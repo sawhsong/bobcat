@@ -14,7 +14,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- User defined jar files -->
+		<!-- User defined jar files - Begin -->
 		<dependency>
 			<groupId>ds</groupId>
 			<artifactId>pd4ml</artifactId>
@@ -29,6 +29,7 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/lib/bcprov-ext-jdk15on-160.jar</systemPath>
 		</dependency>
+		<!-- User defined jar files - End -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
