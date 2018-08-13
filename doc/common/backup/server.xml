@@ -22,13 +22,13 @@
 			<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="alpaca_access_log" suffix=".txt"/>
 
-				<Context docBase="alpaca" path="" reloadable="true" source="org.eclipse.jst.j2ee.server:alpaca">
+<!-- 				<Context docBase="alpaca" path="/alpaca" reloadable="true" source="org.eclipse.jst.j2ee.server:alpaca"> -->
+<!-- 					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/zebraJndi" password="zebra" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE" username="zebra"/> -->
+<!-- 				</Context> -->
+
+				<Context docBase="D:\workspaceMaven\alpaca\target\alpaca.war" path="" reloadable="true">
 					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/zebraJndi" username="zebra" password="zebra" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
 				</Context>
-
-<!-- 				<Context docBase="D:\workspaceMaven\alpaca\target\alpaca.war" path="" reloadable="true"> -->
-<!-- 					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/zebraJndi" username="zebra" password="zebra" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE"/> -->
-<!-- 				</Context> -->
 			</Host>
 		</Engine>
 	</Service>
