@@ -117,19 +117,19 @@ public class QueryAdvisor {
 	}
 
 	public Object getObject(String key) {
-		if (object == null || CommonUtil.isEmpty(key)) {return null;}
+		if (object == null || CommonUtil.isBlank(key)) {return null;}
 		if (!object.containsKey(key)) {return null;}
 		return object.get(key);
 	}
 
 	public void setObject(String key, Object obj) {
-		if (CommonUtil.isEmpty(key) || obj == null) {return;}
+		if (CommonUtil.isBlank(key) || obj == null) {return;}
 		if (object == null) {object = new HashMap<String, Object>();}
 		object.put(key, obj);
 	}
 
 	public void removeObject(String key) {
-		if (object == null || CommonUtil.isEmpty(key)) {return;}
+		if (object == null || CommonUtil.isBlank(key)) {return;}
 		if (!object.containsKey(key)) {return;}
 		object.remove(key);
 	}

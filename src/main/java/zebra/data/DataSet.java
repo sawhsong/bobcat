@@ -109,13 +109,13 @@ public class DataSet {
 	}
 
 	public void addName(String name) {
-		fieldNameIdx.put(name, new Integer(fieldName.size()));
+		fieldNameIdx.put(name, Integer.valueOf(fieldName.size()));
 		fieldName.add(name);
 	}
 
 	public void addName(String name[]) {
 		for (int i=0; i<name.length; i++) {
-			fieldNameIdx.put(name[i], new Integer(i));
+			fieldNameIdx.put(name[i], Integer.valueOf(i));
 			fieldName.add(name[i]);
 		}
 	}

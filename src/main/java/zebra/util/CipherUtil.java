@@ -56,6 +56,7 @@ public class CipherUtil {
 		dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 		byte[] decoded = dcipher.doFinal(dec);
 		String result = new String(decoded);
+
 		return result;
 	}
 }

@@ -59,7 +59,7 @@ public class ParamEntity {
 	}
 
 	public Object getObject(String key) {
-		if (object == null || CommonUtil.isEmpty(key)) {return null;}
+		if (object == null || CommonUtil.isBlank(key)) {return null;}
 		if (!object.containsKey(key)) {return null;}
 
 		return object.get(key);
@@ -67,14 +67,14 @@ public class ParamEntity {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setObject(String key, Object obj) {
-		if (CommonUtil.isEmpty(key) || obj == null) {return;}
+		if (CommonUtil.isBlank(key) || obj == null) {return;}
 		if (object == null) {object = new HashMap();}
 
 		object.put(key, obj);
 	}
 
 	public void removeObject(String key) {
-		if (object == null || CommonUtil.isEmpty(key)) {return;}
+		if (object == null || CommonUtil.isBlank(key)) {return;}
 		if (!object.containsKey(key)) {return;}
 
 		object.remove(key);
@@ -82,7 +82,7 @@ public class ParamEntity {
 
 	@SuppressWarnings("unchecked")
 	public void renameObject(String from, String to) {
-		if (object == null || CommonUtil.isEmpty(CommonUtil.nvl(from)) || CommonUtil.isEmpty(CommonUtil.nvl(to))) {return;}
+		if (object == null || CommonUtil.isBlank(CommonUtil.nvl(from)) || CommonUtil.isBlank(CommonUtil.nvl(to))) {return;}
 		if (!object.containsKey(from)) {return;}
 
 		object.put(to, object.get(from));
