@@ -29,7 +29,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 	protected final List argTrace = new ArrayList();
 	private static final boolean showTypeHelp = false;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	protected void argTraceSet(int i, String typeHelper, Object arg) {
 		String tracedArg;
 		try {
@@ -265,7 +265,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 
 	public void setShort(int parameterIndex, short x) throws SQLException {
 		String methodCall = "setShort(" + parameterIndex + ", " + x + ")";
-		argTraceSet(parameterIndex, "(short)", new Short(x));
+		argTraceSet(parameterIndex, "(short)", Short.valueOf(x));
 		try {
 			realPreparedStatement.setShort(parameterIndex, x);
 		} catch (SQLException s) {
@@ -292,7 +292,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 
 	public void setInt(int parameterIndex, int x) throws SQLException {
 		String methodCall = "setInt(" + parameterIndex + ", " + x + ")";
-		argTraceSet(parameterIndex, "(int)", new Integer(x));
+		argTraceSet(parameterIndex, "(int)", Integer.valueOf(x));
 		try {
 			realPreparedStatement.setInt(parameterIndex, x);
 		} catch (SQLException s) {
@@ -304,7 +304,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 
 	public void setLong(int parameterIndex, long x) throws SQLException {
 		String methodCall = "setLong(" + parameterIndex + ", " + x + ")";
-		argTraceSet(parameterIndex, "(long)", new Long(x));
+		argTraceSet(parameterIndex, "(long)", Long.valueOf(x));
 		try {
 			realPreparedStatement.setLong(parameterIndex, x);
 		} catch (SQLException s) {
@@ -316,7 +316,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 
 	public void setFloat(int parameterIndex, float x) throws SQLException {
 		String methodCall = "setFloat(" + parameterIndex + ", " + x + ")";
-		argTraceSet(parameterIndex, "(float)", new Float(x));
+		argTraceSet(parameterIndex, "(float)", Float.valueOf(x));
 		try {
 			realPreparedStatement.setFloat(parameterIndex, x);
 		} catch (SQLException s) {
@@ -328,7 +328,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 
 	public void setDouble(int parameterIndex, double x) throws SQLException {
 		String methodCall = "setDouble(" + parameterIndex + ", " + x + ")";
-		argTraceSet(parameterIndex, "(double)", new Double(x));
+		argTraceSet(parameterIndex, "(double)", Double.valueOf(x));
 		try {
 			realPreparedStatement.setDouble(parameterIndex, x);
 		} catch (SQLException s) {
@@ -793,6 +793,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addBatch() throws SQLException {
 		String methodCall = "addBatch()";
 		currentBatch.add(dumpedSql());
@@ -805,6 +806,7 @@ public class PreparedStatementSpy extends StatementSpy implements PreparedStatem
 		reportReturn(methodCall);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		String methodCall = "unwrap(" + (iface == null ? "null" : iface.getName()) + ")";
 		try {

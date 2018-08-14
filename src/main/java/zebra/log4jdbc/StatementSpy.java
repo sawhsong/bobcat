@@ -214,8 +214,10 @@ public class StatementSpy implements Statement, Spy {
 		reportReturn(methodCall);
 	}
 
+	@SuppressWarnings("rawtypes")
 	protected List currentBatch = new ArrayList();
 
+	@SuppressWarnings("unchecked")
 	public void addBatch(String sql) throws SQLException {
 		String methodCall = "addBatch(" + sql + ")";
 
@@ -630,6 +632,7 @@ public class StatementSpy implements Statement, Spy {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		String methodCall = "unwrap(" + (iface == null ? "null" : iface.getName()) + ")";
 		try {
@@ -653,14 +656,11 @@ public class StatementSpy implements Statement, Spy {
 
 	@Override
 	public void closeOnCompletion() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean isCloseOnCompletion() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

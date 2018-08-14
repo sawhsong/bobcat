@@ -1319,6 +1319,7 @@ public class ResultSetSpy implements ResultSet, Spy {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object getObject(String colName, Map map) throws SQLException {
 		String methodCall = "getObject(" + colName + ", " + map + ")";
 		try {
@@ -2080,6 +2081,7 @@ public class ResultSetSpy implements ResultSet, Spy {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		String methodCall = "unwrap(" + (iface == null ? "null" : iface.getName()) + ")";
 		try {
@@ -2103,13 +2105,11 @@ public class ResultSetSpy implements ResultSet, Spy {
 
 	@Override
 	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

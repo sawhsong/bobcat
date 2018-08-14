@@ -3,8 +3,11 @@ package zebra.crypto;
 import java.io.ByteArrayOutputStream;
 
 public class URL64 {
+	@SuppressWarnings("unused")
 	private static final char _fldif = 'ÿ';
+	@SuppressWarnings("unused")
 	private static final char a = '@';
+	@SuppressWarnings("unused")
 	private static final char _fldint = 'ÿ';
 	static final char[] _fldfor = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
 			'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '.', '0' };

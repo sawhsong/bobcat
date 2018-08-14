@@ -33,6 +33,7 @@ public final class BlowfishCFB extends BlowfishECB {
 		super.cleanUp();
 	}
 
+	@SuppressWarnings("unused")
 	public int encrypt(byte[] inbuf, int inpos, byte[] outbuf, int outpos, int len) {
 		int end = inpos + len;
 
