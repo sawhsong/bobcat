@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration name="zebra" status="OFF">
+<configuration name="alpaca" status="OFF">
 	<!-- Log Level : TRACE, DEBUG, INFO, WARN, ERROR and FATAL -->
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
@@ -80,7 +80,7 @@
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- log4jdbc end -->
-		<logger name="zebra" level="debug">
+		<logger name="alpaca" level="debug">
 			<appender-ref ref="Console"/>
 		</logger>
 
