@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - SYS_ASSET_TYPE - Asset Entry Type
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.SysAssetType" table="SYS_ASSET_TYPE" lazy="false">
+		<meta attribute="class-description" inherit="false">Asset Entry Type</meta>
+
+		<id name="assetTypeId" column="ASSET_TYPE_ID" type="java.lang.String" length="30"></id>
+
+		<property name="assetType" column="ASSET_TYPE" not-null="true" type="java.lang.String" length="30"/>
+		<property name="description" column="DESCRIPTION" not-null="true" type="java.lang.String" length="100"/>
+		<property name="orgCategory" column="ORG_CATEGORY" not-null="true" type="java.lang.String" length="30"/>
+		<property name="accountCode" column="ACCOUNT_CODE" type="java.lang.String" length="30"/>
+		<property name="gstPercentage" column="GST_PERCENTAGE" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="isApplyGst" column="IS_APPLY_GST" type="java.lang.String" length="30"/>
+		<property name="parentAssetType" column="PARENT_ASSET_TYPE" type="java.lang.String" length="30"/>
+		<property name="sortOrder" column="SORT_ORDER" type="java.lang.String" length="30"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="sysAssetType.selectAll">
+	<![CDATA[
+		SELECT ASSET_TYPE_ID,
+		       ASSET_TYPE,
+		       DESCRIPTION,
+		       ORG_CATEGORY,
+		       ACCOUNT_CODE,
+		       GST_PERCENTAGE,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       IS_APPLY_GST,
+		       PARENT_ASSET_TYPE,
+		       SORT_ORDER,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM SYS_ASSET_TYPE
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+	]]>
+	</sql-query>
+
+	<sql-query name="sysAssetType.insert">
+	<![CDATA[
+		INSERT INTO SYS_ASSET_TYPE (
+		       ASSET_TYPE_ID,
+		       ASSET_TYPE,
+		       DESCRIPTION,
+		       ORG_CATEGORY,
+		       ACCOUNT_CODE,
+		       GST_PERCENTAGE,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       IS_APPLY_GST,
+		       PARENT_ASSET_TYPE,
+		       SORT_ORDER,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${ASSET_TYPE_ID},
+		       ${ASSET_TYPE},
+		       ${DESCRIPTION},
+		       ${ORG_CATEGORY},
+		       ${ACCOUNT_CODE},
+		       ${GST_PERCENTAGE},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${IS_APPLY_GST},
+		       ${PARENT_ASSET_TYPE},
+		       ${SORT_ORDER},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="sysAssetType.update">
+	<![CDATA[
+		UPDATE SYS_ASSET_TYPE
+		   SET ASSET_TYPE = ${ASSET_TYPE},
+		       DESCRIPTION = ${DESCRIPTION},
+		       ORG_CATEGORY = ${ORG_CATEGORY},
+		       ACCOUNT_CODE = ${ACCOUNT_CODE},
+		       GST_PERCENTAGE = ${GST_PERCENTAGE},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       IS_APPLY_GST = ${IS_APPLY_GST},
+		       PARENT_ASSET_TYPE = ${PARENT_ASSET_TYPE},
+		       SORT_ORDER = ${SORT_ORDER},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="sysAssetType.updateColumns">
+	<![CDATA[
+		UPDATE SYS_ASSET_TYPE
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="sysAssetType.delete">
+	<![CDATA[
+		DELETE SYS_ASSET_TYPE
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

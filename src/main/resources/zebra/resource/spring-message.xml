@@ -17,10 +17,10 @@
 				<!-- Message Files End -->
 
 				<!-- Hibernate Query Files Begin -->
-				<value>classpath:${path.hibernate.mapperDirFwk}</value>
-				<value>classpath:${path.hibernate.queryDirFwk}</value>
-				<value>classpath:${path.hibernate.mapperDirProject}</value>
-				<value>classpath:${path.hibernate.queryDirProject}</value>
+<!-- 				<value>classpath:${path.hibernate.mapperDirFwk}</value> -->
+<!-- 				<value>classpath:${path.hibernate.queryDirFwk}</value> -->
+<!-- 				<value>classpath:${path.hibernate.mapperDirProject}</value> -->
+<!-- 				<value>classpath:${path.hibernate.queryDirProject}</value> -->
 				<!-- Hibernate Query Files End -->
 			</list>
 		</property>

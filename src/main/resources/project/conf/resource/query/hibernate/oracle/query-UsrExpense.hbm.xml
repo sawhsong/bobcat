@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Query hbm Source
+ * - USR_EXPENSE - Expense Entry (Expenditure data entry for all organisation category)
+ */-->
+<hibernate-mapping>
+	<sql-query name="query.UsrExpense.getExpenseSummaryDataSet">
+	<![CDATA[
+		with src_data as (
+		select src.parent_expense_type as expense_type,
+		       sum(src.expense_entry_count) as expense_entry_count
+		  from (select type.expense_type_id,
+		               type.expense_type,
+		               type.parent_expense_type,
+		               type.description,
+		               nvl(expense.expense_count, 0) as expense_entry_count
+		          from sys_expense_type type,
+		               (select expense_type_id,
+		                       count(*) as expense_count
+		                  from usr_expense
+		                 where org_id = '${orgId}'
+		                   and expense_year = '${financialYear}'
+		                   and quarter_name = '${quarterName}'
+		                 group by expense_type_id
+		               ) expense
+		         where type.org_category = '${orgCategory}'
+		           and type.expense_type_id = expense.expense_type_id(+)
+		       ) src
+		 group by src.parent_expense_type
+		having src.parent_expense_type is not null
+		)
+		select src.expense_type,
+		       typ.description,
+		       src.expense_entry_count
+		  from sys_expense_type typ,
+		       src_data src
+		 where typ.expense_type = src.expense_type
+		   and org_category = '${orgCategory}'
+		 order by typ.sort_order
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrExpense.getExpenseDataSetByCriteria">
+	<![CDATA[
+		select exp.expense_id,
+		       exp.expense_year,
+		       exp.quarter_name,
+		       (select description_${langCode} from sys_common_code where code_type = 'QUARTER_NAME' and common_code = exp.quarter_name) as quarter_name_desc,
+		       exp.org_id,
+		       exp.expense_type_id,
+		       ext.parent_expense_type as parent_expense_type,
+		       (select description_${langCode} from sys_common_code where code_type = 'EXPENSE_MAIN_TYPE' and common_code = ext.parent_expense_type) as parent_expense_type_desc,
+		       ext.expense_type as expense_type_code,
+		       ext.description as expense_type_desc,
+		       ext.is_apply_gst as expense_type_is_apply_gst,
+		       nvl(ext.gst_percentage, 0) as gst_percentage,
+		       ext.account_code,
+		       to_char(exp.expense_date, '${dateFormat}') as expense_date,
+		       nvl(exp.gross_amt, 0) as gross_amt,
+		       nvl(exp.gst_amt, 0) as gst_amt,
+		       nvl(exp.applied_gst, 0) as applied_gst,
+		       nvl(exp.net_amt, 0) as net_amt,
+		       exp.is_completed,
+		       exp.description,
+		       exp.insert_user_id,
+		       to_char(exp.insert_date, '${dateFormat}') as insert_date,
+		       exp.update_user_id,
+		       to_char(exp.update_date, '${dateFormat}') as update_date,
+		       to_char(nvl(exp.update_date, exp.insert_date), '${dateFormat}') as entry_date
+		  from usr_expense exp,
+		       sys_expense_type ext
+		 where exp.expense_type_id = ext.expense_type_id
+		   and exp.org_id = '${orgId}'
+		   and exp.expense_year = '${financialYear}'
+		   and exp.quarter_name = '${quarterName}'
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+</hibernate-mapping>

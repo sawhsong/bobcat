@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.conf.resource.ormapper.mybatis.oracle.SysUser.SysUserMapper">
+	<resultMap id="hashmap" type="java.util.HashMap"></resultMap>
+
+	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT USER_ID,
+		       AUTH_GROUP_ID,
+		       IS_ACTIVE,
+		       LANGUAGE,
+		       LOGIN_ID,
+		       LOGIN_PASSWORD,
+		       MAX_ROW_PER_PAGE,
+		       PAGE_NUM_PER_PAGE,
+		       THEME_TYPE,
+		       USER_NAME,
+		       USER_STATUS,
+		       USER_TYPE,
+		       EMAIL,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       ORG_ID,
+		       PHOTO_PATH,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM SYS_USER
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO SYS_USER (
+		       USER_ID,
+		       AUTH_GROUP_ID,
+		       IS_ACTIVE,
+		       LANGUAGE,
+		       LOGIN_ID,
+		       LOGIN_PASSWORD,
+		       MAX_ROW_PER_PAGE,
+		       PAGE_NUM_PER_PAGE,
+		       THEME_TYPE,
+		       USER_NAME,
+		       USER_STATUS,
+		       USER_TYPE,
+		       EMAIL,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       ORG_ID,
+		       PHOTO_PATH,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${USER_ID},
+		       ${AUTH_GROUP_ID},
+		       ${IS_ACTIVE},
+		       ${LANGUAGE},
+		       ${LOGIN_ID},
+		       ${LOGIN_PASSWORD},
+		       ${MAX_ROW_PER_PAGE},
+		       ${PAGE_NUM_PER_PAGE},
+		       ${THEME_TYPE},
+		       ${USER_NAME},
+		       ${USER_STATUS},
+		       ${USER_TYPE},
+		       ${EMAIL},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${ORG_ID},
+		       ${PHOTO_PATH},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</insert>
+
+	<insert id="insertWithDto" parameterType="project.conf.resource.ormapper.dto.oracle.SysUser">
+	<![CDATA[
+		INSERT INTO SYS_USER (
+		       USER_ID,
+		       AUTH_GROUP_ID,
+		       IS_ACTIVE,
+		       LANGUAGE,
+		       LOGIN_ID,
+		       LOGIN_PASSWORD,
+		       MAX_ROW_PER_PAGE,
+		       PAGE_NUM_PER_PAGE,
+		       THEME_TYPE,
+		       USER_NAME,
+		       USER_STATUS,
+		       USER_TYPE,
+		       EMAIL,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       ORG_ID,
+		       PHOTO_PATH,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       #{userId,jdbcType=VARCHAR},
+		       #{authGroupId,jdbcType=VARCHAR},
+		       #{isActive,jdbcType=VARCHAR},
+		       #{language,jdbcType=VARCHAR},
+		       #{loginId,jdbcType=VARCHAR},
+		       #{loginPassword,jdbcType=VARCHAR},
+		       #{maxRowPerPage,jdbcType=NUMERIC},
+		       #{pageNumPerPage,jdbcType=NUMERIC},
+		       #{themeType,jdbcType=VARCHAR},
+		       #{userName,jdbcType=VARCHAR},
+		       #{userStatus,jdbcType=VARCHAR},
+		       #{userType,jdbcType=VARCHAR},
+		       #{email,jdbcType=VARCHAR},
+		       #{insertDate,jdbcType=TIME},
+		       #{insertUserId,jdbcType=VARCHAR},
+		       #{orgId,jdbcType=VARCHAR},
+		       #{photoPath,jdbcType=VARCHAR},
+		       #{updateDate,jdbcType=TIME},
+		       #{updateUserId,jdbcType=VARCHAR}
+		       )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+		UPDATE SYS_USER
+		   SET AUTH_GROUP_ID = ${AUTH_GROUP_ID},
+		       IS_ACTIVE = ${IS_ACTIVE},
+		       LANGUAGE = ${LANGUAGE},
+		       LOGIN_ID = ${LOGIN_ID},
+		       LOGIN_PASSWORD = ${LOGIN_PASSWORD},
+		       MAX_ROW_PER_PAGE = ${MAX_ROW_PER_PAGE},
+		       PAGE_NUM_PER_PAGE = ${PAGE_NUM_PER_PAGE},
+		       THEME_TYPE = ${THEME_TYPE},
+		       USER_NAME = ${USER_NAME},
+		       USER_STATUS = ${USER_STATUS},
+		       USER_TYPE = ${USER_TYPE},
+		       EMAIL = ${EMAIL},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       ORG_ID = ${ORG_ID},
+		       PHOTO_PATH = ${PHOTO_PATH},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	</update>
+
+	<update id="updateWithDto" parameterType="project.conf.resource.ormapper.dto.oracle.SysUser">
+		UPDATE SYS_USER
+		   SET AUTH_GROUP_ID = #{authGroupId,jdbcType=VARCHAR},
+		       IS_ACTIVE = #{isActive,jdbcType=VARCHAR},
+		       LANGUAGE = #{language,jdbcType=VARCHAR},
+		       LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+		       LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+		       MAX_ROW_PER_PAGE = #{maxRowPerPage,jdbcType=NUMERIC},
+		       PAGE_NUM_PER_PAGE = #{pageNumPerPage,jdbcType=NUMERIC},
+		       THEME_TYPE = #{themeType,jdbcType=VARCHAR},
+		       USER_NAME = #{userName,jdbcType=VARCHAR},
+		       USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+		       USER_TYPE = #{userType,jdbcType=VARCHAR},
+		       EMAIL = #{email,jdbcType=VARCHAR},
+		       INSERT_DATE = #{insertDate,jdbcType=TIME},
+		       INSERT_USER_ID = #{insertUserId,jdbcType=VARCHAR},
+		       ORG_ID = #{orgId,jdbcType=VARCHAR},
+		       PHOTO_PATH = #{photoPath,jdbcType=VARCHAR},
+		       UPDATE_DATE = #{updateDate,jdbcType=TIME},
+		       UPDATE_USER_ID = #{updateUserId,jdbcType=VARCHAR}
+		 WHERE 1 = 1
+		 ${additionalAttributesForUpdateWithDto}
+	</update>
+
+	<update id="updateColumns" parameterType="project.conf.resource.ormapper.dto.oracle.SysUser">
+		UPDATE SYS_USER
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	</update>
+
+	<delete id="delete" parameterType="hashmap">
+	<![CDATA[
+		DELETE SYS_USER
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</delete>
+</mapper>

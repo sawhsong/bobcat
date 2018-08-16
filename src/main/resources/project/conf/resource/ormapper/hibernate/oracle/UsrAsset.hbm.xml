@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_ASSET - Asset Entry (Asset data entry for all organisation category)
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrAsset" table="USR_ASSET" lazy="false">
+		<meta attribute="class-description" inherit="false">Asset Entry (Asset data entry for all organisation category)</meta>
+
+		<id name="assetId" column="ASSET_ID" type="java.lang.String" length="30"></id>
+
+		<property name="assetDate" column="ASSET_DATE" not-null="true" type="java.util.Date"/>
+		<property name="assetTypeId" column="ASSET_TYPE_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="assetYear" column="ASSET_YEAR" not-null="true" type="java.lang.String" length="4"/>
+		<property name="isCompleted" column="IS_COMPLETED" not-null="true" type="java.lang.String" length="30"/>
+		<property name="orgId" column="ORG_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="quarterName" column="QUARTER_NAME" not-null="true" type="java.lang.String" length="30"/>
+		<property name="appliedGst" column="APPLIED_GST" type="java.lang.Double"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="grossAmt" column="GROSS_AMT" type="java.lang.Double"/>
+		<property name="gstAmt" column="GST_AMT" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="netAmt" column="NET_AMT" type="java.lang.Double"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrAsset.selectAll">
+	<![CDATA[
+		SELECT ASSET_ID,
+		       TO_CHAR(ASSET_DATE, 'yyyymmddhh24miss') AS ASSET_DATE,
+		       ASSET_TYPE_ID,
+		       ASSET_YEAR,
+		       IS_COMPLETED,
+		       ORG_ID,
+		       QUARTER_NAME,
+		       APPLIED_GST,
+		       DESCRIPTION,
+		       GROSS_AMT,
+		       GST_AMT,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_ASSET
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrAsset.insert">
+	<![CDATA[
+		INSERT INTO USR_ASSET (
+		       ASSET_ID,
+		       ASSET_DATE,
+		       ASSET_TYPE_ID,
+		       ASSET_YEAR,
+		       IS_COMPLETED,
+		       ORG_ID,
+		       QUARTER_NAME,
+		       APPLIED_GST,
+		       DESCRIPTION,
+		       GROSS_AMT,
+		       GST_AMT,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${ASSET_ID},
+		       ${ASSET_DATE},
+		       ${ASSET_TYPE_ID},
+		       ${ASSET_YEAR},
+		       ${IS_COMPLETED},
+		       ${ORG_ID},
+		       ${QUARTER_NAME},
+		       ${APPLIED_GST},
+		       ${DESCRIPTION},
+		       ${GROSS_AMT},
+		       ${GST_AMT},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${NET_AMT},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrAsset.update">
+	<![CDATA[
+		UPDATE USR_ASSET
+		   SET ASSET_DATE = ${ASSET_DATE},
+		       ASSET_TYPE_ID = ${ASSET_TYPE_ID},
+		       ASSET_YEAR = ${ASSET_YEAR},
+		       IS_COMPLETED = ${IS_COMPLETED},
+		       ORG_ID = ${ORG_ID},
+		       QUARTER_NAME = ${QUARTER_NAME},
+		       APPLIED_GST = ${APPLIED_GST},
+		       DESCRIPTION = ${DESCRIPTION},
+		       GROSS_AMT = ${GROSS_AMT},
+		       GST_AMT = ${GST_AMT},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       NET_AMT = ${NET_AMT},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrAsset.updateColumns">
+	<![CDATA[
+		UPDATE USR_ASSET
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrAsset.delete">
+	<![CDATA[
+		DELETE USR_ASSET
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

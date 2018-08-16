@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Query hbm Source
+ * - USR_EMPLOYEE_WAGE - Employee Wage
+ */-->
+<hibernate-mapping>
+	<sql-query name="query.UsrEmployeeWage.getEmployeeListDataSetByCriteria">
+	<![CDATA[
+		select ewg.wage_year,
+		       ewg.quarter_name,
+		       ewg.org_id,
+		       ewg.employee_id,
+		       uem.surname,
+		       uem.given_name,
+		       sum(nvl(ewg.gross_wage, 0)) as gross_wage,
+		       sum(nvl(ewg.tax, 0)) as tax,
+		       sum(nvl(ewg.super_amt, 0)) as super_amt,
+		       sum(nvl(ewg.net_wage, 0)) as net_wage
+		  from usr_employee_wage ewg,
+		       usr_employee uem
+		 where ewg.employee_id = uem.employee_id
+		   and ewg.org_id = '${orgId}'
+		   and ewg.wage_year = '${financialYear}'
+		   and ewg.quarter_name = '${quarterName}'
+		${auto_fill}
+		 group by ewg.wage_year,
+		       ewg.quarter_name,
+		       ewg.org_id,
+		       ewg.employee_id,
+		       uem.surname,
+		       uem.given_name
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrEmployeeWage.getWageListDataSetByEmployeeId">
+	<![CDATA[
+		select ewg.wage_year,
+		       ewg.quarter_name,
+		       ewg.org_id,
+		       ewg.employee_id,
+		       uem.surname,
+		       uem.given_name,
+		       to_char(uem.start_date, '${dateFormat}') as start_date,
+		       to_char(uem.end_date, '${dateFormat}') as end_date,
+		       nvl(ewg.hourly_rate, 0) as hourly_rate,
+		       nvl(ewg.hour_worked, 0) as hour_worked,
+		       nvl(ewg.gross_wage, 0) as gross_wage,
+		       nvl(ewg.tax, 0) as tax,
+		       nvl(ewg.super_amt, 0) as super_amt,
+		       nvl(ewg.net_wage, 0) as net_wage
+		  from usr_employee_wage ewg,
+		       usr_employee uem
+		 where ewg.employee_id = uem.employee_id
+		   and ewg.employee_id = '${employeeId}'
+	]]>
+	</sql-query>
+</hibernate-mapping>

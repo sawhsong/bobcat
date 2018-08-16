@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<sql-query name="query.zebra.ZebraDomainDictionary.getDomainDictionaryDataSet">
+	<![CDATA[
+		select domain_id as domain_id,
+		       domain_name as domain_name,
+		       name_abbreviation as name_abbreviation,
+		       data_type as data_type,
+		       decode(lower(data_type), 'number', decode(data_precision||','||data_scale, ',', '', data_precision||', '||data_scale), to_char(data_length, '9,999')) as data_length,
+		       description as description,
+		       to_char(nvl(update_date, insert_date), '${dateFormat}') as last_update
+		  from zebra_domain_dictionary
+		 where 1 = 1
+		${auto_fill}
+		 order by to_char(nvl(update_date, insert_date), '${dateFormat}') desc
+	]]>
+	</sql-query>
+
+	<sql-query name="query.zebra.ZebraDomainDictionary.getNameDataSetByName">
+	<![CDATA[
+		select domain_name
+		  from zebra_domain_dictionary
+		 where 1 = 1
+		${auto_fill}
+		 order by domain_name
+	]]>
+	</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<sql-query name="query.SysCountryCurrency.getCurrencyCodeDataSetForAutoCompletion">
+	<![CDATA[
+		select distinct currency_alphabetic_code as currency_code,
+		       currency_name as currency_name
+		  from sys_country_currency
+		 where 1 = 1
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.SysCountryCurrency.getCountryNameDataSetForAutoCompletion">
+	<![CDATA[
+		select distinct country_name as country_name,
+		       country_code_3 as country_code
+		  from sys_country_currency
+		 where 1 = 1
+		 ${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.SysCountryCurrency.getCountryCurrencyDataSetBySearchCriteria">
+	<![CDATA[
+		select country_currency_id,
+		       currency_name,
+		       currency_alphabetic_code,
+		       currency_symbol,
+		       country_name,
+		       country_code_3,
+		       to_char(nvl(update_date, insert_date), '${dateFormat}') as update_date
+		  from sys_country_currency
+		 where 1 = 1
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+</hibernate-mapping>

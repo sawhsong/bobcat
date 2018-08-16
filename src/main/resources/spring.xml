@@ -14,7 +14,7 @@
 	</bean>
 
 	<!-- Import main configuration files -->
-	<import resource="classpath:zebra/resource/spring-webservice.xml"/>
+	<import resource="classpath:zebra/resource/spring-*.xml"/>
 
 	<!-- Import configuration files by project -->
 <!-- 	<import resource="classpath:zebra/example/conf/spring/spring.xml"/> -->

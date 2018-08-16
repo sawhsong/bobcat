@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_INCOME - Income Entry (Sales Income and Other Income for Org Category A, Other Income for Org Category B/C/D)
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrIncome" table="USR_INCOME" lazy="false">
+		<meta attribute="class-description" inherit="false">Income Entry (Sales Income and Other Income for Org Category A, Other Income for Org Category B/C/D)</meta>
+
+		<id name="incomeId" column="INCOME_ID" type="java.lang.String" length="30"></id>
+
+		<property name="incomeDate" column="INCOME_DATE" not-null="true" type="java.util.Date"/>
+		<property name="incomeEntryType" column="INCOME_ENTRY_TYPE" not-null="true" type="java.lang.String" length="30"/>
+		<property name="incomeYear" column="INCOME_YEAR" not-null="true" type="java.lang.String" length="4"/>
+		<property name="isCompleted" column="IS_COMPLETED" not-null="true" type="java.lang.String" length="30"/>
+		<property name="orgId" column="ORG_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="quarterName" column="QUARTER_NAME" not-null="true" type="java.lang.String" length="30"/>
+		<property name="appliedGst" column="APPLIED_GST" type="java.lang.Double"/>
+		<property name="cashAmt" column="CASH_AMT" type="java.lang.Double"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="grossAmt" column="GROSS_AMT" type="java.lang.Double"/>
+		<property name="gstAmt" column="GST_AMT" type="java.lang.Double"/>
+		<property name="gstFreeAmt" column="GST_FREE_AMT" type="java.lang.Double"/>
+		<property name="incomeTypeId" column="INCOME_TYPE_ID" type="java.lang.String" length="30"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="netAmt" column="NET_AMT" type="java.lang.Double"/>
+		<property name="nonCashAmt" column="NON_CASH_AMT" type="java.lang.Double"/>
+		<property name="recordKeepingType" column="RECORD_KEEPING_TYPE" type="java.lang.String" length="30"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrIncome.selectAll">
+	<![CDATA[
+		SELECT INCOME_ID,
+		       TO_CHAR(INCOME_DATE, 'yyyymmddhh24miss') AS INCOME_DATE,
+		       INCOME_ENTRY_TYPE,
+		       INCOME_YEAR,
+		       IS_COMPLETED,
+		       ORG_ID,
+		       QUARTER_NAME,
+		       APPLIED_GST,
+		       CASH_AMT,
+		       DESCRIPTION,
+		       GROSS_AMT,
+		       GST_AMT,
+		       GST_FREE_AMT,
+		       INCOME_TYPE_ID,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       NON_CASH_AMT,
+		       RECORD_KEEPING_TYPE,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_INCOME
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrIncome.insert">
+	<![CDATA[
+		INSERT INTO USR_INCOME (
+		       INCOME_ID,
+		       INCOME_DATE,
+		       INCOME_ENTRY_TYPE,
+		       INCOME_YEAR,
+		       IS_COMPLETED,
+		       ORG_ID,
+		       QUARTER_NAME,
+		       APPLIED_GST,
+		       CASH_AMT,
+		       DESCRIPTION,
+		       GROSS_AMT,
+		       GST_AMT,
+		       GST_FREE_AMT,
+		       INCOME_TYPE_ID,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       NON_CASH_AMT,
+		       RECORD_KEEPING_TYPE,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${INCOME_ID},
+		       ${INCOME_DATE},
+		       ${INCOME_ENTRY_TYPE},
+		       ${INCOME_YEAR},
+		       ${IS_COMPLETED},
+		       ${ORG_ID},
+		       ${QUARTER_NAME},
+		       ${APPLIED_GST},
+		       ${CASH_AMT},
+		       ${DESCRIPTION},
+		       ${GROSS_AMT},
+		       ${GST_AMT},
+		       ${GST_FREE_AMT},
+		       ${INCOME_TYPE_ID},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${NET_AMT},
+		       ${NON_CASH_AMT},
+		       ${RECORD_KEEPING_TYPE},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrIncome.update">
+	<![CDATA[
+		UPDATE USR_INCOME
+		   SET INCOME_DATE = ${INCOME_DATE},
+		       INCOME_ENTRY_TYPE = ${INCOME_ENTRY_TYPE},
+		       INCOME_YEAR = ${INCOME_YEAR},
+		       IS_COMPLETED = ${IS_COMPLETED},
+		       ORG_ID = ${ORG_ID},
+		       QUARTER_NAME = ${QUARTER_NAME},
+		       APPLIED_GST = ${APPLIED_GST},
+		       CASH_AMT = ${CASH_AMT},
+		       DESCRIPTION = ${DESCRIPTION},
+		       GROSS_AMT = ${GROSS_AMT},
+		       GST_AMT = ${GST_AMT},
+		       GST_FREE_AMT = ${GST_FREE_AMT},
+		       INCOME_TYPE_ID = ${INCOME_TYPE_ID},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       NET_AMT = ${NET_AMT},
+		       NON_CASH_AMT = ${NON_CASH_AMT},
+		       RECORD_KEEPING_TYPE = ${RECORD_KEEPING_TYPE},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrIncome.updateColumns">
+	<![CDATA[
+		UPDATE USR_INCOME
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrIncome.delete">
+	<![CDATA[
+		DELETE USR_INCOME
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>
