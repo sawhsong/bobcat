@@ -22,36 +22,36 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-<!-- 	<filter> -->
-<!-- 		<filter-name>struts</filter-name> -->
-<!-- 		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>struts</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
+	<filter>
+		<filter-name>struts</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>AppLoader</servlet-name> -->
-<!-- 		<servlet-class>zebra.config.AppLoader</servlet-class> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!-- 	</servlet> -->
+	<servlet>
+		<servlet-name>AppLoader</servlet-name>
+		<servlet-class>zebra.config.AppLoader</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
 	<!-- WebServices with CXF -->
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>CXFServlet</servlet-name> -->
-<!-- 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!-- 	</servlet> -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>CXFServlet</servlet-name> -->
-<!-- 		<url-pattern>/ws/*</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- Tomcat8 needs this -->
 	<jsp-config>
@@ -61,18 +61,18 @@
 		</taglib>
 	</jsp-config>
 
-<!-- 	<error-page> -->
-<!-- 		<error-code>404</error-code> -->
-<!-- 		<location>/webapp/shared/page/error.jsp</location> -->
-<!-- 	</error-page> -->
-<!-- 	<error-page> -->
-<!-- 		<error-code>500</error-code> -->
-<!-- 		<location>/webapp/shared/page/error.jsp</location> -->
-<!-- 	</error-page> -->
-<!-- 	<error-page> -->
-<!-- 		<exception-type>java.lang.Throwable</exception-type> -->
-<!-- 		<location>/webapp/shared/page/error.jsp</location> -->
-<!-- 	</error-page> -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/shared/page/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/shared/page/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/shared/page/error.jsp</location>
+	</error-page>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

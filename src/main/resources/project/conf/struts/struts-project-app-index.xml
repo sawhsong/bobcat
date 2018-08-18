@@ -5,8 +5,8 @@
 	<package name="index" extends="default" namespace="/" strict-method-invocation="false">
 		<default-interceptor-ref name="ZebraDefaultStack"/>
 		<action name="index/*" class="project.app.index.IndexAction" method="{1}">
-			<result name="dashboard" type="debugDispatcherResult">/webapp/project/app/index/indexDashboard.jsp</result>
-			<result name="success" type="debugDispatcherResult">/webapp/project/app/index/indexDefault.jsp</result>
+			<result name="dashboard" type="debugDispatcherResult">/project/app/index/indexDashboard.jsp</result>
+			<result name="success" type="debugDispatcherResult">/project/app/index/indexDefault.jsp</result>
 		</action>
 	</package>
 </struts>
