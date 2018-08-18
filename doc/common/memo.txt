@@ -1,0 +1,7 @@
+/**
+ * 2018.08.18
+ */
+@ Library file to copy (C:\apache-tomcat-9.0.10\lib)
+	bcprov-ext-jdk15on-160.jar
+	pd4ml.jar
+	ojdbc7.jar
