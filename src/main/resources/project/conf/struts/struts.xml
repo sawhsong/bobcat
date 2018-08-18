@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <include file="project/conf/struts/struts-project-common-module.xml"/>
+    <include file="project/conf/struts/struts-project-app-index.xml"/>
+    <include file="project/conf/struts/struts-project-app-login.xml"/>
+    <include file="project/conf/struts/struts-project-app-bbs.xml"/>
+    <include file="project/conf/struts/struts-project-app-sys.xml"/>
+    <include file="project/conf/struts/struts-project-app-sba.xml"/>
+    <include file="project/conf/struts/struts-project-app-rkm.xml"/>
+    <include file="project/conf/struts/struts-project-app-cst.xml"/>
+    <include file="project/conf/struts/struts-project-app-rpt.xml"/>
+    <include file="project/conf/struts/struts-project-app-odd.xml"/>
+</struts>

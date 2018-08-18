@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="cst" namespace="/cst" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Cst0202 - Performance-->
+        <action class="project.app.cst.cst0202.Cst0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/webapp/project/app/cst/cst0202/Cst0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/webapp/project/app/cst/cst0202/Cst0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/webapp/project/app/cst/cst0202/Cst0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/webapp/project/app/cst/cst0202/Cst0202UpdatePop.jsp</result>
+        </action>
+        <!--Cst0204 - Benchmark-->
+        <action class="project.app.cst.cst0204.Cst0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/webapp/project/app/cst/cst0204/Cst0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/webapp/project/app/cst/cst0204/Cst0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/webapp/project/app/cst/cst0204/Cst0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/webapp/project/app/cst/cst0204/Cst0204UpdatePop.jsp</result>
+        </action>
+    </package>
+</struts>
