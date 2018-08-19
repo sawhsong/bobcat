@@ -21,7 +21,7 @@
 #ulPagination > li > a, #ulPagination > li > span {position:relative;padding:4px 10px;margin-left:-1px;text-decoration:none;
 	color:#2E6E9E;
 	border:1px solid #C5DBEC;
-	background:#DFEFFC url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
+	background:#DFEFFC url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
 }
 #ulPagination > li:first-child > a, #ulPagination > li:first-child > span {margin-left:0;border-top-left-radius:3px;border-bottom-left-radius:3px;}
 #ulPagination > li:last-child > a, #ulPagination > li:last-child > span {border-top-right-radius:3px;border-bottom-right-radius:3px;}
@@ -29,7 +29,7 @@
 	transition:all .2s;
 	color:#1D5987;
 	border:1px solid #79B7E7;
-	background:#D0E5F5 url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
+	background:#D0E5F5 url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
 }
 #ulPagination > .active > a, #ulPagination > .active > span,
 #ulPagination > .active > a:hover, #ulPagination > .active > span:hover,
@@ -42,7 +42,7 @@
 #ulPagination > .disabled > a, #ulPagination > .disabled > a:hover, #ulPagination > .disabled > a:focus {cursor:not-allowed;
 	color:#2E6E9E;
 	border:1px solid #C5DBEC;
-	background:#DFEFFC url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
+	background:#DFEFFC url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
 }
 
 .liPaginationButton {}

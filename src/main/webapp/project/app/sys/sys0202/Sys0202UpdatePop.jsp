@@ -2,7 +2,7 @@
 * Description
 * - 
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCommon.jsp"%>
+<%@ include file="/shared/page/incCommon.jsp"%>
 <%/************************************************************************************************
 * Declare objects & variables
 ************************************************************************************************/%>
@@ -32,7 +32,7 @@
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCssJs.jsp"%>
+<%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
@@ -235,7 +235,7 @@ $(function() {
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divPopupWindowHolder">
 <div id="divFixedPanelPopup">
-<div id="divLocationPathArea"><%@ include file="/webapp/project/common/include/bodyLocationPathArea.jsp"%></div>
+<div id="divLocationPathArea"><%@ include file="/project/common/include/bodyLocationPathArea.jsp"%></div>
 <%/************************************************************************************************
 * Real Contents - fixed panel(tab, button, search, information)
 ************************************************************************************************/%>

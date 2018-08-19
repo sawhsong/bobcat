@@ -2,7 +2,7 @@
 * Description
 * - 
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCommon.jsp"%>
+<%@ include file="/shared/page/incCommon.jsp"%>
 <%/************************************************************************************************
 * Declare objects & variables
 ************************************************************************************************/%>
@@ -21,7 +21,7 @@
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCssJs.jsp"%>
+<%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 .panelHolder {margin:0px auto;width:100%;text-align:center;}
 .panel {margin-top:20px;display:inline-block;width:360px;}

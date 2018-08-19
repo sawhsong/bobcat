@@ -43,10 +43,10 @@ body {padding:0px 0px;
 /**
  * jQuery-Layout component
  */
-.layoutTogglers-north-open, .layoutTogglers-south-closed {background:url("/webapp/shared/resource/image/theme/theme009/common/togglerUp.gif") no-repeat scroll center bottom transparent;}
-.layoutTogglers-north-closed, .layoutTogglers-south-open {background:url("/webapp/shared/resource/image/theme/theme009/common/togglerDown.gif") no-repeat scroll center bottom transparent;}
-.layoutTogglers-west-open, .layoutTogglers-east-closed {background:url("/webapp/shared/resource/image/theme/theme009/common/togglerLeft.gif") no-repeat scroll center bottom transparent;}
-.layoutTogglers-west-closed, .layoutTogglers-east-open {background:url("/webapp/shared/resource/image/theme/theme009/common/togglerRight.gif") no-repeat scroll center bottom transparent;}
+.layoutTogglers-north-open, .layoutTogglers-south-closed {background:url("/shared/resource/image/theme/theme009/common/togglerUp.gif") no-repeat scroll center bottom transparent;}
+.layoutTogglers-north-closed, .layoutTogglers-south-open {background:url("/shared/resource/image/theme/theme009/common/togglerDown.gif") no-repeat scroll center bottom transparent;}
+.layoutTogglers-west-open, .layoutTogglers-east-closed {background:url("/shared/resource/image/theme/theme009/common/togglerLeft.gif") no-repeat scroll center bottom transparent;}
+.layoutTogglers-west-closed, .layoutTogglers-east-open {background:url("/shared/resource/image/theme/theme009/common/togglerRight.gif") no-repeat scroll center bottom transparent;}
 .northLayoutResizers {transition:background 0.2s;
 	background-color:#00642D;
 }

@@ -6,50 +6,50 @@
         <default-interceptor-ref name="ZebraDefaultStack"/>
         <!--/* Sys0202 - Common Code Management */-->
         <action class="project.app.sys.sys0202.Sys0202Action" method="{1}" name="0202/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0202/Sys0202List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/sys/sys0202/Sys0202DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/sys/sys0202/Sys0202InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/sys/sys0202/Sys0202UpdatePop.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0202/Sys0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0202/Sys0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0202/Sys0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0202/Sys0202UpdatePop.jsp</result>
         </action>
         <!--/* Sys0204 - Country / Currency */-->
         <action class="project.app.sys.sys0204.Sys0204Action" method="{1}" name="0204/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0204/Sys0204List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/sys/sys0204/Sys0204DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/sys/sys0204/Sys0204InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/sys/sys0204/Sys0204UpdatePop.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204UpdatePop.jsp</result>
         </action>
         <!--/* Sys0402 - Menu */-->
         <action class="project.app.sys.sys0402.Sys0402Action" method="{1}" name="0402/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0402/Sys0402List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/sys/sys0402/Sys0402DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/sys/sys0402/Sys0402InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/sys/sys0402/Sys0402UpdatePop.jsp</result>
-            <result name="updateSort" type="debugDispatcherResult">/webapp/project/app/sys/sys0402/Sys0402UpdateSortPop.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402UpdatePop.jsp</result>
+            <result name="updateSort" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402UpdateSortPop.jsp</result>
         </action>
         <!--/* Sys0404 - Authority Group */-->
         <action class="project.app.sys.sys0404.Sys0404Action" method="{1}" name="0404/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0404/Sys0404List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/sys/sys0404/Sys0404DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/sys/sys0404/Sys0404InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/sys/sys0404/Sys0404UpdatePop.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0404/Sys0404List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0404/Sys0404DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0404/Sys0404InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0404/Sys0404UpdatePop.jsp</result>
         </action>
         <!--/* Sys0406 - Menu - Authority Group */-->
         <action class="project.app.sys.sys0406.Sys0406Action" method="{1}" name="0406/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0406/Sys0406List.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0406/Sys0406List.jsp</result>
         </action>
         <!--Sys0602 - Annoucement-->
         <action class="project.app.sys.sys0602.Sys0602Action" method="{1}" name="0602/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0602/Sys0602List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/sys/sys0602/Sys0602DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/sys/sys0602/Sys0602InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/sys/sys0602/Sys0602UpdatePop.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602UpdatePop.jsp</result>
         </action>
         <!--Sys0604 - Free Board-->
         <action class="project.app.sys.sys0604.Sys0604Action" method="{1}" name="0604/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/sys/sys0604/Sys0604List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/sys/sys0604/Sys0604Detail.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/sys/sys0604/Sys0604Insert.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/sys/sys0604/Sys0604Update.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604Detail.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604Insert.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604Update.jsp</result>
         </action>
     </package>
 </struts>

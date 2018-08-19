@@ -2,13 +2,13 @@
 * Description
 * - pageHandler
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCommon.jsp"%>
+<%@ include file="/shared/page/incCommon.jsp"%>
 <%@ page import="zebra.data.DataSet, zebra.data.ParamEntity, zebra.util.CommonUtil"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<%@ include file="/webapp/shared/page/incCssJs.jsp"%>
+<%@ include file="/shared/page/incCssJs.jsp"%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();

@@ -5,10 +5,10 @@
         <default-interceptor-ref name="ZebraDefaultStack"/>
         <!--Rpt0202 - Report 1-->
         <action class="project.app.rpt.rpt0202.Rpt0202Action" method="{1}" name="0202/*">
-            <result name="list" type="debugDispatcherResult">/webapp/project/app/rpt/rpt0202/Rpt0202List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/webapp/project/app/rpt/rpt0202/Rpt0202DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/webapp/project/app/rpt/rpt0202/Rpt0202InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/webapp/project/app/rpt/rpt0202/Rpt0202UpdatePop.jsp</result>
+            <result name="list" type="debugDispatcherResult">/project/app/rpt/rpt0202/Rpt0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rpt/rpt0202/Rpt0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rpt/rpt0202/Rpt0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rpt/rpt0202/Rpt0202UpdatePop.jsp</result>
         </action>
     </package>
 </struts>

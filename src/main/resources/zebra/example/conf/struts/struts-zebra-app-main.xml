@@ -7,8 +7,8 @@
 
 		<!--/* Main */-->
 		<action name="main/*" class="zebra.example.app.main.MainAction" method="{1}">
-			<result name="index" type="debugDispatcherResult">/webapp/zebra/example/app/main/mainDefault.jsp</result>
-			<result name="garbageCollection" type="debugDispatcherResult">/webapp/zebra/example/app/main/garbageCollection.jsp</result>
+			<result name="index" type="debugDispatcherResult">/zebra/example/app/main/mainDefault.jsp</result>
+			<result name="garbageCollection" type="debugDispatcherResult">/zebra/example/app/main/garbageCollection.jsp</result>
 		</action>
 	</package>
 </struts>

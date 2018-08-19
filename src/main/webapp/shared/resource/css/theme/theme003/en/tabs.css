@@ -25,12 +25,12 @@
 .nav-tabs > li > a {margin-right:1px;padding:8px 12px;transition:all .3s;
 	color:#1C94C4;
 	border:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .nav-tabs > li > a:hover {cursor:pointer;transition:all .3s;
 	color:#C77405;
 	border:1px solid #FBCB09;
-	background:#FDF5CE url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
+	background:#FDF5CE url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
 }
 .nav-tabs > li.active > a {cursor:pointer;
 	color:#C77405;
@@ -52,7 +52,7 @@
 .nav > li.disabled > a {opacity:0.6;}
 .nav > li.disabled > a:hover, .nav > li.disabled > a:focus {opacity:0.6;
 	border:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .nav-tabs > li.disabled.active > a {opacity:0.6;}
 .nav-tabs > li.disabled.active > a, .nav-tabs > li.disabled.active > a:hover, .nav-tabs > li.disabled.active > a:focus {opacity:0.6;cursor:not-allowed;

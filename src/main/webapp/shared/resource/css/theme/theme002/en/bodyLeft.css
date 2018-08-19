@@ -21,7 +21,7 @@
 	border-radius:0px;
 	border:0px;
 	border-bottom:1px solid #79b7e7;
-	background:#F5F8F9 url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_inset-hard_100_f5f8f9_1x100.png") 50% 50% repeat-x;
+	background:#F5F8F9 url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_inset-hard_100_f5f8f9_1x100.png") 50% 50% repeat-x;
 }
 #divLeftMenuHeader:hover {
 /* 	background-color:#ffffff; */

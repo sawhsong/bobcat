@@ -2,7 +2,7 @@
 * Description
 * - 
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCommon.jsp"%>
+<%@ include file="/shared/page/incCommon.jsp"%>
 <%@ page isErrorPage="true"%>
 <%@ page import="java.io.*, zebra.util.WebUtil, zebra.util.CommonUtil"%>
 <%/************************************************************************************************
@@ -16,7 +16,7 @@
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCssJs.jsp"%>
+<%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 body {
 	padding:10px 10px 10px 10px;

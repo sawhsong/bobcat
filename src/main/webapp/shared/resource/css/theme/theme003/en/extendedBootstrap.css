@@ -22,5 +22,5 @@
 .panel-default .panel-heading {
 	color:#C77405;
 	border-bottom:1px solid #FBCB09;
-	background:#FDF5CE url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
+	background:#FDF5CE url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
 }

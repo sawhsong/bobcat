@@ -9,9 +9,9 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml"/>
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-<!-- 	<bean id="baseWebService" abstract="true" class="${name.framework}.base.BaseWebService"> -->
-<!-- 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/> -->
-<!-- 		<property name="sessionFactory" ref="hibernateLocalSessionFactory"/> -->
-<!-- 		<property name="messageSourceAccessor" ref="messageSourceAccessor"/> -->
-<!-- 	</bean> -->
+	<bean id="baseWebService" abstract="true" class="${name.framework}.base.BaseWebService">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+		<property name="sessionFactory" ref="hibernateLocalSessionFactory"/>
+		<property name="messageSourceAccessor" ref="messageSourceAccessor"/>
+	</bean>
 </beans>

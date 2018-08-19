@@ -28,12 +28,12 @@
 .divNonyCalendarHeaderHolder {margin:0px auto;padding:8px 0px;text-align:center;border-top-left-radius:4px;border-top-right-radius:4px;transition:background .2s;
 	color:#1C94C4;
 	border-bottom:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .divNonyCalendarHeaderHolder:hover {transition:background .2s;
 	color:#C77405;
 	border-bottom:1px solid #FBCB09;
-	background:#FDF5CE url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
+	background:#FDF5CE url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
 }
 .divNonyCalendarHeaderTitle {font-weight:bold;
 	background:transparent;
@@ -167,11 +167,11 @@
 .tblNonyCalendarTable td.selectable {
 	color:#1C94C4;
 	border:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .tblNonyCalendarTable td:not(.selectable):not(.weekNumber) {opacity:0.3;
 	border:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .tblNonyCalendarTable th {font-size:1.0em;}
 .tblNonyCalendarTable td {font-size:1.0em;}
@@ -179,11 +179,11 @@
 .weekNumberHeader, .weekNumber {opacity:0.2;}
 .tblNonyCalendarTable td.weekNumber {
 	border:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .tblNonyCalendarTable td.weekNumber:not([weekNumber |= weekNumberBlank]) {
 	border:1px solid #CCCCCC;
-	background:#F6F6F6 url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	background:#F6F6F6 url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 }
 .tblNonyCalendarTable td.weekNumber[weekNumber |= weekNumberBlank] {opacity:0.3;}
 .selectable {cursor:pointer;}
@@ -217,7 +217,7 @@
 .selectable:not(.today):not(.defaultDay):hover {
 	color:#c77405;
 	border:1px solid #fbcb09;
-	background:#FDF5CE url("/webapp/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
+	background:#FDF5CE url("/shared/resource/css/jquery-ui/theme003/images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
 }
 
 /**

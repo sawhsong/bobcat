@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page errorPage = "/webapp/shared/page/error.jsp"%>
+<%@ page errorPage = "/shared/page/error.jsp"%>
 <%@ page import="java.util.*, net.sf.json.JSONObject, zebra.data.*, zebra.util.*"%>
 <%@ page import="zebra.example.common.module.commoncode.*"%>
 <%@ page import="zebra.example.common.module.menu.*"%>

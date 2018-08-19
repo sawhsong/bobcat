@@ -43,7 +43,7 @@
 	color:#FFE633;
 }
 #aLogo {padding:6px 0px 6px 24px;
-	background:url('/webapp/shared/resource/image/icon/logo-key.png') no-repeat 0% 50%;
+	background:url('/shared/resource/image/icon/logo-key.png') no-repeat 0% 50%;
 }
 
 /**
@@ -64,10 +64,10 @@
 	background-color:#ffffff;
 }
 #aThemeSelector {padding:6px 0px 6px 20px;
-	background:url('/webapp/shared/resource/image/icon/themeSelector.png') no-repeat 0% 50%;
+	background:url('/shared/resource/image/icon/themeSelector.png') no-repeat 0% 50%;
 }
 #aFrameworkMenu {padding:6px 0px 6px 20px;
-	background:url('/webapp/shared/resource/image/icon/frameworkMenu.png') no-repeat 0% 50%;
+	background:url('/shared/resource/image/icon/frameworkMenu.png') no-repeat 0% 50%;
 }
 
 /**
@@ -102,7 +102,7 @@
 	border-right:0px solid #191919;
 }
 #aLoggedInUser {
-	background:url('/webapp/shared/resource/image/theme/theme000/common/icnUser-loggedIn_White.png') no-repeat 0px 0px
+	background:url('/shared/resource/image/theme/theme000/common/icnUser-loggedIn_White.png') no-repeat 0px 0px
 }
 #divLoggedInUser.selected {
 	background-color:#5681A7;

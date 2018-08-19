@@ -30,12 +30,12 @@
 .nonyPopWinHeaderHolder {padding:8px 8px;transition:background .2s;border-top-left-radius:5px;border-top-right-radius:5px;
 	color:#2E6E9E;
 	border:1px solid #C5DBEC;
-	background:#DFEFFC url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
+	background:#DFEFFC url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
 }
 .nonyPopWinHeaderHolder:hover {transition:all .2s;
 	color:#1D5987;
 	border:1px solid #79B7E7;
-	background:#D0E5F5 url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
+	background:#D0E5F5 url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
 }
 .nonyPopWinHeaderTitle {font-size:1.03em;font-weight:bold;
 	background:transparent;
@@ -66,12 +66,12 @@
 .nonyDialogHeaderHolder {padding:12px 8px;transition:background .2s;border-top-left-radius:5px;border-top-right-radius:5px;
 	color:#2E6E9E;
 	border:0px solid #C5DBEC;
-	background:#DFEFFC url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
+	background:#DFEFFC url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
 }
 .nonyDialogHeaderHolder:hover {transition:all .2s;
 	color:#1D5987;
 	border:0px solid #79B7E7;
-	background:#D0E5F5 url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
+	background:#D0E5F5 url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
 }
 .nonyDialogHeaderTitle {font-size:1.03em;font-weight:bold;
 	background:transparent;

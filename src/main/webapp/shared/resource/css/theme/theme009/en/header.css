@@ -43,7 +43,7 @@
 	color:#459e00;
 }
 #aLogo {padding:24px 0px 24px 160px;
-/* 	background:url('/webapp/shared/resource/image/theme/theme009/common/logo-daintree.png') no-repeat 0% 50%; */
+/* 	background:url('/shared/resource/image/theme/theme009/common/logo-daintree.png') no-repeat 0% 50%; */
 	background-size:150px 55px;
 }
 
@@ -65,10 +65,10 @@
 	background-color:#191919;
 }
 #aThemeSelector {padding:6px 0px 6px 20px;
-	background:url('/webapp/shared/resource/image/icon/themeSelector_Black.png') no-repeat 0% 50%;
+	background:url('/shared/resource/image/icon/themeSelector_Black.png') no-repeat 0% 50%;
 }
 #aFrameworkMenu {padding:6px 0px 6px 20px;
-	background:url('/webapp/shared/resource/image/icon/frameworkMenu_Black.png') no-repeat 0% 50%;
+	background:url('/shared/resource/image/icon/frameworkMenu_Black.png') no-repeat 0% 50%;
 }
 
 /**
@@ -103,7 +103,7 @@
 	border-right:0px solid #3E8044;
 }
 #aLoggedInUser {
-	background:url('/webapp/shared/resource/image/theme/theme000/common/icnUser-loggedIn_White.png') no-repeat 0px 0px
+	background:url('/shared/resource/image/theme/theme000/common/icnUser-loggedIn_White.png') no-repeat 0px 0px
 }
 #divLoggedInUser.selected {
 	background-color:#007836;

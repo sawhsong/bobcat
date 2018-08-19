@@ -1,6 +1,6 @@
 {
 	"globalMenu":{
-		"G1":{"menuId":"G1", "menuName_en":"Implicit Objects", "menuName_ko":"내장객체보기", "menuUrl":"/webapp/shared/page/implicitObjects.jsp"},
+		"G1":{"menuId":"G1", "menuName_en":"Implicit Objects", "menuName_ko":"내장객체보기", "menuUrl":"/shared/page/implicitObjects.jsp"},
 		"G2":{"menuId":"G2", "menuName_en":"Garbage Collection", "menuName_ko":"메모리정리", "menuUrl":"/zebra/main/getGarbageColletion.do"},
 		"G3":{"menuId":"G3", "menuName_en":"Main Menu", "menuName_ko":"메인메뉴", "menuUrl":"/index.do"}
 	},

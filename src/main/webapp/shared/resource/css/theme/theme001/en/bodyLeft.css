@@ -21,7 +21,7 @@
 	border-radius:0px;
 	border:0px;
 	border-bottom:1px solid #CCCCCC;
-	background:#FFFFFF url("/webapp/shared/resource/css/jquery-ui/theme001/images/ui-bg_glass_65_ffffff_1x400.png") 50% 50% repeat-x;
+	background:#FFFFFF url("/shared/resource/css/jquery-ui/theme001/images/ui-bg_glass_65_ffffff_1x400.png") 50% 50% repeat-x;
 }
 #divLeftMenuHeader:hover {
 	background-color:#ffffff;

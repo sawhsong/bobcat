@@ -2,7 +2,7 @@
 * Description
 * - 
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCommon.jsp"%>
+<%@ include file="/shared/page/incCommon.jsp"%>
 <%/************************************************************************************************
 * Declare objects & variables
 ************************************************************************************************/%>
@@ -21,7 +21,7 @@
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCssJs.jsp"%>
+<%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 </style>
 <script type="text/javascript">
@@ -392,12 +392,12 @@ $(function() {
 ************************************************************************************************/%>
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
-<div id="divHeaderHolder" class="ui-layout-north"><%@ include file="/webapp/zebra/example/common/include/header.jsp"%></div>
+<div id="divHeaderHolder" class="ui-layout-north"><%@ include file="/zebra/example/common/include/header.jsp"%></div>
 <div id="divBodyHolder" class="ui-layout-center">
-<div id="divBodyLeft" class="ui-layout-west"><%@ include file="/webapp/zebra/example/common/include/bodyLeft.jsp"%></div>
+<div id="divBodyLeft" class="ui-layout-west"><%@ include file="/zebra/example/common/include/bodyLeft.jsp"%></div>
 <div id="divBodyCenter" class="ui-layout-center">
 <div id="divFixedPanel">
-<div id="divLocationPathArea"><%@ include file="/webapp/zebra/example/common/include/bodyLocationPathArea.jsp"%></div>
+<div id="divLocationPathArea"><%@ include file="/zebra/example/common/include/bodyLocationPathArea.jsp"%></div>
 <%/************************************************************************************************
 * Real Contents - fixed panel(tab, button, search, information)
 ************************************************************************************************/%>
@@ -488,9 +488,9 @@ $(function() {
 ************************************************************************************************/%>
 </div>
 </div>
-<div id="divBodyRight" class="ui-layout-east"><%@ include file="/webapp/zebra/example/common/include/bodyRight.jsp"%></div>
+<div id="divBodyRight" class="ui-layout-east"><%@ include file="/zebra/example/common/include/bodyRight.jsp"%></div>
 </div>
-<div id="divFooterHolder" class="ui-layout-south"><%@ include file="/webapp/zebra/example/common/include/footer.jsp"%></div>
+<div id="divFooterHolder" class="ui-layout-south"><%@ include file="/zebra/example/common/include/footer.jsp"%></div>
 <%/************************************************************************************************
 * Additional Elements
 ************************************************************************************************/%>

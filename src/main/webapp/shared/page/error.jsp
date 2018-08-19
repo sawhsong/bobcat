@@ -15,8 +15,8 @@
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
-<script type="text/javascript" src="/webapp/shared/resource/js/jquery/jquery-2.1.4.js"></script>
-<script type="text/javascript" src="/webapp/shared/resource/js/angularjs/angular.js"></script>
+<script type="text/javascript" src="/shared/resource/js/jquery/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="/shared/resource/js/angularjs/angular.js"></script>
 <style type="text/css">
 body {
 	padding:10px 10px;
@@ -143,7 +143,7 @@ $(function() {
 * Real Contents
 ************************************************************************************************/%>
 <div class="errorCodeBox">
-	<div class="errorIcon"><img src="/webapp/shared/resource/image/icon/error.png"/></div>
+	<div class="errorIcon"><img src="/shared/resource/image/icon/error.png"/></div>
 	<div class="errorTitle">
 		Exception occurred!<br/>
 		[Error Code : ${requestScope["javax.servlet.error.status_code"]}]

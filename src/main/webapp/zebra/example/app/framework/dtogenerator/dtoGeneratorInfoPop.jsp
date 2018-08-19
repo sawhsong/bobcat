@@ -2,7 +2,7 @@
 * Description
 * - 
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCommon.jsp"%>
+<%@ include file="/shared/page/incCommon.jsp"%>
 <%/************************************************************************************************
 * Declare objects & variables
 ************************************************************************************************/%>
@@ -22,7 +22,7 @@
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
-<%@ include file="/webapp/shared/page/incCssJs.jsp"%>
+<%@ include file="/shared/page/incCssJs.jsp"%>
 <script type="text/javascript">
 var dataSource = "<%=dataSource%>";
 
@@ -158,7 +158,7 @@ $(function() {
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divPopupWindowHolder">
 <div id="divFixedPanelPopup">
-<div id="divLocationPathArea"><%@ include file="/webapp/zebra/example/common/include/bodyLocationPathArea.jsp"%></div>
+<div id="divLocationPathArea"><%@ include file="/zebra/example/common/include/bodyLocationPathArea.jsp"%></div>
 <%/************************************************************************************************
 * Real Contents - fixed panel(tab, button, search, information)
 ************************************************************************************************/%>

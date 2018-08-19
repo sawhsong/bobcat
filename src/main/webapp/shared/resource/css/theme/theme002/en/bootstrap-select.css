@@ -329,17 +329,17 @@ button.bootstrapSelect.dropdown-toggle > span.caret {margin-right:-5px;}
 button.bootstrapSelect.dropdown-toggle.default {transition:all .2s;
 	color:#2E6E9E;
 	border-bottom:1px solid #C5DBEC;
-	background:#DFEFFC url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
+	background:#DFEFFC url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
 }
 button.bootstrapSelect.dropdown-toggle.default:hover, button.bootstrapSelect.dropdown-toggle.default:focus, .bootstrapSelect.open button.dropdown-toggle.default {
 	color:#1D5987;
 	border-bottom:1px solid #79B7E7;
-	background:#D0E5F5 url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
+	background:#D0E5F5 url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
 }
 button.bootstrapSelect.dropdown-toggle.default.disabled:hover, button.bootstrapSelect.dropdown-toggle.default.disabled:focus, .bootstrapSelect.open button.dropdown-toggle.default.disabled {
 	color:#2E6E9E;
 	border-bottom:1px solid #C5DBEC;
-	background:#DFEFFC url("/webapp/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
+	background:#DFEFFC url("/shared/resource/css/jquery-ui/theme002/images/ui-bg_glass_85_dfeffc_1x400.png") 50% 50% repeat-x;
 }
 
 button.bootstrapSelect.dropdown-toggle.primary {text-shadow:0px 1px 1px rgba(0, 0, 0, 0.3);
