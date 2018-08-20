@@ -37,6 +37,13 @@
 			<scope>system</scope>
 			<systemPath>${webapp.lib}/ojdbc7.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>ds</groupId>
+			<artifactId>ss_css2</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/ss_css2-0.9.3.jar</systemPath>
+		</dependency>
 		<!-- User defined jar files - End -->
 
 		<dependency>
@@ -671,11 +678,6 @@
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
 			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>css2parser</groupId>
-			<artifactId>ss_css2</artifactId>
-			<version>0.9.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml</groupId>
