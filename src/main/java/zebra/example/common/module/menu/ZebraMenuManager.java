@@ -7,13 +7,14 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import zebra.config.MemoryBean;
 import zebra.util.ConfigUtil;
 
 public class ZebraMenuManager {
-	private static Logger logger = Logger.getLogger(ZebraMenuManager.class);
+	private static Logger logger = LogManager.getLogger(ZebraMenuManager.class);
 
 	public static void loadMenu() throws Exception {
 		String menuJson = IOUtils.toString(new BufferedInputStream(new FileInputStream((String)MemoryBean.get("applicationRealPath") + ConfigUtil.getProperty("path.file.fwkMenu"))), "utf-8");
