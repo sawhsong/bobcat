@@ -181,11 +181,6 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.7.25</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.25</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
@@ -518,7 +513,7 @@
 			<version>5.3.5.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.0.12.Final</version>
 		</dependency>
