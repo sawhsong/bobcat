@@ -3,13 +3,12 @@ package zebra.example.common.module.menu;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 import zebra.config.MemoryBean;
 import zebra.util.ConfigUtil;
 
