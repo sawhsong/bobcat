@@ -22,10 +22,6 @@ public class DirectoryResourceBundleMessageSource extends ResourceBundleMessageS
 		String classPath = "";
 		File rootDir;
 		ArrayList baseNames = new ArrayList();
-		/*!
-		 * Hibernate 5.1.4 will be using therefore no need to load query files
-		 */
-//		HibernateQueryManager hibernateQueryManager = new HibernateQueryManager();
 
 		for (int i=0; i<directoryPath.size(); i++) {
 			classPath = CommonUtil.replace((String)directoryPath.get(i), "classpath:", "/WEB-INF/classes/");
@@ -35,8 +31,9 @@ public class DirectoryResourceBundleMessageSource extends ResourceBundleMessageS
 		super.setBasenames((String[])baseNames.toArray(new String[baseNames.size()]));
 
 		/*!
-		 * Hibernate 5.1.4 will be using therefore no need to load query files
+		 * No need to load query files
 		 */
+//		HibernateQueryManager hibernateQueryManager = new HibernateQueryManager();
 //		hibernateQueryManager.loadQueryFiles(servletContext, directoryPath);
 	}
 

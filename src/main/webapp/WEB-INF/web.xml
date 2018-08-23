@@ -36,8 +36,13 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>AppLoader</servlet-name>
+		<servlet-name>FrameworkAppLoader</servlet-name>
 		<servlet-class>zebra.config.AppLoader</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>ProjectAppLoader</servlet-name>
+		<servlet-class>project.common.extend.AppLoader</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
