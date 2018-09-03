@@ -4,9 +4,9 @@
  */
 delete zebra_domain_dictionary;
 
-insert into zebra_domain_dictionary values('1',    'id',                   'id',                   'VARCHAR2',  null,  null,  30,    'uid, id',                           '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('1',    'id',                   'id',                   'VARCHAR2',  null,  null,  50,    'uid, id',                           '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('2',    'password',             'password',             'VARCHAR2',  null,  null,  30,    'password',                          '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('3',    'common_code',          'common_code',          'VARCHAR2',  null,  null,  30,    'common_code.common_code',           '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('3',    'common_code',          'common_code',          'VARCHAR2',  null,  null,  50,    'common_code.common_code',           '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('4',    'normal_name',          'name',                 'VARCHAR2',  null,  null,  50,    'person name, user name, org name',  '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('5',    'file_name',            'file_name',            'VARCHAR2',  null,  null,  1000,  'file name, image/icon name',        '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('6',    'menu_name',            'menu_name',            'VARCHAR2',  null,  null,  500,   'menu name',                         '0',  sysdate,  '',  '');

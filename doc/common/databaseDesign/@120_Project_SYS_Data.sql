@@ -6,44 +6,75 @@
  */
 delete sys_common_code;
 
-insert into sys_common_code values('CODE_CATEGORY', '0000000000', 'Code Category', 'BIZ', 'Code Category', 'Code Category', 'CODE_CATEGORY_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
-insert into sys_common_code values('CODE_CATEGORY', 'SYS',        'System',        'SYS', 'System',        'System',        'CODE_CATEGORY_SYS',        '001', 'Y', 'Y', '0', sysdate, null, null);
-insert into sys_common_code values('CODE_CATEGORY', 'BIZ',        'Business',      'BIZ', 'Business',      'Business',      'CODE_CATEGORY_BIZ',        '002', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('SIMPLE_YN', '0000000000', 'Simple YN', 'Simple YN', 'Simple YN', 'SIMPLE_YN_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('SIMPLE_YN', 'Y',          'Yes',       'Yes',       'Yes',       'SIMPLE_YN_Y',          '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('SIMPLE_YN', 'N',          'No',        'No',        'No',        'SIMPLE_YN_N',          '002', 'Y', 'Y', '0', sysdate, null, null);
 
-insert into sys_common_code values('SIMPLE_YN', '0000000000', 'Simple YN', 'BIZ', 'Simple YN', 'Simple YN', 'SIMPLE_YN_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
-insert into sys_common_code values('SIMPLE_YN', 'Y',          'Yes',       'BIZ', 'Yes',       'Yes',       'SIMPLE_YN_Y',          '001', 'Y', 'Y', '0', sysdate, null, null);
-insert into sys_common_code values('SIMPLE_YN', 'N',          'No',        'BIZ', 'No',        'No',        'SIMPLE_YN_N',          '002', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USE_YN', '0000000000', 'Is Used',    '사용여부', 'Use or Not', 'USE_YN_0000000000', '000',   'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USE_YN', 'Y',          'Use',        '사용',     'Use',        'USE_YN_Y',          '001',   'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USE_YN', 'N',          'Not in Use', '미사용',   'Not Use',    'USE_YN_N',          '002',   'Y', 'Y', '0', sysdate, null, null);
 
-insert into sys_common_code values('USE_YN', '0000000000',     '사용여부',  'Use or Not',    'USE_YN_0000000000',  '000',   'Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USE_YN', 'Y',              '사용',      'Use',           'USE_YN_Y',           '001',   'Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USE_YN', 'N',              '미사용',    'Not Use',       'USE_YN_N',           '002',   'Y','Y','0',sysdate,'','');
+insert into sys_common_code values('LANGUAGE_TYPE', '0000000000', 'Language Type', '언어타입',  'Language Type', 'LANGUAGE_TYPE_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('LANGUAGE_TYPE', 'EN',         'English',       '영어',      'English',       'LANGUAGE_TYPE_EN',         '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('LANGUAGE_TYPE', 'KO',         'Korean',        '한국어',    'Korean',        'LANGUAGE_TYPE_KO',         '002', 'Y', 'Y', '0', sysdate, null, null);
 
-insert into sys_common_code values('LANGUAGE_TYPE','0000000000', '언어타입',  'Language', 'LANGUAGE_TYPE_0000000000',  '000',  'Y','Y','0',sysdate,'','');
-insert into sys_common_code values('LANGUAGE_TYPE','en',         '영어',      'English',  'LANGUAGE_TYPE_EN',          '001',   'Y','Y','0',sysdate,'','');
-insert into sys_common_code values('LANGUAGE_TYPE','ko',         '한국어',    'Korean',   'LANGUAGE_TYPE_KO',          '002',   'Y','Y','0',sysdate,'','');
+insert into sys_common_code values('BOARD_TYPE', '0000000000', 'Board Type',      '게시판구분', 'Board Type',      'BOARD_TYPE_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('BOARD_TYPE', 'FREE',       'Free Board',      '자유게시판', 'Free Board',      'BOARD_TYPE_FREE',       '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('BOARD_TYPE', 'NOTICE',     'Notice Board',    '공지사항',   'Notice Board',    'BOARD_TYPE_NOTICE',     '002', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('BOARD_TYPE', 'REPOSITORY', 'Data Repository', '자료실',     'Data Repository', 'BOARD_TYPE_REPOSITORY', '003', 'Y', 'Y', '0', sysdate, null, null);
 
-insert into sys_common_code values('BOARD_TYPE','0000000000', '게시판구분',  'Board Type',     'BOARD_TYPE_0000000000',  '000','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('BOARD_TYPE','FREE',       '자유게시판',  'Free Board',     'BOARD_TYPE_FREE',        '001','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('BOARD_TYPE','NOTICE',     '공지사항',    'Notice Board',   'BOARD_TYPE_NOTICE',      '002','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('BOARD_TYPE','REPOSITORY', '자료실',      'Data Repository','BOARD_TYPE_REPOSITORY',  '003','Y','Y','0',sysdate,'','');
+insert into sys_common_code values('BOARD_SEARCH_TYPE', '0000000000', 'Board Search Criteria', '게시판검색형태', 'Board Search Criteria', 'BOARD_SEARCH_TYPE_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('BOARD_SEARCH_TYPE', 'SUBJECT',    'Subject',               '제목',            'Subject',               'BOARD_SEARCH_TYPE_SUBJECT',    '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('BOARD_SEARCH_TYPE', 'CONTENTS',   'Contents',              '내용',            'Contents',              'BOARD_SEARCH_TYPE_CONTENTS',   '002', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('BOARD_SEARCH_TYPE', 'WRITER',     'Writer',                '작성자',          'Writer',                'BOARD_SEARCH_TYPE_WRITER',     '003', 'Y', 'Y', '0', sysdate, null, null);
 
-insert into sys_common_code values('BOARD_SEARCH_TYPE', '0000000000','게시판검색형태', 'Board Search Criteria', 'BOARD_SEARCH_TYPE_0000000000',  '000','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('BOARD_SEARCH_TYPE', 'SUBJECT',   '제목',            'Subject',               'BOARD_SEARCH_TYPE_SUBJECT',     '001','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('BOARD_SEARCH_TYPE', 'CONTENTS',  '내용',            'Contents',              'BOARD_SEARCH_TYPE_CONTENTS',    '002','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('BOARD_SEARCH_TYPE', 'WRITER',    '작성자',          'Writer',                'BOARD_SEARCH_TYPE_WRITER',      '003','Y','Y','0',sysdate,'','');
+insert into sys_common_code values('USER_THEME_TYPE', '0000000000', 'User Theme Type', '사용자스킨구분', 'User Theme Type', 'USER_THEME_TYPE_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME000',   'Bootstrap',       'Bootstrap',       'Bootstrap',       'USER_THEME_TYPE_000',        '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME001',   'Smoothness',      'Smoothness',      'Smoothness',      'USER_THEME_TYPE_001',        '002', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME002',   'Redmond',         'Redmond',         'Redmond',         'USER_THEME_TYPE_002',        '003', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME003',   'Lightness',       'Lightness',       'Lightness',       'USER_THEME_TYPE_003',        '004', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME004',   'Start',           'Start',           'Start',           'USER_THEME_TYPE_004',        '005', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME005',   'Sunny',           'Sunny',           'Sunny',           'USER_THEME_TYPE_005',        '006', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME006',   'Flick',           'Flick',           'Flick',           'USER_THEME_TYPE_006',        '007', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME007',   'Flick',           'Pepper Grinder',  'Pepper Grinder',  'USER_THEME_TYPE_007',        '008', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME008',   'Cupertino',       'Cupertino',       'Cupertino',       'USER_THEME_TYPE_008',        '009', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME009',   'Cupertino',       'South Street',    'South Street',    'USER_THEME_TYPE_009',        '010', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_THEME_TYPE', 'THEME010',   'Humanity',        'Humanity',        'Humanity',        'USER_THEME_TYPE_010',        '011', 'Y', 'Y', '0', sysdate, null, null);
 
-insert into sys_common_code values('USER_THEME_TYPE','0000000000',   '사용자스킨구분', 'User Theme Type','USER_THEME_TYPE_0000000000',  '000','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme000',     'Bootstrap',       'Bootstrap',      'USER_THEME_TYPE_000',         '001','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme001',     'Smoothness',      'Smoothness',     'USER_THEME_TYPE_001',         '002','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme002',     'Redmond',         'Redmond',        'USER_THEME_TYPE_002',         '003','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme003',     'Lightness',       'Lightness',      'USER_THEME_TYPE_003',         '004','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme004',     'Start',           'Start',          'USER_THEME_TYPE_004',         '005','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme005',     'Sunny',           'Sunny',          'USER_THEME_TYPE_005',         '006','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme006',     'Flick',           'Flick',          'USER_THEME_TYPE_006',         '007','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme007',     'Pepper Grinder',  'Pepper Grinder', 'USER_THEME_TYPE_007',         '008','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme008',     'Cupertino',       'Cupertino',      'USER_THEME_TYPE_008',         '009','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme009',     'South Street',    'South Street',   'USER_THEME_TYPE_009',         '010','Y','Y','0',sysdate,'','');
-insert into sys_common_code values('USER_THEME_TYPE','theme010',     'Humanity',        'Humanity',       'USER_THEME_TYPE_010',         '011','Y','Y','0',sysdate,'','');
+-- From PERCI
+insert into sys_common_code
+select lookup_type as code_type,
+       '0000000000' as common_code,
+       initcap(replace(lookup_type, '_', ' ')) as code_meaning,
+       initcap(replace(lookup_type, '_', ' ')) as description_ko,
+       initcap(replace(lookup_type, '_', ' ')) as description_en,
+       lookup_type||'_'||'0000000000' as program_constants,
+       '000' as sort_order,
+       'Y' as is_active,
+       'N' as is_default,
+       '0' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from sys_common_lookups@perci
+union
+select lookup_type as code_type,
+       lookup_code as common_code,
+       meaning as description_ko,
+       description as description_ko,
+       description as description_en,
+       lookup_type||'_'||lookup_code as program_constants,
+       lpad(to_char(row_number() over (partition by lookup_type order by lookup_type, lookup_code)), 3, '0') as sort_order,
+       'Y' as is_active,
+       'N' as is_default,
+       '0' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from sys_common_lookups@perci
+ order by code_type,
+       common_code
+;
 
 /**
  * Category    : SYS
