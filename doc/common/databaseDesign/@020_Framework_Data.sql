@@ -1,27 +1,4 @@
 /**
- * Table Name  : Domain Dictionary
- * Description : Database column data types
- */
-delete zebra_domain_dictionary;
-
-insert into zebra_domain_dictionary values('1',    'id',                   'id',                   'VARCHAR2',  null,  null,  50,    'uid, id',                           '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('2',    'password',             'password',             'VARCHAR2',  null,  null,  30,    'password',                          '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('3',    'common_code',          'common_code',          'VARCHAR2',  null,  null,  50,    'common_code.common_code',           '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('4',    'normal_name',          'name',                 'VARCHAR2',  null,  null,  50,    'person name, user name, org name',  '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('5',    'file_name',            'file_name',            'VARCHAR2',  null,  null,  1000,  'file name, image/icon name',        '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('6',    'menu_name',            'menu_name',            'VARCHAR2',  null,  null,  500,   'menu name',                         '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('7',    'email',                'email',                'VARCHAR2',  null,  null,  100,   'email',                             '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('8',    'ip_address',           'ip_address',           'VARCHAR2',  null,  null,  50,    'ip_address (considering ipv6)',     '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('9',    'size',                 'size',                 'NUMBER',    24,    2,     24,    'size',                              '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('10',   'quantity',             'qty',                  'NUMBER',    24,    2,     24,    'quantity',                          '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('11',   'file_path',            'file_path',            'VARCHAR2',  null,  null,  2000,  'file/directory path',               '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('12',   'description_short',    'description',          'VARCHAR2',  null,  null,  1000,  'short description',                 '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('13',   'description_normal',   'description',          'VARCHAR2',  null,  null,  2000,  'normal description',                '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('14',   'file_type',            'file_type',            'VARCHAR2',  null,  null,  300,   'file type',                         '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('15',   'constants',            'constants',            'VARCHAR2',  null,  null,  100,   'constants (common code constants)', '0',  sysdate,  '',  '');
-
-
-/**
  * Table Name  : 공통코드
  * Description : 공통코드정보
  */
@@ -96,6 +73,30 @@ insert into zebra_common_code values('DOMAIN_DATA_SCALE', '5',          '5',    
 insert into zebra_common_code values('SIMPLE_YN','0000000000',     '단순YN',  'Simple YN',    'SIMPLE_YN_0000000000',  '000',   'Y','Y','0',sysdate,'','');
 insert into zebra_common_code values('SIMPLE_YN','Y',              '예',      'Yes',          'SIMPLE_YN_Y',           '001',   'Y','Y','0',sysdate,'','');
 insert into zebra_common_code values('SIMPLE_YN','N',              '아니오',  'No',           'SIMPLE_YN_N',           '002',   'Y','Y','0',sysdate,'','');
+
+
+/**
+ * Table Name  : Domain Dictionary
+ * Description : Database column data types
+ */
+delete zebra_domain_dictionary;
+
+insert into zebra_domain_dictionary values('1',    'id',                   'id',                   'VARCHAR2',  null,  null,  50,    'uid, id',                           '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('2',    'password',             'password',             'VARCHAR2',  null,  null,  30,    'password',                          '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('3',    'common_code',          'common_code',          'VARCHAR2',  null,  null,  30,    '            common_code',           '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('4',    'normal_name',          'name',                 'VARCHAR2',  null,  null,  50,    'person name, user name, org name',  '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('5',    'file_name',            'file_name',            'VARCHAR2',  null,  null,  1000,  'file name, image/icon name',        '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('6',    'menu_name',            'menu_name',            'VARCHAR2',  null,  null,  500,   'menu name',                         '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('7',    'email',                'email',                'VARCHAR2',  null,  null,  100,   'email',                             '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('8',    'ip_address',           'ip_address',           'VARCHAR2',  null,  null,  50,    'ip_address (considering ipv6)',     '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('9',    'size',                 'size',                 'NUMBER',    24,    2,     24,    'size',                              '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('10',   'quantity',             'qty',                  'NUMBER',    24,    2,     24,    'quantity',                          '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('11',   'file_path',            'file_path',            'VARCHAR2',  null,  null,  2000,  'file/directory path',               '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('12',   'description_short',    'description',          'VARCHAR2',  null,  null,  1000,  'short description',                 '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('13',   'description_normal',   'description',          'VARCHAR2',  null,  null,  2000,  'normal description',                '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('14',   'file_type',            'file_type',            'VARCHAR2',  null,  null,  300,   'file type',                         '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('15',   'constants',            'constants',            'VARCHAR2',  null,  null,  100,   'constants (common code constants)', '0',  sysdate,  '',  '');
+
 
 /**
  * Table Name   : 게시판

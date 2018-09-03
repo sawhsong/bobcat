@@ -41,6 +41,10 @@ insert into sys_common_code values('USER_THEME_TYPE', 'THEME008',   'Cupertino',
 insert into sys_common_code values('USER_THEME_TYPE', 'THEME009',   'Cupertino',       'South Street',    'South Street',    'USER_THEME_TYPE_009',        '010', 'Y', 'Y', '0', sysdate, null, null);
 insert into sys_common_code values('USER_THEME_TYPE', 'THEME010',   'Humanity',        'Humanity',        'Humanity',        'USER_THEME_TYPE_010',        '011', 'Y', 'Y', '0', sysdate, null, null);
 
+insert into sys_common_code values('USER_TYPE', '0000000000', 'User Type',     'User Type',     'User Type',     'USER_TYPE_0000000000',    '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_TYPE', 'INTERNAL',   'Internal User', 'Internal User', 'Internal User', 'USER_TYPE_TYPE_INTERNAL', '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_TYPE', 'EXTERNAL',   'External User', 'External User', 'External User', 'USER_TYPE_TYPE_EXTERNAL', '002', 'Y', 'Y', '0', sysdate, null, null);
+
 -- From PERCI
 insert into sys_common_code
 select lookup_type as code_type,
@@ -57,6 +61,8 @@ select lookup_type as code_type,
        null as update_user_id,
        null as update_date
   from sys_common_lookups@perci
+ where enabled_flag = 'Y'
+   and lookup_type not in ('ORG_RELATIONSHIP', 'EXTENSION_CHANGES') -- Duplicated codes
 union
 select lookup_type as code_type,
        lookup_code as common_code,
@@ -72,7 +78,52 @@ select lookup_type as code_type,
        null as update_user_id,
        null as update_date
   from sys_common_lookups@perci
+ where enabled_flag = 'Y'
+   and lookup_type not in ('ORG_RELATIONSHIP', 'EXTENSION_CHANGES') -- Duplicated codes
  order by code_type,
+       sort_order,
+       common_code
+;
+
+-- Insert Duplicated data from PERCI
+insert into sys_common_code
+select distinct lookup_type as code_type,
+       '0000000000' as common_code,
+       initcap(replace(lookup_type, '_', ' ')) as code_meaning,
+       initcap(replace(lookup_type, '_', ' ')) as description_ko,
+       initcap(replace(lookup_type, '_', ' ')) as description_en,
+       lookup_type||'_'||'0000000000' as program_constants,
+       '000' as sort_order,
+       'Y' as is_active,
+       'N' as is_default,
+       '0' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from sys_common_lookups@perci
+ where enabled_flag = 'Y'
+   and lookup_type in ('ORG_RELATIONSHIP', 'EXTENSION_CHANGES')
+   and meaning not in ('EB Customer', 'EMA Prospect')
+union
+select distinct lookup_type as code_type,
+       lookup_code as common_code,
+       meaning as description_ko,
+       description as description_ko,
+       description as description_en,
+       lookup_type||'_'||lookup_code as program_constants,
+       lpad(to_char(row_number() over (partition by lookup_type order by lookup_type, lookup_code)), 3, '0') as sort_order,
+       'Y' as is_active,
+       'N' as is_default,
+       '0' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from sys_common_lookups@perci
+ where enabled_flag = 'Y'
+   and lookup_type in ('ORG_RELATIONSHIP', 'EXTENSION_CHANGES')
+   and meaning not in ('EB Customer', 'EMA Prospect')
+ order by code_type,
+       sort_order,
        common_code
 ;
 
@@ -83,6 +134,29 @@ select lookup_type as code_type,
  * Description : Use Excel file to initialise data
  */
 delete sys_menu;
+-- PERCI Menu
+/*
+ select connect_by_root sequence_number||'/'||sub_menu_id as my_root,
+        substr(sys_connect_by_path(sequence_number||'/'||sub_menu_id, '^'), 2) as connect_path,
+        level as my_level,
+        connect_by_isleaf as is_leaf,
+        menu_id,
+        sub_menu_id,
+        sequence_number,
+        prompt,
+        (select jsp_page
+           from sys_user_function@perci
+          where function_id = smd.function_id
+        ) jsp_link
+   from sys_menu_details@perci smd
+connect by prior sub_menu_id = menu_id
+  start with menu_id = (select menu_id
+                          from sys_menus@perci
+                         where user_menu_name = 'Entity_Responsibilities'
+                       )
+ order siblings by sequence_number
+;
+*/
 
 
 /**
@@ -134,6 +208,17 @@ insert into sys_menu_auth_link (
 	       sys_menu
 	 where sys_auth_group.group_id = '0'
 )
+;
+
+
+/**
+ * Category    : SYS
+ * Table ID    : SYS_COUNTRY_CURRENCY
+ * Table Name  : Country & Currency code
+ * Description : 
+ */
+update sys_country_currency
+   set country_name = initcap(country_name)
 ;
 
 

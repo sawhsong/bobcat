@@ -1,4 +1,11 @@
 /**
+ * DB Design File Naming Conventions
+ * 1st number : Subsystem sequence(0:Framework, 1:Project SYS ...)
+ * 2nd number : Definition of Table or Data(1:Table, 2:Data ...)
+ * 3rd number : Sequence
+ */
+
+/**
  * User
  */
 -- alpaca
