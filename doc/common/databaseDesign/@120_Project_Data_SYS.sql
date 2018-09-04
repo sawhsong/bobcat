@@ -262,7 +262,7 @@ insert into sys_menu_auth_link (
  * Category    : SYS
  * Table ID    : SYS_COUNTRY_CURRENCY
  * Table Name  : Country & Currency code
- * Description : Use Excel file to initialise data (@123_Project_Data_SYS_COUNTRY_CURRENCY.xlsx)
+ * Description : Use Excel file to initialise data (@122_Project_Data_SYS_COUNTRY_CURRENCY.xlsx)
  */
 update sys_country_currency
    set country_name = initcap(country_name)

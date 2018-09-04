@@ -246,7 +246,7 @@ comment on column sys_menu_auth_link.update_date     is 'Update Date';
  * Category    : SYS
  * Table ID    : SYS_COUNTRY_CURRENCY
  * Table Name  : Country and Currency Info
- * Description : Use Excel file to initialise data (@123_Project_Data_SYS_COUNTRY_CURRENCY.xlsx)
+ * Description : Use Excel file to initialise data (@122_Project_Data_SYS_COUNTRY_CURRENCY.xlsx)
  */
 drop table sys_country_currency cascade constraints;
 purge recyclebin;
