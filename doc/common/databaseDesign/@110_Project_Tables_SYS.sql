@@ -48,7 +48,7 @@ comment on column sys_common_code.update_date       is 'Update Date';
  * Category    : SYS
  * Table ID    : SYS_MENU
  * Table Name  : Menu Info
- * Description : Use Excel file to initialise data 
+ * Description : Use Excel file to initialise data (@121_Project_Data_SYS_MENU.xlsx)
  */
 drop table sys_menu cascade constraints;
 purge recyclebin;
@@ -103,7 +103,7 @@ create table sys_user (
     user_name                       varchar2(50)                                        not null,   -- User name
     login_id                        varchar2(30)                                        not null,   -- Login ID
     login_password                  varchar2(30)                                        not null,   -- Login password
-    org_id                          varchar2(30)                                        not null,   -- Organisation UID
+    person_id                       varchar2(30)                                        not null,   -- Person UID ([PERCI.HP_PERSON_D.PERSON_ID])
     auth_group_id                   varchar2(30)                default 'Z'             not null,   -- Authority group code for menu access ([sys_auth_group.auth_id], Default : Z)
     language                        varchar2(30)                                        not null,   -- Language ([sys_common_code.language_type])
     theme_type                      varchar2(30)                                        not null,   -- Theme ID ([sys_common_code.user_theme_type])
@@ -112,8 +112,22 @@ create table sys_user (
     max_row_per_page                number(5)                                           not null,   -- Number of rows to display on a page (config.properties - view.data.maxRowsPerPage)
     page_num_per_page               number(5)                                           not null,   -- Number of pages to display on a page (config.properties - view.data.pageNumsPerPage)
     user_status                     varchar2(30)                                        not null,   -- User status ([sys_common_code.user_status])
-    photo_path                      varchar2(2000),                                                 -- User photo path
+    photo_path                      varchar2(1000),                                                 -- User photo path
     is_active                       varchar2(1)                                         not null,   -- Is active ?
+    description                     varchar2(1000),                                                 -- From PERCI(Description for the User)
+    prop_to_portal                  varchar2(3),                                                    -- From PERCI(For What?)
+    pin                             varchar2(30),                                                   -- From PERCI(For What?)
+    disabled_date                   date,                                                           -- From PERCI(For What?)
+    security_question_1             varchar2(60),                                                   -- From PERCI(For What? - sys_common_code.PORTAL_SECURITY_QUESTIONS)
+    security_question_answer_1      varchar2(500),                                                  -- From PERCI()
+    security_question_2             varchar2(60),                                                   -- From PERCI(For What? - sys_common_code.PORTAL_SECURITY_QUESTIONS)
+    security_question_answer_2      varchar2(500),                                                  -- From PERCI()
+    portal_skin                     varchar2(60),                                                   -- From PERCI(sys_common_code.PORTAL_SKIN)
+    portal_security_role            varchar2(60),                                                   -- From PERCI(sys_common_code.PORTAL_SECURITY_GROUP)
+    reset_password                  varchar2(30),                                                   -- From PERCI(For What?)
+    reset_term_condition            varchar2(30),                                                   -- From PERCI(For What?)
+    is_portal_user                  varchar2(30),                                                   -- From PERCI(For What?)
+    portal_org_profile_id           varchar2(30),                                                   -- From PERCI(For What?)
     insert_user_id                  varchar2(30),                                                   -- Insert User UID
     insert_date                     date                        default sysdate,                    -- Insert Date
     update_user_id                  varchar2(30),                                                   -- Update User UID
@@ -125,26 +139,40 @@ create table sys_user (
 )
 pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
-comment on table  sys_user                   is 'User Info';
-comment on column sys_user.user_id           is 'User UID (PK)';
-comment on column sys_user.user_name         is 'User name';
-comment on column sys_user.login_id          is 'Login ID';
-comment on column sys_user.login_password    is 'Login password';
-comment on column sys_user.org_id            is 'Organisation UID';
-comment on column sys_user.auth_group_id     is 'Authority group code for menu access ([sys_auth_group.auth_id], Default : Z)';
-comment on column sys_user.language          is 'Language ([sys_common_code.language_type])';
-comment on column sys_user.theme_type        is 'Theme ID ([sys_common_code.user_theme_type])';
-comment on column sys_user.user_type         is 'User type ([sys_common_code.user_type])';
-comment on column sys_user.email             is 'Email';
-comment on column sys_user.max_row_per_page  is 'Number of rows to display on a page (config.properties - view.data.maxRowsPerPage)';
-comment on column sys_user.page_num_per_page is 'Number of pages to display on a page (config.properties - view.data.pageNumsPerPage)';
-comment on column sys_user.user_status       is 'User status ([sys_common_code.user_status])';
-comment on column sys_user.photo_path        is 'User photo path';
-comment on column sys_user.is_active         is 'Is active?';
-comment on column sys_user.insert_user_id    is 'Insert User UID';
-comment on column sys_user.insert_date       is 'Insert Date';
-comment on column sys_user.update_user_id    is 'Update User UID';
-comment on column sys_user.update_date       is 'Update Date';
+comment on table  sys_user                            is 'User Info';
+comment on column sys_user.user_id                    is 'User UID (PK)';
+comment on column sys_user.user_name                  is 'User name';
+comment on column sys_user.login_id                   is 'Login ID';
+comment on column sys_user.login_password             is 'Login password';
+comment on column sys_user.person_id                  is 'Person UID ([PERCI.HP_PERSON_D.PERSON_ID])';
+comment on column sys_user.auth_group_id              is 'Authority group code for menu access ([sys_auth_group.auth_id], Default : Z)';
+comment on column sys_user.language                   is 'Language ([sys_common_code.language_type])';
+comment on column sys_user.theme_type                 is 'Theme ID ([sys_common_code.user_theme_type])';
+comment on column sys_user.user_type                  is 'User type ([sys_common_code.user_type])';
+comment on column sys_user.email                      is 'Email';
+comment on column sys_user.max_row_per_page           is 'Number of rows to display on a page (config.properties - view.data.maxRowsPerPage)';
+comment on column sys_user.page_num_per_page          is 'Number of pages to display on a page (config.properties - view.data.pageNumsPerPage)';
+comment on column sys_user.user_status                is 'User status ([sys_common_code.user_status])';
+comment on column sys_user.photo_path                 is 'User photo path';
+comment on column sys_user.is_active                  is 'Is active?';
+comment on column sys_user.description                is 'From PERCI(Description for the User)';
+comment on column sys_user.prop_to_portal             is 'From PERCI(For What?)';
+comment on column sys_user.pin                        is 'From PERCI(For What?)';
+comment on column sys_user.disabled_date              is 'From PERCI(For What?)';
+comment on column sys_user.security_question_1        is 'From PERCI(For What? - sys_common_code.PORTAL_SECURITY_QUESTIONS)';
+comment on column sys_user.security_question_answer_1 is 'From PERCI()';
+comment on column sys_user.security_question_2        is 'From PERCI(For What? - sys_common_code.PORTAL_SECURITY_QUESTIONS)';
+comment on column sys_user.security_question_answer_2 is 'From PERCI()';
+comment on column sys_user.portal_skin                is 'From PERCI(sys_common_code.PORTAL_SKIN)';
+comment on column sys_user.portal_security_role       is 'From PERCI(sys_common_code.PORTAL_SECURITY_GROUP)';
+comment on column sys_user.reset_password             is 'From PERCI(For What?)';
+comment on column sys_user.reset_term_condition       is 'From PERCI(For What?)';
+comment on column sys_user.is_portal_user             is 'From PERCI(For What?)';
+comment on column sys_user.portal_org_profile_id      is 'From PERCI(For What?)';
+comment on column sys_user.insert_user_id             is 'Insert User UID';
+comment on column sys_user.insert_date                is 'Insert Date';
+comment on column sys_user.update_user_id             is 'Update User UID';
+comment on column sys_user.update_date                is 'Update Date';
 
 
 /**
@@ -218,7 +246,7 @@ comment on column sys_menu_auth_link.update_date     is 'Update Date';
  * Category    : SYS
  * Table ID    : SYS_COUNTRY_CURRENCY
  * Table Name  : Country and Currency Info
- * Description : 
+ * Description : Use Excel file to initialise data (@123_Project_Data_SYS_COUNTRY_CURRENCY.xlsx)
  */
 drop table sys_country_currency cascade constraints;
 purge recyclebin;
