@@ -47,8 +47,6 @@ public class SysUser extends BaseDto implements Serializable {
 	private String INSERT_DATE;
 	private String insertUserId;
 	private String INSERT_USER_ID;
-	private String orgId;
-	private String ORG_ID;
 	private String photoPath;
 	private String PHOTO_PATH;
 	private Date updateDate;
@@ -229,15 +227,6 @@ public class SysUser extends BaseDto implements Serializable {
 		setValueFromAccessor("INSERT_USER_ID", insertUserId);
 	}
 
-	public String getOrgId() {
-		return orgId;
-	}
-
-	public void setOrgId(String orgId) throws Exception {
-		this.orgId = orgId;
-		setValueFromAccessor("ORG_ID", orgId);
-	}
-
 	public String getPhotoPath() {
 		return photoPath;
 	}
@@ -409,7 +398,6 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "email : "+email+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
-		str += "orgId : "+orgId+"\n";
 		str += "photoPath : "+photoPath+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
@@ -440,7 +428,6 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "<column name=\"email\" value=\""+email+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
-		str += "<column name=\"orgId\" value=\""+orgId+"\">";
 		str += "<column name=\"photoPath\" value=\""+photoPath+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
@@ -471,7 +458,6 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "\"email\":\""+email+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
-		str += "\"orgId\":\""+orgId+"\", ";
 		str += "\"photoPath\":\""+photoPath+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";

@@ -135,7 +135,6 @@ public class Sba0204BizImpl extends BaseBiz implements Sba0204Biz {
 			sysUser.setUserName(requestDataSet.getValue("userName"));
 			sysUser.setLoginId(requestDataSet.getValue("loginId"));
 			sysUser.setLoginPassword(requestDataSet.getValue("password"));
-			sysUser.setOrgId(requestDataSet.getValue("orgId"));
 			sysUser.setAuthGroupId(requestDataSet.getValue("authGroup"));
 			sysUser.setLanguage(requestDataSet.getValue("language"));
 			sysUser.setThemeType(requestDataSet.getValue("themeType"));
@@ -189,7 +188,6 @@ public class Sba0204BizImpl extends BaseBiz implements Sba0204Biz {
 
 			sysUser.setUserName(requestDataSet.getValue("userName"));
 			sysUser.setLoginId(requestDataSet.getValue("loginId"));
-			sysUser.setOrgId(requestDataSet.getValue("orgId"));
 			sysUser.setAuthGroupId(requestDataSet.getValue("authGroup"));
 			sysUser.setLanguage(requestDataSet.getValue("language"));
 			sysUser.setThemeType(requestDataSet.getValue("themeType"));

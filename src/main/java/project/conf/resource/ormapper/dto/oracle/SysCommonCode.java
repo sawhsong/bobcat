@@ -21,8 +21,8 @@ public class SysCommonCode extends BaseDto implements Serializable {
 	private String CODE_TYPE;
 	private String commonCode;
 	private String COMMON_CODE;
-	private String codeCategory;
-	private String CODE_CATEGORY;
+	private String codeMeaning;
+	private String CODE_MEANING;
 	private String programConstants;
 	private String PROGRAM_CONSTANTS;
 	private String descriptionEn;
@@ -100,13 +100,13 @@ public class SysCommonCode extends BaseDto implements Serializable {
 		setValueFromAccessor("COMMON_CODE", commonCode);
 	}
 
-	public String getCodeCategory() {
-		return codeCategory;
+	public String getCodeMeaning() {
+		return codeMeaning;
 	}
 
-	public void setCodeCategory(String codeCategory) throws Exception {
-		this.codeCategory = codeCategory;
-		setValueFromAccessor("CODE_CATEGORY", codeCategory);
+	public void setCodeMeaning(String codeMeaning) throws Exception {
+		this.codeMeaning = codeMeaning;
+		setValueFromAccessor("CODE_CATEGORY", codeMeaning);
 	}
 
 	public String getProgramConstants() {
@@ -340,7 +340,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 
 		str += "codeType : "+codeType+"\n";
 		str += "commonCode : "+commonCode+"\n";
-		str += "codeCategory : "+codeCategory+"\n";
+		str += "codeMeaning : "+codeMeaning+"\n";
 		str += "programConstants : "+programConstants+"\n";
 		str += "descriptionEn : "+descriptionEn+"\n";
 		str += "descriptionKo : "+descriptionKo+"\n";
@@ -365,7 +365,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 
 		str += "<column name=\"codeType\" value=\""+codeType+"\">";
 		str += "<column name=\"commonCode\" value=\""+commonCode+"\">";
-		str += "<column name=\"codeCategory\" value=\""+codeCategory+"\">";
+		str += "<column name=\"codeMeaning\" value=\""+codeMeaning+"\">";
 		str += "<column name=\"programConstants\" value=\""+programConstants+"\">";
 		str += "<column name=\"descriptionEn\" value=\""+descriptionEn+"\">";
 		str += "<column name=\"descriptionKo\" value=\""+descriptionKo+"\">";
@@ -390,7 +390,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 
 		str += "\"codeType\":\""+codeType+"\", ";
 		str += "\"commonCode\":\""+commonCode+"\", ";
-		str += "\"codeCategory\":\""+codeCategory+"\", ";
+		str += "\"codeMeaning\":\""+codeMeaning+"\", ";
 		str += "\"programConstants\":\""+programConstants+"\", ";
 		str += "\"descriptionEn\":\""+descriptionEn+"\", ";
 		str += "\"descriptionKo\":\""+descriptionKo+"\", ";

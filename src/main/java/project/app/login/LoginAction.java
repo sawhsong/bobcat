@@ -44,7 +44,6 @@ public class LoginAction extends BaseAction {
 				session.setAttribute("UserId", sysUser.getUserId());
 				session.setAttribute("UserName", sysUser.getUserName());
 				session.setAttribute("LoginId", sysUser.getLoginId());
-				session.setAttribute("OrgId", sysUser.getOrgId());
 				session.setAttribute("langCode", sysUser.getLanguage());
 				session.setAttribute("themeId", sysUser.getThemeType());
 				session.setAttribute("maxRowsPerPage", CommonUtil.toString(sysUser.getMaxRowPerPage(), "###"));
@@ -146,7 +145,6 @@ public class LoginAction extends BaseAction {
 				session.setAttribute("UserIdForAdminTool", sysUserForAdminTool.getUserId());
 				session.setAttribute("UserNameForAdminTool", sysUserForAdminTool.getUserName());
 				session.setAttribute("LoginIdForAdminTool", sysUserForAdminTool.getLoginId());
-				session.setAttribute("OrgIdForAdminTool", sysUserForAdminTool.getOrgId());
 				session.setAttribute("SysUserForAdminTool", sysUserForAdminTool);
 				session.setAttribute("SysOrgForAdminTool", sysOrgForAdminTool);
 				session.setAttribute("OrgLegalNameForAdminTool", paramEntity.getObject("orgLegalNameForAdminTool"));

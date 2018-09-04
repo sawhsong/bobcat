@@ -20,7 +20,6 @@
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
-		<property name="orgId" column="ORG_ID" type="java.lang.String" length="30"/>
 		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="2000"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
@@ -43,7 +42,6 @@
 		       EMAIL,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
-		       ORG_ID,
 		       PHOTO_PATH,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
@@ -73,7 +71,6 @@
 		       EMAIL,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
-		       ORG_ID,
 		       PHOTO_PATH,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
@@ -94,7 +91,6 @@
 		       ${EMAIL},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
-		       ${ORG_ID},
 		       ${PHOTO_PATH},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
@@ -119,7 +115,6 @@
 		       EMAIL = ${EMAIL},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
-		       ORG_ID = ${ORG_ID},
 		       PHOTO_PATH = ${PHOTO_PATH},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}

@@ -104,7 +104,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			sysUser.setUserName(requestDataSet.getValue("userName"));
 			sysUser.setLoginId(requestDataSet.getValue("loginId"));
 			sysUser.setLoginPassword(requestDataSet.getValue("password"));
-			sysUser.setOrgId(null);
 			sysUser.setAuthGroupId("Z"); //SysAuthGroup.GroupId(Not Selected)
 			sysUser.setLanguage(ConfigUtil.getProperty("etc.default.language"));
 			sysUser.setThemeType(ConfigUtil.getProperty("view.theme.default"));
@@ -162,7 +161,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			paramEntity.setObject("defaultQuarterCode", sysFinancialPeriod.getQuarterCode());
 			paramEntity.setObject("defaultQuarterName", sysFinancialPeriod.getQuarterName());
 			paramEntity.setObject("sysUser", sysUser);
-			paramEntity.setObject("sysOrg", sysOrgDao.getOrgByOrgId(sysUser.getOrgId()));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I903", getMessage("I903", paramEntity));
@@ -252,7 +250,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 
 		try {
 			sysUser = sysUserDao.getUserByUserId(userId);
-			sysOrg = sysOrgDao.getOrgByOrgId(sysUser.getOrgId());
 
 			orgCategoryDesc = CommonCodeManager.getCodeDescription("ORG_CATEGORY", sysOrg.getOrgCategory());
 
@@ -267,7 +264,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			resultDataSet.setValue("user_id", sysUser.getUserId());
 			resultDataSet.setValue("user_name", sysUser.getUserName());
 			resultDataSet.setValue("login_id", sysUser.getLoginId());
-			resultDataSet.setValue("org_id", sysUser.getOrgId());
 			resultDataSet.setValue("org_name", sysOrg.getLegalName());
 			resultDataSet.setValue("org_category_desc", orgCategoryDesc);
 
