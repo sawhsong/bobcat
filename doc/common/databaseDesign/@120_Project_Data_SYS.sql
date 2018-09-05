@@ -45,6 +45,17 @@ insert into sys_common_code values('USER_TYPE', '0000000000', 'User Type',     '
 insert into sys_common_code values('USER_TYPE', 'INTERNAL',   'Internal User', 'Internal User', 'Internal User', 'USER_TYPE_TYPE_INTERNAL', '001', 'Y', 'Y', '0', sysdate, null, null);
 insert into sys_common_code values('USER_TYPE', 'EXTERNAL',   'External User', 'External User', 'External User', 'USER_TYPE_TYPE_EXTERNAL', '002', 'Y', 'Y', '0', sysdate, null, null);
 
+insert into sys_common_code values('USER_STATUS','0000000000', 'User type', 'User type', 'User type', 'USER_STATUS_0000000000', '000', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_STATUS','RR',         'Requested', 'Requested', 'Requested', 'USER_STATUS_RR',         '001', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_STATUS','NU',         'Normal',    'Normal',    'Normal',    'USER_STATUS_NU',         '002', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_STATUS','BU',         'Banned',    'Banned',    'Banned',    'USER_STATUS_BU',         '003', 'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('USER_STATUS','WU',         'Withdrawn', 'Withdrawn', 'Withdrawn', 'USER_STATUS_WU',         '004', 'Y', 'Y', '0', sysdate, null, null);
+
+insert into sys_common_code values('MENU_LEVEL','0000000000', 'Menu Level', 'Menu Level', 'Menu Level', 'MENU_LEVEL_0000000000',  '000',   'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('MENU_LEVEL','1',          'Level 1',    'Level 1',    'Level 1',    'MENU_LEVEL_1',           '001',   'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('MENU_LEVEL','2',          'Level 2',    'Level 2',    'Level 2',    'MENU_LEVEL_2',           '002',   'Y', 'Y', '0', sysdate, null, null);
+insert into sys_common_code values('MENU_LEVEL','3',          'Level 3',    'Level 3',    'Level 3',    'MENU_LEVEL_3',           '002',   'Y', 'Y', '0', sysdate, null, null);
+
 -- From PERCI
 insert into sys_common_code
 select lookup_type as code_type,
