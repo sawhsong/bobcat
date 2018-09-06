@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-    <!--Odd0202 - Organisation Input Data-->
-    <bean class="${name.package.project}.app.odd.odd0202.Odd0202Action" id="odd0202Action" name="odd0202Action"/>
-    <bean class="${name.package.project}.app.odd.odd0202.Odd0202BizImpl" id="odd0202Biz" name="odd0202Biz" parent="baseBiz"/>
-    <!--Odd0204 - Organisation Employee-->
-    <bean class="${name.package.project}.app.odd.odd0204.Odd0204Action" id="odd0204Action" name="odd0204Action"/>
-    <bean class="${name.package.project}.app.odd.odd0204.Odd0204BizImpl" id="odd0204Biz" name="odd0204Biz" parent="baseBiz"/>
-</beans>

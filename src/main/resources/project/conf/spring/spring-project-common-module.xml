@@ -23,25 +23,4 @@
 	<!--/* Common Lookup */-->
 	<bean id="commonLookupAction" name="commonLookupAction" class="${name.package.project}.common.module.commonlookup.CommonLookupAction"/>
 	<bean id="commonLookupBiz" name="commonLookupBiz" class="${name.package.project}.common.module.commonlookup.CommonLookupBizImpl" parent="baseBiz"/>
-
-	<!--/* Data Entry Summary for Admin Tool */-->
-	<bean id="entrySummaryAction" name="entrySummaryAction" class="${name.package.project}.common.module.admintoolentrysummary.EntrySummaryAction"/>
-	<bean id="entrySummaryBiz" name="entrySummaryBiz" class="${name.package.project}.common.module.admintoolentrysummary.EntrySummaryBizImpl" parent="baseBiz"/>
-
-	<!--/* Data Entry Types Supporter */-->
-	<bean id="entryTypeSupporterAction" name="entryTypeSupporterAction" class="${name.package.project}.common.module.entrytypesupporter.EntryTypeSupporterAction"/>
-	<bean id="entryTypeSupporterBiz" name="entryTypeSupporterBiz" class="${name.package.project}.common.module.entrytypesupporter.EntryTypeSupporterBizImpl" parent="baseBiz"/>
-
-	<!--/* DataHelper */-->
-	<bean id="dataHelper" name="dataHelper" class="${name.package.project}.common.module.datahelper.DataHelper" parent="baseBiz">
-		<property name="sysUserDao" ref="sysUserDao"/>
-		<property name="sysAuthGroupDao" ref="sysAuthGroupDao"/>
-		<property name="sysFinancialPeriodDao" ref="sysFinancialPeriodDao"/>
-		<property name="sysIncomeTypeDao" ref="sysIncomeTypeDao"/>
-		<property name="sysExpenseTypeDao" ref="sysExpenseTypeDao"/>
-		<property name="sysAssetTypeDao" ref="sysAssetTypeDao"/>
-		<property name="sysRepaymentTypeDao" ref="sysRepaymentTypeDao"/>
-		<property name="sysBorrowingTypeDao" ref="sysBorrowingTypeDao"/>
-		<property name="sysLendingTypeDao" ref="sysLendingTypeDao"/>
-	</bean>
 </beans>
