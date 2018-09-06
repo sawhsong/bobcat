@@ -245,7 +245,7 @@ $(function() {
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
@@ -286,7 +286,7 @@ $(function() {
 	<div class="divButtonAreaRight">
 		<ui:buttonGroup id="subButtonGroup">
 			<ui:button id="btnAdd" caption="button.com.add" iconClass="fa-plus"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <%/************************************************************************************************

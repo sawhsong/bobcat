@@ -411,7 +411,7 @@ $(function() {
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">

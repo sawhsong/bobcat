@@ -154,7 +154,7 @@ $(function() {
 			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save" status="<%=disableFlag%>"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>

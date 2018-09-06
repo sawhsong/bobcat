@@ -106,7 +106,7 @@ $(function() {
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>

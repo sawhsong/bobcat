@@ -154,7 +154,7 @@ $(function() {
 			<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">

@@ -169,7 +169,7 @@ $(function() {
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>

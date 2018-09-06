@@ -110,7 +110,7 @@ $(function() {
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>

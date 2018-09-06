@@ -214,7 +214,7 @@ $(function() {
 		<ui:tabList caption="fwk.uielement.tabEtc" iconClass="fa-code" iconPosition="left"/>
 		<ui:tabList caption="Disabled Tab" iconClass="fa-code" iconPosition="left" isClickable="false"/>
 		<ui:tabList caption="Disabled Tab" iconClass="fa-code" iconPosition="left" isActive="true" isClickable="false"/>
-	</tag:tab>
+	</ui:tab>
 </div>
 <div id="divButtonArea">
 	<div id="divButtonAreaLeft"></div>
@@ -454,7 +454,7 @@ $(function() {
 							<ui:button id="btnGroupTag3" caption="btnGroupTag3" type="btn-success" status="disabled" iconClass="fa-envelope-o"/>
 							<ui:button id="btnGroupTag4" caption="btnGroupTag4" type="warning" status="disabled"/>
 							<ui:button id="btnGroupTag5" caption="btnGroupTag5" type="danger" iconClass="fa-search" script="alert('btnGroupTag5');"/>
-						</tag:buttonGroup>
+						</ui:buttonGroup>
 					</div>
 				</div>
 			</div>

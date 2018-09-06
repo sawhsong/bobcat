@@ -164,7 +164,7 @@ $(function() {
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divLogo" class="logoImage">
-	<img id="imgLogo" src="<mc:cp key="imgIcon"/>/logoPerci.png" class="" style="width:100px;height:50px;"/>
+	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoPerci.png" style="width:100px;height:50px;"/>
 </div>
 <div id="divLoginPanel" class="loginPanel">
 	<div class="panel panel-default panelLogin">

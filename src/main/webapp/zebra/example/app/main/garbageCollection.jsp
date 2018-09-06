@@ -75,7 +75,7 @@ $(function() {
 			<ui:button id="btnRun" caption="fwk.garbageCollection.buttonRunCollector" iconClass="fa-recycle"/>
 			<ui:button id="btnReload" caption="button.com.reload" iconClass="fa-refresh"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
-		</tag:buttonGroup>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainerPopup">
