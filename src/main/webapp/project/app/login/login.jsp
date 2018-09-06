@@ -97,7 +97,7 @@ $(function() {
 					var result = commonJs.parseAjaxResult(data, textStatus, "json");
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						var dataSet = result.dataSet;
-						var actionString = "/index/dashboard.do";
+						var actionString = "/index/index.do";
 
 						commonJs.openDialog({
 							type:"information",

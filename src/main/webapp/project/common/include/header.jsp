@@ -7,7 +7,6 @@
 ************************************************************************************************/%>
 <%
 	SysUser sysUserHeaderPage = (SysUser)session.getAttribute("SysUser");
-	SysOrg sysOrgHeaderPage = (SysOrg)session.getAttribute("SysOrg");
 	String authGroupIdHeaderPage = sysUserHeaderPage.getAuthGroupId();
 	String userNameHeaderPage = sysUserHeaderPage.getUserName();
 	String userIdHeaderPage = sysUserHeaderPage.getUserId();
@@ -120,24 +119,6 @@ $(function() {
 		</div>
 		<div id="divGlobalMenuRight">
 			<div id="divGblMenuArea">
-<%
-				if (CommonUtil.isNotBlank(userIdForAdminToolHeaderPage)) {
-%>
-				<div id="divUsingUserAs" class="headerGblMenus" style="color:#D92E24;cursor:default;">
-					User Name As ${sessionScope.UserNameForAdminTool} / User Login ID As ${sessionScope.LoginIdForAdminTool} (${sessionScope.OrgIdForAdminTool} / ${sessionScope.OrgLegalNameForAdminTool} / ${sessionScope.OrgCategoryDescForAdminTool})
-				</div>
-				<div id="divUsingUserAsBreaker" class="divGblMenuBreak">&nbsp;</div>
-<%
-				} else {
-%>
-				<div id="divUsingUserAs" class="headerGblMenus" style="color:#D92E24;cursor:default;">
-				</div>
-<%
-				}
-%>
-				<div id="divLoginUserInfo" class="headerGblMenus" style="cursor:default;">
-					<%=sysOrgHeaderPage.getLegalName()%> (<%=CommonUtil.getFormatString(sysOrgHeaderPage.getAbn(), "?? ??? ??? ???")%>)
-				</div>
 <%
 				if (CommonUtil.equals(loginIdHeaderPage, "dustin")) {
 %>
