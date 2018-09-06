@@ -27,7 +27,7 @@ body {background:#FFFFFF;}
 .logoImage {margin:0px auto;width:100%;text-align:center;}
 .logoImage img {margin-top:5%;}
 .loginPanel {margin:0px auto;width:100%;text-align:center;}
-.panelLogin {margin-top:16px;display:inline-block;width:360px;border:1px solid #D1D1D1;box-shadow:0px 0px 10px rgba(0, 0, 0, .2);}
+.panelLogin {margin-top:10px;display:inline-block;width:360px;border:1px solid #D1D1D1;box-shadow:0px 0px 10px rgba(0, 0, 0, .2);}
 .panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;}
 .loginBoxtTitle {background:url(<tag:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
 .panel-body {padding:25px 25px 20px 25px;}
@@ -164,7 +164,7 @@ $(function() {
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divLogo" class="logoImage">
-	<img id="imgLogo" src="<tag:cp key="imgIcon"/>/logoHKAccount.png" class="" style="width:130px;height:24px;"/>
+	<img id="imgLogo" src="<tag:cp key="imgIcon"/>/logoPerci.png" class="" style="width:90px;height:45px;"/>
 </div>
 <div id="divLoginPanel" class="loginPanel">
 	<div class="panel panel-default panelLogin">

@@ -184,7 +184,7 @@ $(function() {
 				<c:set var="menuName" value="menuName_${sessionScope.langCode}" scope="page"/>
 				<c:set var="active" value="${(menu.value['menuId'] eq sessionScope.headerMenuId) ? 'Selected' : ''}" />
 				<div id="div${menu.value['menuId']}" class="headerMainMenus${active}" onclick="doMainMenu('${menu.value['menuId']}', '${menu.value[menuName]}', '${menu.value['menuUrl']}')">
-					<a style="background:url(<tag:cp key="imgThemeCom"/>/${menu.value['icon']}_<tag:cp key="hearMainMenuIconColor"/>.png) no-repeat 0px 50%;padding:4px 0px 4px 25px;">
+					<a style="background:url(<tag:cp key="imgThemeCom"/>/${menu.value['icon']}_<tag:cp key="headMainMenuIconColor"/>.png) no-repeat 0px 50%;padding:4px 0px 4px 25px;">
 						${menu.value[menuName]}
 					</a>
 				</div>

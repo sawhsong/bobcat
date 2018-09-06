@@ -31,7 +31,7 @@ public class ConfigProperty extends TaglibSupport {
 				rtnString = CommonUtil.replace(rtnString, "#PROJECT_NAME#", projectName);
 			}
 
-			if (CommonUtil.equalsIgnoreCase(getKey(), "hearMainMenuIconColor")) {
+			if (CommonUtil.equalsIgnoreCase(getKey(), "headMainMenuIconColor")) {
 				if (CommonUtil.equalsIgnoreCase(themeId, "theme001")) {
 					rtnString = "Black";
 				} else {

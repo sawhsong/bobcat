@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Copy Web Sources" default="1.project app" basedir=".">
+	<property file="copyWebSource.properties"/>
+
+	<target name="1.project app" description="Copy project app sources">
+		<copy todir="${target.project.app}">
+			<fileset dir="${src.project.app}"/>
+		</copy>
+	</target>
+
+	<target name="2.project common" description="Copy project common sources">
+		<copy todir="${target.project.common}">
+			<fileset dir="${src.project.common}"/>
+		</copy>
+	</target>
+
+	<target name="3.shared" description="Copy shared sources">
+		<copy todir="${target.shared}">
+			<fileset dir="${src.shared}"/>
+		</copy>
+	</target>
+
+	<target name="4.zebra app" description="Copy zebra app sources">
+		<copy todir="${target.zebra.app}">
+			<fileset dir="${src.zebra.app}"/>
+		</copy>
+	</target>
+
+	<target name="5.zebra common" description="Copy zebra common sources">
+		<copy todir="${target.zebra.common}">
+			<fileset dir="${src.zebra.common}"/>
+		</copy>
+	</target>
+</project>
