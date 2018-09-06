@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -56,12 +56,12 @@ $(function() {
 
 	$("#btnGenerate").click(function(event) {
 		if (commonJs.getCountChecked("chkSourceData") == 0) {
-			commonJs.warn("<tag:msg key="I902"/>");
+			commonJs.warn("<mc:msg key="I902"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q901"/>",
+			contents:"<mc:msg key="Q901"/>",
 			width:300,
 			height:150,
 			buttons:[{
@@ -114,7 +114,7 @@ $(function() {
 			}
 		} else {
 			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"3\"><tag:msg key="I001"/></td>";
+			html += "<td class=\"tdGridCt\" colspan=\"3\"><mc:msg key="I001"/></td>";
 			html += "</tr>";
 		}
 
@@ -163,7 +163,7 @@ $(function() {
 			}
 		} else {
 			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"2\"><tag:msg key="I001"/></td>";
+			html += "<td class=\"tdGridCt\" colspan=\"2\"><mc:msg key="I001"/></td>";
 			html += "</tr>";
 		}
 
@@ -220,12 +220,12 @@ $(function() {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
 								if (result.isSuccess == true || result.isSuccess == "true") {
-									popup.addContents("<tag:msg key="I802"/> : "+param.tableName);
+									popup.addContents("<mc:msg key="I802"/> : "+param.tableName);
 
 									if ((index+1) == commonJs.getCountChecked("chkSourceData")) {
 										commonJs.openDialog({
 											type:"information",
-											contents:"<tag:msg key="I801"/>",
+											contents:"<mc:msg key="I801"/>",
 											modal:true,
 											width:300,
 											buttons:[{
@@ -240,7 +240,7 @@ $(function() {
 										});
 									}
 								} else {
-									popup.addContents("<tag:msg key="E801"/> : "+param.tableName);
+									popup.addContents("<mc:msg key="E801"/> : "+param.tableName);
 								}
 							}
 						});
@@ -296,10 +296,10 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
-			<tag:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<tag:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -378,7 +378,7 @@ $(function() {
 			</thead>
 			<tbody id="tblSourceDataBody">
 				<tr>
-					<td class="tdGridCt" colspan="3"><tag:msg key="I002"/></td>
+					<td class="tdGridCt" colspan="3"><mc:msg key="I002"/></td>
 				</tr>
 			</tbody>
 		</table>

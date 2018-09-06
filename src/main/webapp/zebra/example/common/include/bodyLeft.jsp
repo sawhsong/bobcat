@@ -44,7 +44,7 @@ $(function() {
 <div id="divBodyLeftMenuPanel">
 <c:if test="${sessionScope.headerMenuId != '' && leftMenu.subMenu != null}">
 	<div id="divLeftMenuHeader">
-		<a style="background:url(<tag:cp key="imgThemeCom"/>/${leftMenu['icon']}_Black.png) no-repeat 0px 50%;padding:4px 0px 4px 25px;">${sessionScope.headerMenuName}</a>
+		<a style="background:url(<mc:cp key="imgThemeCom"/>/${leftMenu['icon']}_Black.png) no-repeat 0px 50%;padding:4px 0px 4px 25px;">${sessionScope.headerMenuName}</a>
 	</div>
 	<div id="divLeftMenu">
 	<c:set var="str" value="menuName_${sessionScope.langCode}" scope="page"></c:set>

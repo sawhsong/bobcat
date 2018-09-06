@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -61,7 +61,7 @@ $(function() {
 		});
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q001"/>",
+			contents:"<mc:msg key="Q001"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -230,16 +230,16 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><tag:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
+		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
 		<colgroup>
 			<col width="15%"/>
 			<col width="35%"/>
@@ -247,23 +247,23 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
 			<td class="tdEdit">
-				<input type="text" id="codeTypeMaster" name="codeTypeMaster" class="txtEn" style="text-transform:uppercase;" checkName="<tag:msg key="fwk.commoncode.header.codeType"/>" mandatory/>
+				<input type="text" id="codeTypeMaster" name="codeTypeMaster" class="txtEn" style="text-transform:uppercase;" checkName="<mc:msg key="fwk.commoncode.header.codeType"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
-				<tag:radio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
+				<ui:radio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit">
-				<input type="text" id="descriptionEnMaster" name="descriptionEnMaster" class="txtEn" checkName="<tag:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
+				<input type="text" id="descriptionEnMaster" name="descriptionEnMaster" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit">
-				<input type="text" id="descriptionKoMaster" name="descriptionKoMaster" class="txtEn" checkName="<tag:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
+				<input type="text" id="descriptionKoMaster" name="descriptionKoMaster" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
 			</td>
 		</tr>
 	</table>
@@ -272,8 +272,8 @@ $(function() {
 <div class="divButtonArea areaContainerPopup">
 	<div class="divButtonAreaLeft"></div>
 	<div class="divButtonAreaRight">
-		<tag:buttonGroup id="subButtonGroup">
-			<tag:button id="btnAdd" caption="button.com.add" iconClass="fa-plus"/>
+		<ui:buttonGroup id="subButtonGroup">
+			<ui:button id="btnAdd" caption="button.com.add" iconClass="fa-plus"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -310,29 +310,29 @@ $(function() {
 			<col width="10%"/>
 		</colgroup>
 		<tr>
-			<th id="thDragHander" class="thEditCt dragHandler" title="<tag:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.commonCode"/></th>
+			<th id="thDragHander" class="thEditCt dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 			<td class="tdEdit">
-				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<tag:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
+				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
-				<tag:radio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
+				<ui:radio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.sortOrder"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 			<td class="tdEdit">
-				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<tag:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
+				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
 			</td>
 		</tr>
 		<tr>
-			<th id="thDeleteButton" class="thEditCt deleteButton" title="<tag:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th id="thDeleteButton" class="thEditCt deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit">
-				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<tag:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
+				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<tag:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
+				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
 			</td>
 		</tr>
 	</table>

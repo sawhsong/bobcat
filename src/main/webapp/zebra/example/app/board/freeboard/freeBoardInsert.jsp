@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -32,7 +32,7 @@ $(function() {
 			$("#fmDefault").attr("enctype", "multipart/form-data");
 
 			commonJs.confirm({
-				contents:"<tag:msg key="Q001"/>",
+				contents:"<mc:msg key="Q001"/>",
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
@@ -102,9 +102,9 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<tag:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -128,32 +128,32 @@ $(function() {
 			<col width="37%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt mandatory"><tag:msg key="fwk.bbs.header.writerName"/></th>
+			<th class="thEditRt mandatory"><mc:msg key="fwk.bbs.header.writerName"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerName" name="writerName" class="txtEn" value="" checkName="<tag:msg key="fwk.bbs.header.writerName"/>" mandatory/>
+				<input type="text" id="writerName" name="writerName" class="txtEn" value="" checkName="<mc:msg key="fwk.bbs.header.writerName"/>" mandatory/>
 			</td>
-			<th class="thEditRt mandatory"><tag:msg key="fwk.bbs.header.writerEmail"/></th>
+			<th class="thEditRt mandatory"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerEmail" name="writerEmail" class="txtEn" value="" checkName="<tag:msg key="fwk.bbs.header.writerEmail"/>" option="email" mandatory/>
+				<input type="text" id="writerEmail" name="writerEmail" class="txtEn" value="" checkName="<mc:msg key="fwk.bbs.header.writerEmail"/>" option="email" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt mandatory"><tag:msg key="fwk.bbs.header.articleSubject"/></th>
+			<th class="thEditRt mandatory"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="articleSubject" name="articleSubject" class="txtEn" value="" checkName="<tag:msg key="fwk.bbs.header.articleSubject"/>" mandatory/>
+				<input type="text" id="articleSubject" name="articleSubject" class="txtEn" value="" checkName="<mc:msg key="fwk.bbs.header.articleSubject"/>" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.articleContents"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
 				<textarea id="articleContents" name="articleContents" class="txaEn"></textarea>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEditRt">
-				<tag:msg key="fwk.bbs.header.attachedFile"/><br/>
+				<mc:msg key="fwk.bbs.header.attachedFile"/><br/>
 				<div id="divButtonAreaRight">
-					<tag:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
+					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
 				</div>
 			</th>
 			<td class="tdEdit" colspan="3">

@@ -13,12 +13,12 @@
 			</colgroup>
 			<tr>
 				<td class="tdDefault">
-					(<tag:msg key="login.header.tel"/>)&nbsp;<tag:msg key="login.header.telValue"/>&nbsp;/
-					&nbsp;(<tag:msg key="login.header.fax"/>)&nbsp;<tag:msg key="login.header.faxValue"/>&nbsp;/
-					&nbsp;&nbsp;<a href="mailto:<tag:msg key="login.header.emailValue"/>" style="cursor:pointer;"><tag:msg key="login.header.emailValue"/></a>
+					(<mc:msg key="login.header.tel"/>)&nbsp;<mc:msg key="login.header.telValue"/>&nbsp;/
+					&nbsp;(<mc:msg key="login.header.fax"/>)&nbsp;<mc:msg key="login.header.faxValue"/>&nbsp;/
+					&nbsp;&nbsp;<a href="mailto:<mc:msg key="login.header.emailValue"/>" style="cursor:pointer;"><mc:msg key="login.header.emailValue"/></a>
 				</td>
 				<td class="tdDefaultCt">&copy; HKAccounting.com.au / <%=CommonUtil.getSysdate("yyyy")%></td>
-				<td class="tdDefaultRt"><tag:msg key="I990"/></td>
+				<td class="tdDefaultRt"><mc:msg key="I990"/></td>
 			</tr>
 		</table>
 	</div>

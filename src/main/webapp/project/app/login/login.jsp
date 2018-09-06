@@ -16,8 +16,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/favicon.png">
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -29,7 +29,7 @@ body {background:#FFFFFF;}
 .loginPanel {margin:0px auto;width:100%;text-align:center;}
 .panelLogin {margin-top:10px;display:inline-block;width:360px;border:1px solid #D1D1D1;box-shadow:0px 0px 10px rgba(0, 0, 0, .2);}
 .panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;}
-.loginBoxtTitle {background:url(<tag:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
+.loginBoxtTitle {background:url(<mc:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
 .panel-body {padding:25px 25px 20px 25px;}
 .addonIcon {width:16px;}
 .input-group {padding-bottom:4px;}
@@ -40,7 +40,7 @@ body {background:#FFFFFF;}
 
 .loginDescriptionArea {margin:0px auto;width:700px;text-align:center;color:#555555;font-size:12px;
 /* 	border-radius:6px;box-shadow:0px 10px 20px rgba(0, 0, 0, .2); */
-/* 	background:url(<tag:cp key="imgIcon"/>/loginBack.png) no-repeat 50% 0%; */
+/* 	background:url(<mc:cp key="imgIcon"/>/loginBack.png) no-repeat 50% 0%; */
 /* 	background-size:700px 500px; */
 /* 	background-blend-mode:overlay; */
 }
@@ -126,7 +126,7 @@ $(function() {
 					popupId:"ResetPassword",
 					url:"/login/resetPassword.do",
 					paramData:{},
-					header:"<tag:msg key="login.header.resetPassword"/>",
+					header:"<mc:msg key="login.header.resetPassword"/>",
 					blind:false,
 					draggable:false,
 					width:400,
@@ -137,7 +137,7 @@ $(function() {
 					popupId:"Request Register",
 					url:"/login/requestRegister.do",
 					paramData:{},
-					header:"<tag:msg key="login.header.requestRegister"/>",
+					header:"<mc:msg key="login.header.requestRegister"/>",
 					blind:false,
 					draggable:false,
 					width:400,
@@ -164,31 +164,31 @@ $(function() {
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divLogo" class="logoImage">
-	<img id="imgLogo" src="<tag:cp key="imgIcon"/>/logoPerci.png" class="" style="width:90px;height:45px;"/>
+	<img id="imgLogo" src="<mc:cp key="imgIcon"/>/logoPerci.png" class="" style="width:100px;height:50px;"/>
 </div>
 <div id="divLoginPanel" class="loginPanel">
 	<div class="panel panel-default panelLogin">
 		<div class="panel-heading">
-			<h3 class="panel-title loginBoxtTitle"><tag:msg key="login.header.main"/></h3>
+			<h3 class="panel-title loginBoxtTitle"><mc:msg key="login.header.main"/></h3>
 		</div>
 		<div class="panel-body">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-lg fa-user addonIcon"></i></div>
-				<input type="text" id="loginId" name="loginId" value="" class="form-control" placeholder="LOGIN ID" checkName="<tag:msg key="login.header.loginId"/>" mandatory/>
+				<input type="text" id="loginId" name="loginId" value="" class="form-control" placeholder="LOGIN ID" checkName="<mc:msg key="login.header.loginId"/>" mandatory/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-lg fa-lock addonIcon"></i></div>
-				<input type="password" id="password" name="password" value="" class="form-control" placeholder="PASSWORD" checkName="<tag:msg key="login.header.password"/>" mandatory/>
+				<input type="password" id="password" name="password" value="" class="form-control" placeholder="PASSWORD" checkName="<mc:msg key="login.header.password"/>" mandatory/>
 			</div>
 			<div class="buttonDiv">
-				<tag:button id="btnLogin" type="success" caption="login.button.login" iconClass="fa-key" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
+				<ui:button id="btnLogin" type="success" caption="login.button.login" iconClass="fa-key" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
 			</div>
 			<div class="additionalLink">
 				<div class="passwordLink">
-					<a id="aResetPassword" class="aNormal aEn"><tag:msg key="login.button.resetPassword"/></a>
+					<a id="aResetPassword" class="aNormal aEn"><mc:msg key="login.button.resetPassword"/></a>
 				</div>
 				<div class="registerLink">
-					<a id="aRequestRegister" class="aNormal aEn"><tag:msg key="login.button.requestRegister"/></a>
+					<a id="aRequestRegister" class="aNormal aEn"><mc:msg key="login.button.requestRegister"/></a>
 				</div>
 			</div>
 		</div>
@@ -197,7 +197,7 @@ $(function() {
 <div id="divDescriptionArea" class="loginDescriptionArea">
 	<div class="panel panel-default loginDescription">
 		<div class="panel-heading">
-			<h3 class="panel-title loginDescriptionTitle"><tag:msg key="login.message.descHeader"/></h3>
+			<h3 class="panel-title loginDescriptionTitle"><mc:msg key="login.message.descHeader"/></h3>
 		</div>
 		<div class="panel-body descContents">
 			<table class="tblDefault withPadding" style="width:100%;">
@@ -205,7 +205,7 @@ $(function() {
 					<col width="100%"/>
 				</colgroup>
 				<tr>
-					<td class="tdDefault"><tag:msg key="login.message.description"/></td>
+					<td class="tdDefault"><mc:msg key="login.message.description"/></td>
 				</tr>
 			</table>
 			<div class="verGap10"></div>
@@ -215,20 +215,20 @@ $(function() {
 					<col width="75%"/>
 				</colgroup>
 				<tr>
-					<th class="thDefault"><tag:msg key="login.header.accountant"/></th>
-					<td class="tdDefault"><tag:msg key="login.header.accountantName"/></td>
+					<th class="thDefault"><mc:msg key="login.header.accountant"/></th>
+					<td class="tdDefault"><mc:msg key="login.header.accountantName"/></td>
 				</tr>
 				<tr>
-					<th class="thDefault"><tag:msg key="login.header.email"/></th>
-					<td class="tdDefault"><tag:msg key="login.header.emailValue"/></td>
+					<th class="thDefault"><mc:msg key="login.header.email"/></th>
+					<td class="tdDefault"><mc:msg key="login.header.emailValue"/></td>
 				</tr>
 				<tr>
-					<th class="thDefault"><tag:msg key="login.header.tel"/></th>
-					<td class="tdDefault"><tag:msg key="login.header.telValue"/></td>
+					<th class="thDefault"><mc:msg key="login.header.tel"/></th>
+					<td class="tdDefault"><mc:msg key="login.header.telValue"/></td>
 				</tr>
 				<tr>
-					<th class="thDefault"><tag:msg key="login.header.fax"/></th>
-					<td class="tdDefault"><tag:msg key="login.header.faxValue"/></td>
+					<th class="thDefault"><mc:msg key="login.header.fax"/></th>
+					<td class="tdDefault"><mc:msg key="login.header.faxValue"/></td>
 				</tr>
 			</table>
 			<div class="verGap10"></div>
@@ -237,7 +237,7 @@ $(function() {
 					<col width="100%"/>
 				</colgroup>
 				<tr>
-					<td class="tdDefault"><tag:msg key="I990"/></td>
+					<td class="tdDefault"><mc:msg key="I990"/></td>
 				</tr>
 			</table>
 		</div>

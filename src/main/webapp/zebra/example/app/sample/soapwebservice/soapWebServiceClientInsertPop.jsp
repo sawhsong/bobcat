@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -33,7 +33,7 @@ $(function() {
 			$("#fmDefault").attr("enctype", "multipart/form-data");
 
 			commonJs.confirm({
-				contents:"<tag:msg key="Q001"/>",
+				contents:"<mc:msg key="Q001"/>",
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
@@ -93,9 +93,9 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -119,32 +119,32 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><tag:msg key="fwk.notice.header.writerName"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.notice.header.writerName"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerName" name="writerName" class="txtEn" value="<%=sysUser.getUserName()%>" checkName="<tag:msg key="fwk.notice.header.writerName"/>" mandatory/>
+				<input type="text" id="writerName" name="writerName" class="txtEn" value="<%=sysUser.getUserName()%>" checkName="<mc:msg key="fwk.notice.header.writerName"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.notice.header.writerEmail"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.notice.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerEmail" name="writerEmail" class="txtEn" value="<%=sysUser.getEmail()%>" checkName="<tag:msg key="fwk.notice.header.writerEmail"/>" option="email" mandatory/>
+				<input type="text" id="writerEmail" name="writerEmail" class="txtEn" value="<%=sysUser.getEmail()%>" checkName="<mc:msg key="fwk.notice.header.writerEmail"/>" option="email" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt mandatory"><tag:msg key="fwk.notice.header.articleSubject"/></th>
+			<th class="thEditRt mandatory"><mc:msg key="fwk.notice.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="articleSubject" name="articleSubject" class="txtEn" checkName="<tag:msg key="fwk.notice.header.articleSubject"/>" mandatory/>
+				<input type="text" id="articleSubject" name="articleSubject" class="txtEn" checkName="<mc:msg key="fwk.notice.header.articleSubject"/>" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.notice.header.articleContents"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
 				<textarea id="articleContents" name="articleContents" class="txaEn" style="height:224px;"></textarea>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEditRt">
-				<tag:msg key="fwk.notice.header.attachedFile"/><br/>
+				<mc:msg key="fwk.notice.header.attachedFile"/><br/>
 				<div id="divButtonAreaRight">
-					<tag:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
+					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
 				</div>
 			</th>
 			<td class="tdEdit" colspan="3">

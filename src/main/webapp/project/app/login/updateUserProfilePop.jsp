@@ -20,8 +20,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/favicon.png">
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -51,7 +51,7 @@ $(function() {
 		$("#fmDefault").attr("enctype", "multipart/form-data");
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q001"/>",
+			contents:"<mc:msg key="Q001"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -106,10 +106,10 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<tag:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -145,43 +145,43 @@ $(function() {
 			<col width="28%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.changePhoto"/></th>
+			<th class="thEdit"><mc:msg key="login.header.changePhoto"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="file" id="filePhotoPath" name="filePhotoPath" class="file" value="" style="width:540px;" checkName="<tag:msg key="login.header.changePhoto"/>"/>
+				<input type="file" id="filePhotoPath" name="filePhotoPath" class="file" value="" style="width:540px;" checkName="<mc:msg key="login.header.changePhoto"/>"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.userId"/></th>
+			<th class="thEdit"><mc:msg key="login.header.userId"/></th>
 			<td class="tdEdit">
 				<input type="text" id="userId" name="userId" value="<%=sysUser.getUserId()%>" class="txtDpl" readonly/>
 			</td>
-			<th class="thEdit"><tag:msg key="login.header.loginId"/></th>
+			<th class="thEdit"><mc:msg key="login.header.loginId"/></th>
 			<td class="tdEdit">
-				<input type="text" id="loginId" name="loginId" value="<%=sysUser.getLoginId()%>" class="txtEn" checkName="<tag:msg key="login.header.loginId"/>" mandatory/>
+				<input type="text" id="loginId" name="loginId" value="<%=sysUser.getLoginId()%>" class="txtEn" checkName="<mc:msg key="login.header.loginId"/>" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.userName"/></th>
+			<th class="thEdit"><mc:msg key="login.header.userName"/></th>
 			<td class="tdEdit">
-				<input type="text" id="userName" name="userName" value="<%=sysUser.getUserName()%>" class="txtEn" checkName="<tag:msg key="login.header.userName"/>" mandatory/>
+				<input type="text" id="userName" name="userName" value="<%=sysUser.getUserName()%>" class="txtEn" checkName="<mc:msg key="login.header.userName"/>" mandatory/>
 			</td>
-			<th class="thEdit"><tag:msg key="login.header.password"/></th>
+			<th class="thEdit"><mc:msg key="login.header.password"/></th>
 			<td class="tdEdit">
-				<input type="text" id="loginPassword" name="loginPassword" value="<%=sysUser.getLoginPassword()%>" class="txtEn" checkName="<tag:msg key="login.header.password"/>" mandatory/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit"><tag:msg key="login.header.language"/></th>
-			<td class="tdEdit">
-				<tag:select id="language" name="language" codeType="LANGUAGE_TYPE" options="mandatory" selectedValue="<%=sysUser.getLanguage()%>"/>
-			</td>
-			<th class="thEdit"><tag:msg key="login.header.themeType"/></th>
-			<td class="tdEdit">
-				<tag:select id="themeType" name="themeType" codeType="USER_THEME_TYPE" options="mandatory" selectedValue="<%=sysUser.getThemeType()%>"/>
+				<input type="text" id="loginPassword" name="loginPassword" value="<%=sysUser.getLoginPassword()%>" class="txtEn" checkName="<mc:msg key="login.header.password"/>" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.maxRowsPerPage"/></th>
+			<th class="thEdit"><mc:msg key="login.header.language"/></th>
+			<td class="tdEdit">
+				<ui:select id="language" name="language" codeType="LANGUAGE_TYPE" options="mandatory" selectedValue="<%=sysUser.getLanguage()%>"/>
+			</td>
+			<th class="thEdit"><mc:msg key="login.header.themeType"/></th>
+			<td class="tdEdit">
+				<ui:select id="themeType" name="themeType" codeType="USER_THEME_TYPE" options="mandatory" selectedValue="<%=sysUser.getThemeType()%>"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit"><mc:msg key="login.header.maxRowsPerPage"/></th>
 			<td class="tdEdit">
 				<select id="maxRowsPerPage" name="maxRowsPerPage" class="bootstrapSelect">
 <%
@@ -194,7 +194,7 @@ $(function() {
 %>
 				</select>
 			</td>
-			<th class="thEdit"><tag:msg key="login.header.pageNumsPerPage"/></th>
+			<th class="thEdit"><mc:msg key="login.header.pageNumsPerPage"/></th>
 			<td class="tdEdit">
 				<select id="pageNumsPerPage" name="pageNumsPerPage" class="bootstrapSelect">
 <%
@@ -209,9 +209,9 @@ $(function() {
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.email"/></th>
+			<th class="thEdit"><mc:msg key="login.header.email"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="email" name="email" value="<%=sysUser.getEmail()%>" class="txtEn" checkName="<tag:msg key="login.header.email"/>" mandatory option="email"/>
+				<input type="text" id="email" name="email" value="<%=sysUser.getEmail()%>" class="txtEn" checkName="<mc:msg key="login.header.email"/>" mandatory option="email"/>
 			</td>
 		</tr>
 	</table>

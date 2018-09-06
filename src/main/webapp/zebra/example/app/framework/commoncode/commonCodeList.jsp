@@ -22,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -102,13 +102,13 @@ $(function() {
 
 		if (param.mode == "Detail") {
 			url = "/zebra/framework/commoncode/getDetail.do";
-			header = "<tag:msg key="fwk.commoncode.header.popupHeaderDetail"/>";
+			header = "<mc:msg key="fwk.commoncode.header.popupHeaderDetail"/>";
 		} else if (param.mode == "New") {
 			url = "/zebra/framework/commoncode/getInsert.do";
-			header = "<tag:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
+			header = "<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
 		} else if (param.mode == "Edit") {
 			url = "/zebra/framework/commoncode/getUpdate.do";
-			header = "<tag:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
+			header = "<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
 			height = 754;
 		}
 
@@ -130,12 +130,12 @@ $(function() {
 
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn("<tag:msg key="I902"/>");
+			commonJs.warn("<mc:msg key="I902"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q002"/>",
+			contents:"<mc:msg key="Q002"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -215,12 +215,12 @@ $(function() {
 		$("[name=dataRange]").remove();
 
 		if (rowCnt <= 0) {
-			commonJs.warn("<tag:msg key="I001"/>");
+			commonJs.warn("<mc:msg key="I001"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q003"/>",
+			contents:"<mc:msg key="Q003"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -285,19 +285,19 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<tag:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
-			<tag:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<tag:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<tag:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
 		</tag:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<label for="commonCodeType" class="lblEn hor"><tag:msg key="fwk.commoncode.searchHeader.codeType"/></label>
+			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label>
 			<select id="commonCodeType" name="commonCodeType" class="bootstrapSelect default">
 				<option value="">==Select==</option>
 <%
@@ -336,15 +336,15 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<tag:msg key="fwk.commoncode.dataGridHeader.selectToDelete"/>"></i></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="fwk.commoncode.dataGridHeader.codeType"/></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="fwk.commoncode.dataGridHeader.description"/></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="fwk.commoncode.dataGridHeader.programConstants"/></th>
-				<th class="thGrid sortable:number"><tag:msg key="fwk.commoncode.dataGridHeader.useYn"/></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="fwk.commoncode.dataGridHeader.defaultYn"/></th>
-				<th class="thGrid sortable:date"><tag:msg key="fwk.commoncode.dataGridHeader.insertDate"/></th>
-				<th class="thGrid sortable:date"><tag:msg key="fwk.commoncode.dataGridHeader.updateDate"/></th>
-				<th class="thGrid"><tag:msg key="page.com.action"/></th>
+				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.commoncode.dataGridHeader.selectToDelete"/>"></i></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.codeType"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.description"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.programConstants"/></th>
+				<th class="thGrid sortable:number"><mc:msg key="fwk.commoncode.dataGridHeader.useYn"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.defaultYn"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.insertDate"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -381,7 +381,7 @@ $(function() {
 		} else {
 %>
 			<tr>
-				<td class="tdGridCt" colspan="9"><tag:msg key="<%=msgCode%>"/></td>
+				<td class="tdGridCt" colspan="9"><mc:msg key="<%=msgCode%>"/></td>
 			</tr>
 <%
 		}
@@ -389,7 +389,7 @@ $(function() {
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"><tag:pagination totalRows="<%=pe.getTotalResultRows()%>" script="doSearch"/></div>
+<div id="divPagingArea" class="areaContainer"><ui:pagination totalRows="<%=pe.getTotalResultRows()%>" script="doSearch"/></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

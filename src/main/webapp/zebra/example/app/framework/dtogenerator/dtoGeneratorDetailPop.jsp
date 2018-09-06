@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -65,7 +65,7 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
@@ -78,9 +78,9 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
 			<td class="tdEdit"><%=requestDataSet.getValue("tableName")%></td>
-			<th class="thEditRt"><tag:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue("TABLE_DESCRIPTION")%></td>
 		</tr>
 	</table>
@@ -107,13 +107,13 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.header.columnName"/></th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.header.dataType"/></th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.header.defaultValue"/></th>
-				<th class="thGrid sortable:numeric"><tag:msg key="fwk.dtogenerator.header.length"/></th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.header.nullable"/></th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.header.keyType"/></th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.header.description"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.header.columnName"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.header.dataType"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.header.defaultValue"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="fwk.dtogenerator.header.length"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.header.nullable"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.header.keyType"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.header.description"/></th>
 			</tr>
 		</thead>
 		<tbody>

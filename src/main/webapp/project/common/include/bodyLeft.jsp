@@ -89,7 +89,7 @@ $(function() {
 if (CommonUtil.isNotBlank(headerMenuId)) {
 %>
 	<div id="divLeftMenuHeader">
-		<a style="background:url(<tag:cp key="imgThemeCom"/>/<%=headerMenuId%>_Black.png) no-repeat 0px 50%;padding:4px 0px 4px 25px;"><%=headerMenuName%></a>
+		<a style="background:url(<mc:cp key="imgThemeCom"/>/<%=headerMenuId%>_Black.png) no-repeat 0px 50%;padding:4px 0px 4px 25px;"><%=headerMenuName%></a>
 	</div>
 <%
 	if (dsLeftMenu.getRowCnt() > 0) {
@@ -100,7 +100,7 @@ if (CommonUtil.isNotBlank(headerMenuId)) {
 			if (CommonUtil.equals(dsLeftMenu.getValue(i, "LEVEL"), "2")) {
 %>
 		<div class="leftMenuAccordionGroup">
-			<h3 style="background:url(<tag:cp key="imgThemeCom"/>/MenuLevel2_Black.png) no-repeat 14px 50%">
+			<h3 style="background:url(<mc:cp key="imgThemeCom"/>/MenuLevel2_Black.png) no-repeat 14px 50%">
 				<%=dsLeftMenu.getValue(i, "MENU_NAME_"+languageCodeHeaderPage)%>
 			</h3>
 			<div class="leftMenuAccordionContents">

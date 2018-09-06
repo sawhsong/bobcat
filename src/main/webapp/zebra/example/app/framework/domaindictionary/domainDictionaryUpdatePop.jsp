@@ -20,7 +20,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -49,7 +49,7 @@ $(function() {
 			});
 		} else {
 			commonJs.confirm({
-				contents:"<tag:msg key="Q001"/>",
+				contents:"<mc:msg key="Q001"/>",
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
@@ -105,7 +105,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		parent.popup.setHeader("<tag:msg key="fwk.domaindictionary.title.popupTitleEdit"/>");
+		parent.popup.setHeader("<mc:msg key="fwk.domaindictionary.title.popupTitleEdit"/>");
 		$("#domainName").focus();
 	});
 });
@@ -126,9 +126,9 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -152,57 +152,57 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><tag:msg key="fwk.domaindictionary.header.name"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.name"/></th>
 			<td class="tdEdit">
-				<input type="text" id="domainName" name="domainName" class="txtEn" value="<%=zebraDomainDictionary.getDomainName()%>" checkName="<tag:msg key="fwk.domaindictionary.header.name"/>" mandatory/>
+				<input type="text" id="domainName" name="domainName" class="txtEn" value="<%=zebraDomainDictionary.getDomainName()%>" checkName="<mc:msg key="fwk.domaindictionary.header.name"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><tag:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
 			<td class="tdEdit">
-				<input type="text" id="nameAbbreviation" name="nameAbbreviation" class="txtEn" value="<%=zebraDomainDictionary.getNameAbbreviation()%>" checkName="<tag:msg key="fwk.domaindictionary.header.nameAbbrev"/>" mandatory/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit mandatory"><tag:msg key="fwk.domaindictionary.header.dataType"/></th>
-			<td class="tdEdit">
-				<tag:select id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" selectedValue="<%=zebraDomainDictionary.getDataType()%>" options="mandatory" source="framework"/>
-			</td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataLength"/></th>
-			<td class="tdEdit">
-				<tag:select id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<input type="text" id="nameAbbreviation" name="nameAbbreviation" class="txtEn" value="<%=zebraDomainDictionary.getNameAbbreviation()%>" checkName="<mc:msg key="fwk.domaindictionary.header.nameAbbrev"/>" mandatory/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
+			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.dataType"/></th>
 			<td class="tdEdit">
-				<tag:select id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:select id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" selectedValue="<%=zebraDomainDictionary.getDataType()%>" options="mandatory" source="framework"/>
 			</td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataScale"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
 			<td class="tdEdit">
-				<tag:select id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:select id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.domaindictionary.header.desc"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
+			<td class="tdEdit">
+				<ui:select id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
+			</td>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
+			<td class="tdEdit">
+				<ui:select id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEditRt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
 			<td class="tdEdit" colspan="3" style="height:200px;vertical-align:top">
 				<textarea id="description" name="description" class="txaEn" style="height:200px;"><%=zebraDomainDictionary.getDescription()%></textarea>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.insertUser"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.insertUser"/></th>
 			<td class="tdEdit">
 				<input type="text" id="insertUserId" name="insertUserId" class="txtDpl" value="<%=zebraDomainDictionary.getInsertUserId()%>" readonly="readonly"/>
 			</td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.insertDate"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
 			<td class="tdEdit">
 				<input type="text" id="insertDate" name="insertDate" class="txtDpl" value="<%=CommonUtil.toString(zebraDomainDictionary.getInsertDate(), toDateFormat)%>" readonly="readonly"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.updateUser"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.updateUser"/></th>
 			<td class="tdEdit">
 				<input type="text" id="updateUserId" name="updateUserId" class="txtDpl" value="<%=zebraDomainDictionary.getUpdateUserId()%>" readonly="readonly"/>
 			</td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.updateDate"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.updateDate"/></th>
 			<td class="tdEdit">
 				<input type="text" id="updateDate" name="updateDate" class="txtDpl" value="<%=CommonUtil.toString(zebraDomainDictionary.getUpdateDate(), toDateFormat)%>" readonly="readonly"/>
 			</td>

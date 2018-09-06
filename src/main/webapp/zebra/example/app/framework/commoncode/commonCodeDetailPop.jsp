@@ -28,7 +28,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -79,7 +79,7 @@ $(function() {
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
-				contents:"<tag:msg key="Q002"/>",
+				contents:"<mc:msg key="Q002"/>",
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
@@ -150,17 +150,17 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<tag:button id="btnDelete" caption="button.com.delete" iconClass="fa-save" status="<%=disableFlag%>"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save" status="<%=disableFlag%>"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><tag:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
+		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
 		<colgroup>
 			<col width="15%"/>
 			<col width="35%"/>
@@ -168,15 +168,15 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit"><mc:msg key="fwk.commoncode.header.codeType"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></td>
-			<th class="thEdit"><tag:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit"><tag:radio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
+			<th class="thEdit"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<td class="tdEdit"><ui:radio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_EN")%></td>
-			<th class="thEdit"><tag:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_KO")%></td>
 		</tr>
 	</table>
@@ -212,17 +212,17 @@ $(function() {
 					<col width="10%"/>
 				</colgroup>
 				<tr>
-					<th class="thEdit"><tag:msg key="fwk.commoncode.header.commonCode"/></th>
+					<th class="thEdit"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
-					<th class="thEdit"><tag:msg key="fwk.commoncode.header.useYn"/></th>
-					<td class="tdEdit"><tag:radio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
-					<th class="thEdit"><tag:msg key="fwk.commoncode.header.sortOrder"/></th>
+					<th class="thEdit"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+					<td class="tdEdit"><ui:radio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
+					<th class="thEdit"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
 				</tr>
 				<tr>
-					<th class="thEdit"><tag:msg key="fwk.commoncode.header.descriptionEn"/></th>
+					<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "DESCRIPTION_EN")%></td>
-					<th class="thEdit"><tag:msg key="fwk.commoncode.header.descriptionKo"/></th>
+					<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 					<td class="tdEdit" colspan="3"><%=resultDataSet.getValue(i, "DESCRIPTION_KO")%></td>
 				</tr>
 			</table>

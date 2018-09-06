@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -33,7 +33,7 @@ $(function() {
 
 	$("#btnGenerate").click(function(event) {
 		commonJs.confirm({
-			contents:"<tag:msg key="Q901"/>",
+			contents:"<mc:msg key="Q901"/>",
 			width:300,
 			height:150,
 			buttons:[{
@@ -87,12 +87,12 @@ $(function() {
 									var dataDelimiter = globalMap.get("dataDelimiter");
 									var menuIdArray = paramData.menuId.split(dataDelimiter);
 									var menuId = menuIdArray[1];
-									popupProcess.addContents("<tag:msg key="I802"/> : "+menuId);
+									popupProcess.addContents("<mc:msg key="I802"/> : "+menuId);
 
 									if ((index+1) == parent.commonJs.getCountChecked("chkForGenerate")) {
 										parent.commonJs.openDialog({
 											type:"information",
-											contents:"<tag:msg key="I801"/>",
+											contents:"<mc:msg key="I801"/>",
 											modal:true,
 											width:300,
 											buttons:[{
@@ -107,7 +107,7 @@ $(function() {
 										});
 									}
 								} else {
-									popupProcess.addContents("<tag:msg key="E801"/> : "+paramData.menuId);
+									popupProcess.addContents("<mc:msg key="E801"/> : "+paramData.menuId);
 								}
 							}
 						});
@@ -140,9 +140,9 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -159,7 +159,7 @@ $(function() {
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><tag:msg key="fwk.sourcegenerator.header.classSource"/></caption>
+		<caption class="captionEdit"><mc:msg key="fwk.sourcegenerator.header.classSource"/></caption>
 		<colgroup>
 			<col width="20%"/>
 			<col width="20%"/>
@@ -167,32 +167,32 @@ $(function() {
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.srcPath"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
 			<td class="tdEdit" colspan="3">
 				<input type="text" id="javaSourcePath" name="javaSourcePath" class="txtDpl" value="<%=paramEntity.getObject("javaPath")%>" readonly/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.actionClass"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.actionClass"/></th>
 			<td class="tdEdit">
-				<label class="lblCheckDis"><input type="checkbox" name="javaCreateAction" class="chkDis" value="Y" checked disabled/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckDis"><input type="checkbox" name="javaCreateAction" class="chkDis" value="Y" checked disabled/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.cudPageHandler"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.cudPageHandler"/></th>
 			<td class="tdEdit">
-				<label class="lblRadioEn"><input type="radio" name="actionHandlerType" class="rdoEn" value="A" checked/><tag:msg key="fwk.sourcegenerator.header.ajax"/></label>
-				<label class="lblRadioEn"><input type="radio" name="actionHandlerType" class="rdoEn" value="P"/><tag:msg key="fwk.sourcegenerator.header.pageHandler"/></label>
+				<label class="lblRadioEn"><input type="radio" name="actionHandlerType" class="rdoEn" value="A" checked/><mc:msg key="fwk.sourcegenerator.header.ajax"/></label>
+				<label class="lblRadioEn"><input type="radio" name="actionHandlerType" class="rdoEn" value="P"/><mc:msg key="fwk.sourcegenerator.header.pageHandler"/></label>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.bizClass"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.bizClass"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckDis"><input type="checkbox" name="javaCreateBiz" class="chkDis" value="Y" checked disabled/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckDis"><input type="checkbox" name="javaCreateBiz" class="chkDis" value="Y" checked disabled/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 	</table>
 	<div class="verGap10"></div>
 	<table class="tblEdit">
-		<caption class="captionEdit"><tag:msg key="fwk.sourcegenerator.header.viewSource"/></caption>
+		<caption class="captionEdit"><mc:msg key="fwk.sourcegenerator.header.viewSource"/></caption>
 		<colgroup>
 			<col width="20%"/>
 			<col width="20%"/>
@@ -200,74 +200,74 @@ $(function() {
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.srcPath"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
 			<td class="tdEdit" colspan="3">
 				<input type="text" id="jspSourcePath" name="jspSourcePath" class="txtDpl" value="<%=paramEntity.getObject("jspPath")%>" readonly/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.list"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.list"/></th>
 			<td class="tdEdit">
-				<label class="lblCheckDis"><input type="checkbox" name="jspCreateList" class="chkDis" value="Y" checked disabled/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckDis"><input type="checkbox" name="jspCreateList" class="chkDis" value="Y" checked disabled/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.pageType"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
 			<td class="tdEdit">
-				<label class="lblRadioEn"><input type="radio" name="jspSubPageType" class="rdoEn" value="Popup" checked/><tag:msg key="fwk.sourcegenerator.header.pop"/></label>
-				<label class="lblRadioEn"><input type="radio" name="jspSubPageType" class="rdoEn" value="Page"/><tag:msg key="fwk.sourcegenerator.header.page"/></label>
+				<label class="lblRadioEn"><input type="radio" name="jspSubPageType" class="rdoEn" value="Popup" checked/><mc:msg key="fwk.sourcegenerator.header.pop"/></label>
+				<label class="lblRadioEn"><input type="radio" name="jspSubPageType" class="rdoEn" value="Page"/><mc:msg key="fwk.sourcegenerator.header.page"/></label>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.detail"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.detail"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckEn"><input type="checkbox" name="jspCreateDetail" class="chkEn" value="Y" checked/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckEn"><input type="checkbox" name="jspCreateDetail" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.insert"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.insert"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckEn"><input type="checkbox" name="jspCreateInsert" class="chkEn" value="Y" checked/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckEn"><input type="checkbox" name="jspCreateInsert" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.update"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.update"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckEn"><input type="checkbox" name="jspCreateUpdate" class="chkEn" value="Y" checked/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckEn"><input type="checkbox" name="jspCreateUpdate" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 	</table>
 	<div class="verGap10"></div>
 	<table class="tblEdit">
-		<caption class="captionEdit"><tag:msg key="fwk.sourcegenerator.header.configETC"/></caption>
+		<caption class="captionEdit"><mc:msg key="fwk.sourcegenerator.header.configETC"/></caption>
 		<colgroup>
 			<col width="20%"/>
 			<col width="*"/>
 			<col width="14%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.spring"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.spring"/></th>
 			<td class="tdEdit">
 				<input type="text" id="springConfigPath" name="springConfigPath" class="txtDpl" value="<%=paramEntity.getObject("springPath")%>" readonly/>
 			</td>
 			<td class="tdEdit">
-				<label class="lblCheckEn"><input type="checkbox" name="createSpring" class="chkEn" value="Y" checked/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckEn"><input type="checkbox" name="createSpring" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.struts"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.struts"/></th>
 			<td class="tdEdit">
 				<input type="text" id="strutsConfigPath" name="strutsConfigPath" class="txtDpl" value="<%=paramEntity.getObject("strutsPath")%>" readonly/>
 			</td>
 			<td class="tdEdit">
-				<label class="lblCheckEn"><input type="checkbox" name="createStruts" class="chkEn" value="Y" checked/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckEn"><input type="checkbox" name="createStruts" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.sourcegenerator.header.message"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.message"/></th>
 			<td class="tdEdit">
 				<input type="text" id="messageConfigPath" name="messageConfigPath" class="txtDpl" value="<%=paramEntity.getObject("messagePath")%>" readonly/>
 			</td>
 			<td class="tdEdit">
-				<label class="lblCheckEn"><input type="checkbox" name="createMessage" class="chkEn" value="Y" checked/><tag:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<label class="lblCheckEn"><input type="checkbox" name="createMessage" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
 			</td>
 		</tr>
 	</table>

@@ -61,8 +61,12 @@
 	<!-- Tomcat8 needs this -->
 	<jsp-config>
 		<taglib>
-			<taglib-uri>tag</taglib-uri>
-			<taglib-location>/WEB-INF/tld/taglibs.tld</taglib-location>
+			<taglib-uri>UI taglib</taglib-uri>
+			<taglib-location>/WEB-INF/tld/tagui.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>Message / Config taglib</taglib-uri>
+			<taglib-location>/WEB-INF/tld/tagmc.tld</taglib-location>
 		</taglib>
 	</jsp-config>
 

@@ -16,8 +16,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/favicon.png">
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -152,13 +152,13 @@ $(function() {
 				html += "<td class=\"tdGridCt\">"+dataSet.getValue(i, "CREATED_DATE")+"</td>";
 				html += "<td class=\"tdGridRt\">"+commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")+"</td>";
 				html += "<td class=\"tdGridCt\">";
-				html += "<i id=\"icnAction\" name=\"icnAction\" class=\"fa fa-tasks fa-lg icnEn\" articleId=\""+dataSet.getValue(i, "ARTICLE_ID")+"\" onclick=\"doAction(this)\" title=\"<tag:msg key="page.com.action"/>\"></i>";
+				html += "<i id=\"icnAction\" name=\"icnAction\" class=\"fa fa-tasks fa-lg icnEn\" articleId=\""+dataSet.getValue(i, "ARTICLE_ID")+"\" onclick=\"doAction(this)\" title=\"<mc:msg key="page.com.action"/>\"></i>";
 				html += "</td>";
 				html += "</tr>";
 			}
 		} else {
 			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"7\"><tag:msg key="I001"/></td>";
+			html += "<td class=\"tdGridCt\" colspan=\"7\"><mc:msg key="I001"/></td>";
 			html += "</tr>";
 		}
 
@@ -195,13 +195,13 @@ $(function() {
 
 		if (param.mode == "Detail") {
 			url = "/#MENU_URL#/getDetail.do";
-			header = "<tag:msg key="#THIS_MENU_ID#.header.popupHeaderDetail"/>";
+			header = "<mc:msg key="#THIS_MENU_ID#.header.popupHeaderDetail"/>";
 		} else if (param.mode == "New" || param.mode == "Reply") {
 			url = "/#MENU_URL#/getInsert.do";
-			header = "<tag:msg key="#THIS_MENU_ID#.header.popupHeaderEdit"/>";
+			header = "<mc:msg key="#THIS_MENU_ID#.header.popupHeaderEdit"/>";
 		} else if (param.mode == "Edit") {
 			url = "/#MENU_URL#/getUpdate.do";
-			header = "<tag:msg key="#THIS_MENU_ID#.header.popupHeaderEdit"/>";
+			header = "<mc:msg key="#THIS_MENU_ID#.header.popupHeaderEdit"/>";
 			height = 634;
 		}
 
@@ -223,12 +223,12 @@ $(function() {
 
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn("<tag:msg key="I902"/>");
+			commonJs.warn("<mc:msg key="I902"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q002"/>",
+			contents:"<mc:msg key="Q002"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -361,12 +361,12 @@ $(function() {
 		$("[name=dataRange]").remove();
 
 		if (searchResultDataCount <= 0) {
-			commonJs.warn("<tag:msg key="I001"/>");
+			commonJs.warn("<mc:msg key="I001"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q003"/>",
+			contents:"<mc:msg key="Q003"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -424,12 +424,12 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<tag:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
-			<tag:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<tag:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<tag:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -443,19 +443,19 @@ $(function() {
 				</colgroup>
 				<tr>
 					<td class="tdDefault">
-						<label for="searchType" class="lblEn hor"><tag:msg key="#THIS_MENU_ID#.search.searchType"/></label>
+						<label for="searchType" class="lblEn hor"><mc:msg key="#THIS_MENU_ID#.search.searchType"/></label>
 						<div style="float:left;padding-right:4px;">
-							<tag:select id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default"/>
+							<ui:select id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default"/>
 						</div>
 						<input type="text" id="searchWord" name="searchWord" class="txtEn hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
-						<label for="fromDate" class="lblEn hor"><tag:msg key="#THIS_MENU_ID#.search.searchPeriod"/></label>
-						<input type="text" id="fromDate" name="fromDate" class="txtEnCt hor" style="width:100px" checkName="<tag:msg key="#THIS_MENU_ID#.search.searchDateFrom"/>" option="date"/>
-						<i id="icnFromDate" class="fa fa-calendar icnEn hor" title="<tag:msg key="#THIS_MENU_ID#.search.searchDateFrom"/>"></i>
+						<label for="fromDate" class="lblEn hor"><mc:msg key="#THIS_MENU_ID#.search.searchPeriod"/></label>
+						<input type="text" id="fromDate" name="fromDate" class="txtEnCt hor" style="width:100px" checkName="<mc:msg key="#THIS_MENU_ID#.search.searchDateFrom"/>" option="date"/>
+						<i id="icnFromDate" class="fa fa-calendar icnEn hor" title="<mc:msg key="#THIS_MENU_ID#.search.searchDateFrom"/>"></i>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<input type="text" id="toDate" name="toDate" class="txtEnCt hor" style="width:100px" checkName="<tag:msg key="#THIS_MENU_ID#.search.searchDateTo"/>" option="date"/>
-						<i id="icnToDate" class="fa fa-calendar icnEn hor" title="<tag:msg key="#THIS_MENU_ID#.search.searchDateTo"/>"></i>
+						<input type="text" id="toDate" name="toDate" class="txtEnCt hor" style="width:100px" checkName="<mc:msg key="#THIS_MENU_ID#.search.searchDateTo"/>" option="date"/>
+						<i id="icnToDate" class="fa fa-calendar icnEn hor" title="<mc:msg key="#THIS_MENU_ID#.search.searchDateTo"/>"></i>
 					</td>
 				</tr>
 			</table>
@@ -485,18 +485,18 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr class="noBorderHor">
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<tag:msg key="page.com.selectToDelete"/>"></i></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="#THIS_MENU_ID#.grid.subject"/></th>
-				<th class="thGrid"><tag:msg key="#THIS_MENU_ID#.grid.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="#THIS_MENU_ID#.grid.writerName"/></th>
-				<th class="thGrid sortable:date"><tag:msg key="#THIS_MENU_ID#.grid.date"/></th>
-				<th class="thGrid sortable:numeric"><tag:msg key="#THIS_MENU_ID#.grid.hitCount"/></th>
-				<th class="thGrid"><tag:msg key="page.com.action"/></th>
+				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="page.com.selectToDelete"/>"></i></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="#THIS_MENU_ID#.grid.subject"/></th>
+				<th class="thGrid"><mc:msg key="#THIS_MENU_ID#.grid.file"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="#THIS_MENU_ID#.grid.writerName"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="#THIS_MENU_ID#.grid.date"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="#THIS_MENU_ID#.grid.hitCount"/></th>
+				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr class="noBorderHor noStripe">
-				<td class="tdGridCt" colspan="7"><tag:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

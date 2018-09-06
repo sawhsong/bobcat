@@ -16,8 +16,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/favicon.png">
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -25,7 +25,7 @@
 <style type="text/css">
 .panelHolder {margin:0px auto;width:100%;text-align:center;}
 .panel {margin-top:20px;display:inline-block;width:360px;}
-.panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;background:url(<tag:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
+.panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;background:url(<mc:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
 .panel-body {padding:25px 25px 20px 25px;}
 .addonIcon {width:16px;}
 .input-group {padding-bottom:4px;}
@@ -104,14 +104,14 @@ $(function() {
 		<div class="panel-body">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-lg fa-user addonIcon"></i></div>
-				<input type="text" id="loginId" name="loginId" class="form-control" placeholder="LOGIN ID" checkName="<tag:msg key="login.header.loginId"/>" mandatory/>
+				<input type="text" id="loginId" name="loginId" class="form-control" placeholder="LOGIN ID" checkName="<mc:msg key="login.header.loginId"/>" mandatory/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-lg fa-envelope addonIcon"></i></div>
-				<input type="text" id="email" name="email" class="form-control" placeholder="EMAIL" checkName="<tag:msg key="login.header.email"/>" mandatory option="email"/>
+				<input type="text" id="email" name="email" class="form-control" placeholder="EMAIL" checkName="<mc:msg key="login.header.email"/>" mandatory option="email"/>
 			</div>
 			<div class="buttonDiv">
-				<tag:button id="btnReset" type="warning" caption="login.button.emailResetpassword" iconClass="fa-send" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
+				<ui:button id="btnReset" type="warning" caption="login.button.emailResetpassword" iconClass="fa-send" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
 			</div>
 		</div>
 	</div>

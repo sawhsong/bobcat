@@ -31,4 +31,16 @@
 			<fileset dir="${src.zebra.common}"/>
 		</copy>
 	</target>
+
+	<target name="6.project conf" description="Copy project conf">
+		<copy todir="${target.project.conf}">
+			<fileset dir="${src.project.conf}"/>
+		</copy>
+	</target>
+
+	<target name="7.zebra conf" description="Copy zebra conf">
+		<copy todir="${target.zebra.conf}">
+			<fileset dir="${src.zebra.conf}"/>
+		</copy>
+	</target>
 </project>

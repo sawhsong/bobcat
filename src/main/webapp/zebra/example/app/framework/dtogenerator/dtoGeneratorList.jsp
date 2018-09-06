@@ -20,7 +20,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -37,14 +37,14 @@ $(function() {
 	 */
 	$("#btnGenerate").click(function(event) {
 		if (commonJs.getCountChecked("chkForGenerate") == 0) {
-			commonJs.warn("<tag:msg key="I902"/>");
+			commonJs.warn("<mc:msg key="I902"/>");
 			return;
 		}
 
 		popupInfo = commonJs.openPopup({
 			popupId:"DTOGeneratorInfo",
 			url:"/zebra/framework/dtogenerator/getGeneratorInfo.do",
-			header:"<tag:msg key="fwk.dtogenerator.title.generatorPopupHeader"/>",
+			header:"<mc:msg key="fwk.dtogenerator.title.generatorPopupHeader"/>",
 			paramData:{dataSource:$("#dataSource").val()},
 			blind:false,
 			width:800,
@@ -98,7 +98,7 @@ $(function() {
 				tableName:tableName,
 				dataSource:$("#dataSource").val()
 			},
-			header:"<tag:msg key="fwk.dtogenerator.title.detailPopupHeader"/>",
+			header:"<mc:msg key="fwk.dtogenerator.title.detailPopupHeader"/>",
 			width:1000,
 			height:650
 		});
@@ -165,10 +165,10 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
-			<tag:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<tag:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -182,7 +182,7 @@ $(function() {
 				</colgroup>
 				<tr>
 					<td class="tdDefault">
-						<label for="dataSource" class="lblEn hor"><tag:msg key="fwk.dtogenerator.dataSource"/></label>
+						<label for="dataSource" class="lblEn hor"><mc:msg key="fwk.dtogenerator.dataSource"/></label>
 						<select id="dataSource" name="dataSource" class="bootstrapSelect default">
 <%
 						for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
@@ -195,7 +195,7 @@ $(function() {
 						</select>
 					</td>
 					<td class="tdDefault">
-						<label for="tableName" class="lblEn hor"><tag:msg key="fwk.dtogenerator.tableName"/></label>
+						<label for="tableName" class="lblEn hor"><mc:msg key="fwk.dtogenerator.tableName"/></label>
 						<input type="text" id="tableName" name="tableName" class="txtEn hor" style="width:280px"/>
 					</td>
 				</tr>
@@ -224,11 +224,11 @@ $(function() {
 		<thead>
 			<tr>
 				<th class="thGrid">
-					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<tag:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i>
+					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i>
 				</th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
-				<th class="thGrid sortable:string"><tag:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
-				<th class="thGrid"><tag:msg key="page.com.action"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -245,7 +245,7 @@ $(function() {
 				</td>
 				<td class="tdGridLt"><%=resultDataSet.getValue(i, "COMMENTS")%></td>
 				<td class="tdGridCt">
-					<i name="icnAction" class="fa fa-tasks fa-lg icnEn" tableName="<%=resultDataSet.getValue(i, "TABLE_NAME")%>" onclick="doAction(this)" title="<tag:msg key="page.com.action"/>"></i>
+					<i name="icnAction" class="fa fa-tasks fa-lg icnEn" tableName="<%=resultDataSet.getValue(i, "TABLE_NAME")%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
 				</td>
 			</tr>
 <%
@@ -253,7 +253,7 @@ $(function() {
 		} else {
 %>
 			<tr>
-				<td class="tdGridCt" colspan="4"><tag:msg key="<%=messageCode%>"/></td>
+				<td class="tdGridCt" colspan="4"><mc:msg key="<%=messageCode%>"/></td>
 			</tr>
 <%
 		}

@@ -14,7 +14,7 @@ $(function() {
 	if (parent.$(".nonyPopWinBase").length > 0 || parent.$(".nonyDialogBase").length > 0) {
 		if (sessionCheckType == "SessionTimedOut") {
 			commonJs.openDialog({
-				contents:"<tag:msg key="W001"/>",
+				contents:"<mc:msg key="W001"/>",
 				buttons:[{
 					caption:"Ok",
 					callback:function() {
@@ -31,7 +31,7 @@ $(function() {
 	} else {
 		if (sessionCheckType == "SessionTimedOut") {
 			commonJs.openDialog({
-				contents:"<tag:msg key="W001"/>",
+				contents:"<mc:msg key="W001"/>",
 				buttons:[{
 					caption:"Ok",
 					callback:function() {

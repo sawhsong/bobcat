@@ -18,8 +18,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/favicon.png">
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -74,9 +74,9 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -112,31 +112,31 @@ $(function() {
 			<col width="28%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.userId"/></th>
+			<th class="thEdit"><mc:msg key="login.header.userId"/></th>
 			<td class="tdEdit"><%=sysUser.getUserId()%></td>
-			<th class="thEdit"><tag:msg key="login.header.loginId"/></th>
+			<th class="thEdit"><mc:msg key="login.header.loginId"/></th>
 			<td class="tdEdit"><%=sysUser.getLoginId()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.userName"/></th>
+			<th class="thEdit"><mc:msg key="login.header.userName"/></th>
 			<td class="tdEdit"><%=sysUser.getUserName()%></td>
-			<th class="thEdit"><tag:msg key="login.header.password"/></th>
+			<th class="thEdit"><mc:msg key="login.header.password"/></th>
 			<td class="tdEdit"><%=sysUser.getLoginPassword()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.language"/></th>
+			<th class="thEdit"><mc:msg key="login.header.language"/></th>
 			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("LANGUAGE_TYPE", sysUser.getLanguage())%></td>
-			<th class="thEdit"><tag:msg key="login.header.themeType"/></th>
+			<th class="thEdit"><mc:msg key="login.header.themeType"/></th>
 			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("USER_THEME_TYPE", sysUser.getThemeType())%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.maxRowsPerPage"/></th>
+			<th class="thEdit"><mc:msg key="login.header.maxRowsPerPage"/></th>
 			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getMaxRowPerPage(), "#,###")%></td>
-			<th class="thEdit"><tag:msg key="login.header.pageNumsPerPage"/></th>
+			<th class="thEdit"><mc:msg key="login.header.pageNumsPerPage"/></th>
 			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getPageNumPerPage(), "#,###")%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="login.header.email"/></th>
+			<th class="thEdit"><mc:msg key="login.header.email"/></th>
 			<td class="tdEdit" colspan="3"><%=sysUser.getEmail()%></td>
 		</tr>
 	</table>

@@ -56,13 +56,13 @@ $(function() {
 		if (isVisibleAdminToolLocationPath) {
 %>
 	<div style="float:right;">
-		<a onclick="doControlAdminTool('false')" style="color:blue;"><tag:msg key="page.com.hideAdminTool"/></a>
+		<a onclick="doControlAdminTool('false')" style="color:blue;"><mc:msg key="page.com.hideAdminTool"/></a>
 	</div>
 <%
 		} else {
 %>
 	<div style="float:right;">
-		<a onclick="doControlAdminTool('true')" style="color:blue;"><tag:msg key="page.com.showAdminTool"/></a>
+		<a onclick="doControlAdminTool('true')" style="color:blue;"><mc:msg key="page.com.showAdminTool"/></a>
 	</div>
 <%
 		}

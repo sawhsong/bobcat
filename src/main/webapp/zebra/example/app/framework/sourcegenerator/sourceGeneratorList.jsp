@@ -21,7 +21,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -41,14 +41,14 @@ $(function() {
 	 */
 	$("#btnGenerate").click(function(event) {
 		if (commonJs.getCountChecked("chkForGenerate") == 0) {
-			commonJs.warn("<tag:msg key="I902"/>");
+			commonJs.warn("<mc:msg key="I902"/>");
 			return;
 		}
 
 		popup = commonJs.openPopup({
 			popupId:"SourceGeneratorInfo",
 			url:"/zebra/framework/sourcegenerator/getGeneratorInfo.do",
-			header:"<tag:msg key="fwk.sourcegenerator.title.generatorPopupHeader"/>",
+			header:"<mc:msg key="fwk.sourcegenerator.title.generatorPopupHeader"/>",
 			paramData:{},
 			blind:false,
 			width:680,
@@ -150,10 +150,10 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
-			<tag:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<tag:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -166,7 +166,7 @@ $(function() {
 				</colgroup>
 				<tr>
 					<td class="tdDefault">
-						<label for="searchMenu" class="lblEn hor"><tag:msg key="fwk.sourcegenerator.searchMenu"/></label>
+						<label for="searchMenu" class="lblEn hor"><mc:msg key="fwk.sourcegenerator.searchMenu"/></label>
 						<select id="searchMenu" name="searchMenu" class="bootstrapSelect default">
 							<option value="">==Select==</option>
 <%
@@ -206,13 +206,13 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<tag:msg key="fwk.sourcegenerator.title.selectToGenerate"/>"></i></th>
-				<th class="thGrid"><tag:msg key="fwk.sourcegenerator.dataGridHeader.menuId"/></th>
-				<th class="thGrid"><tag:msg key="fwk.sourcegenerator.dataGridHeader.menuName"/></th>
-				<th class="thGrid"><tag:msg key="fwk.sourcegenerator.dataGridHeader.menuUrl"/></th>
-				<th class="thGrid"><tag:msg key="fwk.sourcegenerator.dataGridHeader.menuDesc"/></th>
-				<th class="thGrid"><tag:msg key="fwk.sourcegenerator.dataGridHeader.creationDate"/></th>
-				<th class="thGrid"><tag:msg key="page.com.action"/></th>
+				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.sourcegenerator.title.selectToGenerate"/>"></i></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuId"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuName"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuUrl"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuDesc"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.creationDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -255,7 +255,7 @@ $(function() {
 <%
 				if (activate) {
 %>
-					<i name="icnAction" class="fa fa-tasks fa-lg icnEn" menuId="<%=menuId%>" onclick="doAction(this)" title="<tag:msg key="page.com.action"/>"></i>
+					<i name="icnAction" class="fa fa-tasks fa-lg icnEn" menuId="<%=menuId%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
 <%
 				}
 %>
@@ -266,7 +266,7 @@ $(function() {
 		} else {
 %>
 			<tr>
-				<td class="tdGridCt" colspan="7"><tag:msg key="<%=messageCode%>"/></td>
+				<td class="tdGridCt" colspan="7"><mc:msg key="<%=messageCode%>"/></td>
 			</tr>
 <%
 		}

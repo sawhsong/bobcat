@@ -22,8 +22,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/favicon.png">
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -82,7 +82,7 @@ $(function() {
 			}
 		} else {
 			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"4\"><tag:msg key="I001"/></td>";
+			html += "<td class=\"tdGridCt\" colspan=\"4\"><mc:msg key="I001"/></td>";
 			html += "</tr>";
 		}
 
@@ -180,18 +180,18 @@ $(function() {
 </div>
 <div id="divSearchCriteriaArea" class="areaContainerPopup">
 	<table class="tblSearch">
-		<caption><tag:msg key="page.com.searchCriteria"/></caption>
+		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
 			<col width="50%"/>
 			<col width="50%"/>
 		</colgroup>
 		<tr>
 			<td class="tdSearch">
-				<label for="orgName" class="lblEn hor"><tag:msg key="orglookup.search.orgName"/></label>
+				<label for="orgName" class="lblEn hor"><mc:msg key="orglookup.search.orgName"/></label>
 				<input type="text" id="orgName" name="orgName" class="txtEn" style="width:250px;"/>
 			</td>
 			<td class="tdSearch">
-				<label for="abn" class="lblEn hor"><tag:msg key="orglookup.search.abn"/></label>
+				<label for="abn" class="lblEn hor"><mc:msg key="orglookup.search.abn"/></label>
 				<input type="text" id="abn" name="abn" class="txtEn" style="width:250px;"/>
 			</td>
 		</tr>
@@ -217,15 +217,15 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGridCt"><tag:msg key="orglookup.grid.id"/></th>
-				<th class="thGrid"><tag:msg key="orglookup.grid.name"/></th>
-				<th class="thGrid"><tag:msg key="orglookup.grid.abn"/></th>
-				<th class="thGrid"><tag:msg key="orglookup.grid.address"/></th>
+				<th class="thGridCt"><mc:msg key="orglookup.grid.id"/></th>
+				<th class="thGrid"><mc:msg key="orglookup.grid.name"/></th>
+				<th class="thGrid"><mc:msg key="orglookup.grid.abn"/></th>
+				<th class="thGrid"><mc:msg key="orglookup.grid.address"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="4"><tag:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="4"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

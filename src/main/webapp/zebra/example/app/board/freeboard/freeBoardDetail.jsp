@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -92,7 +92,7 @@ $(function() {
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
-				contents:"<tag:msg key="Q002"/>",
+				contents:"<mc:msg key="Q002"/>",
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
@@ -136,11 +136,11 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<tag:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
-			<tag:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
-			<tag:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
+			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -164,23 +164,23 @@ $(function() {
 			<col width="37%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.writerName"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.writerName"/></th>
 			<td class="tdEdit"><%=freeBoard.getWriterName()%>(<%=freeBoard.getWriterId()%>)</td>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.writerEmail"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
 			<td class="tdEdit"><%=freeBoard.getWriterEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.updateDate"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.updateDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(freeBoard.getUpdateDate())%></td>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.visitCount"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.visitCount"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(freeBoard.getVisitCnt())%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.articleSubject"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3"><%=freeBoard.getArticleSubject()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.bbs.header.attachedFile"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.bbs.header.attachedFile"/></th>
 			<td class="tdEdit" colspan="3">
 				<table class="tblDefault withPadding">
 					<tr>

@@ -28,7 +28,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -71,10 +71,10 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="btnGroup">
-			<tag:button id="btnRun" caption="fwk.garbageCollection.buttonRunCollector" iconClass="fa-recycle"/>
-			<tag:button id="btnReload" caption="button.com.reload" iconClass="fa-refresh"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="btnGroup">
+			<ui:button id="btnRun" caption="fwk.garbageCollection.buttonRunCollector" iconClass="fa-recycle"/>
+			<ui:button id="btnReload" caption="button.com.reload" iconClass="fa-refresh"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -85,11 +85,11 @@ $(function() {
 			<col width="75%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.garbageCollection.host"/></th>
+			<th class="thEdit"><mc:msg key="fwk.garbageCollection.host"/></th>
 			<td class="tdEdit"><%=pe.getObject("hostName")%> (<%=pe.getObject("hostAddress")%>)</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.garbageCollection.measurmentTime"/></th>
+			<th class="thEdit"><mc:msg key="fwk.garbageCollection.measurmentTime"/></th>
 			<td class="tdEdit"><%=CommonUtil.nvl((String)pe.getObject("measuredTime"))%></td>
 		</tr>
 	</table>
@@ -112,11 +112,11 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid" colspan="2"><tag:msg key="fwk.garbageCollection.totalMemory"/> (<%=pe.getObject("totalMemory")%> MB)</th>
+				<th class="thGrid" colspan="2"><mc:msg key="fwk.garbageCollection.totalMemory"/> (<%=pe.getObject("totalMemory")%> MB)</th>
 			</tr>
 			<tr>
-				<th class="thGrid"><tag:msg key="fwk.garbageCollection.usingMemory"/> (<%=pe.getObject("usingMemory")%> MB)</th>
-				<th class="thGrid"><tag:msg key="fwk.garbageCollection.freeMemory"/> (<%=pe.getObject("freeMemory")%> MB)</th>
+				<th class="thGrid"><mc:msg key="fwk.garbageCollection.usingMemory"/> (<%=pe.getObject("usingMemory")%> MB)</th>
+				<th class="thGrid"><mc:msg key="fwk.garbageCollection.freeMemory"/> (<%=pe.getObject("freeMemory")%> MB)</th>
 			</tr>
 		</thead>
 		<tbody>

@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -208,12 +208,12 @@ $(function() {
 * Real Contents - fixed panel(tab, button, search, information)
 ************************************************************************************************/%>
 <div id="divTabArea" class="areaContainer">
-	<tag:tab id="tabCategory">
-		<tag:tabList caption="fwk.uielement.tabTable" isActive="true" iconClass="fa-table" iconPosition="left"/>
-		<tag:tabList caption="fwk.uielement.tabElements" iconClass="fa-edit" iconPosition="left"/>
-		<tag:tabList caption="fwk.uielement.tabEtc" iconClass="fa-code" iconPosition="left"/>
-		<tag:tabList caption="Disabled Tab" iconClass="fa-code" iconPosition="left" isClickable="false"/>
-		<tag:tabList caption="Disabled Tab" iconClass="fa-code" iconPosition="left" isActive="true" isClickable="false"/>
+	<ui:tab id="tabCategory">
+		<ui:tabList caption="fwk.uielement.tabTable" isActive="true" iconClass="fa-table" iconPosition="left"/>
+		<ui:tabList caption="fwk.uielement.tabElements" iconClass="fa-edit" iconPosition="left"/>
+		<ui:tabList caption="fwk.uielement.tabEtc" iconClass="fa-code" iconPosition="left"/>
+		<ui:tabList caption="Disabled Tab" iconClass="fa-code" iconPosition="left" isClickable="false"/>
+		<ui:tabList caption="Disabled Tab" iconClass="fa-code" iconPosition="left" isActive="true" isClickable="false"/>
 	</tag:tab>
 </div>
 <div id="divButtonArea">
@@ -380,22 +380,22 @@ $(function() {
 	
 						<label for="txtWithImage" class="lblEn hor mandatory">Input text</label>
 						<input type="text" id="txtWithImage" name="txtWithImage" class="txtEn hor success" value="" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithImage"/>
-						<img id="imgWithImageEn" src="<tag:cp key="imgThemeCom"/>/generate_Black.png" class="imgEn hor" title="imgWithImageEn"/>
-						<img id="imgWithImageDis" src="<tag:cp key="imgThemeCom"/>/generate_Black.png" class="imgDis hor" title="imgWithImageDis"/>
+						<img id="imgWithImageEn" src="<mc:cp key="imgThemeCom"/>/generate_Black.png" class="imgEn hor" title="imgWithImageEn"/>
+						<img id="imgWithImageDis" src="<mc:cp key="imgThemeCom"/>/generate_Black.png" class="imgDis hor" title="imgWithImageDis"/>
 					</div>
 					<div class="verGap20"></div>
 					<div id="divBasicIcnImgBtn2">
 						<label for="txtWithPngImage" class="lblEn hor mandatory">Input text</label>
 						<input type="text" id="txtWithPngImage" name="txtWithPngImage" class="txtEn hor warning" value="" style="width:200px" placeholder="txtWithPngImage"/>
-						<img id="imgWithPngImageEn" src="<tag:cp key="imgThemeCom"/>/icnDocument.png" class="imgEn hor" title="imgWithPngImageEn"/>
-						<img id="imgWithPngImageDis" src="<tag:cp key="imgThemeCom"/>/icnDocument.png" class="imgDis hor" title="imgWithPngImageDis"/>
+						<img id="imgWithPngImageEn" src="<mc:cp key="imgThemeCom"/>/icnDocument.png" class="imgEn hor" title="imgWithPngImageEn"/>
+						<img id="imgWithPngImageDis" src="<mc:cp key="imgThemeCom"/>/icnDocument.png" class="imgDis hor" title="imgWithPngImageDis"/>
 	
 						<div class="horGap20"></div>
 	
 						<label for="txtWithButton" class="lblEn hor mandatory">Input text</label>
 						<input type="text" id="txtWithButton" name="txtWithButton" class="txtEn hor error" value="" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithButton"/>
 						<button id="btnPrintLog" type="button" class="btn btn-default"><i class="fa fa-save fa-lg"></i> Print Log</button>
-						<a id="btnAnchor" type="button" class="btn btn-primary"><i class="fa fa-list-alt fa-lg"></i> <tag:msg key="button.com.create"/></a>
+						<a id="btnAnchor" type="button" class="btn btn-primary"><i class="fa fa-list-alt fa-lg"></i> <mc:msg key="button.com.create"/></a>
 					</div>
 				</div>
 			</div>
@@ -438,22 +438,22 @@ $(function() {
 					<div id="divTagButton">
 						<label for="txtWithTagButton" class="lblEn hor">Button by Tag Library</label>
 						<input type="text" id="txtWithTagButton" name="txtWithTagButton" class="txtEn hor" style="width:200px" placeholder="txtWithTagButton"/>
-						<tag:button id="btnTag1" caption="btnTag1" type="default" iconClass="fa-print" script="alert('btnTag1')"/>
-						<tag:button id="btnTag2" caption="btnTag2" type="primary" iconClass="fa-comment-o" script="alert('btnTag2')"/>
-						<tag:button id="btnTag3" caption="btnTag3" type="btn-success" status="disabled" iconClass="fa-envelope-o"/>
-						<tag:button id="btnTag4" caption="btnTag4" type="warning" status="disabled"/>
-						<tag:button id="btnTag5" caption="btnTag5" type="danger" iconClass="fa-search" script="alert('btnTag5');"/>
+						<ui:button id="btnTag1" caption="btnTag1" type="default" iconClass="fa-print" script="alert('btnTag1')"/>
+						<ui:button id="btnTag2" caption="btnTag2" type="primary" iconClass="fa-comment-o" script="alert('btnTag2')"/>
+						<ui:button id="btnTag3" caption="btnTag3" type="btn-success" status="disabled" iconClass="fa-envelope-o"/>
+						<ui:button id="btnTag4" caption="btnTag4" type="warning" status="disabled"/>
+						<ui:button id="btnTag5" caption="btnTag5" type="danger" iconClass="fa-search" script="alert('btnTag5');"/>
 					</div>
 					<div class="verGap10"></div>
 					<div id="divTagButtonGroup">
 						<label for="txtWithTagButtonGroup" class="lblEn hor">Button Group by Tag Library</label>
 						<input type="text" id="txtWithTagButtonGroup" name="txtWithTagButtonGroup" class="txtEn hor" style="width:200px" placeholder="txtWithTagButtonGroup"/>
-						<tag:buttonGroup id="btnGroupTag" groupClass="" style="">
-							<tag:button id="btnGroupTag1" caption="btnGroupTag1" type="default" iconClass="fa-print" script="alert('btnGroupTag1')"/>
-							<tag:button id="btnGroupTag2" caption="btnGroupTag2" type="primary" iconClass="fa-comment-o" script="alert('btnGroupTag2')"/>
-							<tag:button id="btnGroupTag3" caption="btnGroupTag3" type="btn-success" status="disabled" iconClass="fa-envelope-o"/>
-							<tag:button id="btnGroupTag4" caption="btnGroupTag4" type="warning" status="disabled"/>
-							<tag:button id="btnGroupTag5" caption="btnGroupTag5" type="danger" iconClass="fa-search" script="alert('btnGroupTag5');"/>
+						<ui:buttonGroup id="btnGroupTag" groupClass="" style="">
+							<ui:button id="btnGroupTag1" caption="btnGroupTag1" type="default" iconClass="fa-print" script="alert('btnGroupTag1')"/>
+							<ui:button id="btnGroupTag2" caption="btnGroupTag2" type="primary" iconClass="fa-comment-o" script="alert('btnGroupTag2')"/>
+							<ui:button id="btnGroupTag3" caption="btnGroupTag3" type="btn-success" status="disabled" iconClass="fa-envelope-o"/>
+							<ui:button id="btnGroupTag4" caption="btnGroupTag4" type="warning" status="disabled"/>
+							<ui:button id="btnGroupTag5" caption="btnGroupTag5" type="danger" iconClass="fa-search" script="alert('btnGroupTag5');"/>
 						</tag:buttonGroup>
 					</div>
 				</div>
@@ -854,7 +854,7 @@ $(function() {
 						<tr>
 							<th class="thEdit">
 								File Selection(Modified by fileElement.js)<br/>
-								<tag:button id="btnAddFileSelection" caption="Add" type="default" iconClass="fa-plus"/>
+								<ui:button id="btnAddFileSelection" caption="Add" type="default" iconClass="fa-plus"/>
 							</th>
 							<td class="tdEdit">
 								<div id="divAttachedFile" style="height:114px;overflow-y:auto;"></div>
@@ -868,10 +868,10 @@ $(function() {
 				<div class="accordionContents">
 					<div id="divPopupAndDialog">
 						<label for="btnPopupWindowExample1" class="lblEn hor">Popup Window Example</label>
-						<tag:button id="btnPopupWindowExample1" caption="Popup Window" type="default" iconClass="glyphicon-new-window" buttonStyle="float:left"/>
+						<ui:button id="btnPopupWindowExample1" caption="Popup Window" type="default" iconClass="glyphicon-new-window" buttonStyle="float:left"/>
 						<div class="horGap30"></div>
 						<label for="btnPopupDialogExample1" class="lblEn hor">Popup Dialog Example</label>
-						<tag:button id="btnPopupDialogExample1" caption="Popup Dialog" type="default" iconClass="glyphicon-new-window" buttonStyle="float:left"/>
+						<ui:button id="btnPopupDialogExample1" caption="Popup Dialog" type="default" iconClass="glyphicon-new-window" buttonStyle="float:left"/>
 					</div>
 					<div class="verGap20"></div>
 					<div id="divCalendar">
@@ -910,22 +910,22 @@ $(function() {
 						<tr>
 							<th class="thEdit">Single Selection</th>
 							<td class="tdEdit">
-								<tag:select id="selComCodeSingle1" name="selComCodeSingle1" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor default" selectedValue="REPOSITORY" script="alert($(this).val());" source="framework"/>
-								<tag:select id="selComCodeSingle2" name="selComCodeSingle2" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor error" status="disabled" selectedValue="BBS" source="framework"/>
+								<ui:select id="selComCodeSingle1" name="selComCodeSingle1" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor default" selectedValue="REPOSITORY" script="alert($(this).val());" source="framework"/>
+								<ui:select id="selComCodeSingle2" name="selComCodeSingle2" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor error" status="disabled" selectedValue="BBS" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Multiple Selection(Default)</th>
 							<td class="tdEdit">
-								<tag:select id="selComCodeMulti1" name="selComCodeMulti1" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" source="framework"/>
-								<tag:select id="selComCodeMulti2" name="selComCodeMulti2" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" status="disabled" source="framework"/>
+								<ui:select id="selComCodeMulti1" name="selComCodeMulti1" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" source="framework"/>
+								<ui:select id="selComCodeMulti2" name="selComCodeMulti2" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" status="disabled" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Multiple Selection(Bootstrap)</th>
 							<td class="tdEdit">
-								<tag:select id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" source="framework"/>
-								<tag:select id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" status="disabled" source="framework"/>
+								<ui:select id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" source="framework"/>
+								<ui:select id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" status="disabled" source="framework"/>
 							</td>
 						</tr>
 					</table>
@@ -939,25 +939,25 @@ $(function() {
 						<tr>
 							<th class="thEdit">Checkbox block</th>
 							<td class="tdEdit">
-								<tag:check name="chkComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
+								<ui:check name="chkComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Checkbox inline</th>
 							<td class="tdEdit">
-								<tag:check name="chkComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE" script="" source="framework"/>
+								<ui:check name="chkComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE" script="" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Checkbox Block</th>
 							<td class="tdEdit">
-								<tag:check name="chkComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" source="framework"/>
+								<ui:check name="chkComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Checkbox Inline</th>
 							<td class="tdEdit">
-								<tag:check name="chkComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
+								<ui:check name="chkComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 					</table>
@@ -971,25 +971,25 @@ $(function() {
 						<tr>
 							<th class="thEdit">Radio block</th>
 							<td class="tdEdit">
-								<tag:radio name="rdoComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
+								<ui:radio name="rdoComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Radio inline</th>
 							<td class="tdEdit">
-								<tag:radio name="rdoComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="NOTICE;REPOSITORY" script="alert($(this).val());" source="framework"/>
+								<ui:radio name="rdoComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="NOTICE;REPOSITORY" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Radio Block</th>
 							<td class="tdEdit">
-								<tag:radio name="rdoComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" script="alert($(this).val());" source="framework"/>
+								<ui:radio name="rdoComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Radio Inline</th>
 							<td class="tdEdit">
-								<tag:radio name="rdoComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
+								<ui:radio name="rdoComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 					</table>

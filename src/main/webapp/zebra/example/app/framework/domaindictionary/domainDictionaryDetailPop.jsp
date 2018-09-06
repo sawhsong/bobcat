@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -69,7 +69,7 @@ $(function() {
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
-				contents:"<tag:msg key="Q002"/>",
+				contents:"<mc:msg key="Q002"/>",
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
@@ -140,10 +140,10 @@ $(function() {
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<tag:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
-			<tag:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -167,39 +167,39 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.name"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.name"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getDomainName()%></td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getNameAbbreviation()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataType"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataType"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getDataType()%></td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataLength"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(zebraDomainDictionary.getDataLength())%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getDataPrecision()%></td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.dataScale"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getDataScale()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><tag:msg key="fwk.domaindictionary.header.desc"/></th>
+			<th class="thEditRt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
 			<td class="tdEdit" colspan="3" style="height:200px;vertical-align:top">
 				<%=zebraDomainDictionary.getDescription()%>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.insertUser"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.insertUser"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getInsertUserId()%></td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.insertDate"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(zebraDomainDictionary.getInsertDate())%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.updateUser"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.updateUser"/></th>
 			<td class="tdEdit"><%=zebraDomainDictionary.getUpdateUserId()%></td>
-			<th class="thEdit"><tag:msg key="fwk.domaindictionary.header.updateDate"/></th>
+			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.updateDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(zebraDomainDictionary.getUpdateDate())%></td>
 		</tr>
 	</table>

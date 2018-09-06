@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title><tag:msg key="fwk.main.system.title"/></title>
+<title><mc:msg key="fwk.main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>
@@ -135,12 +135,12 @@ $(function() {
 
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn("<tag:msg key="I902"/>");
+			commonJs.warn("<mc:msg key="I902"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q002"/>",
+			contents:"<mc:msg key="Q002"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -256,12 +256,12 @@ $(function() {
 		$("[name=dataRange]").remove();
 
 		if (rowCnt <= 0) {
-			commonJs.warn("<tag:msg key="I001"/>");
+			commonJs.warn("<mc:msg key="I001"/>");
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<tag:msg key="Q003"/>",
+			contents:"<mc:msg key="Q003"/>",
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
@@ -332,12 +332,12 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<tag:buttonGroup id="buttonGroup">
-			<tag:button id="btnNew" caption="button.com.new" iconClass="fa-comment"/>
-			<tag:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
-			<tag:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<tag:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<tag:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-comment"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
 		</tag:buttonGroup>
 	</div>
 </div>
@@ -351,12 +351,12 @@ $(function() {
 				</colgroup>
 				<tr>
 					<td class="tdDefault">
-						<label for="searchType" class="lblEn hor"><tag:msg key="fwk.notice.searchHeader.searchType"/></label>
-						<div style="float:left;padding-right:4px;"><tag:select id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/></div>
+						<label for="searchType" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchType"/></label>
+						<div style="float:left;padding-right:4px;"><ui:select id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/></div>
 						<input type="text" id="searchWord" name="searchWord" class="txtEn hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
-						<label for="fromDate" class="lblEn hor"><tag:msg key="fwk.notice.searchHeader.searchPeriod"/></label>
+						<label for="fromDate" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchPeriod"/></label>
 						<input type="text" id="fromDate" name="fromDate" class="txtEnCt hor" style="width:100px" checkName="From Date" option="date"/>
 						<i id="icnFromDate" class="fa fa-calendar icnEn hor" title="From Date"></i>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
@@ -392,14 +392,14 @@ $(function() {
 		<thead>
 			<tr class="noBorderHor">
 				<th class="thGrid">
-					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<tag:msg key="fwk.notice.title.selectToDelete"/>"></i>
+					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.notice.title.selectToDelete"/>"></i>
 				</th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="fwk.bbs.dataGridHeader.subject"/></th>
-				<th class="thGrid"><tag:msg key="fwk.bbs.dataGridHeader.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><tag:msg key="fwk.bbs.dataGridHeader.writer"/></th>
-				<th class="thGrid sortable:date"><tag:msg key="fwk.bbs.dataGridHeader.createdDate"/></th>
-				<th class="thGrid sortable:numeric"><tag:msg key="fwk.bbs.dataGridHeader.visitCount"/></th>
-				<th class="thGrid"><tag:msg key="page.com.action"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.dataGridHeader.subject"/></th>
+				<th class="thGrid"><mc:msg key="fwk.bbs.dataGridHeader.file"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.dataGridHeader.writer"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.bbs.dataGridHeader.createdDate"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="fwk.bbs.dataGridHeader.visitCount"/></th>
+				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -444,7 +444,7 @@ $(function() {
 				<td class="tdGridCt"><%=resultDataSet.getValue(i, "CREATED_DATE")%></td>
 				<td class="tdGridRt"><%=CommonUtil.getNumberMask(resultDataSet.getValue(i, "VISIT_CNT"))%></td>
 				<td class="tdGridCt">
-					<i id="icnAction" name="icnAction" class="fa fa-tasks fa-lg icnEn" articleId="<%=resultDataSet.getValue(i, "ARTICLE_ID")%>" onclick="doAction(this)" title="<tag:msg key="page.com.action"/>"></i>
+					<i id="icnAction" name="icnAction" class="fa fa-tasks fa-lg icnEn" articleId="<%=resultDataSet.getValue(i, "ARTICLE_ID")%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
 				</td>
 			</tr>
 <%
@@ -452,7 +452,7 @@ $(function() {
 		} else {
 %>
 			<tr class="noBorderHor noStripe">
-				<td class="tdGridCt" colspan="7"><tag:msg key="<%=msgCode%>"/></td>
+				<td class="tdGridCt" colspan="7"><mc:msg key="<%=msgCode%>"/></td>
 			</tr>
 <%
 		}
@@ -460,7 +460,7 @@ $(function() {
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"><tag:pagination totalRows="<%=paramEntity.getTotalResultRows()%>" script="doSearch"/></div>
+<div id="divPagingArea" class="areaContainer"><ui:pagination totalRows="<%=paramEntity.getTotalResultRows()%>" script="doSearch"/></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

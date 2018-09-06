@@ -163,7 +163,7 @@ $(function() {
 				String selected = (CommonUtil.equals(menuId, selectedHeaderMenuHeaderPage)) ? "Selected" : "";
 %>
 				<div id="div<%=menuId%>" class="headerMainMenus<%=selected%>" onclick="doMainMenu('<%=menuId%>', '<%=menuName%>', '<%=menuUrl%>')">
-					<a style="background:url(<tag:cp key="imgThemeCom"/>/<%=icon%>_<tag:cp key="headMainMenuIconColor"/>.png) no-repeat 0px 0px"><%=menuName%></a>
+					<a style="background:url(<mc:cp key="imgThemeCom"/>/<%=icon%>_<mc:cp key="headMainMenuIconColor"/>.png) no-repeat 0px 0px"><%=menuName%></a>
 				</div>
 <%
 			}

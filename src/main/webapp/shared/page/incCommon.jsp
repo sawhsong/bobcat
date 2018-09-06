@@ -6,7 +6,6 @@
 <%@ page import="zebra.example.conf.resource.ormapper.dto.oracle.*"%>
 <%@ page import="project.common.module.commoncode.*"%>
 <%@ page import="project.common.module.menu.*"%>
-<%@ page import="project.common.module.datahelper.*"%>
 <%@ page import="project.conf.resource.ormapper.dto.oracle.*"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -14,7 +13,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%@ taglib uri="/WEB-INF/tld/taglibs.tld" prefix="tag"%>
+
+<%@ taglib uri="/WEB-INF/tld/tagui.tld" prefix="ui"%>
+<%@ taglib uri="/WEB-INF/tld/tagmc.tld" prefix="mc"%>
 <%/************************************************************************************************
 * Auto set Search Criteria
 ************************************************************************************************/%>
