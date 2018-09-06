@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
 import project.conf.resource.ormapper.dao.SysCountryCurrency.SysCountryCurrencyDao;
-import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
-import project.conf.resource.ormapper.dao.UsrEmployee.UsrEmployeeDao;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -20,10 +18,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 	private SysUserDao sysUserDao;
 	@Autowired
 	private SysCountryCurrencyDao sysCountryCurrencyDao;
-	@Autowired
-	private SysOrgDao sysOrgDao;
-	@Autowired
-	private UsrEmployeeDao usrEmployeeDao;
 
 	public ParamEntity getUserId(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
@@ -109,7 +103,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		try {
 			queryAdvisor.addAutoFillCriteria(inputValue, "(lower(legal_name) like lower('"+inputValue+"%') or lower(trading_name) like lower('"+inputValue+"%'))");
 			queryAdvisor.addOrderByClause("legal_name");
-			paramEntity.setAjaxResponseDataSet(sysOrgDao.getOrgNameDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -125,7 +118,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		try {
 			queryAdvisor.addAutoFillCriteria(inputValue, "abn like '"+inputValue+"%'");
 			queryAdvisor.addOrderByClause("abn");
-			paramEntity.setAjaxResponseDataSet(sysOrgDao.getAbnDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -141,7 +133,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		try {
 			queryAdvisor.addAutoFillCriteria(inputValue, "(lower(legal_name) like lower('"+inputValue+"%') or lower(trading_name) like lower('"+inputValue+"%'))");
 			queryAdvisor.addOrderByClause("legal_name");
-			paramEntity.setAjaxResponseDataSet(sysOrgDao.getOrgIdDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -160,7 +151,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 			queryAdvisor.addAutoFillCriteria(orgId, "org_id = '"+orgId+"'");
 			queryAdvisor.addAutoFillCriteria(inputValue, "lower(surname) like lower('%"+inputValue+"%')");
 			queryAdvisor.addOrderByClause("surname");
-			paramEntity.setAjaxResponseDataSet(usrEmployeeDao.getEmployeeSurnameDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -179,7 +169,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 			queryAdvisor.addAutoFillCriteria(orgId, "org_id = '"+orgId+"'");
 			queryAdvisor.addAutoFillCriteria(inputValue, "lower(given_name) like lower('%"+inputValue+"%')");
 			queryAdvisor.addOrderByClause("given_name");
-			paramEntity.setAjaxResponseDataSet(usrEmployeeDao.getEmployeeGivenNameDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

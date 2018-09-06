@@ -8,7 +8,6 @@ package project.app.login;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseAction;
-import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
@@ -39,7 +38,6 @@ public class LoginAction extends BaseAction {
 
 			if (paramEntity.isSuccess()) {
 				SysUser sysUser = (SysUser)paramEntity.getObject("sysUser");
-				SysOrg sysOrg = (SysOrg)paramEntity.getObject("sysOrg");
 
 				session.setAttribute("UserId", sysUser.getUserId());
 				session.setAttribute("UserName", sysUser.getUserName());
@@ -49,13 +47,6 @@ public class LoginAction extends BaseAction {
 				session.setAttribute("maxRowsPerPage", CommonUtil.toString(sysUser.getMaxRowPerPage(), "###"));
 				session.setAttribute("pageNumsPerPage", CommonUtil.toString(sysUser.getPageNumPerPage(), "###"));
 				session.setAttribute("SysUser", sysUser);
-				session.setAttribute("SysOrg", sysOrg);
-				session.setAttribute("OrgLegalName", sysOrg.getLegalName());
-				session.setAttribute("OrgCategory", sysOrg.getOrgCategory());
-				session.setAttribute("DefaultPeriodYear", paramEntity.getObject("defaultPeriodYear"));
-				session.setAttribute("DefaultFinancialYear", paramEntity.getObject("defaultFinancialYear"));
-				session.setAttribute("DefaultQuarterCode", paramEntity.getObject("defaultQuarterCode"));
-				session.setAttribute("DefaultQuarterName", paramEntity.getObject("defaultQuarterName"));
 
 				paramEntity.setAjaxResponseDataSet(sysUser.getDataSet());
 			}
@@ -140,16 +131,11 @@ public class LoginAction extends BaseAction {
 
 			if (paramEntity.isSuccess()) {
 				SysUser sysUserForAdminTool = (SysUser)paramEntity.getObject("sysUserForAdminTool");
-				SysOrg sysOrgForAdminTool = (SysOrg)paramEntity.getObject("sysOrgForAdminTool");
 
 				session.setAttribute("UserIdForAdminTool", sysUserForAdminTool.getUserId());
 				session.setAttribute("UserNameForAdminTool", sysUserForAdminTool.getUserName());
 				session.setAttribute("LoginIdForAdminTool", sysUserForAdminTool.getLoginId());
 				session.setAttribute("SysUserForAdminTool", sysUserForAdminTool);
-				session.setAttribute("SysOrgForAdminTool", sysOrgForAdminTool);
-				session.setAttribute("OrgLegalNameForAdminTool", paramEntity.getObject("orgLegalNameForAdminTool"));
-				session.setAttribute("OrgCategoryForAdminTool", paramEntity.getObject("orgCategoryForAdminTool"));
-				session.setAttribute("OrgCategoryDescForAdminTool", paramEntity.getObject("orgCategoryDescForAdminTool"));
 			}
 		} catch (Exception ex) {
 		}

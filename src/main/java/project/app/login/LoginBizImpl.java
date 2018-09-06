@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
-import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
-import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
-import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
@@ -24,10 +20,6 @@ import zebra.util.FileUtil;
 public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	@Autowired
 	private SysUserDao sysUserDao;
-	@Autowired
-	private SysOrgDao sysOrgDao;
-	@Autowired
-	private SysFinancialPeriodDao sysFinancialPeriodDao;
 	@Autowired
 	private LoginMessageSender loginMessageSender;
 
@@ -137,7 +129,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	public ParamEntity exeLogin(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		SysUser sysUser = new SysUser();
-		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
 		String loginId = requestDataSet.getValue("loginId");
 		String password = requestDataSet.getValue("password");
 
@@ -154,12 +145,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 				throw new FrameworkException("E908", getMessage("E908", paramEntity));
 			}
 
-			sysFinancialPeriod = sysFinancialPeriodDao.getCurrentFinancialPeriod();
-
-			paramEntity.setObject("defaultPeriodYear", sysFinancialPeriod.getPeriodYear());
-			paramEntity.setObject("defaultFinancialYear", sysFinancialPeriod.getFinancialYear());
-			paramEntity.setObject("defaultQuarterCode", sysFinancialPeriod.getQuarterCode());
-			paramEntity.setObject("defaultQuarterName", sysFinancialPeriod.getQuarterName());
 			paramEntity.setObject("sysUser", sysUser);
 
 			paramEntity.setSuccess(true);
@@ -243,29 +228,19 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	public ParamEntity setSessionValuesForAdminTool(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		SysUser sysUser = new SysUser();
-		SysOrg sysOrg = new SysOrg();
 		String userId = requestDataSet.getValue("userId");
-		String orgCategoryDesc = "";
 		DataSet resultDataSet = new DataSet();
 
 		try {
 			sysUser = sysUserDao.getUserByUserId(userId);
 
-			orgCategoryDesc = CommonCodeManager.getCodeDescription("ORG_CATEGORY", sysOrg.getOrgCategory());
-
 			paramEntity.setObject("sysUserForAdminTool", sysUser);
-			paramEntity.setObject("sysOrgForAdminTool", sysOrg);
-			paramEntity.setObject("orgLegalNameForAdminTool", sysOrg.getLegalName());
-			paramEntity.setObject("orgCategoryForAdminTool", sysOrg.getOrgCategory());
-			paramEntity.setObject("orgCategoryDescForAdminTool", orgCategoryDesc);
 
 			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "org_category_desc"});
 			resultDataSet.addRow();
 			resultDataSet.setValue("user_id", sysUser.getUserId());
 			resultDataSet.setValue("user_name", sysUser.getUserName());
 			resultDataSet.setValue("login_id", sysUser.getLoginId());
-			resultDataSet.setValue("org_name", sysOrg.getLegalName());
-			resultDataSet.setValue("org_category_desc", orgCategoryDesc);
 
 			paramEntity.setAjaxResponseDataSet(resultDataSet);
 			paramEntity.setSuccess(true);
