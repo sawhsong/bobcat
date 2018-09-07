@@ -13,9 +13,12 @@ public class TaglibUtil extends CommonUtil {
 		if (CommonUtil.startsWith(value, "<mc:cp key=")) {
 			key = CommonUtil.substringAfter(value, "=");
 			key = CommonUtil.substringBefore(key, "/>");
+
+			confPropValue = ConfigUtil.getProperty(key);
+			str = CommonUtil.replacePattern(value, "<(.*)>", confPropValue);
+		} else {
+			str = value;
 		}
-		confPropValue = ConfigUtil.getProperty(key);
-		str = CommonUtil.replacePattern(value, "<(.*)>", confPropValue);
 
 		return str;
 	}
