@@ -173,11 +173,11 @@ $(function() {
 		</div>
 		<div class="panel-body">
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-user addonIcon"></i></div>
-				<input type="text" id="loginId" name="loginId" value="" class="form-control" placeholder="LOGIN ID" checkName="<mc:msg key="login.header.loginId"/>" mandatory/>
+				<div class="input-group-addon"><ui:icon className="fa-user addonIcon"/></div>
+				<ui:text id="loginId" name="loginId" className="form-control" style="padding:6px 12px" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-lock addonIcon"></i></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
 				<input type="password" id="password" name="password" value="" class="form-control" placeholder="PASSWORD" checkName="<mc:msg key="login.header.password"/>" mandatory/>
 			</div>
 			<div class="buttonDiv">

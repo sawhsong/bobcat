@@ -134,7 +134,7 @@ label.block {display:block;padding-top:4px;padding-bottom:4px;width:5px;white-sp
 .lblDis, .lblTxtDis, .lblTxaDis {cursor:default;}
 
 /* Enabled */
-.txtEn, .txtEnLt, .txtEnCt, .txtEnRt {display:block;padding:6px 4px;width:100%;border-radius:3px;
+.txtEn {display:block;padding:6px 4px;width:100%;border-radius:3px;
 	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 			box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 	-webkit-transition:border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -144,29 +144,23 @@ label.block {display:block;padding-top:4px;padding-bottom:4px;width:5px;white-sp
 	background-color:#ffffff;
 	background-image:none;
 }
-.txtEn:hover, .txtEn:focus, .txtEnLt:hover, .txtEnLt:focus, .txtEnCt:hover, .txtEnCt:focus, .txtEnRt:hover, .txtEnRt:focus {outline:0;
+.txtEn:hover, .txtEn:focus {outline:0;
 	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1), 0 0 4px rgba(102, 175, 233, .5);
 			box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1), 0 0 4px rgba(102, 175, 233, .5);
 	border-color:#66afe9;
 }
-.txtEn, .txtEnLt {text-align:left;}
-.txtEnCt {text-align:center;}
-.txtEnRt {text-align:right;}
 
 /* Display */
-.txtDpl, .txtDplLt, .txtDplCt, .txtDplRt {display:block;padding:7px 4px;width:100%;border-radius:3px;
+.txtDpl {display:block;padding:7px 4px;width:100%;border-radius:3px;
 	color:#212121;
 	border:0px solid #CCCCCC;
 	background-color:transparent;
 	background-image:none;
 }
-.txtDpl:focus, .txtDplLt:focus, .txtDplCt:focus, .txtDplRt:focus {outline:0px;}
-.txtDpl, .txtDplLt {text-align:left;}
-.txtDplCt {text-align:center;}
-.txtDplRt {text-align:right;}
+.txtDpl:focus {outline:0px;}
 
 /* Disabled / Readonly */
-.txtDis, .txtDisLt, .txtDisCt, .txtDisRt {display:block;padding:6px 4px;width:100%;border-radius:3px;opacity:0.6;
+.txtDis {display:block;padding:6px 4px;width:100%;border-radius:3px;opacity:0.6;
 	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 			box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 	-webkit-transition:border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -176,16 +170,13 @@ label.block {display:block;padding-top:4px;padding-bottom:4px;width:5px;white-sp
 	background-color:#ffffff;
 	background-image:none;
 }
-.txtDis:focus, .txtDisLt:focus, .txtDisCt:focus, .txtDisRt:focus {outline:0px;}
-.txtDis, .txtDisLt {text-align:left;}
-.txtDisCt {text-align:center;}
-.txtDisRt {text-align:right;}
+.txtDis:focus {outline:0px;}
 
 /**
  * Textarea
  */
 /* Enabled */
-.txaEn, .txaEnLt, .txaEnCt, .txaRt {display:block;padding:6px 4px;width:100%;border-radius:3px;
+.txaEn {display:block;padding:6px 4px;width:100%;border-radius:3px;
 	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 			box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 	-webkit-transition:border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -200,24 +191,18 @@ label.block {display:block;padding-top:4px;padding-bottom:4px;width:5px;white-sp
 			box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1), 0 0 4px rgba(102, 175, 233, .5);
 	border-color:#66afe9;
 }
-.txaEn, .txaEnLt {text-align:left;}
-.txaEnCt {text-align:center;}
-.txaEnRt {text-align:right;}
 
 /* Display */
-.txaDpl, .txaDplLt, .txaDplCt, .txaDplRt {display:block;padding:7px 4px;width:100%;
+.txaDpl {display:block;padding:7px 4px;width:100%;
 	color:#212121;
 	border:0px solid #CCCCCC;
 	background-color:transparent;
 	background-image:none;
 }
-.txaDpl:focus, .txaDplLt:focus, .txaDplCt:focus, .txaDplRt:focus {outline:0px;}
-.txaDpl, .txaDplLt {text-align:left;}
-.txaDplCt {text-align:center;}
-.txaDplRt {text-align:right;}
+.txaDpl:focus {outline:0px;}
 
 /* Disabled / Readonly */
-.txaDis, .txaDisLt, .txaDisCt, .txaDisRt {display:block;padding:6px 4px;width:100%;border-radius:3px;opacity:0.6;
+.txaDis {display:block;padding:6px 4px;width:100%;border-radius:3px;opacity:0.6;
 	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 			box-shadow:inset 0 1px 1px rgba(0, 0, 0, .1);
 	-webkit-transition:border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -227,10 +212,7 @@ label.block {display:block;padding-top:4px;padding-bottom:4px;width:5px;white-sp
 	background-color:#ffffff;
 	background-image:none;
 }
-.txaDis:focus, .txaDisLt:focus, .txaDisCt:focus, .txaDisRt:focus {outline:0px;}
-.txaDis, .txaDisLt {text-align:left;}
-.txaDisCt {text-align:center;}
-.txaDisRt {text-align:right;}
+.txaDis:focus {outline:0px;}
 
 
 /**

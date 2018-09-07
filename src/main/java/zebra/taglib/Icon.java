@@ -5,17 +5,14 @@ import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
-import zebra.util.TaglibUtil;
 
-public class Image extends TaglibSupport {
+public class Icon extends TaglibSupport {
 	private String id;
-	private String src;
 	private String name;
 	private String title;
 	private String className;
 	private String style;
 	private String script;
-	private String status;
 
 	public int doStartTag() {
 		try {
@@ -25,27 +22,26 @@ public class Image extends TaglibSupport {
 			StringBuffer html = new StringBuffer();
 			String classNamePrefix = "";
 
-			src = TaglibUtil.getMccpValue(src);
+			html.append("<i");
 
-			if (CommonUtil.isNotBlank(status)) {
-				if (!CommonUtil.equalsIgnoreCase(status, "disabled")) {classNamePrefix = "imgEn";}
-				else {classNamePrefix = "imgDis";}
-			}
-
-			html.append("<img id=\""+id+"\" src=\""+src+"\"");
-
+			if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
 			if (CommonUtil.isNotBlank(name)) {html.append(" name=\""+name+"\"");}
 			if (CommonUtil.isNotBlank(title)) {
 				title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 				html.append(" title=\""+title+"\"");
 			}
-			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+classNamePrefix+" "+className+"\"");}
-			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
-			if (CommonUtil.isNotBlank(script)) {
-				if (!CommonUtil.containsIgnoreCase(status, "disabled")) {html.append(" onclick=\""+script+"\"");}
+			if (CommonUtil.isNotBlank(className)) {
+				if (CommonUtil.startsWithIgnoreCase(className, "fa-")) {
+					classNamePrefix = "fa fa-lg";
+				} else if (CommonUtil.startsWithIgnoreCase(className, "glyphicon-")) {
+					classNamePrefix = "glyphicon";
+				}
+				html.append(" class=\""+classNamePrefix+" "+className+"\"");
 			}
+			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
+			if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
-			html.append("/>");
+			html.append("></i>");
 
 			jspWriter.print(html.toString());
 		} catch (Exception ex) {
@@ -64,14 +60,6 @@ public class Image extends TaglibSupport {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getSrc() {
-		return src;
-	}
-
-	public void setSrc(String src) {
-		this.src = src;
 	}
 
 	public String getName() {
@@ -112,13 +100,5 @@ public class Image extends TaglibSupport {
 
 	public void setScript(String script) {
 		this.script = script;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 }
