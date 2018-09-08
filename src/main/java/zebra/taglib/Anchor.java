@@ -28,7 +28,7 @@ public class Anchor extends TaglibSupport {
 			html.append("<a");
 
 			if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
-			if (CommonUtil.isNotBlank(className)) {html.append(" className=\""+className+"\"");}
+			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(script)) {
 				if (!CommonUtil.containsIgnoreCase(status, "disabled")) {html.append(" onclick=\""+script+"\"");}

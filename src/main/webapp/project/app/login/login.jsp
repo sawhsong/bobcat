@@ -25,30 +25,18 @@
 <style type="text/css">
 body {background:#FFFFFF;}
 .logoImage {margin:0px auto;width:100%;text-align:center;}
-.logoImage img {margin-top:5%;}
+.logoImage img {margin-top:10%;}
 .loginPanel {margin:0px auto;width:100%;text-align:center;}
 .panelLogin {margin-top:10px;display:inline-block;width:360px;border:1px solid #D1D1D1;box-shadow:0px 0px 10px rgba(0, 0, 0, .2);}
 .panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;}
 .loginBoxtTitle {background:url(<mc:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
 .panel-body {padding:25px 25px 20px 25px;}
 .addonIcon {width:16px;}
-.input-group {padding-bottom:4px;}
-.buttonDiv {padding-top:18px;padding-bottom:0px;}
+.input-group {padding-bottom:8px;}
+.buttonDiv {padding-top:16px;padding-bottom:0px;}
 .additionalLink {padding-top:20px;font-size:13px;}
 .passwordLink {float:left;width:50%;text-align:left;}
 .registerLink {float:right;width:50%;text-align:right;}
-
-.loginDescriptionArea {margin:0px auto;width:700px;text-align:center;color:#555555;font-size:12px;
-/* 	border-radius:6px;box-shadow:0px 10px 20px rgba(0, 0, 0, .2); */
-/* 	background:url(<mc:cp key="imgIcon"/>/loginBack.png) no-repeat 50% 0%; */
-/* 	background-size:700px 500px; */
-/* 	background-blend-mode:overlay; */
-}
-.loginDescriptionArea .panel-heading {background-color:#ffffff;}
-.loginDescriptionTitle {padding-top:4px;padding-left:4px;text-align:left;font-size:14px;height:26px;font-weight:bold;}
-.loginDescription {margin:30px 10px 30px 10px;display:inline-block;width:560px;border-top:1px solid #D1D1D1;box-shadow:0px 0px 20px rgba(0, 0, 0, .2);}
-.loginDescriptionArea .panel-body {padding:15px 15px 15px 15px;text-align:left;}
-.descContents {line-height:180%;}
 </style>
 <script type="text/javascript">
 globalMap.put("noLayoutWindow", true);
@@ -97,7 +85,7 @@ $(function() {
 					var result = commonJs.parseAjaxResult(data, textStatus, "json");
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						var dataSet = result.dataSet;
-						var actionString = "/index/index.do";
+						var actionString = "/index/dashboard.do";
 
 						commonJs.openDialog({
 							type:"information",
@@ -185,62 +173,12 @@ $(function() {
 			</div>
 			<div class="additionalLink">
 				<div class="passwordLink">
-					<ui:anchor id="aResetPassword" class="aNormal aEn"/>
-					<a id="aResetPassword" class="aNormal aEn"><mc:msg key="login.button.resetPassword"/></a>
+					<ui:anchor id="aResetPassword" caption="login.button.resetPassword" className="aEn"/>
 				</div>
 				<div class="registerLink">
-					<a id="aRequestRegister" class="aNormal aEn"><mc:msg key="login.button.requestRegister"/></a>
+					<ui:anchor id="aRequestRegister" caption="login.button.requestRegister" className="aEn"/>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-<div id="divDescriptionArea" class="loginDescriptionArea">
-	<div class="panel panel-default loginDescription">
-		<div class="panel-heading">
-			<h3 class="panel-title loginDescriptionTitle"><mc:msg key="login.message.descHeader"/></h3>
-		</div>
-		<div class="panel-body descContents">
-			<table class="tblDefault withPadding" style="width:100%;">
-				<colgroup>
-					<col width="100%"/>
-				</colgroup>
-				<tr>
-					<td class="tdDefault"><mc:msg key="login.message.description"/></td>
-				</tr>
-			</table>
-			<div class="verGap10"></div>
-			<table class="tblDefault withPadding" style="width:100%;">
-				<colgroup>
-					<col width="25%"/>
-					<col width="75%"/>
-				</colgroup>
-				<tr>
-					<th class="thDefault"><mc:msg key="login.header.accountant"/></th>
-					<td class="tdDefault"><mc:msg key="login.header.accountantName"/></td>
-				</tr>
-				<tr>
-					<th class="thDefault"><mc:msg key="login.header.email"/></th>
-					<td class="tdDefault"><mc:msg key="login.header.emailValue"/></td>
-				</tr>
-				<tr>
-					<th class="thDefault"><mc:msg key="login.header.tel"/></th>
-					<td class="tdDefault"><mc:msg key="login.header.telValue"/></td>
-				</tr>
-				<tr>
-					<th class="thDefault"><mc:msg key="login.header.fax"/></th>
-					<td class="tdDefault"><mc:msg key="login.header.faxValue"/></td>
-				</tr>
-			</table>
-			<div class="verGap10"></div>
-			<table class="tblDefault withPadding" style="width:100%;">
-				<colgroup>
-					<col width="100%"/>
-				</colgroup>
-				<tr>
-					<td class="tdDefault"><mc:msg key="I990"/></td>
-				</tr>
-			</table>
 		</div>
 	</div>
 </div>
