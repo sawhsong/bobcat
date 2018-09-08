@@ -178,13 +178,14 @@ $(function() {
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
-				<input type="password" id="password" name="password" value="" class="form-control" placeholder="PASSWORD" checkName="<mc:msg key="login.header.password"/>" mandatory/>
+				<ui:password id="password" name="password" className="form-control" style="padding:6px 12px" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="buttonDiv">
 				<ui:button id="btnLogin" type="success" caption="login.button.login" iconClass="fa-key" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
 			</div>
 			<div class="additionalLink">
 				<div class="passwordLink">
+					<ui:anchor id="aResetPassword" class="aNormal aEn"/>
 					<a id="aResetPassword" class="aNormal aEn"><mc:msg key="login.button.resetPassword"/></a>
 				</div>
 				<div class="registerLink">

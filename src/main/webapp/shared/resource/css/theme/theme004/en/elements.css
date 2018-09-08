@@ -9,6 +9,7 @@
 
 /* Anchor */
 .aEn {cursor:pointer;}
+.aDis {cursor:default;}
 
 /* jQuery Accordion related elements */
 .accordionContents {}

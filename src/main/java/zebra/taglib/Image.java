@@ -23,27 +23,19 @@ public class Image extends TaglibSupport {
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String classNamePrefix = "";
 
-			src = TaglibUtil.getMccpValue(src);
+			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 
-			if (CommonUtil.isNotBlank(status)) {
-				if (!CommonUtil.equalsIgnoreCase(status, "disabled")) {classNamePrefix = "imgEn";}
-				else {classNamePrefix = "imgDis";}
-			}
-
-			html.append("<img id=\""+id+"\" src=\""+src+"\"");
+			html.append("<img id=\""+id+"\" src=\""+TaglibUtil.getMccpValue(src)+"\"");
 
 			if (CommonUtil.isNotBlank(name)) {html.append(" name=\""+name+"\"");}
-			if (CommonUtil.isNotBlank(title)) {
-				title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
-				html.append(" title=\""+title+"\"");
-			}
-			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+classNamePrefix+" "+className+"\"");}
+			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
+			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(script)) {
 				if (!CommonUtil.containsIgnoreCase(status, "disabled")) {html.append(" onclick=\""+script+"\"");}
 			}
+			if (CommonUtil.isNotBlank(status)) {html.append(" "+status+"");}
 
 			html.append("/>");
 

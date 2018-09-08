@@ -28,17 +28,12 @@ public class Text extends TaglibSupport {
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String classNamePrefix = "", scriptStr = "";
+			String scriptStr = "";
 			String scripts[], eventFunc[];
 
-			if (CommonUtil.containsIgnoreCase(status, "disabled") || CommonUtil.containsIgnoreCase(options, "disabled") ||
-				CommonUtil.containsIgnoreCase(status, "readonly") || CommonUtil.containsIgnoreCase(options, "readonly")) {
-				classNamePrefix = "txtDis";
-			} else if (CommonUtil.containsIgnoreCase(status, "display") || CommonUtil.containsIgnoreCase(options, "display")) {
-				classNamePrefix = "txtDpl";
-			} else {
-				classNamePrefix = "txtEn";
-			}
+			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
+			placeHolder = CommonUtil.containsIgnoreCase(placeHolder, ".") ? getMessage(placeHolder, langCode) : placeHolder;
+			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
 
 			if (CommonUtil.isNotBlank(script)) {
 				scripts = CommonUtil.split(script, ";");
@@ -50,22 +45,13 @@ public class Text extends TaglibSupport {
 
 			html.append("<input type=\"text\" id=\""+id+"\" name=\""+name+"\"");
 
-			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+classNamePrefix+" "+className+"\"");}
+			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(value)) {html.append(" value=\""+value+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(scriptStr)) {html.append(" "+scriptStr+"");}
-			if (CommonUtil.isNotBlank(title)) {
-				title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
-				html.append(" title=\""+title+"\"");
-			}
-			if (CommonUtil.isNotBlank(placeHolder)) {
-				placeHolder = CommonUtil.containsIgnoreCase(placeHolder, ".") ? getMessage(placeHolder, langCode) : placeHolder;
-				html.append(" placeholder=\""+placeHolder+"\"");
-			}
-			if (CommonUtil.isNotBlank(checkName)) {
-				checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
-				html.append(" checkName=\""+checkName+"\"");
-			}
+			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
+			if (CommonUtil.isNotBlank(placeHolder)) {html.append(" placeholder=\""+placeHolder+"\"");}
+			if (CommonUtil.isNotBlank(checkName)) {html.append(" checkName=\""+checkName+"\"");}
 			if (CommonUtil.isNotBlank(maxbyte)) {html.append(" maxbyte=\""+maxbyte+"\"");}
 			if (CommonUtil.isNotBlank(minbyte)) {html.append(" minbyte=\""+minbyte+"\"");}
 			if (CommonUtil.isNotBlank(checkFlag)) {html.append(" checkFlag=\""+checkFlag+"\"");}
