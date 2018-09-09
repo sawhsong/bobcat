@@ -17,4 +17,9 @@ public class IndexAction extends BaseAction {
 		biz.index(paramEntity);
 		return SUCCESS;
 	}
+
+	public String dashboard() throws Exception {
+		biz.dashboard(paramEntity);
+		return "dashboard";
+	}
 }

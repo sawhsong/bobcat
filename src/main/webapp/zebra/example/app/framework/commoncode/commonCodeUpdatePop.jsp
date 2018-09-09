@@ -265,7 +265,7 @@ $(function() {
 			</td>
 			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
-				<ui:radio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
+				<ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
 			</td>
 		</tr>
 		<tr>
@@ -329,7 +329,7 @@ $(function() {
 					</td>
 					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 					<td class="tdEdit">
-						<ui:radio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
+						<ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
 					</td>
 					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 					<td class="tdEdit">
@@ -383,7 +383,7 @@ $(function() {
 			</td>
 			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
-				<ui:radio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
+				<ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
 			</td>
 			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 			<td class="tdEdit">

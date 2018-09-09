@@ -19,6 +19,7 @@ public class Text extends TaglibSupport {
 	private String maxbyte;
 	private String minbyte;
 	private String checkFlag;
+	private String option;
 	private String options;
 	private String status;
 
@@ -55,6 +56,7 @@ public class Text extends TaglibSupport {
 			if (CommonUtil.isNotBlank(maxbyte)) {html.append(" maxbyte=\""+maxbyte+"\"");}
 			if (CommonUtil.isNotBlank(minbyte)) {html.append(" minbyte=\""+minbyte+"\"");}
 			if (CommonUtil.isNotBlank(checkFlag)) {html.append(" checkFlag=\""+checkFlag+"\"");}
+			if (CommonUtil.isNotBlank(option)) {html.append(" option=\""+options+"\"");}
 			if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 
 			html.append("/>");
@@ -164,6 +166,14 @@ public class Text extends TaglibSupport {
 
 	public void setCheckFlag(String checkFlag) {
 		this.checkFlag = checkFlag;
+	}
+
+	public String getOption() {
+		return option;
+	}
+
+	public void setOption(String option) {
+		this.option = option;
 	}
 
 	public String getOptions() {

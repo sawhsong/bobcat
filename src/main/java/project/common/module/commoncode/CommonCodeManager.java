@@ -67,6 +67,18 @@ public class CommonCodeManager extends BaseBiz implements CommonCodeManagerBiz {
 		return ds;
 	}
 
+	public static String getCodeMeaning(String codeType, String comCode) throws Exception {
+		DataSet ds = new DataSet();
+		String str = "";
+
+		if (CommonUtil.isNotBlank(codeType) && CommonUtil.isNotBlank(comCode)) {
+			ds = getCodeDataSetByCodeType(codeType);
+			str = ds.getValue(ds.getRowIndex("COMMON_CODE", comCode), "CODE_MEANING");
+		}
+
+		return str;
+	}
+
 	public static String getCodeDescription(String langCode, String codeType, String comCode) throws Exception {
 		DataSet ds = new DataSet();
 		String str = "";

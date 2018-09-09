@@ -171,7 +171,7 @@ $(function() {
 			<th class="thEdit"><mc:msg key="fwk.commoncode.header.codeType"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></td>
 			<th class="thEdit"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit"><ui:radio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
+			<td class="tdEdit"><ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
@@ -215,7 +215,7 @@ $(function() {
 					<th class="thEdit"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
 					<th class="thEdit"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-					<td class="tdEdit"><ui:radio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
+					<td class="tdEdit"><ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
 					<th class="thEdit"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
 				</tr>

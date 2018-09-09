@@ -164,21 +164,21 @@ $(function() {
 		<tr>
 			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.dataType"/></th>
 			<td class="tdEdit">
-				<ui:select id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" selectedValue="<%=zebraDomainDictionary.getDataType()%>" options="mandatory" source="framework"/>
+				<ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" selectedValue="<%=zebraDomainDictionary.getDataType()%>" options="mandatory" source="framework"/>
 			</td>
 			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
 			<td class="tdEdit">
-				<ui:select id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
 			<td class="tdEdit">
-				<ui:select id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:ccselect id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
 			<td class="tdEdit">
-				<ui:select id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:ccselect id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>

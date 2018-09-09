@@ -104,24 +104,24 @@ $(function() {
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-credit-card addonIcon"></i></div>
-				<input type="text" id="userName" name="userName" class="form-control" placeholder="USER NAME" checkName="<mc:msg key="login.header.userName"/>" mandatory/>
+				<div class="input-group-addon"><ui:icon className="fa-credit-card addonIcon"/></div>
+				<ui:text id="userName" name="userName" className="form-control" placeHolder="login.header.userName" checkName="login.header.userName" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-user addonIcon"></i></div>
-				<input type="text" id="loginId" name="loginId" class="form-control" placeholder="LOGIN ID" checkName="<mc:msg key="login.header.loginId"/>" mandatory/>
+				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-user addonIcon"/></div>
+				<ui:text id="loginId" name="loginId" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-lock addonIcon"></i></div>
-				<input type="password" id="password" name="password" class="form-control" placeholder="PASSWORD" checkName="<mc:msg key="login.header.password"/>" mandatory/>
+				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-lock addonIcon"/></div>
+				<ui:password id="password" name="password" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-lock addonIcon"></i></div>
-				<input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="CONFIRM PASSWORD" checkName="<mc:msg key="login.header.password"/>" mandatory/>
+				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-lock addonIcon"/></div>
+				<ui:password id="passwordConfirm" name="passwordConfirm" className="form-control" placeHolder="Confirm Password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-envelope addonIcon"></i></div>
-				<input type="text" id="email" name="email" class="form-control" placeholder="EMAIL" checkName="<mc:msg key="login.header.email"/>" mandatory option="email"/>
+				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-envelope addonIcon"/></div>
+				<ui:text id="email" name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
 			</div>
 			<label class="lblCheckEn block"><input type="checkbox" name="sendEmail" class="chkEn" value="Y" checked/><mc:msg key="login.label.sendMail"/></label>
 			<div class="buttonDiv">

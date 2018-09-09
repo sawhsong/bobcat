@@ -362,7 +362,7 @@ $(function() {
 				<tr>
 					<td class="tdDefault">
 						<label for="searchType" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchType"/></label>
-						<div style="float:left;padding-right:4px;"><ui:select id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/></div>
+						<div style="float:left;padding-right:4px;"><ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/></div>
 						<input type="text" id="searchWord" name="searchWord" class="txtEn hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">

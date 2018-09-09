@@ -103,12 +103,12 @@ $(function() {
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-user addonIcon"></i></div>
-				<input type="text" id="loginId" name="loginId" class="form-control" placeholder="LOGIN ID" checkName="<mc:msg key="login.header.loginId"/>" mandatory/>
+				<div class="input-group-addon"><ui:icon className="fa-user addonIcon"/></div>
+				<ui:text id="loginId" name="loginId" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><i class="fa fa-lg fa-envelope addonIcon"></i></div>
-				<input type="text" id="email" name="email" class="form-control" placeholder="EMAIL" checkName="<mc:msg key="login.header.email"/>" mandatory option="email"/>
+				<div class="input-group-addon"><ui:icon className="fa-envelope addonIcon"/></div>
+				<ui:text id="email" name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
 			</div>
 			<div class="buttonDiv">
 				<ui:button id="btnReset" type="warning" caption="login.button.emailResetpassword" iconClass="fa-send" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>

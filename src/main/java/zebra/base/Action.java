@@ -28,7 +28,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-//import project.common.module.commoncode.CommonCodeManager;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
@@ -89,7 +88,7 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 
 	protected String getMessage(String messageCode, ParamEntity paramEntity) {
 		String lang = (String)paramEntity.getSession().getAttribute("langCode");
-		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.nvl(lang, ConfigUtil.getProperty("etc.default.language"))));
+		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.nvl(lang, CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")))));
 	}
 
 	/*!
@@ -189,19 +188,11 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	/*!
 	 * 7. Session Map
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public void setSession(Map sessionMap) {
-		this.session = this.request.getSession();
-
-		for (Iterator iter = sessionMap.entrySet().iterator(); iter.hasNext();) {
-			Entry<String, String[]> entry = (Entry<String, String[]>)iter.next();
-			this.session.setAttribute(entry.getKey(), entry.getValue());
-		}
-
-		setAdditionalSessionAttributes();
-		setPersonalisedSessionAttributes();
 		logSession();
+
 		// To use session in service layer(Biz)
 		paramEntity.setSession(this.session);
 		paramEntity.setRequest(this.request);
@@ -210,6 +201,8 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 		paramEntity.setRequestFileDataSet(requestFileDataSet);
 
 		logParamEntity();
+
+		MemoryBean.set(session.getId(), session);
 	}
 
 	/*!
@@ -217,49 +210,6 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	 */
 	protected void setRequestAttribute(String attributeName, Object object) {
 		request.setAttribute(attributeName, object);
-	}
-
-	/*!
-	 * private methods - addtional setting
-	 */
-	private void setAdditionalSessionAttributes() {
-		String language = (String)this.session.getAttribute("langCode");
-		String themeId = (String)this.session.getAttribute("themeId");
-		String maxRowsPerPage = (String)this.session.getAttribute("maxRowsPerPage");
-		String pageNumsPerPage = (String)this.session.getAttribute("pageNumsPerPage");
-
-		try {
-			languageCode = CommonUtil.nvl(language, ConfigUtil.getProperty("etc.default.language"));
-			themeId = CommonUtil.nvl(themeId, ConfigUtil.getProperty("view.theme.default"));
-			maxRowsPerPage = CommonUtil.nvl(maxRowsPerPage, CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"))[2]);
-			pageNumsPerPage = CommonUtil.nvl(pageNumsPerPage, CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"))[0]);
-
-			this.session.setAttribute("frameworkName", ConfigUtil.getProperty("name.framework"));
-			this.session.setAttribute("projectName", ConfigUtil.getProperty("name.project"));
-			this.session.setAttribute("langCode", languageCode);
-			this.session.setAttribute("themeId", themeId);
-//			this.session.setAttribute("themeName", CommonCodeManager.getCodeDescription("USER_THEME_TYPE", themeId));
-			this.session.setAttribute("maxRowsPerPage", maxRowsPerPage);
-			this.session.setAttribute("pageNumsPerPage", pageNumsPerPage);
-
-			MemoryBean.set(this.session.getId(), this.session);
-		} catch (Exception ex) {
-			logger.error(ex);
-		}
-	}
-
-	private void setPersonalisedSessionAttributes() {
-		String themeId = (String)this.request.getParameter("themeId");
-
-		// Theme selectbox & theme attributes
-		if (CommonUtil.isNotBlank(themeId)) {
-			try {
-				this.session.setAttribute("themeId", themeId);
-//				this.session.setAttribute("themeName", CommonCodeManager.getCodeDescription("USER_THEME_TYPE", themeId));
-			} catch (Exception ex) {
-				logger.error(ex);
-			}
-		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -388,7 +338,7 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	}
 
 	/*!
-	 * getter - called by jsp(do not touch - very important!)
+	 * getter - called by jsp(do not change - very important!)
 	 */
 	public ParamEntity getParamEntity() {
 		return paramEntity;

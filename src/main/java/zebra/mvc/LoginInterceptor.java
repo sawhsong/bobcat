@@ -87,8 +87,8 @@ public class LoginInterceptor implements Interceptor {
 
 			session.setAttribute("frameworkName", ConfigUtil.getProperty("name.framework"));
 			session.setAttribute("projectName", ConfigUtil.getProperty("name.project"));
-			session.setAttribute("langCode", request.getLocale().getLanguage());
-			session.setAttribute("themeId", ConfigUtil.getProperty("view.theme.default"));
+			session.setAttribute("langCode", CommonUtil.lowerCase(request.getLocale().getLanguage()));
+			session.setAttribute("themeId", CommonUtil.lowerCase(ConfigUtil.getProperty("view.theme.default")));
 
 			return returnValue;
 		}

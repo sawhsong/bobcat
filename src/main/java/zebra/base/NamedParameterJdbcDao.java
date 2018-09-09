@@ -90,7 +90,7 @@ public class NamedParameterJdbcDao extends NamedParameterJdbcDaoSupport {
 
 	protected String getMessage(String messageCode, ParamEntity paramEntity) {
 		String lang = (String)paramEntity.getSession().getAttribute("langCode");
-		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.nvl(lang, ConfigUtil.getProperty("etc.default.language"))));
+		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.nvl(lang, CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")))));
 	}
 
 	/**

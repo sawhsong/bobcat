@@ -14,10 +14,10 @@ public class ConfigProperty extends TaglibSupport {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
-			String langCode = (String)httpSession.getAttribute("langCode");
+			String langCode = CommonUtil.lowerCase((String)httpSession.getAttribute("langCode"));
 			String frameworkName = ConfigUtil.getProperty("name.framework");
 			String projectName = ConfigUtil.getProperty("name.project");
-			String themeId = (String)httpSession.getAttribute("themeId");
+			String themeId = CommonUtil.lowerCase((String)httpSession.getAttribute("themeId"));
 			String rtnString = "";
 
 			rtnString = ConfigUtil.getProperty(getKey());

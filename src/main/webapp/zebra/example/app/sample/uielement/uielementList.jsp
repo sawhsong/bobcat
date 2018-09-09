@@ -659,7 +659,7 @@ $(function() {
 							<th class="thEdit">Bootstrap Radio inline</th>
 							<td class="tdEdit">
 								<label class="radio-inline"><input type="radio" name="rdoBootstrapInline" value="rdoBootstrapInline0">rdoBootstrapInline0</label>
-								<label class="radio-inline disabled" ><input type="radio" name="rdoBootstrapInline" value="rdoBootstrapInline1" disabled>rdoBootstrapInline1</label>
+								<label class="radio-inline disabled"><input type="radio" name="rdoBootstrapInline" value="rdoBootstrapInline1" disabled>rdoBootstrapInline1</label>
 								<label class="radio-inline"><input type="radio" name="rdoBootstrapInline" value="rdoBootstrapInline2">rdoBootstrapInline2</label>
 							</td>
 						</tr>
@@ -910,22 +910,22 @@ $(function() {
 						<tr>
 							<th class="thEdit">Single Selection</th>
 							<td class="tdEdit">
-								<ui:select id="selComCodeSingle1" name="selComCodeSingle1" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor default" selectedValue="REPOSITORY" script="alert($(this).val());" source="framework"/>
-								<ui:select id="selComCodeSingle2" name="selComCodeSingle2" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor error" status="disabled" selectedValue="BBS" source="framework"/>
+								<ui:ccselect id="selComCodeSingle1" name="selComCodeSingle1" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor default" selectedValue="REPOSITORY" script="alert($(this).val());" source="framework"/>
+								<ui:ccselect id="selComCodeSingle2" name="selComCodeSingle2" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor error" status="disabled" selectedValue="BBS" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Multiple Selection(Default)</th>
 							<td class="tdEdit">
-								<ui:select id="selComCodeMulti1" name="selComCodeMulti1" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" source="framework"/>
-								<ui:select id="selComCodeMulti2" name="selComCodeMulti2" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" status="disabled" source="framework"/>
+								<ui:ccselect id="selComCodeMulti1" name="selComCodeMulti1" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" source="framework"/>
+								<ui:ccselect id="selComCodeMulti2" name="selComCodeMulti2" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" status="disabled" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Multiple Selection(Bootstrap)</th>
 							<td class="tdEdit">
-								<ui:select id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" source="framework"/>
-								<ui:select id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" status="disabled" source="framework"/>
+								<ui:ccselect id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" source="framework"/>
+								<ui:ccselect id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" status="disabled" source="framework"/>
 							</td>
 						</tr>
 					</table>
@@ -939,25 +939,25 @@ $(function() {
 						<tr>
 							<th class="thEdit">Checkbox block</th>
 							<td class="tdEdit">
-								<ui:check name="chkComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
+								<ui:cccheck name="chkComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Checkbox inline</th>
 							<td class="tdEdit">
-								<ui:check name="chkComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE" script="" source="framework"/>
+								<ui:cccheck name="chkComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE" script="" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Checkbox Block</th>
 							<td class="tdEdit">
-								<ui:check name="chkComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" source="framework"/>
+								<ui:cccheck name="chkComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Checkbox Inline</th>
 							<td class="tdEdit">
-								<ui:check name="chkComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
+								<ui:cccheck name="chkComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 					</table>
@@ -971,25 +971,25 @@ $(function() {
 						<tr>
 							<th class="thEdit">Radio block</th>
 							<td class="tdEdit">
-								<ui:radio name="rdoComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
+								<ui:ccradio name="rdoComCodeBlock1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" displayType="block" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Radio inline</th>
 							<td class="tdEdit">
-								<ui:radio name="rdoComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="NOTICE;REPOSITORY" script="alert($(this).val());" source="framework"/>
+								<ui:ccradio name="rdoComCodeInline1" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="NOTICE;REPOSITORY" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Radio Block</th>
 							<td class="tdEdit">
-								<ui:radio name="rdoComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" script="alert($(this).val());" source="framework"/>
+								<ui:ccradio name="rdoComCodeBlock2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="BBS;NOTICE;REPOSITORY" isBootstrap="true" displayType="block" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Bootstrap Radio Inline</th>
 							<td class="tdEdit">
-								<ui:radio name="rdoComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
+								<ui:ccradio name="rdoComCodeInline2" codeType="BOARD_TYPE" selectedValue="REPOSITORY" disabledValue="REPOSITORY" isBootstrap="true" script="alert($(this).val());" source="framework"/>
 							</td>
 						</tr>
 					</table>

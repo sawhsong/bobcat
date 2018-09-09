@@ -48,7 +48,7 @@ public class Password extends TaglibSupport {
 				}
 			}
 
-			html.append("<input type=\"text\" id=\""+id+"\" name=\""+name+"\"");
+			html.append("<input type=\"password\" id=\""+id+"\" name=\""+name+"\"");
 
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+classNamePrefix+" "+className+"\"");}
 			if (CommonUtil.isNotBlank(value)) {html.append(" value=\""+value+"\"");}
