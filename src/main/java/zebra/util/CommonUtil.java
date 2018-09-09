@@ -215,7 +215,7 @@ public class CommonUtil extends StringUtils {
 	}
 
 	public static boolean toBoolean(String value) {
-		return (CommonUtil.equalsIgnoreCase(value, "true") || CommonUtil.equalsIgnoreCase(value, "Y"));
+		return (CommonUtil.equalsIgnoreCase(value, "true") || CommonUtil.equalsIgnoreCase(value, "yes") || CommonUtil.equalsIgnoreCase(value, "y"));
 	}
 
 	public static String getNumberMask(String value) {

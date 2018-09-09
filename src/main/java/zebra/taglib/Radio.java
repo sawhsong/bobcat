@@ -5,12 +5,12 @@ import javax.servlet.jsp.JspWriter;
 import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
-public class Checkbox extends TaglibSupport {
+public class Radio extends TaglibSupport {
 	private String name;
 	private String value;
 	private String text;
 	private String id;
-	private String isChecked;
+	private String isSelected;
 	private String isDisabled;
 	private String script;
 	private String labelClassName;
@@ -34,32 +34,31 @@ public class Checkbox extends TaglibSupport {
 				}
 
 				if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
-					html.append("<div class=\"checkbox"+disabledString+"\"><label");
+					html.append("<div class=\"radio"+disabledString+"\"><label");
 
 					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" class=\""+labelClassName+"\"");}
 					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\"");
+					html.append("><input type=\"radio\" name=\""+name+"\" value=\""+value+"\"");
 					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
 					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
 					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" class=\""+inputClassName+"\"");}
 					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
-					if (CommonUtil.toBoolean(isChecked)) {html.append(" checked");}
+					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
 					html.append("/>"+text+"</label></div>");
 				} else {
-					html.append("<label class=\"checkbox-inline"+disabledString);
-
+					html.append("<label class=\"radio-inline"+disabledString);
 					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
 					html.append("\"");
 					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\"");
+					html.append("><input type=\"radio\" name=\""+name+"\" value=\""+value+"\"");
 					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
 					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
 					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" class=\""+inputClassName+"\"");}
 					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
-					if (CommonUtil.toBoolean(isChecked)) {html.append(" checked");}
+					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
@@ -74,34 +73,34 @@ public class Checkbox extends TaglibSupport {
 				}
 
 				if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
-					html.append("<label class=\"lblCheck"+classSuffix);
+					html.append("<label class=\"lblRadio"+classSuffix);
 					html.append(" block");
 					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
 					html.append("\"");
 					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\" class=\"chk"+classSuffix);
+					html.append("><input type=\"radio\" name=\""+name+"\" value=\""+value+"\" class=\"rdo"+classSuffix);
 					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" "+inputClassName+"");}
 					html.append("\"");
 					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
 					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
 					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
-					if (CommonUtil.toBoolean(isChecked)) {html.append(" checked");}
+					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
 					html.append("/>"+text+"</label>");
 				} else {
-					html.append("<label class=\"lblCheck"+classSuffix);
+					html.append("<label class=\"lblRadio"+classSuffix);
 					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
 					html.append("\"");
 					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\" class=\"chk"+classSuffix);
+					html.append("><input type=\"radio\" name=\""+name+"\" value=\""+value+"\" class=\"rdo"+classSuffix);
 					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" "+inputClassName+"");}
 					html.append("\"");
 					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
 					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
 					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
-					if (CommonUtil.toBoolean(isChecked)) {html.append(" checked");}
+					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
@@ -149,6 +148,22 @@ public class Checkbox extends TaglibSupport {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getIsSelected() {
+		return isSelected;
+	}
+
+	public void setIsSelected(String isSelected) {
+		this.isSelected = isSelected;
+	}
+
+	public String getIsDisabled() {
+		return isDisabled;
+	}
+
+	public void setIsDisabled(String isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 
 	public String getScript() {
@@ -221,21 +236,5 @@ public class Checkbox extends TaglibSupport {
 
 	public void setOptions(String options) {
 		this.options = options;
-	}
-
-	public String getIsChecked() {
-		return isChecked;
-	}
-
-	public void setIsChecked(String isChecked) {
-		this.isChecked = isChecked;
-	}
-
-	public String getIsDisabled() {
-		return isDisabled;
-	}
-
-	public void setIsDisabled(String isDisabled) {
-		this.isDisabled = isDisabled;
 	}
 }

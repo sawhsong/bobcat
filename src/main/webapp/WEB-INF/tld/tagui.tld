@@ -520,10 +520,19 @@
 			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>selectedValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>value</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>text</name><required>true</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>isSelected</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>isDisabled</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
