@@ -19,11 +19,21 @@ public class Image extends TaglibSupport {
 
 	public int doStartTag() {
 		try {
+			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
+			String classNamePrefix = "";
 
+			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
+				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+					classNamePrefix = "imgDis";
+				} else {
+					classNamePrefix = "imgEn";
+				}
+				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			}
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 
 			html.append("<img id=\""+id+"\" src=\""+TaglibUtil.getMccpValue(src)+"\"");

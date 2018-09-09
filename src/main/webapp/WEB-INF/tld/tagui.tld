@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" version="2.0">
 	<tlib-version>2.0</tlib-version>
-	<short-name>Taglib</short-name>
+	<short-name>Taglib UI</short-name>
 
 	<!-- Zebra -->
 	<tag>
@@ -10,39 +10,25 @@
 		<body-content>empty</body-content>
 		<description>Text</description>
 		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>caption</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>caption</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -51,79 +37,49 @@
 		<body-content>empty</body-content>
 		<description>Text</description>
 		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>value</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>placeHolder</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>placeHolder</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>checkName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>maxbyte</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>maxbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>minbyte</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>minbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>checkFlag</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>checkFlag</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>option</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>option</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -132,79 +88,49 @@
 		<body-content>empty</body-content>
 		<description>Text</description>
 		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>value</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>placeHolder</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>placeHolder</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>checkName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>maxbyte</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>maxbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>minbyte</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>minbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>checkFlag</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>checkFlag</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>option</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>option</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -213,34 +139,22 @@
 		<body-content>empty</body-content>
 		<description>Icon</description>
 		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -249,44 +163,28 @@
 		<body-content>empty</body-content>
 		<description>Image</description>
 		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>src</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>src</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -295,39 +193,25 @@
 		<body-content>empty</body-content>
 		<description>Page navigation</description>
 		<attribute>
-			<name>totalRows</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>totalRows</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>maxRowsPerPage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>maxRowsPerPage</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>pageNumsPerPage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>pageNumsPerPage</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>currentPage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>currentPage</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>formId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>formId</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>formAction</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>formAction</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -336,54 +220,34 @@
 		<body-content>empty</body-content>
 		<description>Button</description>
 		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>caption</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>caption</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>type</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>type</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>buttonClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>buttonClass</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>buttonStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>buttonStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>iconClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>iconClass</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>iconStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>iconStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -392,19 +256,13 @@
 		<body-content>JSP</body-content>
 		<description>Button Group</description>
 		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>groupClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>groupClass</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -413,14 +271,10 @@
 		<body-content>JSP</body-content>
 		<description>Tab</description>
 		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -429,44 +283,28 @@
 		<body-content>empty</body-content>
 		<description>Tab List</description>
 		<attribute>
-			<name>caption</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>caption</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>useAutoScript</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>useAutoScript</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isActive</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isActive</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isClickable</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isClickable</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>iconClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>iconClass</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>iconPosition</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>iconPosition</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -475,79 +313,49 @@
 		<body-content>empty</body-content>
 		<description>Render Select box from Common Code</description>
 		<attribute>
-			<name>codeType</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>codeType</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>langCode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>langCode</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>selectedValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>selectedValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>disabledValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isMultiple</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isMultiple</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isBootstrap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>caption</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>caption</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>source</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -556,79 +364,49 @@
 		<body-content>empty</body-content>
 		<description>Render Radio button from Common Code</description>
 		<attribute>
-			<name>codeType</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>codeType</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>langCode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>langCode</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>selectedValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>selectedValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>disabledValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>displayType</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isBootstrap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>source</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -637,79 +415,49 @@
 		<body-content>empty</body-content>
 		<description>Render Checkbox from Common Code</description>
 		<attribute>
-			<name>codeType</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>codeType</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>langCode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>langCode</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>selectedValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>selectedValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>disabledValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>displayType</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isBootstrap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>source</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -718,49 +466,31 @@
 		<body-content>JSP</body-content>
 		<description>Render Select box</description>
 		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>style</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isMultiple</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isMultiple</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isBootstrap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -769,179 +499,105 @@
 		<body-content>empty</body-content>
 		<description>Render Select box options</description>
 		<attribute>
-			<name>value</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>value</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>text</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>text</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isSelected</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isSelected</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isDisabled</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isDisabled</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-<!--
 	<tag>
 		<name>radio</name>
 		<tag-class>zebra.taglib.Radio</tag-class>
 		<body-content>empty</body-content>
 		<description>Render Radio button</description>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>selectedValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>selectedValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>disabledValue</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>displayType</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isBootstrap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>source</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
 		<name>check</name>
-		<tag-class>zebra.taglib.CommonCodeCheckbox</tag-class>
+		<tag-class>zebra.taglib.Checkbox</tag-class>
 		<body-content>empty</body-content>
-		<description>Render Checkbox from Common Code</description>
+		<description>Render Checkbox</description>
 		<attribute>
-			<name>codeType</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isSelected</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>langCode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isDisabled</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>selectedValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>script</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputClassName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>labelStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputClassName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>inputStyle</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>labelStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>displayType</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inputStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>isBootstrap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>options</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>source</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
--->
+
 	<!-- Project -->
 </taglib>

@@ -25,13 +25,25 @@ public class Text extends TaglibSupport {
 
 	public int doStartTag() {
 		try {
+			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String scriptStr = "";
+			String classNamePrefix = "", scriptStr = "";
 			String scripts[], eventFunc[];
 
+			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
+				if (CommonUtil.containsIgnoreCase(status, "disabled") || CommonUtil.containsIgnoreCase(options, "disabled") ||
+					CommonUtil.containsIgnoreCase(status, "readonly") || CommonUtil.containsIgnoreCase(options, "readonly")) {
+					classNamePrefix = "txtDis";
+				} else if (CommonUtil.containsIgnoreCase(status, "display") || CommonUtil.containsIgnoreCase(options, "display")) {
+					classNamePrefix = "txtDpl";
+				} else {
+					classNamePrefix = "txtEn";
+				}
+				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			}
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 			placeHolder = CommonUtil.containsIgnoreCase(placeHolder, ".") ? getMessage(placeHolder, langCode) : placeHolder;
 			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
@@ -58,6 +70,7 @@ public class Text extends TaglibSupport {
 			if (CommonUtil.isNotBlank(checkFlag)) {html.append(" checkFlag=\""+checkFlag+"\"");}
 			if (CommonUtil.isNotBlank(option)) {html.append(" option=\""+options+"\"");}
 			if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
+			if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" "+status);}
 
 			html.append("/>");
 

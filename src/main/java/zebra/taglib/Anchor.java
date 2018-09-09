@@ -17,11 +17,21 @@ public class Anchor extends TaglibSupport {
 
 	public int doStartTag() {
 		try {
+			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
+			String classNamePrefix = "";
 
+			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
+				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+					classNamePrefix = "aDis";
+				} else {
+					classNamePrefix = "aEn";
+				}
+				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			}
 			caption = CommonUtil.containsIgnoreCase(caption, ".") ? getMessage(caption, langCode) : caption;
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 

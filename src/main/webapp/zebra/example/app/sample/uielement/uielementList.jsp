@@ -676,6 +676,34 @@ $(function() {
 							<col width="*"/>
 						</colgroup>
 						<tr>
+							<th class="thEdit">Single Selection(Taglib)</th>
+							<td class="tdEdit">
+								<ui:text id="txtEnWithTaglibSelectbox" name="txtEnWithTaglibSelectbox" className="defClass inline" style="width:200px;" placeHolder="txtEnWithTaglibSelectbox"/>
+								<ui:select id="selTaglibSingleSelection1" name="selTaglibSingleSelection1" className="hor default">
+									<ui:seloption value="SingleSelection1-0" text="SingleSelection1-0"/>
+									<ui:seloption value="SingleSelection1-1" text="SingleSelection1-1"/>
+									<ui:seloption value="SingleSelection1-2" text="SingleSelection1-2"/>
+									<ui:seloption value="SingleSelection1-3" text="SingleSelection1-3" isDisabled="true"/>
+									<ui:seloption value="SingleSelection1-4" text="SingleSelection1-4"/>
+								</ui:select>
+								<ui:select id="selTaglibSingleSelection2" name="selTaglibSingleSelection2" className="hor error">
+									<ui:seloption value="SingleSelection2-0" text="SingleSelection2-0"/>
+									<ui:seloption value="SingleSelection2-1" text="SingleSelection2-1"/>
+									<ui:seloption value="SingleSelection2-2" text="SingleSelection2-2"/>
+									<ui:seloption value="SingleSelection2-3" text="SingleSelection2-3"/>
+									<ui:seloption value="SingleSelection2-4" text="SingleSelection2-4"/>
+								</ui:select>
+								<ui:select id="selTaglibSingleSelection3" name="selTaglibSingleSelection3" className="hor" status="disabled">
+									<ui:seloption value="SingleSelection2-0" text="SingleSelection2-0"/>
+									<ui:seloption value="SingleSelection2-1" text="SingleSelection2-1"/>
+									<ui:seloption value="SingleSelection2-2" text="SingleSelection2-2"/>
+									<ui:seloption value="SingleSelection2-3" text="SingleSelection2-3"/>
+									<ui:seloption value="SingleSelection2-4" text="SingleSelection2-4"/>
+								</ui:select>
+								<ui:text id="txtDisWithTaglibtSelectbox" name="txtDisWithTaglibSelectbox" className="defClass inline" style="width:200px;" options="disabled" placeHolder="txtDisWithTaglibSelectbox"/>
+							</td>
+						</tr>
+						<tr>
 							<th class="thEdit">Single Selection(Default)</th>
 							<td class="tdEdit">
 								<input type="text" id="txtEnWithDefaultSelectbox" name="txtEnWithDefaultSelectbox" class="txtEn inline" style="width:200px;" placeholder="txtEnWithDefaultSelectbox"/>
@@ -876,20 +904,20 @@ $(function() {
 					<div class="verGap20"></div>
 					<div id="divCalendar">
 						<label for="txtFromDate" class="lblEn hor">From Date</label>
-						<input type="text" id="txtFromDate" name="txtFromDate" class="txtEnCt hor" style="width:90px" value="<%//=CommonUtil.getSysdate(ConfigUtil.getProperty("defaultDate"))%>"/>
+						<input type="text" id="txtFromDate" name="txtFromDate" class="txtEn Ct hor" style="width:90px" value="<%//=CommonUtil.getSysdate(ConfigUtil.getProperty("defaultDate"))%>"/>
 						<i id="icnFromDate" class="fa fa-calendar icnEn hor" title="From Date"></i>
 						<div class="horGap20"></div>
 						<label for="txtToDate" class="lblEn hor">To Date</label>
-						<input type="text" id="txtToDate" name="txtToDate" class="txtEnCt hor" style="width:90px" value="<%//=CommonUtil.getSysdate(ConfigUtil.getProperty("defaultDate"))%>"/>
-						<input type="text" id="txtToTime" name="txtToTime" class="txtEnCt hor" style="width:80px" value=""/>
-						<input type="text" id="txtToDay" name="txtToDay" class="txtEnCt hor" style="width:80px" value=""/>
-						<input type="text" id="txtToWeek" name="txtToWeek" class="txtEnCt hor" style="width:80px" value=""/>
+						<input type="text" id="txtToDate" name="txtToDate" class="txtEn Ct hor" style="width:90px" value="<%//=CommonUtil.getSysdate(ConfigUtil.getProperty("defaultDate"))%>"/>
+						<input type="text" id="txtToTime" name="txtToTime" class="txtEn Ct hor" style="width:80px" value=""/>
+						<input type="text" id="txtToDay" name="txtToDay" class="txtEn Ct hor" style="width:80px" value=""/>
+						<input type="text" id="txtToWeek" name="txtToWeek" class="txtEn Ct hor" style="width:80px" value=""/>
 						<i id="icnToDate" class="fa fa-calendar icnEn hor" title="To Date"></i>
 					</div>
 					<div class="verGap20"></div>
 					<div id="divJQueryCalendar">
 						<label for="txtJQueryDatePicker" class="lblEn hor">JQuery Date Picker</label>
-						<input type="text" id="txtJQueryDatePicker" name="txtJQueryDatePicker" class="txtEnCt hor" style="width:90px" value="<%//=CommonUtil.getSysdate(ConfigUtil.getProperty("defaultDate"))%>"/>
+						<input type="text" id="txtJQueryDatePicker" name="txtJQueryDatePicker" class="txtEn Ct hor" style="width:90px" value="<%//=CommonUtil.getSysdate(ConfigUtil.getProperty("defaultDate"))%>"/>
 						<i id="icnJQueryDatePicker" class="fa fa-calendar icnEn hor" title="From Date"></i>
 					</div>
 					<div class="verGap20"></div>
