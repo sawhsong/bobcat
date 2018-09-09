@@ -1,17 +1,16 @@
 package zebra.taglib;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
-import project.common.module.commoncode.CommonCodeManager;
 import zebra.base.TaglibSupport;
-import zebra.data.DataSet;
-import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
 import zebra.util.CommonUtil;
 
 public class Checkbox extends TaglibSupport {
 	private String name;
-	private String isSelected;
+	private String value;
+	private String text;
+	private String id;
+	private String isChecked;
 	private String isDisabled;
 	private String script;
 	private String labelClassName;
@@ -22,116 +21,95 @@ public class Checkbox extends TaglibSupport {
 	private String isBootstrap;
 	private String status;
 	private String options;	// for data validator
-	private String source;	// common_code source(framework / project)
 
 	public int doStartTag() {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
-			HttpSession httpSession = pageContext.getSession();
 			StringBuffer html = new StringBuffer();
-			DataSet ds = new DataSet();
-			String defaultLangCode = "";
-/*
-			if (CommonUtil.isNotBlank(source) || CommonUtil.equalsIgnoreCase(source, "framework")) {
-				ds = ZebraCommonCodeManager.getCodeDataSetByCodeType(codeType);
-			} else {
-				ds = CommonCodeManager.getCodeDataSetByCodeType(codeType);
-			}
+			String disabledString = "", classSuffix = "";
 
-			defaultLangCode = CommonUtil.nvl(langCode, (String)httpSession.getAttribute("langCode"));
+			if (CommonUtil.equalsIgnoreCase(isBootstrap, "true") || CommonUtil.equalsIgnoreCase(isBootstrap, "yes")) {
+				if (CommonUtil.equalsIgnoreCase(isDisabled, "true") || CommonUtil.equalsIgnoreCase(isDisabled, "yes") || CommonUtil.equalsIgnoreCase(status, "disabled")) {
+					disabledString = " disabled";
+				}
 
-			for (int i=0; i<ds.getRowCnt(); i++) {
-				if (CommonUtil.equalsIgnoreCase(isBootstrap, "true") || CommonUtil.equalsIgnoreCase(isBootstrap, "yes")) {
-					if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
-						html.append("<div class=\"checkbox");
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-						html.append("\"><label");
+				if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
+					html.append("<div class=\"checkbox"+disabledString+"\"><label");
 
-						if (CommonUtil.isNotBlank(labelClassName)) {html.append(" class=\""+labelClassName+"\"");}
-						if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-						html.append("><input type=\"checkbox\" id=\""+name+"_"+i+"\" name=\""+name+"\" value=\""+ds.getValue(i, "COMMON_CODE")+"\"");
-						if (CommonUtil.isNotBlank(inputClassName)) {html.append(" class=\""+inputClassName+"\"");}
-						if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
-						if (CommonUtil.equals(ds.getValue(i, "COMMON_CODE"), selectedValue)) {html.append(" checked");}
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-						if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
-						if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" class=\""+labelClassName+"\"");}
+					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
+					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\"");
+					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
+					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
+					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" class=\""+inputClassName+"\"");}
+					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
+					if (CommonUtil.equalsIgnoreCase(isChecked, "true") || CommonUtil.equalsIgnoreCase(isChecked, "yes")) {html.append(" checked");}
+					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
+					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
-						html.append("/>"+ds.getValue(i, "DESCRIPTION_"+defaultLangCode.toUpperCase())+"</label></div>");
-					} else {
-						html.append("<label class=\"checkbox-inline");
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-						if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
-						html.append("\"");
-						if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-						html.append("><input type=\"checkbox\" id=\""+name+"_"+i+"\" name=\""+name+"\" value=\""+ds.getValue(i, "COMMON_CODE")+"\"");
-						if (CommonUtil.isNotBlank(inputClassName)) {html.append(" class=\""+inputClassName+"\"");}
-						if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
-						if (CommonUtil.equals(ds.getValue(i, "COMMON_CODE"), selectedValue)) {html.append(" checked");}
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-						if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
-						if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
-
-						html.append("/>"+ds.getValue(i, "DESCRIPTION_"+defaultLangCode.toUpperCase())+"</label>");
-					}
+					html.append("/>"+text+"</label></div>");
 				} else {
-					if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
-						html.append("<label class=\"lblCheck");
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-						else {html.append("En");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-//						else {html.append("En");}
-						html.append(" block");
-						if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
-						html.append("\"");
-						if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-						html.append("><input type=\"checkbox\" id=\""+name+"_"+i+"\" name=\""+name+"\" value=\""+ds.getValue(i, "COMMON_CODE")+"\" class=\"chk");
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-						else {html.append("En");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-//						else {html.append("En");}
-						if (CommonUtil.isNotBlank(inputClassName)) {html.append(" "+inputClassName+"");}
-						html.append("\"");
-						if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
-						if (CommonUtil.equals(ds.getValue(i, "COMMON_CODE"), selectedValue)) {html.append(" checked");}
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-						if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
-						if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					html.append("<label class=\"checkbox-inline"+disabledString);
 
-						html.append("/>"+ds.getValue(i, "DESCRIPTION_"+defaultLangCode.toUpperCase())+"</label>");
-					} else {
-						html.append("<label class=\"lblCheck");
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-						else {html.append("En");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-//						else {html.append("En");}
-						if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
-						html.append("\"");
-						if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
-						html.append("><input type=\"checkbox\" id=\""+name+"_"+i+"\" name=\""+name+"\" value=\""+ds.getValue(i, "COMMON_CODE")+"\" class=\"chk");
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-						else {html.append("En");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append("Dis");}
-//						else {html.append("En");}
-						if (CommonUtil.isNotBlank(inputClassName)) {html.append(" "+inputClassName+"");}
-						html.append("\"");
-						if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
-						if (CommonUtil.equals(ds.getValue(i, "COMMON_CODE"), selectedValue)) {html.append(" checked");}
-						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-//						if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}
-						if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
-						if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
+					html.append("\"");
+					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
+					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\"");
+					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
+					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
+					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" class=\""+inputClassName+"\"");}
+					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
+					if (CommonUtil.equalsIgnoreCase(isChecked, "true") || CommonUtil.equalsIgnoreCase(isChecked, "yes")) {html.append(" checked");}
+					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
+					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
 
-						html.append("/>"+ds.getValue(i, "DESCRIPTION_"+defaultLangCode.toUpperCase())+"</label>");
-					}
+					html.append("/>"+text+"</label>");
+				}
+			} else {
+				if (CommonUtil.equalsIgnoreCase(isDisabled, "true") || CommonUtil.equalsIgnoreCase(isDisabled, "yes") || CommonUtil.equalsIgnoreCase(status, "disabled")) {
+					classSuffix = "Dis";
+					disabledString = " disabled";
+				} else {
+					classSuffix = "En";
+				}
+
+				if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
+					html.append("<label class=\"lblCheck"+classSuffix);
+
+					html.append(" block");
+					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
+					html.append("\"");
+					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
+					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\" class=\"chk"+classSuffix);
+					if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
+					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" "+inputClassName+"");}
+					html.append("\"");
+					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
+					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
+					if (CommonUtil.equalsIgnoreCase(isChecked, "true") || CommonUtil.equalsIgnoreCase(isChecked, "yes")) {html.append(" checked");}
+					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
+					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+
+					html.append("/>"+text+"</label>");
+				} else {
+					html.append("<label class=\"lblCheck"+classSuffix);
+
+					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
+					html.append("\"");
+					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
+					html.append("><input type=\"checkbox\" name=\""+name+"\" value=\""+value+"\" class=\"chk"+classSuffix);
+					if (CommonUtil.isNotBlank(inputClassName)) {html.append(" "+inputClassName+"");}
+					html.append("\"");
+					if (CommonUtil.isNotBlank(inputStyle)) {html.append(" style=\""+inputStyle+"\"");}
+					if (CommonUtil.isNotBlank(disabledString)) {html.append(" "+disabledString);}
+					if (CommonUtil.equalsIgnoreCase(isChecked, "true") || CommonUtil.equalsIgnoreCase(isChecked, "yes")) {html.append(" checked");}
+					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
+					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+
+					html.append("/>"+text+"</label>");
 				}
 			}
-*/
+
 			jspWriter.print(html.toString());
 		} catch (Exception ex) {
 			logger.error(ex);
@@ -148,6 +126,30 @@ public class Checkbox extends TaglibSupport {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getScript() {
@@ -222,11 +224,19 @@ public class Checkbox extends TaglibSupport {
 		this.options = options;
 	}
 
-	public String getSource() {
-		return source;
+	public String getIsChecked() {
+		return isChecked;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setIsChecked(String isChecked) {
+		this.isChecked = isChecked;
+	}
+
+	public String getIsDisabled() {
+		return isDisabled;
+	}
+
+	public void setIsDisabled(String isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 }
