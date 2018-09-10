@@ -25,21 +25,21 @@ public class TabList extends TaglibSupport {
 			String className = "", anchorHref = "", iconTag = "", anchorHtml = "";
 			String autoAction = "commonJs.changeTabSelection(this);";
 
-			if (CommonUtil.isBlank(isClickable) || CommonUtil.equalsIgnoreCase(isClickable, "true") || CommonUtil.equalsIgnoreCase(isClickable, "yes")) {
-				if (CommonUtil.equalsIgnoreCase(isActive, "true") || CommonUtil.equalsIgnoreCase(isActive, "yes")) {
+			if (CommonUtil.isBlank(isClickable) || CommonUtil.toBoolean(isClickable)) {
+				if (CommonUtil.toBoolean(isActive)) {
 					className = " active";
 				}
 				anchorHref = " href=\"#\"";
 				script = " "+CommonUtil.nvl(script);
 			} else {
-				if (CommonUtil.equalsIgnoreCase(isActive, "true") || CommonUtil.equalsIgnoreCase(isActive, "yes")) {
+				if (CommonUtil.toBoolean(isActive)) {
 					className = " active disabled";
 				} else {
 					className = " disabled";
 				}
 			}
 
-			if (CommonUtil.equalsIgnoreCase(useAutoScript, "false") || CommonUtil.equalsIgnoreCase(useAutoScript, "no")) {
+			if (!CommonUtil.toBoolean(useAutoScript)) {
 				autoAction = "";
 			}
 

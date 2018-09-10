@@ -1,5 +1,6 @@
 package zebra.taglib;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibSupport;
@@ -25,8 +26,12 @@ public class Checkbox extends TaglibSupport {
 	public int doStartTag() {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
+			HttpSession httpSession = pageContext.getSession();
+			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
 			String disabledString = "", classSuffix = "";
+
+			text = CommonUtil.containsIgnoreCase(text, ".") ? getMessage(text, langCode) : text;
 
 			if (CommonUtil.toBoolean(isBootstrap)) {
 				if (CommonUtil.toBoolean(isDisabled) || CommonUtil.equalsIgnoreCase(status, "disabled")) {

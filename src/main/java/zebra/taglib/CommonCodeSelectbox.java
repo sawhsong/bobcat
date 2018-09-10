@@ -49,11 +49,11 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			if (CommonUtil.isNotEmpty(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotEmpty(options)) {html.append(" "+options);}
 			if (CommonUtil.isNotEmpty(script)) {html.append(" onchange=\""+script+"\"");}
-			if (CommonUtil.equalsIgnoreCase(isMultiple, "true") || CommonUtil.equalsIgnoreCase(isMultiple, "yes")) {html.append(" multiple=\"multiple\"");}
+			if (CommonUtil.toBoolean(isMultiple)) {html.append(" multiple=\"multiple\"");}
 			if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" "+status);}
 			// css class
-			if (CommonUtil.equalsIgnoreCase(isBootstrap, "false") || CommonUtil.equalsIgnoreCase(isBootstrap, "no")) {
-				if (CommonUtil.equalsIgnoreCase(isMultiple, "true") || CommonUtil.equalsIgnoreCase(isMultiple, "yes")) {classString = "selMulti";}
+			if (!CommonUtil.toBoolean(isBootstrap)) {
+				if (CommonUtil.toBoolean(isMultiple)) {classString = "selMulti";}
 				else {classString = "selSingle";}
 
 				if (CommonUtil.equalsIgnoreCase(status, "disabled")) {classString += "Dis";}

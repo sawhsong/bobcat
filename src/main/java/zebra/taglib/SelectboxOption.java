@@ -18,8 +18,8 @@ public class SelectboxOption extends TaglibSupport {
 
 			html.append("<option value=\""+value+"\"");
 
-			if (CommonUtil.equalsIgnoreCase(isSelected, "true") || CommonUtil.equalsIgnoreCase(isSelected, "yes")) {html.append(" selected");}
-			if (CommonUtil.equalsIgnoreCase(isDisabled, "true") || CommonUtil.equalsIgnoreCase(isDisabled, "yes")) {html.append(" disabled");}
+			if (CommonUtil.toBoolean(isSelected)) {html.append(" selected");}
+			if (CommonUtil.toBoolean(isDisabled)) {html.append(" disabled");}
 
 			html.append(">"+text+"");
 			html.append("</option>\n");

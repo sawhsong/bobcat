@@ -123,6 +123,7 @@ $(function() {
 				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-envelope addonIcon"/></div>
 				<ui:text id="email" name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
 			</div>
+			<ui:check name="sendEmail" value="Y" text=""/>
 			<label class="lblCheckEn block"><input type="checkbox" name="sendEmail" class="chkEn" value="Y" checked/><mc:msg key="login.label.sendMail"/></label>
 			<div class="buttonDiv">
 				<ui:button id="btnRequest" type="primary" caption="login.button.requestRegister" iconClass="fa-bullhorn" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>

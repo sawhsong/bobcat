@@ -68,7 +68,7 @@ public class Text extends TaglibSupport {
 			if (CommonUtil.isNotBlank(maxbyte)) {html.append(" maxbyte=\""+maxbyte+"\"");}
 			if (CommonUtil.isNotBlank(minbyte)) {html.append(" minbyte=\""+minbyte+"\"");}
 			if (CommonUtil.isNotBlank(checkFlag)) {html.append(" checkFlag=\""+checkFlag+"\"");}
-			if (CommonUtil.isNotBlank(option)) {html.append(" option=\""+options+"\"");}
+			if (CommonUtil.isNotBlank(option)) {html.append(" option=\""+option+"\"");}
 			if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 			if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" "+status);}
 

@@ -8,7 +8,7 @@
 		<name>anchor</name>
 		<tag-class>zebra.taglib.Anchor</tag-class>
 		<body-content>empty</body-content>
-		<description>Text</description>
+		<description>Anchor</description>
 		<attribute>
 			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
