@@ -44,7 +44,7 @@ $(function() {
 		$("#hdnLeftMenuName").val("");
 		$("#hdnLeftMenuUrl").val("");
 
-		commonJs.doSubmit({form:$("form:eq(0)"), action:"/zebra/framework/index/getDefault.do"});
+		commonJs.doSubmit({form:$("form:eq(0)"), action:"/zebra/main/getDefault.do"});
 	});
 
 	$("#aLoggedInUser").click(function() {

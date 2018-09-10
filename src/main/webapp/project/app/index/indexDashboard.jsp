@@ -34,7 +34,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <link rel="icon" type="image/png" href="<tag:cp key="imgIcon"/>/favicon.png">
-<title><tag:msg key="main.system.title"/></title>
+<title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
 ************************************************************************************************/%>

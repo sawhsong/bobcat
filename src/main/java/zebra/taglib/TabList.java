@@ -39,7 +39,7 @@ public class TabList extends TaglibSupport {
 				}
 			}
 
-			if (!CommonUtil.toBoolean(useAutoScript)) {
+			if (CommonUtil.equalsIgnoreCase(useAutoScript, "false") || CommonUtil.equalsIgnoreCase(useAutoScript, "no")) {
 				autoAction = "";
 			}
 

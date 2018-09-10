@@ -9,5 +9,4 @@ public interface LoginBiz {
 	public ParamEntity exeRequestRegister(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getUserProfile(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
-	public ParamEntity setSessionValuesForAdminTool(ParamEntity paramEntity) throws Exception;
 }

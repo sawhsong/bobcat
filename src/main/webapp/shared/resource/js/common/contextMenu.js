@@ -798,7 +798,7 @@
 
 					if (img) {
 						// Dustin : to use image / icon font
-						if (img.indexOf("/web") != -1) {
+						if (img.indexOf("/shared") != -1) {
 							list.prepend('<img src="' + img + '" align="absmiddle" class="'+option.classPrefix+'-mIcon" />');
 						} else {
 							if ($.nony.startsWith(img, "fa-")) {

@@ -108,23 +108,22 @@ $(function() {
 				<ui:text id="userName" name="userName" className="form-control" placeHolder="login.header.userName" checkName="login.header.userName" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-user addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-user addonIcon"/></div>
 				<ui:text id="loginId" name="loginId" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-lock addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
 				<ui:password id="password" name="password" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-lock addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
 				<ui:password id="passwordConfirm" name="passwordConfirm" className="form-control" placeHolder="Confirm Password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa fa-lg fa-envelope addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-envelope addonIcon"/></div>
 				<ui:text id="email" name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
 			</div>
-			<ui:check name="sendEmail" value="Y" text=""/>
-			<label class="lblCheckEn block"><input type="checkbox" name="sendEmail" class="chkEn" value="Y" checked/><mc:msg key="login.label.sendMail"/></label>
+			<ui:check name="sendEmail" value="Y" text="login.label.sendMail" displayType="block" isChecked="true"/>
 			<div class="buttonDiv">
 				<ui:button id="btnRequest" type="primary" caption="login.button.requestRegister" iconClass="fa-bullhorn" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
 			</div>

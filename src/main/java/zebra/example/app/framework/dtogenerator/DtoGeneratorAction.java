@@ -30,11 +30,8 @@ public class DtoGeneratorAction extends BaseAction {
 	}
 
 	public String exeGenerate() throws Exception {
-		try {
-			biz.exeGenerate(paramEntity);
-			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("resultDataSet"));
-		} catch (Exception ex) {
-		}
+		biz.exeGenerate(paramEntity);
+		paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("resultDataSet"));
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}

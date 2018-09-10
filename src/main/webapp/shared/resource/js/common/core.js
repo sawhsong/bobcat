@@ -221,6 +221,13 @@ var nony = {
 			return val.toUpperCase();
 		}
 	},
+	lowerCase : function(val) {
+		if ($.nony.isEmpty(val)) {
+			return "";
+		} else {
+			return val.toLowerCase();
+		}
+	},
 	replace : function(src, from, to) {
 		var newStr = src;
 		var iOffset = 0;

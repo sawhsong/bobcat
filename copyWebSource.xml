@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Copy Web Sources" default="1.project app" basedir=".">
+<project name="Copy Web Sources" default="0.All" basedir=".">
 	<property file="copyWebSource.properties"/>
+
+	<target name="0.All"
+		depends="1.project app,
+				 2.project common,
+				 3.shared,
+				 4.zebra app,
+				 5.zebra common,
+				 6.project conf,
+				 7.zebra conf"
+		description="Run All Targets"
+	/>
 
 	<target name="1.project app" description="Copy project app sources">
 		<copy todir="${target.project.app}">

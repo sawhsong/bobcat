@@ -224,29 +224,4 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 		}
 		return paramEntity;
 	}
-
-	public ParamEntity setSessionValuesForAdminTool(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		SysUser sysUser = new SysUser();
-		String userId = requestDataSet.getValue("userId");
-		DataSet resultDataSet = new DataSet();
-
-		try {
-			sysUser = sysUserDao.getUserByUserId(userId);
-
-			paramEntity.setObject("sysUserForAdminTool", sysUser);
-
-			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "org_category_desc"});
-			resultDataSet.addRow();
-			resultDataSet.setValue("user_id", sysUser.getUserId());
-			resultDataSet.setValue("user_name", sysUser.getUserName());
-			resultDataSet.setValue("login_id", sysUser.getLoginId());
-
-			paramEntity.setAjaxResponseDataSet(resultDataSet);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
 }

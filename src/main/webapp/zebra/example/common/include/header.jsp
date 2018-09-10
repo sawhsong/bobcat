@@ -46,8 +46,8 @@ $(function() {
 				popupId:"garbageCollector",
 				url:menuUrl,
 				header:framework.messages.garbageCollection.header,
-				width:600,
-				height:456,
+				width:640,
+				height:460,
 				draggable:true,
 				modal:true,
 				blind:true
@@ -82,8 +82,8 @@ $(function() {
 		for (var i=0; i<theme.getRowCnt(); i++) {
 			themeMenu.push({
 				name:theme.getValue(i, "DESCRIPTION_EN"),
-				img:"<mc:cp key="imgIcon"/>/"+theme.getValue(i, "COMMON_CODE")+".png",
-				themeId:theme.getValue(i, "COMMON_CODE"),
+				img:"<mc:cp key="imgIcon"/>/"+commonJs.lowerCase(theme.getValue(i, "COMMON_CODE"))+".png",
+				themeId:commonJs.lowerCase(theme.getValue(i, "COMMON_CODE")),
 				fun:function() {
 					var index = $(this).index();
 

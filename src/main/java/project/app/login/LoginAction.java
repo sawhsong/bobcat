@@ -33,7 +33,7 @@ public class LoginAction extends BaseAction {
 	}
 
 	public String login() throws Exception {
-		try {
+//		try {
 			biz.exeLogin(paramEntity);
 
 			if (paramEntity.isSuccess()) {
@@ -50,8 +50,8 @@ public class LoginAction extends BaseAction {
 
 				paramEntity.setAjaxResponseDataSet(sysUser.getDataSet());
 			}
-		} catch (Exception ex) {
-		}
+//		} catch (Exception ex) {
+//		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
@@ -118,42 +118,6 @@ public class LoginAction extends BaseAction {
 
 		try {
 			session.setAttribute("isVisibleAdminTool", flag);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String setSessionValuesForAdminTool() throws Exception {
-		try {
-			biz.setSessionValuesForAdminTool(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				SysUser sysUserForAdminTool = (SysUser)paramEntity.getObject("sysUserForAdminTool");
-
-				session.setAttribute("UserIdForAdminTool", sysUserForAdminTool.getUserId());
-				session.setAttribute("UserNameForAdminTool", sysUserForAdminTool.getUserName());
-				session.setAttribute("LoginIdForAdminTool", sysUserForAdminTool.getLoginId());
-				session.setAttribute("SysUserForAdminTool", sysUserForAdminTool);
-			}
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String removeSessionValuesForAdminTool() throws Exception {
-		try {
-			session.removeAttribute("UserIdForAdminTool");
-			session.removeAttribute("UserNameForAdminTool");
-			session.removeAttribute("LoginIdForAdminTool");
-			session.removeAttribute("OrgIdForAdminTool");
-			session.removeAttribute("SysUserForAdminTool");
-			session.removeAttribute("SysOrgForAdminTool");
-			session.removeAttribute("OrgLegalNameForAdminTool");
-			session.removeAttribute("OrgCategoryForAdminTool");
-			session.removeAttribute("OrgCategoryDescForAdminTool");
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 		}
