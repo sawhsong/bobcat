@@ -40,12 +40,15 @@
 	color:#000000;
 }
 #divLogoArea a:hover {text-decoration:none;
-	color:#FFE633;
+	color:#D92E24;
 }
-#aLogo {padding:6px 0px 8px 160px;
-/* 	background:url('/shared/resource/image/icon/logo-gear_White.png') no-repeat 0% 50%; */
-	background:url('/shared/resource/image/icon/logoHKAccount.png') no-repeat 0% 0%;
-	background-size:134px 28px;
+#aLogoFramework {padding:6px 0px 6px 24px;
+	font-size:0.9em;
+	background:url('/shared/resource/image/icon/logo-gear_Black.png') no-repeat 0% 50%;
+}
+#aLogo {padding:6px 0px 8px 100px;
+	background:url('/shared/resource/image/icon/logoPerci.png') no-repeat 0% 0%;
+	background-size:64px 30px;
 }
 
 /**

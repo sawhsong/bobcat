@@ -29,7 +29,7 @@ $(function() {
 		$("#divLoggedInUser").trigger("click");
 	});
 
-	$("#aLogo").click(function(event) {
+	$("#aLogoFramework").click(function(event) {
 		$("#hdnHeaderMenuId").val("");
 		$("#hdnHeaderMenuName").val("");
 		$("#hdnHeaderMenuUrl").val("");
@@ -158,7 +158,7 @@ $(function() {
 	<div id="divGlobalMenuHeaderGroup">
 		<div id="divGlobalMenuLeft">
 			<div id="divLogoArea">
-				<a id="aLogo"></a>
+				<a id="aLogoFramework">ZEBRA [SAWH Java Framework]</a>
 			</div>
 		</div>
 		<div id="divGlobalMenuRight">
