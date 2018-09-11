@@ -15,7 +15,7 @@
 /**
  * Layout - Header Center
  */
-#divGlobalMenuHeaderGroup {padding:12px 8px 10px 8px;
+#divGlobalMenuHeaderGroup {padding:12px 8px 12px 8px;
 	background:#FFFFFF;
 }
 #divGlobalMenuHeaderGroup:after {content:"";display:block;line-height:0px;clear:both;}
@@ -43,7 +43,7 @@
 	color:#D92E24;
 }
 #aLogoFramework {padding:6px 0px 6px 24px;
-	font-size:0.9em;
+	font-size:0.8em;
 	background:url('/shared/resource/image/icon/logo-gear_Black.png') no-repeat 0% 50%;
 }
 #aLogo {padding:6px 0px 8px 100px;
@@ -89,11 +89,11 @@
 	background:#094369;
 }
 .headerMainMenus:hover {
-	background:#51819E;
+	background:#6695B0;
 }
 .headerMainMenusSelected {float:left;display:inline-block;padding:12px 18px;transition:background .2s;cursor:pointer;
 	border-right:1px solid #191919;
-	background:#51819E;
+	background:#6695B0;
 }
 .headerMainMenus a, .headerMainMenus a:hover, .headerMainMenus a:link, .headerMainMenus a:visited,
 .headerMainMenusSelected a, .headerMainMenusSelected a:hover, .headerMainMenusSelected a:link, .headerMainMenusSelected a:visited {padding:0px 0px 1px 25px;font-size:1.1em;text-decoration:none;
