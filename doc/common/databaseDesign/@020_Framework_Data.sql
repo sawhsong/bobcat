@@ -19,21 +19,21 @@ insert into zebra_common_code values('BOARD_SEARCH_TYPE', 'CONTENTS',  '내용',
 insert into zebra_common_code values('BOARD_SEARCH_TYPE', 'WRITER',    '작성자',          'Writer',                'BOARD_SEARCH_TYPE_WRITER',      '003','Y','Y','0',sysdate,'','');
 
 insert into zebra_common_code values('USER_THEME_TYPE','0000000000',   '사용자스킨구분', 'User Theme Type','USER_THEME_TYPE_0000000000',  '000','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme000',     'Bootstrap',       'Bootstrap',      'USER_THEME_TYPE_000',         '001','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme001',     'Smoothness',      'Smoothness',     'USER_THEME_TYPE_001',         '002','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme002',     'Redmond',         'Redmond',        'USER_THEME_TYPE_002',         '003','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme003',     'Lightness',       'Lightness',      'USER_THEME_TYPE_003',         '004','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme004',     'Start',           'Start',          'USER_THEME_TYPE_004',         '005','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme005',     'Sunny',           'Sunny',          'USER_THEME_TYPE_005',         '006','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme006',     'Flick',           'Flick',          'USER_THEME_TYPE_006',         '007','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme007',     'Pepper Grinder',  'Pepper Grinder', 'USER_THEME_TYPE_007',         '008','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme008',     'Cupertino',       'Cupertino',      'USER_THEME_TYPE_008',         '009','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme009',     'South Street',    'South Street',   'USER_THEME_TYPE_009',         '010','Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('USER_THEME_TYPE','theme010',     'Humanity',        'Humanity',       'USER_THEME_TYPE_010',         '011','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME000',     'Bootstrap',       'Bootstrap',      'USER_THEME_TYPE_000',         '001','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME001',     'Smoothness',      'Smoothness',     'USER_THEME_TYPE_001',         '002','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME002',     'Redmond',         'Redmond',        'USER_THEME_TYPE_002',         '003','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME003',     'Lightness',       'Lightness',      'USER_THEME_TYPE_003',         '004','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME004',     'Start',           'Start',          'USER_THEME_TYPE_004',         '005','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME005',     'Sunny',           'Sunny',          'USER_THEME_TYPE_005',         '006','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME006',     'Flick',           'Flick',          'USER_THEME_TYPE_006',         '007','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME007',     'Pepper Grinder',  'Pepper Grinder', 'USER_THEME_TYPE_007',         '008','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME008',     'Cupertino',       'Cupertino',      'USER_THEME_TYPE_008',         '009','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME009',     'South Street',    'South Street',   'USER_THEME_TYPE_009',         '010','Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('USER_THEME_TYPE','THEME010',     'Humanity',        'Humanity',       'USER_THEME_TYPE_010',         '011','Y','Y','0',sysdate,'','');
 
 insert into zebra_common_code values('LANGUAGE_TYPE','0000000000', '언어타입',  'Language', 'LANGUAGE_TYPE_0000000000',  '000',  'Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('LANGUAGE_TYPE','en',         '영어',      'English',  'LANGUAGE_TYPE_EN',          '001',   'Y','Y','0',sysdate,'','');
-insert into zebra_common_code values('LANGUAGE_TYPE','ko',         '한국어',    'Korean',   'LANGUAGE_TYPE_KO',          '002',   'Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('LANGUAGE_TYPE','EN',         '영어',      'English',  'LANGUAGE_TYPE_EN',          '001',   'Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('LANGUAGE_TYPE','KO',         '한국어',    'Korean',   'LANGUAGE_TYPE_KO',          '002',   'Y','Y','0',sysdate,'','');
 
 insert into zebra_common_code values('DOMAIN_DATA_TYPE', '0000000000', 'Domain Data Type',  'Domain Data Type', 'DOMAIN_DATA_TYPE_0000000000',  '000',  'Y', 'Y', '0', sysdate, '', '');
 insert into zebra_common_code values('DOMAIN_DATA_TYPE', 'VARCHAR2',   'Varchar2',          'Varchar2',         'DOMAIN_DATA_TYPE_VARCHAR2',    '001',  'Y', 'Y', '0', sysdate, '', '');
