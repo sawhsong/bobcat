@@ -206,7 +206,7 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 .tblGrid tfoot tr:first-child td {}
 .tblGrid tfoot tr:last-child td {}
 .tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {transition:background .2s;
-	background:#FFFDF0;
+	background:#FFFBD9;
 }
 .tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):not(.noStripe):nth-child(even) {
 	background:#F9F9F9;

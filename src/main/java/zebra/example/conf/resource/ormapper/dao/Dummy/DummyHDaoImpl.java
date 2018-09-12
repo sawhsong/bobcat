@@ -14,13 +14,13 @@ public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableListDataSetByCriteria");
 	}
 
-	public DataSet getTableListDataSetByCriteriaForMySqlAdditionalDataSource(QueryAdvisor queryAdvisor) throws Exception {
+	public DataSet getTableListDataSetByCriteriaForAdditionalDataSource(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String tableName = requestDataSet.getValue("tableName");
 
 		queryAdvisor.addAutoFillCriteria(tableName, "upper(table_name) like upper('%"+tableName+"%')");
 
-		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableListDataSetByCriteriaForMySqlAdditionalDataSource");
+		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableListDataSetByCriteriaForAdditionalDataSource");
 	}
 
 	public DataSet getTableDetailDataSetByTableName(String tableName) throws Exception {
@@ -29,10 +29,10 @@ public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableDetailDataSetByTableName");
 	}
 
-	public DataSet getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(String tableName) throws Exception {
+	public DataSet getTableDetailDataSetByTableNameForAdditionalDataSource(String tableName) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addVariable("table_name", tableName);
-		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableDetailDataSetByTableNameForMySqlAdditionalDataSource");
+		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableDetailDataSetByTableNameForAdditionalDataSource");
 	}
 
 	public DataSet getDataSetBySQLQuery(String sqlQuery) throws Exception {
@@ -40,7 +40,6 @@ public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 	}
 
 	public int createTable(String sql) throws Exception {
-		
 		return executeSql(sql);
 	}
 

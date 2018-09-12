@@ -44,16 +44,17 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), "hkaccount");
+		String defaultDataSourceUser = ConfigUtil.getProperty("jdbc.user.name");
+		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), defaultDataSourceUser);
 		String dataSourceNames[] = CommonUtil.split(ConfigUtil.getProperty("jdbc.multipleDatasource"), ConfigUtil.getProperty("delimiter.data"));
 
 		try {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(false);
 
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
+			if (!CommonUtil.equalsIgnoreCase(dataSource, "defaultDataSourceUser")) {
 				dummyDao.setDataSourceName(dataSource);
-				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteriaForMySqlAdditionalDataSource(queryAdvisor));
+				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
 				dummyDao.resetDataSourceName();
 				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteria(queryAdvisor));
@@ -70,48 +71,24 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	}
 
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), "hkaccount");
-		String dataSourceNames[] = CommonUtil.split(ConfigUtil.getProperty("jdbc.multipleDatasource"), ConfigUtil.getProperty("delimiter.data"));
-
-		try {
-			queryAdvisor.setRequestDataSet(requestDataSet);
-			queryAdvisor.setPagination(false);
-
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
-				dummyDao.setDataSourceName(dataSource);
-				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteriaForMySqlAdditionalDataSource(queryAdvisor));
-			} else {
-				dummyDao.resetDataSourceName();
-				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteria(queryAdvisor));
-			}
-
-			paramEntity.setObject("datasourceDataSet", getDatasourceDataSet(dataSourceNames));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-
-		return paramEntity;
+		return getDefault(paramEntity);
 	}
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String defaultDataSourceUser = ConfigUtil.getProperty("jdbc.user.name");
 		String dataSource = requestDataSet.getValue("dataSource");
 		String tableName = requestDataSet.getValue("tableName");
 
 		try {
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
+			if (!CommonUtil.equalsIgnoreCase(dataSource, defaultDataSourceUser)) {
 				dummyDao.setDataSourceName(dataSource);
-				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(tableName));
+				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(tableName));
 			} else {
 				dummyDao.resetDataSourceName();
 				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableName(tableName));
 			}
 
-			
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -1337,7 +1314,6 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			return "String";
 		}
 	}
-
 
 	private String getDataTypeStringForMyBatisXml(String value) {
 		if (CommonUtil.contains(CommonUtil.upperCase(value), "NUMBER")) {

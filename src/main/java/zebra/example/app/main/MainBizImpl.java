@@ -67,7 +67,7 @@ public class MainBizImpl extends BaseBiz implements MainBiz {
 			PiePlot plot = new PiePlot(pieDataset);
 			plot.setOutlineVisible(false);
 
-			JFreeChart chart = new JFreeChart("VM Memory status", new Font("Trebuchet MS", 1, 16), plot, true);
+			JFreeChart chart = new JFreeChart("VM Memory status", new Font("Verdana", 1, 12), plot, true);
 			chart.setBackgroundPaint(Color.WHITE);
 
 			ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());

@@ -18,7 +18,7 @@ public interface DummyDao extends IDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public DataSet getTableListDataSetByCriteriaForMySqlAdditionalDataSource(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getTableListDataSetByCriteriaForAdditionalDataSource(QueryAdvisor queryAdvisor) throws Exception;
 	/**
 	 * Get table detail by TableName
 	 * @param tableName
@@ -32,7 +32,7 @@ public interface DummyDao extends IDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public DataSet getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(String tableName) throws Exception;
+	public DataSet getTableDetailDataSetByTableNameForAdditionalDataSource(String tableName) throws Exception;
 	/**
 	 * Select all
 	 * @param sqlQuery

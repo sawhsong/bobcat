@@ -38,7 +38,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 
 			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
 				dummyDao.setDataSourceName(dataSource);
-				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForMySqlAdditionalDataSource(queryAdvisor));
+				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
 				dummyDao.resetDataSourceName();
 				queryAdvisor.addAutoFillCriteria("table_name", "table_name like 'DM_%'");
@@ -62,7 +62,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 		try {
 			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
 				dummyDao.setDataSourceName(dataSource);
-				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(tableName));
+				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(tableName));
 			} else {
 				dummyDao.resetDataSourceName();
 				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableName(tableName));
@@ -100,7 +100,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 
 			if (!CommonUtil.equalsIgnoreCase(targetDb, "hkaccount")) {
 				dummyDao.setDataSourceName(targetDb);
-				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(tableNamePrefix+tableName);
+				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(tableNamePrefix+tableName);
 			} else {
 				dummyDao.resetDataSourceName();
 				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableName(tableNamePrefix+tableName);
@@ -136,7 +136,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 
 			if (!CommonUtil.equalsIgnoreCase(sourceDb, "hkaccount")) {
 				dummyDao.setDataSourceName(sourceDb);
-				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(srcTableName);
+				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(srcTableName);
 			} else {
 				dummyDao.resetDataSourceName();
 				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableName(srcTableName);
@@ -196,7 +196,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 
 			if (!CommonUtil.equalsIgnoreCase(sourceDb, "hkaccount")) {
 				dummyDao.setDataSourceName(sourceDb);
-				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForMySqlAdditionalDataSource(srcTableName);
+				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(srcTableName);
 			} else {
 				dummyDao.resetDataSourceName();
 				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableName(srcTableName);
