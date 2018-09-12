@@ -162,7 +162,7 @@ $(function() {
 			</div>
 		</div>
 		<div id="divGlobalMenuRight">
-			<div id="divGblMenuArea">
+			<div id="divGblMenuAreaFramework">
 				<div id="divThemeSelector" class="headerGblMenus">
 					<a id="aThemeSelector">${sessionScope.themeName}</a>
 				</div>
