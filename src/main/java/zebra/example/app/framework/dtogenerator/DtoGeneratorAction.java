@@ -15,8 +15,12 @@ public class DtoGeneratorAction extends BaseAction {
 	}
 
 	public String getList() throws Exception {
-		biz.getList(paramEntity);
-		return "list";
+		try {
+			biz.getList(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String getDetail() throws Exception {

@@ -69,13 +69,13 @@ body {padding:0px 0px;
 /**
  * Global attributes - ETC
  */
-/* Textbox / Textarea Alignment */
+/* Textbox / Textarea / Th / Td Alignment */
 input[type=text].Lt, input[type=text].lt {text-align:left;}
 input[type=text].Rt, input[type=text].rt {text-align:right;}
 input[type=text].Ct, input[type=text].ct {text-align:center;}
-textarea.Lt, textarea.lt {text-align:left;}
-textarea.Rt, textarea.rt {text-align:right;}
-textarea.Ct, textarea.ct {text-align:center;}
+textarea.Lt, textarea.lt, th.Lt, th.lt, td.Lt, td.lt {text-align:left;}
+textarea.Rt, textarea.rt, th.Rt, th.rt, td.Rt, td.rt {text-align:right;}
+textarea.Ct, textarea.ct, th.Ct, th.ct, td.Ct, td.ct {text-align:center;}
 
 /* Mandatory field in table header - <th class="thEdit mandatory">Search 1</th> */
 .mandatory:after, .Mandatory:after {font-size:.8em;content:"\00a0 \273B";color:#FF4A4A;}

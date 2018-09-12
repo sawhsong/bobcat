@@ -40,6 +40,8 @@
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/ajax.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/fileElement.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/dataSet.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsCommon"/>/UiGridTr.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsCommon"/>/UiGridTd.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/contextMenu.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/commonJs.js"></script>
 

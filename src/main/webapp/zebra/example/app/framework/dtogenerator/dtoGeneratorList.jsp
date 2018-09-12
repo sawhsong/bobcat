@@ -10,8 +10,6 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet datasourceDataSet = (DataSet)paramEntity.getObject("datasourceDataSet");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
-	String messageCode = "I001";
 %>
 <%/************************************************************************************************
 * HTML
@@ -31,6 +29,7 @@
 <script type="text/javascript">
 var popupDetail = null;
 var popupInfo = null;
+var searchResultDataCount = 0;
 
 $(function() {
 	/*!
@@ -83,12 +82,85 @@ $(function() {
 	 * process
 	 */
 	exeSearch = function() {
+		commonJs.showProcMessageOnElement("tblGrid");
+
 		if (commonJs.doValidate($("#fmDefault"))) {
-			commonJs.doSubmit({
-				form:"fmDefault",
-				action:"/zebra/framework/dtogenerator/getList.do"
-			});
+			setTimeout(function() {
+				commonJs.ajaxSubmit({
+					formId:"fmDefault",
+					url:"/zebra/framework/dtogenerator/getList.do",
+					dataType:"json",
+					success:function(data, textStatus) {
+						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+						if (result.isSuccess == true || result.isSuccess == "true") {
+							renderDataGridTable(result);
+						}
+					}
+				});
+			}, 100);
 		}
+	};
+
+	renderDataGridTable = function(result) {
+		var dataSet = result.dataSet;
+		var html = "";
+
+		searchResultDataCount = dataSet.getRowCnt();
+		$("#tblGridBody").html("");
+
+		if (dataSet.getRowCnt() > 0) {
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var uiGridTr = new UiGridTr();
+				var uiGridTd = null;
+
+				uiGridTr.setClassName("noBorderHor noStripe");
+				uiGridTd = new UiGridTd();
+				uiGridTd.setClassName("tdGridCt");
+				uiGridTd.setValue(dataSet.getValue(i, "TABLE_NAME"));
+				uiGridTr.addChild(uiGridTd);
+				uiGridTd = new UiGridTd();
+				uiGridTd.setClassName("tdGridLt");
+				uiGridTd.setValue(dataSet.getValue(i, "COMMENTS"));
+				uiGridTr.addChild(uiGridTd);
+console.log(uiGridTr.toHtmlString());
+
+
+
+				html += "<tr>";
+				html += "<td class=\"tdGridCt\"><input type=\"checkbox\" id=\"chkForGenerate\" name=\"chkForGenerate\" class=\"chkEn inTblGrid\" value=\""+dataSet.getValue(i, "TABLE_NAME")+"\"/></td>";
+				html += "<td class=\"tdGridLt\"><a class=\"aEn\" onclick=\"getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')\">"+dataSet.getValue(i, "TABLE_NAME")+"</a></td>";
+				html += "<td class=\"tdGridLt\">"+dataSet.getValue(i, "COMMENTS")+"</td>";
+				html += "<td class=\"tdGridCt\">";
+				html += "<i id=\"icnAction\" name=\"icnAction\" class=\"fa fa-tasks fa-lg icnEn\" tableName=\""+dataSet.getValue(i, "TABLE_NAME")+"\" onclick=\"doAction(this)\" title=\"<mc:msg key="page.com.action"/>\"></i>";
+				html += "</td>";
+				html += "</tr>";
+			}
+		} else {
+			var uiTr = new UiTr();
+
+			html += "<tr>";
+			html += "<td class=\"tdGridCt\" colspan=\"4\"><mc:msg key="I001"/></td>";
+			html += "</tr>";
+		}
+
+		$("#tblGridBody").append($(html));
+
+		$("#tblGrid").fixedHeaderTable({
+			baseDivElement:"divScrollablePanel",
+			attachedPagingArea:false,
+			blockElementId:"tblGrid",
+			pagingAreaId:"divPagingArea",
+			totalResultRows:result.totalResultRows,
+			script:"exeSearch",
+			widthAdjust:0
+		});
+
+		$("[name=icnAction]").each(function(index) {
+			$(this).contextMenu(ctxMenu.dtoGeneratorAction);
+		});
+
+		commonJs.hideProcMessageOnElement("tblGrid");
 	};
 
 	getDetail = function(tableName) {
@@ -134,15 +206,10 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#tblFixedHeaderTable").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			widthAdjust:26
-		});
-
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.dtoGeneratorAction);
 		});
-
+		exeSearch();
 		$("#tableName").focus();
 	});
 });
@@ -215,7 +282,7 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<table id="tblFixedHeaderTable" class="tblGrid sort autosort">
+	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="4%"/>
 			<col width="32%"/>
@@ -224,45 +291,20 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid">
-					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i>
-				</th>
+				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
 				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
 				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
-		<tbody>
-<%
-		if (resultDataSet.getRowCnt() > 0) {
-			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-%>
+		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt">
-					<input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="<%=resultDataSet.getValue(i, "TABLE_NAME")%>"/>
-				</td>
-				<td class="tdGridLt">
-					<a class="aEn" onclick="getDetail('<%=resultDataSet.getValue(i, "TABLE_NAME")%>')" class="aNormal"><%=resultDataSet.getValue(i, "TABLE_NAME")%></a>
-				</td>
-				<td class="tdGridLt"><%=resultDataSet.getValue(i, "COMMENTS")%></td>
-				<td class="tdGridCt">
-					<i name="icnAction" class="fa fa-tasks fa-lg icnEn" tableName="<%=resultDataSet.getValue(i, "TABLE_NAME")%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
-				</td>
+				<td class="tdGridCt" colspan="4"><mc:msg key="I002"/></td>
 			</tr>
-<%
-			}
-		} else {
-%>
-			<tr>
-				<td class="tdGridCt" colspan="4"><mc:msg key="<%=messageCode%>"/></td>
-			</tr>
-<%
-		}
-%>
 		</tbody>
 	</table>
+	<div id="divPagingArea"></div>
 </div>
-<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

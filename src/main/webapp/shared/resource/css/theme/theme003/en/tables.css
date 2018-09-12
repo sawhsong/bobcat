@@ -70,15 +70,12 @@ table.tblSearch caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border
 	border-bottom:0px;
 	background-color:#F2F5F9;
 }
-.thSearch, .thSearchCt, .thSearchLt, .thSearchRt {padding:2px 6px;
+.thSearch {padding:2px 6px;
 	color:#555555;
 	background:#FFFFFF;
 }
 .tblSearch td {padding:2px 6px;border:0px solid #FFFFFF;}
 .tblSearch tfoot td {padding:2px 6px;}
-.thSearchCt, .tdSearchCt {text-align:center;}
-.thSearchLt, .tdSearch, .tdSearchLt {text-align:left;}
-.thSearch, .thSearchRt, .tdSearchRt {text-align:right;}
 .tblSearch tr:first-child th, .tblSearch tr:first-child td {padding-top:6px;}
 .tblSearch tr:last-child th, .tblSearch tr:last-child td {padding-bottom:6px;}
 
@@ -92,7 +89,7 @@ table.tblInform caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border
 	border-bottom:0px;
 	background-color:#FCF8E3;
 }
-.thInform, .thInformCt, .thInformLt, .thInformRt {padding:6px 6px;
+.thInform {padding:6px 6px;
 	color:#555555;
 	border:1px solid #F8E3B8;
 	background:#FCF8E3;
@@ -101,78 +98,12 @@ table.tblInform caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border
 	border:1px solid #F8E3B8;
 }
 .tblInform tfoot td {padding:6px 6px;}
-.thInformCt, .tdInformCt {text-align:center;}
-.thInformLt, .tdInform, .tdInformLt {text-align:left;}
-.thInform, .thInformRt, .tdInformRt {text-align:right;}
-
-/**
- * DataEntry Tables
- */
-.tblDataEntry {width:100%;border:1px solid #D3EBE0;}
-table.tblDataEntry caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border-top-left-radius:4px;border-top-right-radius:4px;
-	color:#555555;
-	border:1px solid #D3EBE0;
-	border-bottom:0px;
-	background-color:#F1F9F7;
-}
-.thDataEntry, .thDataEntryCt, .thDataEntryLt, .thDataEntryRt {padding:6px 6px;
-	color:#555555;
-	border:1px solid #D3EBE0;
-	background:#F9F9F9;
-}
-.tblDataEntry td {padding:6px 6px;
-	border:1px solid #D3EBE0;
-}
-.tblDataEntry tfoot td {padding:6px 6px;}
-.thDataEntryCt, .tdDataEntryCt {text-align:center;}
-.thDataEntryLt, .tdDataEntry, .tdDataEntryLt {text-align:left;}
-.thDataEntry, .thDataEntryRt, .tdDataEntryRt {text-align:right;}
-
-/**
- * Admin Tool Tables
- */
-.tblAdminTool {width:100%;border:1px solid #FFBFC2;}
-table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border-top-left-radius:4px;border-top-right-radius:4px;
-	color:#555555;
-	border:1px solid #FFBFC2;
-	border-bottom:0px;
-	background-color:#FFF4F4;
-}
-.thAdminTool, .thAdminToolCt, .thAdminToolLt, .thAdminToolRt {padding:3px 3px;
-	color:#555555;
-	border:1px solid #FFBFC2;
-	background:#FFF4F4;
-}
-.tblAdminTool td {padding:3px 3px;
-	border:1px solid #FFBFC2;
-}
-.tblAdminTool tfoot td {padding:3px 3px;}
-.thAdminToolCt, .tdAdminToolCt {text-align:center;}
-.thAdminToolLt, .tdAdminTool, .tdAdminToolLt {text-align:left;}
-.thAdminTool, .thAdminToolRt, .tdAdminToolRt {text-align:right;}
-/* Admin Tool Grid */
-.tblAdminToolGrid {width:100%;
-	border-bottom:1px solid #DDDDDD;
-}
-.thAdminToolGrid, .thAdminToolGridCt, .thAdminToolGridLt, .thAdminToolGridRt {padding:3px 2px;
-	border:1px solid #DDDDDD;
-	background:#F5F5F5;
-}
-.tblAdminToolGrid td {padding:2px 2px;vertical-align:top;
-	border:1px solid #DDDDDD;
-}
-.tblAdminToolGrid tbody tr:last-child td {}
-.tblAdminToolGrid tfoot tr:first-child td {}
-.tblAdminToolGrid tfoot tr:last-child td {}
-.thAdminToolGrid, .thAdminToolGridCt, .tdAdminToolGridCt {text-align:center;}
-.thAdminToolGridLt, .tdAdminToolGrid, .tdAdminToolGridLt {text-align:left;}
-.thAdminToolGridRt, .tdAdminToolGridRt {text-align:right;}
 
 /**
  * Edit Tables
  */
 .tblEdit {width:100%;}
-.thEdit, .thEditCt, .thEditLt, .thEditRt {padding:6px 6px;
+.thEdit {padding:6px 6px;
 	color:#555555;
 	border:1px solid #CCCCCC;
 	background:#F6F6F6;
@@ -182,17 +113,13 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 }
 .tblEdit tfoot td {padding:6px 6px;}
 
-.thEditCt, .tdEditCt {text-align:center;}
-.thEditLt, .tdEdit, .tdEditLt {text-align:left;}
-.thEdit, .thEditRt, .tdEditRt {text-align:right;}
-
 /**
  * Grid style Tables
  */
 .tblGrid {width:100%;box-shadow:0px 0px 0px rgba(0, 0, 0, .2);
 	border-bottom:1px solid #CCCCCC;
 }
-.thGrid, .thGridCt, .thGridLt, .thGridRt {padding:8px 4px;
+.thGrid {padding:8px 4px;
 	border:1px solid #CCCCCC;
 	background:#FDF5CE;
 }
@@ -215,10 +142,6 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 .tblGrid tfoot tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {
 	background:#F5F5F5;
 }
-
-.thGrid, .thGridCt, .tdGridCt {text-align:center;}
-.thGridLt, .tdGrid, .tdGridLt {text-align:left;}
-.thGridRt, .tdGridRt {text-align:right;}
 
 .tblGrid tr.noBorderHor td, .tblGrid tr.noBorderHor th {
 	border-top:0px solid #CCCCCC;
@@ -247,7 +170,7 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 .tblDefault {width:100%;
 	border:0px solid #CCCCCC;
 }
-.thDefault, .thDefaultCt, .thDefaultLt, .thDefaultRt {padding:0px 0px;
+.thDefault {padding:0px 0px;
 	color:#555555;
 	border:0px solid #CCCCCC;
 }
@@ -257,9 +180,5 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 .tblDefault tfoot td {padding:0px 0px;
 	border:0px solid #CCCCCC;
 }
-
-.thDefaultCt, .tdDefaultCt {text-align:center;}
-.thDefaultLt, .tdDefault, .tdDefaultLt {text-align:left;}
-.thDefault, .thDefaultRt, .tdDefaultRt {text-align:right;}
 
 table.withPadding th, table.withPadding td {padding:4px 4px;}

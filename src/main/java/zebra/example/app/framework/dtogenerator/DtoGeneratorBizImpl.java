@@ -44,6 +44,23 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String dataSourceNames[] = CommonUtil.split(ConfigUtil.getProperty("jdbc.multipleDatasource"), ConfigUtil.getProperty("delimiter.data"));
+
+		try {
+			queryAdvisor.setRequestDataSet(requestDataSet);
+
+			paramEntity.setObject("datasourceDataSet", getDatasourceDataSet(dataSourceNames));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+
+		return paramEntity;
+	}
+
+	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		String defaultDataSourceUser = ConfigUtil.getProperty("jdbc.user.name");
 		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), defaultDataSourceUser);
 		String dataSourceNames[] = CommonUtil.split(ConfigUtil.getProperty("jdbc.multipleDatasource"), ConfigUtil.getProperty("delimiter.data"));
@@ -54,10 +71,10 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 
 			if (!CommonUtil.equalsIgnoreCase(dataSource, "defaultDataSourceUser")) {
 				dummyDao.setDataSourceName(dataSource);
-				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
+				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
 				dummyDao.resetDataSourceName();
-				paramEntity.setObject("resultDataSet", dummyDao.getTableListDataSetByCriteria(queryAdvisor));
+				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteria(queryAdvisor));
 			}
 
 			paramEntity.setObject("datasourceDataSet", getDatasourceDataSet(dataSourceNames));
@@ -68,10 +85,6 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		}
 
 		return paramEntity;
-	}
-
-	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
-		return getDefault(paramEntity);
 	}
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
