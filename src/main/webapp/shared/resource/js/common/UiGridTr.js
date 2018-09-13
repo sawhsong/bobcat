@@ -1,5 +1,5 @@
 /**
- * Table.tr
+ * Table.tr - For Data Grid only
  */
 UiGridTr = Class.create();
 UiGridTr.prototype = {
