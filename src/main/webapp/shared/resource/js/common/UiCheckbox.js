@@ -40,11 +40,9 @@ UiCheckbox.prototype = {
 	toHtmlString : function() {
 		var str = "";
 
-		str += "<td class=\""+this.className+"\"";
+		str += "<input type=\"checkbox\" class=\""+this.className+"\"";
 		
-		str += ">";
-		str += this.value;
-		str += "</td>";
+		str += "/>";
 
 		return str;
 	}

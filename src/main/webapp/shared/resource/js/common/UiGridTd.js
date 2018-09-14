@@ -3,12 +3,18 @@
  */
 UiGridTd = Class.create();
 UiGridTd.prototype = {
+	/**
+	 * Constructor
+	 */
 	initialize : function() {
 		this.className = "";
 		this.tdAttribute = "";
 		this.value = "",
 		this.childList= new Array();
 	},
+	/**
+	 * Setter / Getter
+	 */
 	setClassName : function(className) {
 		this.className = className;
 	},
@@ -18,6 +24,12 @@ UiGridTd.prototype = {
 	setTdAttribute : function(attributes) {
 		this.tdAttribute = attributes;
 	},
+	/**
+	 * Method
+	 */
+	/**
+	 * toString
+	 */
 	toHtmlString : function() {
 		var str = "";
 		var attrArray = null;
