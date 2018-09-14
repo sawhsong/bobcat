@@ -1,21 +1,26 @@
 /**
- * Table.tr - For Data Grid only
+ * Anchor - For Data Grid only
  */
-UiGridTr = Class.create();
-UiGridTr.prototype = {
+UiAnchor = Class.create();
+UiAnchor.prototype = {
 	/**
 	 * Constructor
 	 */
 	initialize : function() {
-		this.className = "";
+		this.id = "";
+		this.className = "aEn";
 		this.style = "";
-		this.childList= new Array();
+		this.script = "";
+		this.text = ""
 	},
 	/**
 	 * Setter / Getter
 	 */
+	setId : function(id) {this.id = id; return this;},
 	setClassName : function(className) {this.className = className; return this;},
 	setStyle : function(style) {this.style = style; return this;},
+	setScript : function(script) {this.script = script; return this;},
+	setText : function(text) {this.text = text; return this;},
 	/**
 	 * Method
 	 */
@@ -24,23 +29,19 @@ UiGridTr.prototype = {
 		if (!$.nony.isEmpty(this.className)) {this.className.replace(className, "");}
 		return this;
 	},
-	addChild : function(obj) {this.childList.push(obj); return this;},
 	/**
 	 * toString
 	 */
 	toHtmlString : function() {
 		var str = "";
 
-		str += "<tr";
+		str += "<a id=\""+this.id+"\"";
 		if (!$.nony.isEmpty(this.className)) {str += " class=\""+this.className+"\"";}
 		if (!$.nony.isEmpty(this.style)) {str += " style=\""+this.style+"\"";}
+		if (!$.nony.isEmpty(this.script)) {str += " onclick=\""+this.script+"\"";}
 		str += ">";
-		if (this.childList != null && this.childList.length > 0) {
-			for (var i=0; i<this.childList.length; i++) {
-				str += this.childList[i].toHtmlString();
-			}
-		}
-		str += "</tr>";
+		if (!$.nony.isEmpty(this.text)) {str += this.text;}
+		str += "</a>";
 
 		return str;
 	}

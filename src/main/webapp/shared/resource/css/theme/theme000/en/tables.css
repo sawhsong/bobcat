@@ -134,7 +134,7 @@ table.tblInform caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border
 .tblGrid tfoot tr:first-child td {}
 .tblGrid tfoot tr:last-child td {}
 .tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {transition:background .2s;
-	background:#FFFBD9;
+	background:#FEFAE5;
 }
 .tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):not(.noStripe):nth-child(even) {
 	background:#F9F9F9;

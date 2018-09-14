@@ -112,49 +112,50 @@ $(function() {
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
 				var uiGridTr = new UiGridTr();
-				var uiGridTd = null;
 
-				uiGridTr.setClassName("noBorderHor noStripe");
-				uiGridTd = new UiGridTd();
-				uiGridTd.setClassName("tdGridCt");
-				uiGridTd.setValue(dataSet.getValue(i, "TABLE_NAME"));
-				uiGridTr.addChild(uiGridTd);
-				uiGridTd = new UiGridTd();
-				uiGridTd.setClassName("tdGridLt");
-				uiGridTd.setValue(dataSet.getValue(i, "COMMENTS"));
-				uiGridTr.addChild(uiGridTd);
-console.log(uiGridTr.toHtmlString());
+				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
+				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
+				uiTd0.addClassName("Ct").addChild(uiChk);
+				uiGridTr.addChild(uiTd0);
 
+				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
+				uiTd1.addClassName("Lt").addChild(uiAnc);
+				uiGridTr.addChild(uiTd1);
 
+				var uiTd2 = new UiGridTd();
+				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
+				uiGridTr.addChild(uiTd2);
 
-				html += "<tr>";
-				html += "<td class=\"tdGridCt\"><input type=\"checkbox\" id=\"chkForGenerate\" name=\"chkForGenerate\" class=\"chkEn inTblGrid\" value=\""+dataSet.getValue(i, "TABLE_NAME")+"\"/></td>";
-				html += "<td class=\"tdGridLt\"><a class=\"aEn\" onclick=\"getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')\">"+dataSet.getValue(i, "TABLE_NAME")+"</a></td>";
-				html += "<td class=\"tdGridLt\">"+dataSet.getValue(i, "COMMENTS")+"</td>";
-				html += "<td class=\"tdGridCt\">";
-				html += "<i id=\"icnAction\" name=\"icnAction\" class=\"fa fa-tasks fa-lg icnEn\" tableName=\""+dataSet.getValue(i, "TABLE_NAME")+"\" onclick=\"doAction(this)\" title=\"<mc:msg key="page.com.action"/>\"></i>";
-				html += "</td>";
-				html += "</tr>";
+				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
+				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+				uiTd3.addClassName("Ct").addChild(uiIcon);
+				uiGridTr.addChild(uiTd3);
+
+				html += uiGridTr.toHtmlString();
 			}
 		} else {
-			var uiTr = new UiTr();
+			var uiGridTr = new UiGridTr();
 
-			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"4\"><mc:msg key="I001"/></td>";
-			html += "</tr>";
+			var uiTd0 = new UiGridTd();
+			uiTd0.addClassName("Ct").setAttribute("colspan:4").setText("<mc:msg key="I001"/>");
+			uiGridTr.addChild(uiTd0);
+
+			html += uiGridTr.toHtmlString();
 		}
 
 		$("#tblGridBody").append($(html));
 
-		$("#tblGrid").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			attachedPagingArea:false,
-			blockElementId:"tblGrid",
-			pagingAreaId:"divPagingArea",
-			totalResultRows:result.totalResultRows,
-			script:"exeSearch",
-			widthAdjust:0
-		});
+// 		$("#tblGrid").fixedHeaderTable({
+// 			baseDivElement:"divScrollablePanel",
+// 			attachedPagingArea:false,
+// 			blockElementId:"tblGrid",
+// 			pagingAreaId:"divPagingArea",
+// 			totalResultRows:result.totalResultRows,
+// 			script:"exeSearch",
+// 			widthAdjust:0
+// 		});
 
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.dtoGeneratorAction);
@@ -291,15 +292,15 @@ console.log(uiGridTr.toHtmlString());
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
-				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
-				<th class="thGrid sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
+				<th class="thGrid Ct"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
+				<th class="thGrid Ct sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+				<th class="thGrid Ct sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+				<th class="thGrid Ct"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="4"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="4"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
