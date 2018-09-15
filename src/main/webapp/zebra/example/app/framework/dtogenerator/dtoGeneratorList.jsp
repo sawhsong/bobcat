@@ -160,6 +160,31 @@ $(function() {
 
 				html += uiGridTr.toHtmlString();
 			}
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var uiGridTr = new UiGridTr();
+
+				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
+				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
+				uiTd0.addClassName("Ct").addChild(uiChk);
+				uiGridTr.addChild(uiTd0);
+
+				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
+				uiTd1.addClassName("Lt").addChild(uiAnc);
+				uiGridTr.addChild(uiTd1);
+
+				var uiTd2 = new UiGridTd();
+				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
+				uiGridTr.addChild(uiTd2);
+
+				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
+				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+				uiTd3.addClassName("Ct").addChild(uiIcon);
+				uiGridTr.addChild(uiTd3);
+
+				html += uiGridTr.toHtmlString();
+			}
 		} else {
 			var uiGridTr = new UiGridTr();
 
@@ -173,14 +198,12 @@ $(function() {
 		$("#tblGridBody").append($(html));
 
 		$("#tblGrid").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			attachedPagingArea:true,
-//			setDummyPaging:true,
-			blockElementId:"tblGrid",
-			pagingAreaId:"divPagingArea",
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:true,
+			displayRowCount:false,
 			totalResultRows:result.totalResultRows,
-			script:"exeSearch",
-			widthAdjust:0
+			script:"exeSearch"
 		});
 
 		$("[name=icnAction]").each(function(index) {
@@ -319,8 +342,8 @@ $(function() {
 		<thead>
 			<tr>
 				<th class="thGrid Ct"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
-				<th class="thGrid Ct sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
-				<th class="thGrid Ct sortable:string"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+				<th class="thGrid Ct sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+				<th class="thGrid Ct sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
 				<th class="thGrid Ct"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
@@ -330,8 +353,8 @@ $(function() {
 			</tr>
 		</tbody>
 	</table>
-	<div id="divPagingArea" class="areaContainer"></div>
 </div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

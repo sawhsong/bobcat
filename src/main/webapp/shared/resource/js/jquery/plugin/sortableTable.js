@@ -730,8 +730,8 @@ var Table = (function(){
 
 		// Scrape each row of each tbody
 		var bodies = t.tBodies;
-		var headerColumnWidth = globalMap.get("headerColumnWidth"+$(t).attr("id"));
-		var originalTableHeight = globalMap.get("originalTableHeight"+$(t).attr("id"));
+//		var headerColumnWidth = globalMap.get("headerColumnWidth"+$(t).attr("id"));
+//		var originalTableHeight = globalMap.get("originalTableHeight"+$(t).attr("id"));
 
 		if (bodies==null || bodies.length==0) { return; }
 		for (var i=0,L=bodies.length; i<L; i++) {
@@ -785,13 +785,13 @@ var Table = (function(){
 				/*!
 				 * modified by Dustin(2013.12.01) - fixedHeaderTable
 				 */
-				$(row).find("td").each(function(index) {
-					if ($.nony.isEmpty($(this).attr("colspan"))) {
-						$(this).width(headerColumnWidth[index]+"px");
-					} else {
-						$(this).width(baseWidth+"px");
-					}
-				});
+//				$(row).find("td").each(function(index) {
+//					if ($.nony.isEmpty($(this).attr("colspan"))) {
+//						$(this).width(headerColumnWidth[index]+"px");
+//					} else {
+//						$(this).width(baseWidth+"px");
+//					}
+//				});
 			}
 		}
 
@@ -813,15 +813,15 @@ var Table = (function(){
 				/*!
 				 * modified by Dustin(2013.12.08) - fixedHeaderTable
 				 */
-//				(tdata.filters && def(tdata.filters[table.getCellIndex(c)]) && hasClass(c,table.FilterableClassName))?addClass(c,table.FilteredClassName):removeClass(c,table.FilteredClassName);
+				(tdata.filters && def(tdata.filters[table.getCellIndex(c)]) && hasClass(c,table.FilterableClassName))?addClass(c,table.FilteredClassName):removeClass(c,table.FilteredClassName);
 
-				if ($(o).parent().index() == table.getCellIndex(c) && hasClass(c, table.FilterableClassName)) {
-					if ($(o).val() != "") {
-						addClass(c, table.FilteredClassName);
-					} else {
-						removeClass(c, table.FilteredClassName);
-					}
-				}
+//				if ($(o).parent().index() == table.getCellIndex(c) && hasClass(c, table.FilterableClassName)) {
+//					if ($(o).val() != "") {
+//						addClass(c, table.FilteredClassName);
+//					} else {
+//						removeClass(c, table.FilteredClassName);
+//					}
+//				}
 			}
 		);
 

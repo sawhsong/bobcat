@@ -921,10 +921,13 @@ var nony = {
 			mainDivId = "divPopupWindowHolder";
 		} else {
 			mainDivId = "divBodyCenter";
-			heightHeader = $("#divHeaderHolder").height() || 0;
-			heightFooter = $("#divFooterHolder").height() || 0;
+			heightHeader = $("#divHeaderHolder").outerHeight() || 0;
+			heightFooter = $("#divFooterHolder").outerHeight() || 0;
 		}
-
+//console.log("divHeaderHolder.height : "+$("#divHeaderHolder").height());
+//console.log("divHeaderHolder.outerheight : "+$("#divHeaderHolder").outerHeight());
+//console.log("divFooterHolder.height : "+$("#divFooterHolder").height());
+//console.log("divFooterHolder.outerheight : "+$("#divFooterHolder").outerHeight());
 		$("#"+mainDivId+" > div").each(function(index) {
 			if (isPopup) {
 				if (($(this).css("display") != "none") && ($(this).attr("id") != "divScrollablePanelPopup")) {
@@ -938,7 +941,8 @@ var nony = {
 		});
 
 		heightSum += ($("#divScrollablePanel").outerHeight() - $("#divScrollablePanel").height());
-
+//console.log("divScrollablePanel.outerheight : "+$("#divScrollablePanel").outerHeight());
+//console.log("divScrollablePanel.height : "+$("#divScrollablePanel").height());
 		if (bodyLayout != null) {
 			if (bodyLayout.state.north.isClosed) {
 				heightHeader = 0;
@@ -951,16 +955,8 @@ var nony = {
 
 		if (isPopup) {
 			heightCorrection = 2;
-//			$("#divScrollablePanelPopup").css("border", "1px solid red");
 			$("#divScrollablePanelPopup").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		} else {
-			// 검색조건 1행 - 123, 2행 - 156
-//			if (heightSum > 150) {
-//				heightCorrection = 13;
-//			} else {
-//				heightCorrection = -1;
-//			}
-
 			$("#divScrollablePanel").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		}
 

@@ -79,8 +79,3 @@ table.sort18 th.sorted-desc:after {cursor:pointer; content:" "url("/shared/resou
 
 /* Dummy for default content image - Do not delete */
 th.sortable, th.sortable:after {cursor:pointer; content:"";}
-
-/* TBody scroll bar with fixed THead */
-table.fixedHeaderTable, table.fixedHeaderTable thead, table.fixedHeaderTable tfoot {display:block;}
-table.fixedHeaderTable tbody {display:block;overflow-y:auto;}
-table.fixedHeaderTable caption {display:inherit;}
