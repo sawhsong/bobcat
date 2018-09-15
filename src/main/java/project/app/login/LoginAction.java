@@ -33,7 +33,7 @@ public class LoginAction extends BaseAction {
 	}
 
 	public String login() throws Exception {
-//		try {
+		try {
 			biz.exeLogin(paramEntity);
 
 			if (paramEntity.isSuccess()) {
@@ -50,8 +50,8 @@ public class LoginAction extends BaseAction {
 
 				paramEntity.setAjaxResponseDataSet(sysUser.getDataSet());
 			}
-//		} catch (Exception ex) {
-//		}
+		} catch (Exception ex) {
+		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}

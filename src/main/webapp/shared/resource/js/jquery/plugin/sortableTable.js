@@ -437,8 +437,8 @@ var Table = (function(){
 
 		// If it has already been computed, return the answer from the lookup table
 		if (def(this.tableHeaderIndexes[tableObj.id])) {
-			return this.tableHeaderIndexes[tableObj.id][cellCoordinates];      
-		} 
+			return this.tableHeaderIndexes[tableObj.id][cellCoordinates];
+		}
 
 		var matrix = [];
 		this.tableHeaderIndexes[tableObj.id] = {};
@@ -459,8 +459,8 @@ var Table = (function(){
 				var rowSpan = c.rowSpan || 1;
 				var colSpan = c.colSpan || 1;
 				var firstAvailCol;
-				if(!def(matrix[rowIndex])) { 
-					matrix[rowIndex] = []; 
+				if(!def(matrix[rowIndex])) {
+					matrix[rowIndex] = [];
 				}
 				var m = matrix[rowIndex];
 				// Find first available column in the first row

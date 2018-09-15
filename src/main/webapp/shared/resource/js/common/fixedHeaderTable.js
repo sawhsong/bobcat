@@ -83,7 +83,7 @@
 				}
 
 				if (options.setDummyPaging) {
-					html += "<div id=\"divPagination\">";
+					html += "<div id=\"divPagination\" style='border:1px solid red;'>";
 					html += "<table id=\"tblPagination\">";
 					html += "<tr>";
 					if ($.nony.isPopup()) {
@@ -96,7 +96,7 @@
 					html += "</ul>";
 					html += "</td>";
 					html += "<td class=\"tdPaginationRight\" style=\"text-align:right;\">";
-//					html += $.nony.getNumberMask(options.totalResultRows, "#,##0")+" Rows";
+					html += $.nony.getNumberMask(options.totalResultRows, "#,##0")+" Rows";
 					html += "</td>";
 					html += "</tr>";
 					html += "</table>";
