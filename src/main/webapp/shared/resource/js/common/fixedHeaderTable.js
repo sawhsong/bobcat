@@ -15,44 +15,6 @@
  * 				totalResultRows:result.totalResultRows	// [conditional mandatory : for pagination area component - if paging is attached this is mandatory]
  * 			});
  */
-/*
-(function ($) {
-    $.fn.fixHeader = function () {
-        return this.each(function () {
-            var $table = $(this);
-            var $sp = $table.scrollParent();
-            var tableOffset = $table.position().top;
-            var $tableFixed = $("<table />")
-                .prop('class', $table.prop('class'))
-                .css({ position: "fixed", "table-layout": "fixed", display: "none", "margin-top": "0px" });
-            $table.before($tableFixed);
-            $tableFixed.append($table.find("thead").clone());
-
-            $sp.bind("scroll", function () {
-                var offset = $(this).scrollTop();
-
-                if (offset > tableOffset && $tableFixed.is(":hidden")) {
-                    $tableFixed.show();
-                    var p = $table.position();
-                    var offset = $sp.offset();
-
-                    //Set the left and width to match the source table and the top to match the scroll parent
-                    $tableFixed.css({ top: (offset ? offset.top : 0) + "px", }).width($table.width());
-
-                    //Set the width of each column to match the source table
-                    $.each($table.find('th, td'), function (i, th) {
-                        $($tableFixed.find('th, td')[i]).width($(th).width());
-                    });
-
-                }
-                else if (offset <= tableOffset && !$tableFixed.is(":hidden")) {
-                    $tableFixed.hide();
-                }
-            });
-        });
-    };
-})(jQuery);
- */
 (function($) {
 	$.fn.fixedHeaderTable = function(options) {
 		return this.each(function() {
@@ -71,8 +33,8 @@
 
 			$(options.attachTo).css("overflow", "auto");
 
-			/**
-			 * Paging Area
+			/*!
+			 * Rendering Paging Area
 			 */
 			if (options.isPageable) {
 				var className = "", readOnly = "", event = "", jsParamString = "", html = "";
@@ -278,7 +240,7 @@
 					html += "<ul id=\"ulPagination\">";
 					html += "</ul>";
 					html += "</td>";
-					html += "<td class=\"tdPaginationRight\" style=\"text-align:right;padding:4px 0px 2px 0px;\">";
+					html += "<td class=\"tdPaginationRight\" style=\"color:#337AB7;padding:4px 0px 2px 0px;text-align:right;font-weight:bold;\">";
 					html += $.nony.getNumberMask(options.totalResultRows, "#,##0")+" Rows Displayed";
 					html += "</td>";
 					html += "</tr>";
@@ -289,6 +251,42 @@
 				}
 			} // Paging Area End
 
+			/*!
+			 * Filter Row
+			 */
+			if (options.isFilter) {
+				var html = "", filterColLength = 0;
+
+				html += "<tr>";
+
+				if (options.filterColumn == null || options.filterColumn == "undefined") {
+					filterColLength = $(this).find("thead th").length;
+					for (var i=0; i<filterColLength; i++) {
+						html += "<th class=\"thGrid Ct\">";
+						html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" onkeyup=\"Table.filter(this, this)\"/>";
+						html += "</th>"
+					}
+				} else {
+					filterColLength = options.filterColumn.length;
+					for (var i=0; i<filterColLength; i++) {
+						html += "<th class=\"thGrid Ct\">";
+						$(this).find("thead th").each(function(index) {
+							if (options.filterColumn[i] == index) {
+								html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" onkeyup=\"Table.filter(this, this)\"/>";
+							}
+						});
+						html += "</th>"
+					}
+				}
+
+				html += "</tr>";
+
+				$(this).find("thead").append($(html));
+			}
+
+			/*!
+			 * Calculating height(pagingArea, attachTo
+			 */
 			pagingAreaHeight = $(options.pagingArea).outerHeight();
 
 			if (isPopup) {
@@ -297,23 +295,44 @@
 				$scrollablePanel = $("#divScrollablePanel");
 			}
 
-			attachToHeight = options.attachToHeight || $scrollablePanel.height();
-
 			if ($.nony.browser.Chrome) {heightAdjustment = 6;}
 			else if ($.nony.browser.FireFox) {heightAdjustment = 6;}
 			else {heightAdjustment = 6;}
-			$(options.attachTo).height(attachToHeight - (pagingAreaHeight + heightAdjustment));
-//console.log("$scrollablePanel.height() : "+$scrollablePanel.height());
-//console.log("attachToHeight : "+attachToHeight);
-//console.log("pagingAreaHeight : "+pagingAreaHeight);
-//console.log("$(options.attachTo).height() : "+$(options.attachTo).height());
-//console.log("$(this).height() : "+$(this).height());
 
+			/*!
+			 * Return if the data table is smaller than attachTo height
+			 */
+			attachToHeight = options.attachToHeight || $(options.attachTo).height();
+			if (($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment)) >= attachToHeight) {
+				return;
+			}
 
+			$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
 
-//			if () {
-//				isScrollbar = true;
-//			}
+			/*!
+			 * Fixed header
+			 */
+			var $table = $(this);
+			var tableOffset = $table.offset().top;
+			var $header = $table.find("thead").clone(true, true);
+			var $fixedTable = $("<table/>").prop("class", $table.prop("class")).css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px"});
+
+			$fixedTable.width($table.width());
+			$table.before($fixedTable);
+			$fixedTable.append($header).show();
+
+			$table.find("th").each(function(index) {
+				$($fixedTable.find("th")[index]).width($(this).width());
+				$($fixedTable.find("th")[index]).bind("click", function() {
+					$($table.find("th")[index]).trigger("click");
+
+					$table.find("th").each(function(inner_index) {
+						$fixedTable.find("th").each(function() {
+							$($fixedTable.find("th")[inner_index]).attr("class", $($table.find("th")[inner_index]).attr("class"));
+						});
+					});
+				});
+			});
 		});
 	};
 })(jQuery);

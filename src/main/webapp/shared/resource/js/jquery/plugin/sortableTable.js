@@ -622,7 +622,8 @@ var Table = (function(){
 			}
 			// Also allow for a regular input
 			if (filters.nodeName=="INPUT" && filters.type=="text") {
-				filters={ 'filter':"/^"+filters.value+"/" };
+//				filters={ 'filter':"/^"+filters.value+"/" }; - Dustin 2018.09.17
+				filters={ 'filter':"/"+filters.value+"/" };
 			}
 			// Force filters to be an array
 
@@ -637,7 +638,8 @@ var Table = (function(){
 				if (typeof(filter.filter)=="string") {
 					// If a filter string is like "/expr/" then turn it into a Regex
 					if (filter.filter.match(/^\/(.*)\/$/)) {
-						filter.filter = new RegExp(RegExp.$1);
+//						filter.filter = new RegExp(RegExp.$1); - Dustin 2018.09.17
+						filter.filter = new RegExp(RegExp.$1, "i");
 						filter.filter.regex=true;
 					}
 					// If filter string is like "function (x) { ... }" then turn it into a function

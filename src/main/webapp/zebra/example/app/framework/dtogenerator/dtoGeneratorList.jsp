@@ -82,7 +82,7 @@ $(function() {
 	 * process
 	 */
 	exeSearch = function() {
-		commonJs.showProcMessageOnElement("tblGrid");
+		commonJs.showProcMessageOnElement("divDataArea");
 
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
@@ -135,56 +135,56 @@ $(function() {
 
 				html += uiGridTr.toHtmlString();
 			}
-			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var uiGridTr = new UiGridTr();
+// 			for (var i=0; i<dataSet.getRowCnt(); i++) {
+// 				var uiGridTr = new UiGridTr();
 
-				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
-				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
-				uiTd0.addClassName("Ct").addChild(uiChk);
-				uiGridTr.addChild(uiTd0);
+// 				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
+// 				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
+// 				uiTd0.addClassName("Ct").addChild(uiChk);
+// 				uiGridTr.addChild(uiTd0);
 
-				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
-				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
-				uiTd1.addClassName("Lt").addChild(uiAnc);
-				uiGridTr.addChild(uiTd1);
+// 				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
+// 				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
+// 				uiTd1.addClassName("Lt").addChild(uiAnc);
+// 				uiGridTr.addChild(uiTd1);
 
-				var uiTd2 = new UiGridTd();
-				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
-				uiGridTr.addChild(uiTd2);
+// 				var uiTd2 = new UiGridTd();
+// 				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
+// 				uiGridTr.addChild(uiTd2);
 
-				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
-				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
-					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
-				uiTd3.addClassName("Ct").addChild(uiIcon);
-				uiGridTr.addChild(uiTd3);
+// 				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
+// 				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+// 					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+// 				uiTd3.addClassName("Ct").addChild(uiIcon);
+// 				uiGridTr.addChild(uiTd3);
 
-				html += uiGridTr.toHtmlString();
-			}
-			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var uiGridTr = new UiGridTr();
+// 				html += uiGridTr.toHtmlString();
+// 			}
+// 			for (var i=0; i<dataSet.getRowCnt(); i++) {
+// 				var uiGridTr = new UiGridTr();
 
-				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
-				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
-				uiTd0.addClassName("Ct").addChild(uiChk);
-				uiGridTr.addChild(uiTd0);
+// 				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
+// 				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
+// 				uiTd0.addClassName("Ct").addChild(uiChk);
+// 				uiGridTr.addChild(uiTd0);
 
-				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
-				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
-				uiTd1.addClassName("Lt").addChild(uiAnc);
-				uiGridTr.addChild(uiTd1);
+// 				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
+// 				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
+// 				uiTd1.addClassName("Lt").addChild(uiAnc);
+// 				uiGridTr.addChild(uiTd1);
 
-				var uiTd2 = new UiGridTd();
-				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
-				uiGridTr.addChild(uiTd2);
+// 				var uiTd2 = new UiGridTd();
+// 				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
+// 				uiGridTr.addChild(uiTd2);
 
-				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
-				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
-					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
-				uiTd3.addClassName("Ct").addChild(uiIcon);
-				uiGridTr.addChild(uiTd3);
+// 				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
+// 				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+// 					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+// 				uiTd3.addClassName("Ct").addChild(uiIcon);
+// 				uiGridTr.addChild(uiTd3);
 
-				html += uiGridTr.toHtmlString();
-			}
+// 				html += uiGridTr.toHtmlString();
+// 			}
 		} else {
 			var uiGridTr = new UiGridTr();
 
@@ -200,8 +200,10 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
-			displayRowCount:false,
+			isPageable:false,
+			displayRowCount:true,
+			isFilter:true,
+// 			filterColumn:[1, 2],
 			totalResultRows:result.totalResultRows,
 			script:"exeSearch"
 		});
@@ -210,7 +212,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.dtoGeneratorAction);
 		});
 
-		commonJs.hideProcMessageOnElement("tblGrid");
+		commonJs.hideProcMessageOnElement("divDataArea");
 	};
 
 	getDetail = function(tableName) {
