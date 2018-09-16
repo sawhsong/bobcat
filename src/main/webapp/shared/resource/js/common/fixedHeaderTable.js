@@ -255,33 +255,32 @@
 			 * Filter Row
 			 */
 			if (options.isFilter) {
-				var html = "", filterColLength = 0;
+				if ($(this).find("thead").find("#systemGeneratedFilterRow").length <= 0) {
+					var html = "", filterColLength = 0;
 
-				html += "<tr>";
+					html += "<tr id=\"systemGeneratedFilterRow\">";
 
-				if (options.filterColumn == null || options.filterColumn == "undefined") {
-					filterColLength = $(this).find("thead th").length;
-					for (var i=0; i<filterColLength; i++) {
-						html += "<th class=\"thGrid Ct\">";
-						html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" onkeyup=\"Table.filter(this, this)\"/>";
-						html += "</th>"
-					}
-				} else {
-					filterColLength = options.filterColumn.length;
-					for (var i=0; i<filterColLength; i++) {
-						html += "<th class=\"thGrid Ct\">";
+					if (options.filterColumn == null || options.filterColumn == "undefined") {
 						$(this).find("thead th").each(function(index) {
-							if (options.filterColumn[i] == index) {
-								html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" onkeyup=\"Table.filter(this, this)\"/>";
-							}
+							html += "<th class=\"thGrid Ct\">";
+							html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" id=\"systemGeneratedFilterRow"+index+"\" onkeyup=\"Table.filter(this, this)\"/>";
+							html += "</th>"
 						});
-						html += "</th>"
+					} else {
+						$(this).find("thead th").each(function(index) {
+							html += "<th class=\"thGrid Ct\">";
+							for (var i=0; i<options.filterColumn.length; i++) {
+								if (options.filterColumn[i] == index) {
+									html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" id=\"systemGeneratedFilterRow"+index+"\" onkeyup=\"Table.filter(this, this)\"/>";
+								}
+							}
+							html += "</th>"
+						});
 					}
+
+					html += "</tr>";
+					$(this).find("thead").append($(html));
 				}
-
-				html += "</tr>";
-
-				$(this).find("thead").append($(html));
 			}
 
 			/*!
@@ -323,6 +322,7 @@
 
 			$table.find("th").each(function(index) {
 				$($fixedTable.find("th")[index]).width($(this).width());
+
 				$($fixedTable.find("th")[index]).bind("click", function() {
 					$($table.find("th")[index]).trigger("click");
 
@@ -333,6 +333,17 @@
 					});
 				});
 			});
+
+			if ($(this).find("thead").find("#systemGeneratedFilterRow").length > 0) {
+				$("#systemGeneratedFilterRow").find("th input[type=text]").each(function(index) {
+					$($fixedTable.find("th input[type=text]")[index]).bind("keyup", function() {
+						var val = $($fixedTable.find("th input[type=text]")[index]).val();
+
+						$($table.find("thead th input[type=text]")[index]).val(val);
+						$($table.find("thead th input[type=text]")[index]).trigger("keyup");
+					});
+				});
+			}
 		});
 	};
 })(jQuery);
