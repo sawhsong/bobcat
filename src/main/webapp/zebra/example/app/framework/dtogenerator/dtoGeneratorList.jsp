@@ -74,6 +74,7 @@ $(function() {
 
 			if ($(element).is("[name=tableName]")) {
 				exeSearch();
+				event.preventDefault();
 			}
 		}
 	});
@@ -82,7 +83,7 @@ $(function() {
 	 * process
 	 */
 	exeSearch = function() {
-		commonJs.showProcMessageOnElement("divDataArea");
+		commonJs.showProcMessageOnElement("divScrollablePanel");
 
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
@@ -151,8 +152,8 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
-			displayRowCount:true,
+			isPageable:false,
+			displayRowCount:false,
 			isFilter:false,
 			filterColumn:[1, 2],
 			totalResultRows:result.totalResultRows,
@@ -163,7 +164,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.dtoGeneratorAction);
 		});
 
-		commonJs.hideProcMessageOnElement("divDataArea");
+		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	getDetail = function(tableName) {
@@ -307,7 +308,7 @@ $(function() {
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"></div>
+<div id="divPagingArea" class=""></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>
