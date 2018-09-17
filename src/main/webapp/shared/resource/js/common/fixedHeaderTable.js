@@ -33,6 +33,10 @@
 
 			$(options.attachTo).css("overflow", "auto");
 
+			if ($("#systemGeneratedTableForFixedHeader").length > 0) {
+				$("#systemGeneratedTableForFixedHeader").remove();
+			}
+
 			/*!
 			 * Rendering Paging Area
 			 */
@@ -263,7 +267,7 @@
 					if (options.filterColumn == null || options.filterColumn == "undefined") {
 						$(this).find("thead th").each(function(index) {
 							html += "<th class=\"thGrid Ct\">";
-							html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" id=\"systemGeneratedFilterRow"+index+"\" onkeyup=\"Table.filter(this, this)\"/>";
+							html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" onkeyup=\"Table.filter(this, this)\"/>";
 							html += "</th>"
 						});
 					} else {
@@ -271,7 +275,7 @@
 							html += "<th class=\"thGrid Ct\">";
 							for (var i=0; i<options.filterColumn.length; i++) {
 								if (options.filterColumn[i] == index) {
-									html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" id=\"systemGeneratedFilterRow"+index+"\" onkeyup=\"Table.filter(this, this)\"/>";
+									html += "<input type=\"text\" class=\"txtEn Lt\" style=\"width:100%;font-weight:normal\" onkeyup=\"Table.filter(this, this)\"/>";
 								}
 							}
 							html += "</th>"
@@ -303,7 +307,7 @@
 			 */
 			attachToHeight = options.attachToHeight || $(options.attachTo).height();
 			if (($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment)) >= attachToHeight) {
-				return;
+//				return;
 			}
 
 			$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
@@ -314,7 +318,7 @@
 			var $table = $(this);
 			var tableOffset = $table.offset().top;
 			var $header = $table.find("thead").clone(true, true);
-			var $fixedTable = $("<table/>").prop("class", $table.prop("class")).css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px"});
+			var $fixedTable = $("<table id=\"systemGeneratedTableForFixedHeader\"/>").prop("class", $table.prop("class")).css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px"});
 
 			$fixedTable.width($table.width());
 			$table.before($fixedTable);
@@ -344,6 +348,8 @@
 					});
 				});
 			}
+
+
 		});
 	};
 })(jQuery);

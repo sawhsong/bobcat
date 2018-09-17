@@ -763,6 +763,14 @@ var Table = (function(){
 								else {
 									hideRow = (val!=filter);
 								}
+
+								// Dustin - 2018.09.17
+								if ($("#systemGeneratedTableForFixedHeader").length > 0) {
+									var $fixedTable = $("#systemGeneratedTableForFixedHeader");
+									$(t).find("th").each(function(index) {
+										$($fixedTable.find("th")[index]).width($(this).width());
+									});
+								}
 							}
 						}
 					}

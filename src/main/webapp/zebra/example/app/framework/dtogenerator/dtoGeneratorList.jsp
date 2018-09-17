@@ -107,9 +107,38 @@ $(function() {
 		var html = "";
 
 		searchResultDataCount = dataSet.getRowCnt();
+// var $gridTable = $("#tblGrid").clone(true, true);
+// $("#tblGrid").remove();
+// $("#divDataArea").append($gridTable).show();
+
 		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var uiGridTr = new UiGridTr();
+
+				var uiTd0 = new UiGridTd(), uiChk = new UiCheckbox();
+				uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(dataSet.getValue(i, "TABLE_NAME"));
+				uiTd0.addClassName("Ct").addChild(uiChk);
+				uiGridTr.addChild(uiTd0);
+
+				var uiTd1 = new UiGridTd(), uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
+				uiTd1.addClassName("Lt").addChild(uiAnc);
+				uiGridTr.addChild(uiTd1);
+
+				var uiTd2 = new UiGridTd();
+				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
+				uiGridTr.addChild(uiTd2);
+
+				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
+				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+				uiTd3.addClassName("Ct").addChild(uiIcon);
+				uiGridTr.addChild(uiTd3);
+
+				html += uiGridTr.toHtmlString();
+			}
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
 				var uiGridTr = new UiGridTr();
 
@@ -203,7 +232,7 @@ $(function() {
 			isPageable:true,
 			displayRowCount:true,
 			isFilter:true,
-// 			filterColumn:[1, 2],
+			filterColumn:[1, 2],
 			totalResultRows:result.totalResultRows,
 			script:"exeSearch"
 		});
