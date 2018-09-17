@@ -8,6 +8,8 @@
  * 				isPageable:true/false					// [optional : true : displays paging area component, false : displays nothing]
  * 				displayRowCount:true					// [optional : true : displays total row count even if isPageable is false, false : displays nothing]
  * 				attachToHeight:750,						// [optional : height of parent jquery object which holds this table]
+ * 				isFilter:false,							// [optional : true : displays filter row]
+ * 				filterColumn:[1, 2],					// [optional : if isFilter is true : sets the column index to display filter textbox]
  * 
  * 				formId:"formId"							// [optional : for pagination area component - form Id]
  * 				formAction:"formAction					// [optional : for pagination area component - form action]
