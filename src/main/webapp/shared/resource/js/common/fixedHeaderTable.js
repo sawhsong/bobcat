@@ -246,7 +246,7 @@
 					html += "<ul id=\"ulPagination\">";
 					html += "</ul>";
 					html += "</td>";
-					html += "<td class=\"tdPaginationRight\" style=\"color:#337AB7;padding:4px 0px 2px 0px;text-align:right;font-weight:bold;\">";
+					html += "<td class=\"tdPaginationRight\" style=\"color:#337AB7;padding:6px 0px 2px 0px;text-align:right;font-weight:bold;\">";
 					html += $.nony.getNumberMask(options.totalResultRows, "#,##0")+" Rows Displayed";
 					html += "</td>";
 					html += "</tr>";
