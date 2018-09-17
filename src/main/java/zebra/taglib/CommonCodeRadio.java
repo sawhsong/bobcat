@@ -43,7 +43,7 @@ public class CommonCodeRadio extends TaglibSupport {
 			defaultLangCode = CommonUtil.nvl(langCode, (String)httpSession.getAttribute("langCode"));
 
 			for (int i=0; i<ds.getRowCnt(); i++) {
-				if (CommonUtil.toBoolean(isBootstrap)) {
+				if (CommonUtil.toBoolean(isBootstrap, true)) {
 					if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
 						html.append("<div class=\"radio");
 						if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "COMMON_CODE")) || CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" disabled");}

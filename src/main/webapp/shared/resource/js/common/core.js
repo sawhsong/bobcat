@@ -590,9 +590,10 @@ var nony = {
 		});
 	},
 	_jqTooltip : function() {
-		$(document).tooltip({
+		$.widget.bridge("jqUiTooltip", $.ui.tooltip);
+		$(document).jqUiTooltip({
 			track:true,
-			show:{effect:"fade", duration:50},
+			show:{effect:"fade", duration:20},
 			position:{my:"left+13 top+10", at:"right bottom"}
 		});
 	},

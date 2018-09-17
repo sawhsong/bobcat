@@ -309,10 +309,10 @@
 			 */
 			attachToHeight = options.attachToHeight || $(options.attachTo).height();
 			if (($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment)) >= attachToHeight) {
-//				return;
+//				$(options.attachTo).height($(this).height());
+			} else {
+				$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
 			}
-
-			$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
 
 			/*!
 			 * Fixed header
@@ -320,9 +320,13 @@
 			var $table = $(this);
 			var tableOffset = $table.offset().top;
 			var $header = $table.find("thead").clone(true, true);
-			var $fixedTable = $("<table id=\"systemGeneratedTableForFixedHeader\"/>").prop("class", $table.prop("class")).css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px"});
+			var $fixedTable = $("<table id=\"systemGeneratedTableForFixedHeader\"/>").prop("class", $table.prop("class"))
+								.css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px"});
 
-			$fixedTable.width($table.width());
+			if ($.nony.browser.Chrome) {$fixedTable.width($table.width());}
+			else if ($.nony.browser.FireFox) {$fixedTable.width($table.width()+1);}
+			else {$fixedTable.width($table.width()+1);}
+
 			$table.before($fixedTable);
 			$fixedTable.append($header).show();
 

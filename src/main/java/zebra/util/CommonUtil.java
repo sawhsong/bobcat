@@ -215,7 +215,29 @@ public class CommonUtil extends StringUtils {
 	}
 
 	public static boolean toBoolean(String value) {
-		return (CommonUtil.equalsIgnoreCase(value, "true") || CommonUtil.equalsIgnoreCase(value, "yes") || CommonUtil.equalsIgnoreCase(value, "y"));
+		return (equalsIgnoreCase(value, "true") || equalsIgnoreCase(value, "yes") || equalsIgnoreCase(value, "y"));
+	}
+
+	public static boolean toBoolean(String value, boolean defaultIfBlank) {
+		if (isBlank(value)) {return defaultIfBlank;}
+		return toBoolean(value);
+	}
+
+	public static boolean isIn(String value, String... values) {
+		if (isBlank(value)) {return false;}
+		for (String s : values) {
+			if (equals(value, s)) {return true;}
+		}
+		return false;
+	}
+
+	public static String removeString(String value, String... values) {
+		if (isBlank(value)) {return value;}
+		String val = value;
+		for (String s : values) {
+			val = remove(val, s);
+		}
+		return val;
 	}
 
 	public static String getNumberMask(String value) {

@@ -86,11 +86,11 @@ $(function() {
 			<col width="75%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><mc:msg key="fwk.garbageCollection.host"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.garbageCollection.host"/></th>
 			<td class="tdEdit"><%=pe.getObject("hostName")%> (<%=pe.getObject("hostAddress")%>)</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="fwk.garbageCollection.measurmentTime"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.garbageCollection.measurmentTime"/></th>
 			<td class="tdEdit"><%=CommonUtil.nvl((String)pe.getObject("measuredTime"))%></td>
 		</tr>
 	</table>
@@ -113,16 +113,16 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid" colspan="2"><mc:msg key="fwk.garbageCollection.totalMemory"/> (<%=pe.getObject("totalMemory")%> MB)</th>
+				<th class="thGrid Ct" colspan="2"><mc:msg key="fwk.garbageCollection.totalMemory"/> (<%=pe.getObject("totalMemory")%> MB)</th>
 			</tr>
 			<tr>
-				<th class="thGrid"><mc:msg key="fwk.garbageCollection.usingMemory"/> (<%=pe.getObject("usingMemory")%> MB)</th>
-				<th class="thGrid"><mc:msg key="fwk.garbageCollection.freeMemory"/> (<%=pe.getObject("freeMemory")%> MB)</th>
+				<th class="thGrid Ct"><mc:msg key="fwk.garbageCollection.usingMemory"/> (<%=pe.getObject("usingMemory")%> MB)</th>
+				<th class="thGrid Ct"><mc:msg key="fwk.garbageCollection.freeMemory"/> (<%=pe.getObject("freeMemory")%> MB)</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td class="tdGridCt" colspan="2"><img src="<%=pe.getObject("chartFilePath")%>"/></td>
+				<td class="tdGrid Ct" colspan="2"><img src="<%=pe.getObject("chartFilePath")%>"/></td>
 			</tr>
 		</tbody>
 	</table>

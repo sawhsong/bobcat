@@ -46,9 +46,9 @@ $(function() {
 			url:"/zebra/framework/dtogenerator/getGeneratorInfo.do",
 			header:"<mc:msg key="fwk.dtogenerator.title.generatorPopupHeader"/>",
 			paramData:{dataSource:$("#dataSource").val()},
-			blind:false,
-			width:800,
-			height:520
+			blind:true,
+			width:1000,
+			height:540
 		});
 	});
 
@@ -99,7 +99,7 @@ $(function() {
 						}
 					}
 				});
-			}, 100);
+			}, 50);
 		}
 	};
 
@@ -176,8 +176,8 @@ $(function() {
 				dataSource:$("#dataSource").val()
 			},
 			header:"<mc:msg key="fwk.dtogenerator.title.detailPopupHeader"/>",
-			width:1000,
-			height:650
+			width:1200,
+			height:700
 		});
 	};
 
@@ -255,20 +255,20 @@ $(function() {
 				<tr>
 					<td class="tdDefault">
 						<label for="dataSource" class="lblEn hor"><mc:msg key="fwk.dtogenerator.dataSource"/></label>
-						<select id="dataSource" name="dataSource" class="bootstrapSelect default">
+						<ui:select id="dataSource" name="dataSource">
 <%
 						for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
-							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "hkaccount")) ? "selected" : "";
+							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "alpaca")) ? "selected" : "";
 %>
 							<option value="<%=datasourceDataSet.getValue(i, "VALUE")%>" <%=selected%>><%=datasourceDataSet.getValue(i, "NAME")%></option>
 <%
 						}
 %>
-						</select>
+						</ui:select>
 					</td>
 					<td class="tdDefault">
 						<label for="tableName" class="lblEn hor"><mc:msg key="fwk.dtogenerator.tableName"/></label>
-						<input type="text" id="tableName" name="tableName" class="txtEn hor" style="width:280px"/>
+						<ui:text id="tableName" name="tableName" className="defClass hor" style="width:280px"/>
 					</td>
 				</tr>
 			</table>
@@ -295,10 +295,10 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid Ct"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
-				<th class="thGrid Ct sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
-				<th class="thGrid Ct sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
-				<th class="thGrid Ct"><mc:msg key="page.com.action"/></th>
+				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
@@ -308,7 +308,7 @@ $(function() {
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class=""></div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

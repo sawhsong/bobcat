@@ -52,7 +52,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			if (CommonUtil.toBoolean(isMultiple)) {html.append(" multiple=\"multiple\"");}
 			if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" "+status);}
 			// css class
-			if (!CommonUtil.toBoolean(isBootstrap)) {
+			if (!CommonUtil.toBoolean(isBootstrap, true)) {
 				if (CommonUtil.toBoolean(isMultiple)) {classString = "selMulti";}
 				else {classString = "selSingle";}
 

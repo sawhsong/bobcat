@@ -33,7 +33,7 @@ public class Checkbox extends TaglibSupport {
 
 			text = CommonUtil.containsIgnoreCase(text, ".") ? getMessage(text, langCode) : text;
 
-			if (CommonUtil.toBoolean(isBootstrap)) {
+			if (CommonUtil.toBoolean(isBootstrap, true)) {
 				if (CommonUtil.toBoolean(isDisabled) || CommonUtil.equalsIgnoreCase(status, "disabled")) {
 					disabledString = " disabled";
 				}

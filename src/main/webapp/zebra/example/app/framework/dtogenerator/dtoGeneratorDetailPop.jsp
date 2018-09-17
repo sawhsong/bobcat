@@ -25,6 +25,8 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <script type="text/javascript">
+globalMap.put("useJqTooltip", true);
+
 $(function() {
 	/*!
 	 * event
@@ -42,11 +44,11 @@ $(function() {
 	 */
 	$(window).ready(function() {
 		setTimeout(function() {
-			$("#tblFixedHeaderTable").fixedHeaderTable({
-				baseDivElement:"divScrollablePanelPopup",
-				widthAdjust:-6
+			$("#tblGrid").fixedHeaderTable({
+				attachTo:$("#divDataArea"),
+				pagingArea:$("#divPagingArea")
 			});
-		}, 1000);
+		}, 500);
 	});
 });
 </script>
@@ -79,9 +81,9 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
 			<td class="tdEdit"><%=requestDataSet.getValue("tableName")%></td>
-			<th class="thEditRt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue("TABLE_DESCRIPTION")%></td>
 		</tr>
 	</table>
@@ -96,14 +98,14 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<table id="tblFixedHeaderTable" class="tblGrid sort autosort:4">
+	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="25%"/>
+			<col width="22%"/>
 			<col width="9%"/>
 			<col width="10%"/>
-			<col width="7%"/>
 			<col width="8%"/>
-			<col width="8%"/>
+			<col width="9%"/>
+			<col width="9%"/>
 			<col width="*"/>
 		</colgroup>
 		<thead>
@@ -124,12 +126,12 @@ $(function() {
 %>
 			<tr>
 				<td class="tdGrid"><%=resultDataSet.getValue(i, "COLUMN_NAME")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "DATA_TYPE")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "DATA_DEFAULT")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "DATA_LENGTH")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "NULLABLE")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "CONSTRAINT_TYPE")%></td>
-				<td class="tdGrid"><%=CommonUtil.abbreviate(resultDataSet.getValue(i, "COMMENTS"), 35)%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "DATA_TYPE")%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "DATA_DEFAULT")%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "DATA_LENGTH")%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "NULLABLE")%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "CONSTRAINT_TYPE")%></td>
+				<td class="tdGrid" title="<%=resultDataSet.getValue(i, "COMMENTS")%>"><%=CommonUtil.abbreviate(resultDataSet.getValue(i, "COMMENTS"), 40)%></td>
 			</tr>
 <%
 			}
