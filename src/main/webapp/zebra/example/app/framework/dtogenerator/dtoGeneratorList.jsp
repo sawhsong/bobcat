@@ -47,7 +47,7 @@ $(function() {
 			header:"<mc:msg key="fwk.dtogenerator.title.generatorPopupHeader"/>",
 			paramData:{dataSource:$("#dataSource").val()},
 			blind:true,
-			width:900,
+			width:1000,
 			height:520
 		});
 	});

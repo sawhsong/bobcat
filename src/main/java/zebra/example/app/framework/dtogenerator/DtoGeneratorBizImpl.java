@@ -112,7 +112,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
 		// D:/workspaceMaven/alpaca/target/alpaca/
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "webapp");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
 
 		String dtoProject = CommonUtil.replace(ConfigUtil.getProperty("path.common.dtoProject"), "#DB_VENDOR#", dbVendor);
@@ -233,7 +233,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkPackage = CommonUtil.lowerCase(ConfigUtil.getProperty("name.package.framework"));
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.javaDto");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
@@ -418,7 +418,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	private boolean generateHibernateDtoConfig(String systemType, DataSet requestDataSet, DataSet tableInfoDataSet) throws Exception {
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.hibernateDtoConfig");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
@@ -577,13 +577,13 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	private boolean generateMybatisDtoMapper(String systemType, DataSet requestDataSet, DataSet tableInfoDataSet) throws Exception {
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.mybatisDtoMapper");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
 
-		String mybatisMapperProjectPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperConfProject"), "#DB_VENDOR#", dbVendor);
-		String mybatisMapperFrameworkPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperConfFwk"), "#DB_VENDOR#", dbVendor);
+		String mybatisMapperProjectPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperClassProject"), "#DB_VENDOR#", dbVendor);
+		String mybatisMapperFrameworkPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperClassFwk"), "#DB_VENDOR#", dbVendor);
 
 		String targetPath = "", packageString = "", tempString = "", sourceString = "";
 		File targetFile;
@@ -630,15 +630,15 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	private boolean generateMybatisDtoMapperXml(String systemType, DataSet requestDataSet, DataSet tableInfoDataSet) throws Exception {
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.mybatisDtoMapperXml");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
 
 		String dtoProjectPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.common.dtoProject"), "#DB_VENDOR#", dbVendor);
 		String dtoFrameworkPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.common.dtoFwk"), "#DB_VENDOR#", dbVendor);
-		String mybatisMapperProjectPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperConfProject"), "#DB_VENDOR#", dbVendor);
-		String mybatisMapperFrameworkPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperConfFwk"), "#DB_VENDOR#", dbVendor);
+		String mybatisMapperProjectPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperXmlProject"), "#DB_VENDOR#", dbVendor);
+		String mybatisMapperFrameworkPath = rootPath + CommonUtil.replace(ConfigUtil.getProperty("path.source.mybatisDtoMapperXmlFwk"), "#DB_VENDOR#", dbVendor);
 
 		String autoFillString = ConfigUtil.getProperty("db.constants.autoFillString");
 		String whereString = ConfigUtil.getProperty("db.constants.whereString");
@@ -773,7 +773,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	private boolean generateDao(String systemType, DataSet requestDataSet, DataSet tableInfoDataSet) throws Exception {
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.javaDao");
 
@@ -884,7 +884,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkPackage = CommonUtil.lowerCase(ConfigUtil.getProperty("name.package.framework"));
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.javaDaoImpl");
 
@@ -942,7 +942,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkPackage = CommonUtil.lowerCase(ConfigUtil.getProperty("name.package.framework"));
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.javaDaoMapper");
 
@@ -998,7 +998,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkName = ConfigUtil.getProperty("name.framework");
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.hibernateQuery");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
@@ -1047,7 +1047,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkName = ConfigUtil.getProperty("name.framework");
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.mybatisQuery");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
@@ -1107,7 +1107,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkPath = ConfigUtil.getProperty("name.path.framework");
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.daoSpringConf");
 
