@@ -645,7 +645,7 @@ $(function() {
 						<tr>
 							<th class="thEdit">Bootstrap Radio Block</th>
 							<td class="tdEdit">
-								<div class="radio ">
+								<div class="radio">
 									<label><input type="radio" name="rdoBootstrapBlock" value="rdoBootstrapBlock0">rdoBootstrapBlock0</label>
 								</div>
 								<div class="radio disabled">

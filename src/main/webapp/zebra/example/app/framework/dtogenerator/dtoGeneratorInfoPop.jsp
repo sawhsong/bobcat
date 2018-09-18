@@ -179,14 +179,10 @@ $(function() {
 		<div class="panel-heading"><h3 class="panel-title"><mc:msg key="fwk.dtogenerator.header.system"/></h3></div>
 		<div class="panel-body">
 			<table class="tblDefault withPadding">
-				<colgroup>
-					<col width="25%"/>
-					<col width="75%"/>
-				</colgroup>
 				<tr>
 					<td class="tdDefault">
-						<label class="lblRadioEn"><input type="radio" name="system" class="rdoEn inEdit" value="Project" checked/><mc:msg key="fwk.dtogenerator.header.project"/></label>
-						<label class="lblRadioEn"><input type="radio" name="system" class="rdoEn inEdit" value="Framework"/><mc:msg key="fwk.dtogenerator.header.framework"/></label>
+						<ui:radio name="system" inputClassName="inTbl" value="Project" text="fwk.dtogenerator.header.project" isSelected="true"/>
+						<ui:radio name="system" inputClassName="inTbl" value="Framework" text="fwk.dtogenerator.header.framework"/>
 					</td>
 				</tr>
 			</table>
@@ -212,8 +208,8 @@ $(function() {
 				<col width="*"/>
 			</colgroup>
 			<tr>
-				<th class="thEdit" rowspan="2"><mc:msg key="fwk.dtogenerator.header.dto"/></th>
-				<td class="tdEditCt" colspan="2">
+				<th class="thEdit Rt" rowspan="2"><mc:msg key="fwk.dtogenerator.header.dto"/></th>
+				<td class="tdEdit Ct" colspan="2">
 					<label class="lblCheckEn block">
 						<input type="checkbox" name="dtoProject" class="chkEn inTbl" value="Y" checked/><mc:msg key="fwk.dtogenerator.header.dtoClass"/>
 						&nbsp;&nbsp;[<%=paramEntity.getObject("dtoProjectPath")%>]
@@ -221,18 +217,14 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td class="tdEditCt"></td>
-				<td class="tdEdit">
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="hibernateDtoConfigProject" class="chkEn" value="Y" checked/><mc:msg key="fwk.dtogenerator.header.hibernateConfig"/>
-					</label>
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="mybatisDtoMapperConfigProject" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.mybatisDtoMapperConfig"/>
-					</label>
+				<td class="tdEdit Ct" style="border-right:0px"></td>
+				<td class="tdEdit" style="border-left:0px">
+					<ui:check name="hibernateDtoConfigProject" value="Y" text="fwk.dtogenerator.header.hibernateConfig" isChecked="true" displayType="block"/>
+					<ui:check name="mybatisDtoMapperConfigProject" value="Y" text="fwk.dtogenerator.header.mybatisDtoMapperConfig" displayType="block"/>
 				</td>
 			</tr>
 			<tr>
-				<th class="thEdit" rowspan="3"><mc:msg key="fwk.dtogenerator.header.dao"/></th>
+				<th class="thEdit Rt" rowspan="3"><mc:msg key="fwk.dtogenerator.header.dao"/></th>
 				<td class="tdEditCt" colspan="2">
 					<label class="lblCheckEn block">
 						<input type="checkbox" name="daoProject" class="chkEn inTbl" value="Y"/><mc:msg key="fwk.dtogenerator.header.daoClass"/>
@@ -241,21 +233,15 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td class="tdEditCt"></td>
-				<td class="tdEdit">
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="hibernateDaoImplProject" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.hibernateDaoImpl"/>
-					</label>
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="mybatisDaoImplProject" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.mybatisDaoImpl"/>
-					</label>
+				<td class="tdEdit Ct" style="border-right:0px"></td>
+				<td class="tdEdit" style="border-left:0px">
+					<ui:check name="hibernateDaoImplProject" value="Y" text="fwk.dtogenerator.header.hibernateDaoImpl" displayType="block"/>
+					<ui:check name="mybatisDaoImplProject" value="Y" text="fwk.dtogenerator.header.mybatisDaoImpl" displayType="block"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="tdEdit" colspan="2">
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="daoSpringConfigProject" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.daoSpringConfig"/>
-					</label>
+					<ui:check name="daoSpringConfigProject" value="Y" text="fwk.dtogenerator.header.daoSpringConfig"/>
 				</td>
 			</tr>
 		</table>
@@ -264,18 +250,23 @@ $(function() {
 			<caption class="captionEdit"><mc:msg key="fwk.dtogenerator.header.queryXml"/></caption>
 			<colgroup>
 				<col width="20%"/>
-				<col width="4%"/>
 				<col width="*"/>
 			</colgroup>
 			<tr>
-				<th class="thEdit"><mc:msg key="fwk.dtogenerator.header.hibernateQuery"/></th>
-				<td class="tdEditCt"><input type="checkbox" name="hibernateQueryProject" class="chkEn inTbl" value="Y"/></td>
-				<td class="tdEdit"><%=paramEntity.getObject("hibernateQueryProjectPath")%></td>
+				<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.header.hibernateQuery"/></th>
+				<td class="tdEdit">
+					<label class="lblCheckEn block">
+						<input type="checkbox" name="hibernateQueryProject" class="chkEn inTbl" value="Y"/><%=paramEntity.getObject("hibernateQueryProjectPath")%>
+					</label>
+				</td>
 			</tr>
 			<tr>
-				<th class="thEdit"><mc:msg key="fwk.dtogenerator.header.mybatisQuery"/></th>
-				<td class="tdEditCt"><input type="checkbox" name="mybatisQueryProject" class="chkEn inTbl" value="Y"/></td>
-				<td class="tdEdit"><%=paramEntity.getObject("mybatisQueryProjectPath")%></td>
+				<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.header.mybatisQuery"/></th>
+				<td class="tdEditCt">
+					<label class="lblCheckEn block">
+						<input type="checkbox" name="mybatisQueryProject" class="chkEn inTbl" value="Y"/><%=paramEntity.getObject("mybatisQueryProjectPath")%>
+					</label>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -288,8 +279,8 @@ $(function() {
 				<col width="*"/>
 			</colgroup>
 			<tr>
-				<th class="thEdit" rowspan="2"><mc:msg key="fwk.dtogenerator.header.dto"/></th>
-				<td class="tdEditCt" colspan="2">
+				<th class="thEdit Rt" rowspan="2"><mc:msg key="fwk.dtogenerator.header.dto"/></th>
+				<td class="tdEdit" colspan="2">
 					<label class="lblCheckEn block">
 						<input type="checkbox" name="dtoFramework" class="chkEn inTbl" value="Y" checked/><mc:msg key="fwk.dtogenerator.header.dtoClass"/>
 						&nbsp;&nbsp;[<%=paramEntity.getObject("dtoFrameworkPath")%>]
@@ -297,19 +288,15 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td class="tdEditCt"></td>
-				<td class="tdEdit">
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="hibernateDtoConfigFramework" class="chkEn" value="Y" checked/><mc:msg key="fwk.dtogenerator.header.hibernateConfig"/>
-					</label>
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="mybatisDtoMapperConfigFramework" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.mybatisDtoMapperConfig"/>
-					</label>
+				<td class="tdEdit Rt" style="border-right:0px"></td>
+				<td class="tdEdit" style="border-left:0px">
+					<ui:check name="hibernateDtoConfigFramework" value="Y" text="fwk.dtogenerator.header.hibernateConfig" isChecked="true" displayType="block"/>
+					<ui:check name="mybatisDtoMapperConfigFramework" value="Y" text="fwk.dtogenerator.header.mybatisDtoMapperConfig" displayType="block"/>
 				</td>
 			</tr>
 			<tr>
-				<th class="thEdit" rowspan="3"><mc:msg key="fwk.dtogenerator.header.dao"/></th>
-				<td class="tdEditCt" colspan="2">
+				<th class="thEdit Rt" rowspan="3"><mc:msg key="fwk.dtogenerator.header.dao"/></th>
+				<td class="tdEdit" colspan="2">
 					<label class="lblCheckEn block">
 						<input type="checkbox" name="daoFramework" class="chkEn inTbl" value="Y"/><mc:msg key="fwk.dtogenerator.header.daoClass"/>
 						&nbsp;&nbsp;[<%=paramEntity.getObject("daoFrameworkPath")%>]
@@ -317,21 +304,15 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<td class="tdEditCt"></td>
-				<td class="tdEdit">
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="hibernateDaoImplFramework" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.hibernateDaoImpl"/>
-					</label>
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="mybatisDaoImplFramework" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.mybatisDaoImpl"/>
-					</label>
+				<td class="tdEdit Rt" style="border-right:0px"></td>
+				<td class="tdEdit" style="border-left:0px">
+					<ui:check name="hibernateDaoImplFramework" value="Y" text="fwk.dtogenerator.header.hibernateDaoImpl" displayType="block"/>
+					<ui:check name="mybatisDaoImplFramework" value="Y" text="fwk.dtogenerator.header.mybatisDaoImpl" displayType="block"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="tdEdit" colspan="2">
-					<label class="lblCheckEn block">
-						<input type="checkbox" name="daoSpringConfigFramework" class="chkEn" value="Y"/><mc:msg key="fwk.dtogenerator.header.daoSpringConfig"/>
-					</label>
+					<ui:check name="daoSpringConfigFramework" value="Y" text="fwk.dtogenerator.header.daoSpringConfig"/>
 				</td>
 			</tr>
 		</table>
@@ -340,18 +321,23 @@ $(function() {
 			<caption class="captionEdit"><mc:msg key="fwk.dtogenerator.header.queryXml"/></caption>
 			<colgroup>
 				<col width="20%"/>
-				<col width="4%"/>
 				<col width="*"/>
 			</colgroup>
 			<tr>
-				<th class="thEdit"><mc:msg key="fwk.dtogenerator.header.hibernateQuery"/></th>
-				<td class="tdEditCt"><input type="checkbox" name="hibernateQueryFramework" class="chkEn inTbl" value="Y"/></td>
-				<td class="tdEdit"><%=paramEntity.getObject("hibernateQueryFrameworkPath")%></td>
+				<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.header.hibernateQuery"/></th>
+				<td class="tdEdit">
+					<label class="lblCheckEn block">
+						<input type="checkbox" name="hibernateQueryFramework" class="chkEn inTbl" value="Y"/><%=paramEntity.getObject("hibernateQueryFrameworkPath")%>
+					</label>
+				</td>
 			</tr>
 			<tr>
-				<th class="thEdit"><mc:msg key="fwk.dtogenerator.header.mybatisQuery"/></th>
-				<td class="tdEditCt"><input type="checkbox" name="mybatisQueryFramework" class="chkEn inTbl" value="Y"/></td>
-				<td class="tdEdit"><%=paramEntity.getObject("mybatisQueryFrameworkPath")%></td>
+				<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.header.mybatisQuery"/></th>
+				<td class="tdEdit">
+					<label class="lblCheckEn block">
+						<input type="checkbox" name="mybatisQueryFramework" class="chkEn inTbl" value="Y"/><%=paramEntity.getObject("mybatisQueryFrameworkPath")%>
+					</label>
+				</td>
 			</tr>
 		</table>
 	</div>

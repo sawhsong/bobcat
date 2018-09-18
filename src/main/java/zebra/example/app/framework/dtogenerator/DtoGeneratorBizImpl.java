@@ -111,6 +111,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	}
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
+		// D:/workspaceMaven/alpaca/target/alpaca/
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "webapp");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
 
