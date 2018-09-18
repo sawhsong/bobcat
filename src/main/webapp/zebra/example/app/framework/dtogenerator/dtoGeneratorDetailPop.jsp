@@ -46,8 +46,7 @@ $(function() {
 		setTimeout(function() {
 			$("#tblGrid").fixedHeaderTable({
 				attachTo:$("#divDataArea"),
-				pagingArea:$("#divPagingArea"),
-				displayRowCount:true
+				pagingArea:$("#divPagingArea")
 			});
 		}, 500);
 	});
@@ -141,7 +140,7 @@ $(function() {
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainerPopup"></div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

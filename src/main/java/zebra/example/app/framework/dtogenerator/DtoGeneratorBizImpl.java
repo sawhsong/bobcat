@@ -111,7 +111,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	}
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "webapp");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
 
 		String dtoProject = CommonUtil.replace(ConfigUtil.getProperty("path.common.dtoProject"), "#DB_VENDOR#", dbVendor);
