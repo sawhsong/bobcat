@@ -826,7 +826,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		String frameworkPackage = CommonUtil.lowerCase(ConfigUtil.getProperty("name.package.framework"));
 		String tableName = requestDataSet.getValue("tableName");
 
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String sourcePath = srcPath + "/" + ConfigUtil.getProperty("name.source.javaHDaoImpl");
 
