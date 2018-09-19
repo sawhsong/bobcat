@@ -1,7 +1,7 @@
-/**
- * Framework Generated MyBatis Mapper Source
- * - SYS_BOARD
- */
+/**************************************************************************************************
+ * Framework Generated MyBatis DTO Mapper Source
+ * - SYS_BOARD - Bulletin Board
+ *************************************************************************************************/
 package project.conf.resource.ormapper.mybatis.oracle.SysBoard;
 
 import zebra.base.Mapper;

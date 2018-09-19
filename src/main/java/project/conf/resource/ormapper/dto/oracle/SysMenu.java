@@ -1,7 +1,7 @@
-/**
+/**************************************************************************************************
  * Framework Generated DTO Source
  * - SYS_MENU - Menu Info
- */
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
 import java.io.Serializable;

@@ -106,7 +106,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 
 	public void setCodeMeaning(String codeMeaning) throws Exception {
 		this.codeMeaning = codeMeaning;
-		setValueFromAccessor("CODE_CATEGORY", codeMeaning);
+		setValueFromAccessor("CODE_MEANING", codeMeaning);
 	}
 
 	public String getProgramConstants() {

@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - SYS_BOARD - Bulletin Board
+ */-->
 <hibernate-mapping>
 	<class name="project.conf.resource.ormapper.dto.oracle.SysBoard" table="SYS_BOARD" lazy="false">
 		<meta attribute="class-description" inherit="false">Bulletin Board</meta>

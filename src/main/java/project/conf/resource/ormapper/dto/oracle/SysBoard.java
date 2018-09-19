@@ -1,7 +1,7 @@
-/**
+/**************************************************************************************************
  * Framework Generated DTO Source
  * - SYS_BOARD - Bulletin Board
- */
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
 import java.io.Serializable;

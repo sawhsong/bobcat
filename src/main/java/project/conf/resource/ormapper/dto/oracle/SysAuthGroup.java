@@ -1,7 +1,7 @@
-/**
+/**************************************************************************************************
  * Framework Generated DTO Source
  * - SYS_AUTH_GROUP - Menu Authority Info
- */
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
 import java.io.Serializable;

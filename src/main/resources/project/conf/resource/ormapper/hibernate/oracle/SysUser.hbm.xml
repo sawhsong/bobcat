@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - SYS_USER - User Info
+ */-->
 <hibernate-mapping>
 	<class name="project.conf.resource.ormapper.dto.oracle.SysUser" table="SYS_USER" lazy="false">
 		<meta attribute="class-description" inherit="false">User Info</meta>
@@ -13,14 +17,29 @@
 		<property name="loginPassword" column="LOGIN_PASSWORD" not-null="true" type="java.lang.String" length="30"/>
 		<property name="maxRowPerPage" column="MAX_ROW_PER_PAGE" not-null="true" type="java.lang.Double"/>
 		<property name="pageNumPerPage" column="PAGE_NUM_PER_PAGE" not-null="true" type="java.lang.Double"/>
+		<property name="personId" column="PERSON_ID" not-null="true" type="java.lang.String" length="30"/>
 		<property name="themeType" column="THEME_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="userName" column="USER_NAME" not-null="true" type="java.lang.String" length="50"/>
 		<property name="userStatus" column="USER_STATUS" not-null="true" type="java.lang.String" length="30"/>
 		<property name="userType" column="USER_TYPE" not-null="true" type="java.lang.String" length="30"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="disabledDate" column="DISABLED_DATE" type="java.util.Date"/>
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
-		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="2000"/>
+		<property name="isPortalUser" column="IS_PORTAL_USER" type="java.lang.String" length="30"/>
+		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="1000"/>
+		<property name="pin" column="PIN" type="java.lang.String" length="30"/>
+		<property name="portalOrgProfileId" column="PORTAL_ORG_PROFILE_ID" type="java.lang.String" length="30"/>
+		<property name="portalSecurityRole" column="PORTAL_SECURITY_ROLE" type="java.lang.String" length="60"/>
+		<property name="portalSkin" column="PORTAL_SKIN" type="java.lang.String" length="60"/>
+		<property name="propToPortal" column="PROP_TO_PORTAL" type="java.lang.String" length="3"/>
+		<property name="resetPassword" column="RESET_PASSWORD" type="java.lang.String" length="30"/>
+		<property name="resetTermCondition" column="RESET_TERM_CONDITION" type="java.lang.String" length="30"/>
+		<property name="securityQuestion1" column="SECURITY_QUESTION_1" type="java.lang.String" length="60"/>
+		<property name="securityQuestion2" column="SECURITY_QUESTION_2" type="java.lang.String" length="60"/>
+		<property name="securityQuestionAnswer1" column="SECURITY_QUESTION_ANSWER_1" type="java.lang.String" length="500"/>
+		<property name="securityQuestionAnswer2" column="SECURITY_QUESTION_ANSWER_2" type="java.lang.String" length="500"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 	</class>
@@ -35,14 +54,29 @@
 		       LOGIN_PASSWORD,
 		       MAX_ROW_PER_PAGE,
 		       PAGE_NUM_PER_PAGE,
+		       PERSON_ID,
 		       THEME_TYPE,
 		       USER_NAME,
 		       USER_STATUS,
 		       USER_TYPE,
+		       DESCRIPTION,
+		       TO_CHAR(DISABLED_DATE, 'yyyymmddhh24miss') AS DISABLED_DATE,
 		       EMAIL,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
+		       IS_PORTAL_USER,
 		       PHOTO_PATH,
+		       PIN,
+		       PORTAL_ORG_PROFILE_ID,
+		       PORTAL_SECURITY_ROLE,
+		       PORTAL_SKIN,
+		       PROP_TO_PORTAL,
+		       RESET_PASSWORD,
+		       RESET_TERM_CONDITION,
+		       SECURITY_QUESTION_1,
+		       SECURITY_QUESTION_2,
+		       SECURITY_QUESTION_ANSWER_1,
+		       SECURITY_QUESTION_ANSWER_2,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
 		  FROM SYS_USER
@@ -64,14 +98,29 @@
 		       LOGIN_PASSWORD,
 		       MAX_ROW_PER_PAGE,
 		       PAGE_NUM_PER_PAGE,
+		       PERSON_ID,
 		       THEME_TYPE,
 		       USER_NAME,
 		       USER_STATUS,
 		       USER_TYPE,
+		       DESCRIPTION,
+		       DISABLED_DATE,
 		       EMAIL,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
+		       IS_PORTAL_USER,
 		       PHOTO_PATH,
+		       PIN,
+		       PORTAL_ORG_PROFILE_ID,
+		       PORTAL_SECURITY_ROLE,
+		       PORTAL_SKIN,
+		       PROP_TO_PORTAL,
+		       RESET_PASSWORD,
+		       RESET_TERM_CONDITION,
+		       SECURITY_QUESTION_1,
+		       SECURITY_QUESTION_2,
+		       SECURITY_QUESTION_ANSWER_1,
+		       SECURITY_QUESTION_ANSWER_2,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
 		       )
@@ -84,14 +133,29 @@
 		       ${LOGIN_PASSWORD},
 		       ${MAX_ROW_PER_PAGE},
 		       ${PAGE_NUM_PER_PAGE},
+		       ${PERSON_ID},
 		       ${THEME_TYPE},
 		       ${USER_NAME},
 		       ${USER_STATUS},
 		       ${USER_TYPE},
+		       ${DESCRIPTION},
+		       ${DISABLED_DATE},
 		       ${EMAIL},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
+		       ${IS_PORTAL_USER},
 		       ${PHOTO_PATH},
+		       ${PIN},
+		       ${PORTAL_ORG_PROFILE_ID},
+		       ${PORTAL_SECURITY_ROLE},
+		       ${PORTAL_SKIN},
+		       ${PROP_TO_PORTAL},
+		       ${RESET_PASSWORD},
+		       ${RESET_TERM_CONDITION},
+		       ${SECURITY_QUESTION_1},
+		       ${SECURITY_QUESTION_2},
+		       ${SECURITY_QUESTION_ANSWER_1},
+		       ${SECURITY_QUESTION_ANSWER_2},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
 		       )
@@ -108,14 +172,29 @@
 		       LOGIN_PASSWORD = ${LOGIN_PASSWORD},
 		       MAX_ROW_PER_PAGE = ${MAX_ROW_PER_PAGE},
 		       PAGE_NUM_PER_PAGE = ${PAGE_NUM_PER_PAGE},
+		       PERSON_ID = ${PERSON_ID},
 		       THEME_TYPE = ${THEME_TYPE},
 		       USER_NAME = ${USER_NAME},
 		       USER_STATUS = ${USER_STATUS},
 		       USER_TYPE = ${USER_TYPE},
+		       DESCRIPTION = ${DESCRIPTION},
+		       DISABLED_DATE = ${DISABLED_DATE},
 		       EMAIL = ${EMAIL},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       IS_PORTAL_USER = ${IS_PORTAL_USER},
 		       PHOTO_PATH = ${PHOTO_PATH},
+		       PIN = ${PIN},
+		       PORTAL_ORG_PROFILE_ID = ${PORTAL_ORG_PROFILE_ID},
+		       PORTAL_SECURITY_ROLE = ${PORTAL_SECURITY_ROLE},
+		       PORTAL_SKIN = ${PORTAL_SKIN},
+		       PROP_TO_PORTAL = ${PROP_TO_PORTAL},
+		       RESET_PASSWORD = ${RESET_PASSWORD},
+		       RESET_TERM_CONDITION = ${RESET_TERM_CONDITION},
+		       SECURITY_QUESTION_1 = ${SECURITY_QUESTION_1},
+		       SECURITY_QUESTION_2 = ${SECURITY_QUESTION_2},
+		       SECURITY_QUESTION_ANSWER_1 = ${SECURITY_QUESTION_ANSWER_1},
+		       SECURITY_QUESTION_ANSWER_2 = ${SECURITY_QUESTION_ANSWER_2},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}
 		 WHERE 1 = 1

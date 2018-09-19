@@ -1,7 +1,7 @@
-/**
+/**************************************************************************************************
  * Framework Generated DTO Source
  * - SYS_COUNTRY_CURRENCY - Country and Currency Info
- */
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
 import java.io.Serializable;

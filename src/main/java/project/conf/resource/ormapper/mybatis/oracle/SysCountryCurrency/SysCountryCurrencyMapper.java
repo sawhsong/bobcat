@@ -1,7 +1,7 @@
-/**
- * Framework Generated MyBatis Mapper Source
- * - SYS_COUNTRY_CURRENCY
- */
+/**************************************************************************************************
+ * Framework Generated MyBatis DTO Mapper Source
+ * - SYS_COUNTRY_CURRENCY - Country and Currency Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.mybatis.oracle.SysCountryCurrency;
 
 import zebra.base.Mapper;

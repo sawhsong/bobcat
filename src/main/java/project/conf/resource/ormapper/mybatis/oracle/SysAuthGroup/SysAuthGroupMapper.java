@@ -1,7 +1,7 @@
-/**
- * Framework Generated MyBatis Mapper Source
- * - SYS_AUTH_GROUP
- */
+/**************************************************************************************************
+ * Framework Generated MyBatis DTO Mapper Source
+ * - SYS_AUTH_GROUP - Menu Authority Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.mybatis.oracle.SysAuthGroup;
 
 import zebra.base.Mapper;

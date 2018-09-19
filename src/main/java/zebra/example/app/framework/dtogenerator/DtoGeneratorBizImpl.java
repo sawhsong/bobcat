@@ -672,8 +672,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			}
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
-logger.debug("targetPath : "+targetPath);
-logger.debug("rootPath : "+rootPath + "src/main/resources/");
+
 			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/main/resources/"), "/", ".");
 
 			dtoName = CommonUtil.replace(CommonUtil.remove(dtoPath, rootPath + "src/main/java/"), "/", ".")+"."+CommonUtil.toCamelCase(tableName);
