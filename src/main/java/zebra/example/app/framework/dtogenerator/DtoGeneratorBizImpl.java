@@ -111,7 +111,6 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	}
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
-		// D:/workspaceMaven/alpaca/target/alpaca/
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String dbVendor = CommonUtil.lowerCase(ConfigUtil.getProperty("db.vendor"));
 
@@ -270,7 +269,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/main/java/"), "/", ".");
 
 			toString = "String str = \"\";\n\n";
 			toXmlString = "String str = \"\";\n\n";
@@ -461,7 +460,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(dtoPath, rootPath + "src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(dtoPath, rootPath + "src/main/java/"), "/", ".");
 
 			if (primaryKeyColumnCnt > 1) {
 				primaryKey += "<composite-id>\n";
@@ -609,7 +608,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_NAME#", tableName);
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_DESCRIPTION#", tableInfoDataSet.getValue("TABLE_DESCRIPTION"));
@@ -674,9 +673,9 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/main/java/"), "/", ".");
 
-			dtoName = CommonUtil.replace(CommonUtil.remove(dtoPath, rootPath + "src/"), "/", ".")+"."+CommonUtil.toCamelCase(tableName);
+			dtoName = CommonUtil.replace(CommonUtil.remove(dtoPath, rootPath + "src/main/java/"), "/", ".")+"."+CommonUtil.toCamelCase(tableName);
 
 			qrySelectAll += "SELECT ";
 
@@ -804,7 +803,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_NAME#", tableName);
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_DESCRIPTION#", tableInfoDataSet.getValue("TABLE_DESCRIPTION"));
@@ -860,7 +859,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_NAME#", tableName);
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_DESCRIPTION#", tableInfoDataSet.getValue("TABLE_DESCRIPTION"));
@@ -917,7 +916,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_NAME#", tableName);
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_DESCRIPTION#", tableInfoDataSet.getValue("TABLE_DESCRIPTION"));
@@ -975,7 +974,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath+"src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_NAME#", tableName);
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_DESCRIPTION#", tableInfoDataSet.getValue("TABLE_DESCRIPTION"));
@@ -1082,7 +1081,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(daoPath, rootPath+"src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(daoPath, rootPath+"src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_NAME#", tableName);
 			sourceString = CommonUtil.replace(sourceString, "#TABLE_DESCRIPTION#", tableInfoDataSet.getValue("TABLE_DESCRIPTION"));
