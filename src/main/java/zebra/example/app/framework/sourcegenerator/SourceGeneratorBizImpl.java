@@ -627,7 +627,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 				transformer.setOutputProperty("indent", "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "4");
 
-				StreamResult streamResult = new StreamResult(targetFile);
+				StreamResult streamResult = new StreamResult(targetFile.getPath());
 				transformer.transform(domSource, streamResult);
 			}
 
@@ -710,7 +710,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 					transformer.setOutputProperty("doctype-public", docType.getPublicId());
 					transformer.setOutputProperty("doctype-system", docType.getSystemId());
 
-					StreamResult streamResult = new StreamResult(regFile);
+					StreamResult streamResult = new StreamResult(regFile.getPath());
 					transformer.transform(domSource, streamResult);
 				}
 
@@ -774,7 +774,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 						transformer.setOutputProperty("doctype-public", docType.getPublicId());
 						transformer.setOutputProperty("doctype-system", docType.getSystemId());
 
-						StreamResult streamResult = new StreamResult(targetFile);
+						StreamResult streamResult = new StreamResult(targetFile.getPath());
 						transformer.transform(domSource, streamResult);
 					}
 				}
