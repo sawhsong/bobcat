@@ -196,7 +196,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("{");
 		sb.append("\"isSuccess\":\""+paramEntity.isSuccess()+"\",");
 		sb.append("\"messageCode\":\""+paramEntity.getMessageCode()+"\",");
-		sb.append("\"message\":\""+CommonUtil.remove(CommonUtil.remove(paramEntity.getMessage(), "\n"), "\"")+"\",");
+		sb.append("\"message\":\""+CommonUtil.removeString(CommonUtil.replace(paramEntity.getMessage(), "\\", "/"), "\n", "\"")+"\",");
 		sb.append("\"totalResultRows\":\""+paramEntity.getTotalResultRows()+"\"");
 		sb.append("}");
 
@@ -209,7 +209,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("{");
 		sb.append("\"isSuccess\":\""+paramEntity.isSuccess()+"\",");
 		sb.append("\"messageCode\":\""+paramEntity.getMessageCode()+"\",");
-		sb.append("\"message\":\""+CommonUtil.remove(CommonUtil.remove(paramEntity.getMessage(), "\n"), "\"")+"\",");
+		sb.append("\"message\":\""+CommonUtil.removeString(CommonUtil.replace(paramEntity.getMessage(), "\\", "/"), "\n", "\"")+"\",");
 		sb.append("\"totalResultRows\":\""+paramEntity.getTotalResultRows()+"\",");
 		sb.append("\"dataSet\":{");
 		sb.append("\"dataSetHeader\":[");

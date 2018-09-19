@@ -118,11 +118,12 @@
 					$(this.popupHeaderTitle).html(header);
 				},
 				setContents : function(contentsString) {
-					$($(this.popupIframe).contents().find("#divPopupWindowHolder")).html(contentsString);
+					var html = "<div style=\"padding:5px 5px\">"+contentsString+"</div>";
+					$($(this.popupIframe).contents().find("#divPopupWindowHolder")).html(html);
 				},
 				addContents : function(contentsString) {
 					var html = $.nony.nvl($($(this.popupIframe).contents().find("#divPopupWindowHolder")).html());
-					var contentsHtml = $.nony.isEmpty(html) ? contentsString : html+"<br/>"+contentsString;
+					var contentsHtml = $.nony.isEmpty(html) ? "<div style=\"padding:5px 5px\">"+contentsString+"</div>" : html+"<div style=\"padding:5px 5px\">"+contentsString+"</div>";
 					$($(this.popupIframe).contents().find("#divPopupWindowHolder")).html(contentsHtml);
 				}
 			};
@@ -223,11 +224,12 @@
 					$(this.popupHeaderTitle).html(header);
 				},
 				setContents : function(contentsString) {
-					$($(this.popupIframe).contents().find("#divPopupWindowHolder")).html(contentsString);
+					var html = "<div style=\"padding:5px 5px\">"+contentsString+"</div>";
+					$($(this.popupIframe).contents().find("#divPopupWindowHolder")).html(html);
 				},
 				addContents : function(contentsString) {
 					var html = $.nony.nvl($($(this.popupIframe).contents().find("#divPopupWindowHolder")).html());
-					var contentsHtml = $.nony.isEmpty(html) ? contentsString : html+"<br/>"+contentsString;
+					var contentsHtml = $.nony.isEmpty(html) ? "<div style=\"padding:5px 5px\">"+contentsString+"</div>" : html+"<div style=\"padding:5px 5px\">"+contentsString+"</div>";
 					$($(this.popupIframe).contents().find("#divPopupWindowHolder")).html(contentsHtml);
 				}
 			};

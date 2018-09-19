@@ -319,7 +319,7 @@ var nony = {
 	},
 	toBoolean : function(val) {
 		if ($.nony.isEmpty(val)) {return false;}
-		return ((val.toLowerCase() == "true") || (val.toLowerCase() == "yes") || (val.toLowerCase() == "y"));
+		return (val == true || val.toLowerCase() == "true" || val.toLowerCase() == "yes" || val.toLowerCase() == "y");
 	},
 	/*!
 	 * date utilities(use moment.js)

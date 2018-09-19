@@ -113,7 +113,7 @@ $(function() {
 							success:function(data, textStatus) {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-								if (result.isSuccess == true || result.isSuccess == "true") {
+								if (commonJs.toBoolean(result.isSuccess)) {
 									popupProcess.addContents("<mc:msg key="I802"/> : "+paramData.tableName);
 
 									if ((index+1) == parent.commonJs.getCountChecked("chkForGenerate")) {
@@ -135,6 +135,7 @@ $(function() {
 									}
 								} else {
 									popupProcess.addContents("<mc:msg key="E801"/> : "+paramData.tableName);
+									popupProcess.addContents("[Error Message : "+data.message+"]");
 								}
 							}
 						});

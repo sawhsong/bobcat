@@ -672,8 +672,9 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			}
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
-
-			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/main/java/"), "/", ".");
+logger.debug("targetPath : "+targetPath);
+logger.debug("rootPath : "+rootPath + "src/main/resources/");
+			packageString = CommonUtil.replace(CommonUtil.remove(targetPath, rootPath + "src/main/resources/"), "/", ".");
 
 			dtoName = CommonUtil.replace(CommonUtil.remove(dtoPath, rootPath + "src/main/java/"), "/", ".")+"."+CommonUtil.toCamelCase(tableName);
 
@@ -1248,7 +1249,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			}
 
 			if (isHibernateChecked || isMyBatisChecked) {
-				StreamResult streamResult = new StreamResult(targetFile);
+				StreamResult streamResult = new StreamResult(targetFile.getPath());
 
 				NodeList nodeList = (NodeList)xpath.evaluate("//text()[normalize-space()='']", document, XPathConstants.NODESET);
 				for (int i = 0; i < nodeList.getLength(); i++) {

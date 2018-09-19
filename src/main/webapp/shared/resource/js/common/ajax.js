@@ -72,6 +72,11 @@
 			params.error = function(xhr, textStatus, errorThrown) {
 				var data, contentsString = "";
 
+				console.log("request.status : "+xhr.status);
+				console.log("request.responseText : "+xhr.responseText);
+				console.log("textStatus : "+textStatus);
+				console.log("errorThrown : "+errorThrown);
+
 				try {
 					if (xhr.responseText == "SessionTimedOut" || xhr.responseXML == "SessionTimedOut") {
 						commonJs.openDialog({
@@ -85,25 +90,26 @@
 							width:330,
 							blind:true
 						});
+
+						return;
 					}
-					return;
 				} catch(e) {}
 
 				if (params.dataType == "xml") {
 					data = xhr.responseXML;
 				} else if (params.dataType == "json") {
-					data = $.parseJSON(xhr.responseText);
+					data = xhr.responseText;
 				} else {
 					data = xhr.responseText;
 				}
 
-				contentsString += textStatus + "</br>";
-				contentsString += errorThrown + "</br>";
-				contentsString += data.message + "</br>";
+//				contentsString += textStatus + "</br>";
+//				contentsString += errorThrown + "</br>";
+//				contentsString += data.message + "</br>";
 
 				$.nony.openDialog({
 					type:"error",
-					contents:contentsString,
+					contents:data,
 					width:"400",
 					height:"400",
 					buttons:[{
