@@ -75,7 +75,6 @@ public class Text extends TaglibSupport {
 			html.append("/>");
 
 			jspWriter.print(html.toString());
-			jspWriter.flush();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}

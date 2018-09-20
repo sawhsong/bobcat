@@ -10,6 +10,7 @@
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
 	ZebraDomainDictionary zebraDomainDictionary = (ZebraDomainDictionary)pe.getObject("zebraDomainDictionary");
+	String numberFormat = "###";
 %>
 <%/************************************************************************************************
 * HTML
@@ -167,17 +168,17 @@ $(function() {
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength())%>" caption="==Select==" source="framework"/>
+				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision())%>" caption="==Select==" source="framework"/>
+				<ui:ccselect id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale())%>" caption="==Select==" source="framework"/>
+				<ui:ccselect id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
