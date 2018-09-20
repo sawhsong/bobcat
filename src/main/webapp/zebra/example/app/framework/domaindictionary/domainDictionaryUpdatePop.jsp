@@ -189,21 +189,21 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertUser"/></th>
 			<td class="tdEdit">
-				<ui:text name="insertUserId" id="insertUserId" className="defClass" value="<%=zebraDomainDictionary.getInsertUserId()%>" options="display" status="display"/>
+				<ui:text name="insertUser" id="insertUser" className="defClass" value="<%=zebraDomainDictionary.getInsertUserName()%>" status="display"/>
 			</td>
-			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
 			<td class="tdEdit">
-				<input type="text" id="insertDate" name="insertDate" class="txtDpl" value="<%=CommonUtil.toString(zebraDomainDictionary.getInsertDate())%>" readonly="readonly"/>
+				<ui:text name="insertDate" id="insertDate" className="defClass" value="<%=CommonUtil.toViewDateString(zebraDomainDictionary.getInsertDate())%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.updateUser"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.updateUser"/></th>
 			<td class="tdEdit">
-				<input type="text" id="updateUserId" name="updateUserId" class="txtDpl" value="<%=zebraDomainDictionary.getUpdateUserId()%>" readonly="readonly"/>
+				<ui:text name="updateUser" id="updateUser" className="defClass" value="<%=zebraDomainDictionary.getUpdateUserName()%>" status="display"/>
 			</td>
-			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.updateDate"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.updateDate"/></th>
 			<td class="tdEdit">
-				<input type="text" id="updateDate" name="updateDate" class="txtDpl" value="<%=CommonUtil.toString(zebraDomainDictionary.getUpdateDate())%>" readonly="readonly"/>
+				<ui:text name="updateDate" id="updateDate" className="defClass" value="<%=CommonUtil.toViewDateString(zebraDomainDictionary.getUpdateDate())%>" status="display"/>
 			</td>
 		</tr>
 	</table>

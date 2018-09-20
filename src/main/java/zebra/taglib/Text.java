@@ -34,12 +34,11 @@ public class Text extends TaglibSupport {
 			String scripts[], eventFunc[];
 
 			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
-				if (CommonUtil.containsIgnoreCase(status, "disabled") || CommonUtil.containsIgnoreCase(options, "disabled") ||
-					CommonUtil.containsIgnoreCase(status, "readonly") || CommonUtil.containsIgnoreCase(options, "readonly")) {
-					options = CommonUtil.replace(options, "display", "readonly");
+				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+					options += " readonly";
 					classNamePrefix = "txtDis";
-				} else if (CommonUtil.containsIgnoreCase(status, "display") || CommonUtil.containsIgnoreCase(options, "display")) {
-					options = CommonUtil.replace(options, "display", "readonly");
+				} else if (CommonUtil.containsIgnoreCase(status, "display")) {
+					options += " readonly";
 					classNamePrefix = "txtDpl";
 				} else {
 					classNamePrefix = "txtEn";
@@ -76,6 +75,7 @@ public class Text extends TaglibSupport {
 			html.append("/>");
 
 			jspWriter.print(html.toString());
+			jspWriter.flush();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}

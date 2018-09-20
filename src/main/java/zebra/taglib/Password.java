@@ -36,10 +36,10 @@ public class Password extends TaglibSupport {
 			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
 				if (CommonUtil.containsIgnoreCase(status, "disabled") || CommonUtil.containsIgnoreCase(options, "disabled") ||
 					CommonUtil.containsIgnoreCase(status, "readonly") || CommonUtil.containsIgnoreCase(options, "readonly")) {
-					options = CommonUtil.replace(options, "display", "readonly");
+					options += " readonly";
 					classNamePrefix = "txtDis";
 				} else if (CommonUtil.containsIgnoreCase(status, "display") || CommonUtil.containsIgnoreCase(options, "display")) {
-					options = CommonUtil.replace(options, "display", "readonly");
+					options += " readonly";
 					classNamePrefix = "txtDpl";
 				} else {
 					classNamePrefix = "txtEn";
