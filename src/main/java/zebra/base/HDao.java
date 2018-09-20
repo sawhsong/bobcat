@@ -175,6 +175,13 @@ public class HDao extends HibernateDaoSupport {
 	/*!
 	 * Update
 	 */
+	/**
+	 * When update all columns - this uses all columns
+	 * @param queryAdvisor
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
 	protected int updateWithSQLQuery(QueryAdvisor queryAdvisor, Dto dto) throws Exception {
 		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
 
@@ -205,6 +212,13 @@ public class HDao extends HibernateDaoSupport {
 		return query.executeUpdate();
 	}
 
+	/**
+	 * DTO must have primary key column value
+	 * @param queryAdvisor
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
 	protected int updateWithDto(QueryAdvisor queryAdvisor, Dto dto) throws Exception {
 		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
 
@@ -222,6 +236,13 @@ public class HDao extends HibernateDaoSupport {
 		}
 	}
 
+	/**
+	 * When update particular columns - addUpdateColumnFromField() method must be called for this
+	 * @param queryAdvisor
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
 	protected int updateColumns(QueryAdvisor queryAdvisor, Dto dto) throws Exception {
 		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
 

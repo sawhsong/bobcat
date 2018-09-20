@@ -16,7 +16,8 @@ public class ZebraDomainDictionaryHDaoImpl extends BaseHDao implements ZebraDoma
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 
 		queryAdvisor.addWhereClause("domain_id = '" + domainId + "'");
-		return updateWithSQLQuery(queryAdvisor, dto);
+
+		return updateColumns(queryAdvisor, dto);
 	}
 
 	public int delete(String[] domainIds) throws Exception {

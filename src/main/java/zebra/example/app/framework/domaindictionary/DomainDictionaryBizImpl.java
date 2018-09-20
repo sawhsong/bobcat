@@ -137,7 +137,7 @@ public class DomainDictionaryBizImpl extends BaseBiz implements DomainDictionary
 			zebraDomainDictionary.setDataPrecision(CommonUtil.toDouble(requestDataSet.getValue("dataPrecision")));
 			zebraDomainDictionary.setDataScale(CommonUtil.toDouble(requestDataSet.getValue("dataScale")));
 			zebraDomainDictionary.setDescription(requestDataSet.getValue("description"));
-			zebraDomainDictionary.setUpdateUserId((String)session.getAttribute("LoginId"));
+			zebraDomainDictionary.setUpdateUserId((String)session.getAttribute("UserId"));
 			zebraDomainDictionary.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraDomainDictionary.addUpdateColumnFromField();
 
