@@ -189,7 +189,7 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertUser"/></th>
 			<td class="tdEdit">
-				<ui:text name="insertUserId" id="insertUserId" className="defClass" value="<%=zebraDomainDictionary.getInsertUserId()%>" options="readonly" status="display"/>
+				<ui:text name="insertUserId" id="insertUserId" className="defClass" value="<%=zebraDomainDictionary.getInsertUserId()%>" options="display" status="display"/>
 			</td>
 			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
 			<td class="tdEdit">
