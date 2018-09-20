@@ -8,6 +8,7 @@ import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseBiz;
+import zebra.example.common.module.datahelper.ZebraDataHelper;
 import zebra.example.conf.resource.ormapper.dao.ZebraDomainDictionary.ZebraDomainDictionaryDao;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraDomainDictionary;
 import zebra.exception.FrameworkException;
@@ -21,14 +22,7 @@ public class DomainDictionaryBizImpl extends BaseBiz implements DomainDictionary
 	private ZebraDomainDictionaryDao zebraDomainDictionaryDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		queryAdvisor.setPagination(true);
-		queryAdvisor.addVariable("dateFormat", ConfigUtil.getProperty("format.date.java"));
-
 		try {
-			paramEntity.setObject("viewMode", "defaultInit");
-			paramEntity.setObject("resultDataSet", zebraDomainDictionaryDao.getDomainDictionaryDataSet(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -41,13 +35,15 @@ public class DomainDictionaryBizImpl extends BaseBiz implements DomainDictionary
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		String searchWord = requestDataSet.getValue("searchWord");
+		HttpSession session = paramEntity.getSession();
 
 		try {
 			queryAdvisor.setPagination(true);
 			queryAdvisor.addVariable("dateFormat", ConfigUtil.getProperty("format.date.java"));
+			queryAdvisor.addVariable("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.addAutoFillCriteria(searchWord, "lower(domain_name) like lower('%"+searchWord+"%') or lower(name_abbreviation) like lower('%"+searchWord+"%')");
 
-			paramEntity.setObject("resultDataSet", zebraDomainDictionaryDao.getDomainDictionaryDataSet(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(zebraDomainDictionaryDao.getDomainDictionaryDataSet(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -104,6 +100,8 @@ public class DomainDictionaryBizImpl extends BaseBiz implements DomainDictionary
 
 		try {
 			zebraDomainDictionary = zebraDomainDictionaryDao.getDomainDictionaryById(requestDataSet.getValue("domainId"));
+			zebraDomainDictionary.setInsertUserName(ZebraDataHelper.getUserNameById(zebraDomainDictionary.getInsertUserId()));
+			zebraDomainDictionary.setUpdateUserName(ZebraDataHelper.getUserNameById(zebraDomainDictionary.getUpdateUserId()));
 
 			paramEntity.setObject("zebraDomainDictionary", zebraDomainDictionary);
 			paramEntity.setSuccess(true);

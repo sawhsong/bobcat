@@ -3,6 +3,8 @@ package zebra.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 

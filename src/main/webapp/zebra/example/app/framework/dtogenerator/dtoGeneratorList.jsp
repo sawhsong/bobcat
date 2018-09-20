@@ -129,7 +129,7 @@ $(function() {
 				uiTd2.addClassName("Lt").setText(dataSet.getValue(i, "COMMENTS"));
 				uiGridTr.addChild(uiTd2);
 
-				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon(), attribute = "";
+				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
 				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
 					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
 				uiTd3.addClassName("Ct").addChild(uiIcon);

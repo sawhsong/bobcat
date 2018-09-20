@@ -9,8 +9,6 @@
 <%
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet resultDataSet = (DataSet)pe.getObject("resultDataSet");
-	String viewMode = CommonUtil.nvl((String)pe.getObject("viewMode"));
-	String msgCode = CommonUtil.isEmpty(viewMode) ? "I001" : "I002";
 %>
 <%/************************************************************************************************
 * HTML
@@ -29,6 +27,7 @@
 </style>
 <script type="text/javascript">
 var popup = null;
+var searchResultDataCount = 0;
 
 $(function() {
 	/*!
@@ -90,10 +89,83 @@ $(function() {
 	 * process
 	 */
 	doSearch = function() {
-		commonJs.doSubmit({
-			formId:"fmDefault",
-			action:"/zebra/framework/domaindictionary/getList.do"
+		commonJs.showProcMessageOnElement("divScrollablePanel");
+
+		if (commonJs.doValidate($("#fmDefault"))) {
+			setTimeout(function() {
+				commonJs.ajaxSubmit({
+					formId:"fmDefault",
+					url:"/zebra/framework/domaindictionary/getList.do",
+					dataType:"json",
+					success:function(data, textStatus) {
+						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+						if (result.isSuccess == true || result.isSuccess == "true") {
+							renderDataGridTable(result);
+						}
+					}
+				});
+			}, 100);
+		}
+	};
+
+	renderDataGridTable = function(result) {
+		var dataSet = result.dataSet;
+		var html = "";
+
+		searchResultDataCount = dataSet.getRowCnt();
+
+		$("#tblGridBody").html("");
+
+		if (dataSet.getRowCnt() > 0) {
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var uiGridTr = new UiGridTr();
+
+				var uiChk = new UiCheckbox();
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "DOMAIN_ID"));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
+
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "DOMAIN_NAME")).setScript("getDetail('"+dataSet.getValue(i, "DOMAIN_ID")+"')");
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "NAME_ABBREVIATION")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DATA_TYPE")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DATA_LENGTH")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "LAST_UPDATE")));
+
+				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
+					.addAttribute("title:"+"<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
+
+				html += uiGridTr.toHtmlString();
+			}
+		} else {
+			var uiGridTr = new UiGridTr();
+
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:8").setText("<mc:msg key="I001"/>"));
+			html += uiGridTr.toHtmlString();
+		}
+
+		$("#tblGridBody").append($(html));
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:true,
+			isFilter:true,
+			filterColumn:[1, 2, 3, 4, 5, 6],
+			totalResultRows:result.totalResultRows,
+			script:"doSearch"
 		});
+
+		$("[name=icnAction]").each(function(index) {
+			$(this).contextMenu(ctxMenu.commonAction);
+		});
+
+		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	getDetail = function(domainId) {
@@ -113,7 +185,7 @@ $(function() {
 		} else if (param.mode == "Edit") {
 			url = "/zebra/framework/domaindictionary/getUpdate.do";
 			header = "<mc:msg key="fwk.domaindictionary.title.popupTitleEdit"/>";
-			height = 504;
+			height = 510;
 		}
 
 		var popParam = {
@@ -207,11 +279,10 @@ $(function() {
 	};
 
 	exeExport = function(menuObject) {
-		var rowCnt = <%=resultDataSet.getRowCnt()%>;
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
 
-		if (rowCnt <= 0) {
+		if (searchResultDataCount <= 0) {
 			commonJs.warn("<mc:msg key="I001"/>");
 			return;
 		}
@@ -249,11 +320,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#tblGrid").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			widthAdjust:40
-		});
-
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.commonAction);
 		});
@@ -271,6 +337,8 @@ $(function() {
 		$("#searchWord").focus();
 
 		setExportButtonContextMenu();
+
+		doSearch();
 	});
 });
 </script>
@@ -312,7 +380,7 @@ $(function() {
 				<tr>
 					<td class="tdDefault">
 						<label for="searchWord" class="lblEn hor"><mc:msg key="fwk.domaindictionary.searchHeader.domainName"/></label>
-						<input type="text" id="searchWord" name="searchWord" class="txtEn hor" style="width:280px"/>
+						<ui:text name="searchWord" id="searchWord" className="defClass hor" style="width:280px"/>
 					</td>
 				</tr>
 			</table>
@@ -353,41 +421,14 @@ $(function() {
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
-		<tbody>
-<%
-		if (resultDataSet.getRowCnt() > 0) {
-			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-%>
+		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt"><input type="checkbox" id="chkForDel" name="chkForDel" class="chkEn inTblGrid" value="<%=resultDataSet.getValue(i, "DOMAIN_ID")%>"/></td>
-				<td class="tdGrid">
-					<a onclick="getDetail('<%=resultDataSet.getValue(i, "DOMAIN_ID")%>')" class="aEn">
-						<%=resultDataSet.getValue(i, "DOMAIN_NAME")%>
-					</a>
-				</td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "NAME_ABBREVIATION")%></td>
-				<td class="tdGridCt"><%=ZebraCommonCodeManager.getCodeDescription("DOMAIN_DATA_TYPE", resultDataSet.getValue(i, "DATA_TYPE"))%></td>
-				<td class="tdGridRt"><%=resultDataSet.getValue(i, "DATA_LENGTH")%></td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "DESCRIPTION")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "LAST_UPDATE")%></td>
-				<td class="tdGridCt">
-					<i id="icnAction" name="icnAction" class="fa fa-tasks fa-lg icnEn" domainId="<%=resultDataSet.getValue(i, "DOMAIN_ID")%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
-				</td>
+				<td class="tdGrid Ct" colspan="8"><mc:msg key="I002"/></td>
 			</tr>
-<%
-			}
-		} else {
-%>
-			<tr>
-				<td class="tdGridCt" colspan="8"><mc:msg key="<%=msgCode%>"/></td>
-			</tr>
-<%
-		}
-%>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"><ui:pagination totalRows="<%=pe.getTotalResultRows()%>" script="doSearch"/></div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>
