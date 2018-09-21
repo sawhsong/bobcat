@@ -132,7 +132,7 @@ $(function() {
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
-<div class="breaker" style="height:1px;"></div>
+<div class="breaker"></div>
 </div>
 <div id="divScrollablePanelPopup">
 <%/************************************************************************************************
@@ -147,39 +147,39 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.name"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.domaindictionary.header.name"/></th>
 			<td class="tdEdit">
-				<input type="text" id="domainName" name="domainName" class="txtEn" checkName="<mc:msg key="fwk.domaindictionary.header.name"/>" mandatory/>
+				<ui:text name="domainName" id="domainName" className="defClass" checkName="fwk.domaindictionary.header.name" options="mandatory"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
 			<td class="tdEdit">
-				<input type="text" id="nameAbbreviation" name="nameAbbreviation" class="txtEn" checkName="<mc:msg key="fwk.domaindictionary.header.nameAbbrev"/>" mandatory/>
+				<ui:text name="nameAbbreviation" id="nameAbbreviation" className="defClass" checkName="fwk.domaindictionary.header.nameAbbrev" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.domaindictionary.header.dataType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.domaindictionary.header.dataType"/></th>
 			<td class="tdEdit">
 				<ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework"/>
 			</td>
-			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
 			<td class="tdEdit">
 				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
 			<td class="tdEdit">
 				<ui:ccselect id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" caption="==Select==" source="framework"/>
 			</td>
-			<th class="thEdit"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
 			<td class="tdEdit">
 				<ui:ccselect id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
 			<td class="tdEdit" colspan="3" style="height:200px;vertical-align:top">
-				<textarea id="description" name="description" class="txaEn" style="height:200px;"></textarea>
+				<ui:txa name="description" id="description" className="defClass" style="height:200px;"/>
 			</td>
 		</tr>
 	</table>

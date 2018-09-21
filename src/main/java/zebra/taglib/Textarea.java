@@ -34,11 +34,10 @@ public class Textarea extends TaglibSupport {
 			String scripts[], eventFunc[];
 
 			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
-				if (CommonUtil.containsIgnoreCase(status, "disabled") || CommonUtil.containsIgnoreCase(options, "disabled") ||
-					CommonUtil.containsIgnoreCase(status, "readonly") || CommonUtil.containsIgnoreCase(options, "readonly")) {
+				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
 					options += " readonly";
 					classNamePrefix = "txaDis";
-				} else if (CommonUtil.containsIgnoreCase(status, "display") || CommonUtil.containsIgnoreCase(options, "display")) {
+				} else if (CommonUtil.containsIgnoreCase(status, "display")) {
 					options += " readonly";
 					classNamePrefix = "txaDpl";
 				} else {

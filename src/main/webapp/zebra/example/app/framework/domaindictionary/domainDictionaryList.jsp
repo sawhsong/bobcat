@@ -174,7 +174,7 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 430;
+		var height = 440;
 
 		if (param.mode == "Detail") {
 			url = "/zebra/framework/domaindictionary/getDetail.do";

@@ -25,8 +25,6 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <script type="text/javascript">
-globalMap.put("useJqTooltip", true);
-
 $(function() {
 	/*!
 	 * event

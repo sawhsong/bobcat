@@ -187,14 +187,13 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
 			<td class="tdEdit" colspan="3" style="height:200px">
-				<ui:txa name="description" id="description" value="<%=zebraDomainDictionary.getDescription()%>" className="defClass" style="height:200px;"/>
+				<ui:txa name="description" id="description" value="<%=HtmlUtil.htmlToString(zebraDomainDictionary.getDescription())%>" className="defClass" style="height:200px;"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertUser"/></th>
 			<td class="tdEdit">
 				<ui:text name="insertUser" id="insertUser" className="defClass" value="<%=zebraDomainDictionary.getInsertUserName()%>" status="display"/>
-				<ui:hidden name="insertUserId" id="insertUserId" value="<%=zebraDomainDictionary.getInsertUserId()%>"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
 			<td class="tdEdit">
@@ -205,7 +204,6 @@ $(function() {
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.updateUser"/></th>
 			<td class="tdEdit">
 				<ui:text name="updateUser" id="updateUser" className="defClass" value="<%=zebraDomainDictionary.getUpdateUserName()%>" status="display"/>
-				<ui:hidden name="updateUserId" id="updateUserId" value="<%=zebraDomainDictionary.getUpdateUserId()%>"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.updateDate"/></th>
 			<td class="tdEdit">
