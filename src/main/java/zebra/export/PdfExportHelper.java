@@ -22,7 +22,7 @@ public class PdfExportHelper extends ExportHelper {
 
 	@Override
 	public File createFile() throws Exception {
-		File file = null;
+		File file = null, dir = null;
 		String contentString, exportDetails;
 		OutputStreamWriter osWriter;
 
@@ -32,6 +32,11 @@ public class PdfExportHelper extends ExportHelper {
 			} else {
 				setFileName(fileName+"."+fileExtention);
 				setFileNameGenerated(FILE_NAME_PREFIX+"_"+fileName+"."+fileExtention);
+			}
+
+			dir = new File(TARGET_FILE_PATH);
+			if (!dir.isDirectory()) {
+				dir.mkdirs();
 			}
 
 			file = new File(getFileNameGenerated());

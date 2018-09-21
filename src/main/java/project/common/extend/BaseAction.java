@@ -16,8 +16,6 @@ public class BaseAction extends Action {
 	@SuppressWarnings({ "rawtypes" })
 	public void setSession(Map sessionMap) {
 		try {
-			session = request.getSession();
-
 			session.setAttribute("headerMenuId", requestDataSet.getValue("hdnHeaderMenuId"));
 			session.setAttribute("headerMenuName", requestDataSet.getValue("hdnHeaderMenuName"));
 			session.setAttribute("headerMenuUrl", requestDataSet.getValue("hdnHeaderMenuUrl"));

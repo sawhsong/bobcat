@@ -9,6 +9,7 @@ import zebra.util.ConfigUtil;
 
 public abstract class ExportHelper {
 	protected final String FILE_PATH = (String)MemoryBean.get("applicationRealPath")+ConfigUtil.getProperty("path.dir.temp");
+//	protected final String TARGET_FILE_PATH = "D:/Temp/repository";
 	protected final String FILE_NAME_PREFIX = CommonUtil.getSysdate("yyyyMMddHHmmss")+"_"+CommonUtil.uid()+"_"+"Export";
 	private final String SOURCE_FILE_PATH = (String)MemoryBean.get("applicationRealPath")+"/"+ConfigUtil.getProperty("path.export.sourceFile");
 	protected DataSet sourceDataSet;

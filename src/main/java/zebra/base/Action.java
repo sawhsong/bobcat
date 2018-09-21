@@ -37,7 +37,7 @@ import zebra.util.FileUtil;
 import zebra.util.HtmlUtil;
 
 public class Action extends ActionSupport implements ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware, HttpParametersAware, ApplicationAware {
-	protected Logger logger = LogManager.getLogger(this.getClass());
+	protected Logger logger = LogManager.getLogger(getClass());
 
 	protected MessageSourceAccessor messageSourceAccessor;
 	protected ServletContext servletContext;
@@ -104,6 +104,7 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	 */
 	public void setServletRequest(HttpServletRequest servletRequest) {
 		request = servletRequest;
+		session = request.getSession();
 		locale = servletRequest.getLocale();
 		isMultipart = ServletFileUpload.isMultipartContent(servletRequest);
 		logServletRequest();
@@ -146,18 +147,18 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 					if (CommonUtil.indexOf(valueStr, recordDelimiter) == 0) {
 						values = new String[] {};
 					}
-//					this.searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-//					this.searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
-					this.searchCriteriaDataSet.addColumn(key, value);
+//					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
+//					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+					searchCriteriaDataSet.addColumn(key, value);
 				} else {
-//					this.requestDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-//					this.requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
-					this.requestDataSet.addColumn(key, value);
+//					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
+//					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+					requestDataSet.addColumn(key, value);
 				}
 			}
 
 			if (CommonUtil.equalsIgnoreCase(autoSetSearchCriteria, "Y")) {
-				request.setAttribute("searchCriteriaDataSet", this.searchCriteriaDataSet);
+				request.setAttribute("searchCriteriaDataSet", searchCriteriaDataSet);
 			}
 
 			/*!
@@ -197,8 +198,8 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 		logSession();
 
 		// To use session in service layer(Biz)
-		paramEntity.setSession(this.session);
-		paramEntity.setRequest(this.request);
+		paramEntity.setSession(session);
+		paramEntity.setRequest(request);
 		paramEntity.setRequestDataSet(requestDataSet);
 		paramEntity.setSearchCriteriaDataSet(searchCriteriaDataSet);
 		paramEntity.setRequestFileDataSet(requestFileDataSet);
@@ -323,9 +324,9 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	@SuppressWarnings("rawtypes")
 	private void logSession() {
 		if (CommonUtil.equalsIgnoreCase(ConfigUtil.getProperty("log.debug.session"), "Y")) {
-			for (Enumeration sessionAttr = this.session.getAttributeNames(); sessionAttr.hasMoreElements();) {
+			for (Enumeration sessionAttr = session.getAttributeNames(); sessionAttr.hasMoreElements();) {
 				String name = (String)sessionAttr.nextElement();
-				logger.debug("session - [" + name + "] : " + this.session.getAttribute(name) + "");
+				logger.debug("session - [" + name + "] : " + session.getAttribute(name) + "");
 			}
 		}
 	}

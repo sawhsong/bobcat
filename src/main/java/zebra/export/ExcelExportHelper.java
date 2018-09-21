@@ -27,7 +27,7 @@ public class ExcelExportHelper extends ExportHelper {
 	@Override
 	public File createFile() throws Exception {
 		String filePathName;
-		File file = null;
+		File file = null, dir = null;
 		FileOutputStream fout;
 		SXSSFWorkbook wb = new SXSSFWorkbook();
 		SXSSFSheet sheet;
@@ -35,13 +35,18 @@ public class ExcelExportHelper extends ExportHelper {
 		if (sourceDataSet != null) {
 			if (CommonUtil.isBlank(fileName)) {
 				sheet = wb.createSheet();
-				filePathName = FILE_PATH+"/"+FILE_NAME_PREFIX+"."+fileExtention;
+				filePathName = TARGET_FILE_PATH+"/"+FILE_NAME_PREFIX+"."+fileExtention;
 				setFileNameGenerated(FILE_NAME_PREFIX+"."+fileExtention);
 			} else {
 				sheet = wb.createSheet(fileName);
-				filePathName = FILE_PATH+"/"+FILE_NAME_PREFIX+"_"+fileName+"."+fileExtention;
+				filePathName = TARGET_FILE_PATH+"/"+FILE_NAME_PREFIX+"_"+fileName+"."+fileExtention;
 				setFileName(fileName+"."+fileExtention);
 				setFileNameGenerated(FILE_NAME_PREFIX+"_"+fileName+"."+fileExtention);
+			}
+
+			dir = new File(TARGET_FILE_PATH);
+			if (!dir.isDirectory()) {
+				dir.mkdirs();
 			}
 
 			file = new File(filePathName);
