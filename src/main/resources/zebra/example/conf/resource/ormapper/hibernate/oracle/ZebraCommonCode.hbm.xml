@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - ZEBRA_COMMON_CODE - 공통코드
+ */-->
 <hibernate-mapping>
 	<class name="zebra.example.conf.resource.ormapper.dto.oracle.ZebraCommonCode" table="ZEBRA_COMMON_CODE" lazy="false">
 		<meta attribute="class-description" inherit="false">공통코드</meta>
@@ -40,6 +44,7 @@
 		 ${auto_fill}
 		 ${frameworkGeneratedWhere}
 		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
 	]]>
 	</sql-query>
 

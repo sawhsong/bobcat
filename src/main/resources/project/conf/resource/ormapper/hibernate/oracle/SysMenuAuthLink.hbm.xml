@@ -32,6 +32,7 @@
 		 ${auto_fill}
 		 ${frameworkGeneratedWhere}
 		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
 	]]>
 	</sql-query>
 

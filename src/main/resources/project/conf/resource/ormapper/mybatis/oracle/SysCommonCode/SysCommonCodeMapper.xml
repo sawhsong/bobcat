@@ -27,6 +27,7 @@
 		 ${auto_fill}
 		 ${frameworkGeneratedWhere}
 		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
 	]]>
 	</select>
 

@@ -183,6 +183,7 @@ public class DomainDictionaryBizImpl extends BaseBiz implements DomainDictionary
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
 		ExportHelper exportHelper;
 		String dataRange = requestDataSet.getValue("dataRange");
 		String searchWord = requestDataSet.getValue("searchWord");
@@ -199,6 +200,7 @@ public class DomainDictionaryBizImpl extends BaseBiz implements DomainDictionary
 			exportHelper.setPdfWidth(1000);
 
 			queryAdvisor.addVariable("dateFormat", ConfigUtil.getProperty("format.date.java"));
+			queryAdvisor.addVariable("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.addAutoFillCriteria(searchWord, "lower(domain_name) like lower('%"+searchWord+"%') or lower(name_abbreviation) like lower('%"+searchWord+"%')");
 			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
 				queryAdvisor.setPagination(false);

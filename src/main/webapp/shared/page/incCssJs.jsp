@@ -88,7 +88,7 @@ globalMap.put("bootstrap", "<mc:cp key="bootstrap"/>");
 /*!
  * jQuery UI
  */
-globalMap.put("useJqTooltip", false);
+globalMap.put("useJqTooltip", true);
 globalMap.put("useJqSelectmenu", true);
 globalMap.put("useJqButton", true);
 /*!

@@ -137,7 +137,8 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 				String value = "";
 
 				for (int i=0; i<values.length; i++) {
-					value += (CommonUtil.isEmpty(value)) ? HtmlUtil.stringToHtml(values[i]) : recordDelimiter + HtmlUtil.stringToHtml(values[i]);
+//					value += (CommonUtil.isEmpty(value)) ? HtmlUtil.stringToHtml(values[i]) : recordDelimiter + HtmlUtil.stringToHtml(values[i]);
+					value += (CommonUtil.isEmpty(value)) ? values[i] : recordDelimiter + values[i];
 				}
 
 				if (key.indexOf(searchCriteriaElementSuffix) >= 0) {
@@ -146,10 +147,12 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 						values = new String[] {};
 					}
 //					this.searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-					this.searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+//					this.searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+					this.searchCriteriaDataSet.addColumn(key, value);
 				} else {
 //					this.requestDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-					this.requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+//					this.requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+					this.requestDataSet.addColumn(key, value);
 				}
 			}
 

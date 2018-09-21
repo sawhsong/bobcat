@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="main.project.conf.resource.ormapper.dao.SysMenu.SysMenuDaoMapper">
+<!--/*
+ * Framework Generated MyBatis DAO Mapper Query XML Source
+ * - SYS_MENU - Menu Info
+ */-->
+<mapper namespace="project.conf.resource.ormapper.dao.SysMenu.SysMenuDaoMapper">
 	<resultMap id="hashmap" type="java.util.HashMap"></resultMap>
 
 	<select id="getAllActiveMenu" parameterType="hashMap" resultType="hashMap">

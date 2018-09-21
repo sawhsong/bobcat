@@ -1,7 +1,7 @@
-/**
+/**************************************************************************************************
  * Framework Generated DTO Source
  * - ZEBRA_BOARD - 게시판
- */
+ *************************************************************************************************/
 package zebra.example.conf.resource.ormapper.dto.oracle;
 
 import java.io.Serializable;

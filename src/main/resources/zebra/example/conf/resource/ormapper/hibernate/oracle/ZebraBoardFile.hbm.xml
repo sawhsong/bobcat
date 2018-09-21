@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - ZEBRA_BOARD_FILE - 게시판 첨부파일
+ */-->
 <hibernate-mapping>
 	<class name="zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoardFile" table="ZEBRA_BOARD_FILE" lazy="false">
 		<meta attribute="class-description" inherit="false">게시판 첨부파일</meta>
@@ -38,6 +42,7 @@
 		 ${auto_fill}
 		 ${frameworkGeneratedWhere}
 		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
 	]]>
 	</sql-query>
 

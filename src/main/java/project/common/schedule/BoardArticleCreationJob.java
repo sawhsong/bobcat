@@ -44,7 +44,7 @@ public class BoardArticleCreationJob extends QuartzJobBean {
 			sysBoard.setWriterEmail(ConfigUtil.getProperty("mail.default.from"));
 			sysBoard.setWriterIpAddress("127.0.0.1");
 			sysBoard.setArticleSubject("System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
-			sysBoard.setArticleContents(HtmlUtil.special2htm("BoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"), "\n"));
+			sysBoard.setArticleContents("BoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
 			sysBoard.setInsertUserId("0");
 			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			sysBoard.setParentArticleId("-1");

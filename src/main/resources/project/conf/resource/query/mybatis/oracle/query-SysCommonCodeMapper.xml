@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="main.project.conf.resource.ormapper.dao.SysCommonCode.SysCommonCodeDaoMapper">
+<!--/*
+ * Framework Generated MyBatis DAO Mapper Query XML Source
+ * - SYS_COMMON_CODE - Common Lookup Code
+ */-->
+<mapper namespace="project.conf.resource.ormapper.dao.SysCommonCode.SysCommonCodeDaoMapper">
 	<resultMap id="hashmap" type="java.util.HashMap"></resultMap>
 
 	<select id="getActiveCommonCodeDataSet" parameterType="hashMap" resultType="hashMap">

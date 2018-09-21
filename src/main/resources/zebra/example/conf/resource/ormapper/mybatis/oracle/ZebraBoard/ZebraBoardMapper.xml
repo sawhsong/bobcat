@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!--/*
+ * Framework Generated MyBatis DTO Mapper XML Source
+ * - ZEBRA_BOARD - 게시판
+ */-->
 <mapper namespace="zebra.example.conf.resource.ormapper.mybatis.oracle.ZebraBoard.ZebraBoardMapper">
 	<resultMap id="hashmap" type="java.util.HashMap"></resultMap>
 
@@ -26,6 +29,7 @@
 		 ${auto_fill}
 		 ${frameworkGeneratedWhere}
 		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
 	]]>
 	</select>
 

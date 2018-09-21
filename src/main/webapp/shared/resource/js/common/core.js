@@ -321,6 +321,22 @@ var nony = {
 		if ($.nony.isEmpty(val)) {return false;}
 		return (val == true || val.toLowerCase() == "true" || val.toLowerCase() == "yes" || val.toLowerCase() == "y");
 	},
+	htmlToString : function(val) {
+		if ($.nony.isEmpty(val)) {
+			val = "";
+		} else {
+//			val = $.nony.replace(val, "&amp;", "&");
+//			val = $.nony.replace(val, "&#35;", "#");
+//			val = $.nony.replace(val, "&lt;", "<");
+//			val = $.nony.replace(val, "&gt;", ">");
+//			val = $.nony.replace(val, "&#37;", "%");
+			val = $.nony.replace(val, "&quot;", "\"");
+			val = $.nony.replace(val, "&#39;", "'");
+//			val = $.nony.replace(val, "&nbsp;", " ");
+			val = $.nony.replace(val, "<br/>", "\r\n");
+		}
+		return val;
+	},
 	/*!
 	 * date utilities(use moment.js)
 	 */

@@ -540,7 +540,8 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			qrySelectAll += "\t\t WHERE 1 = 1\n";
 			qrySelectAll += "\t\t "+autoFillString+"\n";
 			qrySelectAll += "\t\t "+whereString+"\n";
-			qrySelectAll += "\t\t "+orderByString;
+			qrySelectAll += "\t\t "+orderByString+"\n";
+			qrySelectAll += "\t\t "+"FOR UPDATE";
 
 			qryInsertColumn += "\t\t       )\n";
 			qryInsertValues += "\t\t       )";
@@ -732,7 +733,8 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			qrySelectAll += "\t\t WHERE 1 = 1\n";
 			qrySelectAll += "\t\t "+autoFillString+"\n";
 			qrySelectAll += "\t\t "+whereString+"\n";
-			qrySelectAll += "\t\t "+orderByString;
+			qrySelectAll += "\t\t "+orderByString+"\n";
+			qrySelectAll += "\t\t "+"FOR UPDATE";
 
 			qryInsertColumn += "\t\t       )\n";
 			qryInsertValues += "\t\t       )";

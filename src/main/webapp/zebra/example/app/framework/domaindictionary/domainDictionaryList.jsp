@@ -130,9 +130,9 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "NAME_ABBREVIATION")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DATA_TYPE")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DATA_LENGTH")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "DATA_TYPE")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(dataSet.getValue(i, "DATA_LENGTH")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.htmlToString(dataSet.getValue(i, "DESCRIPTION"))));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "LAST_UPDATE")));
 
 				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
@@ -155,7 +155,7 @@ $(function() {
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
-			isFilter:true,
+			isFilter:false,
 			filterColumn:[1, 2, 3, 4, 5, 6],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"

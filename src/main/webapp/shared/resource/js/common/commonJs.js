@@ -48,6 +48,7 @@ var commonJs = {
 	getFormatString : function(source, format) {return $.nony.getFormatString(source, format);},
 	abbreviate : function(val, length) {return $.nony.abbreviate(val, length);},
 	toBoolean : function(val) {return $.nony.toBoolean(val);},
+	htmlToString : function(val) {return $.nony.htmlToString(val);},
 	/*!
 	 * date utilities(use moment.js)
 	 */
