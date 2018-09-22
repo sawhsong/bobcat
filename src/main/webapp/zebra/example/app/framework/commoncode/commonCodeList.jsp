@@ -9,11 +9,7 @@
 <%
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet resultDataSet = (DataSet)pe.getObject("resultDataSet");
-	DataSet dsCodeType = (DataSet)pe.getObject("codeTypeDataSet");
-	String viewMode = CommonUtil.nvl((String)pe.getObject("viewMode"));
 	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
-	String toDateFormat = ConfigUtil.getProperty("format.date.java");
-	String msgCode = CommonUtil.isEmpty(viewMode) ? "I001" : "I002";
 %>
 <%/************************************************************************************************
 * HTML
@@ -57,8 +53,14 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
-	$("#commonCodeType").change(function(event) {
-		doSearch();
+	$(document).keypress(function(event) {
+		if (event.which == 13) {
+			var element = event.target;
+
+			if ($(element).is("[name=searchWord]")) {
+				doSearch();
+			}
+		}
 	});
 
 	/*!
@@ -87,10 +89,91 @@ $(function() {
 	 * process
 	 */
 	doSearch = function() {
-		commonJs.doSubmit({
-			formId:"fmDefault",
-			action:"/zebra/framework/commoncode/getList.do"
+		commonJs.showProcMessageOnElement("divScrollablePanel");
+
+		if (commonJs.doValidate($("#fmDefault"))) {
+			setTimeout(function() {
+				commonJs.ajaxSubmit({
+					formId:"fmDefault",
+					url:"/zebra/framework/commoncode/getList.do",
+					dataType:"json",
+					success:function(data, textStatus) {
+						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+						if (result.isSuccess == true || result.isSuccess == "true") {
+							renderDataGridTable(result);
+						}
+					}
+				});
+			}, 100);
+		}
+	};
+
+	renderDataGridTable = function(result) {
+		var dataSet = result.dataSet;
+		var html = "";
+		var dateFormat = globalMap.get("dateFormatJs");
+
+		searchResultDataCount = dataSet.getRowCnt();
+
+		$("#tblGridBody").html("");
+
+		if (dataSet.getRowCnt() > 0) {
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var defaultYn = dataSet.getValue(i, "DEFAULT_YN");
+				var className = "chkEn", disabledStr = "";
+				var uiGridTr = new UiGridTr();
+
+				if ("Y" == defaultYn) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
+
+				var uiChk = new UiCheckbox();
+				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").addClassName(className).setValue(dataSet.getValue(i, "CODE_TYPE")).setOptions(disabledStr);
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
+
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "CODE_TYPE")).setScript("getDetail('"+dataSet.getValue(i, "CODE_TYPE")+"')");
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "NAME_ABBREVIATION")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "DATA_TYPE")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "DATA_LENGTH"))));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.htmlToString(dataSet.getValue(i, "DESCRIPTION"))));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "LAST_UPDATE"), dateFormat)));
+
+				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
+					.addAttribute("title:"+"<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
+
+				html += uiGridTr.toHtmlString();
+			}
+		} else {
+			var uiGridTr = new UiGridTr();
+
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:8").setText("<mc:msg key="I001"/>"));
+			html += uiGridTr.toHtmlString();
+		}
+
+		$("#tblGridBody").append($(html));
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:true,
+			isFilter:false,
+			filterColumn:[1, 2, 3, 4, 5, 6],
+			totalResultRows:result.totalResultRows,
+			script:"doSearch"
 		});
+
+		$("[name=icnAction]").each(function(index) {
+			$(this).contextMenu(ctxMenu.commonAction);
+		});
+
+		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	getDetail = function(codeType) {
@@ -253,17 +336,25 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#tblGrid").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			widthAdjust:50
-		});
-
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
-		commonJs.getBootstrapSelectbox("commonCodeType").focus();
+		commonJs.setAutoComplete($("#commonCodeType"), {
+			url:"/zebra/common/autoCompletion/",
+			method:"getCommonCodeType",
+			label:"description",
+			value:"code_type",
+			select:function(event, ui) {
+				doSearch();
+			}
+		});
+
+		$("#commonCodeType").focus();
+
 		setExportButtonContextMenu();
+
+		doSearch();
 	});
 });
 </script>
@@ -299,16 +390,19 @@ $(function() {
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label>
-			<select id="commonCodeType" name="commonCodeType" class="bootstrapSelect default">
-				<option value="">==Select==</option>
-<%
-			for (int i=0; i<dsCodeType.getRowCnt(); i++) {
-%>
-				<option value="<%=dsCodeType.getValue(i, "CODE_TYPE")%>"><%=dsCodeType.getValue(i, "DESCRIPTION_"+langCode)%></option>
-<%
-			}
-%>
-			</select>
+			<ui:text name="commonCodeType" id="commonCodeType" className="defClass hor" style="width:280px"/>
+
+<%-- 			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label> --%>
+<!-- 			<select id="commonCodeType" name="commonCodeType" class="bootstrapSelect default"> -->
+<!-- 				<option value="">==Select==</option> -->
+<%-- <% --%>
+// 			for (int i=0; i<dsCodeType.getRowCnt(); i++) {
+<%-- %> --%>
+<%-- 				<option value="<%=dsCodeType.getValue(i, "CODE_TYPE")%>"><%=dsCodeType.getValue(i, "DESCRIPTION_"+langCode)%></option> --%>
+<%-- <% --%>
+// 			}
+<%-- %> --%>
+<!-- 			</select> -->
 		</div>
 	</div>
 </div>
@@ -337,7 +431,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.commoncode.dataGridHeader.selectToDelete"/>"></i></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="fwk.commoncode.dataGridHeader.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.codeType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.description"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.programConstants"/></th>
@@ -348,49 +442,14 @@ $(function() {
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
-		<tbody>
-<%
-		if (resultDataSet.getRowCnt() > 0) {
-			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-				String defaultYn = resultDataSet.getValue(i, "DEFAULT_YN");
-				String className = "chkEn", disabledStr = "";
-
-				if (CommonUtil.equals(defaultYn, "Y")) {
-					className = "chkDis";
-					disabledStr = "disabled";
-				}
-%>
+		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt">
-					<input type="checkbox" id="chkForDel" name="chkForDel" class="<%=className%> inTblGrid" value="<%=resultDataSet.getValue(i, "CODE_TYPE")%>" <%=disabledStr%>/>
-				</td>
-				<td class="tdGrid">
-					<a onclick="getDetail('<%=resultDataSet.getValue(i, "CODE_TYPE")%>')" class="aEn"><%=resultDataSet.getValue(i, "CODE_TYPE")%></a>
-				</td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "DESCRIPTION_"+langCode)%></td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "PROGRAM_CONSTANTS")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "USE_YN")%></td>
-				<td class="tdGridCt"><%=defaultYn%></td>
-				<td class="tdGridCt"><%=CommonUtil.getDateTimeMask(resultDataSet.getValue(i, "INSERT_DATE"), toDateFormat)%></td>
-				<td class="tdGridCt"><%=CommonUtil.getDateTimeMask(resultDataSet.getValue(i, "UPDATE_DATE"), toDateFormat)%></td>
-				<td class="tdGridCt">
-					<i id="icnAction" name="icnAction" class="fa fa-tasks fa-lg icnEn" codeType="<%=resultDataSet.getValue(i, "CODE_TYPE")%>" defaultYn="<%=defaultYn%>" onclick="doAction(this)"></i>
-				</td>
+				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
 			</tr>
-<%
-			}
-		} else {
-%>
-			<tr>
-				<td class="tdGridCt" colspan="9"><mc:msg key="<%=msgCode%>"/></td>
-			</tr>
-<%
-		}
-%>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"><ui:pagination totalRows="<%=pe.getTotalResultRows()%>" script="doSearch"/></div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

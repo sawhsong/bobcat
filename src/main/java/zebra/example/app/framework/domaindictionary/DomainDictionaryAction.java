@@ -65,10 +65,7 @@ public class DomainDictionaryAction extends BaseAction {
 	}
 
 	public String exeExport() throws Exception {
-		try {
-			biz.exeExport(paramEntity);
-		} catch (Exception ex) {
-		}
+		biz.exeExport(paramEntity);
 		setRequestAttribute("paramEntity", paramEntity);
 		return "export";
 	}

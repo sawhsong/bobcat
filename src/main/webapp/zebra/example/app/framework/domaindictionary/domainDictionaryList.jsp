@@ -412,7 +412,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.domaindictionary.title.selectToDelete"/>"></i></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="fwk.domaindictionary.title.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.name"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.nameAbbrev"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.dataType"/></th>

@@ -295,7 +295,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.dtogenerator.title.selectToGenerate"/>"></i></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="fwk.dtogenerator.title.selectToGenerate"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>

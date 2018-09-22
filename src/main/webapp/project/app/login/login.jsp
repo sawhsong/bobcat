@@ -129,7 +129,7 @@ $(function() {
 					blind:false,
 					draggable:false,
 					width:400,
-					height:402
+					height:406
 				};
 			}
 
