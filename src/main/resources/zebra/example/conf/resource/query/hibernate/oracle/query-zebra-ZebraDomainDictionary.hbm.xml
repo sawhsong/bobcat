@@ -7,13 +7,13 @@
 <hibernate-mapping>
 	<sql-query name="query.zebra.ZebraDomainDictionary.getDomainDictionaryDataSet">
 	<![CDATA[
-		select domain_id as domain_id,
-		       domain_name as domain_name,
-		       name_abbreviation as name_abbreviation,
+		select domain_id,
+		       domain_name,
+		       name_abbreviation,
 		       (select description_${langCode} from zebra_common_code where code_type = 'DOMAIN_DATA_TYPE' and common_code = zebra_domain_dictionary.data_type) as data_type,
-		       decode(lower(data_type), 'number', decode(data_precision||','||data_scale, ',', '', data_precision||', '||data_scale), to_char(data_length, '9,999')) as data_length,
-		       description as description,
-		       to_char(nvl(update_date, insert_date), '${dateFormat}') as last_update
+		       decode(lower(data_type), 'number', decode(data_precision||','||data_scale, ',', '', data_precision||', '||data_scale), data_length) as data_length,
+		       description,
+		       nvl(update_date, insert_date) as last_update
 		  from zebra_domain_dictionary
 		 where 1 = 1
 		${auto_fill}

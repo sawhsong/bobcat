@@ -333,7 +333,7 @@ var nony = {
 			val = $.nony.replace(val, "&quot;", "\"");
 			val = $.nony.replace(val, "&#39;", "'");
 //			val = $.nony.replace(val, "&nbsp;", " ");
-			val = $.nony.replace(val, "<br/>", "\r\n");
+			val = $.nony.replace(val, "<br/>", "\n");
 		}
 		return val;
 	},
