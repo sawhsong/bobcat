@@ -28,6 +28,9 @@
 </style>
 <script type="text/javascript">
 var popup = null;
+var searchResultDataCount = 0;
+var dateFormat = globalMap.get("dateFormatJs");
+var langCode = globalMap.get("langCode").toUpperCase();
 
 $(function() {
 	/*!
@@ -112,7 +115,6 @@ $(function() {
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
 		var html = "";
-		var dateFormat = globalMap.get("dateFormatJs");
 
 		searchResultDataCount = dataSet.getRowCnt();
 
@@ -137,15 +139,16 @@ $(function() {
 				uiAnc.setText(dataSet.getValue(i, "CODE_TYPE")).setScript("getDetail('"+dataSet.getValue(i, "CODE_TYPE")+"')");
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "NAME_ABBREVIATION")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "DATA_TYPE")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "DATA_LENGTH"))));
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.htmlToString(dataSet.getValue(i, "DESCRIPTION"))));
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "LAST_UPDATE"), dateFormat)));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION_"+langCode)));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "PROGRAM_CONSTANTS")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "USE_YN")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(defaultYn));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "INSERT_DATE"), dateFormat)));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
 
 				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
-					.addAttribute("title:"+"<mc:msg key="page.com.action"/>").setScript("doAction(this)");
+				uiIcon.setId("icnAction").setName("icnAction").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
+					.addAttribute("defaultYn:"+defaultYn).setScript("doAction(this)");
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
 				html += uiGridTr.toHtmlString();
@@ -153,7 +156,7 @@ $(function() {
 		} else {
 			var uiGridTr = new UiGridTr();
 
-			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:8").setText("<mc:msg key="I001"/>"));
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText("<mc:msg key="I001"/>"));
 			html += uiGridTr.toHtmlString();
 		}
 
@@ -164,7 +167,7 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			isFilter:false,
-			filterColumn:[1, 2, 3, 4, 5, 6],
+			filterColumn:[1, 2, 3],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -294,11 +297,10 @@ $(function() {
 	};
 
 	exeExport = function(menuObject) {
-		var rowCnt = <%=resultDataSet.getRowCnt()%>;
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
 
-		if (rowCnt <= 0) {
+		if (searchResultDataCount <= 0) {
 			commonJs.warn("<mc:msg key="I001"/>");
 			return;
 		}
@@ -343,7 +345,7 @@ $(function() {
 		commonJs.setAutoComplete($("#commonCodeType"), {
 			url:"/zebra/common/autoCompletion/",
 			method:"getCommonCodeType",
-			label:"description",
+			label:"description"+langCode,
 			value:"code_type",
 			select:function(event, ui) {
 				doSearch();
@@ -391,18 +393,6 @@ $(function() {
 		<div class="panel-body">
 			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label>
 			<ui:text name="commonCodeType" id="commonCodeType" className="defClass hor" style="width:280px"/>
-
-<%-- 			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label> --%>
-<!-- 			<select id="commonCodeType" name="commonCodeType" class="bootstrapSelect default"> -->
-<!-- 				<option value="">==Select==</option> -->
-<%-- <% --%>
-// 			for (int i=0; i<dsCodeType.getRowCnt(); i++) {
-<%-- %> --%>
-<%-- 				<option value="<%=dsCodeType.getValue(i, "CODE_TYPE")%>"><%=dsCodeType.getValue(i, "DESCRIPTION_"+langCode)%></option> --%>
-<%-- <% --%>
-// 			}
-<%-- %> --%>
-<!-- 			</select> -->
 		</div>
 	</div>
 </div>

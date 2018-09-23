@@ -67,4 +67,16 @@ public class ZebraCommonCodeHDaoImpl extends BaseHDao implements ZebraCommonCode
 
 		return selectAllAsDataSet(queryAdvisor, ZebraCommonCode);
 	}
+
+	public DataSet getActiveCodeTypeDataSetLikeCodeType(String codeType) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		ZebraCommonCode ZebraCommonCode = new ZebraCommonCode();
+
+		queryAdvisor.addWhereClause("use_yn = 'Y'");
+		queryAdvisor.addWhereClause("lower(code_type) like lower('"+codeType+"%')");
+		queryAdvisor.addWhereClause("common_code = '0000000000'");
+		queryAdvisor.addOrderByClause("code_type");
+
+		return selectAllAsDataSet(queryAdvisor, ZebraCommonCode);
+	}
 }

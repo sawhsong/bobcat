@@ -22,15 +22,7 @@ public class CommonCodeBizImpl extends BaseBiz implements CommonCodeBiz {
 	private ZebraCommonCodeDao zebraCommonCodeDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-
 		try {
-			queryAdvisor.setPagination(true);
-
-			paramEntity.setObject("viewMode", "defaultInit");
-			paramEntity.setObject("codeTypeDataSet", zebraCommonCodeDao.getActiveCodeTypeDataSet());
-			paramEntity.setObject("resultDataSet", zebraCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -48,8 +40,7 @@ public class CommonCodeBizImpl extends BaseBiz implements CommonCodeBiz {
 			queryAdvisor.setPagination(true);
 			queryAdvisor.addAutoFillCriteria(codeType, "code_type = '"+codeType+"'");
 
-			paramEntity.setObject("codeTypeDataSet", zebraCommonCodeDao.getActiveCodeTypeDataSet());
-			paramEntity.setObject("resultDataSet", zebraCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(zebraCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {

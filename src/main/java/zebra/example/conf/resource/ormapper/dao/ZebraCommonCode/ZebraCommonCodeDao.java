@@ -53,4 +53,10 @@ public interface ZebraCommonCodeDao extends IDao {
 	 * @throws Exception
 	 */
 	public DataSet getCommonCodeDataSetByCodeType(String codeType) throws Exception;
+	/**
+	 * Get all active code type
+	 * @return DataSet
+	 * @throws Exception
+	 */
+	public DataSet getActiveCodeTypeDataSetLikeCodeType(String codeType) throws Exception;
 }

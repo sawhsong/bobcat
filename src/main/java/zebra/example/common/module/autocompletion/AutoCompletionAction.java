@@ -18,4 +18,15 @@ public class AutoCompletionAction extends BaseAction {
 		}
 		return "ajaxResponse";
 	}
+
+	public String getCommonCodeType() throws Exception {
+		try {
+			biz.getCommonCodeType(paramEntity);
+		} catch (Exception ex) {
+			return "ajaxResponse";
+		} finally {
+			setRequestAttribute("paramEntity", paramEntity);
+		}
+		return "ajaxResponse";
+	}
 }
