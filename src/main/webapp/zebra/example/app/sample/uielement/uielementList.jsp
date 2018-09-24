@@ -133,17 +133,15 @@ $(function() {
 	});
 
 	$(window).load(function() {
-		$("#divDataGrid").height(400);
-// 		commonJs.changeTabSelection($("#tabCategory li:eq(2) a"));
+		commonJs.changeTabSelection($("#tabCategory li:eq(1) a"));
 
+		$("#divDataGrid").height(300);
 		$("#tblFixedHeaderTable2").fixedHeaderTable({
 			attachTo:$("#divDataGrid"),
-// 			attachToHeight:400,
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,
 			isFilter:false,
 			filterColumn:[1, 2, 3],
-// 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
@@ -266,11 +264,11 @@ $(function() {
 				for (int i=0; i<10; i++) {
 %>
 					<tr class="success">
-						<td class="tdGridCt"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
-						<td class="tdGridCt"><%=i+1%></td>
-						<td class="tdGridLt"><a class="aEn" onclick="" class="aNormal">NONY_BOARD_<%=i+1%></a></td>
-						<td class="tdGridLt"><%=i+1%>_Attached Files</td>
-						<td class="tdGridCt">
+						<td class="tdGrid Ct"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
+						<td class="tdGrid Ct"><%=i+1%></td>
+						<td class="tdGrid Lt"><a class="aEn" onclick="" class="aNormal">NONY_BOARD_<%=i+1%></a></td>
+						<td class="tdGrid Lt"><%=i+1%>_Attached Files</td>
+						<td class="tdGrid Ct">
 							<i id="icnAction"class="fa fa-tasks fa-lg icnEn" tableName="NONY_BOARD" tableDesc="" onclick="" title="Action"></i>
 						</td>
 					</tr>
@@ -295,7 +293,7 @@ $(function() {
 						</colgroup>
 						<thead>
 							<tr>
-								<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="Select to generate"></i></th>
+								<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="Select to generate"/></th>
 								<th class="thGrid sortable:numeric">Index</th>
 								<th class="thGrid sortable:string">First Name</th>
 								<th class="thGrid sortable:date">Date</th>
@@ -307,11 +305,11 @@ $(function() {
 						for (int i=0; i<200; i++) {
 %>
 							<tr>
-								<td class="tdGridCt"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
-								<td class="tdGridCt"><%=i+1%></td>
-								<td class="tdGridLt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
-								<td class="tdGridLt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
-								<td class="tdGridCt"><i id="icnAction"class="fa fa-tasks fa-lg icnEn" onclick="" title="Action"></i></td>
+								<td class="tdGrid Ct"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
+								<td class="tdGrid Ct"><%=i+1%></td>
+								<td class="tdGrid Lt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
+								<td class="tdGrid Lt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
+								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-tasks icnEn" title="Action"/></td>
 							</tr>
 <%
 						}
@@ -333,16 +331,16 @@ $(function() {
 						<col width="35%"/>
 					</colgroup>
 					<tr>
-						<th class="thDefault">thDefault</th>
+						<th class="thDefault Lt">thDefault</th>
 						<td class="tdDefault">tdDefault</td>
-						<th class="thDefaultRt">thDefaultRt</th>
-						<td class="tdDefaultRt">tdDefaultRt</td>
+						<th class="thDefault Rt">thDefaultRt</th>
+						<td class="tdDefault Rt">tdDefaultRt</td>
 					</tr>
 					<tr>
-						<th class="thDefaultLt">thDefaultLt</th>
-						<td class="tdDefaultLt">tdDefaultLt</td>
-						<th class="thDefaultCt">thDefaultCt</th>
-						<td class="tdDefaultCt">tdDefaultCt</td>
+						<th class="thDefault Lt">thDefaultLt</th>
+						<td class="tdDefault Lt">tdDefaultLt</td>
+						<th class="thDefault Ct">thDefaultCt</th>
+						<td class="tdDefault Ct">tdDefaultCt</td>
 					</tr>
 				</table>
 			</div>
@@ -361,14 +359,14 @@ $(function() {
 					<tr>
 						<th class="thEdit">thEdit</th>
 						<td class="tdEdit">tdEdit</td>
-						<th class="thEditRt">thEditRt</th>
-						<td class="tdEditRt">tdEditRt</td>
+						<th class="thEdit Rt">thEditRt</th>
+						<td class="tdEdit Rt">tdEditRt</td>
 					</tr>
 					<tr>
-						<th class="thEditLt">thEditLt</th>
-						<td class="tdEditLt">tdEditLt</td>
-						<th class="thEditCt">thEditCt</th>
-						<td class="tdEditCt">tdEditCt</td>
+						<th class="thEdit Lt">thEditLt</th>
+						<td class="tdEdit Lt">tdEditLt</td>
+						<th class="thEdit Ct">thEditCt</th>
+						<td class="tdEdit Ct">tdEditCt</td>
 					</tr>
 				</table>
 			</div>
@@ -381,7 +379,7 @@ $(function() {
 				<div class="accordionContents">
 					<div id="divBasicIcnImgBtn1">
 						<label for="txtWithIcon" class="lblEn hor">Input text</label>
-						<input type="text" id="txtWithIcon" name="txtWithIcon" class="txtEn hor" value="" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithIcon"/>
+						<input type="text" id="txtWithIcon" name="txtWithIcon" class="txtEn hor" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithIcon"/>
 						<i id="icnWithIconEn" class="fa fa-calendar icnEn hor" title="icnWithIcon"></i>
 						<i id="icnWithIconDis" class="fa fa-calendar icnDis hor" title="icnWithIcon"></i>
 	
@@ -391,6 +389,13 @@ $(function() {
 						<input type="text" id="txtWithImage" name="txtWithImage" class="txtEn hor success" value="" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithImage"/>
 						<img id="imgWithImageEn" src="<mc:cp key="imgThemeCom"/>/generate_Black.png" class="imgEn hor" title="imgWithImageEn"/>
 						<img id="imgWithImageDis" src="<mc:cp key="imgThemeCom"/>/generate_Black.png" class="imgDis hor" title="imgWithImageDis"/>
+
+						<div class="horGap20"></div>
+	
+						<label for="txtTaglib" class="lblEn hor">Input text</label>
+						<ui:text id="txtTaglib" name="txtTaglib" className="defClass hor success" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" options="mandatory" placeHolder="txtTaglib"/>
+						<ui:img id="imgTaglib" src="<mc:cp key=imgThemeCom/>/generate_Black.png" className="defClass hor" style="margin-top:6px" title="imgTaglib"/>
+						<ui:icon id="icnTaglib" className="fa-calendar icnDis hor" style="margin-top:8px" title="icnTaglib"/>
 					</div>
 					<div class="verGap20"></div>
 					<div id="divBasicIcnImgBtn2">
@@ -481,31 +486,45 @@ $(function() {
 							<col width="24%"/>
 						</colgroup>
 						<tr>
-							<th class="thEdit">txtEn</th>
+							<th class="thEdit Rt">txtEn</th>
 							<td class="tdEdit">
 								<input type="text" id="txtFormElementsEn" name="txtFormElementsEn" class="txtEn" placeholder="txtFormElementsEn"/>
 							</td>
-							<th class="thEdit">txtDis</th>
+							<th class="thEdit Rt">txtDis</th>
 							<td class="tdEdit">
 								<input type="text" id="txtFormElementsDis" name="txtFormElementsDis" class="txtDis" disabled placeholder="txtFormElementsDis"/>
 							</td>
-							<th class="thEdit">txtDpl</th>
+							<th class="thEdit Rt">txtDpl</th>
 							<td class="tdEdit">
 								<input type="text" id="txtFormElementsDpl" name="txtFormElementsDpl" class="txtDpl" disabled placeholder="txtFormElementsDpl"/>
 							</td>
 						</tr>
 						<tr>
-							<th class="thEdit">txtEn Success</th>
+							<th class="thEdit Rt">txtEn Success</th>
 							<td class="tdEdit">
 								<input type="text" id="txtFormElementsEnSuccess" name="txtFormElementsEnSuccess" class="txtEn success" placeholder="txtFormElementsEnSuccess"/>
 							</td>
-							<th class="thEdit">txtEn Warning</th>
+							<th class="thEdit Rt">txtEn Warning</th>
 							<td class="tdEdit">
 								<input type="text" id="txtFormElementsEnWarning" name="txtFormElementsEnWarning" class="txtEn warning" placeholder="txtFormElementsEnWarning"/>
 							</td>
-							<th class="thEdit">txtEn Error</th>
+							<th class="thEdit Rt">txtEn Error</th>
 							<td class="tdEdit">
 								<input type="text" id="txtFormElementsEnError" name="txtFormElementsEnError" class="txtEn error" placeholder="txtFormElementsEnError"/>
+							</td>
+						</tr>
+						<tr>
+							<th class="thEdit Rt">Taglib Text</th>
+							<td class="tdEdit">
+								<ui:text id="txtTaglibEn" name="txtTaglibEn" className="defClass" placeHolder="txtFormElementsEn"/>
+							</td>
+							<th class="thEdit Rt">Taglib txtDis</th>
+							<td class="tdEdit">
+								<ui:text id="txtTaglibDis" name="txtTaglibDis" className="defClass" placeHolder="txtFormElementsDis" status="disabled"/>
+							</td>
+							<th class="thEdit Rt">Taglib txtDpl</th>
+							<td class="tdEdit">
+								<ui:text id="txtTaglibDpl" name="txtTaglibDpl" className="defClass" placeHolder="txtFormElementsDpl" status="display"/>
 							</td>
 						</tr>
 					</table>
@@ -521,31 +540,45 @@ $(function() {
 							<col width="24%"/>
 						</colgroup>
 						<tr>
-							<th class="thEdit">txaEn</th>
+							<th class="thEdit Rt">txaEn</th>
 							<td class="tdEdit">
 								<textarea id="txaFormElementsEn" name="txaFormElementsEn" class="txaEn" placeholder="txaFormElementsEn" style="height:80px">txaFormElementsEn</textarea>
 							</td>
-							<th class="thEdit">txaDis</th>
+							<th class="thEdit Rt">txaDis</th>
 							<td class="tdEdit">
 								<textarea id="txaFormElementsDis" name="txaFormElementsDis" class="txaDis" disabled placeholder="txaFormElementsDis" style="height:80px">txaFormElementsDis</textarea>
 							</td>
-							<th class="thEdit">txaDpl</th>
+							<th class="thEdit Rt">txaDpl</th>
 							<td class="tdEdit">
 								<textarea id="txaFormElementsDpl" name="txaFormElementsDpl" class="txaDpl" disabled placeholder="txaFormElementsDpl" style="height:80px">txaFormElementsDis</textarea>
 							</td>
 						</tr>
 						<tr>
-							<th class="thEdit">txaEn Success</th>
+							<th class="thEdit Rt">txaEn Success</th>
 							<td class="tdEdit">
 								<textarea id="txaFormElementsEnSuccess" name="txaFormElementsEnSuccess" class="txaEn success" placeholder="txaFormElementsEnSuccess" style="height:80px">txaFormElementsEnSuccess</textarea>
 							</td>
-							<th class="thEdit">txaEn Warning</th>
+							<th class="thEdit Rt">txaEn Warning</th>
 							<td class="tdEdit">
 								<textarea id="txaFormElementsEnWarning" name="txaFormElementsEnWarning" class="txaEn warning" placeholder="txaFormElementsEnWarning" style="height:80px">txaFormElementsEnWarning</textarea>
 							</td>
-							<th class="thEdit">txaEn Error</th>
+							<th class="thEdit Rt">txaEn Error</th>
 							<td class="tdEdit">
 								<textarea id="txaFormElementsEnError" name="txaFormElementsEnError" class="txaEn error" placeholder="txaFormElementsEnError" style="height:80px">txaFormElementsEnError</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th class="thEdit Rt">Taglib txaEn</th>
+							<td class="tdEdit">
+								<ui:txa id="txaTaglibEn" name="txaTaglibEn" className="defClass" placeHolder="txaTaglibEn" style="height:80px" value="txaFormElementsEn"/>
+							</td>
+							<th class="thEdit Rt">Taglib txaDis</th>
+							<td class="tdEdit">
+								<ui:txa id="txaTaglibDis" name="txaTaglibDis" className="defClass" placeHolder="txaTaglibDis" style="height:80px" value="txaFormElementsDis" status="disabled"/>
+							</td>
+							<th class="thEdit Rt">Taglib txaDpl</th>
+							<td class="tdEdit">
+								<ui:txa id="txaTaglibDpl" name="txaTaglibDpl" className="defClass" placeHolder="txaTaglibDpl" style="height:80px" value="txaFormElementsDis" status="display"/>
 							</td>
 						</tr>
 					</table>
@@ -1030,6 +1063,12 @@ $(function() {
 							</td>
 						</tr>
 					</table>
+				</div>
+			</div>
+			<div class="accordionGroup">
+				<h3>Image Slider</h3>
+				<div class="accordionContents">
+					Image Slider
 				</div>
 			</div>
 		</div>

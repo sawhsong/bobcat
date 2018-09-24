@@ -36,7 +36,7 @@ public class Image extends TaglibSupport {
 			}
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 
-			html.append("<img id=\""+id+"\" src=\""+TaglibUtil.getMccpValue(src)+"\"");
+			html.append("<img id=\""+id+"\" src=\""+TaglibUtil.getMccpValue(httpSession, src)+"\"");
 
 			if (CommonUtil.isNotBlank(name)) {html.append(" name=\""+name+"\"");}
 			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
