@@ -30,24 +30,24 @@ public class ZebraCommonCodeHDaoImpl extends BaseHDao implements ZebraCommonCode
 
 	public DataSet getAllActiveCommonCode() throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
-		ZebraCommonCode ZebraCommonCode = new ZebraCommonCode();
+		ZebraCommonCode zebraCommonCode = new ZebraCommonCode();
 
 		queryAdvisor.addWhereClause("use_yn = 'Y'");
 		queryAdvisor.addOrderByClause("code_type");
 		queryAdvisor.addOrderByClause("sort_order");
 
-		return selectAllAsDataSet(queryAdvisor, ZebraCommonCode);
+		return selectAllAsDataSet(queryAdvisor, zebraCommonCode);
 	}
 
 	public DataSet getActiveCodeTypeDataSet() throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
-		ZebraCommonCode ZebraCommonCode = new ZebraCommonCode();
+		ZebraCommonCode zebraCommonCode = new ZebraCommonCode();
 
 		queryAdvisor.addWhereClause("use_yn = 'Y'");
 		queryAdvisor.addWhereClause("common_code = '0000000000'");
 		queryAdvisor.addOrderByClause("code_type");
 
-		return selectAllAsDataSet(queryAdvisor, ZebraCommonCode);
+		return selectAllAsDataSet(queryAdvisor, zebraCommonCode);
 	}
 
 	public DataSet getActiveCommonCodeDataSet(QueryAdvisor queryAdvisor) throws Exception {
@@ -60,23 +60,23 @@ public class ZebraCommonCodeHDaoImpl extends BaseHDao implements ZebraCommonCode
 
 	public DataSet getCommonCodeDataSetByCodeType(String codeType) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
-		ZebraCommonCode ZebraCommonCode = new ZebraCommonCode();
+		ZebraCommonCode zebraCommonCode = new ZebraCommonCode();
 
 		queryAdvisor.addWhereClause("code_type = '"+codeType+"'");
 		queryAdvisor.addOrderByClause("sort_order");
 
-		return selectAllAsDataSet(queryAdvisor, ZebraCommonCode);
+		return selectAllAsDataSet(queryAdvisor, zebraCommonCode);
 	}
 
 	public DataSet getActiveCodeTypeDataSetLikeCodeType(String codeType) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
-		ZebraCommonCode ZebraCommonCode = new ZebraCommonCode();
+		ZebraCommonCode zebraCommonCode = new ZebraCommonCode();
 
 		queryAdvisor.addWhereClause("use_yn = 'Y'");
 		queryAdvisor.addWhereClause("lower(code_type) like lower('"+codeType+"%')");
 		queryAdvisor.addWhereClause("common_code = '0000000000'");
 		queryAdvisor.addOrderByClause("code_type");
 
-		return selectAllAsDataSet(queryAdvisor, ZebraCommonCode);
+		return selectAllAsDataSet(queryAdvisor, zebraCommonCode);
 	}
 }
