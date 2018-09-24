@@ -165,7 +165,7 @@ $(function() {
 	});
 
 	$(window).load(function() {
-		commonJs.changeTabSelection($("#tabCategory li:eq(1) a"));
+		commonJs.changeTabSelection($("#tabCategory li:eq(2) a"));
 
 		$("#divDataGrid").height(300);
 		$("#tblFixedHeaderTable2").fixedHeaderTable({

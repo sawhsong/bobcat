@@ -28,9 +28,7 @@
 
 <script type="text/javascript" src="<mc:cp key="ckEditor"/>/ckeditor.js"></script>
 <script type="text/javascript" src="<mc:cp key="ckEditor"/>/adapters/jquery.js"></script>
-<script type="text/javascript" src="<mc:cp key="slider"/>/js/jssor.core.js"></script>
-<script type="text/javascript" src="<mc:cp key="slider"/>/js/jssor.slider.js"></script>
-<script type="text/javascript" src="<mc:cp key="slider"/>/js/jssor.utils.js"></script>
+<script type="text/javascript" src="<mc:cp key="slider"/>/js/jssor.slider.min.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/core.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/popup.js"></script>
