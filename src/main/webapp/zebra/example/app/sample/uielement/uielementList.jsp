@@ -133,11 +133,11 @@ $(function() {
 	});
 
 	$(window).load(function() {
-		$("#dataGrid").height(400);
+		$("#divDataGrid").height(400);
 // 		commonJs.changeTabSelection($("#tabCategory li:eq(2) a"));
 
 		$("#tblFixedHeaderTable2").fixedHeaderTable({
-			attachTo:$("#dataGrid"),
+			attachTo:$("#divDataGrid"),
 // 			attachToHeight:400,
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,
@@ -284,40 +284,40 @@ $(function() {
 		<div class="panel panel-primary">
 			<div class="panel-heading"><h3 class="panel-title">Data Table in Panel - within Body Panel</h3></div>
 			<div id="divDataTablePanel2" class="panel-body">
-				<div id="dataGrid">
-				<table id="tblFixedHeaderTable2" class="tblGrid sort autosort">
-					<colgroup>
-						<col width="5%"/>
-						<col width="6%"/>
-						<col width="32%"/>
-						<col width="52%"/>
-						<col width="5%"/>
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="Select to generate"></i></th>
-							<th class="thGrid sortable:numeric">Index</th>
-							<th class="thGrid sortable:string">First Name</th>
-							<th class="thGrid sortable:date">Date</th>
-							<th class="thGrid">Action</th>
-						</tr>
-					</thead>
-					<tbody>
+				<div id="divDataGrid">
+					<table id="tblFixedHeaderTable2" class="tblGrid sort autosort">
+						<colgroup>
+							<col width="5%"/>
+							<col width="6%"/>
+							<col width="32%"/>
+							<col width="52%"/>
+							<col width="5%"/>
+						</colgroup>
+						<thead>
+							<tr>
+								<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="Select to generate"></i></th>
+								<th class="thGrid sortable:numeric">Index</th>
+								<th class="thGrid sortable:string">First Name</th>
+								<th class="thGrid sortable:date">Date</th>
+								<th class="thGrid">Action</th>
+							</tr>
+						</thead>
+						<tbody>
 <%
-					for (int i=0; i<200; i++) {
+						for (int i=0; i<200; i++) {
 %>
-						<tr>
-							<td class="tdGridCt"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
-							<td class="tdGridCt"><%=i+1%></td>
-							<td class="tdGridLt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
-							<td class="tdGridLt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
-							<td class="tdGridCt"><i id="icnAction"class="fa fa-tasks fa-lg icnEn" onclick="" title="Action"></i></td>
-						</tr>
+							<tr>
+								<td class="tdGridCt"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
+								<td class="tdGridCt"><%=i+1%></td>
+								<td class="tdGridLt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
+								<td class="tdGridLt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
+								<td class="tdGridCt"><i id="icnAction"class="fa fa-tasks fa-lg icnEn" onclick="" title="Action"></i></td>
+							</tr>
 <%
-					}
+						}
 %>
-					</tbody>
-				</table>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="panel-footer">Panel footer</div>

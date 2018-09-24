@@ -317,8 +317,8 @@
 			/*!
 			 * Fixed header
 			 */
-			var $table = $(this);
-			var tableOffset = $table.offset().top;
+			var $table = $(this), visibleHeight = 0;
+			var $scrollablePanel = $.nony.isPopup() ? $("#divScrollablePanelPopup") : $("#divScrollablePanel");
 			var $header = $table.find("thead").clone(true, true);
 			var $fixedTable = $("<table id=\"systemGeneratedTableForFixedHeader\"/>").prop("class", $table.prop("class"))
 								.css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px"});
@@ -355,12 +355,16 @@
 				});
 			}
 
-			$(options.attachTo).bind("scroll", function() {
-				$fixedTable.css({position:"fixed"});
-			});
+			visibleHeight = $.nony.toNumber($(options.attachTo).offset().top - $scrollablePanel.offset().top);
 
-			$("#divScrollablePanel").bind("scroll", function() {
-				$fixedTable.css({position:"static"});
+			$scrollablePanel.bind("scroll", function() {
+				$fixedTable.css("top", $(options.attachTo).offset().top);
+
+				if (visibleHeight < $scrollablePanel.scrollTop()) {
+					$fixedTable.hide();
+				} else {
+					$fixedTable.show();
+				}
 			});
 		});
 	};
