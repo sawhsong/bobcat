@@ -354,6 +354,14 @@
 					});
 				});
 			}
+
+			$(options.attachTo).bind("scroll", function() {
+				$fixedTable.css({position:"fixed"});
+			});
+
+			$("#divScrollablePanel").bind("scroll", function() {
+				$fixedTable.css({position:"static"});
+			});
 		});
 	};
 })(jQuery);

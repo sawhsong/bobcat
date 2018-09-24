@@ -169,15 +169,15 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><mc:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.codeType"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></td>
-			<th class="thEdit"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit"><ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_EN")%></td>
-			<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_KO")%></td>
 		</tr>
 	</table>
@@ -213,17 +213,17 @@ $(function() {
 					<col width="10%"/>
 				</colgroup>
 				<tr>
-					<th class="thEdit"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
+					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
-					<th class="thEdit"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 					<td class="tdEdit"><ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
-					<th class="thEdit"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
+					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
 				</tr>
 				<tr>
-					<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 					<td class="tdEdit"><%=resultDataSet.getValue(i, "DESCRIPTION_EN")%></td>
-					<th class="thEdit"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 					<td class="tdEdit" colspan="3"><%=resultDataSet.getValue(i, "DESCRIPTION_KO")%></td>
 				</tr>
 			</table>

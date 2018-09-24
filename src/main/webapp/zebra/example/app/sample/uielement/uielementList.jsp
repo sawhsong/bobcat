@@ -133,12 +133,18 @@ $(function() {
 	});
 
 	$(window).load(function() {
-		commonJs.changeTabSelection($("#tabCategory li:eq(2) a"));
+		$("#dataGrid").height(400);
+// 		commonJs.changeTabSelection($("#tabCategory li:eq(2) a"));
 
 		$("#tblFixedHeaderTable2").fixedHeaderTable({
-			baseDivElement:"divDataTablePanel2",
-			baseHeight:300,
-			widthAdjust:0
+			attachTo:$("#dataGrid"),
+// 			attachToHeight:400,
+			pagingArea:$("#divPagingArea"),
+			isPageable:false,
+			isFilter:false,
+			filterColumn:[1, 2, 3],
+// 			totalResultRows:result.totalResultRows,
+			script:"doSearch"
 		});
 
 		commonJs.setAccordion({
@@ -262,7 +268,7 @@ $(function() {
 					<tr class="success">
 						<td class="tdGridCt"><input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="NONY_BOARD"/></td>
 						<td class="tdGridCt"><%=i+1%></td>
-						<td class="tdGridLt"><a class="aEn" onclick="" class="aNormal">NONY_BOARD</a></td>
+						<td class="tdGridLt"><a class="aEn" onclick="" class="aNormal">NONY_BOARD_<%=i+1%></a></td>
 						<td class="tdGridLt"><%=i+1%>_Attached Files</td>
 						<td class="tdGridCt">
 							<i id="icnAction"class="fa fa-tasks fa-lg icnEn" tableName="NONY_BOARD" tableDesc="" onclick="" title="Action"></i>
@@ -278,6 +284,7 @@ $(function() {
 		<div class="panel panel-primary">
 			<div class="panel-heading"><h3 class="panel-title">Data Table in Panel - within Body Panel</h3></div>
 			<div id="divDataTablePanel2" class="panel-body">
+				<div id="dataGrid">
 				<table id="tblFixedHeaderTable2" class="tblGrid sort autosort">
 					<colgroup>
 						<col width="5%"/>
@@ -311,6 +318,7 @@ $(function() {
 %>
 					</tbody>
 				</table>
+				</div>
 			</div>
 			<div class="panel-footer">Panel footer</div>
 		</div>

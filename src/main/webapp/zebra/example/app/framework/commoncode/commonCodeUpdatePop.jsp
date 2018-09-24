@@ -260,23 +260,23 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
 			<td class="tdEdit">
-				<input type="text" id="codeTypeMaster" name="codeTypeMaster" value="<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>" class="txtEn" style="text-transform:uppercase;" checkName="<mc:msg key="fwk.commoncode.header.codeType"/>" mandatory/>
+				<ui:text name="codeTypeMaster" id="codeTypeMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="fwk.commoncode.header.codeType" options="mandatory"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
 				<ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit">
-				<input type="text" id="descriptionEnMaster" name="descriptionEnMaster" value="<%=resultDataSet.getValue(masterRow, "DESCRIPTION_EN")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
+				<ui:text name="descriptionEnMaster" id="descriptionEnMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit">
-				<input type="text" id="descriptionKoMaster" name="descriptionKoMaster" value="<%=resultDataSet.getValue(masterRow, "DESCRIPTION_KO")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
+				<ui:text name="descriptionKoMaster" id="descriptionKoMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/>
 			</td>
 		</tr>
 	</table>
@@ -293,7 +293,7 @@ $(function() {
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
-<div class="breaker" style="height:1px"></div>
+<div class="breaker"></div>
 </div>
 <div id="divScrollablePanelPopup">
 <%/************************************************************************************************
@@ -323,27 +323,27 @@ $(function() {
 					<col width="10%"/>
 				</colgroup>
 				<tr>
-					<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEditCt dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
-					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
+					<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
+					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 					<td class="tdEdit">
 						<input type="text" id="commonCodeDetail<%=idSuffix%>" name="commonCodeDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "COMMON_CODE")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
 					</td>
-					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 					<td class="tdEdit">
 						<ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
 					</td>
-					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
+					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 					<td class="tdEdit">
 						<input type="text" id="sortOrderDetail<%=idSuffix%>" name="sortOrderDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "SORT_ORDER")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
 					</td>
 				</tr>
 				<tr>
-					<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEditCt deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
-					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+					<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
+					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 					<td class="tdEdit">
 						<input type="text" id="descriptionEnDetail<%=idSuffix%>" name="descriptionEnDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "DESCRIPTION_EN")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
 					</td>
-					<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 					<td class="tdEdit" colspan="3">
 						<input type="text" id="descriptionKoDetail<%=idSuffix%>" name="descriptionKoDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "DESCRIPTION_KO")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
 					</td>
@@ -377,27 +377,27 @@ $(function() {
 			<col width="10%"/>
 		</colgroup>
 		<tr>
-			<th id="thDragHander" class="thEditCt dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
+			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 			<td class="tdEdit">
 				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
 				<ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 			<td class="tdEdit">
 				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
 			</td>
 		</tr>
 		<tr>
-			<th id="thDeleteButton" class="thEditCt deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit">
 				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit" colspan="3">
 				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
 			</td>

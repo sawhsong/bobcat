@@ -248,21 +248,21 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
 			<td class="tdEdit">
 				<input type="text" id="codeTypeMaster" name="codeTypeMaster" class="txtEn" style="text-transform:uppercase;" checkName="<mc:msg key="fwk.commoncode.header.codeType"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
 				<ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit">
 				<input type="text" id="descriptionEnMaster" name="descriptionEnMaster" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit">
 				<input type="text" id="descriptionKoMaster" name="descriptionKoMaster" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
 			</td>
@@ -311,27 +311,27 @@ $(function() {
 			<col width="10%"/>
 		</colgroup>
 		<tr>
-			<th id="thDragHander" class="thEditCt dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
+			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
 			<td class="tdEdit">
 				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit">
 				<ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
 			<td class="tdEdit">
 				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
 			</td>
 		</tr>
 		<tr>
-			<th id="thDeleteButton" class="thEditCt deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit">
 				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
 			<td class="tdEdit" colspan="3">
 				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
 			</td>
