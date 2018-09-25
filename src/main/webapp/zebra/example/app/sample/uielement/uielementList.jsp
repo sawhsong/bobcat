@@ -24,27 +24,6 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-.jssora106 {display:block;position:absolute;cursor:pointer;}
-.jssora106 .c {fill:#fff;opacity:.3;}
-.jssora106 .a {fill:none;stroke:#000;stroke-width:350;stroke-miterlimit:10;}
-.jssora106:hover .c {opacity:.5;}
-.jssora106:hover .a {opacity:.8;}
-.jssora106.jssora106dn .c {opacity:.2;}
-.jssora106.jssora106dn .a {opacity:1;}
-.jssora106.jssora106ds {opacity:.3;pointer-events:none;}
-
-.jssort101 .p {position: absolute;top:0;left:0;box-sizing:border-box;background:#000;}
-.jssort101 .p .cv {position:relative;top:0;left:0;width:100%;height:100%;border:2px solid #000;box-sizing:border-box;z-index:1;}
-.jssort101 .a {fill:none;stroke:#fff;stroke-width:400;stroke-miterlimit:10;visibility:hidden;}
-.jssort101 .p:hover .cv, .jssort101 .p.pdn .cv {border:none;border-color:transparent;}
-.jssort101 .p:hover{padding:2px;}
-.jssort101 .p:hover .cv {background-color:rgba(0,0,0,6);opacity:.35;}
-.jssort101 .p:hover.pdn{padding:0;}
-.jssort101 .p:hover.pdn .cv {border:2px solid #fff;background:none;opacity:.35;}
-.jssort101 .pav .cv {border-color:#fff;opacity:.35;}
-.jssort101 .pav .a, .jssort101 .p:hover .a {visibility:visible;}
-.jssort101 .t {position:absolute;top:0;left:0;width:100%;height:100%;border:none;opacity:.6;}
-.jssort101 .pav .t, .jssort101 .p:hover .t{opacity:1;}
 </style>
 <script type="text/javascript">
 var popup1, popup2, cal;
@@ -175,7 +154,7 @@ $(function() {
 		commonJs.setAccordion({
 			containerClass:"accordionMiscellaneous",
 			expandAll:false,
-			active:1,
+			active:3,
 			multipleExpand:false,
 			activate:function(event, ui) {
 				var currHeader, currContent;
@@ -218,7 +197,12 @@ $(function() {
 
 		$("#slider").imageSlider({
 			width:1000,
-			height:500
+			height:500,
+			arrow:true,
+			arrowTheme:1,
+			thumbnail:true,
+			thumbType:"image",
+			thumbnailTheme:5
 		});
 	});
 });
@@ -1097,43 +1081,53 @@ $(function() {
 					<div id="slider">
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/031.jpg"/>
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/031-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/031-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #001</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/032.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/032-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/032-s190x90.jpg" /> --%>
+								<div u="thumb">Slide description #002</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/033.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/033-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/033-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #003</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/034.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/034-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/034-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #004</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/035.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/035-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/035-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #005</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/036.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/036-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/036-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #006</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/037.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/037-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/037-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #007</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/038.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/038-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/038-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #008</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/039.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/039-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/039-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #009</div>
 						</div>
 						<div>
 							<img data-u="image" src="<mc:cp key="slider"/>/img/sample/040.jpg" />
-							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/040-s190x90.jpg" />
+<%-- 							<img data-u="thumb" src="<mc:cp key="slider"/>/img/sample/040-s190x90.jpg" /> --%>
+							<div u="thumb">Slide description #010</div>
 						</div>
 					</div>
 				</div>

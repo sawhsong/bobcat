@@ -1,0 +1,13 @@
+/**************************************************************************************************
+* JSSOR Image Slider CSS
+**************************************************************************************************/
+@charset "utf-8";
+
+/**
+ * 
+ */
+.arrow1 {display:block;position:absolute;cursor:pointer;}
+.arrow1 .a {fill:#fff;fill-opacity:.8;stroke:#000;stroke-width:120;stroke-miterlimit:10;stroke-opacity:.5;}
+.arrow1:hover {opacity:.8;}
+.arrow1.arrow1dn {opacity:.4;}
+.arrow1.arrow1ds {opacity:.3;pointer-events:none;}
