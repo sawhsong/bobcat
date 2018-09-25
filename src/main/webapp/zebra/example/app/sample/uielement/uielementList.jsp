@@ -24,19 +24,6 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-/* jssor slider loading skin spin css */
-.jssorl-009-spin img {
-	animation-name: jssorl-009-spin;
-	animation-duration: 1.6s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
-}
-
-@keyframes jssorl-009-spin {
-	from {transform: rotate(0deg);}
-	to {transform: rotate(360deg);}
-}
-
 .jssora106 {display:block;position:absolute;cursor:pointer;}
 .jssora106 .c {fill:#fff;opacity:.3;}
 .jssora106 .a {fill:none;stroke:#000;stroke-width:350;stroke-miterlimit:10;}
