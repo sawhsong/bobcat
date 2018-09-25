@@ -7,11 +7,12 @@
  * 				height:500,								// [mandatory : slider div height]
  * 				cursor:pointer,							// [optional : cursor]
  * 				thumbnail:true							// [optional : true : displays thumbnail, [default:false]]
- * 				thumbnailHeight:100,					// [conditional mandatory : height of thumbnail if thumbnail is true]
+ * 				thumbnailHeight:100,					// [optional : height of thumbnail if thumbnail is true, [default:100]]
  * 				thumbnailTheme:1,						// [optional : thumbnail theme number (1, 2, 3, 4, 5, 6)]
  * 				thumbType:thumb							// [optional : thumbnail type ([thumb] / bullet)]
  * 				arrow:true,								// [optional : true : displays left/right arrows, [default:true]]
  * 				arrowTheme:1,							// [optional : arrow theme number (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)]
+ * 				autoSlide:true							// [optional : play slide automatically, [default:false]]
  * 			});
  */
 
@@ -87,7 +88,7 @@
 			if (options.height == null || options.height <= 0) {throw new Error("Height" + framework.messages.mandatory); return;}
 
 			var maxWidth = 1000;
-			var html = "", sliderAreaHtml = "";
+			var html = "";
 			var cursor = options.cursor || "move", thumbnail = options.thumbnail || false, arrow = options.arrow || false;
 			var thumbnailHeight = 0, thumbType = "", thumbnailTheme = "", arrowTheme = "";
 			var containerHeight = 0;
@@ -104,7 +105,6 @@
 
 			containerHeight = $.nony.toNumber(options.height - thumbnailHeight);
 
-			sliderAreaHtml = $(this).html();
 			html += "<div data-u=\"slides\" style=\"cursor:"+cursor+";position:relative;top:0px;left:0px;width:"+options.width+"px;height:"+containerHeight+"px;overflow:hidden;\">";
 			html += $(this).html();
 			html += "</div>";
@@ -151,18 +151,18 @@
 			];
 			var sliderOptions = {
 				$AutoPlay:1,
-				$SlideshowOptions: {
-					$Class: $JssorSlideshowRunner$,
-					$Transitions: sliderTransitions,
-					$TransitionsOrder: 1
+				$SlideshowOptions:{
+					$Class:$JssorSlideshowRunner$,
+					$Transitions:sliderTransitions,
+					$TransitionsOrder:1
 				},
-				$ArrowNavigatorOptions: {
+				$ArrowNavigatorOptions:{
 					$Class: $JssorArrowNavigator$
 				},
-				$ThumbnailNavigatorOptions: {
+				$ThumbnailNavigatorOptions:{
 					$Class: $JssorThumbnailNavigator$,
-					$SpacingX: 5,
-					$SpacingY: 5
+					$SpacingX:5,
+					$SpacingY:5
 				}
 			};
 		
