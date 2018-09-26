@@ -24,7 +24,7 @@ public class Icon extends TaglibSupport {
 
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 			if (CommonUtil.startsWithIgnoreCase(className, "fa-")) {
-				classNamePrefix = "fa fa-lg";
+				classNamePrefix = "fa";
 			} else if (CommonUtil.startsWithIgnoreCase(className, "glyphicon-")) {
 				classNamePrefix = "glyphicon";
 			}

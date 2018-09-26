@@ -9,7 +9,9 @@ UiGridTd.prototype = {
 	initialize : function() {
 		this.className = "tdGrid";
 		this.attribute = "";
-		this.text = "",
+		this.text = "";
+		this.textBeforeChild = "";
+		this.textAfterChild = "";
 		this.childList= new Array();
 	},
 	/**
@@ -28,6 +30,8 @@ UiGridTd.prototype = {
 	},
 	addAttribute : function(attribute) {this.attribute += ($.nony.isEmpty(this.attribute)) ? attribute : ";"+attribute; return this;},
 	addChild : function(obj) {this.childList.push(obj); return this;},
+	addTextBeforeChild : function(text) {this.textBeforeChild = text; return this},
+	addTextAfterChild : function(text) {this.textAfterChild = text; return this},
 	/**
 	 * toString
 	 */
@@ -48,12 +52,14 @@ UiGridTd.prototype = {
 			}
 		}
 		str += ">";
+		if (!$.nony.isEmpty(this.textBeforeChild)) {str += this.textBeforeChild;}
 		if (this.childList != null && this.childList.length > 0) {
 			for (var i=0; i<this.childList.length; i++) {
 				str += this.childList[i].toHtmlString();
 			}
 		}
 		if (!$.nony.isEmpty(this.text)) {str += this.text;}
+		if (!$.nony.isEmpty(this.textAfterChild)) {str += this.textAfterChild;}
 		str += "</td>";
 
 		return str;

@@ -9,7 +9,7 @@ UiIcon.prototype = {
 	initialize : function() {
 		this.id = "";
 		this.name = "";
-		this.className = "fa fa-tasks fa-lg icnEn";
+		this.className = "icnEn";
 		this.style = "";
 		this.script = "";
 		this.attribute = "";
@@ -19,14 +19,35 @@ UiIcon.prototype = {
 	 */
 	setId : function(id) {this.id = id; return this;},
 	setName : function(name) {this.name = name; return this;},
-	setClassName : function(className) {this.className = className; return this;},
+	setClassName : function(className) {
+		var classNamePrefix = "";
+
+		if ($.nony.startsWith(className, "fa-")) {
+			classNamePrefix = "fa";
+		} else if ($.nony.startsWith(className, "glyphicon-")) {
+			classNamePrefix = "glyphicon";
+		}
+		this.className += ($.nony.isEmpty(this.className)) ? classNamePrefix+" "+className : " "+classNamePrefix+" "+className;
+
+		return this;
+	},
 	setStyle : function(style) {this.style = style; return this;},
 	setScript : function(script) {this.script = script; return this;},
 	setAttribute : function(attributes) {this.attribute = attributes; return this;},
 	/**
 	 * Method
 	 */
-	addClassName : function(className) {this.className += ($.nony.isEmpty(this.className)) ? className : " "+className; return this;},
+	addClassName : function(className) {
+		var classNamePrefix = "";
+
+		if ($.nony.startsWith(className, "fa-")) {
+			classNamePrefix = "fa";
+		} else if ($.nony.startsWith(className, "glyphicon-")) {
+			classNamePrefix = "glyphicon";
+		}
+		this.className += ($.nony.isEmpty(this.className)) ? classNamePrefix+" "+className : " "+classNamePrefix+" "+className;
+		return this;
+	},
 	removeClassName : function(className) {
 		if (!$.nony.isEmpty(this.className)) {this.className.replace(className, "");}
 		return this;

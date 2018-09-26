@@ -30,7 +30,7 @@
 		<property name="triggers">
 			<list>
 <!-- 				<ref bean="boardArticleCreationJobTrigger"/> -->
-<!-- 				<ref bean="zebraBoardArticleCreationJobTrigger"/> -->
+				<ref bean="zebraBoardArticleCreationJobTrigger"/>
 			</list>
 		</property>
 	</bean>

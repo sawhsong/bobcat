@@ -300,7 +300,7 @@ $(function() {
 						</colgroup>
 						<thead>
 							<tr>
-								<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="Select to generate"/></th>
+								<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="Select to generate"/></th>
 								<th class="thGrid sortable:numeric">Index</th>
 								<th class="thGrid sortable:string">First Name</th>
 								<th class="thGrid sortable:date">Date</th>
@@ -316,7 +316,7 @@ $(function() {
 								<td class="tdGrid Ct"><%=i+1%></td>
 								<td class="tdGrid Lt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
 								<td class="tdGrid Lt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
-								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-tasks icnEn" title="Action"/></td>
+								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-tasks fa-lg icnEn" title="Action"/></td>
 							</tr>
 <%
 						}
@@ -402,7 +402,7 @@ $(function() {
 						<label for="txtTaglib" class="lblEn hor">Input text</label>
 						<ui:text id="txtTaglib" name="txtTaglib" className="defClass hor success" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" options="mandatory" placeHolder="txtTaglib"/>
 						<ui:img id="imgTaglib" src="<mc:cp key=imgThemeCom/>/generate_Black.png" className="defClass hor" style="margin-top:6px" title="imgTaglib"/>
-						<ui:icon id="icnTaglib" className="fa-calendar icnDis hor" style="margin-top:8px" title="icnTaglib"/>
+						<ui:icon id="icnTaglib" className="fa-calendar fa-lg icnDis hor" style="margin-top:8px" title="icnTaglib"/>
 					</div>
 					<div class="verGap20"></div>
 					<div id="divBasicIcnImgBtn2">

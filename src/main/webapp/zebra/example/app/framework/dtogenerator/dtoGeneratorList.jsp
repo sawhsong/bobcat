@@ -130,7 +130,7 @@ $(function() {
 				uiGridTr.addChild(uiTd2);
 
 				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
 					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
 				uiTd3.addClassName("Ct").addChild(uiIcon);
 				uiGridTr.addChild(uiTd3);
@@ -295,7 +295,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="fwk.dtogenerator.title.selectToGenerate"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.dtogenerator.title.selectToGenerate"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>

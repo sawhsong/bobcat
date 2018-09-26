@@ -147,7 +147,7 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
 
 				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
 					.addAttribute("defaultYn:"+defaultYn).setScript("doAction(this)");
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
@@ -421,7 +421,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="fwk.commoncode.dataGridHeader.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.commoncode.dataGridHeader.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.codeType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.description"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.programConstants"/></th>

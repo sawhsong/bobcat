@@ -7,7 +7,7 @@
 * Declare objects & variables
 ************************************************************************************************/%>
 <%
-	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
+	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 %>
 <%/************************************************************************************************
 * HTML
@@ -97,39 +97,47 @@ $(function() {
 	 * process
 	 */
 	doSearch = function() {
-		commonJs.ajaxSubmit({
-			url:"/zebra/board/notice/getList.do",
-			dataType:"json",
-			formId:"fmDefault",
-			blockElementId:"tblGrid",
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+		commonJs.showProcMessageOnElement("divScrollablePanel");
 
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					renderDataGridTable(result);
-				}
-			}
-		});
+		if (commonJs.doValidate($("#fmDefault"))) {
+			setTimeout(function() {
+				commonJs.ajaxSubmit({
+					url:"/zebra/board/notice/getList.do",
+					dataType:"json",
+					formId:"fmDefault",
+					blockElementId:"tblGrid",
+					success:function(data, textStatus) {
+						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+		
+						if (result.isSuccess == true || result.isSuccess == "true") {
+							renderDataGridTable(result);
+						}
+					}
+				});
+			}, 100);
+		}
 	};
 
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
 		var html = "";
 
-		$("#tblGridBody").html("");
 		searchResultDataCount = dataSet.getRowCnt();
+
+		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "";
+				var space = "", iLength = 200;
 				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
-				var iLength = 200;
+				var gridTr = new UiGridTr();
 
-				html += "<tr class=\"noBorderHor noStripe\">";
-				html += "<td class=\"tdGridCt\">";
-				html += "<input type=\"checkbox\" id=\"chkForDel\" name=\"chkForDel\" class=\"chkEn inTblGrid\" value=\""+dataSet.getValue(i, "ARTICLE_ID")+"\"/>";
-				html += "</td>";
-				html += "<td class=\"tdGrid\" title=\""+dataSet.getValue(i, "ARTICLE_SUBJECT")+"\">";
+				gridTr.setClassName("noBorderHor noStripe");
+
+				var uiChk = new UiCheckbox();
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
+
 				if (iLevel > 0) {
 					for (var j=0; j<iLevel; j++) {
 						space += "&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -139,42 +147,44 @@ $(function() {
 				} else {
 					space += "<i class=\"fa fa-comment\"></i>";
 				}
-				html += space+"&nbsp;&nbsp;<a onclick=\"getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')\" class=\"aEn\">"+dataSet.getValue(i, "ARTICLE_SUBJECT")+"</a>";
-				html += "</td>";
-				html += "<td class=\"tdGridCt\">";
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					html += "<i id=\"icnAttachedFile\" name=\"icnAttachedFile\" class=\"glyphicon glyphicon-paperclip icnEn\" articleId=\""+dataSet.getValue(i, "ARTICLE_ID")+"\" onclick=\"getAttachedFile(this)\"></i>";
-				}
-				html += "</td>";
-				html += "<td class=\"tdGrid\">";
-				html += dataSet.getValue(i, "WRITER_NAME");
-				html += "</td>";
-				html += "<td class=\"tdGridCt\">";
-				html += dataSet.getValue(i, "CREATED_DATE");
-				html += "</td>";
-				html += "<td class=\"tdGridRt\">";
-				html += commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###");
-				html += "</td>";
-				html += "<td class=\"tdGridCt\">";
-				html += "<i id=\"icnAction\" name=\"icnAction\" class=\"fa fa-tasks fa-lg icnEn\" articleId=\""+dataSet.getValue(i, "ARTICLE_ID")+"\" onclick=\"doAction(this)\" title=\"<mc:msg key="page.com.action"/>\"></i>";
-				html += "</td>";
-				html += "</tr>";
+
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "ARTICLE_SUBJECT")).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+
+				var iconAttachFile = new UiIcon();
+				iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
+					.setScript("getAttachedFile(this)");
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAttachFile));
+
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+
+				var iconAction = new UiIcon();
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
+					.setScript("doAction(this)").addAttribute("title:"+"<mc:msg key="page.com.action"/>");
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
+
+				html += gridTr.toHtmlString();
 			}
 		} else {
-			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"7\"><mc:msg key="I001"/></td>";
-			html += "</tr>";
+			var gridTr = new UiGridTr();
+
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			html += gridTr.toHtmlString();
 		}
 
 		$("#tblGridBody").append($(html));
 
 		$("#tblGrid").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			attachedPagingArea:true,
-			pagingAreaId:"divPagingArea",
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:true,
+			isFilter:false,
+			filterColumn:[1, 3],
 			totalResultRows:result.totalResultRows,
-			script:"doSearch",
-			widthAdjust:0
+			script:"doSearch"
 		});
 
 		$("[name=icnAttachedFile]").each(function(index) {
@@ -184,6 +194,8 @@ $(function() {
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.boardAction);
 		});
+
+		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	getDetail = function(articleId) {
@@ -380,9 +392,12 @@ $(function() {
 	$(window).load(function() {
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
+
 		setExportButtonContextMenu();
-		doSearch();
+
 		$("#searchWord").focus();
+
+		doSearch();
 	});
 });
 </script>
@@ -425,16 +440,18 @@ $(function() {
 				<tr>
 					<td class="tdDefault">
 						<label for="searchType" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchType"/></label>
-						<div style="float:left;padding-right:4px;"><ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/></div>
-						<input type="text" id="searchWord" name="searchWord" class="txtEn hor" style="width:280px"/>
+						<div style="float:left;padding-right:4px;">
+							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/>
+						</div>
+						<ui:text id="searchWord" name="searchWord" className="defClass hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
 						<label for="fromDate" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchPeriod"/></label>
-						<input type="text" id="fromDate" name="fromDate" class="txtEnCt hor" style="width:100px" checkName="From Date" option="date"/>
-						<i id="icnFromDate" class="fa fa-calendar icnEn hor" title="From Date"></i>
+						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="From Date" option="date"/>
+						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="From Date"/>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<input type="text" id="toDate" name="toDate" class="txtEnCt hor" style="width:100px" checkName="To Date" option="date"/>
-						<i id="icnToDate" class="fa fa-calendar icnEn hor" title="To Date"></i>
+						<ui:text id="toDate" name="toDate" className="defClass Ct hor" style="width:100px" checkName="To Date" option="date"/>
+						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="To Date"/>
 					</td>
 				</tr>
 			</table>
@@ -465,7 +482,7 @@ $(function() {
 		<thead>
 			<tr class="noBorderHor">
 				<th class="thGrid">
-					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.notice.title.selectToDelete"/>"></i>
+					<ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/>
 				</th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.dataGridHeader.subject"/></th>
 				<th class="thGrid"><mc:msg key="fwk.notice.dataGridHeader.file"/></th>
@@ -477,12 +494,12 @@ $(function() {
 		</thead>
 		<tbody id="tblGridBody">
 			<tr class="noBorderHor noStripe">
-				<td class="tdGridCt" colspan="7"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
-	<div id="divPagingArea" class="areaContainer"></div>
 </div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

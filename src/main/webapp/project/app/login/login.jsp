@@ -161,11 +161,11 @@ $(function() {
 		</div>
 		<div class="panel-body">
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-user addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon"/></div>
 				<ui:text id="loginId" name="loginId" value="dustin" className="form-control" style="padding:6px 12px" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
 				<ui:password id="password" name="password" value="dustin" className="form-control" style="padding:6px 12px" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="buttonDiv">

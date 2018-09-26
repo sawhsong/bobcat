@@ -104,23 +104,23 @@ $(function() {
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-credit-card addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-credit-card fa-lg addonIcon"/></div>
 				<ui:text id="userName" name="userName" className="form-control" placeHolder="login.header.userName" checkName="login.header.userName" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-user addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon"/></div>
 				<ui:text id="loginId" name="loginId" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
 				<ui:password id="password" name="password" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-lock addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
 				<ui:password id="passwordConfirm" name="passwordConfirm" className="form-control" placeHolder="Confirm Password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-envelope addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-envelope fa-lg addonIcon"/></div>
 				<ui:text id="email" name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
 			</div>
 			<ui:check name="sendEmail" value="Y" text="login.label.sendMail" displayType="block" isChecked="true"/>

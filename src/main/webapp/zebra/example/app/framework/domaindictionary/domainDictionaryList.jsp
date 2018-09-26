@@ -135,8 +135,8 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.htmlToString(dataSet.getValue(i, "DESCRIPTION"))));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "LAST_UPDATE"), dateFormat)));
 
-				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
+				var uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
 					.addAttribute("title:"+"<mc:msg key="page.com.action"/>").setScript("doAction(this)");
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
@@ -411,7 +411,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o icnEn" title="fwk.domaindictionary.title.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.domaindictionary.title.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.name"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.nameAbbrev"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.dataType"/></th>
