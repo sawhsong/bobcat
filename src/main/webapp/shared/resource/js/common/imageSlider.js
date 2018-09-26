@@ -10,38 +10,15 @@
  * 				thumbnailHeight:100,					// [optional : height of thumbnail if thumbnail is true, [default:100]]
  * 				thumbType:"image"						// [optional : thumbnail type ([image] / bullet)]
  * 				thumbnailTheme:1,						// [optional : thumbnail theme number (1, 2, 3, 4, 5, 6)]
+ * 				thumbSpacingX:0,						// [optional : thumbnail spacingX]
+ * 				thumbSpacingY:0,						// [optional : thumbnail spacingY]
+ * 				bulletTheme:1,							// [optional : bullet theme number (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)]
  * 				arrow:true,								// [optional : true : displays left/right arrows, [default:true]]
  * 				arrowTheme:1,							// [optional : arrow theme number (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)]
  * 				autoSlide:true							// [optional : play slide automatically, [default:false]]
  * 			});
  */
-
 /*
-		var sliderTransitions = [
-			{$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-			{$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
-		];
-
 		var sliderOptions = {
 			$AutoPlay:1,
 			$DragOrientation:3,							//[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $Cols is greater than 1, or parking position is not 0)
@@ -66,30 +43,18 @@
 				$Orientation:2,
 				$SpacingX:5,							//[Optional] Horizontal space between each thumbnail in pixel, default value is 0
 				$SpacingY:5								//[Optional] Horizontal space between each thumbnail in pixel, default value is 0
+			},
+			$BulletNavigatorOptions: {					//[Optional] Options to specify and enable navigator or not
+				$Class:$JssorBulletNavigator$,			//[Required] Class to create navigator instance
+				$ChanceToShow:2,						//[Required] 0 Never, 1 Mouse Over, 2 Always
+				$AutoCenter:1,							//[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+				$Steps:1,								//[Optional] Steps to go for each navigation request, default value is 1
+				$Rows:1,								//[Optional] Specify lanes to arrange items, default value is 1
+				$SpacingX:10,							//[Optional] Horizontal space between each item in pixel, default value is 0
+				$SpacingY:10,							//[Optional] Vertical space between each item in pixel, default value is 0
+				$Orientation:1							//[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
 			}
 		};
-
-		var jssor_1_slider = new $JssorSlider$("slider", sliderOptions);
-
-		var maxWidth = 980;
-		function ScaleSlider() {
-			var containerElement = jssor_1_slider.$Elmt.parentNode;
-			var containerWidth = containerElement.clientWidth;
-
-			if (containerWidth) {
-				var expectedWidth = Math.min(maxWidth || containerWidth, containerWidth);
-
-				jssor_1_slider.$ScaleWidth(expectedWidth);
-			} else {
-				window.setTimeout(ScaleSlider, 30);
-			}
-		}
-
-		ScaleSlider();
-
-		$(window).bind("load", ScaleSlider);
-		$(window).bind("resize", ScaleSlider);
-		$(window).bind("orientationchange", ScaleSlider);
 */
 (function($) {
 	$.fn.imageSlider = function(options) {
@@ -104,43 +69,22 @@
 				thumbnail = options.thumbnail || false,
 				thumbType = options.thumbType || "image",
 				thumbnailTheme = options.thumbnailTheme || "1",
+				bulletTheme = options.bulletTheme || "1",
 				arrow = options.arrow || true,
-				arrowTheme = options.arrowTheme || "1";
-
-			var html = "";
-			var maxWidth = 1000, thumbnailHeight = 0, containerHeight = 0;
-			var sliderTransitions = [];
-
-			thumbnailHeight = thumbnail ? options.thumbnailHeight || 100 : 0;
-			containerHeight = $.nony.toNumber(options.height - thumbnailHeight);
-
-			html += "<div data-u=\"slides\" style=\"cursor:"+cursor+";position:relative;top:0px;left:0px;width:"+options.width+"px;height:"+containerHeight+"px;overflow:hidden;\">";
-			html += $(this).html();
-			html += "</div>";
-
-			if (arrow) {
-				html += getArrowThemeHtml(arrowTheme);
-			}
+				arrowTheme = options.arrowTheme || "1",
+				slideDuration = 500;
+			var html = "", maxWidth = 2000, thumbnailHeight = 0, containerHeight = 0, orientation = 2, cols = 1, spacingX = 0, spacingY = 0;
 
 			if (thumbnail && thumbType == "image") {
-				html += getThumbnailThemeHtml(thumbnailTheme, options.width, thumbnailHeight);
+				if (thumbnailTheme == "5" || thumbnailTheme == "6") {
+				} else {
+					thumbnailHeight = options.thumbnailHeight || 80;
+					orientation = 1;
+					cols = 5;
+					spacingX = options.thumbSpacingX || 0;
+					spacingY = options.thumbSpacingY || 0;
+				}
 			}
-
-			$(this).css({
-				position:"relative",
-				margin:"0 auto",
-				top:"0px",
-				left:"0px",
-				width:""+options.width+"px",
-				height:""+options.height+"px",
-				overflow:"hidden",
-				visibility:"hidden"
-			});
-
-			$(this).html(html);
-
-
-
 
 			var sliderTransitions = [
 				{$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
@@ -167,34 +111,79 @@
 				{$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
 			];
 			var sliderOptions = {
-				$AutoPlay:1,
+				$AutoPlay:(options.autoSlide) ? 1 : 0,
+				$DragOrientation:3,
+				$SlideDuration:slideDuration,
 				$SlideshowOptions:{
 					$Class:$JssorSlideshowRunner$,
 					$Transitions:sliderTransitions,
 					$TransitionsOrder:1
 				},
 				$ArrowNavigatorOptions:{
-					$Class: $JssorArrowNavigator$
+					$Class: $JssorArrowNavigator$,
+					$ChanceToShow:2,
+					$AutoCenter:2,
+					$Steps:1
 				},
 				$ThumbnailNavigatorOptions:{
 					$Class: $JssorThumbnailNavigator$,
-					$SpacingX:0,
-					$SpacingY:0,
-					$Align:0,
-					$Cols:1,
-					$Orientation:2
+					$ChanceToShow:2,
+					$ActionMode:1,
+					$SpacingX:spacingX,
+					$SpacingY:spacingY,
+					$Cols:cols,
+					$Orientation:orientation
+				},
+				$BulletNavigatorOptions: {
+					$Class:$JssorBulletNavigator$,
+					$ChanceToShow:2,
+					$AutoCenter:1,
+					$Steps:1,
+					$Rows:1,
+					$SpacingX:10,
+					$SpacingY:10,
+					$Orientation:1
 				}
 			};
-		
-			var jssorSlider = new $JssorSlider$("slider", sliderOptions);
+
+//			containerHeight = $.nony.toNumber(options.height - thumbnailHeight);
+
+			html += "<div data-u=\"slides\" style=\"cursor:"+cursor+";position:relative;top:0px;left:0px;width:"+options.width+"px;height:"+options.height+"px;overflow:hidden;\">";
+			html += $(this).html();
+			html += "</div>";
+
+			if (arrow) {
+				html += getArrowThemeHtml(arrowTheme);
+			}
+
+			if (thumbnail && thumbType == "image") {
+				html += getThumbnailThemeHtml(thumbnailTheme, options.width, thumbnailHeight);
+			}
+
+			if (thumbnail && thumbType == "bullet") {
+				html += getBulletThemeHtml(bulletTheme);
+			}
+
+			$(this).css({
+				position:"relative",
+				margin:"0 auto",
+				top:"0px",
+				left:"0px",
+				width:""+options.width+"px",
+				height:""+options.height+"px",
+				overflow:"hidden",
+				visibility:"hidden"
+			});
+
+			$(this).html(html);
+
+			var jssorSlider = new $JssorSlider$($(this).attr("id"), sliderOptions);
 			function scaleSlider() {
 				var containerElement = jssorSlider.$Elmt.parentNode;
 				var containerWidth = containerElement.clientWidth;
-		
+
 				if (containerWidth) {
-					var expectedWidth = Math.min(maxWidth || containerWidth, containerWidth);
-		
-					jssorSlider.$ScaleWidth(expectedWidth);
+					jssorSlider.$ScaleWidth(Math.min(options.width || maxWidth, containerWidth));
 				} else {
 					window.setTimeout(scaleSlider, 30);
 				}
@@ -306,22 +295,23 @@
 
 	getThumbnailThemeHtml = function(thumbnailTheme, width, height) {
 		var html = "";
-		var thumbWidth = 0, thumbHeight = 0;
+		var thumbWidth = 0, thumbHeight = 0, background = "";
 
 		if (thumbnailTheme == "1" || thumbnailTheme == "2") {
 			thumbWidth = 200;
-			thumbHeight = 100;
+			thumbHeight = 80;
+			background = (thumbnailTheme == "1") ? "#000000" : "#ffffff";
 
 			html += "<div data-u=\"thumbnavigator\" class=\"thumb"+thumbnailTheme+"\" style=\"position:absolute;left:0px;bottom:0px;width:"+width+"px;height:"+height+"px\" data-autocenter=\"1\" data-scale-bottom=\"0.75\">";
-			html += "<div data-u=\"slides\">";
+			html += "<div data-u=\"slides\" style=\"background:"+background+"\">";
 			html += "<div data-u=\"prototype\" class=\"p\" style=\"width:"+thumbWidth+"px;height:"+thumbHeight+"px\">";
 			html += "<div data-u=\"thumbnailtemplate\" class=\"t\"></div>";
 			html += "</div>";
 			html += "</div>";
 			html += "</div>";
 		} else if (thumbnailTheme == "3" || thumbnailTheme == "4") {
-			thumbWidth = 190;
-			thumbHeight = 84;
+			thumbWidth = 200;
+			thumbHeight = 80;
 
 			html += "<div data-u=\"thumbnavigator\" class=\"thumb"+thumbnailTheme+"\" style=\"position:absolute;left:0px;bottom:0px;width:"+width+"px;height:"+height+"px\" data-autocenter=\"1\" data-scale-bottom=\"0.75\">";
 			html += "<div data-u=\"slides\">";
@@ -352,13 +342,71 @@
 			html += "</div>";
 		} else {
 			thumbWidth = 200;
-			thumbHeight = 100;
+			thumbHeight = 80;
+			background = (thumbnailTheme == "1") ? "#000000" : "#ffffff";
 
 			html += "<div data-u=\"thumbnavigator\" class=\"thumb"+thumbnailTheme+"\" style=\"position:absolute;left:0px;bottom:0px;width:"+width+"px;height:"+height+"px\" data-autocenter=\"1\" data-scale-bottom=\"0.75\">";
-			html += "<div data-u=\"slides\">";
+			html += "<div data-u=\"slides\" style=\"background:"+background+"\">";
 			html += "<div data-u=\"prototype\" class=\"p\" style=\"width:"+thumbWidth+"px;height:"+thumbHeight+"px\">";
 			html += "<div data-u=\"thumbnailtemplate\" class=\"t\"></div>";
 			html += "</div>";
+			html += "</div>";
+			html += "</div>";
+		}
+
+		return html;
+	};
+
+	getBulletThemeHtml = function(bulletTheme) {
+		var html = "";
+
+		if (bulletTheme == "1" || bulletTheme == "2") {
+			html += "<div data-u=\"navigator\" class=\"bullet"+bulletTheme+"\" style=\"position:absolute;bottom:12px;right:12px\" data-autocenter=\"1\" data-scale=\"0.5\" data-scale-bottom=\"0.75\">";
+			html += "<div data-u=\"prototype\" class=\"i\" style=\"width:16px;height:16px\">";
+			html += "<svg viewBox=\"0 0 16000 16000\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\">";
+			html += "<circle class=\"b\" cx=\"8000\" cy=\"8000\" r=\"5800\"></circle>";
+			html += "</svg>";
+			html += "</div>";
+			html += "</div>";
+		} else if (bulletTheme == "3" || bulletTheme == "4") {
+			html += "<div data-u=\"navigator\" class=\"bullet"+bulletTheme+"\" style=\"position:absolute;bottom:12px;right:12px\" data-autocenter=\"1\" data-scale=\"0.5\" data-scale-bottom=\"0.75\">";
+			html += "<div data-u=\"prototype\" class=\"i\" style=\"width:16px;height:16px\">";
+			html += "<svg viewBox=\"0 0 16000 16000\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\">";
+			html += "<path class=\"b\" d=\"M11400,13800H4600c-1320,0-2400-1080-2400-2400V4600c0-1320,1080-2400,2400-2400h6800 c1320,0,2400,1080,2400,2400v6800C13800,12720,12720,13800,11400,13800z\"></path>";
+			html += "</svg>";
+			html += "</div>";
+			html += "</div>";
+		} else if (bulletTheme == "5" || bulletTheme == "6") {
+			html += "<div data-u=\"navigator\" class=\"bullet"+bulletTheme+"\" style=\"position:absolute;bottom:12px;right:12px\" data-autocenter=\"1\" data-scale=\"0.5\" data-scale-bottom=\"0.75\">";
+			html += "<div data-u=\"prototype\" class=\"i\" style=\"width:16px;height:16px\">";
+			html += "<svg viewBox=\"0 0 16000 16000\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\">";
+			html += "<rect class=\"b\" x=\"2200\" y=\"2200\" width=\"11600\" height=\"11600\"></rect>";
+			html += "</svg>";
+			html += "</div>";
+			html += "</div>";
+		} else if (bulletTheme == "7" || bulletTheme == "8") {
+			html += "<div data-u=\"navigator\" class=\"bullet"+bulletTheme+"\" style=\"position:absolute;bottom:12px;right:12px\" data-autocenter=\"1\" data-scale=\"0.5\" data-scale-bottom=\"0.75\">";
+			html += "<div data-u=\"prototype\" class=\"i\" style=\"width:16px;height:16px\">";
+			html += "<svg viewBox=\"0 0 16000 16000\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\">";
+			html += "<circle class=\"b\" cx=\"8000\" cy=\"8000\" r=\"5800\"></circle>";
+			html += "</svg>";
+			html += "</div>";
+			html += "</div>";
+		} else if (bulletTheme == "9" || bulletTheme == "10") {
+			html += "<div data-u=\"navigator\" class=\"bullet"+bulletTheme+"\" style=\"position:absolute;bottom:12px;right:12px\" data-autocenter=\"1\" data-scale=\"0.5\" data-scale-bottom=\"0.75\">";
+			html += "<div data-u=\"prototype\" class=\"i\" style=\"width:24px;height:24px;font-size:12px;line-height:24px\">";
+			html += "<svg viewBox=\"0 0 16000 16000\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1\">";
+			html += "<circle class=\"b\" cx=\"8000\" cy=\"8000\" r=\"6666.7\"></circle>";
+			html += "</svg>";
+			html += "<div data-u=\"numbertemplate\" class=\"n\"></div>";
+			html += "</div>";
+			html += "</div>";
+		} else {
+			html += "<div data-u=\"navigator\" class=\"bullet"+bulletTheme+"\" style=\"position:absolute;bottom:12px;right:12px\" data-autocenter=\"1\" data-scale=\"0.5\" data-scale-bottom=\"0.75\">";
+			html += "<div data-u=\"prototype\" class=\"i\" style=\"width:16px;height:16px\">";
+			html += "<svg viewBox=\"0 0 16000 16000\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\">";
+			html += "<circle class=\"b\" cx=\"8000\" cy=\"8000\" r=\"5800\"></circle>";
+			html += "</svg>";
 			html += "</div>";
 			html += "</div>";
 		}

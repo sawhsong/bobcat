@@ -87,7 +87,7 @@
 .arrow12.arrow12ds {opacity:.3;pointer-events:none;}
 
 /**
- * Thumbnail & Bullet
+ * Thumbnail
  */
 .thumb1 .p {position:absolute;top:0;left:0;background-color:#000;}
 .thumb1 .t {position:absolute;top:0;left:0;width:100%;height:100%;border:none;opacity:.45;}
@@ -110,3 +110,77 @@
 .thumb4 .p:hover {border-color:rgba(255,255,255,.6);}
 .thumb4 .pav, .thumb4 .p:hover.pdn{border-color:#fff;}
 .thumb4 .pav .t, .thumb4 .p:hover.pdn .t{opacity:1;}
+
+/**
+ * Bullet
+ */
+.bullet1 {position:absolute;}
+.bullet1 .i {position:absolute;cursor:pointer;}
+.bullet1 .i .b {fill:#000;fill-opacity:0.5;stroke:#fff;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.3;}
+.bullet1 .i:hover .b {fill:#fff;fill-opacity:.7;stroke:#000;stroke-opacity:.5;}
+.bullet1 .iav .b {fill:#fff;stroke:#000;fill-opacity:1;}
+.bullet1 .i.idn {opacity:.3;}
+
+.bullet2 {position:absolute;}
+.bullet2 .i {position:absolute;cursor:pointer;}
+.bullet2 .i .b {fill:#fff;fill-opacity:0.7;stroke:#000;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.25;}
+.bullet2 .i:hover .b {fill:#000;fill-opacity:.6;stroke:#fff;stroke-opacity:.35;}
+.bullet2 .iav .b {fill:#000;fill-opacity:1;stroke:#fff;stroke-opacity:.35;}
+.bullet2 .i.idn {opacity:.3;}
+
+.bullet3 {position:absolute;}
+.bullet3 .i {position:absolute;cursor:pointer;}
+.bullet3 .i .b {fill:#000;fill-opacity:0.5;stroke:#fff;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.3;}
+.bullet3 .i:hover .b {fill:#fff;fill-opacity:.7;stroke:#000;stroke-opacity:.5;}
+.bullet3 .iav .b {fill:#fff;stroke:#000;fill-opacity:1;}
+.bullet3 .i.idn {opacity:.3;}
+
+.bullet4 {position:absolute;}
+.bullet4 .i {position:absolute;cursor:pointer;}
+.bullet4 .i .b {fill:#fff;fill-opacity:0.7;stroke:#000;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.25;}
+.bullet4 .i:hover .b {fill:#000;fill-opacity:.6;stroke:#fff;stroke-opacity:.35;}
+.bullet4 .iav .b {fill:#000;fill-opacity:1;stroke:#fff;stroke-opacity:.35;}
+.bullet4 .i.idn {opacity:.3;}
+
+.bullet5 {position:absolute;}
+.bullet5 .i {position:absolute;cursor:pointer;}
+.bullet5 .i .b {fill:#000;fill-opacity:0.5;stroke:#fff;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.3;}
+.bullet5 .i:hover .b {fill:#fff;fill-opacity:.7;stroke:#000;stroke-opacity:.5;}
+.bullet5 .iav .b {fill:#fff;stroke:#000;fill-opacity:1;}
+.bullet5 .i.idn {opacity:.3;}
+
+.bullet6 {position:absolute;}
+.bullet6 .i {position:absolute;cursor:pointer;}
+.bullet6 .i .b {fill:#fff;fill-opacity:0.7;stroke:#000;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.25;}
+.bullet6 .i:hover .b {fill:#000;fill-opacity:.6;stroke:#fff;stroke-opacity:.35;}
+.bullet6 .iav .b {fill:#000;fill-opacity:1;stroke:#fff;stroke-opacity:.35;}
+.bullet6 .i.idn {opacity:.3;}
+
+.bullet7 {position:absolute;}
+.bullet7 .i {position:absolute;cursor:pointer;}
+.bullet7 .i .b {fill:#fff;stroke:#000;stroke-width:400;stroke-miterlimit:10;stroke-opacity:0.5;}
+.bullet7 .i:hover .b {fill-opacity:.7;}
+.bullet7 .iav .b {fill:#ffe200;stroke:#ffaa00;stroke-opacity:.7;stroke-width:2000;}
+.bullet7 .i.idn {opacity:.3;}
+
+.bullet8 {position:absolute;}
+.bullet8 .i {position:absolute;cursor:pointer;}
+.bullet8 .i .b {fill:#000;fill-opacity:.5;stroke:#fff;stroke-width:400;stroke-miterlimit:10;stroke-opacity:0.5;}
+.bullet8 .i:hover .b {fill-opacity:.8;}
+.bullet8 .iav .b {fill:#ffe200;fill-opacity:1;stroke:#ffaa00;stroke-opacity:.7;stroke-width:2000;}
+.bullet8 .iav:hover .b {fill-opacity:.6;}
+.bullet8 .i.idn {opacity:.3;}
+
+.bullet9 .i {position:absolute;color:#fff;font-family:"Helvetica neue",Helvetica,Arial,sans-serif;text-align:center;cursor:pointer;z-index:0;}
+.bullet9 .i .b {fill:#000;opacity:.2;}
+.bullet9 .i:hover {opacity:.7;}
+.bullet9 .iav {color:#000;}
+.bullet9 .iav .b {fill:#fff;opacity:1;}
+.bullet9 .i.idn {opacity:.3;}
+
+.bullet10 .i {position:absolute;color:#000;font-family:"Helvetica neue",Helvetica,Arial,sans-serif;text-align:center;cursor:pointer;z-index:0;}
+.bullet10 .i .b {fill:#fff;opacity:.3;}
+.bullet10 .i:hover {opacity:.7;}
+.bullet10 .iav {color:#fff;}
+.bullet10 .iav .b {fill:#000;opacity:.5;}
+.bullet10 .i.idn {opacity:.3;}
