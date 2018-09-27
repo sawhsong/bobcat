@@ -11,7 +11,6 @@ import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.HtmlUtil;
 
 public class BoardArticleCreationJob extends QuartzJobBean {
 	private Logger logger = LogManager.getLogger(BoardArticleCreationJob.class);

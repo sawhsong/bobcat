@@ -251,10 +251,7 @@ $(function() {
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
-					commonJs.doSubmit({
-						form:"fmDefault",
-						action:"/zebra/board/notice/exeDelete.do"
-					});
+					exeDelete();
 				}
 			}, {
 				caption:"No",
@@ -262,6 +259,33 @@ $(function() {
 				}
 			}],
 			blind:true
+		});
+	};
+
+	exeDelete = function() {
+		commonJs.ajaxSubmit({
+			url:"/zebra/board/notice/exeDelete.do",
+			dataType:"json",
+			formId:"fmDefault",
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					commonJs.openDialog({
+						type:"information",
+						contents:result.message,
+						blind:true,
+						buttons:[{
+							caption:"Ok",
+							callback:function() {
+								doSearch();
+							}
+						}]
+					});
+				} else {
+					commonJs.error(result.message);
+				}
+			}
 		});
 	};
 

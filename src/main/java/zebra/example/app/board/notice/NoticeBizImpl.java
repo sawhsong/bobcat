@@ -17,7 +17,6 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-import zebra.util.HtmlUtil;
 
 public class NoticeBizImpl extends BaseBiz implements NoticeBiz {
 	@Autowired
@@ -116,7 +115,7 @@ public class NoticeBizImpl extends BaseBiz implements NoticeBiz {
 			zebraBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
 			zebraBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
 			zebraBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm(requestDataSet.getValue("articleContents"), "\n"));
+			zebraBoard.setArticleContents(requestDataSet.getValue("articleContents"));
 			zebraBoard.setInsertUserId(loggedInUserId);
 			zebraBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraBoard.setRefArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
@@ -153,7 +152,7 @@ public class NoticeBizImpl extends BaseBiz implements NoticeBiz {
 			zebraBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
 			zebraBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
 			zebraBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm(requestDataSet.getValue("articleContents"), "\n"));
+			zebraBoard.setArticleContents(requestDataSet.getValue("articleContents"));
 			zebraBoard.setUpdateUserId(loggedInUserId);
 			zebraBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 

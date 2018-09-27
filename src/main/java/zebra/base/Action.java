@@ -220,9 +220,12 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	private void setMultipartRequest() {
 		try {
 			if (isMultipart) {
-				String appRealPath = (String)MemoryBean.get("applicationRealPath");
-				String pathTemp = appRealPath + ConfigUtil.getProperty("path.dir.temp");
-				String pathUploadRepository = appRealPath + ConfigUtil.getProperty("path.dir.uploadRepository");
+//				String appRealPath = (String)MemoryBean.get("applicationRealPath");
+//				String pathTemp = appRealPath + ConfigUtil.getProperty("path.dir.temp");
+//				String pathUploadRepository = appRealPath + ConfigUtil.getProperty("path.dir.uploadRepository");
+
+				String pathTemp = ConfigUtil.getProperty("path.dir.temp");
+				String pathUploadRepository = ConfigUtil.getProperty("path.dir.uploadRepository");
 				String dataSetHeader[] = {"FORM_TAG_NAME", "ORIGINAL_NAME", "NEW_NAME", "TEMP_PATH", "REPOSITORY_PATH", "TYPE", "SIZE", "ICON"};
 				MultiPartRequestWrapper multipartWrapper = (MultiPartRequestWrapper)request;
 

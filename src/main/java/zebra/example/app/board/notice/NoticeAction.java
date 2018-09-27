@@ -3,7 +3,6 @@ package zebra.example.app.board.notice;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import zebra.example.common.extend.BaseAction;
-import zebra.util.CommonUtil;
 
 public class NoticeAction extends BaseAction {
 	@Autowired
@@ -88,23 +87,10 @@ public class NoticeAction extends BaseAction {
 	public String exeDelete() throws Exception {
 		try {
 			biz.exeDelete(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("action", "/zebra/board/notice/getDefault.do");
-				if (CommonUtil.isNotEmpty(paramEntity.getRequestDataSet().getValue("articleId"))) {
-					paramEntity.setObject("script", "parent.popup.close(); parent.doSearch();");
-				}
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String exeExport() throws Exception {
