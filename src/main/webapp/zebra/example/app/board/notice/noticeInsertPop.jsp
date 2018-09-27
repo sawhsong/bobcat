@@ -107,7 +107,7 @@ $(function() {
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
-<div class="breaker" style="height:1px;"></div>
+<div class="breaker"></div>
 </div>
 <div id="divScrollablePanelPopup">
 <%/************************************************************************************************
@@ -122,29 +122,29 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="fwk.notice.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.notice.header.writerName"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerName" name="writerName" class="txtEn" value="<%=sysUser.getUserName()%>" checkName="<mc:msg key="fwk.notice.header.writerName"/>" mandatory/>
+				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="fwk.notice.header.writerName" options="mandatory"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="fwk.notice.header.writerEmail"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.notice.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerEmail" name="writerEmail" class="txtEn" value="<%=sysUser.getEmail()%>" checkName="<mc:msg key="fwk.notice.header.writerEmail"/>" option="email" mandatory/>
+				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="fwk.notice.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt mandatory"><mc:msg key="fwk.notice.header.articleSubject"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.notice.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="articleSubject" name="articleSubject" class="txtEn" checkName="<mc:msg key="fwk.notice.header.articleSubject"/>" mandatory/>
+				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="fwk.notice.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.articleContents"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<textarea id="articleContents" name="articleContents" class="txaEn" style="height:224px;"></textarea>
+				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt">
+			<th class="thEdit Rt">
 				<mc:msg key="fwk.notice.header.attachedFile"/><br/>
 				<div id="divButtonAreaRight">
 					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>

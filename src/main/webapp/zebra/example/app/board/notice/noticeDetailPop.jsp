@@ -159,29 +159,29 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.writerName"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.writerName"/></th>
 			<td class="tdEdit"><%=noticeBoard.getWriterName()%>(<%=noticeBoard.getWriterId()%>)</td>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.writerEmail"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.writerEmail"/></th>
 			<td class="tdEdit"><%=noticeBoard.getWriterEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.updateDate"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.updateDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(noticeBoard.getUpdateDate())%></td>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.visitCount"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.visitCount"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(noticeBoard.getVisitCnt())%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3"><%=noticeBoard.getArticleSubject()%></td>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleSubject"/></th>
+			<td class="tdEdit" colspan="3"><%=HtmlUtil.stringToHtml(noticeBoard.getArticleSubject())%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.articleContents"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<%=noticeBoard.getArticleContents()%>
+				<%=HtmlUtil.stringToHtml(noticeBoard.getArticleContents())%>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.attachedFile"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.attachedFile"/></th>
 			<td class="tdEdit" colspan="3">
 				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
 					<table class="tblDefault withPadding">

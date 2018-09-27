@@ -152,10 +152,16 @@ $(function() {
 				uiAnc.setText(dataSet.getValue(i, "ARTICLE_SUBJECT")).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
 
-				var iconAttachFile = new UiIcon();
-				iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("getAttachedFile(this)");
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAttachFile));
+				var gridTd = new UiGridTd();
+				gridTd.addClassName("Ct");
+				if (dataSet.getValue(i, "FILE_CNT") > 0) {
+					var iconAttachFile = new UiIcon();
+					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
+						.setScript("getAttachedFile(this)");
+					gridTd.addChild(iconAttachFile);
+				}
+				gridTr.addChild(gridTd);
+
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
