@@ -149,7 +149,7 @@ $(function() {
 				}
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(dataSet.getValue(i, "ARTICLE_SUBJECT")).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
+				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
 
 				var gridTd = new UiGridTd();
@@ -161,7 +161,6 @@ $(function() {
 					gridTd.addChild(iconAttachFile);
 				}
 				gridTr.addChild(gridTd);
-
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
@@ -488,7 +487,7 @@ $(function() {
 		</div>
 	</div>
 </div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>

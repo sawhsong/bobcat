@@ -203,7 +203,7 @@ $(function() {
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3"><%=HtmlUtil.stringToHtml(noticeBoard.getArticleSubject())%></td>
+			<td class="tdEdit" colspan="3"><%=noticeBoard.getArticleSubject()%></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>

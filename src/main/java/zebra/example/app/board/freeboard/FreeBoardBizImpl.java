@@ -25,15 +25,7 @@ public class FreeBoardBizImpl extends BaseBiz implements FreeBoardBiz {
 	private ZebraBoardFileDao zebraBoardFileDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-
 		try {
-			queryAdvisor.setRequestDataSet(requestDataSet);
-			queryAdvisor.setPagination(true);
-
-			paramEntity.setObject("resultDataSet", zebraBoardDao.getFreeBoardDataSetByCriteria(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -49,7 +41,7 @@ public class FreeBoardBizImpl extends BaseBiz implements FreeBoardBiz {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(true);
 
-			paramEntity.setObject("resultDataSet", zebraBoardDao.getFreeBoardDataSetByCriteria(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(zebraBoardDao.getFreeBoardDataSetByCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -102,7 +94,7 @@ public class FreeBoardBizImpl extends BaseBiz implements FreeBoardBiz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 
 		try {
-			paramEntity.setObject("fileDataSet", zebraBoardFileDao.getBoardFileListDataSetByArticleId(requestDataSet.getValue("articleId")));
+			paramEntity.setAjaxResponseDataSet(zebraBoardFileDao.getBoardFileListDataSetByArticleId(requestDataSet.getValue("articleId")));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

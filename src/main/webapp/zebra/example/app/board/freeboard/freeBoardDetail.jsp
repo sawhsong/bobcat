@@ -25,6 +25,8 @@
 * Stylesheet & Javascript
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
+<style type="text/css">
+</style>
 <script type="text/javascript">
 $(function() {
 	/*!
@@ -49,12 +51,9 @@ $(function() {
 	/*!
 	 * process
 	 */
-	setFCKEditor = function() {
-		$("#articleContents").ckeditor({
-			height:480,
-			toolbar:"frameworkBasic",
-			readOnly:true
-		});
+	setEditor = function() {
+// 		$("#articleContents").ckeditor();
+		CKEDITOR.replace("articleContents");
 	};
 
 	exeDownload = function(repositoryPath, originalName, newName) {
@@ -114,7 +113,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setFCKEditor();
+		setEditor();
 	});
 });
 </script>

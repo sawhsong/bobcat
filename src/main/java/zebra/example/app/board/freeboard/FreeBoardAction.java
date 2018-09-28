@@ -2,7 +2,6 @@ package zebra.example.app.board.freeboard;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import zebra.data.DataSet;
 import zebra.example.common.extend.BaseAction;
 import zebra.util.CommonUtil;
 
@@ -16,8 +15,12 @@ public class FreeBoardAction extends BaseAction {
 	}
 
 	public String getList() throws Exception {
-		biz.getList(paramEntity);
-		return "list";
+		try {
+			biz.getList(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String getDetail() throws Exception {
@@ -38,7 +41,6 @@ public class FreeBoardAction extends BaseAction {
 	public String getAttachedFile() throws Exception {
 		try {
 			biz.getAttachedFile(paramEntity);
-			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("fileDataSet"));
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -92,23 +94,10 @@ public class FreeBoardAction extends BaseAction {
 	public String exeDelete() throws Exception {
 		try {
 			biz.exeDelete(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("action", "/zebra/board/freeboard/getList.do");
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			if (CommonUtil.isNotBlank(paramEntity.getRequestDataSet().getValue("articleContents"))) {
-				paramEntity.getRequestDataSet().setValue("articleContents", "");
-			}
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String exeExport() throws Exception {
