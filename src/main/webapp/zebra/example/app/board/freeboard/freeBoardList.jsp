@@ -25,6 +25,7 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
+globalMap.put("useJqTooltip", false);
 var popupFreeBoard = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];

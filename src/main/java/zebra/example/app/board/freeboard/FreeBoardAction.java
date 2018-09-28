@@ -52,7 +52,7 @@ public class FreeBoardAction extends BaseAction {
 			biz.exeInsert(paramEntity);
 
 			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("action", "/zebra/board/freeboard/getList.do");
+				paramEntity.setObject("action", "/zebra/board/freeboard/getDefault.do");
 			} else {
 				paramEntity.setObject("script", "history.go(-1);");
 			}
@@ -74,7 +74,7 @@ public class FreeBoardAction extends BaseAction {
 			biz.exeUpdate(paramEntity);
 
 			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("action", "/zebra/board/freeboard/getList.do");
+				paramEntity.setObject("action", "/zebra/board/freeboard/getDefault.do");
 			} else {
 				paramEntity.setObject("script", "history.go(-1);");
 			}

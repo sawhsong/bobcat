@@ -11,10 +11,10 @@ CKEDITOR.editorConfig = function(config) {
 	/*!
 	 * Dustin(2015.05.24)
 	 */
-	config.uiColor = "#F7F7F7";
+	config.uiColor = "#F8F8F8";
 	config.language = globalMap.get("langCode");
-	config.height = 370;
-	config.skin = "office2013";
+	config.height = 500;
+	config.skin = "alpaca";
 	config.title = false;
 	config.toolbar_Full=[
 		{name:"document", items:["Source", "-", "Save", "NewPage", "DocProps", "Preview", "Print", "-", "Templates"]},
@@ -35,7 +35,7 @@ CKEDITOR.editorConfig = function(config) {
 	config.toolbar_frameworkBasic = [
 		{name:"document", items:["Source", "-", "NewPage", "DocProps", "Preview", "Print", "Templates"]},
 		{name:"clipboard", items:["Cut", "Copy", "Paste", "PasteText", "PasteFromWord", "Undo", "Redo"]},
-		{name:"editing", items:["Find", "Replace", "SelectAll", "Scayt"]},
+		{name:"editing", items:["Find", "Replace", "SelectAll"]},
 		"/",
 		{name:"basicstyles", items:["Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "RemoveFormat"]},
 		{name:"paragraph", items:["NumberedList", "BulletedList", "Outdent", "Indent", "Blockquote", "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock", "BidiLtr", "BidiRtl"]},

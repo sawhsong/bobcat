@@ -52,8 +52,11 @@ $(function() {
 	 * process
 	 */
 	setEditor = function() {
-// 		$("#articleContents").ckeditor();
-		CKEDITOR.replace("articleContents");
+		$("#articleContents").ckeditor({
+			height:500,
+			toolbar:"frameworkBasic",
+			readOnly:true
+		});
 	};
 
 	exeDownload = function(repositoryPath, originalName, newName) {
@@ -164,23 +167,23 @@ $(function() {
 			<col width="37%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.writerName"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.writerName"/></th>
 			<td class="tdEdit"><%=freeBoard.getWriterName()%>(<%=freeBoard.getWriterId()%>)</td>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
 			<td class="tdEdit"><%=freeBoard.getWriterEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.updateDate"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.updateDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(freeBoard.getUpdateDate())%></td>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.visitCount"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.visitCount"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(freeBoard.getVisitCnt())%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3"><%=freeBoard.getArticleSubject()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.attachedFile"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.attachedFile"/></th>
 			<td class="tdEdit" colspan="3">
 				<table class="tblDefault withPadding">
 					<tr>

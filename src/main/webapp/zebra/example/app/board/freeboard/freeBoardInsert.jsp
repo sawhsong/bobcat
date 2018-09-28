@@ -23,6 +23,8 @@
 * Stylesheet & Javascript
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
+<style type="text/css">
+</style>
 <script type="text/javascript">
 $(function() {
 	/*!
@@ -68,9 +70,9 @@ $(function() {
 	/*!
 	 * process
 	 */
-	setFCKEditor = function() {
+	setEditor = function() {
 		$("#articleContents").ckeditor({
-			height:400,
+			height:450,
 			toolbar:"frameworkBasic"
 		});
 	};
@@ -79,7 +81,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setFCKEditor();
+		setEditor();
 		$("#writerName").focus();
 	});
 });
@@ -129,29 +131,29 @@ $(function() {
 			<col width="37%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt mandatory"><mc:msg key="fwk.bbs.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerName"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerName" name="writerName" class="txtEn" value="" checkName="<mc:msg key="fwk.bbs.header.writerName"/>" mandatory/>
+				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="fwk.bbs.header.writerName" options="mandatory"/>
 			</td>
-			<th class="thEditRt mandatory"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<input type="text" id="writerEmail" name="writerEmail" class="txtEn" value="" checkName="<mc:msg key="fwk.bbs.header.writerEmail"/>" option="email" mandatory/>
+				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="fwk.bbs.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt mandatory"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="articleSubject" name="articleSubject" class="txtEn" value="" checkName="<mc:msg key="fwk.bbs.header.articleSubject"/>" mandatory/>
+				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="fwk.bbs.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.bbs.header.articleContents"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<textarea id="articleContents" name="articleContents" class="txaEn"></textarea>
+				<ui:txa id="articleContents" name="articleContents" className="defClass"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt">
+			<th class="thEdit Rt">
 				<mc:msg key="fwk.bbs.header.attachedFile"/><br/>
 				<div id="divButtonAreaRight">
 					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
