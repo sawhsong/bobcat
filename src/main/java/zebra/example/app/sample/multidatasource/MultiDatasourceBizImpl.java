@@ -26,16 +26,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 	private ZebraBoardFileDao zebraBoardFileDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-
 		try {
-			queryAdvisor.setRequestDataSet(requestDataSet);
-			queryAdvisor.setPagination(true);
-
-			zebraBoardDao.setDataSourceName("Nony");
-			paramEntity.setObject("resultDataSet", zebraBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -52,7 +43,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 			queryAdvisor.setPagination(true);
 
 			zebraBoardDao.setDataSourceName("Nony");
-			paramEntity.setObject("resultDataSet", zebraBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(zebraBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -65,11 +56,15 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String articleId = requestDataSet.getValue("articleId");
+		ZebraBoard zebraBoard;
 
 		try {
 			zebraBoardDao.setDataSourceName("Nony");
 			zebraBoardFileDao.setDataSourceName("Nony");
-			paramEntity.setObject("noticeBoard", zebraBoardDao.getBoardByArticleId(articleId));
+
+			zebraBoard = zebraBoardDao.getBoardByArticleId(articleId);
+			zebraBoard.setArticleContents(HtmlUtil.stringToHtml(zebraBoard.getArticleContents()));
+			paramEntity.setObject("noticeBoard", zebraBoard);
 			paramEntity.setObject("fileDataSet", zebraBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
 
 			zebraBoardDao.updateVisitCountByArticleId(articleId);
@@ -108,7 +103,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 
 		try {
 			zebraBoardFileDao.setDataSourceName("Nony");
-			paramEntity.setObject("fileDataSet", zebraBoardFileDao.getBoardFileListDataSetByArticleId(requestDataSet.getValue("articleId")));
+			paramEntity.setAjaxResponseDataSet(zebraBoardFileDao.getBoardFileListDataSetByArticleId(requestDataSet.getValue("articleId")));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -134,7 +129,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 			zebraBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
 			zebraBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
 			zebraBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm(requestDataSet.getValue("articleContents"), "\n"));
+			zebraBoard.setArticleContents(requestDataSet.getValue("articleContents"));
 			zebraBoard.setInsertUserId(loggedInUserId);
 			zebraBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraBoard.setRefArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
@@ -173,7 +168,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 			zebraBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
 			zebraBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
 			zebraBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm(requestDataSet.getValue("articleContents"), "\n"));
+			zebraBoard.setArticleContents(requestDataSet.getValue("articleContents"));
 			zebraBoard.setUpdateUserId(loggedInUserId);
 			zebraBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 

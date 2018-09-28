@@ -8,10 +8,6 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
-	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
-	String viewMode = CommonUtil.nvl((String)paramEntity.getObject("viewMode"));
-	String toDateFormat = ConfigUtil.getProperty("format.date.java");
-	String msgCode = CommonUtil.isEmpty(viewMode) ? "I001" : "I002";
 %>
 <%/************************************************************************************************
 * HTML
@@ -29,7 +25,9 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
+globalMap.put("useJqTooltip", false);
 var popupNotice = null;
+var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
 
 $(function() {
@@ -100,10 +98,110 @@ $(function() {
 	 * process
 	 */
 	doSearch = function() {
-		commonJs.doSubmit({
-			formId:"fmDefault",
-			action:"/zebra/sample/multidatasource/getList.do"
+		commonJs.showProcMessageOnElement("divScrollablePanel");
+
+		if (commonJs.doValidate($("#fmDefault"))) {
+			setTimeout(function() {
+				commonJs.ajaxSubmit({
+					url:"/zebra/sample/multidatasource/getList.do",
+					dataType:"json",
+					formId:"fmDefault",
+					blockElementId:"tblGrid",
+					success:function(data, textStatus) {
+						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+		
+						if (result.isSuccess == true || result.isSuccess == "true") {
+							renderDataGridTable(result);
+						}
+					}
+				});
+			}, 100);
+		}
+	};
+
+	renderDataGridTable = function(result) {
+		var dataSet = result.dataSet;
+		var html = "";
+
+		searchResultDataCount = dataSet.getRowCnt();
+
+		$("#tblGridBody").html("");
+
+		if (dataSet.getRowCnt() > 0) {
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var space = "", iLength = 200;
+				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
+				var gridTr = new UiGridTr();
+
+				gridTr.setClassName("noBorderHor noStripe");
+
+				var uiChk = new UiCheckbox();
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
+
+				if (iLevel > 0) {
+					for (var j=0; j<iLevel; j++) {
+						space += "&nbsp;&nbsp;&nbsp;&nbsp;";
+						iLength = iLength - 2;
+					}
+					space += "<i class=\"fa fa-comments\"></i>";
+				} else {
+					space += "<i class=\"fa fa-comment\"></i>";
+				}
+
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+
+				var gridTd = new UiGridTd();
+				gridTd.addClassName("Ct");
+				if (dataSet.getValue(i, "FILE_CNT") > 0) {
+					var iconAttachFile = new UiIcon();
+					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
+						.setScript("getAttachedFile(this)");
+					gridTd.addChild(iconAttachFile);
+				}
+				gridTr.addChild(gridTd);
+
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+
+				var iconAction = new UiIcon();
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
+					.setScript("doAction(this)").addAttribute("title:"+"<mc:msg key="page.com.action"/>");
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
+
+				html += gridTr.toHtmlString();
+			}
+		} else {
+			var gridTr = new UiGridTr();
+
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			html += gridTr.toHtmlString();
+		}
+
+		$("#tblGridBody").append($(html));
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:true,
+			isFilter:false,
+			filterColumn:[1, 3],
+			totalResultRows:result.totalResultRows,
+			script:"doSearch"
 		});
+
+		$("[name=icnAttachedFile]").each(function(index) {
+			$(this).contextMenu(attchedFileContextMenu);
+		});
+
+		$("[name=icnAction]").each(function(index) {
+			$(this).contextMenu(ctxMenu.boardAction);
+		});
+
+		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	getDetail = function(articleId) {
@@ -153,10 +251,7 @@ $(function() {
 			buttons:[{
 				caption:"Yes",
 				callback:function() {
-					commonJs.doSubmit({
-						form:"fmDefault",
-						action:"/zebra/sample/multidatasource/exeDelete.do"
-					});
+					exeDelete();
 				}
 			}, {
 				caption:"No",
@@ -164,6 +259,33 @@ $(function() {
 				}
 			}],
 			blind:true
+		});
+	};
+
+	exeDelete = function() {
+		commonJs.ajaxSubmit({
+			url:"/zebra/sample/multidatasource/exeDelete.do",
+			dataType:"json",
+			formId:"fmDefault",
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					commonJs.openDialog({
+						type:"information",
+						contents:result.message,
+						blind:true,
+						buttons:[{
+							caption:"Ok",
+							callback:function() {
+								doSearch();
+							}
+						}]
+					});
+				} else {
+					commonJs.error(result.message);
+				}
+			}
 		});
 	};
 
@@ -260,11 +382,10 @@ $(function() {
 	};
 
 	exeExport = function(menuObject) {
-		var rowCnt = <%=resultDataSet.getRowCnt()%>;
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
 
-		if (rowCnt <= 0) {
+		if (searchResultDataCount <= 0) {
 			commonJs.warn("<mc:msg key="I001"/>");
 			return;
 		}
@@ -302,25 +423,14 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#tblFixedHeaderTable").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			widthAdjust:28
-		});
-
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
 
-		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.boardAction);
-		});
-
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
+		setExportButtonContextMenu();
 
 		$("#searchWord").focus();
 
-		setExportButtonContextMenu();
+		doSearch();
 	});
 });
 </script>
@@ -363,16 +473,18 @@ $(function() {
 				<tr>
 					<td class="tdDefault">
 						<label for="searchType" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchType"/></label>
-						<div style="float:left;padding-right:4px;"><ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/></div>
-						<input type="text" id="searchWord" name="searchWord" class="txtEn hor" style="width:280px"/>
+						<div style="float:left;padding-right:4px;">
+							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/>
+						</div>
+						<ui:text id="searchWord" name="searchWord" className="defClass hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
 						<label for="fromDate" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchPeriod"/></label>
-						<input type="text" id="fromDate" name="fromDate" class="txtEnCt hor" style="width:100px" checkName="From Date" option="date"/>
-						<i id="icnFromDate" class="fa fa-calendar icnEn hor" title="From Date"></i>
+						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="From Date" option="date"/>
+						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="From Date"/>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<input type="text" id="toDate" name="toDate" class="txtEnCt hor" style="width:100px" checkName="To Date" option="date"/>
-						<i id="icnToDate" class="fa fa-calendar icnEn hor" title="To Date"></i>
+						<ui:text id="toDate" name="toDate" className="defClass Ct hor" style="width:100px" checkName="To Date" option="date"/>
+						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="To Date"/>
 					</td>
 				</tr>
 			</table>
@@ -390,7 +502,7 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<table id="tblFixedHeaderTable" class="tblGrid sort autosort">
+	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
 			<col width="*"/>
@@ -403,7 +515,7 @@ $(function() {
 		<thead>
 			<tr class="noBorderHor">
 				<th class="thGrid">
-					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.notice.title.selectToDelete"/>"></i>
+					<ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/>
 				</th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.dataGridHeader.subject"/></th>
 				<th class="thGrid"><mc:msg key="fwk.notice.dataGridHeader.file"/></th>
@@ -413,65 +525,14 @@ $(function() {
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
-		<tbody>
-<%
-		if (resultDataSet.getRowCnt() > 0) {
-			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-%>
+		<tbody id="tblGridBody">
 			<tr class="noBorderHor noStripe">
-				<td class="tdGridCt">
-					<input type="checkbox" id="chkForDel" name="chkForDel" class="chkEn inTblGrid" value="<%=resultDataSet.getValue(i, "ARTICLE_ID")%>"/>
-				</td>
-				<td class="tdGrid" title="<%=resultDataSet.getValue(i, "ARTICLE_SUBJECT")%>">
-<%
-					String space = "";
-					int iLevel = CommonUtil.toInt(resultDataSet.getValue(i, "LEVEL")) - 1;
-					int iLength = 200;
-
-					if (iLevel > 0) {
-						for (int j=0; j<iLevel; j++) {
-							space += "&nbsp;&nbsp;&nbsp;&nbsp;";
-							iLength = iLength - 2;
-						}
-						space += "<i class=\"fa fa-comments\"></i>";
-					} else {
-						space += "<i class=\"fa fa-comment\"></i>";
-					}
-%>
-					<%=space%><a onclick="getDetail('<%=resultDataSet.getValue(i, "ARTICLE_ID")%>')" class="aEn">
-						<%=CommonUtil.abbreviate(resultDataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)%>
-					</a>
-				</td>
-				<td class="tdGridCt">
-<%
-				if (CommonUtil.toInt(resultDataSet.getValue(i, "FILE_CNT")) > 0) {
-%>
-					<i id="icnAttachedFile" name="icnAttachedFile" class="glyphicon glyphicon-paperclip icnEn" articleId="<%=resultDataSet.getValue(i, "ARTICLE_ID")%>" onclick="getAttachedFile(this)"></i>
-<%
-				}
-%>
-				</td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "WRITER_NAME")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "CREATED_DATE")%></td>
-				<td class="tdGridRt"><%=CommonUtil.getNumberMask(resultDataSet.getValue(i, "VISIT_CNT"))%></td>
-				<td class="tdGridCt">
-					<i id="icnAction" name="icnAction" class="fa fa-tasks fa-lg icnEn" articleId="<%=resultDataSet.getValue(i, "ARTICLE_ID")%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
-				</td>
+				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
-<%
-			}
-		} else {
-%>
-			<tr class="noBorderHor noStripe">
-				<td class="tdGridCt" colspan="7"><mc:msg key="<%=msgCode%>"/></td>
-			</tr>
-<%
-		}
-%>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"><ui:pagination totalRows="<%=paramEntity.getTotalResultRows()%>" script="doSearch"/></div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

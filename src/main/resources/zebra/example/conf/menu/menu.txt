@@ -64,14 +64,14 @@
 					"menuName_ko":"소스코드 생성",
 					"icon":"leftMenu-M240",
 					"menuUrl":"/zebra/framework/sourcegenerator/getDefault.do"
-				}, {
+				}/*, {
 					"menuId":"M250",
 					"menuLevel":"2",
 					"menuName_en":"Data Migration(HKAccnt)",
 					"menuName_ko":"데이터 마이그레이션(HKAccnt)",
 					"icon":"leftMenu-M250",
 					"menuUrl":"/zebra/framework/datamigration/getDefault.do"
-				}
+				}*/
 			]
 		},
 		"M300":{
