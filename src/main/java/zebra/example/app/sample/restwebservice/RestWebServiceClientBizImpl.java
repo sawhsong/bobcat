@@ -11,17 +11,8 @@ import zebra.wssupport.RestServiceSupport;
 
 public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServiceClientBiz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		String result = "";
-
 		try {
-			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
-			paramEntity.setPagination(true);
-
-			result = RestServiceSupport.post("zebraRestNoticeBoard/getList", "application/json", paramEntity);
-			paramEntity.setObjectFromJsonString(result);
-			if (!paramEntity.isSuccess()) {
-				throw new FrameworkException(paramEntity.getMessageCode(), paramEntity.getMessage());
-			}
+			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -37,9 +28,12 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 			paramEntity.setPagination(true);
 			result = RestServiceSupport.post("zebraRestNoticeBoard/getList", "application/json", paramEntity);
 			paramEntity.setObjectFromJsonString(result);
+
 			if (!paramEntity.isSuccess()) {
 				throw new FrameworkException(paramEntity.getMessageCode(), paramEntity.getMessage());
 			}
+			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("resultDataSet"));
+			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

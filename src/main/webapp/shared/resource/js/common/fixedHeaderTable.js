@@ -308,10 +308,17 @@
 			 * Return if the data table is smaller than attachTo height
 			 */
 			attachToHeight = options.attachToHeight || $(options.attachTo).height();
+
 			if (($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment)) >= attachToHeight) {
-//				$(options.attachTo).height($(this).height());
+//				$(options.attachTo).height($(this).height() + heightAdjustment);
 			} else {
-				$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
+//				$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
+			}
+			$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
+//commonJs.printLog({message:"$(options.attachTo).height() : "+$(options.attachTo).height()});
+//commonJs.printLog({message:"$(this).height() : "+$(this).height()});
+			if ($(this).height() <= $(options.attachTo).height()) {
+				$(options.attachTo).height($(this).height() + (heightAdjustment - 4));
 			}
 
 			/*!

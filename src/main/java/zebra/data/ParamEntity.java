@@ -338,26 +338,6 @@ public class ParamEntity {
 		}
 	}
 
-	private boolean isDataSet(Node node) {
-		NodeList nodeList = node.getChildNodes();
-
-		if (nodeList != null) {
-			for (int i=0; i<nodeList.getLength(); i++) {
-				Node child = nodeList.item(i);
-
-				if (child.getNodeType() == Node.ELEMENT_NODE) {
-					Element element = (Element)child;
-
-					if (CommonUtil.equalsIgnoreCase(element.getNodeName(), "dataSetHeader")) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
 	/*!
 	 * Only return user-defined values
 	 */
@@ -432,6 +412,26 @@ public class ParamEntity {
 				}
 			}
 		}
+	}
+
+	private boolean isDataSet(Node node) {
+		NodeList nodeList = node.getChildNodes();
+
+		if (nodeList != null) {
+			for (int i=0; i<nodeList.getLength(); i++) {
+				Node child = nodeList.item(i);
+
+				if (child.getNodeType() == Node.ELEMENT_NODE) {
+					Element element = (Element)child;
+
+					if (CommonUtil.equalsIgnoreCase(element.getNodeName(), "dataSetHeader")) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private boolean isDataSet(JSONObject jsonObject) {
