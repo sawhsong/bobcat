@@ -3,10 +3,14 @@ package zebra.example.common.webservice.rest.noticeboard;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 @Path("/")
 public interface NoticeBoardService {
+	/*!
+	 * Internal use
+	 */
 	@POST
 	@Path("getList")
 	public Response getList(String paramString) throws Exception;
@@ -38,4 +42,14 @@ public interface NoticeBoardService {
 	@POST
 	@Path("exeExport")
 	public MultipartBody exeExport(String paramString) throws Exception;
+
+
+	/*!
+	 * External use
+	 */
+/*
+	@GET
+	@Path("getList")
+	public Response getList() throws Exception;
+*/
 }

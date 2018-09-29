@@ -148,12 +148,12 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 						values = new String[] {};
 					}
 //					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-//					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
-					searchCriteriaDataSet.addColumn(key, value);
+					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+//					searchCriteriaDataSet.addColumn(key, value);
 				} else {
 //					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-//					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
-					requestDataSet.addColumn(key, value);
+					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+//					requestDataSet.addColumn(key, value);
 				}
 			}
 

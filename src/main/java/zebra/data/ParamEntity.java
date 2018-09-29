@@ -181,7 +181,11 @@ public class ParamEntity {
 	}
 
 	public int getCurrentPage() {
-		return (getObject("currentPage") instanceof String) ? CommonUtil.toInt((String)getObject("currentPage")) : (int)getObject("currentPage");
+		if (getObject("currentPage") == null) {
+			return 1;
+		} else {
+			return (getObject("currentPage") instanceof String) ? CommonUtil.toInt((String)getObject("currentPage")) : (int)getObject("currentPage");
+		}
 	}
 
 	public void setMaxRowsPerPage(int maxRowsPerPage) {
@@ -189,7 +193,11 @@ public class ParamEntity {
 	}
 
 	public int getMaxRowsPerPage() {
-		return (getObject("maxRowsPerPage") instanceof String) ? CommonUtil.toInt((String)getObject("maxRowsPerPage")) : (int)getObject("maxRowsPerPage");
+		if (getObject("maxRowsPerPage") == null) {
+			return 1;
+		} else {
+			return (getObject("maxRowsPerPage") instanceof String) ? CommonUtil.toInt((String)getObject("maxRowsPerPage")) : (int)getObject("maxRowsPerPage");
+		}
 	}
 
 	public void setPagination(boolean pagination) {
@@ -197,7 +205,9 @@ public class ParamEntity {
 	}
 
 	public boolean isPagination() {
-		if (getObject("pagination") instanceof String) {
+		if (getObject("pagination") == null) {
+			return false;
+		} else if (getObject("pagination") instanceof String) {
 			return CommonUtil.equalsIgnoreCase((String)getObject("pagination"), "true");
 		} else {
 			return (boolean)getObject("pagination");

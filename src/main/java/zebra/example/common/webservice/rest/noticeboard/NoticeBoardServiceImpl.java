@@ -28,6 +28,9 @@ public class NoticeBoardServiceImpl extends BaseWebService implements NoticeBoar
 	@Autowired
 	private ZebraBoardFileDao zebraBoardFileDao;
 
+	/*!
+	 * Internal use
+	 */
 	public Response getList(String paramString) throws Exception {
 		DataSet requestDataSet;
 		QueryAdvisor queryAdvisor;
@@ -278,4 +281,26 @@ public class NoticeBoardServiceImpl extends BaseWebService implements NoticeBoar
 
 		return multipartBody;
 	}
+
+
+	/*!
+	 * External use
+	 */
+/*
+	public Response getList() throws Exception {
+		DataSet resultDataSet = new DataSet();
+		QueryAdvisor queryAdvisor;
+
+		try {
+			queryAdvisor = paramEntity.getQueryAdvisor();
+
+			resultDataSet = zebraBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor);
+		} catch (Exception ex) {
+			setWebserviceException(paramEntity, "E801", ex);
+			throw new WebApplicationException(ex.getMessage());
+		}
+
+		return Response.ok(resultDataSet.toJsonString()).build();
+	}
+*/
 }
