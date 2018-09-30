@@ -25,6 +25,8 @@
 * Stylesheet & Javascript
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
+<style type="text/css">
+</style>
 <script type="text/javascript">
 $(function() {
 	/*!
@@ -99,7 +101,7 @@ $(function() {
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
-						commonJs.doSubmit(params);
+						exeDelete(params);
 					}
 				}, {
 					caption:"No",
@@ -110,6 +112,37 @@ $(function() {
 		} else {
 			commonJs.doSubmit(params);
 		}
+	};
+
+	exeDelete = function(params) {
+		commonJs.ajaxSubmit({
+			url:"/zebra/sample/restwebservice/exeDelete.do",
+			dataType:"json",
+			formId:"fmDefault",
+			data:{
+				articleId:params.data.articleId
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					commonJs.openDialog({
+						type:"information",
+						contents:result.message,
+						blind:true,
+						buttons:[{
+							caption:"Ok",
+							callback:function() {
+								parent.popupNotice.close();
+								parent.doSearch();
+							}
+						}]
+					});
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
 	};
 
 	/*!
@@ -163,29 +196,29 @@ $(function() {
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.writerName"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.writerName"/></th>
 			<td class="tdEdit"><%=noticeBoard.getWriterName()%>(<%=noticeBoard.getWriterId()%>)</td>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.writerEmail"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.writerEmail"/></th>
 			<td class="tdEdit"><%=noticeBoard.getWriterEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.updateDate"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.updateDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(noticeBoard.getUpdateDate())%></td>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.visitCount"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.visitCount"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(noticeBoard.getVisitCnt())%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.articleSubject"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3"><%=noticeBoard.getArticleSubject()%></td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.articleContents"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<%=noticeBoard.getArticleContents()%>
+				<%=HtmlUtil.stringToHtml(noticeBoard.getArticleContents())%>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.notice.header.attachedFile"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.attachedFile"/></th>
 			<td class="tdEdit" colspan="3">
 				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
 					<table class="tblDefault withPadding">

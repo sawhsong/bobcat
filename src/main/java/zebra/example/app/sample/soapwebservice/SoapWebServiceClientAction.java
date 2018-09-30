@@ -16,8 +16,12 @@ public class SoapWebServiceClientAction extends BaseAction {
 	}
 
 	public String getList() throws Exception {
-		biz.getList(paramEntity);
-		return "list";
+		try {
+			biz.getList(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String getDetail() throws Exception {
@@ -38,7 +42,6 @@ public class SoapWebServiceClientAction extends BaseAction {
 	public String getAttachedFile() throws Exception {
 		try {
 			biz.getAttachedFile(paramEntity);
-			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("fileDataSet"));
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -93,23 +96,10 @@ public class SoapWebServiceClientAction extends BaseAction {
 	public String exeDelete() throws Exception {
 		try {
 			biz.exeDelete(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("action", "/zebra/sample/soapwebservice/getList.do");
-				if (CommonUtil.isNotEmpty(paramEntity.getRequestDataSet().getValue("articleId"))) {
-					paramEntity.setObject("script", "parent.popupNotice.close(); parent.doSearch();");
-				}
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String exeExport() throws Exception {

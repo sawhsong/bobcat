@@ -15,20 +15,8 @@ import zebra.wssupport.SoapServiceSupport;
 
 public class SoapWebServiceClientBizImpl extends BaseBiz implements SoapWebServiceClientBiz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		NoticeBoardService noticeBoardService;
-		String result = "";
-
 		try {
-			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
-			paramEntity.setPagination(true);
-
-			noticeBoardService = (NoticeBoardService)SoapServiceSupport.getProxyFactory("zebraSoapNoticeBoard", NoticeBoardService.class).create();
-			result = noticeBoardService.getList(paramEntity.toXmlString());
-
-			paramEntity.setObjectFromXmlString(result);
-			if (!paramEntity.isSuccess()) {
-				throw new FrameworkException(paramEntity.getMessageCode(), paramEntity.getMessage());
-			}
+			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -51,6 +39,7 @@ public class SoapWebServiceClientBizImpl extends BaseBiz implements SoapWebServi
 			if (!paramEntity.isSuccess()) {
 				throw new FrameworkException(paramEntity.getMessageCode(), paramEntity.getMessage());
 			}
+			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("resultDataSet"));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
