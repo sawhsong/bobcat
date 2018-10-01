@@ -86,6 +86,7 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
 			result = RestServiceSupport.post("zebraRestNoticeBoard/getAttachedFile", "application/json", paramEntity);
 			paramEntity.setObjectFromJsonString(result);
+			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("fileDataSet"));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

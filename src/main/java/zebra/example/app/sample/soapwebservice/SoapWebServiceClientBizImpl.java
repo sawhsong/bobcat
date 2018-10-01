@@ -100,6 +100,7 @@ public class SoapWebServiceClientBizImpl extends BaseBiz implements SoapWebServi
 			result = noticeBoardService.getAttachedFile(paramEntity.toXmlString());
 
 			paramEntity.setObjectFromXmlString(result);
+			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("fileDataSet"));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
