@@ -45,24 +45,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 	private SysMenuDao sysMenuDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor qaMenu = paramEntity.getQueryAdvisor();
-		QueryAdvisor qaList = paramEntity.getQueryAdvisor();
-		String dateFormat = ConfigUtil.getProperty("format.date.java");
-		String searchMenu = requestDataSet.getValue("searchMenu");
-
 		try {
-			qaMenu.addVariable("dateFormat", dateFormat);
-			qaMenu.addAutoFillCriteria("searchMenu", "menu_level = '1'");
-			qaMenu.setPagination(false);
-
-			qaList.addVariable("dateFormat", dateFormat);
-			qaList.addAutoFillCriteria(searchMenu, "root = '"+searchMenu+"'");
-			qaList.setPagination(false);
-
-			paramEntity.setObject("searchMenu", sysMenuDao.getAllActiveMenuDataSetBySearchCriteria(qaMenu));
-			paramEntity.setObject("resultDataSet", sysMenuDao.getAllActiveMenuDataSetBySearchCriteria(qaList));
-
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

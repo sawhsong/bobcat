@@ -10,9 +10,7 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	DataSet searchMenuDataSet = (DataSet)paramEntity.getObject("searchMenu");
-	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
 	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
-	String messageCode = "I001";
 %>
 <%/************************************************************************************************
 * HTML
@@ -119,16 +117,9 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#tblFixedHeaderTable").fixedHeaderTable({
-			baseDivElement:"divScrollablePanel",
-			widthAdjust:22
-		});
-
-		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(contextMenu);
-		});
-
 		commonJs.getBootstrapSelectbox("searchMenu").focus();
+
+		exeSearch();
 	});
 });
 </script>

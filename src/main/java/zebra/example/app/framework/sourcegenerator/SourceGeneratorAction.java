@@ -14,8 +14,12 @@ public class SourceGeneratorAction extends BaseAction {
 	}
 
 	public String getList() throws Exception {
-		biz.getList(paramEntity);
-		return "list";
+		try {
+			biz.getList(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String getGeneratorInfo() throws Exception {
