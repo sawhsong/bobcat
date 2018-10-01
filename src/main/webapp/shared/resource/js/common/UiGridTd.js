@@ -8,6 +8,7 @@ UiGridTd.prototype = {
 	 */
 	initialize : function() {
 		this.className = "tdGrid";
+		this.style = "";
 		this.attribute = "";
 		this.text = "";
 		this.textBeforeChild = "";
@@ -18,6 +19,7 @@ UiGridTd.prototype = {
 	 * Setter / Getter
 	 */
 	setClassName : function(className) {this.className = className; return this;},
+	setStyle : function(style) {this.style = style; return this;},
 	setText : function(text) {this.text = text; return this;},
 	setAttribute : function(attributes) {this.attribute = attributes; return this;},
 	/**

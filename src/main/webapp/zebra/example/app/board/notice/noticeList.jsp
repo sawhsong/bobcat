@@ -511,9 +511,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr class="noBorderHor">
-				<th class="thGrid">
-					<ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/>
-				</th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.dataGridHeader.subject"/></th>
 				<th class="thGrid"><mc:msg key="fwk.notice.dataGridHeader.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.dataGridHeader.writer"/></th>

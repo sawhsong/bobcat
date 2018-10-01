@@ -29,6 +29,8 @@
 </style>
 <script type="text/javascript">
 var popup;
+var searchResultDataCount = 0;
+var langCode = globalMap.get("langCode");
 var contextMenu = [{
 	name:"Generate",
 	img:"fa-gears",
@@ -80,14 +82,99 @@ $(function() {
 	 * process
 	 */
 	exeSearch = function() {
+		commonJs.showProcMessageOnElement("divScrollablePanel");
+
 		if (commonJs.doValidate($("#fmDefault"))) {
-			commonJs.doSubmit({
-				form:"fmDefault",
-				data:{
-				},
-				action:"/zebra/framework/sourcegenerator/getList.do"
-			});
+			setTimeout(function() {
+				commonJs.ajaxSubmit({
+					url:"/zebra/framework/sourcegenerator/getList.do",
+					dataType:"json",
+					formId:"fmDefault",
+					blockElementId:"tblGrid",
+					success:function(data, textStatus) {
+						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+		
+						if (result.isSuccess == true || result.isSuccess == "true") {
+							renderDataGridTable(result);
+						}
+					}
+				});
+			}, 100);
 		}
+	};
+
+	renderDataGridTable = function(result) {
+		var dataSet = result.dataSet;
+		var html = "";
+
+		searchResultDataCount = dataSet.getRowCnt();
+		$("#tblGridBody").html("");
+
+		if (dataSet.getRowCnt() > 0) {
+			for (var i=0; i<dataSet.getRowCnt(); i++) {
+				var gridTr = new UiGridTr();
+				var space = "", style = "", menuId = "";
+				var delimiter = globalMap.get("dataDelimiter");
+				var isLeaf = commonJs.toNumber(dataSet.getValue(i, "IS_LEAF"));
+				var iLevel = commonJs.toNumber(dataSet.getValue(i, "MENU_LEVEL")) - 1;
+				var isActive = commonJs.toBoolean(dataSet.getValue(i, "IS_ACTIVE"));
+
+				for (var j=0; j<iLevel; j++) {
+					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				}
+
+				menuId = dataSet.getValue(i, "ROOT")+delimiter+dataSet.getValue(i, "MENU_ID");
+				style += (isLeaf != 1) ? "font-weight:bold;" : "";
+
+				var tdSelect = new UiGridTd();
+				tdSelect.addClassName("Ct");
+				if (isActive) {
+					var uiChk = new UiCheckbox();
+					uiChk.setId("chkForGenerate").setName("chkForGenerate").setValue(menuId).addAttribute("menuName:"+dataSet.getValue(i, "MENU_NAME_"+langCode));
+					tdSelect.addChild(uiChk);
+				}
+				gridTr.addChild(tdSelect);
+
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).addTextBeforeChild(space).setText(dataSet.getValue(i, "MENU_ID")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(dataSet.getValue(i, "MENU_NAME_"+langCode)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "MENU_URL")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATION_DATE")));
+
+				var tdAction = new UiGridTd();
+				tdAction.addClassName("Ct");
+				if (isActive) {
+					var iconAction = new UiIcon();
+					iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("menuId:"+menuId)
+					.setScript("doAction(this)").addAttribute("title:"+"<mc:msg key="page.com.action"/>");
+					tdAction.addChild(iconAction);
+				}
+				gridTr.addChild(tdAction);
+
+				html += gridTr.toHtmlString();
+			}
+		} else {
+			var gridTr = new UiGridTr();
+
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			html += gridTr.toHtmlString();
+		}
+
+		$("#tblGridBody").append($(html));
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:false,
+			totalResultRows:result.totalResultRows,
+			script:"exeSearch"
+		});
+
+		$("[name=icnAction]").each(function(index) {
+			$(this).contextMenu(contextMenu);
+		});
+
+		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	doAction = function(img) {
@@ -159,7 +246,7 @@ $(function() {
 				<tr>
 					<td class="tdDefault">
 						<label for="searchMenu" class="lblEn hor"><mc:msg key="fwk.sourcegenerator.searchMenu"/></label>
-						<select id="searchMenu" name="searchMenu" class="bootstrapSelect default">
+						<select id="searchMenu" name="searchMenu" class="bootstrapSelect">
 							<option value="">==Select==</option>
 <%
 						for (int i=0; i<searchMenuDataSet.getRowCnt(); i++) {
@@ -186,7 +273,7 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<table id="tblFixedHeaderTable" class="tblGrid sort autosort">
+	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
 			<col width="10%"/>
@@ -198,7 +285,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.sourcegenerator.title.selectToGenerate"/>"></i></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.sourcegenerator.title.selectToGenerate"/></th>
 				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuId"/></th>
 				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuName"/></th>
 				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuUrl"/></th>
@@ -207,66 +294,14 @@ $(function() {
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
-		<tbody>
-<%
-		if (resultDataSet.getRowCnt() > 0) {
-			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-				String space = "", style = "", menuId = "";
-				String delimiter = ConfigUtil.getProperty("delimiter.data");
-				boolean activate = false;
-				int isLeaf = CommonUtil.toInt(resultDataSet.getValue(i, "IS_LEAF"));
-				int iLevel = CommonUtil.toInt(resultDataSet.getValue(i, "MENU_LEVEL")) - 1;
-
-				for (int j=0; j<iLevel; j++) {
-					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-				}
-
-				if (isLeaf == 1 && !BeanHelper.containsBean(CommonUtil.toCamelCaseStartLowerCase(resultDataSet.getValue(i, "MENU_ID"))+"Action")) {
-					activate = true;
-				}
-
-				menuId = resultDataSet.getValue(i, "ROOT")+delimiter+resultDataSet.getValue(i, "MENU_ID");
-				style += (isLeaf != 1) ? "font-weight:bold;" : "";
-%>
+		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt">
-<%
-				if (activate) {
-%>
-					<input type="checkbox" id="chkForGenerate" name="chkForGenerate" class="chkEn inTblGrid" value="<%=menuId%>" menuName="<%=resultDataSet.getValue(i, "MENU_NAME_"+langCode)%>"/>
-<%
-				}
-%>
-				</td>
-				<td class="tdGrid" style="<%=style%>"><%=space%><%=resultDataSet.getValue(i, "MENU_ID")%></td>
-				<td class="tdGrid" style="<%=style%>"><%=resultDataSet.getValue(i, "MENU_NAME_"+langCode)%></td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "MENU_URL")%></td>
-				<td class="tdGrid"><%=resultDataSet.getValue(i, "DESCRIPTION")%></td>
-				<td class="tdGridCt"><%=resultDataSet.getValue(i, "CREATION_DATE")%></td>
-				<td class="tdGridCt">
-<%
-				if (activate) {
-%>
-					<i name="icnAction" class="fa fa-tasks fa-lg icnEn" menuId="<%=menuId%>" onclick="doAction(this)" title="<mc:msg key="page.com.action"/>"></i>
-<%
-				}
-%>
-				</td>
+				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
-<%
-			}
-		} else {
-%>
-			<tr>
-				<td class="tdGridCt" colspan="7"><mc:msg key="<%=messageCode%>"/></td>
-			</tr>
-<%
-		}
-%>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea"></div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

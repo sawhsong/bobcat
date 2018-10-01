@@ -37,6 +37,7 @@ import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseBiz;
 import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
 import zebra.exception.FrameworkException;
+import zebra.util.BeanHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
@@ -45,7 +46,15 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 	private SysMenuDao sysMenuDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
+		QueryAdvisor qaMenu = paramEntity.getQueryAdvisor();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+
 		try {
+			qaMenu.addVariable("dateFormat", dateFormat);
+			qaMenu.addAutoFillCriteria("searchMenu", "menu_level = '1'");
+			qaMenu.setPagination(false);
+
+			paramEntity.setObject("searchMenu", sysMenuDao.getAllActiveMenuDataSetBySearchCriteria(qaMenu));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -56,23 +65,26 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor qaMenu = paramEntity.getQueryAdvisor();
+		DataSet resultDataSet = new DataSet();
 		QueryAdvisor qaList = paramEntity.getQueryAdvisor();
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String searchMenu = requestDataSet.getValue("searchMenu");
 
 		try {
-			qaMenu.addVariable("dateFormat", dateFormat);
-			qaMenu.addAutoFillCriteria("searchMenu", "menu_level = '1'");
-			qaMenu.setPagination(false);
-
 			qaList.addVariable("dateFormat", dateFormat);
 			qaList.addAutoFillCriteria(searchMenu, "root = '"+searchMenu+"'");
 			qaList.setPagination(false);
 
-			paramEntity.setObject("searchMenu", sysMenuDao.getAllActiveMenuDataSetBySearchCriteria(qaMenu));
-			paramEntity.setObject("resultDataSet", sysMenuDao.getAllActiveMenuDataSetBySearchCriteria(qaList));
+			resultDataSet = sysMenuDao.getAllActiveMenuDataSetBySearchCriteria(qaList);
+			resultDataSet.addColumn("IS_ACTIVE");
+			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
+				if (CommonUtil.equals(resultDataSet.getValue(i, "IS_LEAF"), "1") && !BeanHelper.containsBean(CommonUtil.toCamelCaseStartLowerCase(resultDataSet.getValue(i, "MENU_ID"))+"Action")) {
+					resultDataSet.setValue(i, "IS_ACTIVE", "true");
+				}
+			}
 
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
+			paramEntity.setTotalResultRows(qaList.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
