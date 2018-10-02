@@ -106,7 +106,6 @@ $(function() {
 					url:"/zebra/board/notice/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
-					blockElementId:"tblGrid",
 					success:function(data, textStatus) {
 						var result = commonJs.parseAjaxResult(data, textStatus, "json");
 		

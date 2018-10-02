@@ -99,7 +99,33 @@ $(function() {
 				buttons:[{
 					caption:"Yes",
 					callback:function() {
-						commonJs.doSubmit(params);
+						commonJs.ajaxSubmit({
+							url:actionString,
+							dataType:"json",
+							formId:"fmDefault",
+							data:{
+								articleId:params.data.articleId
+							},
+							success:function(data, textStatus) {
+								var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+								if (result.isSuccess == true || result.isSuccess == "true") {
+									commonJs.openDialog({
+										type:"information",
+										contents:result.message,
+										blind:true,
+										buttons:[{
+											caption:"Ok",
+											callback:function() {
+												commonJs.doSubmit({action:"/zebra/board/freeboard/getDefault.do"});
+											}
+										}]
+									});
+								} else {
+									commonJs.error(result.message);
+								}
+							}
+						});
 					}
 				}, {
 					caption:"No",

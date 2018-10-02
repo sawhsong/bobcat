@@ -106,7 +106,6 @@ $(function() {
 					url:"/zebra/board/freeboard/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
-					blockElementId:"tblGrid",
 					success:function(data, textStatus) {
 						var result = commonJs.parseAjaxResult(data, textStatus, "json");
 		
@@ -510,9 +509,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr class="noBorderHor">
-				<th class="thGrid">
-					<i id="icnCheck" class="fa fa-check-square-o fa-lg icnEn" title="<mc:msg key="fwk.notice.title.selectToDelete"/>"></i>
-				</th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.bbs.title.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.dataGridHeader.subject"/></th>
 				<th class="thGrid"><mc:msg key="fwk.bbs.dataGridHeader.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.dataGridHeader.writer"/></th>
