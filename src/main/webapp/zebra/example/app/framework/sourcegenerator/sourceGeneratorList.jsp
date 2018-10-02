@@ -52,8 +52,8 @@ $(function() {
 			header:"<mc:msg key="fwk.sourcegenerator.title.generatorPopupHeader"/>",
 			paramData:{},
 			blind:false,
-			width:680,
-			height:580
+			width:760,
+			height:570
 		});
 	});
 
@@ -195,8 +195,7 @@ $(function() {
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,
-			verAdjust:2,
-			containment:$("#divScrollablePanel")
+			verAdjust:2
 		});
 	};
 

@@ -94,7 +94,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 	}
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String javaPath = ConfigUtil.getProperty("path.java.app");
 		String jspPath = ConfigUtil.getProperty("path.web.app");
 		String springPath = ConfigUtil.getProperty("path.conf.menuSpring");
@@ -172,7 +172,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String actionHandlerType = requestDataSet.getValue("actionHandlerType");
 		String actionNameAjaxResponse = ConfigUtil.getProperty("name.source.javaAction.ajaxResponse");
@@ -230,7 +230,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcBizFileName = ConfigUtil.getProperty("name.source.javaBiz");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
@@ -278,7 +278,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcBizImplFileName = ConfigUtil.getProperty("name.source.javaBizImpl");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
@@ -329,7 +329,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
 		String jspTargetpath = jspPath + "/" + rootMenuId + "/" + thisMenuId;
@@ -383,7 +383,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
 		String jspTargetpath = jspPath + "/" + rootMenuId + "/" + thisMenuId;
@@ -440,7 +440,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
 		String jspTargetpath = jspPath + "/" + rootMenuId + "/" + thisMenuId;
@@ -497,7 +497,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = requestDataSet.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
 		String jspTargetpath = jspPath + "/" + rootMenuId + "/" + thisMenuId;
@@ -555,7 +555,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = dsRequest.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcFileName = ConfigUtil.getProperty("name.source.xmlMenuSpringConf");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
@@ -645,7 +645,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = dsRequest.getValue("menuName");
 		String menuNumber = CommonUtil.remove(thisMenuId, rootMenuId);
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcFileName = ConfigUtil.getProperty("name.source.xmlMenuStrutsConf");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
@@ -789,7 +789,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = dsRequest.getValue("menuName");
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "WebRoot");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcFileName = ConfigUtil.getProperty("name.source.propMessage");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);

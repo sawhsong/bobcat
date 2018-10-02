@@ -23,6 +23,8 @@
 * Stylesheet & Javascript
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
+<style type="text/css">
+</style>
 <script type="text/javascript">
 $(function() {
 	/*!
@@ -168,26 +170,26 @@ $(function() {
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="javaSourcePath" name="javaSourcePath" class="txtDpl" value="<%=paramEntity.getObject("javaPath")%>" readonly/>
+				<ui:text id="javaSourcePath" name="javaSourcePath" className="defClass" value="<%=(String)paramEntity.getObject(\"javaPath\")%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.actionClass"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.actionClass"/></th>
 			<td class="tdEdit">
-				<label class="lblCheckDis"><input type="checkbox" name="javaCreateAction" class="chkDis" value="Y" checked disabled/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="javaCreateAction" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true" status="disabled"/>
 			</td>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.cudPageHandler"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.cudPageHandler"/></th>
 			<td class="tdEdit">
-				<label class="lblRadioEn"><input type="radio" name="actionHandlerType" class="rdoEn" value="A" checked/><mc:msg key="fwk.sourcegenerator.header.ajax"/></label>
-				<label class="lblRadioEn"><input type="radio" name="actionHandlerType" class="rdoEn" value="P"/><mc:msg key="fwk.sourcegenerator.header.pageHandler"/></label>
+				<ui:radio name="actionHandlerType" value="A" text="fwk.sourcegenerator.header.ajax" isSelected="true"/>
+				<ui:radio name="actionHandlerType" value="P" text="fwk.sourcegenerator.header.pageHandler"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.bizClass"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.bizClass"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckDis"><input type="checkbox" name="javaCreateBiz" class="chkDis" value="Y" checked disabled/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="javaCreateBiz" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true" status="disabled"/>
 			</td>
 		</tr>
 	</table>
@@ -201,38 +203,38 @@ $(function() {
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
 			<td class="tdEdit" colspan="3">
-				<input type="text" id="jspSourcePath" name="jspSourcePath" class="txtDpl" value="<%=paramEntity.getObject("jspPath")%>" readonly/>
+				<ui:text name="jspSourcePath" id="jspSourcePath" className="defClass" value="<%=(String)paramEntity.getObject(\"jspPath\")%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.list"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.list"/></th>
 			<td class="tdEdit">
-				<label class="lblCheckDis"><input type="checkbox" name="jspCreateList" class="chkDis" value="Y" checked disabled/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="jspCreateList" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true" status="disabled"/>
 			</td>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
 			<td class="tdEdit">
-				<label class="lblRadioEn"><input type="radio" name="jspSubPageType" class="rdoEn" value="Popup" checked/><mc:msg key="fwk.sourcegenerator.header.pop"/></label>
-				<label class="lblRadioEn"><input type="radio" name="jspSubPageType" class="rdoEn" value="Page"/><mc:msg key="fwk.sourcegenerator.header.page"/></label>
+				<ui:radio name="jspSubPageType" value="Popup" text="fwk.sourcegenerator.header.pop" isSelected="true"/>
+				<ui:radio name="jspSubPageType" value="Page" text="fwk.sourcegenerator.header.page"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.detail"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.detail"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckEn"><input type="checkbox" name="jspCreateDetail" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="jspCreateDetail" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.insert"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.insert"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckEn"><input type="checkbox" name="jspCreateInsert" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="jspCreateInsert" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.update"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.update"/></th>
 			<td class="tdEdit" colspan="3">
-				<label class="lblCheckEn"><input type="checkbox" name="jspCreateUpdate" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="jspCreateUpdate" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
 		</tr>
 	</table>
@@ -245,31 +247,30 @@ $(function() {
 			<col width="14%"/>
 		</colgroup>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.spring"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.spring"/></th>
 			<td class="tdEdit">
-				<input type="text" id="springConfigPath" name="springConfigPath" class="txtDpl" value="<%=paramEntity.getObject("springPath")%>" readonly/>
+				<ui:text name="springConfigPath" id="springConfigPath" className="defClass" value="<%=(String)paramEntity.getObject(\"springPath\")%>" status="display"/>
 			</td>
 			<td class="tdEdit">
-				<label class="lblCheckEn"><input type="checkbox" name="createSpring" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.struts"/></th>
-			<td class="tdEdit">
-				<input type="text" id="strutsConfigPath" name="strutsConfigPath" class="txtDpl" value="<%=paramEntity.getObject("strutsPath")%>" readonly/>
-			</td>
-			<td class="tdEdit">
-				<label class="lblCheckEn"><input type="checkbox" name="createStruts" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="createSpring" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEditRt"><mc:msg key="fwk.sourcegenerator.header.message"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.struts"/></th>
 			<td class="tdEdit">
-				<input type="text" id="messageConfigPath" name="messageConfigPath" class="txtDpl" value="<%=paramEntity.getObject("messagePath")%>" readonly/>
+				<ui:text name="strutsConfigPath" id="strutsConfigPath" className="defClass" value="<%=(String)paramEntity.getObject(\"strutsPath\")%>" status="display"/>
 			</td>
 			<td class="tdEdit">
-				<label class="lblCheckEn"><input type="checkbox" name="createMessage" class="chkEn" value="Y" checked/><mc:msg key="fwk.sourcegenerator.header.generate"/></label>
+				<ui:check name="createStruts" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.message"/></th>
+			<td class="tdEdit">
+				<ui:text name="messageConfigPath" id="messageConfigPath" className="defClass" value="<%=(String)paramEntity.getObject(\"messagePath\")%>" status="display"/>
+			</td>
+			<td class="tdEdit">
+				<ui:check name="createMessage" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 		</tr>
 	</table>
 </div>
