@@ -687,7 +687,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 					DOMSource domSource = new DOMSource(document);
 
 					Element includeElement = document.createElement("include");
-					includeElement.setAttribute("file", "main/"+projectName+"/conf/struts/struts-"+projectName+"-app-"+rootMenuId+".xml");
+					includeElement.setAttribute("file", projectName+"/conf/struts/struts-"+projectName+"-app-"+rootMenuId+".xml");
 					rootElement.appendChild(includeElement);
 
 					DOMImplementation domImpl = document.getImplementation();
@@ -718,7 +718,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 					Node node = nodeList.item(i);
 					if (node.getNodeType() == 1) {
 						Element packageElement = (Element)node;
-						String packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/"), "/", ".");
+						String packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/main/java/"), "/", ".");
 
 						Element actionElement = document.createElement("action");
 						actionElement.setAttribute("name", menuNumber + "/*");
@@ -819,7 +819,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 				osWriter.flush();
 
 				for (int i=0; i<dsLang.getRowCnt(); i++) {
-					String lang = dsLang.getValue(i, "COMMON_CODE");
+					String lang = CommonUtil.lowerCase(dsLang.getValue(i, "COMMON_CODE"));
 					String srcNameTemp = CommonUtil.substringBefore(srcFileName, ".");
 					String srcNameExt = CommonUtil.substringAfter(srcFileName, ".");
 					String srcFileNameByLang = srcNameTemp + "_" + lang + "." + srcNameExt;
