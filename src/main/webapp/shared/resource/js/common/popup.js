@@ -21,7 +21,7 @@
 			params.modal = (params.modal == false) ? false : true;
 			params.blind = (params.blind == true) ? true : false;
 			params.shadow = (params.shadow == false) ? false : true;
-			params.url = params.url || globalMap.get("shareRoot")+"/page/"+"blankForPopup.jsp";
+			params.url = params.url || jsconfig.get("shareRoot")+"/page/"+"blankForPopup.jsp";
 			params.paramData = params.paramData || {};
 			params.iframeName = params.iframeName || "popupDialogIframe_"+$.nony.getTimeStamp();
 
@@ -76,15 +76,15 @@
 					};
 
 					if ("slide" == this.effect) {
-						$(this.popupBase).stop().slideUp(globalMap.get("effectDuration"), function() {
+						$(this.popupBase).stop().slideUp(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					} else if ("fade" == this.effect) {
-						$(this.popupBase).stop().fadeOut(globalMap.get("effectDuration"), function() {
+						$(this.popupBase).stop().fadeOut(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					} else {
-						$(this.popupBase).stop().hide(globalMap.get("effectDuration"), function() {
+						$(this.popupBase).stop().hide(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					}
@@ -112,7 +112,7 @@
 					this.popupIframe.animate({width:(frameWidth+width)+"px"});
 					this.popupIframe.animate({height:(frameHeight+height)+"px"});
 
-					$(this.popupBase).animate({"left":(baseLeft-(width/2)) + "px", "top":((baseTop-(height/2))) + "px"}, globalMap.get("effectDuration"), "swing");
+					$(this.popupBase).animate({"left":(baseLeft-(width/2)) + "px", "top":((baseTop-(height/2))) + "px"}, jsconfig.get("effectDuration"), "swing");
 				},
 				setHeader : function(header) {
 					$(this.popupHeaderTitle).html(header);
@@ -143,7 +143,7 @@
 			params.modal = (params.modal == false) ? false : true;
 			params.blind = (params.blind == false) ? false : true;
 			params.shadow = (params.shadow == false) ? false : true;
-			params.url = params.url || globalMap.get("shareRoot")+"/page/"+"blankForPopup.jsp";
+			params.url = params.url || jsconfig.get("shareRoot")+"/page/"+"blankForPopup.jsp";
 			params.paramData = params.paramData || {};
 			params.iframeName = params.iframeName || "popupIframe_"+$.nony.getTimeStamp();
 
@@ -182,15 +182,15 @@
 					};
 
 					if ("slide" == this.effect) {
-						$(this.popupBase).stop().slideUp(globalMap.get("effectDuration"), function() {
+						$(this.popupBase).stop().slideUp(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					} else if ("fade" == this.effect) {
-						$(this.popupBase).stop().fadeOut(globalMap.get("effectDuration"), function() {
+						$(this.popupBase).stop().fadeOut(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					} else {
-						$(this.popupBase).stop().hide(globalMap.get("effectDuration"), function() {
+						$(this.popupBase).stop().hide(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					}
@@ -218,7 +218,7 @@
 					this.popupIframe.animate({width:(frameWidth+width)+"px"});
 					this.popupIframe.animate({height:(frameHeight+height)+"px"});
 
-					$(this.popupBase).animate({"left":(baseLeft-(width/2)) + "px", "top":((baseTop-(height/2))) + "px"}, globalMap.get("effectDuration"), "swing");
+					$(this.popupBase).animate({"left":(baseLeft-(width/2)) + "px", "top":((baseTop-(height/2))) + "px"}, jsconfig.get("effectDuration"), "swing");
 				},
 				setHeader : function(header) {
 					$(this.popupHeaderTitle).html(header);
@@ -383,7 +383,7 @@
 			var table;
 
 			html += "<table><tr>";
-			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+globalMap.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
+			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
 			html += "<td style='padding:2px 4px;line-height:16px;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
 			html += "</tr></table>";
 
@@ -423,17 +423,17 @@
 			}
 
 			if ("slide" == this.effect) {
-				$(this.popupBase).delay(200).slideDown(globalMap.get("effectDuration"), function() {
+				$(this.popupBase).delay(200).slideDown(jsconfig.get("effectDuration"), function() {
 					if (params.popupMethod == "popupDialog") {setContents(params);}
 					if (typeof onLoad == "function") {onLoad();}
 				});
 			} else if ("fade" == this.effect) {
-				$(this.popupBase).delay(200).fadeIn(globalMap.get("effectDuration"), function() {
+				$(this.popupBase).delay(200).fadeIn(jsconfig.get("effectDuration"), function() {
 					if (params.popupMethod == "popupDialog") {setContents(params);}
 					if (typeof onLoad == "function") {onLoad();}
 				});
 			} else {
-				$(this.popupBase).delay(200).show(globalMap.get("effectDuration"), function() {
+				$(this.popupBase).delay(200).show(jsconfig.get("effectDuration"), function() {
 					if (params.popupMethod == "popupDialog") {setContents(params);}
 					if (typeof onLoad == "function") {onLoad();}
 				});
@@ -491,7 +491,7 @@
 			$(divHolder).addClass("areaContainerPopup");
 
 			html += "<table><tr>";
-			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+globalMap.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
+			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
 			html += "<td style='padding:2px 4px;line-height:16px;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
 			html += "</tr></table>";
 
@@ -581,7 +581,7 @@
 			}
 		},
 		_reposPopup : function(event) {
-			$(event.data.popupBase).stop().animate({"left":(($(window).innerWidth() / 2) - (event.data.width / 2)) + "px", "top":(($(window).innerHeight() / 2) - (event.data.height / 2)) + "px"}, globalMap.get("effectDuration"), "swing");
+			$(event.data.popupBase).stop().animate({"left":(($(window).innerWidth() / 2) - (event.data.width / 2)) + "px", "top":(($(window).innerHeight() / 2) - (event.data.height / 2)) + "px"}, jsconfig.get("effectDuration"), "swing");
 		},
 		_close : function(event) {
 			var unblockOption;
@@ -596,15 +596,15 @@
 			};
 
 			if ("slide" == event.data.effect) {
-				$(event.data.popupBase).stop().slideUp(globalMap.get("effectDuration"), function() {
+				$(event.data.popupBase).stop().slideUp(jsconfig.get("effectDuration"), function() {
 					closingFunction();
 				});
 			} else if ("fade" == event.data.effect) {
-				$(event.data.popupBase).stop().fadeOut(globalMap.get("effectDuration"), function() {
+				$(event.data.popupBase).stop().fadeOut(jsconfig.get("effectDuration"), function() {
 					closingFunction();
 				});
 			} else {
-				$(event.data.popupBase).stop().hide(globalMap.get("effectDuration"), function() {
+				$(event.data.popupBase).stop().hide(jsconfig.get("effectDuration"), function() {
 					closingFunction();
 				});
 			}

@@ -17,7 +17,7 @@ var Class = {
 /**
  * global js variables
  */
-var globalMap = {
+var jsconfig = {
 	map : {},
 	isExist : function(name) {return !!this.map[name];},
 	put : function(name, value) {this.map[name] = value;},
@@ -28,7 +28,7 @@ var globalMap = {
 		var items = [];
 		for (var keys in this.map) {
 			items[keys] = this.map[keys];
-			console.log("globalMap : "+keys+" => "+items[keys]);
+			console.log("jsconfig : "+keys+" => "+items[keys]);
 		}
 	}
 };
@@ -49,7 +49,7 @@ var nony = {
 		version : bowser.version
 	},
 	isPopup : function() {
-		return (globalMap.get("noLayoutWindow") || globalMap.get("isPopup") || $("#divPopupWindowHolder").length > 0);
+		return (jsconfig.get("noLayoutWindow") || jsconfig.get("isPopup") || $("#divPopupWindowHolder").length > 0);
 	},
 	isNormalPage : function() {
 		return !$.nony.isPopup();
@@ -74,7 +74,7 @@ var nony = {
 
 		if (typeof(formId) == "object") {formId = $(formId).prop("id");}
 
-		if ("Y" == globalMap.get("autoSetSearchCriteria")) {
+		if ("Y" == jsconfig.get("autoSetSearchCriteria")) {
 			$.nony._appendAutoSearchCriteria(formId);
 		}
 
@@ -105,7 +105,7 @@ var nony = {
 		if (typeof(formId) == "object") {formId = $(formId).prop("id");}
 
 		if ($.nony.isPopup()) {
-			if ("1" == globalMap.get("submitEffect") || "1" == effect || "2" == globalMap.get("submitEffect") || "2" == effect || "3" == globalMap.get("submitEffect") || "3" == effect) {
+			if ("1" == jsconfig.get("submitEffect") || "1" == effect || "2" == jsconfig.get("submitEffect") || "2" == effect || "3" == jsconfig.get("submitEffect") || "3" == effect) {
 				// some actions do not refresh the page - download
 				if (params.action.indexOf("download") == -1) {
 					$.nony.showProcMessage(framework.messages.loading);
@@ -120,18 +120,18 @@ var nony = {
 		} else {
 			// some actions do not refresh the page - download
 			if (params.action.indexOf("download") == -1) {
-				if ("1" == globalMap.get("submitEffect") || "1" == effect) {
+				if ("1" == jsconfig.get("submitEffect") || "1" == effect) {
 					$.nony.showProcMessage(framework.messages.loading);
 					setTimeout(function() {
 						$.nony.submit(params);
 					}, 10);
-				} else if ("2" == globalMap.get("submitEffect") || "2" == effect) {
+				} else if ("2" == jsconfig.get("submitEffect") || "2" == effect) {
 					$("#divBodyHolder").slideUp("slow", function() {
 						setTimeout(function() {
 							$.nony.submit(params);
 						}, 10);
 					});
-				} else if ("3" == globalMap.get("submitEffect") || "3" == effect) {
+				} else if ("3" == jsconfig.get("submitEffect") || "3" == effect) {
 					$.nony.showProcMessage(framework.messages.loading);
 					$("#divBodyHolder").slideUp("slow", function() {
 						setTimeout(function() {
@@ -359,7 +359,7 @@ var nony = {
 		}
 	},
 	getDateTimeMask : function(value, format) {
-		var basicDateTimeJs = globalMap.get("basicDateTimeJs");
+		var basicDateTimeJs = jsconfig.get("basicDateTimeJs");
 
 		if (value == null || value == "") {return "";}
 
@@ -412,7 +412,7 @@ var nony = {
 			return;
 		}
 
-		var dateFormat = (globalMap.get("langCode") == "ko") ? "YYYY-MM-DD" : globalMap.get("dateFormatJs");
+		var dateFormat = (jsconfig.get("langCode") == "ko") ? "YYYY-MM-DD" : jsconfig.get("dateFormatJs");
 		var formatPlaceHolder = dateFormat.toLowerCase();
 
 		dateFormat = $.nony.replace(dateFormat.toUpperCase(), "DD", "99");
@@ -446,7 +446,7 @@ var nony = {
 		);
 	},
 	toggleCheckboxes : function(elementName) {
-		var checkFlag = $.nony.nvl(globalMap.get("toggleCheckboxes"));
+		var checkFlag = $.nony.nvl(jsconfig.get("toggleCheckboxes"));
 
 		if (typeof(elementName) != "string") {
 			throw new Error("The parameter" + framework.messages.invalid);
@@ -459,7 +459,7 @@ var nony = {
 			}
 		});
 
-		globalMap.put("toggleCheckboxes", !checkFlag);
+		jsconfig.put("toggleCheckboxes", !checkFlag);
 	},
 	getCountChecked : function (checkboxName) {
 		var cnt = 0;
@@ -765,7 +765,7 @@ var nony = {
 	 */
 	showProcMessage : function(msg) {
 		$.blockUI({
-			message:"<img src='" + globalMap.get("imgThemeCom") + "/waiting1.gif' style='vertical-align:middle'/>&nbsp;&nbsp;&nbsp;" + msg,
+			message:"<img src='" + jsconfig.get("imgThemeCom") + "/waiting1.gif' style='vertical-align:middle'/>&nbsp;&nbsp;&nbsp;" + msg,
 			css:{
 				width:"100%",
 //				width:"250px",
@@ -795,7 +795,7 @@ var nony = {
 	showProcMessageOnElement : function(blockElementId, msg) {
 		var message = msg || framework.messages.loading;
 		$("#"+blockElementId).block({
-			message:"<img src='" + globalMap.get("imgThemeCom") + "/waiting2.gif'/>&nbsp;" + message,
+			message:"<img src='" + jsconfig.get("imgThemeCom") + "/waiting2.gif'/>&nbsp;" + message,
 			css:{
 				border:"0px",
 				background:"transparent",
@@ -832,7 +832,7 @@ var nony = {
 				} else {
 					$(this).removeClass("active");
 					if ($("#div"+index).length > 0) {
-						$("#div"+index).stop().animate({opacity:"hide"}, globalMap.get("effectDuration"));
+						$("#div"+index).stop().animate({opacity:"hide"}, jsconfig.get("effectDuration"));
 					}
 				}
 			}
@@ -842,7 +842,7 @@ var nony = {
 				} else {
 					$(this).addClass("active");
 					if ($("#div"+index).length > 0) {
-						$("#div"+index).stop().delay(300).animate({opacity:"show"}, globalMap.get("effectDuration"));
+						$("#div"+index).stop().delay(300).animate({opacity:"show"}, jsconfig.get("effectDuration"));
 					}
 				}
 			}
@@ -897,9 +897,9 @@ var nony = {
 	getDataSetFromJavaDataSet : function(dataSetString) {
 		var strArray, header, values;
 		var dataSet = new DataSet();
-		var dataSetHeaderDelimiter = globalMap.get("dataSetHeaderDelimiter");
-		var recordDelimiter = globalMap.get("recordDelimiter");
-		var dataDelimiter = globalMap.get("dataDelimiter");
+		var dataSetHeaderDelimiter = jsconfig.get("dataSetHeaderDelimiter");
+		var recordDelimiter = jsconfig.get("recordDelimiter");
+		var dataDelimiter = jsconfig.get("dataDelimiter");
 
 		if (!$.nony.isEmpty(dataSetString) && dataSetHeaderDelimiter != dataSetString) {
 			strArray = dataSetString.split(dataSetHeaderDelimiter);
@@ -923,7 +923,7 @@ var nony = {
 	 */
 	_doResizeScrollablePanel : function() {
 		var isPopup = $.nony.isPopup();
-		var bodyLayout = globalMap.get("defaultOuterLayoutOption");
+		var bodyLayout = jsconfig.get("defaultOuterLayoutOption");
 		var heightWindow = $(window).innerHeight();
 		var mainDivId;
 		var heightSum = 0, heightHeader = 0, heightFooter = 0, heightCorrection = 0;
@@ -977,7 +977,7 @@ var nony = {
 			$("#divScrollablePanel").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		}
 
-		if (!globalMap.get("isResizeScrollablePanelFuntionRegisteredInResizeEvent")) {
+		if (!jsconfig.get("isResizeScrollablePanelFuntionRegisteredInResizeEvent")) {
 			$(window).resize(function() {
 				setTimeout(function() {
 					$.nony._doResizeScrollablePanel();
@@ -985,13 +985,13 @@ var nony = {
 			});
 		}
 
-		globalMap.put("isResizeScrollablePanelFuntionRegisteredInResizeEvent", true);
+		jsconfig.put("isResizeScrollablePanelFuntionRegisteredInResizeEvent", true);
 		if (isPopup) {
-			globalMap.put("divScrollablePanelPopupWidth", $("#divScrollablePanelPopup").width());
-			globalMap.put("divScrollablePanelPopupHeight", $("#divScrollablePanelPopup").height());
+			jsconfig.put("divScrollablePanelPopupWidth", $("#divScrollablePanelPopup").width());
+			jsconfig.put("divScrollablePanelPopupHeight", $("#divScrollablePanelPopup").height());
 		} else {
-			globalMap.put("divScrollablePanelWidth", $("#divScrollablePanel").width());
-			globalMap.put("divScrollablePanelHeight", $("#divScrollablePanel").height());
+			jsconfig.put("divScrollablePanelWidth", $("#divScrollablePanel").width());
+			jsconfig.put("divScrollablePanelHeight", $("#divScrollablePanel").height());
 		}
 	},
 	_doPageLayout : function(options) {
@@ -1000,31 +1000,31 @@ var nony = {
 		var defaultOuterLayoutOption = $("body").layout(options[0]);
 		var defaultInnerLayoutOption = $("#divBodyHolder").layout(options[1]);
 
-		globalMap.put("defaultOuterLayoutOption", defaultOuterLayoutOption);
-		globalMap.put("defaultInnerLayoutOption", defaultInnerLayoutOption);
+		jsconfig.put("defaultOuterLayoutOption", defaultOuterLayoutOption);
+		jsconfig.put("defaultInnerLayoutOption", defaultInnerLayoutOption);
 
-		if ("1" == globalMap.get("submitEffect")) {
+		if ("1" == jsconfig.get("submitEffect")) {
 			$.nony.showProcMessage(framework.messages.loading);
-		} else if ("2" == globalMap.get("submitEffect")) {
+		} else if ("2" == jsconfig.get("submitEffect")) {
 			$("#divBodyHolder").hide();
-		} else if ("3" == globalMap.get("submitEffect")) {
+		} else if ("3" == jsconfig.get("submitEffect")) {
 			$("#divBodyHolder").hide();
 			$.nony.showProcMessage(framework.messages.loading);
 		}
 	},
 	_doPageLoadEffect : function() {
-		if ("1" == globalMap.get("submitEffect")) {
+		if ("1" == jsconfig.get("submitEffect")) {
 			$.nony.hideProcMessage();
-		} else if ("2" == globalMap.get("submitEffect")) {
-			$("#divBodyHolder").slideDown(globalMap.get("effectDuration"));
-		} else if ("3" == globalMap.get("submitEffect")) {
-			$("#divBodyHolder").slideDown(globalMap.get("effectDuration"));
+		} else if ("2" == jsconfig.get("submitEffect")) {
+			$("#divBodyHolder").slideDown(jsconfig.get("effectDuration"));
+		} else if ("3" == jsconfig.get("submitEffect")) {
+			$("#divBodyHolder").slideDown(jsconfig.get("effectDuration"));
 			$.nony.hideProcMessage();
 		}
 	},
 	_appendAutoSearchCriteria : function(formId) {
 		var $form = $("#"+formId);
-		var elemNameSuffix = globalMap.get("searchCriteriaElementSuffix");
+		var elemNameSuffix = jsconfig.get("searchCriteriaElementSuffix");
 		var elemArray = $form.find("#divSearchCriteriaArea").find(":input").serializeArray();
 
 		$.each(elemArray, function(i, elem) {
@@ -1039,9 +1039,9 @@ var nony = {
 	_setAutoSearchCriteria : function(searchCriteriaDataSetString) {
 		var strArray, header, value;
 		var dataSet = new DataSet();
-		var elemNameSuffix = globalMap.get("searchCriteriaElementSuffix");
-		var dataSetHeaderDelimiter = globalMap.get("dataSetHeaderDelimiter");
-		var dataDelimiter = globalMap.get("dataDelimiter");
+		var elemNameSuffix = jsconfig.get("searchCriteriaElementSuffix");
+		var dataSetHeaderDelimiter = jsconfig.get("dataSetHeaderDelimiter");
+		var dataDelimiter = jsconfig.get("dataDelimiter");
 
 		if (!$.nony.isEmpty(searchCriteriaDataSetString) && dataSetHeaderDelimiter != searchCriteriaDataSetString) {
 			strArray = searchCriteriaDataSetString.split(dataSetHeaderDelimiter);
@@ -1073,7 +1073,7 @@ var nony = {
 
 					if ("checkbox" == elemtype.toLowerCase() || "radio" == elemtype.toLowerCase()) {
 						var valArr;
-						var dataDelimiter = globalMap.get("dataDelimiter");
+						var dataDelimiter = jsconfig.get("dataDelimiter");
 
 						for (var j=0; j<$elem.length; j++) {
 							if (val.indexOf(dataDelimiter) != -1) {

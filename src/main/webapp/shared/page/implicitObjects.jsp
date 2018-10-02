@@ -65,7 +65,7 @@ body {
 }
 </style>
 <script type="text/javascript">
-globalMap.put("noLayoutWindow", true);
+jsconfig.put("noLayoutWindow", true);
 
 $(function() {
 	$(document).ready(function() {

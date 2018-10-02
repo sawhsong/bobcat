@@ -56,7 +56,7 @@ $(function() {
 		}
 
 		$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
-			var delimiter = globalMap.get("dataDelimiter");
+			var delimiter = jsconfig.get("dataDelimiter");
 
 			$(this).find(":input").each(function(index) {
 				var id = $(this).attr("id"), name = $(this).attr("name");
@@ -91,7 +91,7 @@ $(function() {
 	});
 
 	$("#btnAdd").click(function(event) {
-		var elem = $("#liDummy").clone(), delimiter = globalMap.get("dataDelimiter"), elemId = $(elem).attr("id");
+		var elem = $("#liDummy").clone(), delimiter = jsconfig.get("dataDelimiter"), elemId = $(elem).attr("id");
 
 		$(elem).css("display", "block").appendTo($("#ulCommonCodeDetailHolder"));
 
@@ -181,7 +181,7 @@ $(function() {
 			stop:function() {
 				$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 					$(this).find("input").each(function(index) {
-						var id = $(this).attr("id"), name = $(this).attr("name"), delimiter = globalMap.get("dataDelimiter");
+						var id = $(this).attr("id"), name = $(this).attr("name"), delimiter = jsconfig.get("dataDelimiter");
 
 						$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 

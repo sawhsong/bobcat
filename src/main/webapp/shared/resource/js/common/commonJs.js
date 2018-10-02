@@ -153,7 +153,7 @@ var commonJs = {
 		};
 
 		var defaultInnerLayoutOption;
-		if (globalMap.get("noWest")) {
+		if (jsconfig.get("noWest")) {
 			defaultInnerLayoutOption = {
 				name:"defaultInnerLayoutOption",
 				fxName:"fade",
@@ -225,13 +225,13 @@ $(window).load(function() {
 
 	$.nony.fileElement.modifyFileSelectObject();
 
-	if ("Y" == globalMap.get("autoSetSearchCriteria")) {$.nony._setAutoSearchCriteria(globalMap.get("searchCriteriaDataSetString"));}
+	if ("Y" == jsconfig.get("autoSetSearchCriteria")) {$.nony._setAutoSearchCriteria(jsconfig.get("searchCriteriaDataSetString"));}
 
-	if (globalMap.get("useJqTooltip")) {$.nony._jqTooltip();}
+	if (jsconfig.get("useJqTooltip")) {$.nony._jqTooltip();}
 
 	$.nony._doResizeScrollablePanel();
 
-	if (globalMap.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
+	if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
 });
 
 /*!

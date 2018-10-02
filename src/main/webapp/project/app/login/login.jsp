@@ -39,7 +39,7 @@ body {background:#FFFFFF;}
 .registerLink {float:right;width:50%;text-align:right;}
 </style>
 <script type="text/javascript">
-globalMap.put("noLayoutWindow", true);
+jsconfig.put("noLayoutWindow", true);
 var popup = null;
 
 $(function() {

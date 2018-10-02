@@ -30,7 +30,7 @@
 <script type="text/javascript">
 var popup;
 var searchResultDataCount = 0;
-var langCode = globalMap.get("langCode");
+var langCode = jsconfig.get("langCode");
 var contextMenu = [{
 	name:"Generate",
 	img:"fa-gears",
@@ -114,7 +114,7 @@ $(function() {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 				var space = "", style = "", menuId = "";
-				var delimiter = globalMap.get("dataDelimiter");
+				var delimiter = jsconfig.get("dataDelimiter");
 				var isLeaf = commonJs.toNumber(dataSet.getValue(i, "IS_LEAF"));
 				var iLevel = commonJs.toNumber(dataSet.getValue(i, "MENU_LEVEL")) - 1;
 				var isActive = commonJs.toBoolean(dataSet.getValue(i, "IS_ACTIVE"));

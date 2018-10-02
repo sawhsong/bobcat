@@ -50,7 +50,7 @@
 #hExpense.ui-accordion-header.ui-state-active {background:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;}
 </style>
 <script type="text/javascript">
-globalMap.put("noWest", true);
+jsconfig.put("noWest", true);
 $(function() {
 	/*!
 	 * event

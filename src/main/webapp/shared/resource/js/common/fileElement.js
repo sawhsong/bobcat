@@ -15,14 +15,14 @@
 			}
 
 			for (var i=0; i<fileElements.length; i++) {
-				if ("Y" == globalMap.get("customFileObject") || arguments.length != 0) {
+				if ("Y" == jsconfig.get("customFileObject") || arguments.length != 0) {
 					var parent = $(fileElements[i]).parent();
 					var sibling = $(fileElements[i]).prev();
 					var id = $(fileElements[i]).attr("id");
 					var name = $(fileElements[i]).attr("name");
 					var width = 0, widthComp = 0;
 					var params = {};
-					var themeId = globalMap.get("themeId");
+					var themeId = jsconfig.get("themeId");
 
 					/*!
 					 * Adjust width here

@@ -26,7 +26,7 @@
 
 			value = $(params.dateElement).val();
 			if (!$.nony.isEmpty(value)) {
-				if (!moment(value, globalMap.get("dateFormatJs_"+globalMap.get("langCode"))).isValid()) {
+				if (!moment(value, jsconfig.get("dateFormatJs_"+jsconfig.get("langCode"))).isValid()) {
 					throw new Error("The value " + framework.messages.invalid);
 					return;
 				}
@@ -57,15 +57,15 @@
 					};
 
 					if ("slide" == this.effect) {
-						$(this.calendarBase).stop().slideUp(globalMap.get("effectDuration"), function() {
+						$(this.calendarBase).stop().slideUp(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					} else if ("fade" == this.effect) {
-						$(this.calendarBase).stop().fadeOut(globalMap.get("effectDuration"), function() {
+						$(this.calendarBase).stop().fadeOut(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					} else {
-						$(this.calendarBase).stop().hide(globalMap.get("effectDuration"), function() {
+						$(this.calendarBase).stop().hide(jsconfig.get("effectDuration"), function() {
 							closingFunction();
 						});
 					}
@@ -86,8 +86,8 @@
 			this.returnDayOfWeekElement = null;
 			this.returnWeekElement = null;
 			this.calendarId = params.calendarId;
-			this.language = params.language = globalMap.get("langCode");
-			this.dateFormat = params.dateFormat = (this.language == "ko") ? "YYYY-MM-DD" : globalMap.get("dateFormatJs");
+			this.language = params.language = jsconfig.get("langCode");
+			this.dateFormat = params.dateFormat = (this.language == "ko") ? "YYYY-MM-DD" : jsconfig.get("dateFormatJs");
 			this.timeFormat = params.timeFormat = "HH:mm:ss";
 			this.clickedImg = params.clickedImg = event.target;
 			this.weekNumberName = params.weekNumberName = "Wk";
@@ -187,7 +187,7 @@
 			/*!
 			 * Height by theme id - because of font
 			 */
-			var themeId = globalMap.get("themeId");
+			var themeId = jsconfig.get("themeId");
 			if (themeId == "theme000" || themeId == "theme001") {
 				this.height = params.height = "236";
 			} else if (themeId == "theme002") {
@@ -282,12 +282,12 @@
 
 			if ("slide" == this.effect) {
 				drawFunction();
-				$(this.calendarBase).delay(0).slideDown(globalMap.get("effectDuration"), function() {
+				$(this.calendarBase).delay(0).slideDown(jsconfig.get("effectDuration"), function() {
 //					drawFunction();
 				});
 			} else if ("fade" == this.effect) {
 				drawFunction();
-				$(this.calendarBase).delay(0).fadeIn(globalMap.get("effectDuration"), function() {
+				$(this.calendarBase).delay(0).fadeIn(jsconfig.get("effectDuration"), function() {
 //					drawFunction();
 				});
 			} else {
@@ -306,7 +306,7 @@
 					width:widthForAnimate+"px",
 					height:(heightForAnimate)+"px",
 					opacity:1.0
-				}, globalMap.get("effectDuration"), function() {
+				}, jsconfig.get("effectDuration"), function() {
 //					drawFunction();
 				});
 			}
@@ -745,11 +745,11 @@
 			};
 
 			if ("slide" == event.data.effect) {
-				$(event.data.calendarBase).stop().slideUp(globalMap.get("effectDuration"), function() {closingFunction();});
+				$(event.data.calendarBase).stop().slideUp(jsconfig.get("effectDuration"), function() {closingFunction();});
 			} else if ("fade" == event.data.effect) {
-				$(event.data.calendarBase).stop().fadeOut(globalMap.get("effectDuration"), function() {closingFunction();});
+				$(event.data.calendarBase).stop().fadeOut(jsconfig.get("effectDuration"), function() {closingFunction();});
 			} else {
-				$(event.data.calendarBase).stop().hide(globalMap.get("effectDuration"), function() {closingFunction();});
+				$(event.data.calendarBase).stop().hide(jsconfig.get("effectDuration"), function() {closingFunction();});
 			}
 		},
 		_setMousedown : function(event) {

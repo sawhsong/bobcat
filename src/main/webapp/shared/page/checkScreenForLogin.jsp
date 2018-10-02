@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <script type="text/javascript">
-globalMap.put("noLayoutWindow", true);
+jsconfig.put("noLayoutWindow", true);
 var sessionCheckType = "<%=sessionCheckType%>";
 $(function() {
 	if (parent.$(".nonyPopWinBase").length > 0 || parent.$(".nonyDialogBase").length > 0) {

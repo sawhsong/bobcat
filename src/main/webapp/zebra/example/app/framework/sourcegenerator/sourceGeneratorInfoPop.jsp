@@ -87,7 +87,7 @@ $(function() {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
 								if (result.isSuccess == true || result.isSuccess == "true") {
-									var dataDelimiter = globalMap.get("dataDelimiter");
+									var dataDelimiter = jsconfig.get("dataDelimiter");
 									var menuIdArray = paramData.menuId.split(dataDelimiter);
 									var menuId = menuIdArray[1];
 									popupProcess.addContents("<mc:msg key="I802"/> : "+menuId);

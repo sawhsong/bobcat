@@ -44,12 +44,12 @@
 			 */
 			if (options.isPageable) {
 				var className = "", readOnly = "", event = "", jsParamString = "", html = "";
-				var arrMaxRowsPerPageSelect = globalMap.get("maxRowsPerPageArray").split(globalMap.get("dataDelimiter"));
+				var arrMaxRowsPerPageSelect = jsconfig.get("maxRowsPerPageArray").split(jsconfig.get("dataDelimiter"));
 				var maxRowsPerPage = $.nony.toNumber($("#selMaxRowsPerPageSelectForPagenation").val());
-				var pageNumsPerPage = ($.nony.isPopup()) ? 5 : parseInt(globalMap.get("pageNumsPerPage"));
+				var pageNumsPerPage = ($.nony.isPopup()) ? 5 : parseInt(jsconfig.get("pageNumsPerPage"));
 
 				if (maxRowsPerPage <= 0) {
-					maxRowsPerPage = parseInt(globalMap.get("maxRowsPerPage"));
+					maxRowsPerPage = parseInt(jsconfig.get("maxRowsPerPage"));
 				}
 
 				var viewPageCount = 1;

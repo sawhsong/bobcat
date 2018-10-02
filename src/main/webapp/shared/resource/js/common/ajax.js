@@ -263,7 +263,7 @@
 
 					result.dataSet = ds;
 				} else {
-					var dataDelimiter = globalMap.get("dataDelimiter");
+					var dataDelimiter = jsconfig.get("dataDelimiter");
 					var arr;
 
 					if (data.indexOf("\n\n") == -1) {

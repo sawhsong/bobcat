@@ -59,12 +59,12 @@ var ctxMenu = {
 	// LoggedIn global menu
 	loggedInUser : [{
 		name:framework.caption.ctxMyProfile,
-		img:globalMap.get("imgThemeCom")+"/icnUser-MyProfile_Black.png",
+		img:jsconfig.get("imgThemeCom")+"/icnUser-MyProfile_Black.png",
 //		title:"My Profile",
 		fun:function() {}
 	}, {
 		name:framework.caption.ctxLogOut,
-		img:globalMap.get("imgThemeCom")+"/icnUser-LogOut_Black.png",
+		img:jsconfig.get("imgThemeCom")+"/icnUser-LogOut_Black.png",
 //		title:"Log Out",
 		fun:function() {}
 	}],

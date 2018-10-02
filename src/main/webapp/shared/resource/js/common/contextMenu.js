@@ -543,7 +543,7 @@
 			 * Dustin : open effect here
 			 */
 //			menu.css(cssObj);
-			var effectDuration = option.effectDuration || globalMap.get("effectDuration");
+			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
 
 			/*!
 			 * Dustin : border radius
@@ -576,7 +576,7 @@
 			 */
 			var imgSrc = menu.find("img").prop("src");
 			if (!$.nony.isEmpty(imgSrc) && (imgSrc.indexOf("MyProfile") != -1 || imgSrc.indexOf("LogOut") != -1 || imgSrc.indexOf("QM") != -1)) {
-				var images, themeId = globalMap.get("themeId");
+				var images, themeId = jsconfig.get("themeId");
 				menu.closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
 					images = $(this).prop("src");
 					if (themeId == "theme000" || themeId == "theme002" || themeId == "theme003" || themeId == "theme009") {
@@ -706,7 +706,7 @@
 			 * Dustin : main menu close effect here
 			 */
 //			$('.iw-contextMenu').hide();
-			var effectDuration = option.effectDuration || globalMap.get("effectDuration");
+			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
 
 			if ("slide" == option.effect) {
 				$('.'+option.classPrefix+'-contextMenu').stop().slideUp(effectDuration, function() {});
@@ -745,7 +745,7 @@
 					 * Dustin : hide sub menu here
 					 */
 //					submenu.hide(200);
-					var effectDuration = option.effectDuration || globalMap.get("effectDuration");
+					var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
 
 					if ("slide" == option.effect) {
 						submenu.stop().slideUp(effectDuration, function() {});
@@ -759,7 +759,7 @@
 				/*!
 				 * Dustin : Logged in User - Header main menu
 				 */
-				var imgSrc = $(this).find("img").prop("src"), themeId = globalMap.get("themeId");
+				var imgSrc = $(this).find("img").prop("src"), themeId = jsconfig.get("themeId");
 				if (!$.nony.isEmpty(imgSrc) && (imgSrc.indexOf("MyProfile") != -1 || imgSrc.indexOf("LogOut") != -1 || imgSrc.indexOf("QM") != -1)) {
 					var images;
 					$(this).closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {

@@ -9,7 +9,6 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet datasourceDataSet = (DataSet)paramEntity.getObject("datasourceDataSet");
-	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 %>
 <%/************************************************************************************************
 * HTML

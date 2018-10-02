@@ -200,7 +200,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/main/java/"), "/", ".");
 
 			String menuUrl = rootMenuId + "/" + CommonUtil.remove(thisMenuId, rootMenuId);
 
@@ -252,7 +252,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#PROJECT_NAME#", projectName);
 			sourceString = CommonUtil.replace(sourceString, "#PACKAGE_NAME#", packageString);
@@ -301,7 +301,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 			OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 			sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-			packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/"), "/", ".");
+			packageString = CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/main/java/"), "/", ".");
 
 			sourceString = CommonUtil.replace(sourceString, "#PROJECT_NAME#", projectName);
 			sourceString = CommonUtil.replace(sourceString, "#PACKAGE_NAME#", packageString);
@@ -594,7 +594,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 				Document document = docBuilder.parse(targetFile);
 				Element rootElement = document.getDocumentElement();
 				DOMSource domSource = new DOMSource(document);
-				packageString = CommonUtil.replace(CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/"), "/", "."), packageName, "${name.package.project}");
+				packageString = CommonUtil.replace(CommonUtil.replace(CommonUtil.remove(javaTargetpath, rootPath + "src/main/java/"), "/", "."), packageName, "${name.package.project}");
 
 				Element beanElement = document.createElement("bean");
 				beanElement.setAttribute("id", thisMenuIdLowerCamelCase + "Action");
@@ -649,7 +649,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcFileName = ConfigUtil.getProperty("name.source.xmlMenuStrutsConf");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
-		String jspRelPath = CommonUtil.substringAfter(jspPath, "WebRoot");
+		String jspRelPath = CommonUtil.substringAfter(jspPath, "webapp");
 		String javaTargetpath = javaPath + "/" + rootMenuId + "/" + thisMenuId;
 		String sourceString, pageNameSuffix = "";
 

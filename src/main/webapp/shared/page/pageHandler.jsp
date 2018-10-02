@@ -23,10 +23,10 @@
 	String pagehandlerActionType = ConfigUtil.getProperty("pagehandler.actionType");
 %>
 <script type="text/javascript">
-globalMap.put("noLayoutWindow", true);
+jsconfig.put("noLayoutWindow", true);
 
 $(function() {
-	var pagehandlerActionType = globalMap.get("pagehandlerActionType");
+	var pagehandlerActionType = jsconfig.get("pagehandlerActionType");
 	var action = "<%=action%>";
 	var target = "<%=target%>";
 	var messageCode = "<%=messageCode%>";

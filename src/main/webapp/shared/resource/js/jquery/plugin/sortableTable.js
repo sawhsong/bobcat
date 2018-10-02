@@ -732,8 +732,8 @@ var Table = (function(){
 
 		// Scrape each row of each tbody
 		var bodies = t.tBodies;
-//		var headerColumnWidth = globalMap.get("headerColumnWidth"+$(t).attr("id"));
-//		var originalTableHeight = globalMap.get("originalTableHeight"+$(t).attr("id"));
+//		var headerColumnWidth = jsconfig.get("headerColumnWidth"+$(t).attr("id"));
+//		var originalTableHeight = jsconfig.get("originalTableHeight"+$(t).attr("id"));
 
 		if (bodies==null || bodies.length==0) { return; }
 		for (var i=0,L=bodies.length; i<L; i++) {

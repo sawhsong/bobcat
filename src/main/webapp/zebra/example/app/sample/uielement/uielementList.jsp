@@ -29,7 +29,7 @@
 var popup1, popup2, cal;
 
 $(function() {
-	globalMap.put("customFileObject", "N");
+	jsconfig.put("customFileObject", "N");
 
 	$("#btnAddFileSelection").click(function(event) {
 		commonJs.addFileSelectObject({

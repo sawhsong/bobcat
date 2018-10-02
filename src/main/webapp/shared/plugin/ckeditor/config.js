@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function(config) {
 	 * Dustin(2015.05.24)
 	 */
 	config.uiColor = "#F8F8F8";
-	config.language = globalMap.get("langCode");
+	config.language = jsconfig.get("langCode");
 	config.height = 500;
 	config.skin = "alpaca";
 	config.title = false;

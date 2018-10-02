@@ -111,7 +111,7 @@ $(function() {
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
 		var html = "";
-		var dateFormat = globalMap.get("dateFormatJs");
+		var dateFormat = jsconfig.get("dateFormatJs");
 
 		searchResultDataCount = dataSet.getRowCnt();
 

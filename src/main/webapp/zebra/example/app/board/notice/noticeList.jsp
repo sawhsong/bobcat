@@ -25,7 +25,7 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
-globalMap.put("useJqTooltip", false);
+jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];

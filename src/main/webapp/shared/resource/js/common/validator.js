@@ -30,15 +30,15 @@
 
 				if (!(mandatory == null || mandatory == undefined)) {
 					if ($(elem)[0].tagName.toLowerCase().indexOf("select") != -1 && $.nony.isEmpty($(elem).val())) {
-						return this._execError($(elem), this._messages["mandatory_"+globalMap.get("langCode")], "select");
+						return this._execError($(elem), this._messages["mandatory_"+jsconfig.get("langCode")], "select");
 					}
 
 					if ($.nony.isEmpty($(elem).val())) {
-						return this._execError($(elem), this._messages["mandatory_"+globalMap.get("langCode")], "select");
+						return this._execError($(elem), this._messages["mandatory_"+jsconfig.get("langCode")], "select");
 					}
 
 					if (!$.nony.isEmpty(option) && (option == "Numeric" || option == "numeric") && $.nony.toNumber($(elem).val()) == 0) {
-						return this._execError($(elem), this._messages["numeric_"+globalMap.get("langCode")], "select");
+						return this._execError($(elem), this._messages["numeric_"+jsconfig.get("langCode")], "select");
 					}
 				}
 
@@ -47,11 +47,11 @@
 
 					if (parseInt(this._bytes($(elem).val())) < parseInt(minByte)) {
 						if (!$.nony.isEmpty(option) && (option == "IncKor" || option == "incKor")) {
-							msg = $.nony.replace(this._messages["minByteIncKor_"+globalMap.get("langCode")], "{minByte}", Math.round(minByte/2));
+							msg = $.nony.replace(this._messages["minByteIncKor_"+jsconfig.get("langCode")], "{minByte}", Math.round(minByte/2));
 						} else if (!$.nony.isEmpty(option) && (option == "EngOnly" || option == "engOnly")) {
-							msg = $.nony.replace(this._messages["minByteEngOnly_"+globalMap.get("langCode")], "{minByte}", minByte);
+							msg = $.nony.replace(this._messages["minByteEngOnly_"+jsconfig.get("langCode")], "{minByte}", minByte);
 						} else {
-							msg = $.nony.replace(this._messages["minByte_"+globalMap.get("langCode")], "{minByte}", minByte);
+							msg = $.nony.replace(this._messages["minByte_"+jsconfig.get("langCode")], "{minByte}", minByte);
 						}
 						return this._execError($(elem), msg, "select");
 					}
@@ -62,18 +62,18 @@
 
 					if (parseInt(this._bytes($(elem).val())) > parseInt(maxByte)) {
 						if (!$.nony.isEmpty(option) && (option == "IncKor" || option == "incKor")) {
-							msg = $.nony.replace(this._messages["maxByteIncKor_"+globalMap.get("langCode")], "{maxByte}", Math.round(maxByte/2));
+							msg = $.nony.replace(this._messages["maxByteIncKor_"+jsconfig.get("langCode")], "{maxByte}", Math.round(maxByte/2));
 						} else if (!$.nony.isEmpty(option) && (option == "EngOnly" || option == "engOnly")) {
-							msg = $.nony.replace(this._messages["maxByteEngOnly_"+globalMap.get("langCode")], "{maxByte}", maxByte);
+							msg = $.nony.replace(this._messages["maxByteEngOnly_"+jsconfig.get("langCode")], "{maxByte}", maxByte);
 						} else {
-							msg = $.nony.replace(this._messages["maxByte_"+globalMap.get("langCode")], "{maxByte}", maxByte);
+							msg = $.nony.replace(this._messages["maxByte_"+jsconfig.get("langCode")], "{maxByte}", maxByte);
 						}
 						return this._execError($(elem), msg, "select");
 					}
 				}
 
 				if (!$.nony.isEmpty(match) && $(elem).val() != $($.nony.getElement(match)).val()) {
-					return this._execError($(elem), this._messages["match_"+globalMap.get("langCode")], "select");
+					return this._execError($(elem), this._messages["match_"+jsconfig.get("langCode")], "select");
 				}
 
 				if (!$.nony.isEmpty(option) && !$.nony.isEmpty($(elem).val())) {
@@ -122,10 +122,10 @@
 			return arrElem;
 		},
 		doErrorMessage : function(msgType) {
-			return $.nony.validator._execErrorMessage($.nony.validator._messages[msgType+"_"+globalMap.get("langCode")]);
+			return $.nony.validator._execErrorMessage($.nony.validator._messages[msgType+"_"+jsconfig.get("langCode")]);
 		},
 		doValidatorMessage : function(jQueryElement, msgType) {
-			return $.nony.validator._execError(jQueryElement, $.nony.validator._messages[msgType+"_"+globalMap.get("langCode")], "select");
+			return $.nony.validator._execError(jQueryElement, $.nony.validator._messages[msgType+"_"+jsconfig.get("langCode")], "select");
 		},
 		_checkKor : function(str, tail) {
 			return (this._hasFinalConsonant(str)) ? tail.substring(0, 1) : tail.substring(1, 2);
@@ -206,49 +206,49 @@
 			var value = val ? val : $(element).val();
 			var pattern = /^[_a-zA-Z0-9-\.]+@[\.a-zA-Z0-9-]+\.[a-zA-Z]+$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["email_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["email_"+jsconfig.get("langCode")], "select");
 		},
 		isValidPhoneNumber : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /^[0-9]{2,3}[- ]?[0-9]{3,4}[- ]?[0-9]{3,4}$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["phoneNumber_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["phoneNumber_"+jsconfig.get("langCode")], "select");
 		},
 		isValidMobileNumber : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /^[0]{1}[0-9]{2,3}[- ]?[0-9]{3,4}[- ]?[0-9]{3,4}$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["mobileNumber_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["mobileNumber_"+jsconfig.get("langCode")], "select");
 		},
 		isValidUserId : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /^[a-zA-Z0-9]{4,16}$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["userId_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["userId_"+jsconfig.get("langCode")], "select");
 		},
 		isValidPassword : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /^[a-zA-Z0-9]{4,16}$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["password_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["password_"+jsconfig.get("langCode")], "select");
 		},
 		isValidIncKor : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /[가-힣]/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["incKor_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["incKor_"+jsconfig.get("langCode")], "select");
 		},
 		isValidEngOnly : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /^[a-zA-Z]+$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["engOnly_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["engOnly_"+jsconfig.get("langCode")], "select");
 		},
 		isValidNumeric : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /^[-+0-9,.]+$/;
 
-			return (pattern.test(value)) ? true : this._execError($(element), this._messages["numeric_"+globalMap.get("langCode")], "select");
+			return (pattern.test(value)) ? true : this._execError($(element), this._messages["numeric_"+jsconfig.get("langCode")], "select");
 		},
 		isValidResNumber : function(element, val) {
 			var value = val ? val : $(element).val();
@@ -256,7 +256,7 @@
 			var digit = 0;
 			var digset = "234567892345";
 
-			if (!pattern.test(value)) {return this._execError($(element), this._messages["resNumber_"+globalMap.get("langCode")], "select");}
+			if (!pattern.test(value)) {return this._execError($(element), this._messages["resNumber_"+jsconfig.get("langCode")], "select");}
 
 			value = RegExp.$1 + RegExp.$2;
 
@@ -269,7 +269,7 @@
 			digit = digit % 10;
 
 			if (digit != parseInt(value.charAt(12), 10)) {
-				return this._execError($(element), this._messages["resNumber_"+globalMap.get("langCode")], "select");
+				return this._execError($(element), this._messages["resNumber_"+jsconfig.get("langCode")], "select");
 			}
 
 			return true;
@@ -281,7 +281,7 @@
 			var corpNum = "";
 			var step1 = step2 = step3 = step4 = step5 = step6 = step7 = 0;
 
-			if (!pattern.test(value)) {return this._execError($(element), this._messages["bizNumber_"+globalMap.get("langCode")], "select");}
+			if (!pattern.test(value)) {return this._execError($(element), this._messages["bizNumber_"+jsconfig.get("langCode")], "select");}
 
 			value = RegExp.$1 + RegExp.$2 + RegExp.$3;
 			corpNum = value;
@@ -298,7 +298,7 @@
 			step7 = (10 - ((step2 + step3 + step5 + step6) % 10)) % 10;
 
 			if (corpNum.substring(9, 10) != step7) {
-				return this._execError($(element), this._messages["bizNumber_"+globalMap.get("langCode")], "select");
+				return this._execError($(element), this._messages["bizNumber_"+jsconfig.get("langCode")], "select");
 			}
 
 			return;
@@ -306,7 +306,7 @@
 		isValidDomain : function(element, val) {
 			var value = val ? val : $(element).val();
 
-			if (value.indexOf("http://") != -1) {return this._execError($(element), this._messages["domain_"+globalMap.get("langCode")], "select");}
+			if (value.indexOf("http://") != -1) {return this._execError($(element), this._messages["domain_"+jsconfig.get("langCode")], "select");}
 
 			var pattern = new RegExp("^(http://)?([가-힣a-zA-Z0-9-\.]+\.[a-zA-Z]{2,3}$)", "i");
 
@@ -314,35 +314,35 @@
 				$(element).val(RegExp.$2);
 				return true;
 			} else {
-				return this._execError($(element), this._messages["domain_"+globalMap.get("langCode")], "select");
+				return this._execError($(element), this._messages["domain_"+jsconfig.get("langCode")], "select");
 			}
 		},
 		isValidUploadFile : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /[\w\W]+\.asp|aspx|py|perl|lasso|cfm|cgi|afp|asa|php|phps|php3|php4|js|jsp|jsf|jspx|exe|bat|pl$/i;
 
-			if (pattern.test(value)) {return this._execError($(element), this._messages["notUploadable_"+globalMap.get("langCode")], "select");}
+			if (pattern.test(value)) {return this._execError($(element), this._messages["notUploadable_"+jsconfig.get("langCode")], "select");}
 			else {return true;}
 		},
 		isValidSpecialCharAll : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /[$]|[%]|[&]|[`]|[=]|[?]|[\]|[_]|[|]|[\']|[\"]/;
 
-			if (pattern.test(value)) {return this._execError($(element), this._messages["specialCharAll_"+globalMap.get("langCode")], "delete");}
+			if (pattern.test(value)) {return this._execError($(element), this._messages["specialCharAll_"+jsconfig.get("langCode")], "delete");}
 			else {return true;}
 		},
 		isValidSpecialCharSome : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /[`]|[\']|[\"]/;
 
-			if (pattern.test(value)) {return this._execError($(element), this._messages["specialCharSome_"+globalMap.get("langCode")], "delete");}
+			if (pattern.test(value)) {return this._execError($(element), this._messages["specialCharSome_"+jsconfig.get("langCode")], "delete");}
 			else {return true;}
 		},
 		isValidDate : function(element, val) {
 			var value = val ? val : $(element).val();
 
-			if (!moment(value, globalMap.get("dateFormatJs")).isValid()) {
-				return this._execError($(element), this._messages["date_"+globalMap.get("langCode")], "select");
+			if (!moment(value, jsconfig.get("dateFormatJs")).isValid()) {
+				return this._execError($(element), this._messages["date_"+jsconfig.get("langCode")], "select");
 			} else {
 				return true;
 			}

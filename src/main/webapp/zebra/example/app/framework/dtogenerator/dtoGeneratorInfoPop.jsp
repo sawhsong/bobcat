@@ -63,10 +63,10 @@ $(function() {
 	$("[name=system]").click(function(event) {
 		if ($(this).val() == "Framework") {
 			$("#divSystemProject").stop().animate({opacity:"hide"}, "fast");
-			$("#divSystemFramework").stop().delay(300).animate({opacity:"show"}, globalMap.get("effectDuration"));
+			$("#divSystemFramework").stop().delay(300).animate({opacity:"show"}, jsconfig.get("effectDuration"));
 		} else if ($(this).val() == "Project") {
 			$("#divSystemFramework").stop().animate({opacity:"hide"}, "fast");
-			$("#divSystemProject").stop().delay(300).animate({opacity:"show"}, globalMap.get("effectDuration"));
+			$("#divSystemProject").stop().delay(300).animate({opacity:"show"}, jsconfig.get("effectDuration"));
 		}
 	});
 

@@ -29,8 +29,8 @@
 <script type="text/javascript">
 var popup = null;
 var searchResultDataCount = 0;
-var dateFormat = globalMap.get("dateFormatJs");
-var langCode = globalMap.get("langCode").toUpperCase();
+var dateFormat = jsconfig.get("dateFormatJs");
+var langCode = jsconfig.get("langCode").toUpperCase();
 
 $(function() {
 	/*!

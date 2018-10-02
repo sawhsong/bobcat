@@ -53,65 +53,65 @@
 /*!
  * session attributes
  */
-globalMap.put("frameworkName", "${sessionScope.frameworkName}");
-globalMap.put("projectName", "${sessionScope.projectName}");
-globalMap.put("langCode", "${sessionScope.langCode}");
-globalMap.put("themeId", "${sessionScope.themeId}");
-globalMap.put("maxRowsPerPage", "${sessionScope.maxRowsPerPage}");
-globalMap.put("pageNumsPerPage", "${sessionScope.pageNumsPerPage}");
+jsconfig.put("frameworkName", "${sessionScope.frameworkName}");
+jsconfig.put("projectName", "${sessionScope.projectName}");
+jsconfig.put("langCode", "${sessionScope.langCode}");
+jsconfig.put("themeId", "${sessionScope.themeId}");
+jsconfig.put("maxRowsPerPage", "${sessionScope.maxRowsPerPage}");
+jsconfig.put("pageNumsPerPage", "${sessionScope.pageNumsPerPage}");
 /*!
  * paths
  */
-globalMap.put("shareRoot", "<mc:cp key="sharedRoot"/>");
-globalMap.put("sharePage", "<mc:cp key="sharedPage"/>");
-globalMap.put("shareCss", "<mc:cp key="sharedCss"/>");
-globalMap.put("shareImg", "<mc:cp key="sharedImg"/>");
-globalMap.put("shareJs", "<mc:cp key="sharedJs"/>");
-globalMap.put("cssJqUi", "<mc:cp key="cssJqUi"/>");
-globalMap.put("imgIcon", "<mc:cp key="imgIcon"/>");
-globalMap.put("imgPhoto", "<mc:cp key="path.image.photo"/>");
-globalMap.put("imgSortableTable", "<mc:cp key="imgSortableTable"/>");
-globalMap.put("jsCommon", "<mc:cp key="jsCommon"/>");
-globalMap.put("jsJq", "<mc:cp key="jsJq"/>");
-globalMap.put("jsNg", "<mc:cp key="jsNg"/>");
-globalMap.put("jsJqPlugin", "<mc:cp key="jsJqPlugin"/>");
-globalMap.put("jsMessage", "<mc:cp key="jsMessage"/>");
-globalMap.put("cssTheme", "<mc:cp key="cssTheme"/>");
-globalMap.put("imgTheme", "<mc:cp key="imgTheme"/>");
-globalMap.put("imgThemeCom", "<mc:cp key="imgThemeCom"/>");
-globalMap.put("imgThemeCal", "<mc:cp key="imgThemeCal"/>");
-globalMap.put("imgThemePage", "<mc:cp key="imgThemePage"/>");
-globalMap.put("ckEditor", "<mc:cp key="ckEditor"/>");
-globalMap.put("slider", "<mc:cp key="slider"/>");
-globalMap.put("bootstrap", "<mc:cp key="bootstrap"/>");
+jsconfig.put("shareRoot", "<mc:cp key="sharedRoot"/>");
+jsconfig.put("sharePage", "<mc:cp key="sharedPage"/>");
+jsconfig.put("shareCss", "<mc:cp key="sharedCss"/>");
+jsconfig.put("shareImg", "<mc:cp key="sharedImg"/>");
+jsconfig.put("shareJs", "<mc:cp key="sharedJs"/>");
+jsconfig.put("cssJqUi", "<mc:cp key="cssJqUi"/>");
+jsconfig.put("imgIcon", "<mc:cp key="imgIcon"/>");
+jsconfig.put("imgPhoto", "<mc:cp key="path.image.photo"/>");
+jsconfig.put("imgSortableTable", "<mc:cp key="imgSortableTable"/>");
+jsconfig.put("jsCommon", "<mc:cp key="jsCommon"/>");
+jsconfig.put("jsJq", "<mc:cp key="jsJq"/>");
+jsconfig.put("jsNg", "<mc:cp key="jsNg"/>");
+jsconfig.put("jsJqPlugin", "<mc:cp key="jsJqPlugin"/>");
+jsconfig.put("jsMessage", "<mc:cp key="jsMessage"/>");
+jsconfig.put("cssTheme", "<mc:cp key="cssTheme"/>");
+jsconfig.put("imgTheme", "<mc:cp key="imgTheme"/>");
+jsconfig.put("imgThemeCom", "<mc:cp key="imgThemeCom"/>");
+jsconfig.put("imgThemeCal", "<mc:cp key="imgThemeCal"/>");
+jsconfig.put("imgThemePage", "<mc:cp key="imgThemePage"/>");
+jsconfig.put("ckEditor", "<mc:cp key="ckEditor"/>");
+jsconfig.put("slider", "<mc:cp key="slider"/>");
+jsconfig.put("bootstrap", "<mc:cp key="bootstrap"/>");
 /*!
  * jQuery UI
  */
-globalMap.put("useJqTooltip", true);
-globalMap.put("useJqSelectmenu", true);
-globalMap.put("useJqButton", true);
+jsconfig.put("useJqTooltip", true);
+jsconfig.put("useJqSelectmenu", true);
+jsconfig.put("useJqButton", true);
 /*!
  * etc
  */
-globalMap.put("basicDateTimeJs", "<mc:cp key="format.basic.dateTime.js"/>");
-globalMap.put("dateTimeFormatJs", "<mc:cp key="format.dateTime.js"/>");
-globalMap.put("dateFormatJs", "<mc:cp key="dateFormatJs"/>");
-globalMap.put("dateFormatJs_en", "<mc:cp key="dateFormatJs_en"/>");
-globalMap.put("dateFormatJs_ko", "<mc:cp key="dateFormatJs_ko"/>");
-globalMap.put("submitEffect", "<mc:cp key="submitEffect"/>");
-globalMap.put("customFileObject", "<mc:cp key="customFileObject"/>");
-globalMap.put("recordDelimiter", "<mc:cp key="recordDelimiter"/>");
-globalMap.put("dataDelimiter", "<mc:cp key="dataDelimiter"/>");
-globalMap.put("dataSetHeaderDelimiter", "<mc:cp key="dataSetHeaderDelimiter"/>");
-globalMap.put("effectDuration", 400);
-globalMap.put("pagehandlerActionType", "<mc:cp key="pagehandlerActionType"/>");
-globalMap.put("webServiceProviderUrl", "<mc:cp key="webService.provider.url"/>");
-globalMap.put("maxRowsPerPageArray", "<mc:cp key="view.data.maxRowsPerPage"/>");
+jsconfig.put("basicDateTimeJs", "<mc:cp key="format.basic.dateTime.js"/>");
+jsconfig.put("dateTimeFormatJs", "<mc:cp key="format.dateTime.js"/>");
+jsconfig.put("dateFormatJs", "<mc:cp key="dateFormatJs"/>");
+jsconfig.put("dateFormatJs_en", "<mc:cp key="dateFormatJs_en"/>");
+jsconfig.put("dateFormatJs_ko", "<mc:cp key="dateFormatJs_ko"/>");
+jsconfig.put("submitEffect", "<mc:cp key="submitEffect"/>");
+jsconfig.put("customFileObject", "<mc:cp key="customFileObject"/>");
+jsconfig.put("recordDelimiter", "<mc:cp key="recordDelimiter"/>");
+jsconfig.put("dataDelimiter", "<mc:cp key="dataDelimiter"/>");
+jsconfig.put("dataSetHeaderDelimiter", "<mc:cp key="dataSetHeaderDelimiter"/>");
+jsconfig.put("effectDuration", 400);
+jsconfig.put("pagehandlerActionType", "<mc:cp key="pagehandlerActionType"/>");
+jsconfig.put("webServiceProviderUrl", "<mc:cp key="webService.provider.url"/>");
+jsconfig.put("maxRowsPerPageArray", "<mc:cp key="view.data.maxRowsPerPage"/>");
 /*!
  * auto-setup search criteria
  */
-globalMap.put("autoSetSearchCriteria", "<mc:cp key="autoSetSearchCriteria"/>");
-globalMap.put("searchCriteriaElementSuffix", "<mc:cp key="searchCriteriaElementSuffix"/>");
-globalMap.put("searchCriteriaDataSetString", "${pageScope.searchCriteriaDataSet.toStringForJs()}");
+jsconfig.put("autoSetSearchCriteria", "<mc:cp key="autoSetSearchCriteria"/>");
+jsconfig.put("searchCriteriaElementSuffix", "<mc:cp key="searchCriteriaElementSuffix"/>");
+jsconfig.put("searchCriteriaDataSetString", "${pageScope.searchCriteriaDataSet.toStringForJs()}");
 </script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/contextMenuItems.js"></script>
