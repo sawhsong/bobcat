@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import zebra.example.common.extend.BaseBiz;
 
-public class ZebraFrameworkBSM extends BaseBiz implements ZebraFrameworkBizServiceModule {
+public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizService {
 	private Logger logger = LogManager.getLogger(getClass());
 
 
