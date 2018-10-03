@@ -37,7 +37,7 @@ public class MainBizImpl extends BaseBiz implements MainBiz {
 		try {
 			String mode = requestDataSet.getValue("hdnGarbageCollector");
 			String realPath = (String)MemoryBean.get("applicationRealPath");
-			String webPath = ConfigUtil.getProperty("path.dir.temp") + "/vmchart";
+			String webPath = "/shared/repository/temp/vmchart"; //ConfigUtil.getProperty("path.dir.temp") + "/vmchart";
 			String chartFileName = "/vmchart" + CommonUtil.uid() + ".png";
 
 			DefaultPieDataset pieDataset = new DefaultPieDataset();
