@@ -39,4 +39,11 @@ public class FileUtil extends FileUtils {
 			moveFile(new File(tempPath), new File(path));
 		}
 	}
+
+	public static void createFolder(String folderPath) throws Exception {
+		File dir = new File(folderPath);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+	}
 }
