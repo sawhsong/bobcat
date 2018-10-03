@@ -13,7 +13,7 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class Biz {
-	protected Logger logger = LogManager.getLogger(this.getClass());
+	protected Logger logger = LogManager.getLogger(getClass());
 
 	private SqlSessionTemplate sqlSessionTemplate;
 	private SessionFactory sessionFactory;

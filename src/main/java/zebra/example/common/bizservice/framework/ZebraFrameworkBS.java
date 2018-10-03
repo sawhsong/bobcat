@@ -20,8 +20,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Comment;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -40,9 +38,6 @@ import zebra.util.ConfigUtil;
 import zebra.util.FileUtil;
 
 public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizService {
-	@SuppressWarnings("unused")
-	private Logger logger = LogManager.getLogger(getClass());
-
 	/*!
 	 * DTO Generator
 	 */

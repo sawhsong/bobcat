@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ZebraMessageQueueListener implements MessageListener {
-	private Logger logger = LogManager.getLogger(this.getClass());
+	private Logger logger = LogManager.getLogger(getClass());
 
 	@SuppressWarnings("rawtypes")
 	public void onMessage(Message message) {

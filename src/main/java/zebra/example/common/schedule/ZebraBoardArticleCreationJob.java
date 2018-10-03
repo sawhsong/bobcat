@@ -14,7 +14,7 @@ import zebra.util.ConfigUtil;
 import zebra.util.HtmlUtil;
 
 public class ZebraBoardArticleCreationJob extends QuartzJobBean {
-	private Logger logger = LogManager.getLogger(ZebraBoardArticleCreationJob.class);
+	private Logger logger = LogManager.getLogger(getClass());
 	private ZebraBoardDao zebraBoardDao;
 
 	public void setZebraBoardDao(ZebraBoardDao zebraBoardDao) {
