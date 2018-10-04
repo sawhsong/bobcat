@@ -141,7 +141,7 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=HtmlUtil.htmlToString(noticeBoard.getArticleContents())%>"/>
+				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=noticeBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>

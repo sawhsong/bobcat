@@ -188,7 +188,7 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
 			<td class="tdEdit" colspan="3" style="height:200px;vertical-align:top">
-				<%=HtmlUtil.stringToHtml(zebraDomainDictionary.getDescription())%>
+				<ui:txa value="<%=zebraDomainDictionary.getDescription()%>" className="defClass" style="height:190px;padding:0px" status="display"/>
 			</td>
 		</tr>
 		<tr>

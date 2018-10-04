@@ -214,7 +214,7 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<%=HtmlUtil.stringToHtml(noticeBoard.getArticleContents())%>
+				<%=noticeBoard.getArticleContents()%>
 			</td>
 		</tr>
 		<tr>

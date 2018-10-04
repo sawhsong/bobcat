@@ -16,6 +16,7 @@ import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
+import zebra.util.HtmlUtil;
 
 public class AjaxResponse extends StrutsResultSupport {
 	@SuppressWarnings("rawtypes")
@@ -81,8 +82,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("<ajaxResponse>\n");
 		sb.append("<isSuccess>"+paramEntity.isSuccess()+"</isSuccess>\n");
 		sb.append("<messageCode>"+paramEntity.getMessageCode()+"</messageCode>\n");
-		sb.append("<message>"+paramEntity.getMessage()+"</message>\n");
-//		sb.append("<message>"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</message>\n");
+		sb.append("<message>"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</message>\n");
 		sb.append("<totalResultRows>"+paramEntity.getTotalResultRows()+"</totalResultRows>\n");
 		sb.append("</ajaxResponse>");
 
@@ -96,7 +96,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("<ajaxResponse>\n");
 		sb.append("<isSuccess>"+paramEntity.isSuccess()+"</isSuccess>\n");
 		sb.append("<messageCode>"+paramEntity.getMessageCode()+"</messageCode>\n");
-		sb.append("<message>"+paramEntity.getMessage()+"</message>\n");
+		sb.append("<message>"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</message>\n");
 		sb.append("<totalResultRows>"+paramEntity.getTotalResultRows()+"</totalResultRows>\n");
 		sb.append("<dataSet>\n");
 		sb.append("\t<dataSetHeader>\n");
@@ -108,8 +108,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		for (int i=0; i<ds.getRowCnt(); i++) {
 			sb.append("\t\t<dataSetRowItems>\n");
 			for (int j=0; j<ds.getColumnCnt(); j++) {
-				sb.append("\t\t\t<rowItem name=\"").append(ds.getName(j)).append("\" value=\"").append(ds.getValue(i, j)).append("\" />\n");
-//				sb.append("\t\t\t<rowItem name=\"").append(ds.getName(j)).append("\" value=\"").append(HtmlUtil.stringToHtml(ds.getValue(i, j))).append("\" />\n");
+				sb.append("\t\t\t<rowItem name=\"").append(ds.getName(j)).append("\" value=\"").append(HtmlUtil.stringToHtml(ds.getValue(i, j))).append("\" />\n");
 			}
 			sb.append("\t\t</dataSetRowItems>\n");
 		}
@@ -137,8 +136,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("\t\t\t<tr>\n");
 		sb.append("\t\t\t\t<td id=\"isSuccess\" class=\"tdBlank\">"+paramEntity.isSuccess()+"</td>\n");
 		sb.append("\t\t\t\t<td id=\"messageCode\" class=\"tdBlank\">"+paramEntity.getMessageCode()+"</td>\n");
-		sb.append("\t\t\t\t<td id=\"message\" class=\"tdBlank\">"+paramEntity.getMessage()+"</td>\n");
-//		sb.append("\t\t\t\t<td id=\"message\" class=\"tdBlank\">"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</td>\n");
+		sb.append("\t\t\t\t<td id=\"message\" class=\"tdBlank\">"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</td>\n");
 		sb.append("\t\t\t\t<td id=\"totalResultRows\" class=\"tdBlank\">"+paramEntity.getTotalResultRows()+"</td>\n");
 		sb.append("\t\t\t</tr>\n");
 		sb.append("\t\t</tbody>\n");
@@ -165,8 +163,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("\t\t\t<tr>\n");
 		sb.append("\t\t\t\t<td id=\"isSuccess\" class=\"tdBlank\">"+paramEntity.isSuccess()+"</td>\n");
 		sb.append("\t\t\t\t<td id=\"messageCode\" class=\"tdBlank\">"+paramEntity.getMessageCode()+"</td>\n");
-		sb.append("\t\t\t\t<td id=\"message\" class=\"tdBlank\">"+paramEntity.getMessage()+"</td>\n");
-//		sb.append("\t\t\t\t<td id=\"message\" class=\"tdBlank\">"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</td>\n");
+		sb.append("\t\t\t\t<td id=\"message\" class=\"tdBlank\">"+HtmlUtil.stringToHtml(paramEntity.getMessage())+"</td>\n");
 		sb.append("\t\t\t\t<td id=\"totalResultRows\" class=\"tdBlank\">"+paramEntity.getTotalResultRows()+"</td>\n");
 		sb.append("\t\t\t</tr>\n");
 		sb.append("\t\t</tbody>\n");
@@ -183,8 +180,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		for (int i=0; i<ds.getRowCnt(); i++) {
 			sb.append("\t\t\t<tr>\n");
 			for (int j=0; j<ds.getColumnCnt(); j++) {
-				sb.append("\t\t\t\t<td class=\"tdBlank\">").append(ds.getValue(i, j)).append("</td>\n");
-//				sb.append("\t\t\t\t<td class=\"tdBlank\">").append(HtmlUtil.stringToHtml(ds.getValue(i, j))).append("</td>\n");
+				sb.append("\t\t\t\t<td class=\"tdBlank\">").append(HtmlUtil.stringToHtml(ds.getValue(i, j))).append("</td>\n");
 			}
 			sb.append("\t\t\t</tr>\n");
 		}
@@ -201,8 +197,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("{");
 		sb.append("\"isSuccess\":\""+paramEntity.isSuccess()+"\",");
 		sb.append("\"messageCode\":\""+paramEntity.getMessageCode()+"\",");
-		sb.append("\"message\":\""+paramEntity.getMessage()+"\",");
-//		sb.append("\"message\":\""+HtmlUtil.stringToHtml(paramEntity.getMessage())+"\",");
+		sb.append("\"message\":\""+HtmlUtil.stringToHtml(paramEntity.getMessage())+"\",");
 		sb.append("\"totalResultRows\":\""+paramEntity.getTotalResultRows()+"\"");
 		sb.append("}");
 
@@ -215,8 +210,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		sb.append("{");
 		sb.append("\"isSuccess\":\""+paramEntity.isSuccess()+"\",");
 		sb.append("\"messageCode\":\""+paramEntity.getMessageCode()+"\",");
-		sb.append("\"message\":\""+paramEntity.getMessage()+"\",");
-//		sb.append("\"message\":\""+HtmlUtil.stringToHtml(paramEntity.getMessage())+"\",");
+		sb.append("\"message\":\""+HtmlUtil.stringToHtml(paramEntity.getMessage())+"\",");
 		sb.append("\"totalResultRows\":\""+paramEntity.getTotalResultRows()+"\",");
 		sb.append("\"dataSet\":{");
 		sb.append("\"dataSetHeader\":[");
@@ -231,8 +225,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		for (int i=0; i<ds.getRowCnt(); i++) {
 			sb.append("\"dataSetValueRow").append(i).append("\":[");
 			for (int j=0; j<ds.getColumnCnt(); j++) {
-				sb.append("\"").append(ds.getValue(i, j)).append("\"");
-//				sb.append("\"").append(HtmlUtil.stringToHtml(ds.getValue(i, j))).append("\"");
+				sb.append("\"").append(HtmlUtil.stringToHtml(ds.getValue(i, j))).append("\"");
 				if (j < ds.getColumnCnt()-1) {
 					sb.append(",");
 				}
@@ -256,7 +249,7 @@ public class AjaxResponse extends StrutsResultSupport {
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
 
 		sb.append("isSuccess"+delimiter+"messageCode"+delimiter+"message"+delimiter+"totalResultRows").append("\n");
-		sb.append(paramEntity.isSuccess()+delimiter+paramEntity.getMessageCode()+delimiter+paramEntity.getMessage()+delimiter+paramEntity.getTotalResultRows());
+		sb.append(paramEntity.isSuccess()+delimiter+paramEntity.getMessageCode()+delimiter+HtmlUtil.stringToHtml(paramEntity.getMessage())+delimiter+paramEntity.getTotalResultRows());
 
 		return sb.toString();
 	}
@@ -266,11 +259,11 @@ public class AjaxResponse extends StrutsResultSupport {
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
 
 		sb.append("isSuccess"+delimiter+"messageCode"+delimiter+"message"+delimiter+"totalResultRows").append("\n");
-		sb.append(paramEntity.isSuccess()+delimiter+paramEntity.getMessageCode()+delimiter+paramEntity.getMessage()+delimiter+paramEntity.getTotalResultRows()).append("\n\n");
+		sb.append(paramEntity.isSuccess()+delimiter+paramEntity.getMessageCode()+delimiter+HtmlUtil.stringToHtml(paramEntity.getMessage())+delimiter+paramEntity.getTotalResultRows()).append("\n\n");
 		sb.append(CommonUtil.toString(ds.getNames(), delimiter)).append("\n");
 		for (int i=0; i<ds.getRowCnt(); i++) {
 			for (int j=0; j<ds.getColumnCnt(); j++) {
-				sb.append(ds.getValue(i, j));
+				sb.append(HtmlUtil.stringToHtml(ds.getValue(i, j)));
 				if (j < ds.getColumnCnt()-1) {
 					sb.append(delimiter);
 				}

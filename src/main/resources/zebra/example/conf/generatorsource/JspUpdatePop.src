@@ -141,7 +141,7 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=HtmlUtil.htmlToString(sysBoard.getArticleContents())%>"/>
+				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>
