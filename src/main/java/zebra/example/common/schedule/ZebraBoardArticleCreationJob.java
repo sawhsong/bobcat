@@ -11,7 +11,6 @@ import zebra.example.conf.resource.ormapper.dao.ZebraBoard.ZebraBoardDao;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoard;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.HtmlUtil;
 
 public class ZebraBoardArticleCreationJob extends QuartzJobBean {
 	private Logger logger = LogManager.getLogger(getClass());
@@ -43,7 +42,7 @@ public class ZebraBoardArticleCreationJob extends QuartzJobBean {
 			zebraBoard.setWriterEmail(ConfigUtil.getProperty("mail.default.from"));
 			zebraBoard.setWriterIpAddress("127.0.0.1");
 			zebraBoard.setArticleSubject("System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm("ZebraBoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"), "\n"));
+			zebraBoard.setArticleContents("ZebraBoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
 			zebraBoard.setInsertUserId("0");
 			zebraBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraBoard.setRefArticleId("-1");

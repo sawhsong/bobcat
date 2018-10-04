@@ -57,8 +57,10 @@ public class Textarea extends TaglibSupport {
 				}
 			}
 
-			html.append("<textarea id=\""+id+"\" name=\""+name+"\"");
+			html.append("<textarea");
 
+			if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
+			if (CommonUtil.isNotBlank(name)) {html.append(" name=\""+name+"\"");}
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(scriptStr)) {html.append(" "+scriptStr+"");}

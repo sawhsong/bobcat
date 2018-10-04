@@ -16,12 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 import zebra.base.Dto;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.HtmlUtil;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 
 public class ParamEntity {
 	private boolean isSuccess;
@@ -316,7 +315,8 @@ public class ParamEntity {
 	}
 
 	public void setObjectFromXmlString(String xmlString) throws Exception {
-		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(HtmlUtil.htmlToHexForXml(xmlString))));
+		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xmlString)));
+//		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(HtmlUtil.htmlToHexForXml(xmlString))));
 		Element root = doc.getDocumentElement();
 		String nodeName = root.getNodeName(), nodeValue = "";
 
@@ -373,14 +373,16 @@ public class ParamEntity {
 
 						sb.append(",");
 						sb.append("\""+key+"\":");
-						sb.append(HtmlUtil.stringToHtmlForJson(ds.toJsonString()));
+						sb.append(ds.toJsonString());
+//						sb.append(HtmlUtil.stringToHtmlForJson(ds.toJsonString()));
 					} else if (value instanceof Dto) {
 						Dto dto = (Dto)value;
 						DataSet ds = dto.getDataSet();
 
 						sb.append(",");
 						sb.append("\""+key+"\":");
-						sb.append(HtmlUtil.stringToHtmlForJson(ds.toJsonString()));
+						sb.append(ds.toJsonString());
+//						sb.append(HtmlUtil.stringToHtmlForJson(ds.toJsonString()));
 					} else {
 						sb.append(",");
 						sb.append("\""+key+"\":\""+value+"\"");

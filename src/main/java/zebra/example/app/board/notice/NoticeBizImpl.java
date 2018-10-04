@@ -17,7 +17,6 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-import zebra.util.HtmlUtil;
 
 public class NoticeBizImpl extends BaseBiz implements NoticeBiz {
 	@Autowired
@@ -54,12 +53,9 @@ public class NoticeBizImpl extends BaseBiz implements NoticeBiz {
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String articleId = requestDataSet.getValue("articleId");
-		ZebraBoard zebraBoard;
 
 		try {
-			zebraBoard = zebraBoardDao.getBoardByArticleId(articleId);
-			zebraBoard.setArticleContents(HtmlUtil.stringToHtml(zebraBoard.getArticleContents()));
-			paramEntity.setObject("noticeBoard", zebraBoard);
+			paramEntity.setObject("noticeBoard", zebraBoardDao.getBoardByArticleId(articleId));
 			paramEntity.setObject("fileDataSet", zebraBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
 
 			zebraBoardDao.updateVisitCountByArticleId(articleId);

@@ -34,7 +34,6 @@ import zebra.data.ParamEntity;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.FileUtil;
-import zebra.util.HtmlUtil;
 
 public class Action extends ActionSupport implements ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware, HttpParametersAware, ApplicationAware {
 	protected Logger logger = LogManager.getLogger(getClass());
@@ -147,13 +146,14 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 					if (CommonUtil.indexOf(valueStr, recordDelimiter) == 0) {
 						values = new String[] {};
 					}
+					searchCriteriaDataSet.addColumn(key, value);
 //					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
-//					searchCriteriaDataSet.addColumn(key, value);
+//					searchCriteriaDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
+
 				} else {
+					requestDataSet.addColumn(key, value);
 //					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(CommonUtil.toString(values, recordDelimiter)));
-					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
-//					requestDataSet.addColumn(key, value);
+//					requestDataSet.addColumn(key, HtmlUtil.stringToHtml(value));
 				}
 			}
 
@@ -243,7 +243,8 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 							UploadedFile[] files = (UploadedFile[])multipartWrapper.getFiles(inputName);
 
 							if (files != null && files.length > 0) {
-								String newName = CommonUtil.getSysdate("yyyyMMddHHmmss") + "_" + CommonUtil.uid() + "_" + HtmlUtil.stringToHtml(fileNames[0]);
+								String newName = CommonUtil.getSysdate("yyyyMMddHHmmss") + "_" + CommonUtil.uid() + "_" + fileNames[0];
+//								String newName = CommonUtil.getSysdate("yyyyMMddHHmmss") + "_" + CommonUtil.uid() + "_" + HtmlUtil.stringToHtml(fileNames[0]);
 								File fileToSave = new File(pathTemp, newName);
 								FileUtil.copyFile((File)(files[0].getContent()), fileToSave);
 

@@ -1,6 +1,5 @@
 package zebra.data;
 
-import java.io.BufferedReader;
 import java.io.Reader;
 import java.sql.Clob;
 import java.sql.ResultSet;
@@ -13,16 +12,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import zebra.util.CommonUtil;
-import zebra.util.ConfigUtil;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class DataSet {
 	private Logger logger = LogManager.getLogger(this.getClass());
@@ -510,19 +509,20 @@ public class DataSet {
 		}
 	}
 
-	private String getString(Object object) throws Exception{
+	private String getString(Object object) throws Exception {
 		StringBuilder strBuilder = new StringBuilder();
 
 		if (object != null) {
 			if (object instanceof Clob) {
 				Reader reader = ((Clob)object).getCharacterStream();
-				BufferedReader br = new BufferedReader(reader);
-				String lineStr;
-
-				while ((lineStr = br.readLine()) != null) {
-					strBuilder.append(lineStr);
-				}
-				br.close();
+//				BufferedReader br = new BufferedReader(reader);
+//				String lineStr;
+//
+//				while ((lineStr = br.readLine()) != null) {
+//					strBuilder.append(lineStr);
+//				}
+//				br.close();
+				strBuilder.append(getLob(reader));
 			} else if (object instanceof Timestamp) {
 				strBuilder.append(new SimpleDateFormat(ConfigUtil.getProperty("format.default.dateTime")).format(object));
 			} else {

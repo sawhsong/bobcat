@@ -19,7 +19,6 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-import zebra.util.HtmlUtil;
 import zebra.wssupport.RestServiceSupport;
 
 public class NoticeBoardServiceImpl extends BaseWebService implements NoticeBoardService {
@@ -133,7 +132,7 @@ public class NoticeBoardServiceImpl extends BaseWebService implements NoticeBoar
 			zebraBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
 			zebraBoard.setWriterIpAddress((String)paramEntity.getObject("ipAddress"));
 			zebraBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm(requestDataSet.getValue("articleContents"), "\n"));
+			zebraBoard.setArticleContents(requestDataSet.getValue("articleContents"));
 			zebraBoard.setInsertUserId(userId);
 			zebraBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraBoard.setRefArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
@@ -180,7 +179,7 @@ public class NoticeBoardServiceImpl extends BaseWebService implements NoticeBoar
 			zebraBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
 			zebraBoard.setWriterIpAddress((String)paramEntity.getObject("ipAddress"));
 			zebraBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			zebraBoard.setArticleContents(HtmlUtil.special2htm(requestDataSet.getValue("articleContents"), "\n"));
+			zebraBoard.setArticleContents(requestDataSet.getValue("articleContents"));
 			zebraBoard.setUpdateUserId(userId);
 			zebraBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 

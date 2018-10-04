@@ -17,7 +17,6 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-import zebra.util.HtmlUtil;
 
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
@@ -60,12 +59,9 @@ public class #MENU_ID_START_UPPER#BizImpl extends BaseBiz implements #MENU_ID_ST
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String articleId = requestDataSet.getValue("articleId");
-		SysBoard sysBoard;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleContents(HtmlUtil.stringToHtml(sysBoard.getArticleContents()));
-			paramEntity.setObject("sysBoard", sysBoard);
+			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
 			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
 
 			sysBoardDao.updateVisitCountByArticleId(articleId);
