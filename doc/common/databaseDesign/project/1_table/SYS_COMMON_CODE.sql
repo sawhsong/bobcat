@@ -1,8 +1,52 @@
 /**
  * Category    : SYS
- * Table ID    : SYS_COMMON_CODE
- * Table Name  : Common Lookup Code
- * Description : Import Excel file
+ * Table Name  : SYS_COMMON_CODE
+ * Description : Common Lookup Code
+ */
+drop table sys_common_code cascade constraints;
+purge recyclebin;
+
+create table sys_common_code (
+    code_type                       varchar2(50)                                        not null,   -- Code type (PK) - PERCI codes have 50(need to be amended to 30 later), ideal length is 30
+    common_code                     varchar2(60)                                        not null,   -- Common code (PK) - PERCI codes have 60(need to be amended to 30 later), ideal length is 30
+    code_meaning                    varchar2(1000)                                      not null,   -- Code Meaning
+    description_ko                  varchar2(2000),                                                 -- Code Description (Korean) - PERCI codes have 2000(need to be amended to 1000 later), ideal length is 1000
+    description_en                  varchar2(2000),                                                 -- Code Description (English) - PERCI codes have 2000(need to be amended to 1000 later), ideal length is 1000
+    program_constants               varchar2(100)                                       not null,   -- Constants value for the common code to be used in program source code
+    sort_order                      varchar2(3),                                                    -- Sort Order
+    is_active                       varchar2(1)                 default 'Y',                        -- Is active?
+    is_default                      varchar2(1)                 default 'N',                        -- Is default code item? (default code item should not be deleted)
+    insert_user_id                  varchar2(50),                                                   -- Insert User UID
+    insert_date                     date                        default sysdate,                    -- Insert Date
+    update_user_id                  varchar2(50),                                                   -- Update User UID
+    update_date                     date,                                                           -- Update Date
+
+    constraint pk_sys_common_code primary key(code_type, common_code),
+    constraint uk_sys_common_code unique(program_constants)
+    using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
+)
+pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+
+comment on table  sys_common_code                   is 'Common Lookup Code';
+comment on column sys_common_code.code_type         is 'Code type (PK) - PERCI codes have 50(need to be amended to 30 later), ideal length is 30';
+comment on column sys_common_code.common_code       is 'Common code (PK) - PERCI codes have 60(need to be amended to 30 later), ideal length is 30';
+comment on column sys_common_code.code_meaning      is 'Code Meaning';
+comment on column sys_common_code.description_ko    is 'Code Description (Korean) - PERCI codes have 2000(need to be amended to 1000 later), ideal length is 1000';
+comment on column sys_common_code.description_en    is 'Code Description (English) - PERCI codes have 2000(need to be amended to 1000 later), ideal length is 1000';
+comment on column sys_common_code.program_constants is 'Constants value for the common code to be used in program source code';
+comment on column sys_common_code.sort_order        is 'Sort order';
+comment on column sys_common_code.is_active         is 'Is active?';
+comment on column sys_common_code.is_default        is 'Is default code item? (default code item should not be deleted)';
+comment on column sys_common_code.insert_user_id    is 'Insert User UID';
+comment on column sys_common_code.insert_date       is 'Insert Date';
+comment on column sys_common_code.update_user_id    is 'Update User UID';
+comment on column sys_common_code.update_date       is 'Update Date';
+
+
+/**
+ * Category    : SYS
+ * Table Name  : SYS_COMMON_CODE
+ * Description : Common Lookup Code - Import Excel file (SYS_COMMON_CODE_1.xlsx, SYS_COMMON_CODE_2.xlsx)
  */
 delete sys_common_code;
 
@@ -68,7 +112,7 @@ select lookup_type as code_type,
        'Y' as is_active,
        'N' as is_default,
        '0' as insert_user_id,
-       sysdate as insert_date,
+       to_char(sysdate, 'yyyymmdd') as insert_date,
        null as update_user_id,
        null as update_date
   from sys_common_lookups@perci
@@ -85,7 +129,7 @@ select lookup_type as code_type,
        'Y' as is_active,
        'N' as is_default,
        '0' as insert_user_id,
-       sysdate as insert_date,
+       to_char(sysdate, 'yyyymmdd') as insert_date,
        null as update_user_id,
        null as update_date
   from sys_common_lookups@perci
@@ -108,7 +152,7 @@ select distinct lookup_type as code_type,
        'Y' as is_active,
        'N' as is_default,
        '0' as insert_user_id,
-       sysdate as insert_date,
+       to_char(sysdate, 'yyyymmdd') as insert_date,
        null as update_user_id,
        null as update_date
   from sys_common_lookups@perci
@@ -126,7 +170,7 @@ select distinct lookup_type as code_type,
        'Y' as is_active,
        'N' as is_default,
        '0' as insert_user_id,
-       sysdate as insert_date,
+       to_char(sysdate, 'yyyymmdd') as insert_date,
        null as update_user_id,
        null as update_date
   from sys_common_lookups@perci
@@ -137,160 +181,3 @@ select distinct lookup_type as code_type,
        sort_order,
        common_code
 ;
-
-/**
- * Category    : SYS
- * Table ID    : SYS_MENU
- * Table Name  : Menu Info
- * Description : Use Excel file to initialise data (@121_Project_Data_SYS_MENU.xlsx)
- */
-delete sys_menu;
--- PERCI Menu
-/*
- select connect_by_root sequence_number||'/'||sub_menu_id as my_root,
-        substr(sys_connect_by_path(sequence_number||'/'||sub_menu_id, '^'), 2) as connect_path,
-        level as my_level,
-        connect_by_isleaf as is_leaf,
-        menu_id,
-        sub_menu_id,
-        sequence_number,
-        prompt,
-        (select jsp_page
-           from sys_user_function@perci
-          where function_id = smd.function_id
-        ) jsp_link
-   from sys_menu_details@perci smd
-connect by prior sub_menu_id = menu_id
-  start with menu_id = (select menu_id
-                          from sys_menus@perci
-                         where user_menu_name = 'Entity_Responsibilities'
-                       )
- order siblings by sequence_number
-;
-*/
-
-
-/**
- * Category    : SYS
- * Table ID    : SYS_USER
- * Table Name  : System User Info
- * Description : Use Excel file to initialise data
- */
-delete sys_user;
-
-insert into sys_user values('0', 'Dustin', 'dustin', 'dustin', '0', '0', 'EN', 'THEME000', 'INTERNAL', 'dsa@entitysolutions.com.au', 50, 5, 'NU',
-	'/shared/resource/image/photo/DefaultUser_128_Black.png', 'Y', 'System Admin - Dustin', 'Y', null, null, null, null, null, null, 'ipro-default', null, 'N', 'N', 'Y', '1',
-	'0', sysdate, null, null
-);
-insert into sys_user values('1', 'Admin', 'admin', 'admin', '1', '1', 'EN', 'THEME000', 'INTERNAL', 'dsa@entitysolutions.com.au', 50, 5, 'NU',
-	'/shared/resource/image/photo/DefaultUser_128_Black.png', 'Y', 'General Admin - Admin', 'Y', null, null, null, null, null, null, 'ipro-default', null, 'N', 'N', 'Y', '1',
-	'0', sysdate, null, null
-);
-
--- From PERCI
-insert into sys_user
-select user_id as user_id,
-       user_name as user_name,
-       user_name as login_id,
-       password as login_password,
-       person_id as person_id,
-       'Z' as auth_group_id,
-       'EN' as language,
-       'THEME000' as theme_type,
-       'INTERNAL' as user_type,
-       email as email,
-       50 as max_row_per_page,
-       5 as page_num_per_page,
-       'NU' as user_status,
-       '/shared/resource/image/photo/DefaultUser_128_Black.png' as photo_path,
-       decode(is_active, null, 'Y', is_active) as is_active,
-       description as description,
-       prop_to_portal as prop_to_portal,
-       pin as pin,
-       disabled_date as disabled_date,
-       security_question_1 as security_question_1,
-       security_question_answer_1 as security_question_answer_1,
-       security_question_2 as security_question_2,
-       security_question_answer_2 as security_question_answer_2,
-       portal_skin as portal_skin,
-       portal_security_role as portal_security_role,
-       reset_password as reset_password,
-       reset_term_condition as reset_term_condition,
-       is_portal_user as is_portal_user,
-       portal_org_profile_id as portal_org_profile_id,
-       '0' as insert_user_id,
-       sysdate as insert_date,
-       null as update_user_id,
-       null update_date
-  from sys_users@perci
- where user_id not in ('0', '1')
- order by login_id, login_password
-;
-
-
-/**
- * Category    : SYS
- * Table ID    : SYS_AUTH_GROUP
- * Table Name  : Authority Type Info
- * Description : 
- */
-delete sys_auth_group;
-
-insert into sys_auth_group values('0', 'System Admin',         'System Administrator',          'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('1', 'General Admin',        'General Administrator',         'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('2', 'Dep Representative 1', 'Organisation Representative 1', 'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('3', 'Dep Representative 2', 'Organisation Representative 2', 'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('4', 'Dep Representative 3', 'Organisation Representative 3', 'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('5', 'General User 1',       'General User 1',                'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('6', 'General User 2',       'General User 2',                'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('7', 'General User 3',       'General User 3',                'Y',    '0',    sysdate,    null,     null);
-insert into sys_auth_group values('Z', 'Not Selected',         'Not Selected',                  'Y',    '0',    sysdate,    null,     null);
-
-
-/**
- * Category    : SYS
- * Table ID    : SYS_MENU_AUTH_LINK
- * Table Name  : Menu - Authority group mapping
- * Description : 
- */
-delete sys_menu_auth_link;
-
-insert into sys_menu_auth_link (
-	select sys_auth_group.group_id,
-	       sys_menu.menu_id,
-	       0,
-	       sysdate,
-	       null,
-	       null
-	  from sys_auth_group,
-	       sys_menu
-	 where sys_auth_group.group_id = '0'
-)
-;
-
-
-/**
- * Category    : SYS
- * Table ID    : SYS_COUNTRY_CURRENCY
- * Table Name  : Country & Currency code
- * Description : Use Excel file to initialise data (@122_Project_Data_SYS_COUNTRY_CURRENCY.xlsx)
- */
-update sys_country_currency
-   set country_name = initcap(country_name)
-;
-
-
-/**
- * Category    : SYS
- * Table ID    : SYS_BOARD
- * Table Name  : Bulletin board
- * Description : 
- */
-
-
-/**
- * Category    : SYS
- * Table ID    : SYS_BOARD_FILE
- * Table Name  : Attached file for Bulletin board
- * Description : 
- */

@@ -87,7 +87,6 @@ create table plan_table (
 
 
 /**
-* Table Id    : 
 * Table Name  : 
 * Description : Query for TableDefinition Document
 **/
