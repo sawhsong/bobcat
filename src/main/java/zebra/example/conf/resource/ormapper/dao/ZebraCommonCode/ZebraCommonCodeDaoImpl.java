@@ -94,7 +94,7 @@ public class ZebraCommonCodeDaoImpl extends BaseDao implements ZebraCommonCodeDa
 		ZebraCommonCodeMapper zebraCommonCodeMapper = getSqlSession().getMapper(ZebraCommonCodeMapper.class);
 
 		queryAdvisor.addWhereClause("use_yn = 'Y'");
-		queryAdvisor.addWhereClause("lower(code_type) like lower('"+codeType+"%')");
+		queryAdvisor.addWhereClause("lower(code_type) like lower('%"+codeType+"%')");
 		queryAdvisor.addWhereClause("common_code = '0000000000'");
 		queryAdvisor.addOrderByClause("code_type");
 

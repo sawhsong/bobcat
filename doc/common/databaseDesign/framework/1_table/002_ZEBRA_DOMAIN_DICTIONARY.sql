@@ -59,5 +59,5 @@ insert into zebra_domain_dictionary values('10',   'Quantity',             'qty'
 insert into zebra_domain_dictionary values('11',   'File Size',            'file_path',            'VARCHAR2',  null,  null,  2000,  'file/directory path',               '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('12',   'Description(Short)',   'description',          'VARCHAR2',  null,  null,  1000,  'short description',                 '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('13',   'Description(Normal)',  'description',          'VARCHAR2',  null,  null,  2000,  'normal description',                '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('14',   'file_type',            'file_type',            'VARCHAR2',  null,  null,  300,   'file type',                         '0',  sysdate,  '',  '');
+insert into zebra_domain_dictionary values('14',   'File Type',            'file_type',            'VARCHAR2',  null,  null,  300,   'file type',                         '0',  sysdate,  '',  '');
 insert into zebra_domain_dictionary values('15',   'Constants',            'constants',            'VARCHAR2',  null,  null,  100,   'constants (common code constants)', '0',  sysdate,  '',  '');

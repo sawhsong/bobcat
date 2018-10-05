@@ -22,7 +22,7 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		String inputValue = requestDataSet.getValue("inputValue");
 
 		try {
-			queryAdvisor.addAutoFillCriteria(inputValue, "lower(domain_name) like lower('"+inputValue+"%') or lower(name_abbreviation) like lower('"+inputValue+"%')");
+			queryAdvisor.addAutoFillCriteria(inputValue, "lower(domain_name) like lower('%"+inputValue+"%') or lower(name_abbreviation) like lower('%"+inputValue+"%')");
 
 			paramEntity.setAjaxResponseDataSet(zebraDomainDictionaryDao.getNameDataSetByName(queryAdvisor));
 			paramEntity.setSuccess(true);

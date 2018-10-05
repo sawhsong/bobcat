@@ -48,12 +48,13 @@
 		  from user_tab_columns a,
 		       (select a.table_name,
 		               b.column_name,
-		               a.constraint_type
+		               listagg(decode(a.constraint_type, 'P', 'PK', 'R', 'FK', 'U', 'UK'), ', ') within group(order by a.constraint_type) as constraint_type
 		          from user_constraints a,
 		               user_cons_columns b
-		         where a.constraint_type = 'P'
+		         where a.constraint_type in ('P', 'R', 'U')
 		           and a.table_name = b.table_name
 		           and a.constraint_name = b.constraint_name
+		         group by a.table_name, b.column_name
 		       ) c,
 		       user_col_comments d
 		 where a.table_name = '${table_name}'

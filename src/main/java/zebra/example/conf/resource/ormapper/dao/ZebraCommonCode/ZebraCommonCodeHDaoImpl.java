@@ -73,7 +73,7 @@ public class ZebraCommonCodeHDaoImpl extends BaseHDao implements ZebraCommonCode
 		ZebraCommonCode zebraCommonCode = new ZebraCommonCode();
 
 		queryAdvisor.addWhereClause("use_yn = 'Y'");
-		queryAdvisor.addWhereClause("lower(code_type) like lower('"+codeType+"%')");
+		queryAdvisor.addWhereClause("lower(code_type) like lower('%"+codeType+"%')");
 		queryAdvisor.addWhereClause("common_code = '0000000000'");
 		queryAdvisor.addOrderByClause("code_type");
 
