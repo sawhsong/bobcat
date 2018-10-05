@@ -1,0 +1,105 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SYS_MENU" directorySegmentName="seg_0" id="0C6738B0-932E-10A3-EE57-2C8DEA61B25A">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+<schemaObject>620113D4-D911-FF99-9D6E-82D500529D4F</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>4513DF37-444A-0ED5-FD2D-3C76408E5A0A</segment>
+<tableSpace>B38EE602-44FA-F789-F820-658B4D301CC6</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="IS_ACTIVE" id="100470A6-CD4F-CD8A-9736-255BCB696501">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_URL" id="1E50B627-9035-D216-630F-3B54C11D5008">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_ID" id="54352CBD-BB29-EAAC-2C88-F7F89EE94521">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SORT_ORDER" id="6BC7DDDD-6596-28B1-9A29-2524CC054339">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_NAME_EN" id="701E5E7B-64DA-D0AE-ACF0-247FF8768004">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PARENT_MENU_ID" id="73518E65-48AE-113B-7953-FEC4F4241244">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_ICON" id="7F6A68D9-69AC-5FCC-0DA6-BA9ED62EEF74">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="96B8E186-CD48-0A63-371F-D9D29D7A195B">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DESCRIPTION" id="97EF5AAC-175E-D116-31A3-8909001F818B">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_USER_ID" id="A0CAA419-86BF-A0A6-6DF0-C59F567566C0">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_USER_ID" id="B047F033-C8BA-7984-E916-C76347FEF845">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_NAME_KO" id="CFCAEC51-553F-3B91-CAFF-108B4D0FADDB">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_DATE" id="E45D1918-7547-1759-272D-27CD5817C05B">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_SYS_MENU" id="FED697CB-9242-D2CA-565A-C8C730EB760B">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+<schemaObject>620113D4-D911-FF99-9D6E-82D500529D4F</schemaObject>
+<segment>C8D3AAC6-859D-CC51-BD72-AFF30E8E3E76</segment>
+<tableSpace>FEF03E0B-E47A-82DA-4040-B648365A9228</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_SYS_MENU" id="B8A81480-8085-2483-F7E7-341D9AF28FEC">
+<createdBy>dsa</createdBy>
+<createdTime>2018-10-05 03:06:32 UTC</createdTime>
+<ownerDesignName>alpaca</ownerDesignName>
+<segment>C8D3AAC6-859D-CC51-BD72-AFF30E8E3E76</segment>
+<tableSpace>FEF03E0B-E47A-82DA-4040-B648365A9228</tableSpace>
+<existingIndex>FED697CB-9242-D2CA-565A-C8C730EB760B</existingIndex>
+<indexSegment>C8D3AAC6-859D-CC51-BD72-AFF30E8E3E76</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>
