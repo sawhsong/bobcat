@@ -43,3 +43,9 @@ comment on column zebra_board.insert_user_id      is '입력자 uid';
 comment on column zebra_board.insert_date         is '입력일자';
 comment on column zebra_board.update_user_id      is '수정자 uid';
 comment on column zebra_board.update_date         is '수정일자';
+
+
+/**
+ * Table Name  : 게시판
+ * Description : 
+ */
