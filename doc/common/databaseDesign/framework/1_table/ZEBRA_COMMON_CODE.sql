@@ -1,5 +1,48 @@
 /**
  * Table Name  : 공통코드
+ * Description : Framework에서 사용하는 공통코드(프로젝트에서는 별도 테이블 만들것)
+ */
+drop table zebra_common_code cascade constraints;
+purge recyclebin;
+
+create table zebra_common_code (
+    code_type                       varchar2(30)                                        not null,   -- 상위구분코드
+    common_code                     varchar2(30)                                        not null,   -- 코드
+    description_ko                  varchar2(1000),                                                 -- 코드설명(Korean)
+    description_en                  varchar2(1000),                                                 -- 코드설명(English)
+    program_constants               varchar2(100)                                       not null,   -- Constants value for the common code to be used in program
+    sort_order                      varchar2(3),                                                    -- 정렬순서
+    use_yn                          varchar2(1)                 default 'Y',                        -- 사용여부
+    default_yn                      varchar2(1)                 default 'N',                        -- 기본데이터여부(기본데이터는 변경불가)
+    insert_user_id                  varchar2(30),                                                   -- Insert User UID
+    insert_date                     date                        default sysdate,                    -- Insert Date
+    update_user_id                  varchar2(30),                                                   -- Update User UID
+    update_date                     date,                                                           -- Update Date
+
+    constraint pk_zebra_common_code primary key(code_type, common_code),
+    constraint uk_zebra_common_code unique(program_constants)
+    using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
+)
+pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+
+comment on table zebra_common_code is '공통코드';
+
+comment on column zebra_common_code.code_type         is '상위구분코드';
+comment on column zebra_common_code.common_code       is '코드';
+comment on column zebra_common_code.description_ko    is '코드설명(Korean)';
+comment on column zebra_common_code.description_en    is '코드설명(English)';
+comment on column zebra_common_code.program_constants is 'Constants value for the common code to be used in program';
+comment on column zebra_common_code.sort_order        is '정렬순서';
+comment on column zebra_common_code.use_yn            is '사용여부';
+comment on column zebra_common_code.default_yn        is '기본데이터여부(기본데이터는 변경불가)';
+comment on column zebra_common_code.insert_user_id    is '입력자 uid';
+comment on column zebra_common_code.insert_date       is '입력일자';
+comment on column zebra_common_code.update_user_id    is '수정자 uid';
+comment on column zebra_common_code.update_date       is '수정일자';
+
+
+/**
+ * Table Name  : 공통코드
  * Description : 공통코드정보
  */
 delete zebra_common_code;
@@ -73,45 +116,3 @@ insert into zebra_common_code values('DOMAIN_DATA_SCALE', '5',          '5',    
 insert into zebra_common_code values('SIMPLE_YN','0000000000',     '단순YN',  'Simple YN',    'SIMPLE_YN_0000000000',  '000',   'Y','Y','0',sysdate,'','');
 insert into zebra_common_code values('SIMPLE_YN','Y',              '예',      'Yes',          'SIMPLE_YN_Y',           '001',   'Y','Y','0',sysdate,'','');
 insert into zebra_common_code values('SIMPLE_YN','N',              '아니오',  'No',           'SIMPLE_YN_N',           '002',   'Y','Y','0',sysdate,'','');
-
-
-/**
- * Table Name  : Domain Dictionary
- * Description : Database column data types
- */
-delete zebra_domain_dictionary;
-
-insert into zebra_domain_dictionary values('1',    'id',                   'id',                   'VARCHAR2',  null,  null,  50,    'uid, id',                           '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('2',    'password',             'password',             'VARCHAR2',  null,  null,  30,    'password',                          '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('3',    'common_code',          'common_code',          'VARCHAR2',  null,  null,  30,    'common_code',                       '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('4',    'normal_name',          'name',                 'VARCHAR2',  null,  null,  50,    'person name, user name, org name',  '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('5',    'file_name',            'file_name',            'VARCHAR2',  null,  null,  1000,  'file name, image/icon name',        '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('6',    'menu_name',            'menu_name',            'VARCHAR2',  null,  null,  500,   'menu name',                         '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('7',    'email',                'email',                'VARCHAR2',  null,  null,  100,   'email',                             '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('8',    'ip_address',           'ip_address',           'VARCHAR2',  null,  null,  50,    'ip_address (considering ipv6)',     '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('9',    'size',                 'size',                 'NUMBER',    24,    2,     24,    'size',                              '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('10',   'quantity',             'qty',                  'NUMBER',    24,    2,     24,    'quantity',                          '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('11',   'file_path',            'file_path',            'VARCHAR2',  null,  null,  2000,  'file/directory path',               '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('12',   'description_short',    'description',          'VARCHAR2',  null,  null,  1000,  'short description',                 '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('13',   'description_normal',   'description',          'VARCHAR2',  null,  null,  2000,  'normal description',                '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('14',   'file_type',            'file_type',            'VARCHAR2',  null,  null,  300,   'file type',                         '0',  sysdate,  '',  '');
-insert into zebra_domain_dictionary values('15',   'constants',            'constants',            'VARCHAR2',  null,  null,  100,   'constants (common code constants)', '0',  sysdate,  '',  '');
-
-
-/**
- * Table Name   : 게시판
- * Description  :
- */
-delete zebra_board;
-
---insert into zebra_board values('0','NOTICE','0','sawh','4444','sawhsong@gmail.com','127.0.0.1','For testing','For testing',0,'-1','0',sysdate,'','');
---insert into zebra_board values('1','NOTICE','0','sawh','4444','sawhsong@gmail.com','127.0.0.1','For testing','For testing',0,'-1','0',sysdate,'','');
-/*
-declare
-begin
-    for i in 12..1000 loop
-        insert into zebra_board values(i, 'NOTICE', '0', 'sawh', '4444', 'sawhsong@gmail.com', '127.0.0.1', 'For testing'||i, 'For testing'||i, 0, '-1', '0', sysdate, '', '');
-        commit;
-    end loop;
-end;
-*/
