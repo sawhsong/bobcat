@@ -134,6 +134,7 @@ create table sys_user (
     update_date                     date,                                                           -- Update Date
 
     constraint pk_sys_user primary key(user_id),
+    constraint fk_sys_user_auth_group foreign key(auth_group_id) references sys_auth_group(auth_group_id),
     constraint uk_sys_user unique(login_id, login_password)
     using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
 )
