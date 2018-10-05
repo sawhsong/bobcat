@@ -14,9 +14,10 @@ create table sys_menu_auth_link (
     update_user_id                  varchar2(30),                                                   -- Update User UID
     update_date                     date,                                                           -- Update Date
 
-    constraint pk_sys_menu_auth_link primary key(group_id, menu_id),
     constraint fk_sys_menu_auth_link_group foreign key(group_id) references sys_auth_group(group_id),
     constraint fk_sys_menu_auth_link_menu foreign key(menu_id) references sys_menu(menu_id),
+    constraint pk_sys_menu_auth_link primary key(group_id, menu_id)
+
     using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
 )
 pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);

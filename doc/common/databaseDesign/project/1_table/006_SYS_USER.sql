@@ -41,8 +41,8 @@ create table sys_user (
     update_user_id                  varchar2(30),                                                   -- Update User UID
     update_date                     date,                                                           -- Update Date
 
+    constraint fk_sys_user_auth_group foreign key(auth_group_id) references sys_auth_group(group_id),
     constraint pk_sys_user primary key(user_id),
-    constraint fk_sys_user_auth_group foreign key(auth_group_id) references sys_auth_group(auth_group_id),
     constraint uk_sys_user unique(login_id, login_password)
     using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
 )
@@ -101,6 +101,7 @@ insert into sys_user values('1', 'Admin', 'admin', 'admin', '1', '1', 'EN', 'THE
 );
 
 -- From PERCI
+/*
 insert into sys_user
 select user_id as user_id,
        user_name as user_name,
@@ -139,3 +140,4 @@ select user_id as user_id,
  where user_id not in ('0', '1')
  order by login_id, login_password
 ;
+*/

@@ -48,7 +48,9 @@ comment on column sys_menu.update_date     is 'Update Date';
  * Description : Menu Info - Use Excel file to initialise data (SYS_MENU.xlsx)
  */
 delete sys_menu;
+
 -- PERCI Menu
+/*
  select connect_by_root sequence_number||'/'||sub_menu_id as my_root,
         substr(sys_connect_by_path(sequence_number||'/'||sub_menu_id, '^'), 2) as connect_path,
         level as my_level,
@@ -69,3 +71,4 @@ connect by prior sub_menu_id = menu_id
                        )
  order siblings by sequence_number
 ;
+*/

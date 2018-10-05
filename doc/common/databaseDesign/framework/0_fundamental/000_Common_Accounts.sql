@@ -117,3 +117,10 @@ select a.table_name,
        a.nullable,
        a.column_name
 ;
+
+
+/**
+ * Just for reference
+ */
+--alter table zebra_board_file add(constraint fk_zebra_board_file foreign key(article_uid) references zebra_board(article_uid));
+--create index idx_zebra_board_file on zebra_board_file(file_uid) tablespace alpaca_idx storage(initial 3m next 3m maxextents 2000 pctincrease 0);

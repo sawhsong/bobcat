@@ -20,8 +20,9 @@ create table sys_board_file (
     update_user_id                  varchar2(30),                                                   -- Update User UID
     update_date                     date,                                                           -- Update Date
 
-    constraint pk_sys_board_file primary key(file_id),
-    constraint fk_sys_board_file_sys_board foreign key(article_id) references sys_board(article_id)
+    constraint fk_sys_board_file_sys_board foreign key(article_id) references sys_board(article_id),
+    constraint pk_sys_board_file primary key(file_id)
+
     using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
 )
 pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);

@@ -101,6 +101,7 @@ insert into sys_common_code values('MENU_LEVEL','2',          'Level 2',    'Lev
 insert into sys_common_code values('MENU_LEVEL','3',          'Level 3',    'Level 3',    'Level 3',    'MENU_LEVEL_3',           '002',   'Y', 'Y', '0', sysdate, null, null);
 
 -- From PERCI
+/*
 insert into sys_common_code
 select lookup_type as code_type,
        '0000000000' as common_code,
@@ -139,8 +140,9 @@ select lookup_type as code_type,
        sort_order,
        common_code
 ;
-
+*/
 -- Insert Duplicated data from PERCI
+/*
 insert into sys_common_code
 select distinct lookup_type as code_type,
        '0000000000' as common_code,
@@ -181,3 +183,4 @@ select distinct lookup_type as code_type,
        sort_order,
        common_code
 ;
+*/
