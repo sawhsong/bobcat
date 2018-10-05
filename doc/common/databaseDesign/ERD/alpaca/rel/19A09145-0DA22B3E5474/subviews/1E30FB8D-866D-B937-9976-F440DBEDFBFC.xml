@@ -15,10 +15,6 @@
 <notation>1</notation>
 <showSchemaName>false</showSchemaName>
 <objectViews>
-<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="0C6738B0-932E-10A3-EE57-2C8DEA61B25A" otype="Table" vid="39A81685-7B41-6DF4-C2F0-C0643B3821AF">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="8" y="328" width="272" height="248"/>
-</OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="1DDA7E1A-60C7-159F-3321-B7657C70A0AB" otype="Table" vid="3967B743-AE73-1B64-540C-ED4FC7935517">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <bounds x="577" y="8" width="334" height="262"/>
@@ -30,18 +26,6 @@
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="4B65F801-F7C0-CAB0-7C6A-FECC0D303E95" otype="Table" vid="A4FF73C3-FB87-5A86-3674-1FFD53BDE706">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <bounds x="6" y="6" width="326" height="276"/>
-</OView>
-<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="C1BB2C29-B2DC-6668-6AF8-338DFF44856C" otype="Table" vid="AAD234E6-DB56-75A5-9C2E-E6756AB8588D">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="369" y="569" width="266" height="206"/>
-</OView>
-<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="C65C1AC7-9769-1978-7164-920C018426DA" otype="Table" vid="EF4677E0-6CCD-5C63-9C46-D90F50B31BEA">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="362" y="330" width="289" height="150"/>
-</OView>
-<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="D29C1D4F-F41B-7C2C-1ABB-CFEDDB454D81" otype="Table" vid="44B9C8BA-F018-A863-A43A-74E85FB2658A">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="722" y="324" width="352" height="556"/>
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="E1F08956-320A-0C85-B8D2-A167FF867A0E" otype="Table" vid="A8CED258-997B-130C-29E7-566AC1633395">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
