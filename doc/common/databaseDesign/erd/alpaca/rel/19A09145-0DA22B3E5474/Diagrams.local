@@ -1,0 +1,5 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="main_view" objectID="1E30FB8D-866D-B937-9976-F440DBEDFBFC" name="sys" visible="true"/>
+   <object objectType="sub_view" objectID="5EFFA28F-D52D-3756-AE6E-DF41F4939E2D" name="Alpaca - SubView_1" visible="false"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>
