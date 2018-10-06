@@ -7,39 +7,41 @@ drop table zebra_column_creation_info cascade constraints;
 purge recyclebin;
 
 create table zebra_column_creation_info (
-    code_type                       varchar2(30)                                        not null,   -- 상위구분코드
-    common_code                     varchar2(30)                                        not null,   -- 코드
-    description_ko                  varchar2(1000),                                                 -- 코드설명(Korean)
-    description_en                  varchar2(1000),                                                 -- 코드설명(English)
-    program_constants               varchar2(100)                                       not null,   -- Constants value for the common code to be used in program
-    sort_order                      varchar2(3),                                                    -- 정렬순서
-    use_yn                          varchar2(1)                 default 'Y',                        -- 사용여부
-    default_yn                      varchar2(1)                 default 'N',                        -- 기본데이터여부(기본데이터는 변경불가)
+    table_name                      varchar2(30)                                        not null,   -- Table Name ([ZEBRA_TABLE_CREATION_INFO.TABLE_NAME])
+    column_name                     varchar2(30)                                        not null,   -- Column Name
+    data_type                       varchar2(30)                                        not null,   -- Column Data Type
+    data_length                     number,                                                         -- Data Length
+    default_value                   varchar2(100),                                                  -- Default Value
+    nullable                        varchar2(1)                 default 'Y',                        -- Accept null : Y, Not Accept null : N
+    key_type                        varchar2(3),                                                    -- Constraint Type (PK / UK / FK)
+    fk_table_column                 varchar2(100),                                                  -- If Constraint is FK - Reference table.column
+    description                     varchar2(1000)                                      not null,   -- Column comment - not null
+
     insert_user_id                  varchar2(30),                                                   -- Insert User UID
     insert_date                     date                        default sysdate,                    -- Insert Date
     update_user_id                  varchar2(30),                                                   -- Update User UID
     update_date                     date,                                                           -- Update Date
 
-    constraint pk_zebra_common_code primary key(code_type, common_code),
-    constraint uk_zebra_common_code unique(program_constants)
+    constraint fk_zebra_column_creation foreign key(table_name) references zebra_table_creation_info(table_name),
+    constraint pk_zebra_column_creation primary key(table_name, column_name)
     using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
 )
 pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table zebra_column_creation_info is 'Column info to be created';
-
-comment on column zebra_common_code.code_type         is '상위구분코드';
-comment on column zebra_common_code.common_code       is '코드';
-comment on column zebra_common_code.description_ko    is '코드설명(Korean)';
-comment on column zebra_common_code.description_en    is '코드설명(English)';
-comment on column zebra_common_code.program_constants is 'Constants value for the common code to be used in program';
-comment on column zebra_common_code.sort_order        is '정렬순서';
-comment on column zebra_common_code.use_yn            is '사용여부';
-comment on column zebra_common_code.default_yn        is '기본데이터여부(기본데이터는 변경불가)';
-comment on column zebra_common_code.insert_user_id    is '입력자 uid';
-comment on column zebra_common_code.insert_date       is '입력일자';
-comment on column zebra_common_code.update_user_id    is '수정자 uid';
-comment on column zebra_common_code.update_date       is '수정일자';
+comment on column zebra_column_creation_info.table_name      is 'Table Name ([ZEBRA_TABLE_CREATION_INFO.TABLE_NAME])';
+comment on column zebra_column_creation_info.column_name     is 'Column Name';
+comment on column zebra_column_creation_info.data_type       is 'Column Data Type';
+comment on column zebra_column_creation_info.data_length     is 'Data Length';
+comment on column zebra_column_creation_info.default_value   is 'Default Value';
+comment on column zebra_column_creation_info.nullable        is 'Accept null : Y, Not Accept null : N';
+comment on column zebra_column_creation_info.key_type        is 'Constraint Type (PK / UK / FK)';
+comment on column zebra_column_creation_info.fk_table_column is 'If Constraint is FK - Reference table.column';
+comment on column zebra_column_creation_info.description     is 'Column comment - not null';
+comment on column zebra_common_code.insert_user_id           is 'Insert User UID';
+comment on column zebra_common_code.insert_date              is 'Insert Date';
+comment on column zebra_common_code.update_user_id           is 'Update User UID';
+comment on column zebra_common_code.update_date              is 'Update Date';
 
 
 /**

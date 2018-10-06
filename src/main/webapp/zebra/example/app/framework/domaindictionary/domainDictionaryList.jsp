@@ -131,7 +131,7 @@ $(function() {
 
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "NAME_ABBREVIATION")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "DATA_TYPE")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "DATA_LENGTH"))));
+				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(dataSet.getValue(i, "DATA_LENGTH")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.htmlToString(dataSet.getValue(i, "DESCRIPTION"))));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "LAST_UPDATE"), dateFormat)));
 

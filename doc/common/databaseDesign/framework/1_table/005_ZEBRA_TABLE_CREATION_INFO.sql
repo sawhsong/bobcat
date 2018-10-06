@@ -22,7 +22,6 @@ create table zebra_table_creation_info (
 pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table zebra_table_creation_info is 'Table info to be created';
-
 comment on column zebra_table_creation_info.table_name      is 'Table Name';
 comment on column zebra_table_creation_info.description     is 'Table description';
 comment on column zebra_table_creation_info.sql_script      is 'SQL Script for creation';
