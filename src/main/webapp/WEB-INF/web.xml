@@ -70,6 +70,10 @@
 		</taglib>
 	</jsp-config>
 
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/shared/page/error.jsp</location>
