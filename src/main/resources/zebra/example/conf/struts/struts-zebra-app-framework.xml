@@ -39,6 +39,14 @@
 			<result name="info" type="debugDispatcherResult">/zebra/example/app/framework/sourcegenerator/sourceGeneratorInfoPop.jsp</result>
 		</action>
 
+		<!--/* TableScript */-->
+		<action name="tablescript/*" class="zebra.example.app.framework.tablescript.TableScriptAction" method="{1}">
+			<result name="list" type="debugDispatcherResult">/zebra/example/app/framework/tablescript/tableScriptList.jsp</result>
+			<result name="detail" type="debugDispatcherResult">/zebra/example/app/framework/tablescript/tableScriptDetailPop.jsp</result>
+			<result name="insert" type="debugDispatcherResult">/zebra/example/app/framework/tablescript/tableScriptInsertPop.jsp</result>
+			<result name="update" type="debugDispatcherResult">/zebra/example/app/framework/tablescript/tableScriptUpdatePop.jsp</result>
+		</action>
+
 		<!--/* DataMigration */-->
 		<action name="datamigration/*" class="zebra.example.app.framework.datamigration.DataMigrationAction" method="{1}">
 			<result name="list" type="debugDispatcherResult">/zebra/example/app/framework/datamigration/dataMigrationList.jsp</result>

@@ -115,7 +115,7 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 					accessors += "\n";
 				}
 
-				if (CommonUtil.equalsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "P")) {
+				if (CommonUtil.containsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "PK")) {
 					numberOfPK++;
 					primaryKey += CommonUtil.isBlank(primaryKey) ? tableInfoDataSet.getValue(i, "COLUMN_NAME") : ","+tableInfoDataSet.getValue(i, "COLUMN_NAME");
 				}
@@ -303,7 +303,7 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 				String colNameOriginal = tableInfoDataSet.getValue(i, "COLUMN_NAME");
 				String colNameLowerCamelCase = CommonUtil.toCamelCaseStartLowerCase(colNameOriginal);
 
-				if (CommonUtil.equalsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "P")) {
+				if (CommonUtil.containsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "PK")) {
 					if (primaryKeyColumnCnt > 1) {
 						primaryKey += "\t\t\t<key-property name=\""+colNameLowerCamelCase+"\" column=\""+colNameOriginal+"\"";
 						primaryKey += getXmlTypeProperty(dataType, dataLength);
@@ -335,7 +335,7 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 				qryInsertValues += "\t\t       ${"+colNameOriginal+"}";
 				qryInsertValues += (i == tableInfoDataSet.getRowCnt()-1) ? "\n" : ",\n";
 
-				if (!CommonUtil.equalsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "P")) {
+				if (!CommonUtil.containsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "PK")) {
 					qryUpdateDetails += CommonUtil.isBlank(qryUpdateDetails) ? colNameOriginal : "\t\t       "+colNameOriginal;
 					qryUpdateDetails += " = ${"+colNameOriginal+"}";
 					qryUpdateDetails += (i == tableInfoDataSet.getRowCnt()-1) ? "\n" : ",\n";
@@ -532,7 +532,7 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 				qryInsertWithDtoValues += "\t\t       #{"+colNameLowerCamelCase+",jdbcType="+getDataTypeStringForMyBatisXml(dataType)+"}";
 				qryInsertWithDtoValues += (i == tableInfoDataSet.getRowCnt()-1) ? "\n" : ",\n";
 
-				if (!CommonUtil.equalsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "P")) {
+				if (!CommonUtil.containsIgnoreCase(tableInfoDataSet.getValue(i, "CONSTRAINT_TYPE"), "PK")) {
 					qryUpdateDetails += CommonUtil.isBlank(qryUpdateDetails) ? colNameOriginal : "\t\t       "+colNameOriginal;
 					qryUpdateDetails += " = ${"+colNameOriginal+"}";
 					qryUpdateDetails += (i == tableInfoDataSet.getRowCnt()-1) ? "\n" : ",\n";
@@ -1868,7 +1868,7 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 		int cnt = 0;
 
 		for (int i=0; i<dsTableInfo.getRowCnt(); i++) {
-			if (CommonUtil.equalsIgnoreCase("P", dsTableInfo.getValue(i, "CONSTRAINT_TYPE"))) {
+			if (CommonUtil.containsIgnoreCase("PK", dsTableInfo.getValue(i, "CONSTRAINT_TYPE"))) {
 				cnt++;
 			}
 		}

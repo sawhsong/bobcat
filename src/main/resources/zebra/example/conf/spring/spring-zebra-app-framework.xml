@@ -25,6 +25,10 @@
 	<bean id="zebraFrameworkSourceGeneratorAction" name="zebraFrameworkSourceGeneratorAction" class="${name.package.framework}.example.app.framework.sourcegenerator.SourceGeneratorAction"/>
 	<bean id="zebraFrameworkSourceGeneratorBiz" name="zebraFrameworkSourceGeneratorBiz" class="${name.package.framework}.example.app.framework.sourcegenerator.SourceGeneratorBizImpl" parent="baseBiz"/>
 
+	<!--/* TableScript */-->
+	<bean id="zebraFrameworkTableScriptAction" name="zebraFrameworkTableScriptAction" class="${name.package.framework}.example.app.framework.tablescript.TableScriptAction"/>
+	<bean id="zebraFrameworkTableScriptBiz" name="zebraFrameworkTableScriptBiz" class="${name.package.framework}.example.app.framework.tablescript.TableScriptBizImpl" parent="baseBiz"/>
+
 	<!--/* DataMigration */-->
 	<bean id="zebraFrameworkDataMigrationAction" name="zebraFrameworkDataMigrationAction" class="${name.package.framework}.example.app.framework.datamigration.DataMigrationAction"/>
 	<bean id="zebraFrameworkDataMigrationBiz" name="zebraFrameworkDataMigrationBiz" class="${name.package.framework}.example.app.framework.datamigration.DataMigrationBizImpl" parent="baseBiz"/>
