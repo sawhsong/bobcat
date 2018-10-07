@@ -1868,7 +1868,7 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 		int cnt = 0;
 
 		for (int i=0; i<dsTableInfo.getRowCnt(); i++) {
-			if (CommonUtil.containsIgnoreCase("PK", dsTableInfo.getValue(i, "CONSTRAINT_TYPE"))) {
+			if (CommonUtil.containsIgnoreCase(dsTableInfo.getValue(i, "CONSTRAINT_TYPE"), "PK")) {
 				cnt++;
 			}
 		}

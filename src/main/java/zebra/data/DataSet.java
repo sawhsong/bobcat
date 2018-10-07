@@ -20,6 +20,7 @@ import org.w3c.dom.NodeList;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import zebra.base.Dto;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
@@ -266,6 +267,20 @@ public class DataSet {
 	@SuppressWarnings("rawtypes")
 	private List getRowAsList(int row) {
 		return (List)fieldValue.get(row);
+	}
+
+	public Dto getRowAsDto(int row, Dto dto) {
+try {
+logger.debug(dto.getFrwVarPrimaryKey());
+logger.debug(dto.getDataSet().toString());
+	for (int i=0; i<getColumnCnt(); i++) {
+
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+		return dto;
 	}
 
 	@SuppressWarnings("unchecked")

@@ -33,7 +33,7 @@ public abstract class Dto {
 		return updateColumnsDataSet;
 	}
 
-	protected String getFrwVarPrimaryKey() throws Exception {
+	public String getFrwVarPrimaryKey() throws Exception {
 		return FRW_VAR_PRIMARY_KEY;
 	}
 

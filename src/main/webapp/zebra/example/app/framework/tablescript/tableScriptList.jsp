@@ -98,7 +98,7 @@ $(function() {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
 					formId:"fmDefault",
-					url:"/zebra/framework/commoncode/getList.do",
+					url:"/zebra/framework/tablescript/getList.do",
 					dataType:"json",
 					success:function(data, textStatus) {
 						var result = commonJs.parseAjaxResult(data, textStatus, "json");

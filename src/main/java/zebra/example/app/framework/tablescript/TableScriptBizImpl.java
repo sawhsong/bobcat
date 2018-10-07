@@ -10,7 +10,9 @@ import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseBiz;
 import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
 import zebra.example.conf.resource.ormapper.dao.ZebraCommonCode.ZebraCommonCodeDao;
+import zebra.example.conf.resource.ormapper.dao.ZebraTableCreationInfo.ZebraTableCreationInfoDao;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraCommonCode;
+import zebra.example.conf.resource.ormapper.dto.oracle.ZebraTableCreationInfo;
 import zebra.exception.FrameworkException;
 import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
@@ -19,7 +21,7 @@ import zebra.util.ExportUtil;
 
 public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 	@Autowired
-	private ZebraCommonCodeDao zebraCommonCodeDao;
+	private ZebraTableCreationInfoDao zebraTableCreationInfoDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -34,13 +36,18 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		String codeType = requestDataSet.getValue("commonCodeType");
+		DataSet tableInfo;
 
 		try {
 			queryAdvisor.setPagination(true);
-			queryAdvisor.addAutoFillCriteria(codeType, "code_type = '"+codeType+"'");
+			queryAdvisor.setRequestDataSet(requestDataSet);
 
-			paramEntity.setAjaxResponseDataSet(zebraCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
+			tableInfo = zebraTableCreationInfoDao.getAllLikeTableNameAsDataSet(queryAdvisor);
+//			for (int i=0; i<tableInfo.getRowCnt(); i++) {
+				ZebraTableCreationInfo aaa = (ZebraTableCreationInfo)tableInfo.getRowAsDto(0, new ZebraTableCreationInfo());
+//			}
+
+			paramEntity.setAjaxResponseDataSet(tableInfo);
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -49,7 +56,7 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
-
+/*
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -243,4 +250,5 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
+*/
 }

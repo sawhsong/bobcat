@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - ZEBRA_TABLE_CREATION_INFO - Table info to be created
+ */-->
+<hibernate-mapping>
+	<class name="zebra.example.conf.resource.ormapper.dto.oracle.ZebraTableCreationInfo" table="ZEBRA_TABLE_CREATION_INFO" lazy="false">
+		<meta attribute="class-description" inherit="false">Table info to be created</meta>
+
+		<id name="tableName" column="TABLE_NAME" type="java.lang.String" length="30"></id>
+
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="filePathName" column="FILE_PATH_NAME" type="java.lang.String" length="1000"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="sqlScript" column="SQL_SCRIPT" type="java.lang.String"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="zebraTableCreationInfo.selectAll">
+	<![CDATA[
+		SELECT TABLE_NAME,
+		       DESCRIPTION,
+		       FILE_PATH_NAME,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       SQL_SCRIPT,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM ZEBRA_TABLE_CREATION_INFO
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="zebraTableCreationInfo.insert">
+	<![CDATA[
+		INSERT INTO ZEBRA_TABLE_CREATION_INFO (
+		       TABLE_NAME,
+		       DESCRIPTION,
+		       FILE_PATH_NAME,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       SQL_SCRIPT,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${TABLE_NAME},
+		       ${DESCRIPTION},
+		       ${FILE_PATH_NAME},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${SQL_SCRIPT},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="zebraTableCreationInfo.update">
+	<![CDATA[
+		UPDATE ZEBRA_TABLE_CREATION_INFO
+		   SET DESCRIPTION = ${DESCRIPTION},
+		       FILE_PATH_NAME = ${FILE_PATH_NAME},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       SQL_SCRIPT = ${SQL_SCRIPT},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="zebraTableCreationInfo.updateColumns">
+	<![CDATA[
+		UPDATE ZEBRA_TABLE_CREATION_INFO
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="zebraTableCreationInfo.delete">
+	<![CDATA[
+		DELETE ZEBRA_TABLE_CREATION_INFO
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>
