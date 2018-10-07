@@ -1,23 +1,13 @@
 package zebra.example.app.framework.tablescript;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseBiz;
-import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
-import zebra.example.conf.resource.ormapper.dao.ZebraCommonCode.ZebraCommonCodeDao;
 import zebra.example.conf.resource.ormapper.dao.ZebraTableCreationInfo.ZebraTableCreationInfoDao;
-import zebra.example.conf.resource.ormapper.dto.oracle.ZebraCommonCode;
-import zebra.example.conf.resource.ormapper.dto.oracle.ZebraTableCreationInfo;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
-import zebra.util.CommonUtil;
-import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
 
 public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 	@Autowired
@@ -43,9 +33,6 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 
 			tableInfo = zebraTableCreationInfoDao.getAllLikeTableNameAsDataSet(queryAdvisor);
-//			for (int i=0; i<tableInfo.getRowCnt(); i++) {
-				ZebraTableCreationInfo aaa = (ZebraTableCreationInfo)tableInfo.getRowAsDto(0, new ZebraTableCreationInfo());
-//			}
 
 			paramEntity.setAjaxResponseDataSet(tableInfo);
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());

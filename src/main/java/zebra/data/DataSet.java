@@ -269,16 +269,17 @@ public class DataSet {
 		return (List)fieldValue.get(row);
 	}
 
-	public Dto getRowAsDto(int row, Dto dto) {
-try {
-logger.debug(dto.getFrwVarPrimaryKey());
-logger.debug(dto.getDataSet().toString());
-	for (int i=0; i<getColumnCnt(); i++) {
+	public Dto getRowAsDto(int row, Dto dto) throws Exception {
+		String pkColNames[] = CommonUtil.split(dto.getFrwVarPrimaryKey(), ",");
 
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-}
+		if (pkColNames != null) {
+			for (int i=0; i<pkColNames.length; i++) {
+				if (CommonUtil.isEmpty(getValue(row, CommonUtil.trim(pkColNames[i])))) {
+					throw new Exception("[DataSet : getRowAsDto(int, Dto)] Exception : No value for PK Column");
+				}
+			}
+		}
+		dto.setValues(this);
 
 		return dto;
 	}
