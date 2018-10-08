@@ -1789,25 +1789,25 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		File[] fwkFiles = fwkPath.listFiles();
 		File[] pjtFiles = pjtPath.listFiles();
 
-		dataSet.addName(new String[] {"TABLE_NAME", "DESCRIPTION", "FILE_PATH_NAME", "UPDATE_DATE_TIME"});
+		dataSet.addName(new String[] {"TABLE_NAME", "DESCRIPTION", "FILE_NAME", "UPDATE_DATE_TIME"});
 
 		for (File file : fwkFiles) {
 			String tableName = getTableNameFromTableCreationScript(file);
 			String description = getDescriptionFromTableCreationScript(file);
 
 			if (CommonUtil.isNotBlank(tableNameSearched)) {
-				if (CommonUtil.contains(tableName, tableNameSearched)) {
+				if (CommonUtil.containsIgnoreCase(tableName, tableNameSearched)) {
 					dataSet.addRow();
 					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
-					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
 					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 				}
 			} else {
 				dataSet.addRow();
 				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
 				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 			}
 		}
@@ -1817,18 +1817,18 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 			String description = getDescriptionFromTableCreationScript(file);
 
 			if (CommonUtil.isNotBlank(tableNameSearched)) {
-				if (CommonUtil.contains(tableName, tableNameSearched)) {
+				if (CommonUtil.containsIgnoreCase(tableName, tableNameSearched)) {
 					dataSet.addRow();
 					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
-					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
 					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 				}
 			} else {
 				dataSet.addRow();
 				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
 				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 			}
 		}
@@ -1949,18 +1949,18 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 
 	private String getTableNameFromTableCreationScript(File file) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		String searchString = "create table";
+		String searchString = "create table", separator = "(";
 		String rtnString = "", tempString;
 
 		while ((tempString = br.readLine()) != null) {
 			if (CommonUtil.startsWithIgnoreCase(CommonUtil.trim(tempString), searchString)) {
-				rtnString = CommonUtil.trim(CommonUtil.substringAfter(tempString, searchString));
+				rtnString = CommonUtil.trim(CommonUtil.substringAfter(CommonUtil.substringBefore(tempString, separator), searchString));
 				break;
 			}
 		}
 		br.close();
 
-		return rtnString;
+		return CommonUtil.upperCase(rtnString);
 	}
 
 	private String getDescriptionFromTableCreationScript(File file) throws Exception {

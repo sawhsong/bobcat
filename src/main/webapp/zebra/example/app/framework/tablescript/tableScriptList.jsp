@@ -60,6 +60,7 @@ $(function() {
 
 			if ($(element).is("[name=tableName]")) {
 				doSearch();
+				event.preventDefault();
 			}
 		}
 	});
@@ -135,7 +136,7 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
+			isPageable:false,
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -336,10 +337,10 @@ $(function() {
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
-			<col width="20%"/>
+			<col width="18%"/>
 			<col width="*"/>
 			<col width="22%"/>
-			<col width="7%"/>
+			<col width="10%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
