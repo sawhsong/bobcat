@@ -67,24 +67,6 @@ $(function() {
 	/*!
 	 * context menus
 	 */
-	setExportButtonContextMenu = function() {
-		ctxMenu.commonExport[0].fun = function() {exeExport(ctxMenu.commonExport[0]);};
-		ctxMenu.commonExport[1].fun = function() {exeExport(ctxMenu.commonExport[1]);};
-		ctxMenu.commonExport[2].fun = function() {exeExport(ctxMenu.commonExport[2]);};
-		ctxMenu.commonExport[3].fun = function() {exeExport(ctxMenu.commonExport[3]);};
-		ctxMenu.commonExport[4].fun = function() {exeExport(ctxMenu.commonExport[4]);};
-		ctxMenu.commonExport[5].fun = function() {exeExport(ctxMenu.commonExport[5]);};
-
-		$("#btnExport").contextMenu(ctxMenu.commonExport, {
-			classPrefix:"actionButton",
-			effectDuration:300,
-			effect:"slide",
-			borderRadius:"bottom 4px",
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0
-		});
-	};
 
 	/*!
 	 * process
@@ -166,24 +148,23 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(codeType) {
-		openPopup({mode:"Detail", codeType:codeType});
+	getDetail = function(tableName) {
+		openPopup({mode:"Detail", tableName:tableName});
 	};
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 754;
+		var height = 800;
 
 		if (param.mode == "Detail") {
-			url = "/zebra/framework/commoncode/getDetail.do";
+			url = "/zebra/framework/tablescript/getDetail.do";
 			header = "<mc:msg key="fwk.commoncode.header.popupHeaderDetail"/>";
 		} else if (param.mode == "New") {
-			url = "/zebra/framework/commoncode/getInsert.do";
+			url = "/zebra/framework/tablescript/getInsert.do";
 			header = "<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
 		} else if (param.mode == "Edit") {
-			url = "/zebra/framework/commoncode/getUpdate.do";
+			url = "/zebra/framework/tablescript/getUpdate.do";
 			header = "<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
-			height = 754;
 		}
 
 		var popParam = {
@@ -283,44 +264,6 @@ $(function() {
 		});
 	};
 
-	exeExport = function(menuObject) {
-		$("[name=fileType]").remove();
-		$("[name=dataRange]").remove();
-
-		if (searchResultDataCount <= 0) {
-			commonJs.warn("<mc:msg key="I001"/>");
-			return;
-		}
-
-		commonJs.confirm({
-			contents:"<mc:msg key="Q003"/>",
-			buttons:[{
-				caption:"Yes",
-				callback:function() {
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/zebra/framework/commoncode/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-					// needs delayed time - sometimes causing the error [getOutputStream() has already been called for this response]
-					setTimeout(function() {popup.close();}, 3000);
-				}
-			}, {
-				caption:"No",
-				callback:function() {
-				}
-			}],
-			blind:true
-		});
-	};
-
 	/*!
 	 * load event (document / window)
 	 */
@@ -340,8 +283,6 @@ $(function() {
 // 		});
 
 		$("#tableName").focus();
-
-		setExportButtonContextMenu();
 
 		doSearch();
 	});
@@ -371,7 +312,6 @@ $(function() {
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -397,9 +337,9 @@ $(function() {
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
-			<col width="22%"/>
+			<col width="20%"/>
 			<col width="*"/>
-			<col width="22%"/>
+			<col width="25%"/>
 			<col width="7%"/>
 			<col width="7%"/>
 			<col width="4%"/>
