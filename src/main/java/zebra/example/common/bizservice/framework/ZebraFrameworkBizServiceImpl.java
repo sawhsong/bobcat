@@ -37,7 +37,7 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.FileUtil;
 
-public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizService {
+public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFrameworkBizService {
 	/*!
 	 * DTO Generator
 	 */
@@ -1778,6 +1778,65 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 	}
 
 	/*!
+	 * Table Creation Script
+	 */
+	public DataSet getScriptFileDataSet(DataSet requestDataSet) throws Exception {
+		DataSet dataSet = new DataSet();
+		String tableNameSearched = requestDataSet.getValue("tableName");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		File fwkPath = new File(rootPath+"/"+ConfigUtil.getProperty("path.tablescript.framework"));
+		File pjtPath = new File(rootPath+"/"+ConfigUtil.getProperty("path.tablescript.project"));
+		File[] fwkFiles = fwkPath.listFiles();
+		File[] pjtFiles = pjtPath.listFiles();
+
+		dataSet.addName(new String[] {"TABLE_NAME", "DESCRIPTION", "FILE_PATH_NAME", "UPDATE_DATE_TIME"});
+
+		for (File file : fwkFiles) {
+			String tableName = getTableNameFromTableCreationScript(file);
+			String description = getDescriptionFromTableCreationScript(file);
+
+			if (CommonUtil.isNotBlank(tableNameSearched)) {
+				if (CommonUtil.contains(tableName, tableNameSearched)) {
+					dataSet.addRow();
+					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
+					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
+				}
+			} else {
+				dataSet.addRow();
+				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
+				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
+			}
+		}
+
+		for (File file : pjtFiles) {
+			String tableName = getTableNameFromTableCreationScript(file);
+			String description = getDescriptionFromTableCreationScript(file);
+
+			if (CommonUtil.isNotBlank(tableNameSearched)) {
+				if (CommonUtil.contains(tableName, tableNameSearched)) {
+					dataSet.addRow();
+					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
+					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
+				}
+			} else {
+				dataSet.addRow();
+				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
+				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_PATH_NAME", CommonUtil.replace(file.getAbsolutePath()+"/"+file.getName(), "\\", "/"));
+				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
+			}
+		}
+
+		return dataSet;
+	}
+
+	/*!
 	 * Common for this service
 	 */
 	private boolean isExistingHDao(Document document, String daoId) throws Exception {
@@ -1886,5 +1945,37 @@ public class ZebraFrameworkBS extends BaseBiz implements ZebraFrameworkBizServic
 		} else {
 			return " type=\"java.lang.String\" length=\""+dataLength+"\"";
 		}
+	}
+
+	private String getTableNameFromTableCreationScript(File file) throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String searchString = "create table";
+		String rtnString = "", tempString;
+
+		while ((tempString = br.readLine()) != null) {
+			if (CommonUtil.startsWithIgnoreCase(CommonUtil.trim(tempString), searchString)) {
+				rtnString = CommonUtil.trim(CommonUtil.substringAfter(tempString, searchString));
+				break;
+			}
+		}
+		br.close();
+
+		return rtnString;
+	}
+
+	private String getDescriptionFromTableCreationScript(File file) throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String searchString = "* Description", separator = ":";
+		String rtnString = "", tempString;
+
+		while ((tempString = br.readLine()) != null) {
+			if (CommonUtil.startsWithIgnoreCase(CommonUtil.trim(tempString), searchString)) {
+				rtnString = CommonUtil.trim(CommonUtil.substringAfter(tempString, separator));
+				break;
+			}
+		}
+		br.close();
+
+		return rtnString;
 	}
 }

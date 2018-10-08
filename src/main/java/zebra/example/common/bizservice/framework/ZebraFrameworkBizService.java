@@ -33,6 +33,11 @@ public interface ZebraFrameworkBizService {
 	public boolean createMessageFile(DataSet requestDataSet) throws Exception;
 
 	/*!
+	 * Table Creation Script
+	 */
+	public DataSet getScriptFileDataSet(DataSet requestDataSet) throws Exception;
+
+	/*!
 	 * Common for this service
 	 */
 }

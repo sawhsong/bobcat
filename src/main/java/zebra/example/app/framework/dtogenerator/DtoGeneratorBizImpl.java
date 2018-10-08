@@ -17,7 +17,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	@Autowired
 	private DummyDao dummyDao;
 	@Autowired
-	private ZebraFrameworkBizService zebraFrameworkBS;
+	private ZebraFrameworkBizService zebraFrameworkBizService;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
@@ -160,41 +160,41 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			tableInfoDataSet = dummyDao.getTableDetailDataSetByTableName(tableName);
 
 			if (dtoProject || dtoFramework) {
-				zebraFrameworkBS.generateDto(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateDto(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (hibernateDtoConfigProject || hibernateDtoConfigFramework) {
-				zebraFrameworkBS.generateHibernateDtoConfig(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateHibernateDtoConfig(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (mybatisDtoMapperConfigProject || mybatisDtoMapperConfigFramework) {
-				zebraFrameworkBS.generateMybatisDtoMapper(system, requestDataSet, tableInfoDataSet);
-				zebraFrameworkBS.generateMybatisDtoMapperXml(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateMybatisDtoMapper(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateMybatisDtoMapperXml(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (daoProject || daoFramework) {
-				zebraFrameworkBS.generateDao(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateDao(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (hibernateDaoImplProject || hibernateDaoImplFramework) {
-				zebraFrameworkBS.generateHDaoImpl(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateHDaoImpl(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (mybatisDaoImplProject || mybatisDaoImplFramework) {
-				zebraFrameworkBS.generateDaoImpl(system, requestDataSet, tableInfoDataSet);
-				zebraFrameworkBS.generateDaoMapper(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateDaoImpl(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateDaoMapper(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (daoSpringConfigProject || daoSpringConfigFramework) {
-				zebraFrameworkBS.generateDaoSpringConfig(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateDaoSpringConfig(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (hibernateQueryProject || hibernateQueryFramework) {
-				zebraFrameworkBS.generateHibernateQuery(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateHibernateQuery(system, requestDataSet, tableInfoDataSet);
 			}
 
 			if (mybatisQueryProject || mybatisQueryFramework) {
-				zebraFrameworkBS.generateMybatisQuery(system, requestDataSet, tableInfoDataSet);
+				zebraFrameworkBizService.generateMybatisQuery(system, requestDataSet, tableInfoDataSet);
 			}
 
 			paramEntity.setSuccess(true);

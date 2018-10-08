@@ -19,7 +19,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 	@Autowired
 	private SysMenuDao sysMenuDao;
 	@Autowired
-	private ZebraFrameworkBizService zebraFramworkBS;
+	private ZebraFrameworkBizService zebraFramworkBizService;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		QueryAdvisor qaMenu = paramEntity.getQueryAdvisor();
@@ -119,18 +119,18 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 				FileUtil.createFolder(messagePath+"/"+menuPathStr);
 			}
 
-			zebraFramworkBS.createJavaAction(requestDataSet);
-			zebraFramworkBS.createJavaBiz(requestDataSet);
-			zebraFramworkBS.createJavaBizImpl(requestDataSet);
+			zebraFramworkBizService.createJavaAction(requestDataSet);
+			zebraFramworkBizService.createJavaBiz(requestDataSet);
+			zebraFramworkBizService.createJavaBizImpl(requestDataSet);
 
-			zebraFramworkBS.createJspList(requestDataSet);
-			zebraFramworkBS.createJspDetail(requestDataSet);
-			zebraFramworkBS.createJspInsert(requestDataSet);
-			zebraFramworkBS.createJspUpdate(requestDataSet);
+			zebraFramworkBizService.createJspList(requestDataSet);
+			zebraFramworkBizService.createJspDetail(requestDataSet);
+			zebraFramworkBizService.createJspInsert(requestDataSet);
+			zebraFramworkBizService.createJspUpdate(requestDataSet);
 
-			zebraFramworkBS.createConfSpring(requestDataSet);
-			zebraFramworkBS.createConfStruts(requestDataSet);
-			zebraFramworkBS.createMessageFile(requestDataSet);
+			zebraFramworkBizService.createConfSpring(requestDataSet);
+			zebraFramworkBizService.createConfStruts(requestDataSet);
+			zebraFramworkBizService.createMessageFile(requestDataSet);
 
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {

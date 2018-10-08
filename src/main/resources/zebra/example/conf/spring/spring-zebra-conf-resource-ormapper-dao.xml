@@ -44,8 +44,4 @@
     <!-- 		<property name="mapperInterface" value="${name.package.framework}.example.conf.resource.ormapper.dao.ZebraBoardFile.ZebraBoardFileDaoMapper" /> -->
     <!-- 		<property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
     <!-- 	</bean> -->
-    <!--ZebraColumnCreationInfo DAO-->
-    <bean class="${name.package.framework}.example.conf.resource.ormapper.dao.ZebraColumnCreationInfo.ZebraColumnCreationInfoHDaoImpl" id="zebraColumnCreationInfoDao" init-method="init" name="zebraColumnCreationInfoDao" parent="baseHDao" scope="prototype"/>
-    <!--ZebraTableCreationInfo DAO-->
-    <bean class="${name.package.framework}.example.conf.resource.ormapper.dao.ZebraTableCreationInfo.ZebraTableCreationInfoHDaoImpl" id="zebraTableCreationInfoDao" init-method="init" name="zebraTableCreationInfoDao" parent="baseHDao" scope="prototype"/>
 </beans>

@@ -214,6 +214,14 @@ public class CommonUtil extends StringUtils {
 		return new SimpleDateFormat(ConfigUtil.getProperty("format.default.dateTime")).parse(value);
 	}
 
+	public static String toDateTimeString(long value) throws Exception {
+		return toDateTimeString(value, ConfigUtil.getProperty("format.dateTime.java"));
+	}
+
+	public static String toDateTimeString(long value, String format) throws Exception {
+		return new SimpleDateFormat(format).format(value);
+	}
+
 	public static boolean toBoolean(String value) {
 		return (equalsIgnoreCase(value, "true") || equalsIgnoreCase(value, "yes") || equalsIgnoreCase(value, "y"));
 	}

@@ -113,9 +113,8 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "FILE_PATH_NAME")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "INSERT_DATE"), dateFormat)));
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "FILE_NAME")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "UPDATE_DATE_TIME")));
 
 				var uiIcon = new UiIcon();
 				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
@@ -127,7 +126,7 @@ $(function() {
 		} else {
 			var uiGridTr = new UiGridTr();
 
-			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:6").setText("<mc:msg key="I001"/>"));
 			html += uiGridTr.toHtmlString();
 		}
 
@@ -339,8 +338,7 @@ $(function() {
 			<col width="3%"/>
 			<col width="20%"/>
 			<col width="*"/>
-			<col width="25%"/>
-			<col width="7%"/>
+			<col width="22%"/>
 			<col width="7%"/>
 			<col width="4%"/>
 		</colgroup>
@@ -349,20 +347,19 @@ $(function() {
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableDesc"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.filePathName"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.insertDate"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.updateDate"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.fileName"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.tablescript.gridListHeader.updateDateTime"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="6"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"></div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

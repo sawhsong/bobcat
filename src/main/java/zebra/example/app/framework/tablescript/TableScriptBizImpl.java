@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
+import zebra.example.common.bizservice.framework.ZebraFrameworkBizService;
 import zebra.example.common.extend.BaseBiz;
-import zebra.example.conf.resource.ormapper.dao.ZebraTableCreationInfo.ZebraTableCreationInfoDao;
 import zebra.exception.FrameworkException;
 
 public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 	@Autowired
-	private ZebraTableCreationInfoDao zebraTableCreationInfoDao;
+	private ZebraFrameworkBizService zebraFrameworkBizService;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -28,11 +28,10 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 
 		try {
-			queryAdvisor.setPagination(true);
+			queryAdvisor.setPagination(false);
 			queryAdvisor.setRequestDataSet(requestDataSet);
 
-			paramEntity.setAjaxResponseDataSet(zebraTableCreationInfoDao.getAllLikeTableNameAsDataSet(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setAjaxResponseDataSet(zebraFrameworkBizService.getScriptFileDataSet(requestDataSet));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
