@@ -9,7 +9,6 @@
 <%
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet resultDataSet = (DataSet)pe.getObject("resultDataSet");
-	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
 %>
 <%/************************************************************************************************
 * HTML
