@@ -119,6 +119,10 @@ body {
 </style>
 <script type="text/javascript">
 $(function() {
+	clickButton = function() {
+		history.go(-1);
+	};
+
 	$(document).ready(function() {
 		$(".sectionContents").hide();
 		$(".sectionContents:first").toggle("blind");
@@ -150,7 +154,7 @@ $(function() {
 	</div>
 </div>
 <div class="buttonBox">
-	<a class="button red" onclick="history.go(-1)">Back</a>
+	<a class="button red" onclick="clickButton()">Back</a>
 </div>
 <div style="clear:both;height:5px;"></div>
 <div class="messageSections">

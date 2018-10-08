@@ -106,20 +106,20 @@ $(function() {
 				var uiGridTr = new UiGridTr();
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").setValue(dataSet.getValue(i, "TABLE_NAME"));
+				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").setValue(dataSet.getValue(i, "FILE_NAME"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "FILE_NAME")+"')");
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "FILE_NAME")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "FILE_SIZE"), "#,###")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(dataSet.getValue(i, "FILE_SIZE")+" KB"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "UPDATE_DATE_TIME")));
 
 				var uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("fileName:"+dataSet.getValue(i, "FILE_NAME"))
 					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
@@ -149,8 +149,8 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(tableName) {
-		openPopup({mode:"Detail", tableName:tableName});
+	getDetail = function(fileName) {
+		openPopup({mode:"Detail", fileName:fileName});
 	};
 
 	openPopup = function(param) {
@@ -169,15 +169,15 @@ $(function() {
 		}
 
 		var popParam = {
-			popupId:"commonCode"+param.mode,
+			popupId:"tableScript"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				codeType:commonJs.nvl(param.codeType, "")
+				fileName:commonJs.nvl(param.fileName, "")
 			},
 			header:header,
 			blind:true,
-			width:1000,
+			width:1200,
 			height:height
 		};
 
@@ -208,7 +208,7 @@ $(function() {
 
 	exeDelete = function() {
 		commonJs.ajaxSubmit({
-			url:"/zebra/framework/commoncode/exeDelete.do",
+			url:"/zebra/framework/tablescript/exeDelete.do",
 			dataType:"json",
 			formId:"fmDefault",
 			success:function(data, textStatus) {
@@ -234,25 +234,18 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var codeType = $(img).attr("codeType");
-		var defaultYn = $(img).attr("defaultYn");
+		var fileName = $(img).attr("fileName");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == codeType) {
+			if (!$(this).is(":disabled") && $(this).val() == fileName) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		if (defaultYn == "Y") {
-			ctxMenu.commonAction[2].disable = true;
-		} else {
-			ctxMenu.commonAction[2].disable = false;
-		}
-
-		ctxMenu.commonAction[0].fun = function() {getDetail(codeType);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", codeType:codeType});};
+		ctxMenu.commonAction[0].fun = function() {getDetail(fileName);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", fileName:fileName});};
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {
@@ -272,16 +265,6 @@ $(function() {
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.commonAction);
 		});
-
-// 		commonJs.setAutoComplete($("#commonCodeType"), {
-// 			url:"/zebra/common/autoCompletion/",
-// 			method:"getCommonCodeType",
-// 			label:"description"+langCode,
-// 			value:"code_type",
-// 			select:function(event, ui) {
-// 				doSearch();
-// 			}
-// 		});
 
 		$("#tableName").focus();
 

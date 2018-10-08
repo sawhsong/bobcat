@@ -1801,7 +1801,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
 					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
-					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", file.length()/1024/1024);
+					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
 					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 				}
 			} else {
@@ -1809,7 +1809,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
 				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", file.length()/1024/1024);
+				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
 				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 			}
 		}
@@ -1824,7 +1824,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
 					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
-					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", file.length()/1024/1024);
+					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
 					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 				}
 			} else {
@@ -1832,7 +1832,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
 				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", file.length()/1024/1024);
+				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
 				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 			}
 		}
