@@ -26,15 +26,12 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		DataSet tableInfo;
 
 		try {
 			queryAdvisor.setPagination(true);
 			queryAdvisor.setRequestDataSet(requestDataSet);
 
-			tableInfo = zebraTableCreationInfoDao.getAllLikeTableNameAsDataSet(queryAdvisor);
-
-			paramEntity.setAjaxResponseDataSet(tableInfo);
+			paramEntity.setAjaxResponseDataSet(zebraTableCreationInfoDao.getAllLikeTableNameAsDataSet(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {

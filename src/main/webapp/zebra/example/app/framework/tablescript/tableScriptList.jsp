@@ -30,7 +30,6 @@
 var popup = null;
 var searchResultDataCount = 0;
 var dateFormat = jsconfig.get("dateFormatJs");
-var langCode = jsconfig.get("langCode").toUpperCase();
 
 $(function() {
 	/*!
@@ -60,7 +59,7 @@ $(function() {
 		if (event.which == 13) {
 			var element = event.target;
 
-			if ($(element).is("[name=searchWord]")) {
+			if ($(element).is("[name=tableName]")) {
 				doSearch();
 			}
 		}
@@ -122,33 +121,24 @@ $(function() {
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var defaultYn = dataSet.getValue(i, "DEFAULT_YN");
-				var className = "chkEn", disabledStr = "";
 				var uiGridTr = new UiGridTr();
 
-				if ("Y" == defaultYn) {
-					className = "chkDis";
-					disabledStr = "disabled";
-				}
-
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").addClassName(className).setValue(dataSet.getValue(i, "CODE_TYPE")).setOptions(disabledStr);
+				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").setValue(dataSet.getValue(i, "TABLE_NAME"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(dataSet.getValue(i, "CODE_TYPE")).setScript("getDetail('"+dataSet.getValue(i, "CODE_TYPE")+"')");
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "TABLE_NAME")+"')");
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION_"+langCode)));
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "PROGRAM_CONSTANTS")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "USE_YN")));
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(defaultYn));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "FILE_PATH_NAME")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "INSERT_DATE"), dateFormat)));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
 
-				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
-					.addAttribute("defaultYn:"+defaultYn).setScript("doAction(this)");
+				var uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("tableName:"+dataSet.getValue(i, "TABLE_NAME"))
+					.addAttribute("title:<mc:msg key="page.com.action"/>").setScript("doAction(this)");
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
 				html += uiGridTr.toHtmlString();
@@ -156,7 +146,7 @@ $(function() {
 		} else {
 			var uiGridTr = new UiGridTr();
 
-			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText("<mc:msg key="I001"/>"));
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
 			html += uiGridTr.toHtmlString();
 		}
 
@@ -166,8 +156,6 @@ $(function() {
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
-			isFilter:false,
-			filterColumn:[1, 2, 3],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -342,17 +330,17 @@ $(function() {
 			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
-		commonJs.setAutoComplete($("#commonCodeType"), {
-			url:"/zebra/common/autoCompletion/",
-			method:"getCommonCodeType",
-			label:"description"+langCode,
-			value:"code_type",
-			select:function(event, ui) {
-				doSearch();
-			}
-		});
+// 		commonJs.setAutoComplete($("#commonCodeType"), {
+// 			url:"/zebra/common/autoCompletion/",
+// 			method:"getCommonCodeType",
+// 			label:"description"+langCode,
+// 			value:"code_type",
+// 			select:function(event, ui) {
+// 				doSearch();
+// 			}
+// 		});
 
-		$("#commonCodeType").focus();
+		$("#tableName").focus();
 
 		setExportButtonContextMenu();
 
@@ -391,8 +379,8 @@ $(function() {
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label>
-			<ui:text name="commonCodeType" id="commonCodeType" className="defClass hor" style="width:280px"/>
+			<label for="tableName" class="lblEn hor"><mc:msg key="fwk.tablescript.tableName"/></label>
+			<ui:text name="tableName" id="tableName" className="defClass hor" style="width:280px"/>
 		</div>
 	</div>
 </div>
@@ -410,23 +398,19 @@ $(function() {
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
-			<col width="15%"/>
+			<col width="22%"/>
 			<col width="*"/>
-			<col width="18%"/>
+			<col width="22%"/>
 			<col width="7%"/>
 			<col width="7%"/>
-			<col width="9%"/>
-			<col width="9%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.commoncode.dataGridHeader.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.codeType"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.description"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.programConstants"/></th>
-				<th class="thGrid sortable:number"><mc:msg key="fwk.commoncode.dataGridHeader.useYn"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.defaultYn"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableName"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableDesc"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.filePathName"/></th>
 				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.insertDate"/></th>
 				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
@@ -434,7 +418,7 @@ $(function() {
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
