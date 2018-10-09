@@ -2009,7 +2009,6 @@ logger.debug(columnDataSet);
 
 		dataSet.addName(new String[] {"TABLE_NAME", "TABLE_DESCRIPTION", "COLUMN_NAME", "DATA_TYPE", "DATA_LENGTH", "DEFAULT_VALUE", "NULLABLE", "KEY_TYPE", "FK_TABLE_COLUMN", "COLUMN_DESCRIPTION"});
 		while ((tempString = br.readLine()) != null) {
-			String keyType = "";
 			tempString = CommonUtil.trim(tempString);
 
 			if (CommonUtil.isBlank(tempString)) {continue;}
@@ -2031,22 +2030,25 @@ logger.debug(columnDataSet);
 					fkCol = CommonUtil.substringAfter(tempString, "references ");
 					fkCol = CommonUtil.substringBetween(fkCol, "(", ")");
 					for (int i=0; i<keyCol.length; i++) {
-						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "KEY_TYPE", (CommonUtil.isBlank(keyType) ? "FK" : keyType+", FK"));
-						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "FK_TABLE_COLUMN", fkTable+"."+fkCol);
+						int rowIdx = dataSet.getRowIndex("COLUMN_NAME", keyCol[i]);
+						dataSet.setValue(rowIdx, "KEY_TYPE", (CommonUtil.isBlank(dataSet.getValue(rowIdx, "KEY_TYPE"))) ? "FK" : dataSet.getValue(rowIdx, "KEY_TYPE")+", FK");
+						dataSet.setValue(rowIdx, "FK_TABLE_COLUMN", fkTable+"."+fkCol);
 					}
 				}
 
 				if (CommonUtil.containsIgnoreCase(tempString, "primary key")) {
 					keyCol = CommonUtil.splitWithTrim(CommonUtil.substringBetween(tempString, "(", ")"), ",");
 					for (int i=0; i<keyCol.length; i++) {
-						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "KEY_TYPE", (CommonUtil.isBlank(keyType) ? "PK" : keyType+", PK"));
+						int rowIdx = dataSet.getRowIndex("COLUMN_NAME", keyCol[i]);
+						dataSet.setValue(rowIdx, "KEY_TYPE", (CommonUtil.isBlank(dataSet.getValue(rowIdx, "KEY_TYPE"))) ? "PK" : dataSet.getValue(rowIdx, "KEY_TYPE")+", PK");
 					}
 				}
 
 				if (CommonUtil.containsIgnoreCase(tempString, "unique")) {
 					keyCol = CommonUtil.splitWithTrim(CommonUtil.substringBetween(tempString, "(", ")"), ",");
 					for (int i=0; i<keyCol.length; i++) {
-						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "KEY_TYPE", (CommonUtil.isBlank(keyType) ? "UK" : keyType+", UK"));
+						int rowIdx = dataSet.getRowIndex("COLUMN_NAME", keyCol[i]);
+						dataSet.setValue(rowIdx, "KEY_TYPE", (CommonUtil.isBlank(dataSet.getValue(rowIdx, "KEY_TYPE"))) ? "UK" : dataSet.getValue(rowIdx, "KEY_TYPE")+", UK");
 					}
 				}
 			}
