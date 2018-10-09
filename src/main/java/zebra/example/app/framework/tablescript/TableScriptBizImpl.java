@@ -39,6 +39,20 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
+
+	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+
+		try {
+			paramEntity.setObject("resultDataSet", zebraFrameworkBizService.getScriptFileDetailDataSet(requestDataSet.getValue("fileName")));
+
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+
+		return paramEntity;
+	}
 /*
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
@@ -107,20 +121,6 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801"));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-
-		return paramEntity;
-	}
-
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-
-		try {
-			paramEntity.setObject("resultDataSet", zebraCommonCodeDao.getCommonCodeDataSetByCodeType(requestDataSet.getValue("codeType")));
-
-			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

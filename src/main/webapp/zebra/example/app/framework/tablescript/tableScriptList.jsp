@@ -334,8 +334,8 @@ $(function() {
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableDesc"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.fileName"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.fileSize"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.tablescript.gridListHeader.updateDateTime"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.gridListHeader.fileSize"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.gridListHeader.updateDateTime"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

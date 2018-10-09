@@ -1840,6 +1840,24 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		return dataSet;
 	}
 
+	public DataSet getScriptFileDetailDataSet(String fileName) throws Exception {
+		DataSet dataSet = new DataSet();
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		String path = (CommonUtil.containsIgnoreCase(fileName, "zebra")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");
+		File file = new File(rootPath+"/"+path+"/"+fileName);
+		String tableName = getTableNameFromTableCreationScript(file);
+		String description = getDescriptionFromTableCreationScript(file);
+		DataSet columnDataSet = getColumnDataSetFromTableCreationScript(file);
+logger.debug(columnDataSet);
+		for (int i=0; i<columnDataSet.getRowCnt(); i++) {
+			columnDataSet.setValue(i, "TABLE_NAME", tableName);
+			columnDataSet.setValue(i, "TABLE_DESCRIPTION", description);
+			columnDataSet.setValue(i, "NULLABLE", CommonUtil.nvl(columnDataSet.getValue(i, "NULLABLE"), "Y"));
+		}
+logger.debug(columnDataSet);
+		return dataSet;
+	}
+
 	/*!
 	 * Common for this service
 	 */
@@ -1981,5 +1999,112 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		br.close();
 
 		return rtnString;
+	}
+
+	private DataSet getColumnDataSetFromTableCreationScript(File file) throws Exception {
+		DataSet dataSet = new DataSet();
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String tempString;
+		boolean isColInfoRow = false;
+
+		dataSet.addName(new String[] {"TABLE_NAME", "TABLE_DESCRIPTION", "COLUMN_NAME", "DATA_TYPE", "DATA_LENGTH", "DEFAULT_VALUE", "NULLABLE", "KEY_TYPE", "FK_TABLE_COLUMN", "COLUMN_DESCRIPTION"});
+		while ((tempString = br.readLine()) != null) {
+			String keyType = "";
+			tempString = CommonUtil.trim(tempString);
+
+			if (CommonUtil.isBlank(tempString)) {continue;}
+
+			if (CommonUtil.startsWithIgnoreCase(tempString, "pctfree")) {break;}
+
+			if (CommonUtil.startsWithIgnoreCase(tempString, "create table")) {
+				isColInfoRow = true;
+				continue;
+			}
+
+			if (CommonUtil.startsWithIgnoreCase(tempString, "constraint")) {
+				String keyCol[], fkTable = "", fkCol = "";
+				isColInfoRow = false;
+
+				if (CommonUtil.containsIgnoreCase(tempString, "foreign key")) {
+					keyCol = CommonUtil.splitWithTrim(CommonUtil.substringBetween(tempString, "foreign key(", ") references"), ",");
+					fkTable = CommonUtil.substringBetween(tempString, "references ", "(");
+					fkCol = CommonUtil.substringAfter(tempString, "references ");
+					fkCol = CommonUtil.substringBetween(fkCol, "(", ")");
+					for (int i=0; i<keyCol.length; i++) {
+						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "KEY_TYPE", (CommonUtil.isBlank(keyType) ? "FK" : keyType+", FK"));
+						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "FK_TABLE_COLUMN", fkTable+"."+fkCol);
+					}
+				}
+
+				if (CommonUtil.containsIgnoreCase(tempString, "primary key")) {
+					keyCol = CommonUtil.splitWithTrim(CommonUtil.substringBetween(tempString, "(", ")"), ",");
+					for (int i=0; i<keyCol.length; i++) {
+						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "KEY_TYPE", (CommonUtil.isBlank(keyType) ? "PK" : keyType+", PK"));
+					}
+				}
+
+				if (CommonUtil.containsIgnoreCase(tempString, "unique")) {
+					keyCol = CommonUtil.splitWithTrim(CommonUtil.substringBetween(tempString, "(", ")"), ",");
+					for (int i=0; i<keyCol.length; i++) {
+						dataSet.setValue(dataSet.getRowIndex("COLUMN_NAME", keyCol[i]), "KEY_TYPE", (CommonUtil.isBlank(keyType) ? "UK" : keyType+", UK"));
+					}
+				}
+			}
+
+			if (isColInfoRow) {
+				String strArr[] = CommonUtil.split(tempString);
+
+				dataSet.addRow();
+				dataSet.setValue(dataSet.getRowCnt()-1, "COLUMN_NAME", strArr[0]);
+				dataSet.setValue(dataSet.getRowCnt()-1, "DATA_TYPE", getDbDataTypeString(strArr[0]));
+				dataSet.setValue(dataSet.getRowCnt()-1, "DATA_LENGTH", getDbDataLengthString(strArr[1]));
+				if (!CommonUtil.contains(strArr[1], ",")) {
+					if (CommonUtil.containsIgnoreCase(strArr[2], "default")) {
+						if (CommonUtil.containsIgnoreCase(strArr[3], "sysdate")) {
+							dataSet.setValue(dataSet.getRowCnt()-1, "DEFAULT_VALUE", "sysdate");
+						} else {
+							dataSet.setValue(dataSet.getRowCnt()-1, "DEFAULT_VALUE", CommonUtil.substringBetween(strArr[3], "'", "'"));
+						}
+					}
+
+					if (CommonUtil.containsIgnoreCase(strArr[2], "not")) {
+						dataSet.setValue(dataSet.getRowCnt()-1, "NULLABLE", "N");
+					}
+				}
+
+				dataSet.setValue(dataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", CommonUtil.trim(CommonUtil.substringAfter(tempString, "--")));
+			}
+		}
+		br.close();
+
+		return dataSet;
+	}
+
+	private String getDbDataTypeString(String value) {
+		if (CommonUtil.containsIgnoreCase(value, "date")) {
+			return "date";
+		} else if (CommonUtil.containsIgnoreCase(value, "number")) {
+			return "number";
+		} else if (CommonUtil.containsIgnoreCase(value, "clob")) {
+			return "clob";
+		} else {
+			return "varchar2";
+		}
+	}
+
+	private String getDbDataLengthString(String value) {
+		if (CommonUtil.containsIgnoreCase(value, "date")) {
+			return "7";
+		} else if (CommonUtil.containsIgnoreCase(value, "number")) {
+			if (CommonUtil.containsIgnoreCase(value, "(")) {
+				return CommonUtil.substringBetween(value, "(", ")");
+			} else {
+				return "";
+			}
+		} else if (CommonUtil.containsIgnoreCase(value, "clob")) {
+			return "";
+		} else {
+			return CommonUtil.substringBetween(value, "(", ")");
+		}
 	}
 }

@@ -36,6 +36,7 @@ public interface ZebraFrameworkBizService {
 	 * Table Creation Script
 	 */
 	public DataSet getScriptFileDataSet(DataSet requestDataSet) throws Exception;
+	public DataSet getScriptFileDetailDataSet(String fileName) throws Exception;
 
 	/*!
 	 * Common for this service

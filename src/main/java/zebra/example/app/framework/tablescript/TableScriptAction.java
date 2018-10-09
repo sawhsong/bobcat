@@ -22,6 +22,11 @@ public class TableScriptAction extends BaseAction {
 		setRequestAttribute("paramEntity", this.paramEntity);
 		return "ajaxResponse";
 	}
+
+	public String getDetail() throws Exception {
+		biz.getDetail(paramEntity);
+		return "detail";
+	}
 /*
 	public String getInsert() throws Exception {
 		biz.getInsert(this.paramEntity);
@@ -36,11 +41,6 @@ public class TableScriptAction extends BaseAction {
 		}
 		setRequestAttribute("paramEntity", this.paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
 	}
 
 	public String getUpdate() throws Exception {
