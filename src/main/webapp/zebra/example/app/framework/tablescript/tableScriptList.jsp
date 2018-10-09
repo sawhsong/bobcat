@@ -155,17 +155,17 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 800;
+		var height = 900;
 
 		if (param.mode == "Detail") {
 			url = "/zebra/framework/tablescript/getDetail.do";
-			header = "<mc:msg key="fwk.commoncode.header.popupHeaderDetail"/>";
+			header = "<mc:msg key="fwk.tablescript.title.detailPopupHeader"/>";
 		} else if (param.mode == "New") {
 			url = "/zebra/framework/tablescript/getInsert.do";
-			header = "<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
+			header = "<mc:msg key="fwk.tablescript.title.generatorPopupHeader"/>";
 		} else if (param.mode == "Edit") {
 			url = "/zebra/framework/tablescript/getUpdate.do";
-			header = "<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>";
+			header = "<mc:msg key="fwk.tablescript.title.generatorPopupHeader"/>";
 		}
 
 		var popParam = {
@@ -177,7 +177,7 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:1200,
+			width:1600,
 			height:height
 		};
 

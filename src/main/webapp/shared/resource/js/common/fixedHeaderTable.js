@@ -4,7 +4,7 @@
  * 		 : selector must have an ID
  * 			$("#tblFixedHeaderTable").fixedHeaderTable({
  * 				attachTo:$("divDataArea"),				// [mandatory : parent jquery object which holds this table - usually this would be 'divDataArea']
- * 				pagingArea:$("#divPagingArea")			// [mandatory : pagination area jquery object]
+ * 				pagingArea:$("#divPagingArea")			// [optional : pagination area jquery object]
  * 				isPageable:true/false					// [optional : true : displays paging area component, false : displays nothing]
  * 				displayRowCount:true					// [optional : true : displays total row count even if isPageable is false, false : displays nothing]
  * 				attachToHeight:750,						// [optional : height of parent jquery object which holds this table]
@@ -25,9 +25,11 @@
 				return;
 			}
 
-			if ($(options.pagingArea).length <= 0) {
-				throw new Error("PagingArea" + framework.messages.mandatory);
-				return;
+			if (options.isPageable || options.displayRowCount) {
+				if ($(options.pagingArea).length <= 0) {
+					throw new Error("PagingArea" + framework.messages.mandatory);
+					return;
+				}
 			}
 
 			var $scrollablePanel, attachToHeight = 0, isScrollbar = false, heightAdjustment = 0;
@@ -292,7 +294,10 @@
 			/*!
 			 * Calculating height(pagingArea, attachTo
 			 */
-			pagingAreaHeight = $(options.pagingArea).outerHeight();
+			var pagingAreaHeight = 0;
+			if ($(options.pagingArea).length > 0) {
+				pagingAreaHeight = $(options.pagingArea).outerHeight();
+			}
 
 			if (isPopup) {
 				$scrollablePanel = $("#divScrollablePanelPopup");

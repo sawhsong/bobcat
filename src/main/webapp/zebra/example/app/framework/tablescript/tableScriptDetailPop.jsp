@@ -9,17 +9,8 @@
 <%
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
-	DataSet resultDataSet = (DataSet)pe.getObject("resultDataSet");
-	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
-	String isActive = "", isDefault = "", disableFlag = "";
-	int masterRow = -1;
-
-	if (resultDataSet.getRowCnt() > 0) {
-		masterRow = resultDataSet.getRowIndex("COMMON_CODE", "0000000000");
-		isActive = resultDataSet.getValue(masterRow, "USE_YN");
-		isDefault = resultDataSet.getValue(masterRow, "DEFAULT_YN");
-		if (CommonUtil.equals(isDefault, "Y")) {disableFlag = "disabled";}
-	}
+	DataSet dsResult = (DataSet)pe.getObject("resultDataSet");
+	String fileName = dsRequest.getValue("fileName");
 %>
 <%/************************************************************************************************
 * HTML
@@ -35,7 +26,6 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-.codeDetail {list-style:none;margin-top:4px;}
 </style>
 <script type="text/javascript">
 $(function() {
@@ -47,7 +37,6 @@ $(function() {
 	});
 
 	$("#btnDelete").click(function(event) {
-		if ($("#btnDelete").attr("disabled") == "disabled") {return;}
 		doProcessByButton({mode:"Delete"});
 	});
 
@@ -59,14 +48,14 @@ $(function() {
 	 * process
 	 */
 	doProcessByButton = function(param) {
-		var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
+		var fileName = "<%=fileName%>";
 		var actionString = "";
 		var params = {};
 
 		if (param.mode == "Update") {
-			actionString = "/zebra/framework/commoncode/getUpdate.do";
+			actionString = "/zebra/framework/tablescript/getUpdate.do";
 		} else if (param.mode == "Delete") {
-			actionString = "/zebra/framework/commoncode/exeDelete.do";
+			actionString = "/zebra/framework/tablescript/exeDelete.do";
 		}
 
 		params = {
@@ -74,7 +63,7 @@ $(function() {
 			action:actionString,
 			data:{
 				mode:param.mode,
-				codeType:codeType
+				fileName:fileName
 			}
 		};
 
@@ -99,11 +88,11 @@ $(function() {
 
 	exeDelete = function(params) {
 		commonJs.ajaxSubmit({
-			url:"/zebra/framework/commoncode/exeDelete.do",
+			url:params.action,
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
-				codeType:params.data.codeType
+				codeType:params.data.fileName
 			},
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, "json");
@@ -132,6 +121,11 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		setTimeout(function() {
+			$("#tblGrid").fixedHeaderTable({
+				attachTo:$("#divDataArea")
+			});
+		}, 500);
 	});
 });
 </script>
@@ -153,7 +147,7 @@ $(function() {
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save" status="<%=disableFlag%>"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -161,24 +155,18 @@ $(function() {
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
+		<caption class="captionEdit"><%=fileName%></caption>
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="12%"/>
+			<col width="30%"/>
+			<col width="12%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.codeType"/></th>
-			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></td>
-			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit"><ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_EN")%></td>
-			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_KO")%></td>
+			<th class="thEdit Rt"><mc:msg key="fwk.tablescript.header.tableName"/></th>
+			<td class="tdEdit"><%=dsResult.getValue("TABLE_NAME")%></td>
+			<th class="thEdit Rt"><mc:msg key="fwk.tablescript.header.tableDesc"/></th>
+			<td class="tdEdit"><%=dsResult.getValue("TABLE_DESCRIPTION")%></td>
 		</tr>
 	</table>
 </div>
@@ -192,47 +180,56 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<ul>
+	<table id="tblGrid" class="tblGrid">
+		<colgroup>
+			<col width="17%"/>
+			<col width="7%"/>
+			<col width="5%"/>
+			<col width="7%"/>
+			<col width="5%"/>
+			<col width="5%"/>
+			<col width="18%"/>
+			<col width="*"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.colName"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.dataType"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.length"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.defaultValue"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.nullable"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.keyType"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.fkRef"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.description"/></th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
 <%
-	if (resultDataSet.getRowCnt() > 0) {
-		for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-			String rdoIsActiveName = "useYnDetail_"+i;
-
-			isActive = resultDataSet.getValue(i, "USE_YN");
-
-			if (i == masterRow) {continue;}
+		if (dsResult.getRowCnt() > 0) {
+			for (int i=0; i<dsResult.getRowCnt(); i++) {
 %>
-		<li class="codeDetail">
-			<table class="tblEdit">
-				<colgroup>
-					<col width="13%"/>
-					<col width="*"/>
-					<col width="13%"/>
-					<col width="15%"/>
-					<col width="11%"/>
-					<col width="10%"/>
-				</colgroup>
-				<tr>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-					<td class="tdEdit"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-					<td class="tdEdit"><ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-					<td class="tdEdit"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
-				</tr>
-				<tr>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-					<td class="tdEdit"><%=resultDataSet.getValue(i, "DESCRIPTION_EN")%></td>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-					<td class="tdEdit" colspan="3"><%=resultDataSet.getValue(i, "DESCRIPTION_KO")%></td>
-				</tr>
-			</table>
-		</li>
+			<tr>
+				<td class="tdGrid Lt"><%=dsResult.getValue(i, "COLUMN_NAME")%></td>
+				<td class="tdGrid Ct"><%=dsResult.getValue(i, "DATA_TYPE")%></td>
+				<td class="tdGrid Ct"><%=dsResult.getValue(i, "DATA_LENGTH")%></td>
+				<td class="tdGrid Ct"><%=dsResult.getValue(i, "DEFAULT_VALUE")%></td>
+				<td class="tdGrid Ct"><%=dsResult.getValue(i, "NULLABLE")%></td>
+				<td class="tdGrid Ct"><%=dsResult.getValue(i, "KEY_TYPE")%></td>
+				<td class="tdGrid Lt"><%=dsResult.getValue(i, "FK_TABLE_COLUMN")%></td>
+				<td class="tdGrid Lt"><%=CommonUtil.abbreviate(dsResult.getValue(i, "COLUMN_DESCRIPTION"), 100)%></td>
+			</tr>
+<%
+			}
+		} else {
+%>
+			<tr>
+				<td class="tdGrid Ct" colspan="8"><mc:msg key="fwk.tablescript.msg.noColumn"/></td>
+			</tr>
 <%
 		}
-	}
 %>
-	</ul>
+		</tbody>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
