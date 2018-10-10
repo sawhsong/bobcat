@@ -8,6 +8,8 @@ import zebra.data.QueryAdvisor;
 import zebra.example.common.bizservice.framework.ZebraFrameworkBizService;
 import zebra.example.common.extend.BaseBiz;
 import zebra.exception.FrameworkException;
+import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 	@Autowired
@@ -47,6 +49,33 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 			paramEntity.setObject("resultDataSet", zebraFrameworkBizService.getScriptFileDetailDataSet(requestDataSet.getValue("fileName")));
 
 			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+
+		return paramEntity;
+	}
+
+	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String fileName = requestDataSet.getValue("fileName");
+		String chkForDel = requestDataSet.getValue("chkForDel");
+		String[] fileNames = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		int result = -1;
+
+		try {
+			if (CommonUtil.isBlank(fileName)) {
+//				result = zebraFrameworkBizService.delete(fileNames);
+			} else {
+//				result = zebraFrameworkBizService.delete(fileName);
+			}
+
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -167,33 +196,6 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 			throw new FrameworkException(paramEntity, ex);
 		}
 		
-		return paramEntity;
-	}
-
-	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String codeType = requestDataSet.getValue("codeType");
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String[] codeTypes = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		int result = -1;
-
-		try {
-			if (CommonUtil.isBlank(codeType)) {
-				result = zebraCommonCodeDao.delete(codeTypes);
-			} else {
-				result = zebraCommonCodeDao.delete(codeType);
-			}
-
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-
 		return paramEntity;
 	}
 

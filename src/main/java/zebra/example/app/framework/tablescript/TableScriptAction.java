@@ -27,6 +27,15 @@ public class TableScriptAction extends BaseAction {
 		biz.getDetail(paramEntity);
 		return "detail";
 	}
+
+	public String exeDelete() throws Exception {
+		try {
+			biz.exeDelete(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", this.paramEntity);
+		return "ajaxResponse";
+	}
 /*
 	public String getInsert() throws Exception {
 		biz.getInsert(this.paramEntity);
@@ -51,16 +60,6 @@ public class TableScriptAction extends BaseAction {
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);
-			ZebraCommonCodeManager.reload();
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", this.paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String exeDelete() throws Exception {
-		try {
-			biz.exeDelete(paramEntity);
 			ZebraCommonCodeManager.reload();
 		} catch (Exception ex) {
 		}
