@@ -37,6 +37,8 @@ public interface ZebraFrameworkBizService {
 	 */
 	public DataSet getScriptFileDataSet(DataSet requestDataSet) throws Exception;
 	public DataSet getScriptFileDetailDataSet(String fileName) throws Exception;
+	public int delete(String fileName) throws Exception;
+	public int delete(String fileNames[]) throws Exception;
 
 	/*!
 	 * Common for this service

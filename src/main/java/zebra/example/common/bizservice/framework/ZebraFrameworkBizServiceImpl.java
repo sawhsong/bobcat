@@ -1857,6 +1857,38 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		return columnDataSet;
 	}
 
+	public int delete(String fileName) throws Exception {
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		String path = (CommonUtil.containsIgnoreCase(fileName, "zebra")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");
+		File file = new File(rootPath+"/"+path+"/"+fileName);
+		int result = 0;
+
+		if (file.exists()) {
+			file.delete();
+			result++;
+		}
+
+		return result;
+	}
+
+	public int delete(String fileNames[]) throws Exception {
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		String path = "";
+		int result = 0;
+
+		for (String fileName : fileNames) {
+			path = (CommonUtil.containsIgnoreCase(fileName, "zebra")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");
+			File file = new File(rootPath+"/"+path+"/"+fileName);
+
+			if (file.exists()) {
+				file.delete();
+				result++;
+			}
+		}
+
+		return result;
+	}
+
 	/*!
 	 * Common for this service
 	 */
