@@ -177,7 +177,7 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:1600,
+			width:1700,
 			height:height
 		};
 

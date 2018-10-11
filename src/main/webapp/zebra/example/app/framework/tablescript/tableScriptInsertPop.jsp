@@ -24,7 +24,8 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-/* #tblGridBody tr td:hover {background:#ffffff;} */
+.thGrid {border-bottom:0px;}
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {background:#FFFFFF;}
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
 .dummyDetail {list-style:none;}
@@ -33,6 +34,7 @@
 </style>
 <script type="text/javascript">
 jsconfig.put("useJqSelectmenu", false);
+var delimiter = jsconfig.get("dataDelimiter");
 
 $(function() {
 	/*!
@@ -49,8 +51,6 @@ $(function() {
 		}
 
 		$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
-			var delimiter = jsconfig.get("dataDelimiter");
-
 			$(this).find(":input").each(function(index) {
 				var id = $(this).attr("id"), name = $(this).attr("name");
 
@@ -84,7 +84,7 @@ $(function() {
 	});
 
 	$("#btnAdd").click(function(event) {
-		var elem = $("#liDummy").clone(), delimiter = jsconfig.get("dataDelimiter"), elemId = $(elem).attr("id");
+		var elem = $("#liDummy").clone(), elemId = $(elem).attr("id");
 
 		$(elem).css("display", "block").appendTo($("#ulColumnDetailHolder"));
 
@@ -106,7 +106,7 @@ $(function() {
 				$(this).attr("index", groupIndex).attr("id", id+delimiter+groupIndex);
 			});
 
-			$(this).find("input").each(function(index) {
+			$(this).find("input, select").each(function(index) {
 				var id = $(this).attr("id"), name = $(this).attr("name");
 
 				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
@@ -118,13 +118,17 @@ $(function() {
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
 				if (groupIndex == ($("#ulColumnDetailHolder .dummyDetail").length - 1)) {
-					if (name.indexOf("useYnDetail") != -1) {
+					if (name.indexOf("nullable") != -1) {
 						if ($(this).val() == "Y") {$(this).prop("checked", true);}
 					}
 
-					if (name.indexOf("sortOrderDetail") != -1) {
+					if (name.indexOf("sortOrder") != -1) {
 						$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
 					}
+				}
+
+				if ($(this).is("select")) {
+					setSelectBoxes($(this));
 				}
 			});
 		});
@@ -132,7 +136,6 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea")
 		});
-		setSelectBoxes();
 	});
 
 	/*!
@@ -178,11 +181,11 @@ $(function() {
 			stop:function() {
 				$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 					$(this).find("input").each(function(index) {
-						var id = $(this).attr("id"), name = $(this).attr("name"), delimiter = jsconfig.get("dataDelimiter");
+						var id = $(this).attr("id"), name = $(this).attr("name");
 
 						$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
-						if (name.indexOf("sortOrderDetail") != -1) {
+						if (name.indexOf("sortOrder") != -1) {
 							$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
 						}
 					});
@@ -191,6 +194,23 @@ $(function() {
 		});
 
 		$("#ulColumnDetailHolder").disableSelection();
+	};
+
+	setSelectBoxes = function(jqObj) {
+		$(jqObj).selectpicker({
+			width:"auto",
+			size:5,
+			container:"body",
+			style:$(jqObj).attr("class")
+		});
+	};
+
+	validate = function(obj) {
+		var objName = $(obj).attr("name"), currRowIdx = objName.split(delimiter)[1];
+
+// 		if () {
+			
+// 		}
 	};
 
 	/*!
@@ -213,7 +233,7 @@ $(function() {
 			$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 				$(this).find("input[type=text]").each(function(index) {
 					var name = $(this).attr("name");
-					if (name.indexOf("sortOrderDetail") != -1) {
+					if (name.indexOf("sortOrder") != -1) {
 						$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
 					}
 				});
@@ -221,18 +241,6 @@ $(function() {
 		}
 	});
 
-	setSelectBoxes = function() {
-		var options = {};
-
-		$("select.bootstrapSelect").each(function(index) {
-			options.width = "auto";
-			options.size = 5;
-			options.container = "body";
-			options.style = $(this).attr("class");
-
-			$(this).selectpicker(options);
-		});
-	};
 
 	$(window).load(function() {
 		$("#tableName").focus();
@@ -313,12 +321,12 @@ $(function() {
 		<colgroup>
 			<col width="2%"/>
 			<col width="2%"/>
-			<col width="17%"/>
+			<col width="16%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
 			<col width="7%"/>
-			<col width="5%"/>
-			<col width="7%"/>
-			<col width="5%"/>
-			<col width="5%"/>
 			<col width="18%"/>
 			<col width="*"/>
 		</colgroup>
@@ -326,19 +334,19 @@ $(function() {
 			<tr>
 				<th class="thGrid"></th>
 				<th class="thGrid"></th>
-				<th class="thGrid"><mc:msg key="fwk.tablescript.header.colName"/></th>
-				<th class="thGrid"><mc:msg key="fwk.tablescript.header.dataType"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.tablescript.header.colName"/></th>
+				<th class="thGrid "><mc:msg key="fwk.tablescript.header.dataType"/></th>
 				<th class="thGrid"><mc:msg key="fwk.tablescript.header.length"/></th>
 				<th class="thGrid"><mc:msg key="fwk.tablescript.header.defaultValue"/></th>
-				<th class="thGrid"><mc:msg key="fwk.tablescript.header.nullable"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.tablescript.header.nullable"/></th>
 				<th class="thGrid"><mc:msg key="fwk.tablescript.header.keyType"/></th>
 				<th class="thGrid"><mc:msg key="fwk.tablescript.header.fkRef"/></th>
-				<th class="thGrid"><mc:msg key="fwk.tablescript.header.description"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.tablescript.header.description"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td colspan="10" style="padding:0px"><ul id="ulColumnDetailHolder"></ul></td>
+				<td colspan="10" style="padding:0px;border-top:0px"><ul id="ulColumnDetailHolder"></ul></td>
 			</tr>
 		</tbody>
 	</table>
@@ -353,30 +361,33 @@ $(function() {
 * Additional Elements
 ************************************************************************************************/%>
 <li id="liDummy" class="dummyDetail">
-	<table class="tblGrid">
+	<table class="tblGrid" style="border:0px">
 		<colgroup>
 			<col width="2%"/>
 			<col width="2%"/>
-			<col width="17%"/>
+			<col width="16%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
 			<col width="7%"/>
-			<col width="5%"/>
-			<col width="7%"/>
-			<col width="5%"/>
-			<col width="5%"/>
 			<col width="18%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr class="noBorderAll">
 			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
 			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<td class="tdEdit Ct"><ui:text id="columnName" name="columnName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory"/></td>
-			<td class="tdEdit Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework"/></td>
-			<td class="tdEdit Ct"><ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="==Select==" source="framework"/></td>
-			<td class="tdEdit Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" checkName="fwk.tablescript.header.defaultValue"/></td>
-			<td class="tdEdit Ct"><ui:ccradio name="Nullable" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/></td>
-			<td class="tdEdit Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="==Select==" source="framework"/></td>
-			<td class="tdEdit Ct"><ui:text id="fkRef" name="fkRef" className="defClass" checkName="fwk.tablescript.header.fkRef" status="disabled"/></td>
-			<td class="tdEdit Ct"><ui:text id="description" name="description" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory"/></td>
+			<td class="tdGrid Ct"><ui:text id="columnName" name="columnName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:radio name="nullable" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:text id="fkRef" name="fkRef" className="defClass" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct">
+				<ui:text id="description" name="description" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory" script="onchange:validate(this)"/>
+				<ui:hidden id="sortOrder" name="sortOrder" className="defClass"/>
+			</td>
 		</tr>
 	</table>
 </li>
