@@ -65,9 +65,9 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		try {
 			if (CommonUtil.isBlank(fileName)) {
-//				result = zebraFrameworkBizService.delete(fileNames);
+				result = zebraFrameworkBizService.deleteTableCreationScriptFiles(fileNames);
 			} else {
-//				result = zebraFrameworkBizService.delete(fileName);
+				result = zebraFrameworkBizService.deleteTableCreationScriptFile(fileName);
 			}
 
 			if (result <= 0) {
@@ -82,7 +82,7 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
-/*
+
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -92,7 +92,7 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
-
+/*
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();

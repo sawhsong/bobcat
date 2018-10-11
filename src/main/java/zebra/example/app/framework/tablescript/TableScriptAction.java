@@ -36,12 +36,12 @@ public class TableScriptAction extends BaseAction {
 		setRequestAttribute("paramEntity", this.paramEntity);
 		return "ajaxResponse";
 	}
-/*
+
 	public String getInsert() throws Exception {
 		biz.getInsert(this.paramEntity);
 		return "insert";
 	}
-
+/*
 	public String exeInsert() throws Exception {
 		try {
 			biz.exeInsert(paramEntity);

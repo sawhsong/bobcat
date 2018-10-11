@@ -24,13 +24,16 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+/* #tblGridBody tr td:hover {background:#ffffff;} */
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
-.dummyDetail {list-style:none;margin-top:4px;}
+.dummyDetail {list-style:none;}
 .dragHandler {cursor:move;}
 .deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript">
+jsconfig.put("useJqSelectmenu", false);
+
 $(function() {
 	/*!
 	 * event
@@ -45,7 +48,7 @@ $(function() {
 			return;
 		}
 
-		$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+		$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 			var delimiter = jsconfig.get("dataDelimiter");
 
 			$(this).find(":input").each(function(index) {
@@ -83,9 +86,9 @@ $(function() {
 	$("#btnAdd").click(function(event) {
 		var elem = $("#liDummy").clone(), delimiter = jsconfig.get("dataDelimiter"), elemId = $(elem).attr("id");
 
-		$(elem).css("display", "block").appendTo($("#ulCommonCodeDetailHolder"));
+		$(elem).css("display", "block").appendTo($("#ulColumnDetailHolder"));
 
-		$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+		$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 			$(this).attr("index", groupIndex).attr("id", elemId+delimiter+groupIndex);
 
 			$(this).find("i").each(function(index) {
@@ -114,7 +117,7 @@ $(function() {
 
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
-				if (groupIndex == ($("#ulCommonCodeDetailHolder .dummyDetail").length - 1)) {
+				if (groupIndex == ($("#ulColumnDetailHolder .dummyDetail").length - 1)) {
 					if (name.indexOf("useYnDetail") != -1) {
 						if ($(this).val() == "Y") {$(this).prop("checked", true);}
 					}
@@ -125,13 +128,18 @@ $(function() {
 				}
 			});
 		});
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea")
+		});
+		setSelectBoxes();
 	});
 
 	/*!
 	 * process
 	 */
 	exeSave = function() {
-		var detailLength = $("#ulCommonCodeDetailHolder .dummyDetail").length;
+		var detailLength = $("#ulColumnDetailHolder .dummyDetail").length;
 
 		commonJs.ajaxSubmit({
 			url:"/zebra/framework/commoncode/exeInsert.do",
@@ -164,11 +172,11 @@ $(function() {
 	};
 
 	setSortable = function() {
-		$("#ulCommonCodeDetailHolder").sortable({
+		$("#ulColumnDetailHolder").sortable({
 			axis:"y",
 			handle:".dragHandler",
 			stop:function() {
-				$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+				$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 					$(this).find("input").each(function(index) {
 						var id = $(this).attr("id"), name = $(this).attr("name"), delimiter = jsconfig.get("dataDelimiter");
 
@@ -182,7 +190,7 @@ $(function() {
 			}
 		});
 
-		$("#ulCommonCodeDetailHolder").disableSelection();
+		$("#ulColumnDetailHolder").disableSelection();
 	};
 
 	/*!
@@ -192,13 +200,17 @@ $(function() {
 		var obj = event.target;
 
 		if ($(obj).hasClass("deleteButton") || ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton"))) {
-			$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(index) {
+			$("#ulColumnDetailHolder").find(".dummyDetail").each(function(index) {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();
+
+					$("#tblGrid").fixedHeaderTable({
+						attachTo:$("#divDataArea")
+					});
 				}
 			});
 
-			$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+			$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 				$(this).find("input[type=text]").each(function(index) {
 					var name = $(this).attr("name");
 					if (name.indexOf("sortOrderDetail") != -1) {
@@ -209,9 +221,29 @@ $(function() {
 		}
 	});
 
+	setSelectBoxes = function() {
+		var options = {};
+
+		$("select.bootstrapSelect").each(function(index) {
+			options.width = "auto";
+			options.size = 5;
+			options.container = "body";
+			options.style = $(this).attr("class");
+
+			$(this).selectpicker(options);
+		});
+	};
+
 	$(window).load(function() {
-		$("#codeTypeMaster").focus();
+		$("#tableName").focus();
+
 		setSortable();
+
+		setTimeout(function() {
+			$("#tblGrid").fixedHeaderTable({
+				attachTo:$("#divDataArea")
+			});
+		}, 500);
 	});
 });
 </script>
@@ -240,31 +272,20 @@ $(function() {
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="10%"/>
+			<col width="25%"/>
+			<col width="10%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableName"/></th>
 			<td class="tdEdit">
-				<input type="text" id="codeTypeMaster" name="codeTypeMaster" class="txtEn" style="text-transform:uppercase;" checkName="<mc:msg key="fwk.commoncode.header.codeType"/>" mandatory/>
+				<ui:text name="tableName" id="tableName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxbyte="30"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableDesc"/></th>
 			<td class="tdEdit">
-				<ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit">
-				<input type="text" id="descriptionEnMaster" name="descriptionEnMaster" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit">
-				<input type="text" id="descriptionKoMaster" name="descriptionKoMaster" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
+				<ui:text name="tableDescription" id="tableDescription" className="defClass" checkName="fwk.tablescript.header.tableDesc" options="mandatory"/>
 			</td>
 		</tr>
 	</table>
@@ -288,7 +309,39 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<ul id="ulCommonCodeDetailHolder"></ul>
+	<table id="tblGrid" class="tblGrid">
+		<colgroup>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="17%"/>
+			<col width="7%"/>
+			<col width="5%"/>
+			<col width="7%"/>
+			<col width="5%"/>
+			<col width="5%"/>
+			<col width="18%"/>
+			<col width="*"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="thGrid"></th>
+				<th class="thGrid"></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.colName"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.dataType"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.length"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.defaultValue"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.nullable"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.keyType"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.fkRef"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.description"/></th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
+			<tr>
+				<td colspan="10" style="padding:0px"><ul id="ulColumnDetailHolder"></ul></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
@@ -300,41 +353,30 @@ $(function() {
 * Additional Elements
 ************************************************************************************************/%>
 <li id="liDummy" class="dummyDetail">
-	<table class="tblEdit">
+	<table class="tblGrid">
 		<colgroup>
-			<col width="3%"/>
-			<col width="13%"/>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="17%"/>
+			<col width="7%"/>
+			<col width="5%"/>
+			<col width="7%"/>
+			<col width="5%"/>
+			<col width="5%"/>
+			<col width="18%"/>
 			<col width="*"/>
-			<col width="13%"/>
-			<col width="15%"/>
-			<col width="11%"/>
-			<col width="10%"/>
 		</colgroup>
-		<tr>
+		<tr class="noBorderAll">
 			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-			<td class="tdEdit">
-				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit">
-				<ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-			<td class="tdEdit">
-				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
-			</td>
-		</tr>
-		<tr>
 			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit">
-				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit" colspan="3">
-				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
-			</td>
+			<td class="tdEdit Ct"><ui:text id="columnName" name="columnName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory"/></td>
+			<td class="tdEdit Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework"/></td>
+			<td class="tdEdit Ct"><ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="==Select==" source="framework"/></td>
+			<td class="tdEdit Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" checkName="fwk.tablescript.header.defaultValue"/></td>
+			<td class="tdEdit Ct"><ui:ccradio name="Nullable" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/></td>
+			<td class="tdEdit Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="==Select==" source="framework"/></td>
+			<td class="tdEdit Ct"><ui:text id="fkRef" name="fkRef" className="defClass" checkName="fwk.tablescript.header.fkRef" status="disabled"/></td>
+			<td class="tdEdit Ct"><ui:text id="description" name="description" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory"/></td>
 		</tr>
 	</table>
 </li>

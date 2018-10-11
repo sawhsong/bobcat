@@ -116,3 +116,8 @@ insert into zebra_common_code values('DOMAIN_DATA_SCALE', '5',          '5',    
 insert into zebra_common_code values('SIMPLE_YN','0000000000',     '단순YN',  'Simple YN',    'SIMPLE_YN_0000000000',  '000',   'Y','Y','0',sysdate,'','');
 insert into zebra_common_code values('SIMPLE_YN','Y',              '예',      'Yes',          'SIMPLE_YN_Y',           '001',   'Y','Y','0',sysdate,'','');
 insert into zebra_common_code values('SIMPLE_YN','N',              '아니오',  'No',           'SIMPLE_YN_N',           '002',   'Y','Y','0',sysdate,'','');
+
+insert into zebra_common_code values('CONSTRAINT_TYPE', '0000000000', 'Constraint Type', 'Constraint Type',    'CONSTRAINT_TYPE_0000000000',  '000',   'Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('CONSTRAINT_TYPE', 'PK',         'Primary Key',     'Primary Key',        'CONSTRAINT_TYPE_PK',          '001',   'Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('CONSTRAINT_TYPE', 'FK',         'Foreign Key',     'Foreign Key',        'CONSTRAINT_TYPE_FK',          '002',   'Y','Y','0',sysdate,'','');
+insert into zebra_common_code values('CONSTRAINT_TYPE', 'UK',         'Unique Key',      'Unique Key',         'CONSTRAINT_TYPE_UK',          '002',   'Y','Y','0',sysdate,'','');
