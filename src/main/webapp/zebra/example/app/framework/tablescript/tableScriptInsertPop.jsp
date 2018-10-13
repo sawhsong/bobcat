@@ -206,11 +206,32 @@ $(function() {
 	};
 
 	validate = function(obj) {
+		var msg = "";
 		var objName = $(obj).attr("name"), currRowIdx = objName.split(delimiter)[1];
 
-// 		if () {
-			
-// 		}
+		if (commonJs.containsIgnoreCase(objName, "dataType")) {
+			if ($("#dataType"+delimiter+currRowIdx).val() == "CLOB") {
+				$("#defaultValue"+delimiter+currRowIdx).val("EMPTY_CLOB()");
+			} else {
+				$("#defaultValue"+delimiter+currRowIdx).val("");
+			}
+		}
+
+		if (commonJs.containsIgnoreCase(objName, "keyType")) {
+			if (!commonJs.isEmpty($("#keyType"+delimiter+currRowIdx).val())) {
+				$("[name = nullable"+delimiter+currRowIdx+"]").each(function() {
+					if ($(this).val() == "N") {
+						$(this).prop("checked", true);
+					}
+				});
+			}
+
+			if ($("#keyType"+delimiter+currRowIdx).val() == "FK") {
+				$("#fkRef"+delimiter+currRowIdx).removeClass("txtDis").addClass("txtEn").removeAttr("readonly");
+			} else {
+				$("#fkRef"+delimiter+currRowIdx).removeClass("txtEn").addClass("txtDis").attr("readonly", "readonly").val("");
+			}
+		}
 	};
 
 	/*!
@@ -380,7 +401,7 @@ $(function() {
 			<td class="tdGrid Ct"><ui:text id="columnName" name="columnName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
-			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:radio name="nullable" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:text id="fkRef" name="fkRef" className="defClass" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>

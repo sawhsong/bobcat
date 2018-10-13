@@ -272,6 +272,16 @@ var nony = {
 	endsWith : function(src, suffix) {
 		return src.match(suffix+"$") == suffix;
 	},
+	contains : function(src, val) {
+		if (src == null) {return false;}
+		src = $.nony.nvl(src);
+		return src.indexOf(val) != -1;
+	},
+	containsIgnoreCase : function(src, val) {
+		if (src == null) {return false;}
+		src = $.nony.lowerCase($.nony.nvl(src));
+		return src.indexOf($.nony.lowerCase(val)) != -1;
+	},
 	// getFormatString("1234567890", "????-???-???") => "1234-567-890"
 	getFormatString : function(source, format) {
 		var sRtn = "";

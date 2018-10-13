@@ -45,6 +45,8 @@ var commonJs = {
 	rpad : function(src, len, pad) {return $.nony.rpad(src, len, pad);},
 	startsWith : function(src, prefix) {return $.nony.startsWith(src, prefix);},
 	endsWith : function(src, suffix) {return $.nony.endsWith(src, suffix);},
+	contains : function(src, val) {return $.nony.contains(src, val);},
+	containsIgnoreCase : function(src, val) {return $.nony.containsIgnoreCase(src, val);},
 	getFormatString : function(source, format) {return $.nony.getFormatString(source, format);},
 	abbreviate : function(val, length) {return $.nony.abbreviate(val, length);},
 	toBoolean : function(val) {return $.nony.toBoolean(val);},
