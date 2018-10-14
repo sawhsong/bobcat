@@ -1,5 +1,7 @@
 package zebra.example.app.framework.tablescript;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import zebra.data.DataSet;
@@ -56,6 +58,35 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 		return paramEntity;
 	}
 
+	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+
+		return paramEntity;
+	}
+
+	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		int result = -1;
+
+		try {
+			result = zebraFrameworkBizService.generateScriptFile(requestDataSet);
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801"));
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+
+		return paramEntity;
+	}
+
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String fileName = requestDataSet.getValue("fileName");
@@ -82,81 +113,7 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
-
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-
-		return paramEntity;
-	}
 /*
-	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		HttpSession session = paramEntity.getSession();
-		String delimiter = ConfigUtil.getProperty("delimiter.data");
-		String codeType = CommonUtil.upperCase(requestDataSet.getValue("codeTypeMaster"));
-		String processFrom = (String)paramEntity.getObject("processFrom");
-		DataSet detailDataSet;
-		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
-		int result = -1, masterDataRow = -1;
-		ZebraCommonCode zebraCommonCode = new ZebraCommonCode();
-
-		try {
-			zebraCommonCode.setCodeType(codeType);
-			zebraCommonCode.setCommonCode("0000000000");
-			zebraCommonCode.setDescriptionEn(requestDataSet.getValue("descriptionEnMaster"));
-			zebraCommonCode.setDescriptionKo(requestDataSet.getValue("descriptionKoMaster"));
-			zebraCommonCode.setProgramConstants(codeType + "_0000000000");
-			zebraCommonCode.setSortOrder("000");
-			zebraCommonCode.setUseYn(CommonUtil.nvl(requestDataSet.getValue("useYnMaster"), "N"));
-			zebraCommonCode.setDefaultYn(ZebraCommonCodeManager.getCodeByConstants("USE_YN_N"));
-			zebraCommonCode.setInsertUserId((String)session.getAttribute("UserId"));
-			if (CommonUtil.equalsIgnoreCase(processFrom, "update")) {
-				detailDataSet = (DataSet)paramEntity.getObject("detailDataSet");
-				masterDataRow = (int)paramEntity.getObject("masterDataRow");
-
-				zebraCommonCode.setDefaultYn(detailDataSet.getValue(masterDataRow, "DEFAULT_YN"));
-				zebraCommonCode.setInsertUserId(detailDataSet.getValue(masterDataRow, "INSERT_USER_ID"));
-				zebraCommonCode.setInsertDate(CommonUtil.toDate(detailDataSet.getValue(masterDataRow, "INSERT_DATE")));
-				zebraCommonCode.setUpdateUserId((String)session.getAttribute("UserId"));
-				zebraCommonCode.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			}
-
-			result = zebraCommonCodeDao.insert(zebraCommonCode);
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			result = 0;
-			for (int i=0; i<detailLength; i++) {
-				String commonCode = requestDataSet.getValue("commonCodeDetail" + delimiter + i);
-
-				zebraCommonCode.setCommonCode(commonCode);
-				zebraCommonCode.setDescriptionEn(requestDataSet.getValue("descriptionEnDetail" + delimiter + i));
-				zebraCommonCode.setDescriptionKo(requestDataSet.getValue("descriptionKoDetail" + delimiter + i));
-				zebraCommonCode.setProgramConstants(codeType + "_" + CommonUtil.upperCase(commonCode));
-				zebraCommonCode.setSortOrder(requestDataSet.getValue("sortOrderDetail" + delimiter + i));
-				zebraCommonCode.setUseYn(CommonUtil.nvl(requestDataSet.getValue("useYnDetail" + delimiter + i), "N"));
-
-				result += zebraCommonCodeDao.insert(zebraCommonCode);
-			}
-
-			if (result != detailLength) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801"));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-
-		return paramEntity;
-	}
-
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity = getDetail(paramEntity);

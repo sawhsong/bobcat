@@ -635,11 +635,13 @@ var nony = {
 		});
 	},
 	getBootstrapSelectbox : function(id) {
+		var element;
 		$("button").each(function() {
 			if ($(this).attr("data-id") == id) {
-				return $(this);
+				element = $(this);
 			}
 		});
+		return element;
 	},
 	/*!
 	 * Auto Completion

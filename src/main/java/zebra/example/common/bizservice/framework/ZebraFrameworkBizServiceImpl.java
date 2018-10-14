@@ -1857,6 +1857,14 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		return columnDataSet;
 	}
 
+	public int generateScriptFile(DataSet requestDataSet) throws Exception {
+		int result = 0;
+
+		
+
+		return result;
+	}
+
 	public int deleteTableCreationScriptFile(String fileName) throws Exception {
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String path = (CommonUtil.containsIgnoreCase(fileName, "zebra")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");

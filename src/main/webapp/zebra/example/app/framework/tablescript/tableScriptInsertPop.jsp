@@ -33,7 +33,9 @@
 .deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript">
+jsconfig.put("useJqTooltip", false);
 jsconfig.put("useJqSelectmenu", false);
+
 var delimiter = jsconfig.get("dataDelimiter");
 
 $(function() {
@@ -145,7 +147,7 @@ $(function() {
 		var detailLength = $("#ulColumnDetailHolder .dummyDetail").length;
 
 		commonJs.ajaxSubmit({
-			url:"/zebra/framework/commoncode/exeInsert.do",
+			url:"/zebra/framework/tablescript/exeInsert.do",
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
