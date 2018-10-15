@@ -302,8 +302,30 @@ $(function() {
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<label for="tableName" class="lblEn hor"><mc:msg key="fwk.tablescript.tableName"/></label>
-			<ui:text name="tableName" id="tableName" className="defClass hor" style="width:280px"/>
+			<table class="tblDefault">
+				<colgroup>
+					<col width="50%"/>
+					<col width="50%"/>
+				</colgroup>
+				<tr>
+					<td class="tdDefault">
+						<label for="system" class="lblEn hor"><mc:msg key="fwk.tablescript.header.system"/></label>
+						<div style="float:left;">
+							<ui:select id="system" name="system" >
+								<ui:seloption value="All" text="All"/>
+								<ui:seloption value="Project" text="Project"/>
+								<ui:seloption value="Framework" text="Framework"/>
+							</ui:select>
+						</div>
+					</td>
+					<td class="tdDefault">
+						<label for="tableName" class="lblEn hor"><mc:msg key="fwk.tablescript.tableName"/></label>
+						<ui:text name="tableName" id="tableName" className="defClass hor" style="width:280px"/>
+					</td>
+				</tr>
+			</table>
+
+
 		</div>
 	</div>
 </div>

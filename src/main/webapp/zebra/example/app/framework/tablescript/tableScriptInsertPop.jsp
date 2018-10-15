@@ -43,12 +43,15 @@ $(function() {
 	 * event
 	 */
 	$("#btnSave").click(function(event) {
+		var isValid = true;
+
 		$("#liDummy").find(":input").each(function(index) {
 			$(this).removeAttr("mandatory");
 			$(this).removeAttr("option");
 		});
 
 		if (!commonJs.doValidate("fmDefault")) {
+			isValid = false;
 			return;
 		}
 
@@ -63,8 +66,24 @@ $(function() {
 				else {name = "";}
 
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+				if (commonJs.containsIgnoreCase(name, "columnName") && commonJs.isEmpty($(this).val())) {
+					isValid = false;
+					commonJs.doValidatorMessage($(this), "mandatory");
+				}
+
+				if (!isValid) {return;}
+
+				if (commonJs.containsIgnoreCase(name, "description") && commonJs.isEmpty($(this).val())) {
+					isValid = false;
+					commonJs.doValidatorMessage($(this), "mandatory");
+				}
+
+				if (!isValid) {return;}
 			});
 		});
+
+		if (!isValid) {return;}
 
 		commonJs.confirm({
 			contents:"<mc:msg key="Q001"/>",
@@ -201,21 +220,30 @@ $(function() {
 	setSelectBoxes = function(jqObj) {
 		$(jqObj).selectpicker({
 			width:"auto",
-			size:5,
+// 			size:5,
 			container:"body",
 			style:$(jqObj).attr("class")
 		});
 	};
 
 	validate = function(obj) {
-		var msg = "";
+		var selectBox = "";
 		var objName = $(obj).attr("name"), currRowIdx = objName.split(delimiter)[1];
 
 		if (commonJs.containsIgnoreCase(objName, "dataType")) {
 			if ($("#dataType"+delimiter+currRowIdx).val() == "CLOB") {
 				$("#defaultValue"+delimiter+currRowIdx).val("EMPTY_CLOB()");
+			} else if ($("#dataType"+delimiter+currRowIdx).val() == "NUMBER") {
+// 				$("#dataLength"+delimiter+currRowIdx).val("").css("display", "none");
+				selectBox = commonJs.getBootstrapSelectbox("#dataLength"+delimiter+currRowIdx);
+				$("#dataLength"+delimiter+currRowIdx).selectpicker("hide");
+				$("#dataLengthNumber"+delimiter+currRowIdx).css("display", "block");
 			} else {
 				$("#defaultValue"+delimiter+currRowIdx).val("");
+// 				$("#dataLength"+delimiter+currRowIdx).val("").css("display", "block");
+				selectBox = commonJs.getBootstrapSelectbox("#dataLength"+delimiter+currRowIdx);
+				$("#dataLength"+delimiter+currRowIdx).selectpicker("show");
+				$("#dataLengthNumber"+delimiter+currRowIdx).css("display", "none");
 			}
 		}
 
@@ -232,6 +260,12 @@ $(function() {
 				$("#fkRef"+delimiter+currRowIdx).removeClass("txtDis").addClass("txtEn").removeAttr("readonly");
 			} else {
 				$("#fkRef"+delimiter+currRowIdx).removeClass("txtEn").addClass("txtDis").attr("readonly", "readonly").val("");
+			}
+		}
+
+		if (commonJs.containsIgnoreCase(objName, "fkRef")) {
+			if (!commonJs.contains($("#fkRef"+delimiter+currRowIdx).val(), ".")) {
+				commonJs.doValidatorMessage($("#fkRef"+delimiter+currRowIdx), "notValid");
 			}
 		}
 	};
@@ -304,12 +338,19 @@ $(function() {
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="10%"/>
-			<col width="25%"/>
+			<col width="9%"/>
+			<col width="12%"/>
+			<col width="8%"/>
+			<col width="21%"/>
 			<col width="10%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.system"/></th>
+			<td class="tdEdit">
+				<ui:radio name="system" inputClassName="inTbl" value="Project" text="fwk.tablescript.header.project" isSelected="true"/>
+				<ui:radio name="system" inputClassName="inTbl" value="Framework" text="fwk.tablescript.header.framework"/>
+			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableName"/></th>
 			<td class="tdEdit">
 				<ui:text name="tableName" id="tableName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxbyte="30"/>
@@ -402,7 +443,10 @@ $(function() {
 			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
 			<td class="tdGrid Ct"><ui:text id="columnName" name="columnName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
-			<td class="tdGrid Ct"><ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct">
+				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/>
+				<ui:text id="dataLengthNumber" name="dataLengthNumber" className="defClass Ct" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)" style="display:none"/>
+			</td>
 			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:radio name="nullable" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>

@@ -1782,6 +1782,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 	 */
 	public DataSet getScriptFileDataSet(DataSet requestDataSet) throws Exception {
 		DataSet dataSet = new DataSet();
+		String systemSearched = requestDataSet.getValue("system");
 		String tableNameSearched = requestDataSet.getValue("tableName");
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		File fwkPath = new File(rootPath+"/"+ConfigUtil.getProperty("path.tablescript.framework"));
@@ -1791,12 +1792,21 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 
 		dataSet.addName(new String[] {"TABLE_NAME", "DESCRIPTION", "FILE_NAME", "FILE_SIZE", "UPDATE_DATE_TIME"});
 
-		for (File file : fwkFiles) {
-			String tableName = getTableNameFromTableCreationScript(file);
-			String description = getDescriptionFromTableCreationScript(file);
+		if (CommonUtil.isIn(systemSearched, "All", "Framework")) {
+			for (File file : fwkFiles) {
+				String tableName = getTableNameFromTableCreationScript(file);
+				String description = getDescriptionFromTableCreationScript(file);
 
-			if (CommonUtil.isNotBlank(tableNameSearched)) {
-				if (CommonUtil.containsIgnoreCase(tableName, tableNameSearched)) {
+				if (CommonUtil.isNotBlank(tableNameSearched)) {
+					if (CommonUtil.containsIgnoreCase(tableName, tableNameSearched)) {
+						dataSet.addRow();
+						dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+						dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
+						dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
+						dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
+						dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
+					}
+				} else {
 					dataSet.addRow();
 					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
@@ -1804,22 +1814,24 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
 					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 				}
-			} else {
-				dataSet.addRow();
-				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
-				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
-				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 			}
 		}
 
-		for (File file : pjtFiles) {
-			String tableName = getTableNameFromTableCreationScript(file);
-			String description = getDescriptionFromTableCreationScript(file);
+		if (CommonUtil.isIn(systemSearched, "All", "Project")) {
+			for (File file : pjtFiles) {
+				String tableName = getTableNameFromTableCreationScript(file);
+				String description = getDescriptionFromTableCreationScript(file);
 
-			if (CommonUtil.isNotBlank(tableNameSearched)) {
-				if (CommonUtil.containsIgnoreCase(tableName, tableNameSearched)) {
+				if (CommonUtil.isNotBlank(tableNameSearched)) {
+					if (CommonUtil.containsIgnoreCase(tableName, tableNameSearched)) {
+						dataSet.addRow();
+						dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+						dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
+						dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
+						dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
+						dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
+					}
+				} else {
 					dataSet.addRow();
 					dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
 					dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
@@ -1827,13 +1839,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
 					dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 				}
-			} else {
-				dataSet.addRow();
-				dataSet.setValue(dataSet.getRowCnt()-1, "TABLE_NAME", tableName);
-				dataSet.setValue(dataSet.getRowCnt()-1, "DESCRIPTION", description);
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_NAME", file.getName());
-				dataSet.setValue(dataSet.getRowCnt()-1, "FILE_SIZE", CommonUtil.toString(CommonUtil.ceil(CommonUtil.toDouble(CommonUtil.toString(file.length()))/1024, 1), "#,###"));
-				dataSet.setValue(dataSet.getRowCnt()-1, "UPDATE_DATE_TIME", CommonUtil.toDateTimeString(file.lastModified()));
 			}
 		}
 
@@ -1857,7 +1862,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		return columnDataSet;
 	}
 
-	public int generateScriptFile(DataSet requestDataSet) throws Exception {
+	public int generateScriptFile(DataSet requestDataSet, DataSet tableDetailDataSet) throws Exception {
 		int result = 0;
 
 		
