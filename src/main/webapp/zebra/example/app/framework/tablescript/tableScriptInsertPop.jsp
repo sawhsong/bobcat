@@ -227,21 +227,24 @@ $(function() {
 	};
 
 	validate = function(obj) {
-		var selectBox = "";
 		var objName = $(obj).attr("name"), currRowIdx = objName.split(delimiter)[1];
 
 		if (commonJs.containsIgnoreCase(objName, "dataType")) {
 			if ($("#dataType"+delimiter+currRowIdx).val() == "CLOB") {
+				$("#dataLength"+delimiter+currRowIdx).selectpicker("val", "4000");
+				$("#dataLength"+delimiter+currRowIdx).prop("disabled", true);
+				$("#dataLength"+delimiter+currRowIdx).selectpicker("refresh");
 				$("#defaultValue"+delimiter+currRowIdx).val("EMPTY_CLOB()");
 			} else if ($("#dataType"+delimiter+currRowIdx).val() == "NUMBER") {
-// 				$("#dataLength"+delimiter+currRowIdx).val("").css("display", "none");
-				selectBox = commonJs.getBootstrapSelectbox("#dataLength"+delimiter+currRowIdx);
 				$("#dataLength"+delimiter+currRowIdx).selectpicker("hide");
 				$("#dataLengthNumber"+delimiter+currRowIdx).css("display", "block");
+			} else if ($("#dataType"+delimiter+currRowIdx).val() == "DATE") {
+				$("#dataLength"+delimiter+currRowIdx).prop("disabled", true);
+				$("#dataLength"+delimiter+currRowIdx).selectpicker("refresh");
 			} else {
 				$("#defaultValue"+delimiter+currRowIdx).val("");
-// 				$("#dataLength"+delimiter+currRowIdx).val("").css("display", "block");
-				selectBox = commonJs.getBootstrapSelectbox("#dataLength"+delimiter+currRowIdx);
+				$("#dataLength"+delimiter+currRowIdx).prop("disabled", false);
+				$("#dataLength"+delimiter+currRowIdx).selectpicker("refresh");
 				$("#dataLength"+delimiter+currRowIdx).selectpicker("show");
 				$("#dataLengthNumber"+delimiter+currRowIdx).css("display", "none");
 			}
