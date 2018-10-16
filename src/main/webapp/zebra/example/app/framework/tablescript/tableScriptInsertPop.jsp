@@ -68,7 +68,6 @@ $(function() {
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
 				if (commonJs.containsIgnoreCase(name, "columnName") && commonJs.isEmpty($(this).val())) {
-alert(groupIndex);
 					isValid = false;
 					commonJs.doValidatorMessage($(this), "mandatory");
 				}
@@ -457,7 +456,7 @@ alert(groupIndex);
 			<td class="tdGrid Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct">
 				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/>
-				<ui:text id="dataLengthNumber" name="dataLengthNumber" className="defClass Ct" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)" style="display:none"/>
+				<ui:text id="dataLengthNumber" name="dataLengthNumber" className="defClass Ct" checkName="fwk.tablescript.header.length" script="onchange:validate(this)" style="display:none"/>
 			</td>
 			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:radio name="nullable" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
