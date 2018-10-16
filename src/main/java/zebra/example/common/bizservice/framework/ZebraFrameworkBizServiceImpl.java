@@ -1863,9 +1863,16 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 	}
 
 	public int generateScriptFile(DataSet requestDataSet, DataSet tableDetailDataSet) throws Exception {
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		String system = requestDataSet.getValue("system");
+		String path = (CommonUtil.equalsIgnoreCase(system, "framework")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");
+		String tableName = requestDataSet.getValue("tableName");
+		String fileNameIndex = "", fileName = "";
 		int result = 0;
 
-		
+		fileNameIndex = getNextFileNameIndexFromDirectory(rootPath+"/"+path);
+		fileName = fileNameIndex+"_"+CommonUtil.upperCase(tableName)+".sql";
+		result = generateScriptFile(requestDataSet, tableDetailDataSet, rootPath+"/"+path+"/"+fileName);
 
 		return result;
 	}
@@ -1905,6 +1912,107 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 	/*!
 	 * Common for this service
 	 */
+	private int generateScriptFile(DataSet requestDataSet, DataSet detailDataSet, String fileName) throws Exception {
+		int result = 0;
+		String tableSpaceData = ConfigUtil.getProperty("name.tableSpace.data");
+		String tableSpaceIndex = ConfigUtil.getProperty("name.tableSpace.index");
+		String tableNameUpperCase = CommonUtil.upperCase(requestDataSet.getValue("tableName"));
+		String tableNameLowerCase = CommonUtil.lowerCase(requestDataSet.getValue("tableName"));
+		String tableDescription = requestDataSet.getValue("tableDescription");
+		String sqlString = "", commentTable = "", commentData = "", blank = "    ";
+		File file = new File(fileName);
+		OutputStreamWriter osWriter;
+
+		createEmptyFile(file);
+		osWriter = new OutputStreamWriter(new FileOutputStream(file, true), "utf-8");
+
+		commentTable += "/**";
+		commentTable += " * Table Name  : "+tableNameUpperCase;
+		commentTable += " * Description : "+tableDescription;
+		commentTable += " */";
+
+		commentData += "/**";
+		commentData += " * Table Name  : "+tableNameUpperCase;
+		commentData += " * Data        : ";
+		commentData += " */";
+
+		sqlString += "drop table "+tableNameLowerCase+" cascade constraints;\n";
+		sqlString += "purge recyclebin;\n";
+		sqlString += "\n";
+		sqlString += "create table "+tableNameLowerCase+" (\n";
+		for (int i=0; i<detailDataSet.getRowCnt(); i++) {
+			String dataType = CommonUtil.lowerCase(detailDataSet.getValue(i, "dataType"));
+			String defaultVal = CommonUtil.lowerCase(detailDataSet.getValue(i, "defaultValue"));
+			String nullable = CommonUtil.lowerCase(detailDataSet.getValue(i, "nullable"));
+			String numDataLength = CommonUtil.removeString(detailDataSet.getValue(i, "dataLengthNumber"), " ");
+			String comma = "";
+			boolean hasDefaultVal = (CommonUtil.isNotBlank(defaultVal)) ? true : false;
+			boolean isNullable = (CommonUtil.equalsIgnoreCase(nullable, "Y")) ? true : false;
+
+			comma = (!hasDefaultVal && isNullable) ? "," : "";
+			sqlString += blank+CommonUtil.rightPad(CommonUtil.lowerCase(detailDataSet.getValue(i, "columnName")), 32, " ");
+			if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_DATE"))
+					||CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_CLOB"))) {
+				sqlString += CommonUtil.rightPad(dataType+comma, 20, " ");
+			} else if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_NUMBER"))) {
+				if (CommonUtil.isNotBlank(numDataLength)) {
+					sqlString += CommonUtil.rightPad(dataType+"("+detailDataSet.getValue(i, "numDataLength")+")"+comma, 20, " ");
+				} else {
+					sqlString += CommonUtil.rightPad(dataType+comma, 20, " ");
+				}
+			} else {
+				sqlString += CommonUtil.rightPad(dataType+"("+detailDataSet.getValue(i, "dataLength")+")"+comma, 20, " ");
+			}
+
+			if (!hasDefaultVal && isNullable) {
+				sqlString += CommonUtil.rightPad("", 40, " ");
+				sqlString += "-- "+detailDataSet.getValue(i, "description")+"\n";
+			} else {
+				comma = (isNullable) ? "," : "";
+				sqlString += CommonUtil.rightPad("default "+defaultVal+comma, 25, " ");
+				if (!isNullable) {
+					comma = ",";
+					sqlString += CommonUtil.rightPad("not null"+comma, 15, " ");
+				}
+			}
+		}
+		sqlString += ")\n";
+		sqlString += "pctfree 20 pctused 80 tablespace "+tableSpaceData+" alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);\n";
+		sqlString += "\n";
+		sqlString += "comment on table  "+CommonUtil.rightPad(tableNameLowerCase, 62, " ")+" is '"+tableDescription+"';\n";
+		for (int i=0; i<detailDataSet.getRowCnt(); i++) {
+			sqlString += "comment on column "+CommonUtil.rightPad(tableNameLowerCase+"."+detailDataSet.getValue(i, "columnName"), 62, " ")+" is '"+detailDataSet.getValue(i, "description")+"';\n";
+		}
+
+		sqlString = commentTable+sqlString;
+
+		osWriter.write(sqlString);
+		osWriter.flush();
+		osWriter.close();
+
+		return result;
+	}
+
+	private String getNextFileNameIndexFromDirectory(String directory) throws Exception {
+		String rtn = "", fileName = "";
+		File folder = new File(directory);
+		File files[];
+		int index1 = 0, index2 = 0;
+
+		if (folder.isDirectory()) {
+			files = folder.listFiles();
+			for (File file : files) {
+				fileName = file.getName();
+				fileName = CommonUtil.substringBefore(fileName, "_");
+				index1 = CommonUtil.toInt(fileName);
+				if (index1 > index2) {index2 = index1;}
+			}
+			rtn = CommonUtil.leftPad(CommonUtil.toString(index2), 3, "0");
+		}
+
+		return rtn;
+	}
+
 	private boolean isExistingHDao(Document document, String daoId) throws Exception {
 		boolean isExist = false;
 		NodeList nodeList = document.getElementsByTagName("bean");

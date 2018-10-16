@@ -93,6 +93,40 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "FK_TABLE_COLUMN", requestDataSet.getValue("fkRef"+delimiter+i));
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", requestDataSet.getValue("description"+delimiter+i));
 			}
+			tableDetailDataSet.addRow();
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_DESCRIPTION", tableDesc);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_NAME", "INSERT_USER_ID");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_TYPE", "VARCHAR2");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_LENGTH", "30");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "NULLABLE", "Y");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", "Insert User UID");
+
+			tableDetailDataSet.addRow();
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_DESCRIPTION", tableDesc);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_NAME", "INSERT_DATE");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_TYPE", "DATE");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DEFAULT_VALUE", "SYSDATE");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "NULLABLE", "Y");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", "Insert Date");
+
+			tableDetailDataSet.addRow();
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_DESCRIPTION", tableDesc);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_NAME", "UPDATE_USER_ID");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_TYPE", "VARCHAR2");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_LENGTH", "30");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "NULLABLE", "Y");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", "Update User UID");
+
+			tableDetailDataSet.addRow();
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_DESCRIPTION", tableDesc);
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_NAME", "UPDATE_DATE");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_TYPE", "DATE");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "NULLABLE", "Y");
+			tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", "Update Date");
 
 			result = zebraFrameworkBizService.generateScriptFile(requestDataSet, tableDetailDataSet);
 			if (result <= 0) {

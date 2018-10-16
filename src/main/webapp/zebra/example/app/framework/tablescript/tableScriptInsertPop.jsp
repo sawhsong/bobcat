@@ -68,6 +68,7 @@ $(function() {
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
 				if (commonJs.containsIgnoreCase(name, "columnName") && commonJs.isEmpty($(this).val())) {
+alert(groupIndex);
 					isValid = false;
 					commonJs.doValidatorMessage($(this), "mandatory");
 				}
@@ -220,7 +221,6 @@ $(function() {
 	setSelectBoxes = function(jqObj) {
 		$(jqObj).selectpicker({
 			width:"auto",
-// 			size:5,
 			container:"body",
 			style:$(jqObj).attr("class")
 		});
