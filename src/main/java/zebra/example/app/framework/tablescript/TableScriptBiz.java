@@ -9,8 +9,8 @@ public interface TableScriptBiz {
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
-/*
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception;
+/*
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception;
 */

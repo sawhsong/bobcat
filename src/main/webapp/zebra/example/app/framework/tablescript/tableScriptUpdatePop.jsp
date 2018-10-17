@@ -9,16 +9,10 @@
 <%
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
-	DataSet resultDataSet = (DataSet)pe.getObject("resultDataSet");
-	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
+	DataSet dsResult = (DataSet)pe.getObject("resultDataSet");
+	String fileName = (String)dsRequest.getValue("fileName");
+	String system = (CommonUtil.containsIgnoreCase(fileName, "ZEBRA")) ? "Framework" : "Project";
 	String delimiter = ConfigUtil.getProperty("dataDelimiter");
-	String isActive = "", disableFlag = "";
-	int masterRow = -1;
-
-	if (resultDataSet.getRowCnt() > 0) {
-		masterRow = resultDataSet.getRowIndex("COMMON_CODE", "0000000000");
-		isActive = resultDataSet.getValue(masterRow, "USE_YN");
-	}
 %>
 <%/************************************************************************************************
 * HTML
@@ -34,30 +28,38 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.thGrid {border-bottom:0px;}
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {background:#FFFFFF;}
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
-.dummyDetail {list-style:none;margin-top:4px;}
+.dummyDetail {list-style:none;}
 .dragHandler {cursor:move;}
 .deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript">
+jsconfig.put("useJqTooltip", false);
+jsconfig.put("useJqSelectmenu", false);
+
+var delimiter = jsconfig.get("dataDelimiter");
+
 $(function() {
 	/*!
 	 * event
 	 */
 	$("#btnSave").click(function(event) {
+		var isValid = true;
+
 		$("#liDummy").find(":input").each(function(index) {
 			$(this).removeAttr("mandatory");
 			$(this).removeAttr("option");
 		});
 
 		if (!commonJs.doValidate("fmDefault")) {
+			isValid = false;
 			return;
 		}
 
-		$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
-			var delimiter = jsconfig.get("dataDelimiter");
-
+		$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 			$(this).find(":input").each(function(index) {
 				var id = $(this).attr("id"), name = $(this).attr("name");
 
@@ -68,8 +70,24 @@ $(function() {
 				else {name = "";}
 
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+				if (commonJs.containsIgnoreCase(name, "columnName") && commonJs.isEmpty($(this).val())) {
+					isValid = false;
+					commonJs.doValidatorMessage($(this), "mandatory");
+				}
+
+				if (!isValid) {return;}
+
+				if (commonJs.containsIgnoreCase(name, "description") && commonJs.isEmpty($(this).val())) {
+					isValid = false;
+					commonJs.doValidatorMessage($(this), "mandatory");
+				}
+
+				if (!isValid) {return;}
 			});
 		});
+
+		if (!isValid) {return;}
 
 		commonJs.confirm({
 			contents:"<mc:msg key="Q001"/>",
@@ -91,11 +109,11 @@ $(function() {
 	});
 
 	$("#btnAdd").click(function(event) {
-		var elem = $("#liDummy").clone(), delimiter = jsconfig.get("dataDelimiter"), elemId = $(elem).attr("id");
+		var elem = $("#liDummy").clone(), elemId = $(elem).attr("id");
 
-		$(elem).css("display", "block").appendTo($("#ulCommonCodeDetailHolder"));
+		$(elem).css("display", "block").appendTo($("#ulColumnDetailHolder"));
 
-		$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+		$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 			$(this).attr("index", groupIndex).attr("id", elemId+delimiter+groupIndex);
 
 			$(this).find("i").each(function(index) {
@@ -113,7 +131,7 @@ $(function() {
 				$(this).attr("index", groupIndex).attr("id", id+delimiter+groupIndex);
 			});
 
-			$(this).find("input").each(function(index) {
+			$(this).find("input, select").each(function(index) {
 				var id = $(this).attr("id"), name = $(this).attr("name");
 
 				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
@@ -124,16 +142,20 @@ $(function() {
 
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
-				if (groupIndex == ($("#ulCommonCodeDetailHolder .dummyDetail").length - 1)) {
-					if (name.indexOf("useYnDetail") != -1) {
+				if (groupIndex == ($("#ulColumnDetailHolder .dummyDetail").length - 1)) {
+					if (name.indexOf("nullable") != -1) {
 						if ($(this).val() == "Y") {$(this).prop("checked", true);}
 					}
+				}
 
-					if (name.indexOf("sortOrderDetail") != -1) {
-						$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
-					}
+				if ($(this).is("select")) {
+					setSelectBoxes($(this));
 				}
 			});
+		});
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea")
 		});
 	});
 
@@ -141,14 +163,14 @@ $(function() {
 	 * process
 	 */
 	exeSave = function() {
-		var detailLength = $("#ulCommonCodeDetailHolder .dummyDetail").length;
+		var detailLength = $("#ulColumnDetailHolder .dummyDetail").length;
 
 		commonJs.ajaxSubmit({
-			url:"/zebra/framework/commoncode/exeUpdate.do",
+			url:"/zebra/framework/tablescript/exeUpdate.do",
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
-				commonCodeForUpdate:"<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>",
+				fileNameForUpdate:"<%=dsRequest.getValue("fileName")%>",
 				detailLength:detailLength
 			},
 			success:function(data, textStatus) {
@@ -175,25 +197,85 @@ $(function() {
 	};
 
 	setSortable = function() {
-		$("#ulCommonCodeDetailHolder").sortable({
+		$("#ulColumnDetailHolder").sortable({
 			axis:"y",
 			handle:".dragHandler",
 			stop:function() {
-				$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+				$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
 					$(this).find("input").each(function(index) {
-						var id = $(this).attr("id"), name = $(this).attr("name"), delimiter = jsconfig.get("dataDelimiter");
+						var id = $(this).attr("id"), name = $(this).attr("name");
 
 						$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
-
-						if (name.indexOf("sortOrderDetail") != -1) {
-							$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
-						}
 					});
 				});
 			}
 		});
 
-		$("#ulCommonCodeDetailHolder").disableSelection();
+		$("#ulColumnDetailHolder").disableSelection();
+	};
+
+	setSelectBoxes = function(jqObj) {
+		$(jqObj).selectpicker({
+			width:"auto",
+			container:"body",
+			style:$(jqObj).attr("class")
+		});
+	};
+
+	validate = function(obj) {
+		var objName = $(obj).attr("name"), currRowIdx = objName.split(delimiter)[1];
+		var nameSuffix = delimiter+currRowIdx;
+
+		if (commonJs.containsIgnoreCase(objName, "dataType")) {
+			if ($("#dataType"+nameSuffix).val() == "CLOB") {
+				$("#dataLength"+nameSuffix).selectpicker("show");
+				$("#dataLength"+nameSuffix).selectpicker("val", "4000");
+				$("#dataLength"+nameSuffix).prop("disabled", true);
+				$("#dataLength"+nameSuffix).selectpicker("refresh");
+
+				$("#defaultValue"+nameSuffix).val("EMPTY_CLOB()");
+			} else if ($("#dataType"+nameSuffix).val() == "NUMBER") {
+				$("#dataLength"+nameSuffix).selectpicker("hide");
+
+				$("#dataLengthNumber"+nameSuffix).css("display", "block");
+			} else if ($("#dataType"+nameSuffix).val() == "DATE") {
+				$("#dataLength"+nameSuffix).selectpicker("show");
+				$("#dataLength"+nameSuffix).prop("disabled", true);
+				$("#dataLength"+nameSuffix).selectpicker("refresh");
+
+				$("#defaultValue"+nameSuffix).val("");
+				$("#dataLengthNumber"+nameSuffix).css("display", "none");
+			} else {
+				$("#dataLength"+nameSuffix).selectpicker("show");
+				$("#defaultValue"+nameSuffix).val("");
+				$("#dataLength"+nameSuffix).prop("disabled", false);
+				$("#dataLength"+nameSuffix).selectpicker("refresh");
+
+				$("#dataLengthNumber"+nameSuffix).css("display", "none");
+			}
+		}
+
+		if (commonJs.containsIgnoreCase(objName, "keyType")) {
+			if (!commonJs.isEmpty($("#keyType"+nameSuffix).val())) {
+				$("[name = nullable"+nameSuffix+"]").each(function() {
+					if ($(this).val() == "N") {
+						$(this).prop("checked", true);
+					}
+				});
+			}
+
+			if ($("#keyType"+nameSuffix).val() == "FK") {
+				$("#fkRef"+nameSuffix).removeClass("txtDis").addClass("txtEn").removeAttr("readonly");
+			} else {
+				$("#fkRef"+nameSuffix).removeClass("txtEn").addClass("txtDis").attr("readonly", "readonly").val("");
+			}
+		}
+
+		if (commonJs.containsIgnoreCase(objName, "fkRef") && !commonJs.isEmpty($("#fkRef"+nameSuffix).val())) {
+			if (!commonJs.contains($("#fkRef"+nameSuffix).val(), ".")) {
+				commonJs.doValidatorMessage($("#fkRef"+nameSuffix), "notValid");
+			}
+		}
 	};
 
 	/*!
@@ -203,27 +285,28 @@ $(function() {
 		var obj = event.target;
 
 		if ($(obj).hasClass("deleteButton") || ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton"))) {
-			$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(index) {
+			$("#ulColumnDetailHolder").find(".dummyDetail").each(function(index) {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();
-				}
-			});
 
-			$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(groupIndex) {
-				$(this).find("input[type=text]").each(function(index) {
-					var name = $(this).attr("name");
-					if (name.indexOf("sortOrderDetail") != -1) {
-						$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
-					}
-				});
+					$("#tblGrid").fixedHeaderTable({
+						attachTo:$("#divDataArea")
+					});
+				}
 			});
 		}
 	});
 
 	$(window).load(function() {
-		parent.popup.setHeader("<mc:msg key="fwk.commoncode.header.popupHeaderEdit"/>");
-		$("#codeTypeMaster").focus();
+		$("#tableName").focus();
+
 		setSortable();
+
+		setTimeout(function() {
+			$("#tblGrid").fixedHeaderTable({
+				attachTo:$("#divDataArea")
+			});
+		}, 500);
 	});
 });
 </script>
@@ -252,31 +335,27 @@ $(function() {
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="9%"/>
+			<col width="12%"/>
+			<col width="8%"/>
+			<col width="21%"/>
+			<col width="10%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.system"/></th>
 			<td class="tdEdit">
-				<ui:text name="codeTypeMaster" id="codeTypeMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="fwk.commoncode.header.codeType" options="mandatory"/>
+				<ui:radio name="system" inputClassName="inTbl" value="Project" text="fwk.tablescript.header.project" isSelected="<%=CommonUtil.equalsIgnoreCase(system, "Project") ? "true" : "false"%>"/>
+				<ui:radio name="system" inputClassName="inTbl" value="Framework" text="fwk.tablescript.header.framework" isSelected="<%=CommonUtil.equalsIgnoreCase(system, "Framework") ? "true" : "false"%>"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableName"/></th>
 			<td class="tdEdit">
-				<ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
+				<ui:text name="tableName" id="tableName" value="<%=dsResult.getValue("TABLE_NAME")%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxbyte="30"/>
 			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableDesc"/></th>
 			<td class="tdEdit">
-				<ui:text name="descriptionEnMaster" id="descriptionEnMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit">
-				<ui:text name="descriptionKoMaster" id="descriptionKoMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/>
+				<ui:text name="tableDescription" id="tableDescription" value="<%=dsResult.getValue("TABLE_DESCRIPTION")%>" className="defClass" checkName="fwk.tablescript.header.tableDesc" options="mandatory"/>
 			</td>
 		</tr>
 	</table>
@@ -300,61 +379,86 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<ul id="ulCommonCodeDetailHolder">
+	<table id="tblGrid" class="tblGrid">
+		<colgroup>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="16%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="7%"/>
+			<col width="18%"/>
+			<col width="*"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="thGrid"></th>
+				<th class="thGrid"></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.tablescript.header.colName"/></th>
+				<th class="thGrid "><mc:msg key="fwk.tablescript.header.dataType"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.length"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.defaultValue"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.tablescript.header.nullable"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.keyType"/></th>
+				<th class="thGrid"><mc:msg key="fwk.tablescript.header.fkRef"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.tablescript.header.description"/></th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
+			<tr>
+				<td colspan="10" style="padding:0px;border-top:0px">
+					<ul id="ulColumnDetailHolder">
 <%
-	if (resultDataSet.getRowCnt() > 0) {
-		for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-			String idSuffix = delimiter+i;
-			String rdoIsActiveName = "useYnDetail"+idSuffix;
-
-			isActive = resultDataSet.getValue(i, "USE_YN");
-
-			if (i == masterRow) {continue;}
+				if (dsResult.getRowCnt() > 0) {
+					for (int i=0; i<dsResult.getRowCnt(); i++) {
+						String idSuffix = delimiter+i;
+						String colName = dsResult.getValue("COLUMN_NAME");
+						String dataType = dsResult.getValue("DATA_TYPE");
 %>
-		<li id="liDummy<%=idSuffix%>" class="dummyDetail" index="<%=i%>">
-			<table class="tblEdit">
-				<colgroup>
-					<col width="3%"/>
-					<col width="13%"/>
-					<col width="*"/>
-					<col width="13%"/>
-					<col width="15%"/>
-					<col width="11%"/>
-					<col width="10%"/>
-				</colgroup>
-				<tr>
-					<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-					<td class="tdEdit">
-						<input type="text" id="commonCodeDetail<%=idSuffix%>" name="commonCodeDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "COMMON_CODE")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
-					</td>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-					<td class="tdEdit">
-						<ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
-					</td>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-					<td class="tdEdit">
-						<input type="text" id="sortOrderDetail<%=idSuffix%>" name="sortOrderDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "SORT_ORDER")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
-					</td>
-				</tr>
-				<tr>
-					<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-					<td class="tdEdit">
-						<input type="text" id="descriptionEnDetail<%=idSuffix%>" name="descriptionEnDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "DESCRIPTION_EN")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
-					</td>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-					<td class="tdEdit" colspan="3">
-						<input type="text" id="descriptionKoDetail<%=idSuffix%>" name="descriptionKoDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "DESCRIPTION_KO")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
-					</td>
-				</tr>
-			</table>
-		</li>
+						<li id="liDummy<%=idSuffix%>" class="dummyDetail" index="<%=i%>">
+							<table class="tblGrid" style="border:0px">
+								<colgroup>
+									<col width="2%"/>
+									<col width="2%"/>
+									<col width="16%"/>
+									<col width="6%"/>
+									<col width="6%"/>
+									<col width="6%"/>
+									<col width="6%"/>
+									<col width="7%"/>
+									<col width="18%"/>
+									<col width="*"/>
+								</colgroup>
+								<tr class="noBorderAll">
+									<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
+									<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
+									<td class="tdGrid Ct"><ui:text id="columnName<%=idSuffix%>" name="columnName<%=idSuffix%>" value="<%=colName%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)"/></td>
+									<td class="tdGrid Ct"><ui:ccselect id="dataType<%=idSuffix%>" name="dataType<%=idSuffix%>" selectedValue="<%=dataType%>" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
+									<td class="tdGrid Ct">
+										<ui:ccselect id="dataLength<%=idSuffix%>" name="dataLength<%=idSuffix%>" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/>
+										<ui:text id="dataLengthNumber<%=idSuffix%>" name="dataLengthNumber<%=idSuffix%>" className="defClass Ct" checkName="fwk.tablescript.header.length" script="onchange:validate(this)" style="display:none"/>
+									</td>
+									<td class="tdGrid Ct"><ui:text id="defaultValue<%=idSuffix%>" name="defaultValue<%=idSuffix%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
+									<td class="tdGrid Ct"><ui:radio name="nullable<%=idSuffix%>" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
+									<td class="tdGrid Ct"><ui:ccselect id="keyType<%=idSuffix%>" name="keyType<%=idSuffix%>" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
+									<td class="tdGrid Ct"><ui:text id="fkRef<%=idSuffix%>" name="fkRef<%=idSuffix%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
+									<td class="tdGrid Ct">
+										<ui:text id="description<%=idSuffix%>" name="description<%=idSuffix%>" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory" script="onchange:validate(this)"/>
+									</td>
+								</tr>
+							</table>
+						</li>
 <%
-		}
-	}
+					}
+				}
 %>
-	</ul>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
@@ -366,40 +470,34 @@ $(function() {
 * Additional Elements
 ************************************************************************************************/%>
 <li id="liDummy" class="dummyDetail">
-	<table class="tblEdit">
+	<table class="tblGrid" style="border:0px">
 		<colgroup>
-			<col width="3%"/>
-			<col width="13%"/>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="16%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="7%"/>
+			<col width="18%"/>
 			<col width="*"/>
-			<col width="13%"/>
-			<col width="15%"/>
-			<col width="11%"/>
-			<col width="10%"/>
 		</colgroup>
-		<tr>
+		<tr class="noBorderAll">
 			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-			<td class="tdEdit">
-				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit">
-				<ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-			<td class="tdEdit">
-				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
-			</td>
-		</tr>
-		<tr>
 			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit">
-				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
+			<td class="tdGrid Ct"><ui:text id="columnName" name="columnName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct">
+				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/>
+				<ui:text id="dataLengthNumber" name="dataLengthNumber" className="defClass Ct" checkName="fwk.tablescript.header.length" script="onchange:validate(this)" style="display:none"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit" colspan="3">
-				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
+			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:radio name="nullable" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:text id="fkRef" name="fkRef" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct">
+				<ui:text id="description" name="description" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory" script="onchange:validate(this)"/>
 			</td>
 		</tr>
 	</table>

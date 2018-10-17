@@ -142,10 +142,6 @@ $(function() {
 					if (name.indexOf("nullable") != -1) {
 						if ($(this).val() == "Y") {$(this).prop("checked", true);}
 					}
-
-					if (name.indexOf("sortOrder") != -1) {
-						$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
-					}
 				}
 
 				if ($(this).is("select")) {
@@ -205,10 +201,6 @@ $(function() {
 						var id = $(this).attr("id"), name = $(this).attr("name");
 
 						$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
-
-						if (name.indexOf("sortOrder") != -1) {
-							$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
-						}
 					});
 				});
 			}
@@ -297,18 +289,8 @@ $(function() {
 					});
 				}
 			});
-
-			$("#ulColumnDetailHolder").find(".dummyDetail").each(function(groupIndex) {
-				$(this).find("input[type=text]").each(function(index) {
-					var name = $(this).attr("name");
-					if (name.indexOf("sortOrder") != -1) {
-						$(this).val(commonJs.lpad((groupIndex+1), 3, "0"));
-					}
-				});
-			});
 		}
 	});
-
 
 	$(window).load(function() {
 		$("#tableName").focus();
@@ -464,7 +446,6 @@ $(function() {
 			<td class="tdGrid Ct"><ui:text id="fkRef" name="fkRef" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct">
 				<ui:text id="description" name="description" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory" script="onchange:validate(this)"/>
-				<ui:hidden id="sortOrder" name="sortOrder" className="defClass"/>
 			</td>
 		</tr>
 	</table>

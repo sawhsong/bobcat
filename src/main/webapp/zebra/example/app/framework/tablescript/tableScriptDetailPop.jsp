@@ -10,7 +10,7 @@
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
 	DataSet dsResult = (DataSet)pe.getObject("resultDataSet");
-	String fileName = dsRequest.getValue("fileName");
+	String fileName = (String)dsRequest.getValue("fileName");
 %>
 <%/************************************************************************************************
 * HTML

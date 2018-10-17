@@ -42,6 +42,11 @@ public class TableScriptAction extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getUpdate() throws Exception {
+		biz.getUpdate(paramEntity);
+		return "update";
+	}
+
 	public String exeDelete() throws Exception {
 		try {
 			biz.exeDelete(paramEntity);
@@ -51,11 +56,6 @@ public class TableScriptAction extends BaseAction {
 		return "ajaxResponse";
 	}
 /*
-	public String getUpdate() throws Exception {
-		biz.getUpdate(paramEntity);
-		return "update";
-	}
-
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);

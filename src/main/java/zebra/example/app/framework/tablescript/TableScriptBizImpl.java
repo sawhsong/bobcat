@@ -143,6 +143,18 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 		return paramEntity;
 	}
 
+	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity = getDetail(paramEntity);
+
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+
+		return paramEntity;
+	}
+
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String fileName = requestDataSet.getValue("fileName");
@@ -170,18 +182,6 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 		return paramEntity;
 	}
 /*
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity = getDetail(paramEntity);
-
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-
-		return paramEntity;
-	}
-
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String codeType = CommonUtil.upperCase(requestDataSet.getValue("codeTypeMaster"));
