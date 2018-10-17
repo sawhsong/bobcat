@@ -1991,14 +1991,24 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					} else {
 						sqlString += CommonUtil.rightPad("default "+"'"+defaultVal+"'"+comma, 25, " ");
 					}
-					sqlString += CommonUtil.rightPad("", 15, " ");
-					sqlString += "-- "+colDesc+"\n";
-				}
 
-				if (!isNullable) {
-					sqlString += CommonUtil.rightPad("", 25, " ");
-					sqlString += CommonUtil.rightPad("not null,", 15, " ");
-					sqlString += "-- "+colDesc+"\n";
+					if (isNullable) {
+						sqlString += CommonUtil.rightPad("", 15, " ");
+						sqlString += "-- "+colDesc+"\n";
+					} else {
+						sqlString += CommonUtil.rightPad("not null,", 15, " ");
+						sqlString += "-- "+colDesc+"\n";
+					}
+				} else {
+					if (isNullable) {
+						sqlString += CommonUtil.rightPad("", 25, " ");
+						sqlString += CommonUtil.rightPad("", 15, " ");
+						sqlString += "-- "+colDesc+"\n";
+					} else {
+						sqlString += CommonUtil.rightPad("", 25, " ");
+						sqlString += CommonUtil.rightPad("not null,", 15, " ");
+						sqlString += "-- "+colDesc+"\n";
+					}
 				}
 			}
 		}
@@ -2013,7 +2023,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				String fkRefColName = fkRefInfo[1];
 
 				consString += (CommonUtil.isBlank(consString)) ?
-						"constraint fk_"+CommonUtil.uid()+" foreign key("+fkColumnName+")"+" references "+fkRefTable+"("+fkRefColName+")" :
+						"\n"+blank+"constraint fk_"+CommonUtil.uid()+" foreign key("+fkColumnName+")"+" references "+fkRefTable+"("+fkRefColName+")" :
 						",\n"+blank+"constraint fk_"+CommonUtil.uid()+" foreign key("+fkColumnName+")"+" references "+fkRefTable+"("+fkRefColName+")";
 			}
 		}
@@ -2037,7 +2047,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		sqlString += "\n";
 		sqlString += "comment on table  "+CommonUtil.rightPad(tableNameLowerCase, 62, " ")+" is '"+tableDescription+"';\n";
 		for (int i=0; i<detailDataSet.getRowCnt(); i++) {
-			sqlString += "comment on column "+CommonUtil.rightPad(tableNameLowerCase+"."+detailDataSet.getValue(i, "COLUMN_NAME"), 62, " ")+" is '"+detailDataSet.getValue(i, "COLUMN_DESCRIPTION")+"';\n";
+			sqlString += "comment on column "+CommonUtil.rightPad(tableNameLowerCase+"."+CommonUtil.lowerCase(detailDataSet.getValue(i, "COLUMN_NAME")), 62, " ")+" is '"+detailDataSet.getValue(i, "COLUMN_DESCRIPTION")+"';\n";
 		}
 
 		sqlString = commentTable+sqlString;
@@ -2047,7 +2057,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		osWriter.flush();
 		osWriter.close();
 
-		return result;
+		return ++result;
 	}
 
 	private String getNextFileNameIndexFromDirectory(String directory) throws Exception {
