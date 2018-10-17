@@ -1919,72 +1919,129 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		String tableNameUpperCase = CommonUtil.upperCase(requestDataSet.getValue("tableName"));
 		String tableNameLowerCase = CommonUtil.lowerCase(requestDataSet.getValue("tableName"));
 		String tableDescription = requestDataSet.getValue("tableDescription");
-		String sqlString = "", commentTable = "", commentData = "", blank = "    ";
+		String sqlString = "", commentTable = "", commentData = "", blank = "    ", pkCol = "", ukCol = "", fkColRef = "", consString = "";
 		File file = new File(fileName);
 		OutputStreamWriter osWriter;
 
 		createEmptyFile(file);
 		osWriter = new OutputStreamWriter(new FileOutputStream(file, true), "utf-8");
 
-		commentTable += "/**";
-		commentTable += " * Table Name  : "+tableNameUpperCase;
-		commentTable += " * Description : "+tableDescription;
-		commentTable += " */";
+		commentTable += "/**\n";
+		commentTable += " * Table Name  : "+tableNameUpperCase+"\n";
+		commentTable += " * Description : "+tableDescription+"\n";
+		commentTable += " */\n";
 
-		commentData += "/**";
-		commentData += " * Table Name  : "+tableNameUpperCase;
-		commentData += " * Data        : ";
-		commentData += " */";
+		commentData += "/**\n";
+		commentData += " * Table Name  : "+tableNameUpperCase+"\n";
+		commentData += " * Data        : \n";
+		commentData += " */\n";
 
 		sqlString += "drop table "+tableNameLowerCase+" cascade constraints;\n";
 		sqlString += "purge recyclebin;\n";
 		sqlString += "\n";
 		sqlString += "create table "+tableNameLowerCase+" (\n";
 		for (int i=0; i<detailDataSet.getRowCnt(); i++) {
-			String dataType = CommonUtil.lowerCase(detailDataSet.getValue(i, "dataType"));
-			String defaultVal = CommonUtil.lowerCase(detailDataSet.getValue(i, "defaultValue"));
-			String nullable = CommonUtil.lowerCase(detailDataSet.getValue(i, "nullable"));
-			String numDataLength = CommonUtil.removeString(detailDataSet.getValue(i, "dataLengthNumber"), " ");
+			String colName = CommonUtil.lowerCase(detailDataSet.getValue(i, "COLUMN_NAME"));
+			String dataType = CommonUtil.lowerCase(detailDataSet.getValue(i, "DATA_TYPE"));
+			String dataLength = CommonUtil.lowerCase(detailDataSet.getValue(i, "DATA_LENGTH"));
+			String numDataLength = CommonUtil.removeString(detailDataSet.getValue(i, "DATA_LENGTH_NUMBER"), " ");
+			String defaultVal = CommonUtil.lowerCase(detailDataSet.getValue(i, "DEFAULT_VALUE"));
+			String nullable = CommonUtil.lowerCase(detailDataSet.getValue(i, "NULLABLE"));
+			String keyType = CommonUtil.lowerCase(detailDataSet.getValue(i, "KEY_TYPE"));
+			String fkRef = CommonUtil.lowerCase(detailDataSet.getValue(i, "FK_TABLE_COLUMN"));
+			String colDesc = detailDataSet.getValue(i, "COLUMN_DESCRIPTION");
 			String comma = "";
 			boolean hasDefaultVal = (CommonUtil.isNotBlank(defaultVal)) ? true : false;
 			boolean isNullable = (CommonUtil.equalsIgnoreCase(nullable, "Y")) ? true : false;
 
+			if (CommonUtil.equalsIgnoreCase(keyType, ZebraCommonCodeManager.getCodeByConstants("CONSTRAINT_TYPE_PK"))) {
+				pkCol += (CommonUtil.isBlank(pkCol)) ? colName : ", "+colName;
+			} else if (CommonUtil.equalsIgnoreCase(keyType, ZebraCommonCodeManager.getCodeByConstants("CONSTRAINT_TYPE_UK"))) {
+				ukCol += (CommonUtil.isBlank(ukCol)) ? colName : ", "+colName;
+			} else if (CommonUtil.equalsIgnoreCase(keyType, ZebraCommonCodeManager.getCodeByConstants("CONSTRAINT_TYPE_FK"))) {
+				fkColRef += (CommonUtil.isBlank(fkColRef)) ? colName+","+fkRef : ";"+colName+","+fkRef;
+			}
+
 			comma = (!hasDefaultVal && isNullable) ? "," : "";
-			sqlString += blank+CommonUtil.rightPad(CommonUtil.lowerCase(detailDataSet.getValue(i, "columnName")), 32, " ");
-			if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_DATE"))
-					||CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_CLOB"))) {
+
+			sqlString += blank+CommonUtil.rightPad(colName, 32, " ");
+			if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_DATE")) ||
+					CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_CLOB"))) {
 				sqlString += CommonUtil.rightPad(dataType+comma, 20, " ");
 			} else if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_NUMBER"))) {
 				if (CommonUtil.isNotBlank(numDataLength)) {
-					sqlString += CommonUtil.rightPad(dataType+"("+detailDataSet.getValue(i, "numDataLength")+")"+comma, 20, " ");
+					sqlString += CommonUtil.rightPad(dataType+"("+numDataLength+")"+comma, 20, " ");
 				} else {
 					sqlString += CommonUtil.rightPad(dataType+comma, 20, " ");
 				}
 			} else {
-				sqlString += CommonUtil.rightPad(dataType+"("+detailDataSet.getValue(i, "dataLength")+")"+comma, 20, " ");
+				sqlString += CommonUtil.rightPad(dataType+"("+dataLength+")"+comma, 20, " ");
 			}
 
 			if (!hasDefaultVal && isNullable) {
 				sqlString += CommonUtil.rightPad("", 40, " ");
-				sqlString += "-- "+detailDataSet.getValue(i, "description")+"\n";
+				sqlString += "-- "+colDesc+"\n";
 			} else {
-				comma = (isNullable) ? "," : "";
-				sqlString += CommonUtil.rightPad("default "+defaultVal+comma, 25, " ");
+				if (hasDefaultVal) {
+					comma = (isNullable) ? "," : "";
+					if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_DATE")) ||
+							CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_CLOB")) ||
+							CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_NUMBER"))) {
+						sqlString += CommonUtil.rightPad("default "+defaultVal+comma, 25, " ");
+					} else {
+						sqlString += CommonUtil.rightPad("default "+"'"+defaultVal+"'"+comma, 25, " ");
+					}
+					sqlString += CommonUtil.rightPad("", 15, " ");
+					sqlString += "-- "+colDesc+"\n";
+				}
+
 				if (!isNullable) {
-					comma = ",";
-					sqlString += CommonUtil.rightPad("not null"+comma, 15, " ");
+					sqlString += CommonUtil.rightPad("", 25, " ");
+					sqlString += CommonUtil.rightPad("not null,", 15, " ");
+					sqlString += "-- "+colDesc+"\n";
 				}
 			}
 		}
+
+		if (CommonUtil.isNotBlank(fkColRef)) {
+			String fkInfo[] = CommonUtil.split(fkColRef, ";");
+			for (String fkCol : fkInfo) {
+				String fkCR[] = CommonUtil.split(fkCol, ",");
+				String fkColumnName = fkCR[0];
+				String fkRefInfo[] = CommonUtil.split(fkCR[1], ".");
+				String fkRefTable = fkRefInfo[0];
+				String fkRefColName = fkRefInfo[1];
+
+				consString += (CommonUtil.isBlank(consString)) ?
+						"constraint fk_"+CommonUtil.uid()+" foreign key("+fkColumnName+")"+" references "+fkRefTable+"("+fkRefColName+")" :
+						",\n"+blank+"constraint fk_"+CommonUtil.uid()+" foreign key("+fkColumnName+")"+" references "+fkRefTable+"("+fkRefColName+")";
+			}
+		}
+
+		if (CommonUtil.isNotBlank(pkCol)) {
+			consString += (CommonUtil.isBlank(consString)) ?
+					"constraint pk_"+CommonUtil.abbreviate(tableNameLowerCase, 27)+" primary key("+pkCol+")" :
+					",\n"+blank+"constraint pk_"+CommonUtil.abbreviate(tableNameLowerCase, 27)+" primary key("+pkCol+")";
+		}
+
+		if (CommonUtil.isNotBlank(ukCol)) {
+			consString += (CommonUtil.isBlank(consString)) ?
+					"constraint uk_"+CommonUtil.uid()+" unique("+ukCol+")" : ",\n"+blank+"constraint uk_"+CommonUtil.uid()+" unique("+ukCol+")";
+		}
+
+		consString += "\n"+blank+"using index tablespace "+tableSpaceIndex+" storage(initial 50k next 50k pctincrease 0)\n";
+
+		sqlString += consString;
 		sqlString += ")\n";
-		sqlString += "pctfree 20 pctused 80 tablespace "+tableSpaceData+" alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);\n";
+		sqlString += "pctfree 20 pctused 80 tablespace "+tableSpaceData+" storage(initial 100k next 100k maxextents 2000 pctincrease 0);\n";
 		sqlString += "\n";
 		sqlString += "comment on table  "+CommonUtil.rightPad(tableNameLowerCase, 62, " ")+" is '"+tableDescription+"';\n";
 		for (int i=0; i<detailDataSet.getRowCnt(); i++) {
-			sqlString += "comment on column "+CommonUtil.rightPad(tableNameLowerCase+"."+detailDataSet.getValue(i, "columnName"), 62, " ")+" is '"+detailDataSet.getValue(i, "description")+"';\n";
+			sqlString += "comment on column "+CommonUtil.rightPad(tableNameLowerCase+"."+detailDataSet.getValue(i, "COLUMN_NAME"), 62, " ")+" is '"+detailDataSet.getValue(i, "COLUMN_DESCRIPTION")+"';\n";
 		}
 
 		sqlString = commentTable+sqlString;
+		sqlString += "\n\n"+commentData;
 
 		osWriter.write(sqlString);
 		osWriter.flush();
@@ -2007,6 +2064,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				index1 = CommonUtil.toInt(fileName);
 				if (index1 > index2) {index2 = index1;}
 			}
+			index2++;
 			rtn = CommonUtil.leftPad(CommonUtil.toString(index2), 3, "0");
 		}
 

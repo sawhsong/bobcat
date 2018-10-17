@@ -74,7 +74,7 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
 		String tableName = requestDataSet.getValue("tableName");
 		String tableDesc = requestDataSet.getValue("tableDescription");
-		String dataSetHeader[] = {"TABLE_NAME", "TABLE_DESCRIPTION", "COLUMN_NAME", "DATA_TYPE", "DATA_LENGTH", "DEFAULT_VALUE", "NULLABLE", "KEY_TYPE", "FK_TABLE_COLUMN", "COLUMN_DESCRIPTION"};
+		String dataSetHeader[] = {"TABLE_NAME", "TABLE_DESCRIPTION", "COLUMN_NAME", "DATA_TYPE", "DATA_LENGTH", "DATA_LENGTH_NUMBER", "DEFAULT_VALUE", "NULLABLE", "KEY_TYPE", "FK_TABLE_COLUMN", "COLUMN_DESCRIPTION"};
 		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
 		int result = -1;
 
@@ -87,6 +87,7 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_NAME", requestDataSet.getValue("columnName"+delimiter+i));
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_TYPE", requestDataSet.getValue("dataType"+delimiter+i));
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_LENGTH", requestDataSet.getValue("dataLength"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_LENGTH_NUMBER", requestDataSet.getValue("dataLengthNumber"+delimiter+i));
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DEFAULT_VALUE", requestDataSet.getValue("defaultValue"+delimiter+i));
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "NULLABLE", requestDataSet.getValue("nullable"+delimiter+i));
 				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "KEY_TYPE", requestDataSet.getValue("keyType"+delimiter+i));

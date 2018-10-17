@@ -461,7 +461,7 @@ $(function() {
 			<td class="tdGrid Ct"><ui:text id="defaultValue" name="defaultValue" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:radio name="nullable" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
 			<td class="tdGrid Ct"><ui:ccselect id="keyType" name="keyType" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
-			<td class="tdGrid Ct"><ui:text id="fkRef" name="fkRef" className="defClass" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
+			<td class="tdGrid Ct"><ui:text id="fkRef" name="fkRef" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
 			<td class="tdGrid Ct">
 				<ui:text id="description" name="description" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory" script="onchange:validate(this)"/>
 				<ui:hidden id="sortOrder" name="sortOrder" className="defClass"/>
