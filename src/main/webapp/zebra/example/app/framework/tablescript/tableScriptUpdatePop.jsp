@@ -180,7 +180,7 @@ $(function() {
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
-				fileNameForUpdate:"<%=dsRequest.getValue("fileName")%>",
+				fileName:"<%=dsRequest.getValue("fileName")%>",
 				detailLength:detailLength
 			},
 			success:function(data, textStatus) {

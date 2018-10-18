@@ -1877,6 +1877,18 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		return result;
 	}
 
+	public int updateScriptFile(DataSet requestDataSet, DataSet tableDetailDataSet) throws Exception {
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		String system = requestDataSet.getValue("system");
+		String path = (CommonUtil.equalsIgnoreCase(system, "framework")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");
+		String fileName = requestDataSet.getValue("fileName");
+		int result = 0;
+
+		result = generateScriptFile(requestDataSet, tableDetailDataSet, rootPath+"/"+path+"/"+fileName);
+
+		return result;
+	}
+
 	public int deleteTableCreationScriptFile(String fileName) throws Exception {
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
 		String path = (CommonUtil.containsIgnoreCase(fileName, "zebra")) ? ConfigUtil.getProperty("path.tablescript.framework") : ConfigUtil.getProperty("path.tablescript.project");
@@ -1919,9 +1931,13 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		String tableNameUpperCase = CommonUtil.upperCase(requestDataSet.getValue("tableName"));
 		String tableNameLowerCase = CommonUtil.lowerCase(requestDataSet.getValue("tableName"));
 		String tableDescription = requestDataSet.getValue("tableDescription");
-		String sqlString = "", commentTable = "", commentData = "", blank = "    ", pkCol = "", ukCol = "", fkColRef = "", consString = "";
+		String sqlString = "", commentTable = "", commentData = "", blank = "    ", pkCol = "", ukCol = "", fkColRef = "", consString = "", dataSectionString = "";
 		File file = new File(fileName);
 		OutputStreamWriter osWriter;
+
+		if (file.exists()) {
+			dataSectionString = getDataSectionString(file);
+		}
 
 		createEmptyFile(file);
 		osWriter = new OutputStreamWriter(new FileOutputStream(file, true), "utf-8");
@@ -2053,11 +2069,38 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		sqlString = commentTable+sqlString;
 		sqlString += "\n\n"+commentData;
 
+		if (CommonUtil.isNotBlank(dataSectionString)) {
+			sqlString += "\n"+dataSectionString;
+		}
+
 		osWriter.write(sqlString);
 		osWriter.flush();
 		osWriter.close();
 
 		return ++result;
+	}
+
+	private String getDataSectionString(File file) throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String searchString = "* Data", lineToSkip = "*/";
+		String rtnString = "", tempString;
+		boolean isDataSectionRow = false;
+
+		while ((tempString = br.readLine()) != null) {
+			if (CommonUtil.startsWithIgnoreCase(CommonUtil.trim(tempString), searchString)) {
+				isDataSectionRow = true;
+				continue;
+			}
+
+			if (isDataSectionRow && CommonUtil.startsWithIgnoreCase(CommonUtil.trim(tempString), lineToSkip)) {
+				continue;
+			}
+
+			rtnString += tempString;
+		}
+		br.close();
+
+		return rtnString;
 	}
 
 	private String getNextFileNameIndexFromDirectory(String directory) throws Exception {

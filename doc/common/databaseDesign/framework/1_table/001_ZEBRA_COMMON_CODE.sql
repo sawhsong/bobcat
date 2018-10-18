@@ -89,14 +89,16 @@ insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '1',          '1',   
 insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '3',          '3',                   '3',                  'DOMAIN_DATA_LENGTH_3',           '002',  'Y', 'Y', '0', sysdate, '', '');
 insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '5',          '5',                   '5',                  'DOMAIN_DATA_LENGTH_5',           '003',  'Y', 'Y', '0', sysdate, '', '');
 insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '10',         '10',                  '10',                 'DOMAIN_DATA_LENGTH_10',          '004',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '30',         '30',                  '30',                 'DOMAIN_DATA_LENGTH_30',          '005',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '50',         '50',                  '50',                 'DOMAIN_DATA_LENGTH_50',          '006',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '100',        '100',                 '100',                'DOMAIN_DATA_LENGTH_100',         '007',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '300',        '300',                 '300',                'DOMAIN_DATA_LENGTH_300',         '008',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '500',        '500',                 '500',                'DOMAIN_DATA_LENGTH_500',         '009',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '1000',       '1000',                '1000',               'DOMAIN_DATA_LENGTH_1000',        '010',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '2000',       '2000',                '2000',               'DOMAIN_DATA_LENGTH_2000',        '011',  'Y', 'Y', '0', sysdate, '', '');
-insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '4000',       '4000',                '4000',               'DOMAIN_DATA_LENGTH_4000',        '012',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '15',         '15',                  '15',                 'DOMAIN_DATA_LENGTH_15',          '005',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '20',         '20',                  '20',                 'DOMAIN_DATA_LENGTH_20',          '006',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '30',         '30',                  '30',                 'DOMAIN_DATA_LENGTH_30',          '007',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '50',         '50',                  '50',                 'DOMAIN_DATA_LENGTH_50',          '008',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '100',        '100',                 '100',                'DOMAIN_DATA_LENGTH_100',         '009',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '300',        '300',                 '300',                'DOMAIN_DATA_LENGTH_300',         '010',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '500',        '500',                 '500',                'DOMAIN_DATA_LENGTH_500',         '011',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '1000',       '1000',                '1000',               'DOMAIN_DATA_LENGTH_1000',        '012',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '2000',       '2000',                '2000',               'DOMAIN_DATA_LENGTH_2000',        '013',  'Y', 'Y', '0', sysdate, '', '');
+insert into zebra_common_code values('DOMAIN_DATA_LENGTH', '4000',       '4000',                '4000',               'DOMAIN_DATA_LENGTH_4000',        '014',  'Y', 'Y', '0', sysdate, '', '');
 
 insert into zebra_common_code values('DOMAIN_DATA_PRECISION', '0000000000', 'Domain Data Precision',  'Domain Data Precision', 'DOMAIN_DATA_PRECISION_0000000000',  '000',  'Y', 'Y', '0', sysdate, '', '');
 insert into zebra_common_code values('DOMAIN_DATA_PRECISION', '3',          '3',                      '3',                     'DOMAIN_DATA_PRECISION_3',           '001',  'Y', 'Y', '0', sysdate, '', '');

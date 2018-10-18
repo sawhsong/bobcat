@@ -38,6 +38,7 @@ public interface ZebraFrameworkBizService {
 	public DataSet getScriptFileDataSet(DataSet requestDataSet) throws Exception;
 	public DataSet getScriptFileDetailDataSet(String fileName) throws Exception;
 	public int generateScriptFile(DataSet requestDataSet, DataSet tableDetailDataSet) throws Exception;
+	public int updateScriptFile(DataSet requestDataSet, DataSet tableDetailDataSet) throws Exception;
 	public int deleteTableCreationScriptFile(String fileName) throws Exception;
 	public int deleteTableCreationScriptFiles(String fileNames[]) throws Exception;
 

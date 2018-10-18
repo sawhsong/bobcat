@@ -181,72 +181,45 @@ public class TableScriptBizImpl extends BaseBiz implements TableScriptBiz {
 
 		return paramEntity;
 	}
-/*
+
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String codeType = CommonUtil.upperCase(requestDataSet.getValue("codeTypeMaster"));
-		DataSet detailDataSet;
+		DataSet tableDetailDataSet = new DataSet();
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		String tableName = requestDataSet.getValue("tableName");
+		String tableDesc = requestDataSet.getValue("tableDescription");
+		String dataSetHeader[] = {"TABLE_NAME", "TABLE_DESCRIPTION", "COLUMN_NAME", "DATA_TYPE", "DATA_LENGTH", "DATA_LENGTH_NUMBER", "DEFAULT_VALUE", "NULLABLE", "KEY_TYPE", "FK_TABLE_COLUMN", "COLUMN_DESCRIPTION"};
+		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
 		int result = -1;
-		int masterDataRow = -1;
 
 		try {
-			detailDataSet = zebraCommonCodeDao.getCommonCodeDataSetByCodeType(codeType);
-			masterDataRow = detailDataSet.getRowIndex("COMMON_CODE", "0000000000");
+			tableDetailDataSet.addName(dataSetHeader);
+			for (int i=0; i<detailLength; i++) {
+				tableDetailDataSet.addRow();
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_NAME", tableName);
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "TABLE_DESCRIPTION", tableDesc);
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_NAME", requestDataSet.getValue("columnName"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_TYPE", requestDataSet.getValue("dataType"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_LENGTH", requestDataSet.getValue("dataLength"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DATA_LENGTH_NUMBER", requestDataSet.getValue("dataLengthNumber"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "DEFAULT_VALUE", requestDataSet.getValue("defaultValue"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "NULLABLE", requestDataSet.getValue("nullable"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "KEY_TYPE", requestDataSet.getValue("keyType"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "FK_TABLE_COLUMN", requestDataSet.getValue("fkRef"+delimiter+i));
+				tableDetailDataSet.setValue(tableDetailDataSet.getRowCnt()-1, "COLUMN_DESCRIPTION", requestDataSet.getValue("description"+delimiter+i));
+			}
 
-			result = zebraCommonCodeDao.delete(codeType);
+			result = zebraFrameworkBizService.updateScriptFile(requestDataSet, tableDetailDataSet);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
-			paramEntity.setObject("processFrom", "update");
-			paramEntity.setObject("masterDataRow", masterDataRow);
-			paramEntity.setObject("detailDataSet", detailDataSet);
-			paramEntity = exeInsert(paramEntity);
-
 			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		
-		return paramEntity;
-	}
-
-	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String dataRange = requestDataSet.getValue("dataRange");
-		String codeType = requestDataSet.getValue("commonCodeType");
-
-		try {
-			String pageTitle = "Common Code List";
-			String fileName = "CommonCodeList";
-			String[] columnHeader = {"code_type", "common_code", "description_en", "program_constants"};
-
-			exportHelper = ExportUtil.getExportHelper(requestDataSet.getValue("fileType"));
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
-
-			queryAdvisor.addAutoFillCriteria(codeType, "code_type = '"+codeType+"'");
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
-			}
-
-			exportHelper.setSourceDataSet(zebraCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
-
-			paramEntity.setSuccess(true);
-			paramEntity.setFileToExport(exportHelper.createFile());
-			paramEntity.setFileNameToExport(exportHelper.getFileName());
+			paramEntity.setMessage("I801", getMessage("I801"));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
 
 		return paramEntity;
 	}
-*/
 }
