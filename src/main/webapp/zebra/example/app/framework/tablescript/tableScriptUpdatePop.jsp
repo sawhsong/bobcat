@@ -11,8 +11,18 @@
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
 	DataSet dsResult = (DataSet)pe.getObject("resultDataSet");
 	String fileName = (String)dsRequest.getValue("fileName");
+	String tableName = dsResult.getValue("TABLE_NAME");
+	String tableDesc = dsResult.getValue("TABLE_DESCRIPTION");
 	String system = (CommonUtil.containsIgnoreCase(fileName, "ZEBRA")) ? "Framework" : "Project";
 	String delimiter = ConfigUtil.getProperty("dataDelimiter");
+	String selectFramework = "", selectProject = "";
+	if (CommonUtil.equalsIgnoreCase(system, "Project")) {
+		selectFramework = "false";
+		selectProject = "true";
+	} else {
+		selectFramework = "true";
+		selectProject = "false";
+	}
 %>
 <%/************************************************************************************************
 * HTML
@@ -278,6 +288,31 @@ $(function() {
 		}
 	};
 
+	addColumnDetails = function() {
+		var ds = commonJs.getDataSetFromJavaDataSet("<%=dsResult.toStringForJs()%>");
+
+		for (var i=0; i<ds.getRowCnt(); i++) {
+			var rowIdx = delimiter+i;
+
+			$("#btnAdd").trigger("click");
+
+			$("[name=columnName"+rowIdx+"]").val(ds.getValue(i, "COLUMN_NAME"));
+			$("[name=dataType"+rowIdx+"]").selectpicker("val", ds.getValue(i, "DATA_TYPE"));
+			validate($("[name=dataType"+rowIdx+"]"));
+			if (commonJs.contains(ds.getValue(i, "DATA_LENGTH"), ",")) {
+				$("[name=dataLengthNumber"+rowIdx+"]").val(ds.getValue(i, "DATA_LENGTH"));
+			} else {
+				if (commonJs.containsIgnoreCase(ds.getValue(i, "DATA_TYPE"), "DATE")) {
+					$("[name=dataLength"+rowIdx+"]").selectpicker("val", "");
+				} else {
+					$("[name=dataLength"+rowIdx+"]").selectpicker("val", ds.getValue(i, "DATA_LENGTH"));
+				}
+			}
+			validate($("[name=dataLength"+rowIdx+"]"));
+			$("[name=defaultValue"+rowIdx+"]").val(ds.getValue(i, "DEFAULT_VALUE"));
+		}
+	};
+
 	/*!
 	 * load event (document / window)
 	 */
@@ -303,10 +338,22 @@ $(function() {
 		setSortable();
 
 		setTimeout(function() {
+			commonJs.showProcMessageOnElement("divScrollablePanelPopup");
+		}, 300);
+
+		setTimeout(function() {
 			$("#tblGrid").fixedHeaderTable({
 				attachTo:$("#divDataArea")
 			});
-		}, 500);
+		}, 600);
+
+		setTimeout(function() {
+			addColumnDetails();
+		}, 900);
+
+		setTimeout(function() {
+			commonJs.hideProcMessageOnElement("divScrollablePanelPopup");
+		}, 1400);
 	});
 });
 </script>
@@ -346,16 +393,16 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.system"/></th>
 			<td class="tdEdit">
-				<ui:radio name="system" inputClassName="inTbl" value="Project" text="fwk.tablescript.header.project" isSelected="<%=CommonUtil.equalsIgnoreCase(system, "Project") ? "true" : "false"%>"/>
-				<ui:radio name="system" inputClassName="inTbl" value="Framework" text="fwk.tablescript.header.framework" isSelected="<%=CommonUtil.equalsIgnoreCase(system, "Framework") ? "true" : "false"%>"/>
+				<ui:radio name="system" inputClassName="inTbl" value="Project" text="fwk.tablescript.header.project" isSelected="<%=selectProject%>"/>
+				<ui:radio name="system" inputClassName="inTbl" value="Framework" text="fwk.tablescript.header.framework" isSelected="<%=selectFramework%>"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableName"/></th>
 			<td class="tdEdit">
-				<ui:text name="tableName" id="tableName" value="<%=dsResult.getValue("TABLE_NAME")%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxbyte="30"/>
+				<ui:text name="tableName" id="tableName" value="<%=tableName%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxbyte="30"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableDesc"/></th>
 			<td class="tdEdit">
-				<ui:text name="tableDescription" id="tableDescription" value="<%=dsResult.getValue("TABLE_DESCRIPTION")%>" className="defClass" checkName="fwk.tablescript.header.tableDesc" options="mandatory"/>
+				<ui:text name="tableDescription" id="tableDescription" value="<%=tableDesc%>" className="defClass" checkName="fwk.tablescript.header.tableDesc" options="mandatory"/>
 			</td>
 		</tr>
 	</table>
@@ -408,54 +455,7 @@ $(function() {
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td colspan="10" style="padding:0px;border-top:0px">
-					<ul id="ulColumnDetailHolder">
-<%
-				if (dsResult.getRowCnt() > 0) {
-					for (int i=0; i<dsResult.getRowCnt(); i++) {
-						String idSuffix = delimiter+i;
-						String colName = dsResult.getValue("COLUMN_NAME");
-						String dataType = dsResult.getValue("DATA_TYPE");
-%>
-						<li id="liDummy<%=idSuffix%>" class="dummyDetail" index="<%=i%>">
-							<table class="tblGrid" style="border:0px">
-								<colgroup>
-									<col width="2%"/>
-									<col width="2%"/>
-									<col width="16%"/>
-									<col width="6%"/>
-									<col width="6%"/>
-									<col width="6%"/>
-									<col width="6%"/>
-									<col width="7%"/>
-									<col width="18%"/>
-									<col width="*"/>
-								</colgroup>
-								<tr class="noBorderAll">
-									<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
-									<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
-									<td class="tdGrid Ct"><ui:text id="columnName<%=idSuffix%>" name="columnName<%=idSuffix%>" value="<%=colName%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.colName" options="mandatory" script="onchange:validate(this)"/></td>
-									<td class="tdGrid Ct"><ui:ccselect id="dataType<%=idSuffix%>" name="dataType<%=idSuffix%>" selectedValue="<%=dataType%>" codeType="DOMAIN_DATA_TYPE" options="mandatory" source="framework" script="onchange:validate(this)"/></td>
-									<td class="tdGrid Ct">
-										<ui:ccselect id="dataLength<%=idSuffix%>" name="dataLength<%=idSuffix%>" codeType="DOMAIN_DATA_LENGTH" caption="=Select=" source="framework" script="onchange:validate(this)"/>
-										<ui:text id="dataLengthNumber<%=idSuffix%>" name="dataLengthNumber<%=idSuffix%>" className="defClass Ct" checkName="fwk.tablescript.header.length" script="onchange:validate(this)" style="display:none"/>
-									</td>
-									<td class="tdGrid Ct"><ui:text id="defaultValue<%=idSuffix%>" name="defaultValue<%=idSuffix%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.defaultValue" script="onchange:validate(this)"/></td>
-									<td class="tdGrid Ct"><ui:radio name="nullable<%=idSuffix%>" value="Y" text="Y" displayType="inline" isSelected="true"/><ui:radio name="nullable" value="N" text="N" displayType="inline" script="onclick:validate(this)"/></td>
-									<td class="tdGrid Ct"><ui:ccselect id="keyType<%=idSuffix%>" name="keyType<%=idSuffix%>" codeType="CONSTRAINT_TYPE" caption="=Select=" source="framework" script="onchange:validate(this)"/></td>
-									<td class="tdGrid Ct"><ui:text id="fkRef<%=idSuffix%>" name="fkRef<%=idSuffix%>" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.fkRef" status="disabled" script="onchange:validate(this)"/></td>
-									<td class="tdGrid Ct">
-										<ui:text id="description<%=idSuffix%>" name="description<%=idSuffix%>" className="defClass" checkName="fwk.tablescript.header.description" options="mandatory" script="onchange:validate(this)"/>
-									</td>
-								</tr>
-							</table>
-						</li>
-<%
-					}
-				}
-%>
-					</ul>
-				</td>
+				<td colspan="10" style="padding:0px;border-top:0px"><ul id="ulColumnDetailHolder"></ul></td>
 			</tr>
 		</tbody>
 	</table>
