@@ -71,7 +71,6 @@ var commonJs = {
 	 */
 	removeArrayItem : function(array, name) {return $.nony.removeArrayItem(array, name);},
 	getIconNameByFileType : function(fileType) {return $.nony.getIconNameByFileType(fileType);},
-	getCheckedValueFromRadio : function(radioName) {return $.nony.getCheckedValueFromRadio(radioName);},
 	/*!
 	 * popup / dialog / calendar
 	 */
@@ -124,6 +123,8 @@ var commonJs = {
 	setFieldNumberMask : function(elementId, format) {$.nony.setFieldNumberMask(elementId, format);},
 	toggleCheckboxes : function(elementName) {$.nony.toggleCheckboxes(elementName);},
 	getCountChecked : function(checkboxName) {return $.nony.getCountChecked(checkboxName);},
+	setCheckboxValue : function(checkboxName, value) {$.nony.setCheckboxValue(checkboxName, value);},
+	getCheckedValueFromRadio : function(radioName) {return $.nony.getCheckedValueFromRadio(radioName);},
 	clearSearchCriteria : function() {$.nony.clearSearchCriteria();},
 	clearPaginationValue : function() {$.nony.clearPaginationValue();},
 	/*!

@@ -487,6 +487,13 @@ var nony = {
 
 		return cnt;
 	},
+	setCheckboxValue : function(checkboxName, value) {
+		$("[name = "+checkboxName+"]").each(function() {
+			if ($(this).val() == value) {
+				$(this).prop("checked", true);
+			}
+		});
+	},
 	clearSearchCriteria : function() {
 		$(document).find("#divSearchCriteriaArea").find(":input").each(function() {
 			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {

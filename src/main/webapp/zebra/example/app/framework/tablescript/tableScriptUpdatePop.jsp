@@ -310,6 +310,14 @@ $(function() {
 			}
 			validate($("[name=dataLength"+rowIdx+"]"));
 			$("[name=defaultValue"+rowIdx+"]").val(ds.getValue(i, "DEFAULT_VALUE"));
+			commonJs.setCheckboxValue("nullable"+rowIdx, ds.getValue(i, "NULLABLE"));
+			$("[name=keyType"+rowIdx+"]").selectpicker("val", ds.getValue(i, "KEY_TYPE"));
+			$("[name=fkRef"+rowIdx+"]").val(ds.getValue(i, "FK_TABLE_COLUMN"));
+			validate($("[name=fkRef"+rowIdx+"]"));
+			if (ds.getValue(i, "KEY_TYPE") == "FK") {
+				$("[name=fkRef"+rowIdx+"]").removeClass("txtDis").addClass("txtEn").removeAttr("readonly");
+			}
+			$("[name=description"+rowIdx+"]").val(ds.getValue(i, "COLUMN_DESCRIPTION"));
 		}
 	};
 
