@@ -2067,11 +2067,12 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		}
 
 		sqlString = commentTable+sqlString;
-		sqlString += "\n\n"+commentData;
 
 		if (CommonUtil.isNotBlank(dataSectionString)) {
-			sqlString += "\n"+dataSectionString;
+			commentData += "\n"+dataSectionString;
 		}
+
+		sqlString += "\n\n"+commentData;
 
 		osWriter.write(sqlString);
 		osWriter.flush();
@@ -2096,7 +2097,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				continue;
 			}
 
-			rtnString += tempString;
+			rtnString += "\n"+tempString;
 		}
 		br.close();
 
