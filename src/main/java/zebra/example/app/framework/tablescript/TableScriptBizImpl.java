@@ -1,7 +1,5 @@
 package zebra.example.app.framework.tablescript;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import zebra.data.DataSet;
