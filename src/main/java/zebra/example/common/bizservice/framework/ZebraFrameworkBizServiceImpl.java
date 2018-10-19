@@ -2003,9 +2003,9 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					if (CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_DATE")) ||
 							CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_CLOB")) ||
 							CommonUtil.equalsIgnoreCase(dataType, ZebraCommonCodeManager.getCodeByConstants("DOMAIN_DATA_TYPE_NUMBER"))) {
-						sqlString += CommonUtil.rightPad("default "+defaultVal+comma, 25, " ");
+						sqlString += CommonUtil.rightPad("default "+CommonUtil.lowerCase(defaultVal)+comma, 25, " ");
 					} else {
-						sqlString += CommonUtil.rightPad("default "+"'"+defaultVal+"'"+comma, 25, " ");
+						sqlString += CommonUtil.rightPad("default "+"'"+CommonUtil.upperCase(defaultVal)+"'"+comma, 25, " ");
 					}
 
 					if (isNullable) {
@@ -2278,6 +2278,8 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 
 		dataSet.addName(dataSetHeader);
 		while ((tempString = br.readLine()) != null) {
+			boolean hasDefVal = false;
+			int nullableIdx = -1;
 			tempString = CommonUtil.trim(tempString);
 
 			if (CommonUtil.isBlank(tempString)) {continue;}
@@ -2334,6 +2336,8 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				dataSet.setValue(dataSet.getRowCnt()-1, "DATA_LENGTH", dataLength);
 				if (!CommonUtil.contains(strArr[1], ",")) {
 					if (CommonUtil.containsIgnoreCase(strArr[2], defValStr)) {
+						hasDefVal = true;
+
 						if (CommonUtil.equalsIgnoreCase(dataType, "VARCHAR2")) {
 							dataSet.setValue(dataSet.getRowCnt()-1, "DEFAULT_VALUE", CommonUtil.substringBetween(strArr[3], "'", "'"));
 						} else {
@@ -2341,7 +2345,8 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						}
 					}
 
-					if (CommonUtil.containsIgnoreCase(strArr[2], notNullStr)) {
+					nullableIdx = (hasDefVal) ? 4 : 2;
+					if (CommonUtil.containsIgnoreCase(strArr[nullableIdx], notNullStr)) {
 						dataSet.setValue(dataSet.getRowCnt()-1, "NULLABLE", "N");
 					}
 				}

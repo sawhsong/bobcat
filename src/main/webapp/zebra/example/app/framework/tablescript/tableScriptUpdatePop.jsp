@@ -299,7 +299,7 @@ $(function() {
 			$("[name=columnName"+rowIdx+"]").val(ds.getValue(i, "COLUMN_NAME"));
 			$("[name=dataType"+rowIdx+"]").selectpicker("val", ds.getValue(i, "DATA_TYPE"));
 			validate($("[name=dataType"+rowIdx+"]"));
-			if (commonJs.contains(ds.getValue(i, "DATA_LENGTH"), ",")) {
+			if (commonJs.containsIgnoreCase(ds.getValue(i, "DATA_TYPE"), "NUMBER")) {
 				$("[name=dataLengthNumber"+rowIdx+"]").val(ds.getValue(i, "DATA_LENGTH"));
 			} else {
 				if (commonJs.containsIgnoreCase(ds.getValue(i, "DATA_TYPE"), "DATE")) {
