@@ -42,7 +42,7 @@ comment on column zebra_domain_dictionary.update_date         is 'Update Date';
 
 /**
  * Table Name  : Domain Dictionary
- * Description : Database column data types
+ * Data        :
  */
 delete zebra_domain_dictionary;
 

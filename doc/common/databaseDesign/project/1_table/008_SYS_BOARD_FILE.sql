@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_BOARD_FILE
  * Description : Attached file for Bulletin board
  */
@@ -43,7 +42,6 @@ comment on column sys_board_file.update_date        is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_BOARD_FILE
- * Description : Attached file for Bulletin board
+ * Data        : Attached file for Bulletin board
  */

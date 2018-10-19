@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_AUTH_GROUP
  * Description : Menu Authority Info
  */
@@ -34,9 +33,8 @@ comment on column sys_auth_group.update_date     is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_AUTH_GROUP
- * Description : Menu Authority Info
+ * Data        : Menu Authority Info
  */
 delete sys_auth_group;
 

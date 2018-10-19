@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_COMMON_CODE
  * Description : Common Lookup Code
  */
@@ -44,9 +43,8 @@ comment on column sys_common_code.update_date       is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_COMMON_CODE
- * Description : Common Lookup Code - Import Excel file (SYS_COMMON_CODE_1.xlsx, SYS_COMMON_CODE_2.xlsx)
+ * Data        : Common Lookup Code - Import Excel file (SYS_COMMON_CODE_1.xlsx, SYS_COMMON_CODE_2.xlsx)
  */
 delete sys_common_code;
 

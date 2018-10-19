@@ -1,6 +1,6 @@
 /**
- * Table Name  : 게시판
- * Description : 
+ * Table Name  : ZEBRA_BOARD
+ * Description : Bulletin Board
  */
 drop table zebra_board cascade constraints;
 purge recyclebin;
@@ -47,5 +47,5 @@ comment on column zebra_board.update_date         is '수정일자';
 
 /**
  * Table Name  : 게시판
- * Description : 
+ * Data        :
  */

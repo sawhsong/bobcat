@@ -1961,7 +1961,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 			String dataType = CommonUtil.lowerCase(detailDataSet.getValue(i, "DATA_TYPE"));
 			String dataLength = CommonUtil.lowerCase(detailDataSet.getValue(i, "DATA_LENGTH"));
 			String numDataLength = CommonUtil.removeString(detailDataSet.getValue(i, "DATA_LENGTH_NUMBER"), " ");
-			String defaultVal = CommonUtil.lowerCase(detailDataSet.getValue(i, "DEFAULT_VALUE"));
+			String defaultVal = CommonUtil.upperCase(detailDataSet.getValue(i, "DEFAULT_VALUE"));
 			String nullable = CommonUtil.lowerCase(detailDataSet.getValue(i, "NULLABLE"));
 			String keyType = CommonUtil.lowerCase(detailDataSet.getValue(i, "KEY_TYPE"));
 			String fkRef = CommonUtil.lowerCase(detailDataSet.getValue(i, "FK_TABLE_COLUMN"));
@@ -2046,13 +2046,13 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 
 		if (CommonUtil.isNotBlank(pkCol)) {
 			consString += (CommonUtil.isBlank(consString)) ?
-					"constraint pk_"+CommonUtil.abbreviate(tableNameLowerCase, 27)+" primary key("+pkCol+")" :
+					"\n"+blank+"constraint pk_"+CommonUtil.abbreviate(tableNameLowerCase, 27)+" primary key("+pkCol+")" :
 					",\n"+blank+"constraint pk_"+CommonUtil.abbreviate(tableNameLowerCase, 27)+" primary key("+pkCol+")";
 		}
 
 		if (CommonUtil.isNotBlank(ukCol)) {
 			consString += (CommonUtil.isBlank(consString)) ?
-					"constraint uk_"+CommonUtil.uid()+" unique("+ukCol+")" : ",\n"+blank+"constraint uk_"+CommonUtil.uid()+" unique("+ukCol+")";
+					"\n"+blank+"constraint uk_"+CommonUtil.uid()+" unique("+ukCol+")" : ",\n"+blank+"constraint uk_"+CommonUtil.uid()+" unique("+ukCol+")";
 		}
 
 		consString += "\n"+blank+"using index tablespace "+tableSpaceIndex+" storage(initial 50k next 50k pctincrease 0)\n";
@@ -2069,7 +2069,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		sqlString = commentTable+sqlString;
 
 		if (CommonUtil.isNotBlank(dataSectionString)) {
-			commentData += "\n"+dataSectionString;
+			commentData += dataSectionString;
 		}
 
 		sqlString += "\n\n"+commentData;
@@ -2097,7 +2097,9 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				continue;
 			}
 
-			rtnString += "\n"+tempString;
+			if (isDataSectionRow) {
+				rtnString += (CommonUtil.isBlank(rtnString)) ? tempString : "\n"+tempString;
+			}
 		}
 		br.close();
 

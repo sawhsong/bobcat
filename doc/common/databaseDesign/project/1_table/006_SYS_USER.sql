@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_USER
  * Description : User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
  */
@@ -85,9 +84,8 @@ comment on column sys_user.update_date                is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_USER
- * Description : User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
+ * Data        : User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
  */
 delete sys_user;
 

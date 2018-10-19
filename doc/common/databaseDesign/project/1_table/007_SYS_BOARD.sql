@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_BOARD
  * Description : Bulletin board
  */
@@ -49,7 +48,6 @@ comment on column sys_board.update_date         is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_BOARD
- * Description : Bulletin board
+ * Data        : Bulletin board
  */

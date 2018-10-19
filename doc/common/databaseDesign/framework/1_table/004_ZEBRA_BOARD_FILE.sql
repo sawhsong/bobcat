@@ -1,6 +1,6 @@
 /**
- * Table Name  : 게시판 첨부파일 정보
- * Description : 
+ * Table Name  : ZEBRA_BOARD_FILE
+ * Description : Bulletin Board File
  */
 drop table zebra_board_file cascade constraints;
 purge recyclebin;
@@ -45,5 +45,5 @@ comment on column zebra_board_file.update_date        is '수정일자';
 
 /**
  * Table Name  : 게시판 첨부파일 정보
- * Description : 
+ * Data        :
  */

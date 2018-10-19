@@ -43,7 +43,7 @@ comment on column zebra_common_code.update_date       is '수정일자';
 
 /**
  * Table Name  : 공통코드
- * Description : 공통코드정보
+ * Data        :
  */
 delete zebra_common_code;
 
