@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet datasourceDataSet = (DataSet)paramEntity.getObject("datasourceDataSet");
+	String defaultDatasource = CommonUtil.split(ConfigUtil.getProperty("jdbc.multipleDatasource"), ConfigUtil.getProperty("delimiter.data"))[0];
 %>
 <%/************************************************************************************************
 * HTML
@@ -257,7 +258,7 @@ $(function() {
 						<ui:select id="dataSource" name="dataSource">
 <%
 						for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
-							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "hkaccounting")) ? "selected" : "";
+							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), defaultDatasource)) ? "selected" : "";
 %>
 							<option value="<%=datasourceDataSet.getValue(i, "VALUE")%>" <%=selected%>><%=datasourceDataSet.getValue(i, "NAME")%></option>
 <%
