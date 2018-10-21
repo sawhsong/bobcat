@@ -70,7 +70,8 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 	}
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
-		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca");
+		String compilePath = "/target/hkaccounting";
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), compilePath);
 		String javaPath = ConfigUtil.getProperty("path.java.app");
 		String jspPath = ConfigUtil.getProperty("path.web.app");
 		String springPath = ConfigUtil.getProperty("path.conf.menuSpring");

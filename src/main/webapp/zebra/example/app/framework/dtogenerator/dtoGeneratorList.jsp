@@ -257,7 +257,7 @@ $(function() {
 						<ui:select id="dataSource" name="dataSource">
 <%
 						for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
-							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "alpaca")) ? "selected" : "";
+							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "hkaccounting")) ? "selected" : "";
 %>
 							<option value="<%=datasourceDataSet.getValue(i, "VALUE")%>" <%=selected%>><%=datasourceDataSet.getValue(i, "NAME")%></option>
 <%
