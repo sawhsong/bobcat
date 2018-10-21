@@ -384,31 +384,43 @@
 
 			html += "<table><tr>";
 			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
-			html += "<td style='padding:2px 4px;line-height:16px;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
+			html += "<td style='padding:2px 4px;line-height:16px;font-size:11px'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
 			html += "</tr></table>";
 
 			table = $(html);
-			$(divTemp).html(html);
+//			$(divTemp).html(html);
 
-			$("html").append($(divTemp));
-			$("html").append($(table));
+//			$("html").append($(divTemp));
+			$("body").append($(table));
+console.log("params.width : "+params.width);
+console.log("params.minWidth : "+params.minWidth);
+console.log("$(table).outerWidth() : "+$(table).outerWidth());
 
-			params.dialogContentsHeight = ($(divTemp).outerHeight() + 6);
 			if ($.nony.isEmpty(params.width)) {
-//				console.log("dialog width : "+$(table).outerWidth()); // only for delay
-//				console.log("params.minWidth : "+params.minWidth); // only for delay
-
 				if ($(table).outerWidth() < params.minWidth) {
 					params.dialogContentsWidth = (params.minWidth + 30);
 				} else {
 					params.dialogContentsWidth = ($(table).outerWidth() + 30);
+console.log("$(table).outerHeight() : "+$(table).outerHeight());
+$(table).remove();
+html = "";
+html += "<table style='width:"+params.dialogContentsWidth+"'><tr>";
+html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
+html += "<td style='padding:2px 4px;line-height:16px;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
+html += "</tr></table>";
+table = $(html);
+$("html").append($(table));
+console.log("$(table).outerWidth() : "+$(table).outerWidth());
+console.log("$(table).outerHeight() : "+$(table).outerHeight());
 				}
 			} else {
 				params.dialogContentsWidth = (params.width);
 			}
 
-			$(divTemp).remove();
-			$(table).remove();
+			params.dialogContentsHeight = $(table).outerHeight();
+
+//			$(divTemp).remove();
+//			$(table).remove();
 		},
 		_setEffect : function() {
 			var onLoad = this.onLoad;
@@ -442,7 +454,7 @@
 		_setDialogHeight : function(params) {
 			var dialogHeight = params.dialogContentsHeight, dialogWidth = params.dialogContentsWidth;
 			var popupFooterHeight = $(params.popupFooter).actual("outerHeight"), heightAdjust = 0, heightSum = 0;
-
+console.log("dialogHeight : "+dialogHeight);
 			heightSum += $(params.popupHeaderHolder).actual("height");
 			heightSum += $(params.popupHeaderBreaker).actual("height");
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupBase), "border"));
@@ -455,19 +467,22 @@
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupHeaderBreaker), "padding-top") + $.nony.getCssAttributeNumber($(params.popupHeaderBreaker), "padding-bottom"));
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupIframe), "border"));
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupBody), "border"));
-
+console.log("heightSum : "+heightSum);
+console.log("params.dialogContentsHeight : "+params.dialogContentsHeight);
+console.log("params.limitHeightForMax : "+params.limitHeightForMax);
+console.log("$(window).innerHeight() : "+$(window).innerHeight());
 			if ((params.dialogContentsHeight + params.limitHeightForMax) >= $(window).innerHeight()) {
 				dialogHeight = $(window).innerHeight() - params.limitHeightForMax;
 			}
-
+console.log("dialogHeight : "+dialogHeight);
 			if (params.dialogContentsWidth <= params.minWidth) {
 				dialogWidth = params.minWidth;
 			}
-
+console.log("params.minHeight : "+params.minHeight);
 			if (params.dialogContentsHeight <= params.minHeight) {
 				dialogHeight = params.minHeight;
 			}
-
+console.log("dialogHeight : "+dialogHeight);
 			/*!
 			 * Adjust width / height here (for dialog)
 			 */
@@ -476,8 +491,9 @@
 			else {heightAdjust = (params.heightAdjust + 2);}
 
 			$(params.popupIframe).height(dialogHeight + "px");
-			$(params.popupBase).height((($(params.popupIframe).outerHeight()) + heightSum + popupFooterHeight + heightAdjust + 1) + "px");
-
+			$(params.popupBase).height((($(params.popupIframe).outerHeight()) + heightSum + popupFooterHeight + heightAdjust) + "px");
+console.log("ifram height : "+$(params.popupIframe).height());
+console.log("ifram height : "+$(params.popupBase).height());
 			$(params.popupIframe).width(dialogWidth + "px");
 			$(params.popupBase).width(dialogWidth + "px");
 
