@@ -251,6 +251,7 @@
 			this.height = params.height;								// Popup height (Popup:[200], Dialog:[150])
 			this.limitHeightForMax = params.limitHeightForMax = 100;	// Size for height limited (for only Dialog. Not editable)
 			this.minWidth = params.minWidth = 250;						// Minimum width of dialog (for only Dialog. Not editable)
+			this.maxWidth = params.maxWidth = 800;						// Maximum width of dialog (for only Dialog. Not editable)
 			this.minHeight = params.minHeight = 35;						// Minimum height of dialog (for only Dialog. Not editable)
 			this.left = params.left;									// Left position ([center])
 			this.top = params.top;										// Top position ([middle])
@@ -378,40 +379,31 @@
 			else {$(this.popupBase).css("top", this.top);}
 		},
 		_checkContentsHeight : function(params) {
-			var html = "";
-			var divTemp = $("<div id='divTemp'></div>");
-			var table;
+			var html = "", table;
 
 			html += "<table><tr>";
 			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
-			html += "<td style='padding:2px 4px;line-height:16px;font-size:11px'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
+			html += "<td style='padding:2px 4px;line-height:16px;font-size:12px'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
 			html += "</tr></table>";
 
 			table = $(html);
-//			$(divTemp).html(html);
-
-//			$("html").append($(divTemp));
 			$("body").append($(table));
-console.log("params.width : "+params.width);
-console.log("params.minWidth : "+params.minWidth);
-console.log("$(table).outerWidth() : "+$(table).outerWidth());
+			$("body").append($(table));
 
 			if ($.nony.isEmpty(params.width)) {
 				if ($(table).outerWidth() < params.minWidth) {
-					params.dialogContentsWidth = (params.minWidth + 30);
+					params.dialogContentsWidth = (params.minWidth);
 				} else {
-					params.dialogContentsWidth = ($(table).outerWidth() + 30);
-console.log("$(table).outerHeight() : "+$(table).outerHeight());
-$(table).remove();
-html = "";
-html += "<table style='width:"+params.dialogContentsWidth+"'><tr>";
-html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
-html += "<td style='padding:2px 4px;line-height:16px;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
-html += "</tr></table>";
-table = $(html);
-$("html").append($(table));
-console.log("$(table).outerWidth() : "+$(table).outerWidth());
-console.log("$(table).outerHeight() : "+$(table).outerHeight());
+					params.dialogContentsWidth = ($(table).outerWidth());
+
+					$(table).remove();
+					html = "";
+					html += "<table style='width:"+params.dialogContentsWidth+"px'><tr>";
+					html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
+					html += "<td style='padding:2px 4px;line-height:16px;font-size:12px'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
+					html += "</tr></table>";
+					table = $(html);
+					$("body").append($(table));
 				}
 			} else {
 				params.dialogContentsWidth = (params.width);
@@ -419,8 +411,7 @@ console.log("$(table).outerHeight() : "+$(table).outerHeight());
 
 			params.dialogContentsHeight = $(table).outerHeight();
 
-//			$(divTemp).remove();
-//			$(table).remove();
+			$(table).remove();
 		},
 		_setEffect : function() {
 			var onLoad = this.onLoad;
@@ -454,7 +445,7 @@ console.log("$(table).outerHeight() : "+$(table).outerHeight());
 		_setDialogHeight : function(params) {
 			var dialogHeight = params.dialogContentsHeight, dialogWidth = params.dialogContentsWidth;
 			var popupFooterHeight = $(params.popupFooter).actual("outerHeight"), heightAdjust = 0, heightSum = 0;
-console.log("dialogHeight : "+dialogHeight);
+
 			heightSum += $(params.popupHeaderHolder).actual("height");
 			heightSum += $(params.popupHeaderBreaker).actual("height");
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupBase), "border"));
@@ -467,22 +458,19 @@ console.log("dialogHeight : "+dialogHeight);
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupHeaderBreaker), "padding-top") + $.nony.getCssAttributeNumber($(params.popupHeaderBreaker), "padding-bottom"));
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupIframe), "border"));
 			heightSum += ($.nony.getCssAttributeNumber($(params.popupBody), "border"));
-console.log("heightSum : "+heightSum);
-console.log("params.dialogContentsHeight : "+params.dialogContentsHeight);
-console.log("params.limitHeightForMax : "+params.limitHeightForMax);
-console.log("$(window).innerHeight() : "+$(window).innerHeight());
+
 			if ((params.dialogContentsHeight + params.limitHeightForMax) >= $(window).innerHeight()) {
 				dialogHeight = $(window).innerHeight() - params.limitHeightForMax;
 			}
-console.log("dialogHeight : "+dialogHeight);
+
 			if (params.dialogContentsWidth <= params.minWidth) {
 				dialogWidth = params.minWidth;
 			}
-console.log("params.minHeight : "+params.minHeight);
+
 			if (params.dialogContentsHeight <= params.minHeight) {
 				dialogHeight = params.minHeight;
 			}
-console.log("dialogHeight : "+dialogHeight);
+
 			/*!
 			 * Adjust width / height here (for dialog)
 			 */
@@ -492,8 +480,7 @@ console.log("dialogHeight : "+dialogHeight);
 
 			$(params.popupIframe).height(dialogHeight + "px");
 			$(params.popupBase).height((($(params.popupIframe).outerHeight()) + heightSum + popupFooterHeight + heightAdjust) + "px");
-console.log("ifram height : "+$(params.popupIframe).height());
-console.log("ifram height : "+$(params.popupBase).height());
+
 			$(params.popupIframe).width(dialogWidth + "px");
 			$(params.popupBase).width(dialogWidth + "px");
 
