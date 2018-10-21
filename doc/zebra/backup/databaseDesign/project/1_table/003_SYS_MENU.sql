@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_MENU
  * Description : Menu Info - Use Excel file to initialise data (SYS_MENU.xlsx)
  */
@@ -43,9 +42,8 @@ comment on column sys_menu.update_date     is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_MENU
- * Description : Menu Info - Use Excel file to initialise data (SYS_MENU.xlsx)
+ * Data        : Menu Info - Use Excel file to initialise data (SYS_MENU.xlsx)
  */
 delete sys_menu;
 

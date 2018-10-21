@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_MENU_AUTH_LINK
  * Description : Menu - Authority group mapping
  */
@@ -32,9 +31,8 @@ comment on column sys_menu_auth_link.update_date     is 'Update Date';
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_MENU_AUTH_LINK
- * Description : Menu - Authority group mapping
+ * Data        : Menu - Authority group mapping
  */
 delete sys_menu_auth_link;
 

@@ -1,5 +1,4 @@
 /**
- * Category    : SYS
  * Table Name  : SYS_COUNTRY_CURRENCY
  * Description : Country and Currency Info - Use Excel file to initialise data (SYS_COUNTRY_CURRENCY.xlsx)
  */
@@ -45,9 +44,8 @@ comment on column sys_country_currency.update_date              is 'Update Date'
 
 
 /**
- * Category    : SYS
  * Table Name  : SYS_COUNTRY_CURRENCY
- * Description : Country and Currency Info - Use Excel file to initialise data (SYS_COUNTRY_CURRENCY.xlsx)
+ * Data        : Country and Currency Info - Use Excel file to initialise data (SYS_COUNTRY_CURRENCY.xlsx)
  */
 update sys_country_currency
    set country_name = initcap(country_name)
