@@ -23,9 +23,9 @@ create table zebra_board (
     update_date                     date,                                                           -- Update Date
 
     constraint pk_zebra_board primary key(article_id)
-    using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  zebra_board                     is '게시판';
 comment on column zebra_board.article_id          is 'Article UID (PK)';

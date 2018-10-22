@@ -15,7 +15,7 @@ create database link hkaccount_aws connect to hkaccount identified by hkaccount2
 /**
  * Table space(Index, Data)
  */
--- zebra
+-- hkaccount
 create tablespace hkaccount_idx
 datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' size 1m
 extent management local

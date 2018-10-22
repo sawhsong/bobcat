@@ -22,9 +22,9 @@ create table sys_country_currency (
     update_date                     date,                                                           -- Update Date
 
     constraint pk_sys_country_currency primary key(country_currency_id)
-    using index tablespace alpaca_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace alpaca_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_country_currency                          is 'Country and Currency Info';
 comment on column sys_country_currency.country_currency_id      is 'Country and Currency UID (PK)';

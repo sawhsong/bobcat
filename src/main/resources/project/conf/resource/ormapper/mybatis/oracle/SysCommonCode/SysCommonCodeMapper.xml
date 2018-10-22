@@ -11,7 +11,6 @@
 	<![CDATA[
 		SELECT CODE_TYPE,
 		       COMMON_CODE,
-		       CODE_MEANING,
 		       PROGRAM_CONSTANTS,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
@@ -36,7 +35,6 @@
 		INSERT INTO SYS_COMMON_CODE (
 		       CODE_TYPE,
 		       COMMON_CODE,
-		       CODE_MEANING,
 		       PROGRAM_CONSTANTS,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
@@ -51,7 +49,6 @@
 		VALUES (
 		       ${CODE_TYPE},
 		       ${COMMON_CODE},
-		       ${CODE_MEANING},
 		       ${PROGRAM_CONSTANTS},
 		       ${DESCRIPTION_EN},
 		       ${DESCRIPTION_KO},
@@ -71,7 +68,6 @@
 		INSERT INTO SYS_COMMON_CODE (
 		       CODE_TYPE,
 		       COMMON_CODE,
-		       CODE_MEANING,
 		       PROGRAM_CONSTANTS,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
@@ -86,7 +82,6 @@
 		VALUES (
 		       #{codeType,jdbcType=VARCHAR},
 		       #{commonCode,jdbcType=VARCHAR},
-		       #{codeMeaning,jdbcType=VARCHAR},
 		       #{programConstants,jdbcType=VARCHAR},
 		       #{descriptionEn,jdbcType=VARCHAR},
 		       #{descriptionKo,jdbcType=VARCHAR},
@@ -103,8 +98,7 @@
 
 	<update id="update" parameterType="hashmap">
 		UPDATE SYS_COMMON_CODE
-		   SET CODE_MEANING = ${CODE_MEANING},
-		       PROGRAM_CONSTANTS = ${PROGRAM_CONSTANTS},
+		   SET PROGRAM_CONSTANTS = ${PROGRAM_CONSTANTS},
 		       DESCRIPTION_EN = ${DESCRIPTION_EN},
 		       DESCRIPTION_KO = ${DESCRIPTION_KO},
 		       INSERT_DATE = ${INSERT_DATE},
@@ -120,8 +114,7 @@
 
 	<update id="updateWithDto" parameterType="project.conf.resource.ormapper.dto.oracle.SysCommonCode">
 		UPDATE SYS_COMMON_CODE
-		   SET CODE_MEANING = #{codeMeaning,jdbcType=VARCHAR},
-		       PROGRAM_CONSTANTS = #{programConstants,jdbcType=VARCHAR},
+		   SET PROGRAM_CONSTANTS = #{programConstants,jdbcType=VARCHAR},
 		       DESCRIPTION_EN = #{descriptionEn,jdbcType=VARCHAR},
 		       DESCRIPTION_KO = #{descriptionKo,jdbcType=VARCHAR},
 		       INSERT_DATE = #{insertDate,jdbcType=TIME},

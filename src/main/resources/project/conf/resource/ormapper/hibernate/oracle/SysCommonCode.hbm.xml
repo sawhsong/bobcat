@@ -13,7 +13,6 @@
 			<key-property name="commonCode" column="COMMON_CODE" type="java.lang.String" length="60"/>
 		</composite-id>
 
-		<property name="codeMeaning" column="CODE_MEANING" not-null="true" type="java.lang.String" length="1000"/>
 		<property name="programConstants" column="PROGRAM_CONSTANTS" not-null="true" type="java.lang.String" length="100"/>
 		<property name="descriptionEn" column="DESCRIPTION_EN" type="java.lang.String" length="2000"/>
 		<property name="descriptionKo" column="DESCRIPTION_KO" type="java.lang.String" length="2000"/>
@@ -30,7 +29,6 @@
 	<![CDATA[
 		SELECT CODE_TYPE,
 		       COMMON_CODE,
-		       CODE_MEANING,
 		       PROGRAM_CONSTANTS,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
@@ -55,7 +53,6 @@
 		INSERT INTO SYS_COMMON_CODE (
 		       CODE_TYPE,
 		       COMMON_CODE,
-		       CODE_MEANING,
 		       PROGRAM_CONSTANTS,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
@@ -70,7 +67,6 @@
 		VALUES (
 		       ${CODE_TYPE},
 		       ${COMMON_CODE},
-		       ${CODE_MEANING},
 		       ${PROGRAM_CONSTANTS},
 		       ${DESCRIPTION_EN},
 		       ${DESCRIPTION_KO},
@@ -88,8 +84,7 @@
 	<sql-query name="sysCommonCode.update">
 	<![CDATA[
 		UPDATE SYS_COMMON_CODE
-		   SET CODE_MEANING = ${CODE_MEANING},
-		       PROGRAM_CONSTANTS = ${PROGRAM_CONSTANTS},
+		   SET PROGRAM_CONSTANTS = ${PROGRAM_CONSTANTS},
 		       DESCRIPTION_EN = ${DESCRIPTION_EN},
 		       DESCRIPTION_KO = ${DESCRIPTION_KO},
 		       INSERT_DATE = ${INSERT_DATE},

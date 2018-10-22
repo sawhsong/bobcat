@@ -304,7 +304,7 @@
 				$(this.popupHeaderHolder).css("cursor", "move");
 			}
 
-//			$(this.popupIframe).css("height", (this.height - correctionValueForHeight) + "px");
+			$(this.popupIframe).css("height", (this.height - correctionValueForHeight) + "px");
 
 			if (this.popupMethod == "popupWithIframe") {
 				$(this.popupIframe).corner("bottom 5px");
@@ -355,7 +355,7 @@
 			$(this.popupBase).appendTo("body");
 
 			if (this.popupMethod == "popupDialog") {
-				$(this.popupFooter).appendTo(this.popupBody);//.css("margin-top", "-2px");
+				$(this.popupFooter).appendTo(this.popupBody).css("margin-top", "-1px");
 			}
 
 			this.params.popupBase = $(this.popupBase);
@@ -383,34 +383,29 @@
 
 			contentMessage = $.nony.replace(params.contents, "\n", "<br/>");
 
-			htmlDiv += "<div id='temp_checkContentsHeight'></div>";
-
 			html += "<table id='temp_checkContentsHeight'><tr>";
 			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
 			html += "<td style='padding:2px 4px;line-height:16px;white-space:nowrap;font-size:12px'>"+contentMessage+"</td>";
 			html += "</tr></table>";
 
-//			div = $(htmlDiv);
 			table = $(html);
-//			$(div).append($(table));
 			$("body").append($(table));
 
 			if ($.nony.isEmpty(params.width)) {
-				if ($("#temp_checkContentsHeight").outerWidth() < params.minWidth) {
+				if ($(table).outerWidth() < params.minWidth) {
 					params.dialogContentsWidth = params.minWidth;
-				} else if ($("#temp_checkContentsHeight").outerWidth() > params.maxWidth) {
+				} else if ($(table).outerWidth() > params.maxWidth) {
 					params.dialogContentsWidth = params.maxWidth;
 				} else {
-					params.dialogContentsWidth = $("#temp_checkContentsHeight").outerWidth();
+					params.dialogContentsWidth = $(table).outerWidth();
 				}
 			} else {
 				params.dialogContentsWidth = (params.width);
 			}
 
-			params.dialogContentsHeight = $("#temp_checkContentsHeight").outerHeight();
-console.log("$(table).outerWidth() : "+$("#temp_checkContentsHeight").outerWidth());
-console.log("$(table).outerHeight() : "+$("#temp_checkContentsHeight").outerHeight());
-//			$(table).remove();
+			params.dialogContentsHeight = $(table).outerHeight();
+
+			$(table).remove();
 		},
 		_setEffect : function() {
 			var onLoad = this.onLoad;
@@ -422,14 +417,6 @@ console.log("$(table).outerHeight() : "+$("#temp_checkContentsHeight").outerHeig
 			if (params.popupMethod == "popupDialog") {
 				checkContentsHeight(params);
 				setDialogHeight(params);
-
-//				setTimeout(function() {
-//					checkContentsHeight(params);
-//				}, 30);
-//
-//				setTimeout(function() {
-//					setDialogHeight(params);
-//				}, 60);
 			}
 
 			if ("slide" == this.effect) {
