@@ -45,28 +45,3 @@ comment on column sys_menu.update_date     is 'Update Date';
  * Table Name  : SYS_MENU
  * Data        : Menu Info - Use Excel file to initialise data (SYS_MENU.xlsx)
  */
-delete sys_menu;
-
--- PERCI Menu
-/*
- select connect_by_root sequence_number||'/'||sub_menu_id as my_root,
-        substr(sys_connect_by_path(sequence_number||'/'||sub_menu_id, '^'), 2) as connect_path,
-        level as my_level,
-        connect_by_isleaf as is_leaf,
-        menu_id,
-        sub_menu_id,
-        sequence_number,
-        prompt,
-        (select jsp_page
-           from sys_user_function@perci
-          where function_id = smd.function_id
-        ) jsp_link
-   from sys_menu_details@perci smd
-connect by prior sub_menu_id = menu_id
-  start with menu_id = (select menu_id
-                          from sys_menus@perci
-                         where user_menu_name = 'Entity_Responsibilities'
-                       )
- order siblings by sequence_number
-;
-*/

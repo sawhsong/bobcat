@@ -58,13 +58,4 @@ comment on column sys_user.update_date       is 'Update Date';
  * Table Name  : SYS_USER
  * Data        : User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
  */
-delete sys_user;
 
-insert into sys_user values('0', 'Dustin', 'dustin', 'dustin', '0', '0', 'EN', 'THEME000', 'INTERNAL', 'dsa@entitysolutions.com.au', 50, 5, 'NU',
-	'/shared/resource/image/photo/DefaultUser_128_Black.png', 'Y', 'System Admin - Dustin', 'Y', null, null, null, null, null, null, 'ipro-default', null, 'N', 'N', 'Y', '1',
-	'0', sysdate, null, null
-);
-insert into sys_user values('1', 'Admin', 'admin', 'admin', '1', '1', 'EN', 'THEME000', 'INTERNAL', 'dsa@entitysolutions.com.au', 50, 5, 'NU',
-	'/shared/resource/image/photo/DefaultUser_128_Black.png', 'Y', 'General Admin - Admin', 'Y', null, null, null, null, null, null, 'ipro-default', null, 'N', 'N', 'Y', '1',
-	'0', sysdate, null, null
-);

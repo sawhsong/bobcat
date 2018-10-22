@@ -2,11 +2,15 @@
  * User
  */
 -- hkaccount
+drop user hkaccount cascade;
+
 create user hkaccount identified by hkaccount20170523;
 grant connect, resource to hkaccount;
 grant create synonym, create view, create database link, create public synonym, drop public synonym to hkaccount;
 
 -- alpaca
+--drop user alpaca cascade;
+
 --create user alpaca identified by alpaca;
 --grant connect, resource to alpaca;
 --grant create synonym, create view, create database link, create public synonym, drop public synonym to alpaca;

@@ -2,6 +2,8 @@
  * User
  */
 -- alpaca
+drop user alpaca cascade;
+
 create user alpaca identified by alpaca;
 grant connect, resource to alpaca;
 grant create synonym, create view, create database link, create public synonym, drop public synonym to alpaca;
