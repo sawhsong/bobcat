@@ -7,6 +7,7 @@
 ************************************************************************************************/%>
 <%
 	SysUser sysUserHeaderPage = (SysUser)session.getAttribute("SysUser");
+	SysOrg sysOrgHeaderPage = (SysOrg)session.getAttribute("SysOrg");
 	String authGroupIdHeaderPage = sysUserHeaderPage.getAuthGroupId();
 	String userNameHeaderPage = sysUserHeaderPage.getUserName();
 	String userIdHeaderPage = sysUserHeaderPage.getUserId();
