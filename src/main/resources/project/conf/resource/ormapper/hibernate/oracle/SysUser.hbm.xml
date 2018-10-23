@@ -10,14 +10,14 @@
 
 		<id name="userId" column="USER_ID" type="java.lang.String" length="30"></id>
 
+		<property name="loginId" column="LOGIN_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="loginPassword" column="LOGIN_PASSWORD" not-null="true" type="java.lang.String" length="30"/>
 		<property name="authGroupId" column="AUTH_GROUP_ID" not-null="true" type="java.lang.String" length="30"/>
 		<property name="isActive" column="IS_ACTIVE" not-null="true" type="java.lang.String" length="1"/>
 		<property name="language" column="LANGUAGE" not-null="true" type="java.lang.String" length="30"/>
-		<property name="loginId" column="LOGIN_ID" not-null="true" type="java.lang.String" length="30"/>
-		<property name="loginPassword" column="LOGIN_PASSWORD" not-null="true" type="java.lang.String" length="30"/>
 		<property name="maxRowPerPage" column="MAX_ROW_PER_PAGE" not-null="true" type="java.lang.Double"/>
-		<property name="pageNumPerPage" column="PAGE_NUM_PER_PAGE" not-null="true" type="java.lang.Double"/>
 		<property name="orgId" column="ORG_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="pageNumPerPage" column="PAGE_NUM_PER_PAGE" not-null="true" type="java.lang.Double"/>
 		<property name="themeType" column="THEME_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="userName" column="USER_NAME" not-null="true" type="java.lang.String" length="50"/>
 		<property name="userStatus" column="USER_STATUS" not-null="true" type="java.lang.String" length="30"/>
@@ -25,7 +25,7 @@
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
-		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="1000"/>
+		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="2000"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 	</class>
@@ -33,14 +33,14 @@
 	<sql-query name="sysUser.selectAll">
 	<![CDATA[
 		SELECT USER_ID,
+		       LOGIN_ID,
+		       LOGIN_PASSWORD,
 		       AUTH_GROUP_ID,
 		       IS_ACTIVE,
 		       LANGUAGE,
-		       LOGIN_ID,
-		       LOGIN_PASSWORD,
 		       MAX_ROW_PER_PAGE,
-		       PAGE_NUM_PER_PAGE,
 		       ORG_ID,
+		       PAGE_NUM_PER_PAGE,
 		       THEME_TYPE,
 		       USER_NAME,
 		       USER_STATUS,
@@ -64,14 +64,14 @@
 	<![CDATA[
 		INSERT INTO SYS_USER (
 		       USER_ID,
+		       LOGIN_ID,
+		       LOGIN_PASSWORD,
 		       AUTH_GROUP_ID,
 		       IS_ACTIVE,
 		       LANGUAGE,
-		       LOGIN_ID,
-		       LOGIN_PASSWORD,
 		       MAX_ROW_PER_PAGE,
-		       PAGE_NUM_PER_PAGE,
 		       ORG_ID,
+		       PAGE_NUM_PER_PAGE,
 		       THEME_TYPE,
 		       USER_NAME,
 		       USER_STATUS,
@@ -85,14 +85,14 @@
 		       )
 		VALUES (
 		       ${USER_ID},
+		       ${LOGIN_ID},
+		       ${LOGIN_PASSWORD},
 		       ${AUTH_GROUP_ID},
 		       ${IS_ACTIVE},
 		       ${LANGUAGE},
-		       ${LOGIN_ID},
-		       ${LOGIN_PASSWORD},
 		       ${MAX_ROW_PER_PAGE},
-		       ${PAGE_NUM_PER_PAGE},
 		       ${ORG_ID},
+		       ${PAGE_NUM_PER_PAGE},
 		       ${THEME_TYPE},
 		       ${USER_NAME},
 		       ${USER_STATUS},
@@ -110,14 +110,14 @@
 	<sql-query name="sysUser.update">
 	<![CDATA[
 		UPDATE SYS_USER
-		   SET AUTH_GROUP_ID = ${AUTH_GROUP_ID},
+		   SET LOGIN_ID = ${LOGIN_ID},
+		       LOGIN_PASSWORD = ${LOGIN_PASSWORD},
+		       AUTH_GROUP_ID = ${AUTH_GROUP_ID},
 		       IS_ACTIVE = ${IS_ACTIVE},
 		       LANGUAGE = ${LANGUAGE},
-		       LOGIN_ID = ${LOGIN_ID},
-		       LOGIN_PASSWORD = ${LOGIN_PASSWORD},
 		       MAX_ROW_PER_PAGE = ${MAX_ROW_PER_PAGE},
-		       PAGE_NUM_PER_PAGE = ${PAGE_NUM_PER_PAGE},
 		       ORG_ID = ${ORG_ID},
+		       PAGE_NUM_PER_PAGE = ${PAGE_NUM_PER_PAGE},
 		       THEME_TYPE = ${THEME_TYPE},
 		       USER_NAME = ${USER_NAME},
 		       USER_STATUS = ${USER_STATUS},

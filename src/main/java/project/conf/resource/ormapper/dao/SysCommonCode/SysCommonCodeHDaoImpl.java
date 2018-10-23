@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_COMMON_CODE - Common Lookup Code
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysCommonCode;
 
 import project.common.extend.BaseHDao;

@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_MENU_AUTH_LINK - Menu - Authority group mapping
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysMenuAuthLink;
 
 import project.common.extend.BaseHDao;

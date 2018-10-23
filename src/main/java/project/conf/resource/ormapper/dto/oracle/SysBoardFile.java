@@ -17,10 +17,10 @@ public class SysBoardFile extends BaseDto implements Serializable {
 	/**
 	 * Columns
 	 */
-	private String fileId;
-	private String FILE_ID;
 	private String articleId;
 	private String ARTICLE_ID;
+	private String fileId;
+	private String FILE_ID;
 	private String newName;
 	private String NEW_NAME;
 	private String originalName;
@@ -80,15 +80,6 @@ public class SysBoardFile extends BaseDto implements Serializable {
 	/**
 	 * Accessors
 	 */
-	public String getFileId() {
-		return fileId;
-	}
-
-	public void setFileId(String fileId) throws Exception {
-		this.fileId = fileId;
-		setValueFromAccessor("FILE_ID", fileId);
-	}
-
 	public String getArticleId() {
 		return articleId;
 	}
@@ -96,6 +87,15 @@ public class SysBoardFile extends BaseDto implements Serializable {
 	public void setArticleId(String articleId) throws Exception {
 		this.articleId = articleId;
 		setValueFromAccessor("ARTICLE_ID", articleId);
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) throws Exception {
+		this.fileId = fileId;
+		setValueFromAccessor("FILE_ID", fileId);
 	}
 
 	public String getNewName() {
@@ -317,8 +317,8 @@ public class SysBoardFile extends BaseDto implements Serializable {
 	public String toString() {
 		String str = "";
 
-		str += "fileId : "+fileId+"\n";
 		str += "articleId : "+articleId+"\n";
+		str += "fileId : "+fileId+"\n";
 		str += "newName : "+newName+"\n";
 		str += "originalName : "+originalName+"\n";
 		str += "repositoryPath : "+repositoryPath+"\n";
@@ -341,8 +341,8 @@ public class SysBoardFile extends BaseDto implements Serializable {
 	public String toXmlString() {
 		String str = "";
 
-		str += "<column name=\"fileId\" value=\""+fileId+"\">";
 		str += "<column name=\"articleId\" value=\""+articleId+"\">";
+		str += "<column name=\"fileId\" value=\""+fileId+"\">";
 		str += "<column name=\"newName\" value=\""+newName+"\">";
 		str += "<column name=\"originalName\" value=\""+originalName+"\">";
 		str += "<column name=\"repositoryPath\" value=\""+repositoryPath+"\">";
@@ -365,8 +365,8 @@ public class SysBoardFile extends BaseDto implements Serializable {
 	public String toJsonString() {
 		String str = "";
 
-		str += "\"fileId\":\""+fileId+"\", ";
 		str += "\"articleId\":\""+articleId+"\", ";
+		str += "\"fileId\":\""+fileId+"\", ";
 		str += "\"newName\":\""+newName+"\", ";
 		str += "\"originalName\":\""+originalName+"\", ";
 		str += "\"repositoryPath\":\""+repositoryPath+"\", ";

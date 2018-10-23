@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated DAO Source
+ * - SYS_USER - User Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysUser;
 
 import project.conf.resource.ormapper.dto.oracle.SysUser;

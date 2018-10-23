@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated DAO Source
+ * - SYS_BOARD_FILE - Attached file for Bulletin board
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysBoardFile;
 
 import project.conf.resource.ormapper.dto.oracle.SysBoard;

@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_BOARD_FILE - Attached file for Bulletin board
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysBoardFile;
 
 import java.io.File;

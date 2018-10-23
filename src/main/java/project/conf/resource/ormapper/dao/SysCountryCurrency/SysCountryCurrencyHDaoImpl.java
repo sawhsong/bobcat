@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_COUNTRY_CURRENCY - Country and Currency Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysCountryCurrency;
 
 import project.common.extend.BaseHDao;

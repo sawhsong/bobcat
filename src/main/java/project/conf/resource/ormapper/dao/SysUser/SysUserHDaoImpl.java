@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_USER - User Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysUser;
 
 import project.common.extend.BaseHDao;

@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated DAO Source
+ * - SYS_MENU - Menu Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysMenu;
 
 import project.conf.resource.ormapper.dto.oracle.SysMenu;

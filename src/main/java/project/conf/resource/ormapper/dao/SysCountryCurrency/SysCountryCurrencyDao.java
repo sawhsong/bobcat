@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated DAO Source
+ * - SYS_COUNTRY_CURRENCY - Country and Currency Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysCountryCurrency;
 
 import project.conf.resource.ormapper.dto.oracle.SysCountryCurrency;

@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated DAO Source
+ * - SYS_AUTH_GROUP - Menu Authority Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysAuthGroup;
 
 import project.conf.resource.ormapper.dto.oracle.SysAuthGroup;

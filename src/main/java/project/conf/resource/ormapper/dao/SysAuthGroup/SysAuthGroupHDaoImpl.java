@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_AUTH_GROUP - Menu Authority Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysAuthGroup;
 
 import project.common.extend.BaseHDao;

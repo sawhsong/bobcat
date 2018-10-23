@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_EXPENSE - Expense Entry (Expenditure data entry for all organisation category)
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrExpense" table="USR_EXPENSE" lazy="false">
+		<meta attribute="class-description" inherit="false">Expense Entry (Expenditure data entry for all organisation category)</meta>
+
+		<id name="expenseId" column="EXPENSE_ID" type="java.lang.String" length="30"></id>
+
+		<property name="expenseDate" column="EXPENSE_DATE" not-null="true" type="java.util.Date"/>
+		<property name="expenseTypeId" column="EXPENSE_TYPE_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="expenseYear" column="EXPENSE_YEAR" not-null="true" type="java.lang.String" length="4"/>
+		<property name="isCompleted" column="IS_COMPLETED" not-null="true" type="java.lang.String" length="30"/>
+		<property name="orgId" column="ORG_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="quarterName" column="QUARTER_NAME" not-null="true" type="java.lang.String" length="30"/>
+		<property name="appliedGst" column="APPLIED_GST" type="java.lang.Double"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="grossAmt" column="GROSS_AMT" type="java.lang.Double"/>
+		<property name="gstAmt" column="GST_AMT" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="netAmt" column="NET_AMT" type="java.lang.Double"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrExpense.selectAll">
+	<![CDATA[
+		SELECT EXPENSE_ID,
+		       TO_CHAR(EXPENSE_DATE, 'yyyymmddhh24miss') AS EXPENSE_DATE,
+		       EXPENSE_TYPE_ID,
+		       EXPENSE_YEAR,
+		       IS_COMPLETED,
+		       ORG_ID,
+		       QUARTER_NAME,
+		       APPLIED_GST,
+		       DESCRIPTION,
+		       GROSS_AMT,
+		       GST_AMT,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_EXPENSE
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrExpense.insert">
+	<![CDATA[
+		INSERT INTO USR_EXPENSE (
+		       EXPENSE_ID,
+		       EXPENSE_DATE,
+		       EXPENSE_TYPE_ID,
+		       EXPENSE_YEAR,
+		       IS_COMPLETED,
+		       ORG_ID,
+		       QUARTER_NAME,
+		       APPLIED_GST,
+		       DESCRIPTION,
+		       GROSS_AMT,
+		       GST_AMT,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${EXPENSE_ID},
+		       ${EXPENSE_DATE},
+		       ${EXPENSE_TYPE_ID},
+		       ${EXPENSE_YEAR},
+		       ${IS_COMPLETED},
+		       ${ORG_ID},
+		       ${QUARTER_NAME},
+		       ${APPLIED_GST},
+		       ${DESCRIPTION},
+		       ${GROSS_AMT},
+		       ${GST_AMT},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${NET_AMT},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrExpense.update">
+	<![CDATA[
+		UPDATE USR_EXPENSE
+		   SET EXPENSE_DATE = ${EXPENSE_DATE},
+		       EXPENSE_TYPE_ID = ${EXPENSE_TYPE_ID},
+		       EXPENSE_YEAR = ${EXPENSE_YEAR},
+		       IS_COMPLETED = ${IS_COMPLETED},
+		       ORG_ID = ${ORG_ID},
+		       QUARTER_NAME = ${QUARTER_NAME},
+		       APPLIED_GST = ${APPLIED_GST},
+		       DESCRIPTION = ${DESCRIPTION},
+		       GROSS_AMT = ${GROSS_AMT},
+		       GST_AMT = ${GST_AMT},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       NET_AMT = ${NET_AMT},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrExpense.updateColumns">
+	<![CDATA[
+		UPDATE USR_EXPENSE
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrExpense.delete">
+	<![CDATA[
+		DELETE USR_EXPENSE
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

@@ -19,22 +19,22 @@ public class SysUser extends BaseDto implements Serializable {
 	 */
 	private String userId;
 	private String USER_ID;
+	private String loginId;
+	private String LOGIN_ID;
+	private String loginPassword;
+	private String LOGIN_PASSWORD;
 	private String authGroupId;
 	private String AUTH_GROUP_ID;
 	private String isActive;
 	private String IS_ACTIVE;
 	private String language;
 	private String LANGUAGE;
-	private String loginId;
-	private String LOGIN_ID;
-	private String loginPassword;
-	private String LOGIN_PASSWORD;
 	private double maxRowPerPage;
 	private String MAX_ROW_PER_PAGE;
-	private double pageNumPerPage;
-	private String PAGE_NUM_PER_PAGE;
 	private String orgId;
 	private String ORG_ID;
+	private double pageNumPerPage;
+	private String PAGE_NUM_PER_PAGE;
 	private String themeType;
 	private String THEME_TYPE;
 	private String userName;
@@ -83,7 +83,7 @@ public class SysUser extends BaseDto implements Serializable {
 		dataSet.addRow();
 		updateColumnsDataSet.addName(updateColumnsDataSetHeader);
 		setFrwVarPrimaryKey("USER_ID");
-		setFrwVarDateColumn("DISABLED_DATE,INSERT_DATE,UPDATE_DATE");
+		setFrwVarDateColumn("INSERT_DATE,UPDATE_DATE");
 		setFrwVarNumberColumn("MAX_ROW_PER_PAGE,PAGE_NUM_PER_PAGE");
 		setFrwVarClobColumn("");
 		setFrwVarDefaultColumn("AUTH_GROUP_ID,INSERT_DATE");
@@ -101,6 +101,24 @@ public class SysUser extends BaseDto implements Serializable {
 	public void setUserId(String userId) throws Exception {
 		this.userId = userId;
 		setValueFromAccessor("USER_ID", userId);
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) throws Exception {
+		this.loginId = loginId;
+		setValueFromAccessor("LOGIN_ID", loginId);
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) throws Exception {
+		this.loginPassword = loginPassword;
+		setValueFromAccessor("LOGIN_PASSWORD", loginPassword);
 	}
 
 	public String getAuthGroupId() {
@@ -130,24 +148,6 @@ public class SysUser extends BaseDto implements Serializable {
 		setValueFromAccessor("LANGUAGE", language);
 	}
 
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) throws Exception {
-		this.loginId = loginId;
-		setValueFromAccessor("LOGIN_ID", loginId);
-	}
-
-	public String getLoginPassword() {
-		return loginPassword;
-	}
-
-	public void setLoginPassword(String loginPassword) throws Exception {
-		this.loginPassword = loginPassword;
-		setValueFromAccessor("LOGIN_PASSWORD", loginPassword);
-	}
-
 	public double getMaxRowPerPage() {
 		return maxRowPerPage;
 	}
@@ -157,15 +157,6 @@ public class SysUser extends BaseDto implements Serializable {
 		setValueFromAccessor("MAX_ROW_PER_PAGE", CommonUtil.toString(maxRowPerPage));
 	}
 
-	public double getPageNumPerPage() {
-		return pageNumPerPage;
-	}
-
-	public void setPageNumPerPage(double pageNumPerPage) throws Exception {
-		this.pageNumPerPage = pageNumPerPage;
-		setValueFromAccessor("PAGE_NUM_PER_PAGE", CommonUtil.toString(pageNumPerPage));
-	}
-
 	public String getOrgId() {
 		return orgId;
 	}
@@ -173,6 +164,15 @@ public class SysUser extends BaseDto implements Serializable {
 	public void setOrgId(String orgId) throws Exception {
 		this.orgId = orgId;
 		setValueFromAccessor("ORG_ID", orgId);
+	}
+
+	public double getPageNumPerPage() {
+		return pageNumPerPage;
+	}
+
+	public void setPageNumPerPage(double pageNumPerPage) throws Exception {
+		this.pageNumPerPage = pageNumPerPage;
+		setValueFromAccessor("PAGE_NUM_PER_PAGE", CommonUtil.toString(pageNumPerPage));
 	}
 
 	public String getThemeType() {
@@ -395,14 +395,14 @@ public class SysUser extends BaseDto implements Serializable {
 		String str = "";
 
 		str += "userId : "+userId+"\n";
+		str += "loginId : "+loginId+"\n";
+		str += "loginPassword : "+loginPassword+"\n";
 		str += "authGroupId : "+authGroupId+"\n";
 		str += "isActive : "+isActive+"\n";
 		str += "language : "+language+"\n";
-		str += "loginId : "+loginId+"\n";
-		str += "loginPassword : "+loginPassword+"\n";
 		str += "maxRowPerPage : "+maxRowPerPage+"\n";
-		str += "pageNumPerPage : "+pageNumPerPage+"\n";
 		str += "orgId : "+orgId+"\n";
+		str += "pageNumPerPage : "+pageNumPerPage+"\n";
 		str += "themeType : "+themeType+"\n";
 		str += "userName : "+userName+"\n";
 		str += "userStatus : "+userStatus+"\n";
@@ -426,14 +426,14 @@ public class SysUser extends BaseDto implements Serializable {
 		String str = "";
 
 		str += "<column name=\"userId\" value=\""+userId+"\">";
+		str += "<column name=\"loginId\" value=\""+loginId+"\">";
+		str += "<column name=\"loginPassword\" value=\""+loginPassword+"\">";
 		str += "<column name=\"authGroupId\" value=\""+authGroupId+"\">";
 		str += "<column name=\"isActive\" value=\""+isActive+"\">";
 		str += "<column name=\"language\" value=\""+language+"\">";
-		str += "<column name=\"loginId\" value=\""+loginId+"\">";
-		str += "<column name=\"loginPassword\" value=\""+loginPassword+"\">";
 		str += "<column name=\"maxRowPerPage\" value=\""+maxRowPerPage+"\">";
-		str += "<column name=\"pageNumPerPage\" value=\""+pageNumPerPage+"\">";
 		str += "<column name=\"orgId\" value=\""+orgId+"\">";
+		str += "<column name=\"pageNumPerPage\" value=\""+pageNumPerPage+"\">";
 		str += "<column name=\"themeType\" value=\""+themeType+"\">";
 		str += "<column name=\"userName\" value=\""+userName+"\">";
 		str += "<column name=\"userStatus\" value=\""+userStatus+"\">";
@@ -457,14 +457,14 @@ public class SysUser extends BaseDto implements Serializable {
 		String str = "";
 
 		str += "\"userId\":\""+userId+"\", ";
+		str += "\"loginId\":\""+loginId+"\", ";
+		str += "\"loginPassword\":\""+loginPassword+"\", ";
 		str += "\"authGroupId\":\""+authGroupId+"\", ";
 		str += "\"isActive\":\""+isActive+"\", ";
 		str += "\"language\":\""+language+"\", ";
-		str += "\"loginId\":\""+loginId+"\", ";
-		str += "\"loginPassword\":\""+loginPassword+"\", ";
 		str += "\"maxRowPerPage\":\""+maxRowPerPage+"\", ";
-		str += "\"pageNumPerPage\":\""+pageNumPerPage+"\", ";
 		str += "\"orgId\":\""+orgId+"\", ";
+		str += "\"pageNumPerPage\":\""+pageNumPerPage+"\", ";
 		str += "\"themeType\":\""+themeType+"\", ";
 		str += "\"userName\":\""+userName+"\", ";
 		str += "\"userStatus\":\""+userStatus+"\", ";

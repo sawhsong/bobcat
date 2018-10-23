@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_BOARD - Bulletin Board
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysBoard;
 
 import org.springframework.beans.factory.annotation.Autowired;

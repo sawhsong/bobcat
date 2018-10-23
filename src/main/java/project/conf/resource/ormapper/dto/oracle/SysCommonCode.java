@@ -23,6 +23,8 @@ public class SysCommonCode extends BaseDto implements Serializable {
 	private String COMMON_CODE;
 	private String programConstants;
 	private String PROGRAM_CONSTANTS;
+	private String codeCategory;
+	private String CODE_CATEGORY;
 	private String descriptionEn;
 	private String DESCRIPTION_EN;
 	private String descriptionKo;
@@ -105,6 +107,15 @@ public class SysCommonCode extends BaseDto implements Serializable {
 	public void setProgramConstants(String programConstants) throws Exception {
 		this.programConstants = programConstants;
 		setValueFromAccessor("PROGRAM_CONSTANTS", programConstants);
+	}
+
+	public String getCodeCategory() {
+		return codeCategory;
+	}
+
+	public void setCodeCategory(String codeCategory) throws Exception {
+		this.codeCategory = codeCategory;
+		setValueFromAccessor("CODE_CATEGORY", codeCategory);
 	}
 
 	public String getDescriptionEn() {
@@ -330,6 +341,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 		str += "codeType : "+codeType+"\n";
 		str += "commonCode : "+commonCode+"\n";
 		str += "programConstants : "+programConstants+"\n";
+		str += "codeCategory : "+codeCategory+"\n";
 		str += "descriptionEn : "+descriptionEn+"\n";
 		str += "descriptionKo : "+descriptionKo+"\n";
 		str += "insertDate : "+insertDate+"\n";
@@ -354,6 +366,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 		str += "<column name=\"codeType\" value=\""+codeType+"\">";
 		str += "<column name=\"commonCode\" value=\""+commonCode+"\">";
 		str += "<column name=\"programConstants\" value=\""+programConstants+"\">";
+		str += "<column name=\"codeCategory\" value=\""+codeCategory+"\">";
 		str += "<column name=\"descriptionEn\" value=\""+descriptionEn+"\">";
 		str += "<column name=\"descriptionKo\" value=\""+descriptionKo+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
@@ -378,6 +391,7 @@ public class SysCommonCode extends BaseDto implements Serializable {
 		str += "\"codeType\":\""+codeType+"\", ";
 		str += "\"commonCode\":\""+commonCode+"\", ";
 		str += "\"programConstants\":\""+programConstants+"\", ";
+		str += "\"codeCategory\":\""+codeCategory+"\", ";
 		str += "\"descriptionEn\":\""+descriptionEn+"\", ";
 		str += "\"descriptionKo\":\""+descriptionKo+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";

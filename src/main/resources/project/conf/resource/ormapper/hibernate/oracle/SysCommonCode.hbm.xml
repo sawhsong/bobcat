@@ -9,20 +9,21 @@
 		<meta attribute="class-description" inherit="false">Common Lookup Code</meta>
 
 		<composite-id>
-			<key-property name="codeType" column="CODE_TYPE" type="java.lang.String" length="50"/>
-			<key-property name="commonCode" column="COMMON_CODE" type="java.lang.String" length="60"/>
+			<key-property name="codeType" column="CODE_TYPE" type="java.lang.String" length="30"/>
+			<key-property name="commonCode" column="COMMON_CODE" type="java.lang.String" length="30"/>
 		</composite-id>
 
 		<property name="programConstants" column="PROGRAM_CONSTANTS" not-null="true" type="java.lang.String" length="100"/>
-		<property name="descriptionEn" column="DESCRIPTION_EN" type="java.lang.String" length="2000"/>
-		<property name="descriptionKo" column="DESCRIPTION_KO" type="java.lang.String" length="2000"/>
+		<property name="codeCategory" column="CODE_CATEGORY" not-null="true" type="java.lang.String" length="30"/>
+		<property name="descriptionEn" column="DESCRIPTION_EN" type="java.lang.String" length="1000"/>
+		<property name="descriptionKo" column="DESCRIPTION_KO" type="java.lang.String" length="1000"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
-		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="50"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="isActive" column="IS_ACTIVE" type="java.lang.String" length="1"/>
 		<property name="isDefault" column="IS_DEFAULT" type="java.lang.String" length="1"/>
 		<property name="sortOrder" column="SORT_ORDER" type="java.lang.String" length="3"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
-		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="50"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 	</class>
 
 	<sql-query name="sysCommonCode.selectAll">
@@ -30,6 +31,7 @@
 		SELECT CODE_TYPE,
 		       COMMON_CODE,
 		       PROGRAM_CONSTANTS,
+		       CODE_CATEGORY,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
@@ -54,6 +56,7 @@
 		       CODE_TYPE,
 		       COMMON_CODE,
 		       PROGRAM_CONSTANTS,
+		       CODE_CATEGORY,
 		       DESCRIPTION_EN,
 		       DESCRIPTION_KO,
 		       INSERT_DATE,
@@ -68,6 +71,7 @@
 		       ${CODE_TYPE},
 		       ${COMMON_CODE},
 		       ${PROGRAM_CONSTANTS},
+		       ${CODE_CATEGORY},
 		       ${DESCRIPTION_EN},
 		       ${DESCRIPTION_KO},
 		       ${INSERT_DATE},
@@ -85,6 +89,7 @@
 	<![CDATA[
 		UPDATE SYS_COMMON_CODE
 		   SET PROGRAM_CONSTANTS = ${PROGRAM_CONSTANTS},
+		       CODE_CATEGORY = ${CODE_CATEGORY},
 		       DESCRIPTION_EN = ${DESCRIPTION_EN},
 		       DESCRIPTION_KO = ${DESCRIPTION_KO},
 		       INSERT_DATE = ${INSERT_DATE},

@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Framework Generated HDAOImpl Source
+ * - SYS_MENU - Menu Info
+ *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysMenu;
 
 import project.common.extend.BaseHDao;

@@ -153,7 +153,7 @@ $(function() {
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,
-			displayRowCount:false,
+			displayRowCount:true,
 			isFilter:false,
 			filterColumn:[1, 2],
 			totalResultRows:result.totalResultRows,
@@ -308,7 +308,7 @@ $(function() {
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea"></div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>
