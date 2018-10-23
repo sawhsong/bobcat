@@ -58,4 +58,46 @@ comment on column sys_user.update_date       is 'Update Date';
  * Table Name  : SYS_USER
  * Data        : User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
  */
-
+insert into sys_user
+select '0' as user_id,
+       'Administrator' as user_name,
+       'admin' as login_id,
+       'admin' as login_password,
+       '0' as org_id,
+       '0' as auth_group_id,
+       'EN' as language,
+       'THEME000' as theme_type,
+       'INTERNAL' as user_type,
+       'jin@hkaccounting.com.au' as email,
+       50 as max_row_per_page,
+       5 as page_num_per_page,
+       'NU' as user_status,
+       '/shared/resource/image/photo/DefaultUser_128_Black.png' as photo_path,
+       'Y' as is_active,
+       '0' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from dual
+union
+select '1' as user_id,
+       'Developer' as user_name,
+       'dustin' as login_id,
+       'dustin' as login_password,
+       '0' as org_id,
+       '0' as auth_group_id,
+       'EN' as language,
+       'THEME000' as theme_type,
+       'INTERNAL' as user_type,
+       'jin@hkaccounting.com.au' as email,
+       50 as max_row_per_page,
+       5 as page_num_per_page,
+       'NU' as user_status,
+       '/shared/resource/image/photo/DefaultUser_128_Black.png' as photo_path,
+       'Y' as is_active,
+       '0' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from dual
+;
