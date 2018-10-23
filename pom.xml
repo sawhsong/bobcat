@@ -596,7 +596,9 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.12</version>
+<!-- Downgraded because of this error - (CLIENT_PLUGIN_AUTH is required) - hkaccounting db is old version -->
+<!-- 			<version>8.0.12</version> -->
+			<version>5.1.47</version>
 		</dependency>
 
 		<dependency>

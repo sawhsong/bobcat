@@ -97,8 +97,8 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			sysUser.setLoginId(requestDataSet.getValue("loginId"));
 			sysUser.setLoginPassword(requestDataSet.getValue("password"));
 			sysUser.setAuthGroupId("Z"); //SysAuthGroup.GroupId(Not Selected)
-			sysUser.setLanguage(ConfigUtil.getProperty("etc.default.language"));
-			sysUser.setThemeType(ConfigUtil.getProperty("view.theme.default"));
+			sysUser.setLanguage(CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")));
+			sysUser.setThemeType(CommonUtil.lowerCase(ConfigUtil.getProperty("view.theme.default")));
 			sysUser.setMaxRowPerPage(CommonUtil.toDouble(CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"))[2]));
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"))[0]));
 			sysUser.setUserType(CommonCodeManager.getCodeByConstants("USER_TYPE_INTERNAL"));

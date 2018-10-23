@@ -71,6 +71,13 @@
 					"menuName_ko":"테이블 생성 Script",
 					"icon":"leftMenu-M250",
 					"menuUrl":"/zebra/framework/tablescript/getDefault.do"
+				}, {
+					"menuId":"M260",
+					"menuLevel":"2",
+					"menuName_en":"Data Migration(HKAccnt)",
+					"menuName_ko":"데이터 마이그레이션(HKAccnt)",
+					"icon":"leftMenu-M260",
+					"menuUrl":"/zebra/framework/datamigration/getDefault.do"
 				}
 			]
 		},

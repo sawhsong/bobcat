@@ -77,7 +77,7 @@ public class NamedParameterJdbcDao extends NamedParameterJdbcDaoSupport {
 	 * getMessage()
 	 */
 	protected String getMessage(String messageCode) {
-		return messageSourceAccessor.getMessage(messageCode, new Locale(ConfigUtil.getProperty("etc.default.language")));
+		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"))));
 	}
 
 	protected String getMessage(String messageCode, Locale locale) {
