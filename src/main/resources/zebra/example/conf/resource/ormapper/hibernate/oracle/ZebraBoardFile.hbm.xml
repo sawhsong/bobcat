@@ -25,8 +25,8 @@
 
 	<sql-query name="zebraBoardFile.selectAll">
 	<![CDATA[
-		SELECT FILE_ID,
-		       ARTICLE_ID,
+		SELECT ARTICLE_ID,
+		       FILE_ID,
 		       NEW_NAME,
 		       ORIGINAL_NAME,
 		       REPOSITORY_PATH,
@@ -49,8 +49,8 @@
 	<sql-query name="zebraBoardFile.insert">
 	<![CDATA[
 		INSERT INTO ZEBRA_BOARD_FILE (
-		       FILE_ID,
 		       ARTICLE_ID,
+		       FILE_ID,
 		       NEW_NAME,
 		       ORIGINAL_NAME,
 		       REPOSITORY_PATH,
@@ -63,8 +63,8 @@
 		       UPDATE_USER_ID
 		       )
 		VALUES (
-		       ${FILE_ID},
 		       ${ARTICLE_ID},
+		       ${FILE_ID},
 		       ${NEW_NAME},
 		       ${ORIGINAL_NAME},
 		       ${REPOSITORY_PATH},

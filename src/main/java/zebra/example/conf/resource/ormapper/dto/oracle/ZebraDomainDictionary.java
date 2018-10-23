@@ -19,12 +19,12 @@ public class ZebraDomainDictionary extends BaseDto implements Serializable {
 	 */
 	private String domainId;
 	private String DOMAIN_ID;
-	private String dataType;
-	private String DATA_TYPE;
 	private String domainName;
 	private String DOMAIN_NAME;
 	private String nameAbbreviation;
 	private String NAME_ABBREVIATION;
+	private String dataType;
+	private String DATA_TYPE;
 	private double dataLength;
 	private String DATA_LENGTH;
 	private double dataPrecision;
@@ -89,15 +89,6 @@ public class ZebraDomainDictionary extends BaseDto implements Serializable {
 		setValueFromAccessor("DOMAIN_ID", domainId);
 	}
 
-	public String getDataType() {
-		return dataType;
-	}
-
-	public void setDataType(String dataType) throws Exception {
-		this.dataType = dataType;
-		setValueFromAccessor("DATA_TYPE", dataType);
-	}
-
 	public String getDomainName() {
 		return domainName;
 	}
@@ -114,6 +105,15 @@ public class ZebraDomainDictionary extends BaseDto implements Serializable {
 	public void setNameAbbreviation(String nameAbbreviation) throws Exception {
 		this.nameAbbreviation = nameAbbreviation;
 		setValueFromAccessor("NAME_ABBREVIATION", nameAbbreviation);
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) throws Exception {
+		this.dataType = dataType;
+		setValueFromAccessor("DATA_TYPE", dataType);
 	}
 
 	public double getDataLength() {
@@ -318,9 +318,9 @@ public class ZebraDomainDictionary extends BaseDto implements Serializable {
 		String str = "";
 
 		str += "domainId : "+domainId+"\n";
-		str += "dataType : "+dataType+"\n";
 		str += "domainName : "+domainName+"\n";
 		str += "nameAbbreviation : "+nameAbbreviation+"\n";
+		str += "dataType : "+dataType+"\n";
 		str += "dataLength : "+dataLength+"\n";
 		str += "dataPrecision : "+dataPrecision+"\n";
 		str += "dataScale : "+dataScale+"\n";
@@ -342,9 +342,9 @@ public class ZebraDomainDictionary extends BaseDto implements Serializable {
 		String str = "";
 
 		str += "<column name=\"domainId\" value=\""+domainId+"\">";
-		str += "<column name=\"dataType\" value=\""+dataType+"\">";
 		str += "<column name=\"domainName\" value=\""+domainName+"\">";
 		str += "<column name=\"nameAbbreviation\" value=\""+nameAbbreviation+"\">";
+		str += "<column name=\"dataType\" value=\""+dataType+"\">";
 		str += "<column name=\"dataLength\" value=\""+dataLength+"\">";
 		str += "<column name=\"dataPrecision\" value=\""+dataPrecision+"\">";
 		str += "<column name=\"dataScale\" value=\""+dataScale+"\">";
@@ -366,9 +366,9 @@ public class ZebraDomainDictionary extends BaseDto implements Serializable {
 		String str = "";
 
 		str += "\"domainId\":\""+domainId+"\", ";
-		str += "\"dataType\":\""+dataType+"\", ";
 		str += "\"domainName\":\""+domainName+"\", ";
 		str += "\"nameAbbreviation\":\""+nameAbbreviation+"\", ";
+		str += "\"dataType\":\""+dataType+"\", ";
 		str += "\"dataLength\":\""+dataLength+"\", ";
 		str += "\"dataPrecision\":\""+dataPrecision+"\", ";
 		str += "\"dataScale\":\""+dataScale+"\", ";

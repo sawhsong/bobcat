@@ -10,9 +10,9 @@
 
 		<id name="domainId" column="DOMAIN_ID" type="java.lang.String" length="30"></id>
 
-		<property name="dataType" column="DATA_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="domainName" column="DOMAIN_NAME" not-null="true" type="java.lang.String" length="100"/>
 		<property name="nameAbbreviation" column="NAME_ABBREVIATION" not-null="true" type="java.lang.String" length="50"/>
+		<property name="dataType" column="DATA_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="dataLength" column="DATA_LENGTH" type="java.lang.Double"/>
 		<property name="dataPrecision" column="DATA_PRECISION" type="java.lang.Double"/>
 		<property name="dataScale" column="DATA_SCALE" type="java.lang.Double"/>
@@ -26,9 +26,9 @@
 	<sql-query name="zebraDomainDictionary.selectAll">
 	<![CDATA[
 		SELECT DOMAIN_ID,
-		       DATA_TYPE,
 		       DOMAIN_NAME,
 		       NAME_ABBREVIATION,
+		       DATA_TYPE,
 		       DATA_LENGTH,
 		       DATA_PRECISION,
 		       DATA_SCALE,
@@ -50,9 +50,9 @@
 	<![CDATA[
 		INSERT INTO ZEBRA_DOMAIN_DICTIONARY (
 		       DOMAIN_ID,
-		       DATA_TYPE,
 		       DOMAIN_NAME,
 		       NAME_ABBREVIATION,
+		       DATA_TYPE,
 		       DATA_LENGTH,
 		       DATA_PRECISION,
 		       DATA_SCALE,
@@ -64,9 +64,9 @@
 		       )
 		VALUES (
 		       ${DOMAIN_ID},
-		       ${DATA_TYPE},
 		       ${DOMAIN_NAME},
 		       ${NAME_ABBREVIATION},
+		       ${DATA_TYPE},
 		       ${DATA_LENGTH},
 		       ${DATA_PRECISION},
 		       ${DATA_SCALE},
@@ -82,9 +82,9 @@
 	<sql-query name="zebraDomainDictionary.update">
 	<![CDATA[
 		UPDATE ZEBRA_DOMAIN_DICTIONARY
-		   SET DATA_TYPE = ${DATA_TYPE},
-		       DOMAIN_NAME = ${DOMAIN_NAME},
+		   SET DOMAIN_NAME = ${DOMAIN_NAME},
 		       NAME_ABBREVIATION = ${NAME_ABBREVIATION},
+		       DATA_TYPE = ${DATA_TYPE},
 		       DATA_LENGTH = ${DATA_LENGTH},
 		       DATA_PRECISION = ${DATA_PRECISION},
 		       DATA_SCALE = ${DATA_SCALE},
