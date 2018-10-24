@@ -138,6 +138,7 @@ select a.table_name,
    and a.column_name = c.column_name (+)
    and a.table_name = d.table_name (+)
    and a.column_name = d.column_name (+)
+   and a.num_distinct = '0' -- means 'not-used column'
  order by a.table_name,
        a.nullable,
        a.column_name
