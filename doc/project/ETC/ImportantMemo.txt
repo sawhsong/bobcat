@@ -1,3 +1,12 @@
+@ 2018.10.26
+	# data migration
+		* exclude
+			- sys_common_code
+			- sys_country_currency
+			- sys_expense_type
+		* include
+
+
 @ jdk
 @ tomcat
 @ oracle
