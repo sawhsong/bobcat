@@ -46,7 +46,7 @@ body {background:#FFFFFF;}
 }
 .loginDescriptionArea .panel-heading {background-color:#ffffff;}
 .loginDescriptionTitle {padding-top:4px;padding-left:4px;text-align:left;font-size:14px;height:26px;font-weight:bold;}
-.loginDescription {margin:30px 10px 30px 10px;display:inline-block;width:560px;border-top:1px solid #D1D1D1;box-shadow:0px 0px 20px rgba(0, 0, 0, .2);}
+.loginDescription {margin:30px 10px 30px 10px;display:inline-block;width:560px;border:1px solid #D1D1D1;border-radius:10px;box-shadow:0px 0px 20px rgba(0, 0, 0, .2);}
 .loginDescriptionArea .panel-body {padding:15px 15px 15px 15px;text-align:left;}
 .descContents {line-height:180%;}
 </style>

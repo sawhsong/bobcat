@@ -44,13 +44,13 @@
 				<prop key="org.hibernate.tool.hbm2ddl">debug</prop>
 			</props>
 		</property>
-<!-- 		<property name="mappingDirectoryLocations"> -->
-<!-- 			<list> -->
-<!-- 				<value>classpath:${path.hibernate.mapperDirFwk}</value> -->
-<!-- 				<value>classpath:${path.hibernate.queryDirFwk}</value> -->
-<!-- 				<value>classpath:${path.hibernate.mapperDirProject}</value> -->
-<!-- 				<value>classpath:${path.hibernate.queryDirProject}</value> -->
-<!-- 			</list> -->
-<!-- 		</property> -->
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:${path.hibernate.mapperDirFwk}</value>
+				<value>classpath:${path.hibernate.queryDirFwk}</value>
+				<value>classpath:${path.hibernate.mapperDirProject}</value>
+				<value>classpath:${path.hibernate.queryDirProject}</value>
+			</list>
+		</property>
 	</bean>
 </beans>

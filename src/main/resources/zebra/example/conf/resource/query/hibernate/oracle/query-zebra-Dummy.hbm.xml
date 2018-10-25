@@ -15,9 +15,12 @@
 	<sql-query name="query.zebra.Dummy.getTableListDataSetByCriteriaForAdditionalDataSource">
 	<![CDATA[
 		select table_name,
-		       comments
-		  from user_tab_comments
-		 where table_type = 'TABLE'
+		       table_comment
+		  from information_schema.tables
+		 where table_schema = 'hkaccount'
+		   and table_type = 'BASE TABLE'
+		   and table_name not like 'e5zg0_%'
+		   and table_name not like 'zo7dp_%'
 		   ${auto_fill}
 		 order by table_name
 	]]>

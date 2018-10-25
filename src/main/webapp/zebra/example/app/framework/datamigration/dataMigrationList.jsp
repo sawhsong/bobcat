@@ -93,6 +93,8 @@ $(function() {
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						renderSourceDataTable(result);
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});
@@ -112,6 +114,8 @@ $(function() {
 				html += "<td class=\"tdGrid\"><a onclick=\"getDetail('"+$("#sourceDb").val()+"', '"+dataSet.getValue(i, "TABLE_NAME")+"')\" class=\"aEn\">"+dataSet.getValue(i, "TABLE_NAME")+"</a></td>";
 				html += "<td class=\"tdGrid\">"+commonJs.abbreviate(dataSet.getValue(i, "COMMENTS"), 60)+"</td>";
 				html += "</tr>";
+
+
 			}
 		} else {
 			html += "<tr>";
@@ -122,9 +126,7 @@ $(function() {
 		$("#tblSourceDataBody").append($(html));
 
 		$("#tblSourceData").fixedHeaderTable({
-			baseDivElement:"divSourceDataTable",
-			baseWidth:widthSourceDataDiv,
-			widthAdjust:sourceGridWidthAdjust
+			attachTo:$("#divSourceDataTable")
 		});
 
 		commonJs.hideProcMessageOnElement("tblSourceData");
@@ -171,9 +173,7 @@ $(function() {
 		$("#tblTargetDataBody").append($(html));
 
 		$("#tblTargetData").fixedHeaderTable({
-			baseDivElement:"divTargetDataTable",
-			baseWidth:widthTargetDataDiv,
-			widthAdjust:targetGridWidthAdjust
+			attachTo:$("#divTargetDataTable")
 		});
 
 		commonJs.hideProcMessageOnElement("tblTargetData");

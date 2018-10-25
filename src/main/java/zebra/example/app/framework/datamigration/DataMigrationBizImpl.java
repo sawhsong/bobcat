@@ -31,12 +31,13 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 	public ParamEntity getTableList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), "hkaccount");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
+		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), defaultDbUser);
 
 		try {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
+			if (!CommonUtil.equalsIgnoreCase(dataSource, defaultDbUser)) {
 				dummyDao.setDataSourceName(dataSource);
 				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
