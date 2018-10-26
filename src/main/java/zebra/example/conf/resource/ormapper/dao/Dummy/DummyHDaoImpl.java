@@ -3,6 +3,7 @@ package zebra.example.conf.resource.ormapper.dao.Dummy;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseHDao;
+import zebra.util.CommonUtil;
 
 public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 	public DataSet getTableListDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
@@ -33,6 +34,18 @@ public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addVariable("table_name", tableName);
 		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableDetailDataSetByTableNameForAdditionalDataSource");
+	}
+
+	public int getTotalRowCountByTableName(String tableName) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addVariable("table_name", tableName);
+		return CommonUtil.toInt(selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTotalRowCountByTableName").getValue(0, 0));
+	}
+
+	public int getTotalRowCountByTableNameForAdditionalDataSource(String tableName) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addVariable("table_name", tableName);
+		return CommonUtil.toInt(selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTotalRowCountByTableNameForAdditionalDataSource").getValue(0, 0));
 	}
 
 	public DataSet getDataSetBySQLQuery(String sqlQuery) throws Exception {

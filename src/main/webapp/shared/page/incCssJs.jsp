@@ -9,8 +9,8 @@
 <script type="text/javascript" src="<mc:cp key="jsJq"/>/bootstrap.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsNg"/>/angular.js"></script>
 
-<script type="text/javascript" src="<mc:cp key="jsMessage"/>/messages_${sessionScope.langCode}.js"></script>
-<script type="text/javascript" src="<mc:cp key="jsMessage"/>/messages-framework_${sessionScope.langCode}.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsMessage"/>/message_${sessionScope.langCode}.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsMessage"/>/message-framework_${sessionScope.langCode}.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/jquery.blockUI.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/jquery.corner.js"></script>
@@ -107,6 +107,7 @@ jsconfig.put("effectDuration", 400);
 jsconfig.put("pagehandlerActionType", "<mc:cp key="pagehandlerActionType"/>");
 jsconfig.put("webServiceProviderUrl", "<mc:cp key="webService.provider.url"/>");
 jsconfig.put("maxRowsPerPageArray", "<mc:cp key="view.data.maxRowsPerPage"/>");
+jsconfig.put("viewPageName", "<mc:cp key="viewPageName"/>");
 /*!
  * auto-setup search criteria
  */

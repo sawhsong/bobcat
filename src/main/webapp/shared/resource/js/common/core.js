@@ -991,6 +991,7 @@ var nony = {
 			heightCorrection = 2;
 			$("#divScrollablePanelPopup").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		} else {
+			heightCorrection = 0;
 			$("#divScrollablePanel").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		}
 

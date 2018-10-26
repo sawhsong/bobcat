@@ -34,6 +34,20 @@ public interface DummyDao extends IDao {
 	 */
 	public DataSet getTableDetailDataSetByTableNameForAdditionalDataSource(String tableName) throws Exception;
 	/**
+	 * Get total row count
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 */
+	public int getTotalRowCountByTableName(String tableName) throws Exception;
+	/**
+	 * For Additional datasource - MySql
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 */
+	public int getTotalRowCountByTableNameForAdditionalDataSource(String tableName) throws Exception;
+	/**
 	 * Select all
 	 * @param sqlQuery
 	 * @return DataSet

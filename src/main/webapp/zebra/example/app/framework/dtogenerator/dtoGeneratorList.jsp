@@ -176,8 +176,8 @@ $(function() {
 				dataSource:$("#dataSource").val()
 			},
 			header:"<mc:msg key="fwk.dtogenerator.title.detailPopupHeader"/>",
-			width:1200,
-			height:700
+			width:1300,
+			height:800
 		});
 	};
 

@@ -57,16 +57,19 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String dataSource = requestDataSet.getValue("dataSource");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
+		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), defaultDbUser);
 		String tableName = requestDataSet.getValue("tableName");
 
 		try {
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "hkaccount")) {
+			if (!CommonUtil.equalsIgnoreCase(dataSource, defaultDbUser)) {
 				dummyDao.setDataSourceName(dataSource);
 				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(tableName));
+				paramEntity.setObject("totalRowCount", dummyDao.getTotalRowCountByTableNameForAdditionalDataSource(tableName));
 			} else {
 				dummyDao.resetDataSourceName();
 				paramEntity.setObject("resultDataSet", dummyDao.getTableDetailDataSetByTableName(tableName));
+				paramEntity.setObject("totalRowCount", dummyDao.getTotalRowCountByTableName(tableName));
 			}
 
 			paramEntity.setSuccess(true);

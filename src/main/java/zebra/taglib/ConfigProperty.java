@@ -1,6 +1,7 @@
 package zebra.taglib;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.JspPage;
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibSupport;
@@ -37,6 +38,22 @@ public class ConfigProperty extends TaglibSupport {
 				} else {
 					rtnString = "White";
 				}
+			}
+
+			if (CommonUtil.equalsIgnoreCase(getKey(), "viewPageName")) {
+				JspPage jspPage = (JspPage)pageContext.getAttribute("javax.servlet.jsp.jspPage");
+				String name = jspPage.getClass().getName();
+
+				rtnString = CommonUtil.substringBefore(CommonUtil.substringAfterLast(name, "."), "_");
+			}
+
+			if (CommonUtil.equalsIgnoreCase(getKey(), "viewPageJsName")) {
+				JspPage jspPage = (JspPage)pageContext.getAttribute("javax.servlet.jsp.jspPage");
+				String removeString = "org/apache/jsp";
+				String replaceFrom[] = new String[] {"app", "_jsp"}, replaceTo[] = new String[] {"appjs", ".js"};
+				String name = CommonUtil.remove(CommonUtil.replace(jspPage.getClass().getName(), ".", "/"), removeString);
+
+				rtnString = CommonUtil.replaceEach(name, replaceFrom, replaceTo);
 			}
 
 			jspWriter.print(rtnString);

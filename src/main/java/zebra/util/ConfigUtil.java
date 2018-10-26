@@ -52,6 +52,8 @@ public class ConfigUtil {
 			else if (CommonUtil.equalsIgnoreCase(key, "imgIcon")) {rtnString = ConfigUtil.getProperty("path.image.icon");}
 			else if (CommonUtil.equalsIgnoreCase(key, "imgSortableTable")) {rtnString = ConfigUtil.getProperty("path.image.sortableTable");}
 
+			else if (CommonUtil.equalsIgnoreCase(key, "jsApp")) {rtnString = ConfigUtil.getProperty("path.web.appJs");}
+			else if (CommonUtil.equalsIgnoreCase(key, "jsAppFwk")) {rtnString = ConfigUtil.getProperty("path.web.fwkAppJs");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsCommon")) {rtnString = ConfigUtil.getProperty("path.js.common");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsJq")) {rtnString = ConfigUtil.getProperty("path.js.jquery");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsNg")) {rtnString = ConfigUtil.getProperty("path.js.angular");}
