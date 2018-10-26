@@ -42,7 +42,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
 				dummyDao.resetDataSourceName();
-				queryAdvisor.addAutoFillCriteria("table_name", "table_name like 'DM_%'");
+//				queryAdvisor.addAutoFillCriteria("table_name", "table_name like 'DM_%'");
 				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteria(queryAdvisor));
 			}
 

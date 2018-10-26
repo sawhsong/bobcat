@@ -9,6 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet datasourceDataSet = (DataSet)paramEntity.getObject("datasourceDataSet");
+	String dataSourceNames[] = CommonUtil.split(ConfigUtil.getProperty("jdbc.multipleDatasource"), ConfigUtil.getProperty("delimiter.data"));
+	String targetDataSource = dataSourceNames[0];
+	String sourceDataSource = dataSourceNames[1];
 %>
 <%/************************************************************************************************
 * HTML
@@ -34,25 +37,12 @@ $(function() {
 	 * event
 	 */
 	$("#btnSearch").click(function(event) {
-		setGridSize();
 		doSourceDataSearch();
 		doTargetDataSearch();
 	});
 
 	$("#icnCheckSourceData").click(function(event) {
 		commonJs.toggleCheckboxes("chkSourceData");
-	});
-
-	$("#sourceDb").change(function() {
-		setGridSize();
-		doSourceDataSearch();
-		doTargetDataSearch();
-	});
-
-	$("#targetDb").change(function() {
-		setGridSize();
-		doSourceDataSearch();
-		doTargetDataSearch();
 	});
 
 	$("#btnGenerate").click(function(event) {
@@ -109,18 +99,25 @@ $(function() {
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				html += "<tr>";
-				html += "<td class=\"tdGridCt\"><input type=\"checkbox\" id=\"chkSourceData\" name=\"chkSourceData\" class=\"chkEn inTblGrid\" value=\""+dataSet.getValue(i, "TABLE_NAME")+"\"/></td>";
-				html += "<td class=\"tdGrid\"><a onclick=\"getDetail('"+$("#sourceDb").val()+"', '"+dataSet.getValue(i, "TABLE_NAME")+"')\" class=\"aEn\">"+dataSet.getValue(i, "TABLE_NAME")+"</a></td>";
-				html += "<td class=\"tdGrid\">"+commonJs.abbreviate(dataSet.getValue(i, "COMMENTS"), 60)+"</td>";
-				html += "</tr>";
+				var uiGridTr = new UiGridTr();
 
+				var uiChk = new UiCheckbox();
+				uiChk.setId("chkSourceData").setName("chkSourceData").setValue(dataSet.getValue(i, "TABLE_NAME"));
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+$("#sourceDb").val()+"', '"+dataSet.getValue(i, "TABLE_NAME")+"')");
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(dataSet.getValue(i, "COMMENTS"), 60)));
+
+				html += uiGridTr.toHtmlString();
 			}
 		} else {
-			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"3\"><mc:msg key="I001"/></td>";
-			html += "</tr>";
+			var uiGridTr = new UiGridTr();
+
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:3").setText("<mc:msg key="I001"/>"));
+			html += uiGridTr.toHtmlString();
 		}
 
 		$("#tblSourceDataBody").append($(html));
@@ -159,15 +156,21 @@ $(function() {
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				html += "<tr>";
-				html += "<td class=\"tdGrid\"><a onclick=\"getDetail('"+$("#targetDb").val()+"', '"+dataSet.getValue(i, "TABLE_NAME")+"')\" class=\"aEn\">"+dataSet.getValue(i, "TABLE_NAME")+"</a></td>";
-				html += "<td class=\"tdGrid\">"+dataSet.getValue(i, "TABLE_DESCRIPTION")+"</td>";
-				html += "</tr>";
+				var uiGridTr = new UiGridTr();
+
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+$("#targetDb").val()+"', '"+dataSet.getValue(i, "TABLE_NAME")+"')");
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(dataSet.getValue(i, "TABLE_DESCRIPTION"), 60)));
+
+				html += uiGridTr.toHtmlString();
 			}
 		} else {
-			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"2\"><mc:msg key="I001"/></td>";
-			html += "</tr>";
+			var uiGridTr = new UiGridTr();
+
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:2").setText("<mc:msg key="I001"/>"));
+			html += uiGridTr.toHtmlString();
 		}
 
 		$("#tblTargetDataBody").append($(html));
@@ -253,26 +256,7 @@ $(function() {
 	/*!
 	 * load event (document / window)
 	 */
-	setGridSize = function() {
-		$("#divSourceDataTable").css("height", ($("#divScrollablePanel").height()-10));
-		$("#divTargetDataTable").css("height", ($("#divScrollablePanel").height()-10));
-		widthSourceDataDiv = $("#divSourceDataTable").width();
-		widthTargetDataDiv = $("#divTargetDataTable").width();
-	};
-
-	setGridWidthAdjust = function() {
-		if (commonJs.browser.FireFox) {
-			sourceGridWidthAdjust = -14;
-			targetGridWidthAdjust = -23;
-		} else {
-			sourceGridWidthAdjust = -17;
-			targetGridWidthAdjust = -27;
-		}
-	};
-
 	$(window).load(function() {
-		setGridSize();
-		setGridWidthAdjust();
 		doSourceDataSearch();
 		doTargetDataSearch();
 	});
@@ -312,10 +296,10 @@ $(function() {
 					<tr>
 						<td class="tdDefault">
 							<label for="sourceDb" class="lblEn hor">Source Database</label>
-							<select id="sourceDb" name="sourceDb" class="bootstrapSelect default">
+							<select id="sourceDb" name="sourceDb" class="bootstrapSelect" disabled>
 <%
 							for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
-								String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "hkmysql")) ? "selected" : "";
+								String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), sourceDataSource)) ? "selected" : "";
 %>
 								<option value="<%=datasourceDataSet.getValue(i, "VALUE")%>" <%=selected%>><%=datasourceDataSet.getValue(i, "NAME")%></option>
 <%
@@ -335,10 +319,10 @@ $(function() {
 					<tr>
 						<td class="tdDefault">
 							<label for="targetDb" class="lblEn hor">Target Database</label>
-							<select id="targetDb" name="targetDb" class="bootstrapSelect default">
+							<select id="targetDb" name="targetDb" class="bootstrapSelect" disabled>
 <%
 							for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
-								String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), "hkaccount")) ? "selected" : "";
+								String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), targetDataSource)) ? "selected" : "";
 %>
 								<option value="<%=datasourceDataSet.getValue(i, "VALUE")%>" <%=selected%>><%=datasourceDataSet.getValue(i, "NAME")%></option>
 <%
@@ -367,7 +351,7 @@ $(function() {
 		<table id="tblSourceData" class="tblGrid sort autosort">
 			<colgroup>
 				<col width="3%"/>
-				<col width="30%"/>
+				<col width="34%"/>
 				<col width="*"/>
 			</colgroup>
 			<thead>
@@ -379,7 +363,7 @@ $(function() {
 			</thead>
 			<tbody id="tblSourceDataBody">
 				<tr>
-					<td class="tdGridCt" colspan="3"><mc:msg key="I002"/></td>
+					<td class="tdGrid Ct" colspan="3"><mc:msg key="I002"/></td>
 				</tr>
 			</tbody>
 		</table>
@@ -388,7 +372,7 @@ $(function() {
 	<div id="divTargetDataTable" style="float:right;width:49%;">
 		<table id="tblTargetData" class="tblGrid sort autosort">
 			<colgroup>
-				<col width="30%"/>
+				<col width="34%"/>
 				<col width="*"/>
 			</colgroup>
 			<thead>
@@ -398,6 +382,9 @@ $(function() {
 				</tr>
 			</thead>
 			<tbody id="tblTargetDataBody">
+				<tr>
+					<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+				</tr>
 			</tbody>
 		</table>
 		<div id="divTargetDataPagingArea"></div>

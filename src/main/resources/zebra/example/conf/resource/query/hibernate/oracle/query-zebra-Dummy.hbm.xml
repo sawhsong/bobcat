@@ -14,8 +14,8 @@
 
 	<sql-query name="query.zebra.Dummy.getTableListDataSetByCriteriaForAdditionalDataSource">
 	<![CDATA[
-		select table_name,
-		       table_comment
+		select TABLE_NAME,
+		       TABLE_COMMENT as COMMENTS
 		  from information_schema.tables
 		 where table_schema = 'hkaccount'
 		   and table_type = 'BASE TABLE'

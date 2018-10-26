@@ -47,7 +47,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(false);
 
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "defaultDataSourceUser")) {
+			if (!CommonUtil.equalsIgnoreCase(dataSource, defaultDataSourceUser)) {
 				dummyDao.setDataSourceName(dataSource);
 				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
