@@ -9,7 +9,13 @@ var framework = {
 		monthNameLong:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 		dayOfWeekShort:["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
 		dayOfWeekLong:["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-		garbageCollection:"Garbage Collection"
+		garbageCollection:"Garbage Collection",
+
+		/*!
+		 * board.notice
+		 */
+		popupTitleDetail:"Notice Detail",
+		popupTitleEdit:"New / Edit Notice"
 	},
 	message : {
 	}

@@ -41,11 +41,8 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-$(function() {
-	$(window).load(function() {
-	});
-});
 </script>
 </head>
 <%/************************************************************************************************

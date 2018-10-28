@@ -36,12 +36,13 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 
 		try {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(true);
 
-			zebraBoardDao.setDataSourceName("Nony");
+			zebraBoardDao.setDataSourceName(defaultDbUser);
 			paramEntity.setAjaxResponseDataSet(zebraBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
@@ -55,10 +56,11 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String articleId = requestDataSet.getValue("articleId");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 
 		try {
-			zebraBoardDao.setDataSourceName("Nony");
-			zebraBoardFileDao.setDataSourceName("Nony");
+			zebraBoardDao.setDataSourceName(defaultDbUser);
+			zebraBoardFileDao.setDataSourceName(defaultDbUser);
 
 			paramEntity.setObject("noticeBoard", zebraBoardDao.getBoardByArticleId(articleId));
 			paramEntity.setObject("fileDataSet", zebraBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
@@ -96,9 +98,10 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 
 	public ParamEntity getAttachedFile(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 
 		try {
-			zebraBoardFileDao.setDataSourceName("Nony");
+			zebraBoardFileDao.setDataSourceName(defaultDbUser);
 			paramEntity.setAjaxResponseDataSet(zebraBoardFileDao.getBoardFileListDataSetByArticleId(requestDataSet.getValue("articleId")));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -115,6 +118,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 		ZebraBoard zebraBoard = new ZebraBoard();
 		String uid = CommonUtil.uid();
 		String loggedInUserId = (String)session.getAttribute("UserId");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 		int result = -1;
 
 		try {
@@ -130,7 +134,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 			zebraBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraBoard.setRefArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
 
-			zebraBoardDao.setDataSourceName("Nony");
+			zebraBoardDao.setDataSourceName(defaultDbUser);
 			result = zebraBoardDao.insert(zebraBoard, fileDataSet, "Y");
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -152,11 +156,12 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 		String articleId = requestDataSet.getValue("articleId");
 		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		String loggedInUserId = (String)session.getAttribute("UserId");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 		ZebraBoard zebraBoard;
 		int result = 0;
 
 		try {
-			zebraBoardDao.setDataSourceName("Nony");
+			zebraBoardDao.setDataSourceName(defaultDbUser);
 			zebraBoard = zebraBoardDao.getBoardByArticleId(articleId);
 			zebraBoard.setArticleId(articleId);
 			zebraBoard.setWriterId(loggedInUserId);
@@ -168,7 +173,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 			zebraBoard.setUpdateUserId(loggedInUserId);
 			zebraBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			zebraBoardDao.setDataSourceName("Nony");
+			zebraBoardDao.setDataSourceName(defaultDbUser);
 			result = zebraBoardDao.update(zebraBoard, fileDataSet, "Y", fileIdsToDelete);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -186,15 +191,16 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String articleId = requestDataSet.getValue("articleId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 		String[] articleIds = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
 			if (CommonUtil.isBlank(articleId)) {
-				zebraBoardDao.setDataSourceName("Nony");
+				zebraBoardDao.setDataSourceName(defaultDbUser);
 				result = zebraBoardDao.delete(articleIds);
 			} else {
-				zebraBoardDao.setDataSourceName("Nony");
+				zebraBoardDao.setDataSourceName(defaultDbUser);
 				result = zebraBoardDao.delete(articleId);
 			}
 
@@ -215,6 +221,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
 		String dataRange = requestDataSet.getValue("dataRange");
+		String defaultDbUser = ConfigUtil.getProperty("jdbc.user.name");
 
 		try {
 			String pageTitle = "Notice Board List";
@@ -234,7 +241,7 @@ public class MultiDatasourceBizImpl extends BaseBiz implements MultiDatasourceBi
 				queryAdvisor.setPagination(true);
 			}
 
-			zebraBoardDao.setDataSourceName("Nony");
+			zebraBoardDao.setDataSourceName(defaultDbUser);
 			exportHelper.setSourceDataSet(zebraBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);

@@ -24,31 +24,10 @@
 * Stylesheet & Javascript
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
+<style type="text/css">
+</style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-$(function() {
-	/*!
-	 * event
-	 */
-	$("#btnClose").click(function(event) {
-		parent.popupDetail.close();
-	});
-
-	/*!
-	 * process
-	 */
-
-	/*!
-	 * load event (document / window)
-	 */
-	$(window).ready(function() {
-		setTimeout(function() {
-			$("#tblGrid").fixedHeaderTable({
-				attachTo:$("#divDataArea"),
-				pagingArea:$("#divPagingArea")
-			});
-		}, 500);
-	});
-});
 </script>
 </head>
 <%/************************************************************************************************

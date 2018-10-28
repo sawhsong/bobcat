@@ -1,4 +1,13 @@
 /**
+ * 2018.10.29
+ */
+@ Re-implement source code generator function
+	# javascript files
+@ Re-consider popup header(title) text
+	# framework
+
+
+/**
  * 2018.09.03
  */
 @ Local Oracle XE

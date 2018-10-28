@@ -36,25 +36,8 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-$(function() {
-	$(document).bind("click", function(event) {
-		if ("btnRun" == event.target.id || "btnReload" == event.target.id) {
-			if ("btnRun" == event.target.id) {
-				$("#hdnGarbageCollector").val("Run");
-			}
-
-			commonJs.doSubmit({
-				formId:"fmDefault",
-				action:"/zebra/main/getGarbageColletion.do"
-			});
-		}
-
-		if ("btnClose" == event.target.id) {
-			parent.garbageCollectorPopup.close();
-		}
-	});
-});
 </script>
 </head>
 <%/************************************************************************************************
