@@ -27,19 +27,19 @@
 
 			if ($.nony.isEmpty(params.buttons)) {
 				if ("information" == params.type) {
-					params.buttons = [{caption:framework.messages.ok, callback:function() {}}];
+					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				} else if ("question" == params.type || "confirm" == params.type) {
 					params.buttons = [{
-						caption:framework.messages.ok, callback:function() {}
+						caption:com.caption.ok, callback:function() {}
 					}, {
-						caption:framework.messages.cancel, callback:function() {}
+						caption:com.caption.cancel, callback:function() {}
 					}];
 				} else if ("confirmation" == params.type) {
-					params.buttons = [{caption:framework.messages.ok, callback:function() {}}];
+					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				} else if ("warning" == params.type) {
-					params.buttons = [{caption:framework.messages.ok, callback:function() {}}];
+					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				} else if ("error" == params.type) {
-					params.buttons = [{caption:framework.messages.ok, callback:function() {}}];
+					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				}
 			}
 
@@ -129,7 +129,7 @@
 			};
 		},
 		openPopup : function(params) {
-			if ($.nony.isEmpty(params) || $.nony.isEmpty(params.popupId)) {throw new Error("Popup Id" + framework.messages.required);}
+			if ($.nony.isEmpty(params) || $.nony.isEmpty(params.popupId)) {throw new Error("Popup Id" + com.message.required);}
 			if ($("#"+params.popupId).length > 0) {return;}
 
 			params.popupMethod = "popupWithIframe";

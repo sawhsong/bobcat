@@ -123,7 +123,7 @@ $(function() {
 											modal:true,
 											width:300,
 											buttons:[{
-												caption:framework.messages.ok, callback:function() {
+												caption:com.caption.ok, callback:function() {
 													try {
 														parent.popupInfo.close();
 														popupProcess.close();

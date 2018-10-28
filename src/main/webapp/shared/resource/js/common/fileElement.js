@@ -94,12 +94,12 @@
 		},
 		addFileSelectObject : function(params) {
 			if ($.nony.isEmpty(params.appendToId)) {
-				throw new Error("Append to object ID" + framework.messages.invalid);
+				throw new Error("Append to object ID" + com.message.invalid);
 				return;
 			}
 
 			if ($("#"+params.appendToId).length <= 0) {
-				throw new Error("Append to object" + framework.messages.invalid);
+				throw new Error("Append to object" + com.message.invalid);
 				return;
 			}
 

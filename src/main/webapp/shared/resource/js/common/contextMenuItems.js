@@ -2,125 +2,125 @@
  * Predefined context menu items
  */
 var ctxMenu = {
+	// LoggedIn global menu
+	loggedInUser : [{
+		name:com.caption.ctxMyProfile,
+		img:jsconfig.get("imgThemeCom")+"/icnUser-MyProfile_Black.png",
+//		title:"My Profile",
+		fun:function() {}
+	}, {
+		name:com.caption.ctxLogOut,
+		img:jsconfig.get("imgThemeCom")+"/icnUser-LogOut_Black.png",
+//		title:"Log Out",
+		fun:function() {}
+	}],
+
 	// Common action context menu
 	commonAction : [{
-		name:framework.caption.ctxActionViewDetail,
+		name:com.caption.ctxDetail,
 		img:"fa-list-alt",
 		fun:function() {}
 	}, {
-		name:framework.caption.ctxActionEdit,
+		name:com.caption.ctxEdit,
 		img:"fa-edit",
 		fun:function() {}
 	}, {
-		name:framework.caption.ctxActionDelete,
+		name:com.caption.ctxDelete,
 		img:"fa-times",
 		fun:function() {}
 	}],
 
 	// Export context menu
 	commonExport : [{
-		name:framework.caption.exportToExcelAll,
+		name:com.caption.ctxExportExcelAll,
 		fileType:"Excel",
 		dataRange:"All",
 		img:"fa-file-excel-o",
 		fun:function() {}
 	}, {
-		name:framework.caption.exportToExcelCurrentPage,
+		name:com.caption.ctxExportExcelCurrentPage,
 		fileType:"Excel",
 		dataRange:"Current",
 		img:"fa-file-excel-o",
 		fun:function() {}
 	}, {
-		name:framework.caption.exportToPdfAll,
+		name:com.caption.ctxExportPdfAll,
 		fileType:"PDF",
 		dataRange:"All",
 		img:"fa-file-pdf-o",
 		fun:function() {}
 	}, {
-		name:framework.caption.exportToPdfCurrentPage,
+		name:com.caption.ctxExportPdfCurrentPage,
 		fileType:"PDF",
 		dataRange:"Current",
 		img:"fa-file-pdf-o",
 		fun:function() {}
 	}, {
-		name:framework.caption.exportToHtmlAll,
+		name:com.caption.ctxExportHtmlAll,
 		fileType:"HTML",
 		dataRange:"All",
 		img:"fa-file-code-o",
 		fun:function() {}
 	}, {
-		name:framework.caption.exportToHtmlCurrentPage,
+		name:com.caption.ctxExportHtmlCurrentPage,
 		fileType:"HTML",
 		dataRange:"Current",
 		img:"fa-file-code-o",
-		fun:function() {}
-	}],
-
-	// LoggedIn global menu
-	loggedInUser : [{
-		name:framework.caption.ctxMyProfile,
-		img:jsconfig.get("imgThemeCom")+"/icnUser-MyProfile_Black.png",
-//		title:"My Profile",
-		fun:function() {}
-	}, {
-		name:framework.caption.ctxLogOut,
-		img:jsconfig.get("imgThemeCom")+"/icnUser-LogOut_Black.png",
-//		title:"Log Out",
 		fun:function() {}
 	}],
 
 	// Board(Notice, BBS) Action context menu
 	boardAction : [{
-		name:framework.caption.ctxActionViewDetail,
+		name:com.caption.ctxDetail,
 		img:"fa-list-alt",
 		fun:function() {}
 	}, {
-		name:framework.caption.ctxActionEdit,
+		name:com.caption.ctxEdit,
 		img:"fa-edit",
 		fun:function() {}
 	}, {
-		name:framework.caption.ctxActionReply,
+		name:com.caption.ctxReply,
 		img:"fa-reply-all",
 		fun:function() {}
 	}, {
-		name:framework.caption.ctxActionDelete,
+		name:com.caption.ctxDelete,
 		img:"fa-times",
 		fun:function() {}
 	}],
 
 	// DTOGenerator Action context menu
 	dtoGeneratorAction : [{
-		name:framework.caption.ctxActionViewDetail,
+		name:com.caption.ctxDetail,
 		img:"fa-list-alt",
 		fun:function() {}
 	}, {
-		name:framework.caption.ctxActionGenerate,
+		name:com.caption.ctxGenerate,
 		img:"fa-gears",
 		fun:function() {}
 	}],
 
 	// Data Entry Action context menu
 	dataEntrySalesAction : [{
-		name:messages.caption.editItem,
+		name:com.caption.ctxEdit,
 		img:"fa-edit",
 		fun:function() {}
 	}, {
-		name:messages.caption.deleteItem,
+		name:com.caption.ctxDelete,
 		img:"fa-trash",
 		fun:function() {}
 	}],
 
 	// Data Entry Action context menu
 	dataEntryAction : [{
-		name:messages.caption.saveItem,
+		name:com.caption.ctxSave,
 		img:"fa-save",
 		fun:function() {}
 	}, {
-		name:messages.caption.cancelItem,
+		name:com.caption.ctxCancel,
 		img:"fa-refresh",
 		fun:function() {}
 	}, {
-		name:messages.caption.deleteItem,
+		name:com.caption.ctxDelete,
 		img:"fa-trash",
 		fun:function() {}
 	}]

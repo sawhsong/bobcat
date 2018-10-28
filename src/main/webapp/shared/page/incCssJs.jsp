@@ -9,8 +9,9 @@
 <script type="text/javascript" src="<mc:cp key="jsJq"/>/bootstrap.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsNg"/>/angular.js"></script>
 
-<script type="text/javascript" src="<mc:cp key="jsMessage"/>/message_${sessionScope.langCode}.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsMessage"/>/message-framework_${sessionScope.langCode}.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsMessage"/>/message-common_${sessionScope.langCode}.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsMessage"/>/message-project_${sessionScope.langCode}.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/jquery.blockUI.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/jquery.corner.js"></script>

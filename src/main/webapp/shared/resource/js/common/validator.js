@@ -11,7 +11,7 @@
 			var objToCheck = [];
 
 			if (object == null || object == "" || object == "undefined") {
-				throw new Error("Parameter" + framework.messages.invalid);
+				throw new Error("Parameter" + com.message.invalid);
 				return;
 			}
 

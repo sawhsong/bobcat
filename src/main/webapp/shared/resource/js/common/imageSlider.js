@@ -59,8 +59,8 @@
 (function($) {
 	$.fn.imageSlider = function(options) {
 		return this.each(function() {
-			if (options.width == null || options.width <= 0) {throw new Error("Width" + framework.messages.mandatory); return;}
-			if (options.height == null || options.height <= 0) {throw new Error("Height" + framework.messages.mandatory); return;}
+			if (options.width == null || options.width <= 0) {throw new Error("Width" + com.message.mandatory); return;}
+			if (options.height == null || options.height <= 0) {throw new Error("Height" + com.message.mandatory); return;}
 
 			/*!
 			 * Default values

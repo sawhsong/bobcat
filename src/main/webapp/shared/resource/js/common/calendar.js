@@ -12,7 +12,7 @@
 			if ($("#"+params.calendarId).length > 0) {$("#"+params.calendarId).remove();}
 
 			if (event == null || event == undefined || event == "") {
-				throw new Error("Event parameter" + framework.messages.invalid);
+				throw new Error("Event parameter" + com.message.invalid);
 				return;
 			}
 
@@ -20,14 +20,14 @@
 			if (typeof txtObjectId == "object") {params.dateElement = $(txtObjectId);}
 
 			if (params.dateElement == null || $(params.dateElement).length != 1) {
-				throw new Error("Date element parameter" + framework.messages.invalid);
+				throw new Error("Date element parameter" + com.message.invalid);
 				return;
 			}
 
 			value = $(params.dateElement).val();
 			if (!$.nony.isEmpty(value)) {
 				if (!moment(value, jsconfig.get("dateFormatJs_"+jsconfig.get("langCode"))).isValid()) {
-					throw new Error("The value " + framework.messages.invalid);
+					throw new Error("The value " + com.message.invalid);
 					return;
 				}
 			}
@@ -91,10 +91,10 @@
 			this.timeFormat = params.timeFormat = "HH:mm:ss";
 			this.clickedImg = params.clickedImg = event.target;
 			this.weekNumberName = params.weekNumberName = "Wk";
-			this.monthNameShort = params.monthNameShort = framework.messages.monthNameShort;
-			this.monthNameLong = params.monthNameLong = framework.messages.monthNameLong;
-			this.dayOfWeekShort = params.dayOfWeekShort = framework.messages.dayOfWeekShort;
-			this.dayOfWeekLong = params.dayOfWeekLong = framework.messages.dayOfWeekLong;
+			this.monthNameShort = params.monthNameShort = framework.header.monthNameShort;
+			this.monthNameLong = params.monthNameLong = framework.header.monthNameLong;
+			this.dayOfWeekShort = params.dayOfWeekShort = framework.header.dayOfWeekShort;
+			this.dayOfWeekLong = params.dayOfWeekLong = framework.header.dayOfWeekLong;
 			this.effect = params.effect = params.effect || "fade";															// slide / fade / [size]
 			this.displayType = params.displayType = params.displayType || "Short";											// display type of Month (Long / [Short])
 			this.returnType = params.returnType = params.returnType || "Long";												// return type of day of week ([Long] / Short)
@@ -355,7 +355,7 @@
 
 			if (params.minYearMonth) {
 				if (!moment(params.minYearMonth, "YYYYMM").isValid() || params.minYearMonth.length != 6) {
-					throw new Error("Minimum range value " + framework.messages.invalid);
+					throw new Error("Minimum range value " + com.message.invalid);
 					return;
 				}
 
@@ -365,7 +365,7 @@
 
 			if (params.maxYearMonth) {
 				if (!moment(params.maxYearMonth, "YYYYMM").isValid() || params.maxYearMonth.length != 6) {
-					throw new Error("Maximum range value " + framework.messages.invalid);
+					throw new Error("Maximum range value " + com.message.invalid);
 					return;
 				}
 

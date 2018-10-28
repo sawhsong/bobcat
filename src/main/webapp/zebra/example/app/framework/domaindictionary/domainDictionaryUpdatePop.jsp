@@ -38,7 +38,7 @@ $(function() {
 		if ($("#dataType").val() == "VARCHAR2" && commonJs.isEmpty($("#dataLength").val())) {
 			commonJs.openDialog({
 				type:"warning",
-				contents:"Data Length" + framework.messages.mandatory,
+				contents:"Data Length" + com.message.mandatory,
 				buttons:[{
 					caption:"Ok",
 					callback:function() {

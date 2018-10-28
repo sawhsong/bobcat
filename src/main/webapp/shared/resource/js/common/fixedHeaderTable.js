@@ -21,13 +21,13 @@
 	$.fn.fixedHeaderTable = function(options) {
 		return this.each(function() {
 			if ($(options.attachTo).length <= 0) {
-				throw new Error("AttachTo" + framework.messages.mandatory);
+				throw new Error("AttachTo" + com.message.mandatory);
 				return;
 			}
 
 			if (options.isPageable || options.displayRowCount) {
 				if ($(options.pagingArea).length <= 0) {
-					throw new Error("PagingArea" + framework.messages.mandatory);
+					throw new Error("PagingArea" + com.message.mandatory);
 					return;
 				}
 			}
