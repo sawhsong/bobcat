@@ -132,7 +132,7 @@ $(function() {
 		} else {
 			var uiGridTr = new UiGridTr();
 
-			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			uiGridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
 			html += uiGridTr.toHtmlString();
 		}
 
@@ -190,12 +190,12 @@ $(function() {
 
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn("<mc:msg key="I902"/>");
+			commonJs.warn(com.message.I902);
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<mc:msg key="Q002"/>",
+			contents:com.message.Q002,
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
@@ -253,7 +253,7 @@ $(function() {
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {
-			classPrefix:"actionInGrid",
+			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,

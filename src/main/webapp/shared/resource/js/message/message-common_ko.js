@@ -2,6 +2,19 @@
  * Common Javascript Messages
  */
 var com = {
+	constants : {
+		/*!
+		 * Context menu class
+		 */
+		ctxClassPrefixButton:"actionButton",
+		ctxClassPrefixGrid:"actionInGrid",
+
+		/*!
+		 * CKEditor Toolbar
+		 */
+		toolbarDefault:"frameworkBasic",
+		toolbarFull:"full"
+	},
 	caption : {
 		/*!
 		 * Context Menu Item
@@ -58,6 +71,14 @@ var com = {
 		browse:"찾아보기"
 	},
 	header : {
+		searchCriteria:"검색조건",
+		dataEntry:"데이터 입력",
+		action:"액션",
+		insertUser:"입력자",
+		insertDate:"입력일",
+		updateUser:"수정자",
+		updateDate:"수정일",
+		selectToDelete:"삭제선택"
 	},
 	message : {
 		loading:"요청 작업을 처리중 입니다.",

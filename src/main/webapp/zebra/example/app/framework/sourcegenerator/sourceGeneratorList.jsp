@@ -42,7 +42,7 @@ $(function() {
 	 */
 	$("#btnGenerate").click(function(event) {
 		if (commonJs.getCountChecked("chkForGenerate") == 0) {
-			commonJs.warn("<mc:msg key="I902"/>");
+			commonJs.warn(com.message.I902);
 			return;
 		}
 
@@ -145,7 +145,7 @@ $(function() {
 				if (isActive) {
 					var iconAction = new UiIcon();
 					iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("menuId:"+menuId)
-					.setScript("doAction(this)").addAttribute("title:"+"<mc:msg key="page.com.action"/>");
+					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
 					tdAction.addChild(iconAction);
 				}
 				gridTr.addChild(tdAction);
@@ -155,7 +155,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -190,7 +190,7 @@ $(function() {
 		contextMenu[0].fun = function() {$("#btnGenerate").trigger("click");};
 
 		$(img).contextMenu(contextMenu, {
-			classPrefix:"actionInGrid",
+			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,

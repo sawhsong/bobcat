@@ -97,7 +97,7 @@ $(function() {
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
-				contents:"<mc:msg key="Q002"/>",
+				contents:com.message.Q002,
 				buttons:[{
 					caption:com.caption.yes,
 					callback:function() {

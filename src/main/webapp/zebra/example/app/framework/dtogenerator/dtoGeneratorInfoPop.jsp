@@ -39,7 +39,7 @@ $(function() {
 		var selectedSystem = commonJs.getCheckedValueFromRadio("system");
 
 		if (getCheckedCount(selectedSystem) <= 0) {
-			commonJs.warn("<mc:msg key="I902"/>");
+			commonJs.warn(com.message.I902);
 			return;
 		}
 

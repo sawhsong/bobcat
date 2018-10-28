@@ -73,7 +73,7 @@ $(function() {
 	setEditor = function() {
 		$("#articleContents").ckeditor({
 			height:400,
-			toolbar:"frameworkBasic"
+			toolbar:com.constants.toolbarDefault
 		});
 	};
 

@@ -37,7 +37,7 @@ $(function() {
 	 */
 	$("#btnGenerate").click(function(event) {
 		if (commonJs.getCountChecked("chkForGenerate") == 0) {
-			commonJs.warn("<mc:msg key="I902"/>");
+			commonJs.warn(com.message.I902);
 			return;
 		}
 
@@ -141,7 +141,7 @@ $(function() {
 			var uiGridTr = new UiGridTr();
 
 			var uiTd0 = new UiGridTd();
-			uiTd0.addClassName("Ct").setAttribute("colspan:4").setText("<mc:msg key="I001"/>");
+			uiTd0.addClassName("Ct").setAttribute("colspan:4").setText(com.message.I001);
 			uiGridTr.addChild(uiTd0);
 
 			html += uiGridTr.toHtmlString();
@@ -197,7 +197,7 @@ $(function() {
 		ctxMenu.dtoGeneratorAction[1].fun = function() {$("#btnGenerate").trigger("click");};
 
 		$(img).contextMenu(ctxMenu.dtoGeneratorAction, {
-			classPrefix:"actionInGrid",
+			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,

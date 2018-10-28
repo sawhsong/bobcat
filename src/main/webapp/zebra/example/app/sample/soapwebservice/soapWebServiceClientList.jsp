@@ -87,7 +87,7 @@ $(function() {
 		ctxMenu.commonExport[5].fun = function() {exeExport(ctxMenu.commonExport[5]);};
 
 		$("#btnExport").contextMenu(ctxMenu.commonExport, {
-			classPrefix:"actionButton",
+			classPrefix:com.constants.ctxClassPrefixButton,
 			effectDuration:300,
 			effect:"slide",
 			borderRadius:"bottom 4px",
@@ -171,7 +171,7 @@ $(function() {
 
 				var iconAction = new UiIcon();
 				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("doAction(this)").addAttribute("title:"+"<mc:msg key="page.com.action"/>");
+					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -179,7 +179,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText("<mc:msg key="I001"/>"));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -244,12 +244,12 @@ $(function() {
 
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn("<mc:msg key="I902"/>");
+			commonJs.warn(com.message.I902);
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<mc:msg key="Q002"/>",
+			contents:com.message.Q002,
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
@@ -308,7 +308,7 @@ $(function() {
 		ctxMenu.boardAction[3].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.boardAction, {
-			classPrefix:"actionInGrid",
+			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,
@@ -359,7 +359,7 @@ $(function() {
 					}
 
 					$(img).contextMenu(attchedFileContextMenu, {
-						classPrefix:"actionInGrid",
+						classPrefix:com.constants.ctxClassPrefixGrid,
 						displayAround:"trigger",
 						position:"bottom",
 						horAdjust:0,
@@ -393,12 +393,12 @@ $(function() {
 		$("[name=dataRange]").remove();
 
 		if (searchResultDataCount <= 0) {
-			commonJs.warn("<mc:msg key="I001"/>");
+			commonJs.warn(com.message.I001);
 			return;
 		}
 
 		commonJs.confirm({
-			contents:"<mc:msg key="Q003"/>",
+			contents:com.message.Q003,
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {

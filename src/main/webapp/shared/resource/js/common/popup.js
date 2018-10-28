@@ -28,17 +28,17 @@
 			if ($.nony.isEmpty(params.buttons)) {
 				if (com.message.I000 == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
-				} else if ("question" == params.type || "confirm" == params.type) {
+				} else if (com.message.Q000 == params.type || "Confirm" == params.type) {
 					params.buttons = [{
 						caption:com.caption.ok, callback:function() {}
 					}, {
 						caption:com.caption.cancel, callback:function() {}
 					}];
-				} else if ("confirmation" == params.type) {
+				} else if ("Confirmation" == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
-				} else if ("warning" == params.type) {
+				} else if ("Warning" == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
-				} else if ("error" == params.type) {
+				} else if ("Error" == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				}
 			}

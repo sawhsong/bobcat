@@ -2,6 +2,19 @@
  * Common Javascript Messages
  */
 var com = {
+	constants : {
+		/*!
+		 * Context menu class
+		 */
+		ctxClassPrefixButton:"actionButton",
+		ctxClassPrefixGrid:"actionInGrid",
+
+		/*!
+		 * CKEditor Toolbar
+		 */
+		toolbarDefault:"frameworkBasic",
+		toolbarFull:"full"
+	},
 	caption : {
 		/*!
 		 * Context Menu Item
@@ -58,6 +71,14 @@ var com = {
 		browse:"Browse"
 	},
 	header : {
+		searchCriteria:"Search Criteria",
+		dataEntry:"Data Entry",
+		action:"Action",
+		insertUser:"Created By",
+		insertDate:"Created Date",
+		updateUser:"Updated By",
+		updateDate:"Updated Date",
+		selectToDelete:"Select to delete"
 	},
 	message : {
 		loading:"Now processing.",

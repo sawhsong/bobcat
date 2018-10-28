@@ -53,7 +53,7 @@ $(function() {
 	setEditor = function() {
 		$("#articleContents").ckeditor({
 			height:500,
-			toolbar:"frameworkBasic",
+			toolbar:com.constants.toolbarDefault,
 			readOnly:true
 		});
 	};
@@ -81,7 +81,7 @@ $(function() {
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
-				contents:"<mc:msg key="Q002"/>",
+				contents:com.message.Q002,
 				buttons:[{
 					caption:com.caption.yes,
 					callback:function() {
