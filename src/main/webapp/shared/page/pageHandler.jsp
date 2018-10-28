@@ -47,11 +47,11 @@ $(function() {
 
 	$(window).load(function() {
 		if ($.nony.isEmpty(messageCode) || messageCode.indexOf("I") != -1) {
-			dialogType = "information";
+			dialogType = com.message.I000;
 		} else if (messageCode.indexOf("E") != -1) {
 			dialogType = "error";
 		} else {
-			dialogType = "information";
+			dialogType = com.message.I000;
 		}
 
 		if (pagehandlerActionType == "popup") {

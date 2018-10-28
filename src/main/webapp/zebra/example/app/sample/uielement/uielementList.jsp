@@ -78,12 +78,12 @@ $(function() {
 			effect:"fade",
 			heightAdjust:1,
 			buttons:[{
-				caption:"Yes",
+				caption:com.caption.yes,
 				callback:function() {
 					alert("Yes clicked.");
 				}
 			}, {
-				caption:"No",
+				caption:com.caption.no,
 				callback:function() {
 //					alert("No clicked.");
 				}
@@ -111,11 +111,11 @@ $(function() {
 
 				if (result.isSuccess == true || result.isSuccess == "true") {
 					commonJs.openDialog({
-						type:"information",
+						type:com.message.I000,
 						contents:result.dataSet.toString(),
 						blind:true,
 						buttons:[{
-							caption:"Ok",
+							caption:com.caption.ok,
 							callback:function() {
 							}
 						}]

@@ -36,6 +36,8 @@ var com = {
 		 */
 		ok:"Ok",
 		cancel:"Cancel",
+		yes:"Yes",
+		no:"No",
 		close:"Close",
 		reload:"Reload",
 		search:"Search",

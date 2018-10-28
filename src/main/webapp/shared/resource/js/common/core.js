@@ -743,7 +743,7 @@ var nony = {
 	alert : function(msg) {
 		var params = {};
 
-		params.type = "information";
+		params.type = com.message.I000;
 		params.contents = msg;
 
 		return $.nony.popup.openDialog(params);
@@ -754,14 +754,14 @@ var nony = {
 			return;
 		}
 
-		params.type = "question";
+		params.type = com.message.Q000;
 
 		return $.nony.popup.openDialog(params);
 	},
 	warn : function(msg) {
 		var params = {};
 
-		params.type = "warning";
+		params.type = com.message.W000;
 		params.contents = msg;
 
 		return $.nony.popup.openDialog(params);
@@ -769,7 +769,7 @@ var nony = {
 	error : function(msg) {
 		var params = {};
 
-		params.type = "error";
+		params.type = com.message.E000;
 		params.contents = msg;
 
 		return $.nony.popup.openDialog(params);

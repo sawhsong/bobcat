@@ -97,7 +97,7 @@ $(function() {
 			commonJs.confirm({
 				contents:"<mc:msg key="Q002"/>",
 				buttons:[{
-					caption:"Yes",
+					caption:com.caption.yes,
 					callback:function() {
 						commonJs.ajaxSubmit({
 							url:actionString,
@@ -111,11 +111,11 @@ $(function() {
 
 								if (result.isSuccess == true || result.isSuccess == "true") {
 									commonJs.openDialog({
-										type:"information",
+										type:com.message.I000,
 										contents:result.message,
 										blind:true,
 										buttons:[{
-											caption:"Ok",
+											caption:com.caption.ok,
 											callback:function() {
 												commonJs.doSubmit({action:"/zebra/board/freeboard/getDefault.do"});
 											}
@@ -128,7 +128,7 @@ $(function() {
 						});
 					}
 				}, {
-					caption:"No",
+					caption:com.caption.no,
 					callback:function() {
 					}
 				}]

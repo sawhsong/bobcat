@@ -48,12 +48,12 @@ $(function() {
 			width:300,
 			height:150,
 			buttons:[{
-				caption:"Yes",
+				caption:com.caption.yes,
 				callback:function() {
 					exeGenerate($("#fmDefault").serializeArray());
 				}
 			}, {
-				caption:"No",
+				caption:com.caption.no,
 				callback:function() {
 				}
 			}]
@@ -118,7 +118,7 @@ $(function() {
 
 									if ((index+1) == parent.commonJs.getCountChecked("chkForGenerate")) {
 										parent.commonJs.openDialog({
-											type:"information",
+											type:com.message.I000,
 											contents:"<mc:msg key="I801"/>",
 											modal:true,
 											width:300,

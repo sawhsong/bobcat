@@ -31,67 +31,8 @@
 .input-group {padding-bottom:4px;}
 .buttonDiv {padding-top:18px;padding-bottom:0px;}
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var popup = null;
-
-$(function() {
-	/*!
-	 * event
-	 */
-	$(document).keypress(function(event) {
-		if (event.which == 13) {
-			var element = event.target;
-
-			if ($(element).is("[name=loginId]") || $(element).is("[name=email]")) {
-				doProcess();
-			}
-		}
-	});
-
-	$("#btnReset").click(function() {
-		doProcess();
-	});
-
-	/*!
-	 * process
-	 */
-	doProcess = function() {
-		if (!commonJs.doValidate("fmDefault")) {
-			return;
-		}
-
-		commonJs.ajaxSubmit({
-			url:"/login/exeResetPassword.do",
-			dataType:"json",
-			formId:"fmDefault",
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					commonJs.openDialog({
-						type:"information",
-						contents:result.message,
-						blind:true,
-						buttons:[{
-							caption:"Ok",
-							callback:function() {
-								parent.popup.close();
-							}
-						}]
-					});
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-	};
-
-	/*!
-	 * load event (document / window)
-	 */
-	$(window).load(function() {
-		$("[name=loginId]").focus();
-	});
-});
 </script>
 </head>
 <%/************************************************************************************************

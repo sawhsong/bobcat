@@ -26,37 +26,9 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-$(function() {
-	/*!
-	 * event
-	 */
-	$("#btnEdit").click(function(event) {
-		parent.popupUserProfile.resizeTo(0, 116);
-
-		commonJs.doSubmit({
-			form:"fmDefault",
-			action:"/login/getUpdateUserProfile.do",
-			data:{
-				userId:"<%=sysUser.getUserId()%>"
-			}
-		});
-	});
-
-	$("#btnClose").click(function(event) {
-		parent.popupUserProfile.close();
-	});
-
-	/*!
-	 * process
-	 */
-
-	/*!
-	 * load event (document / window)
-	 */
-	$(window).load(function() {
-	});
-});
+var userId = "<%=sysUser.getUserId()%>";
 </script>
 </head>
 <%/************************************************************************************************

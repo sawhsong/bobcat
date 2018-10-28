@@ -82,7 +82,7 @@
 						commonJs.openDialog({
 							contents:com.message.sessionTimeOut,
 							buttons:[{
-								caption:"Ok",
+								caption:com.caption.ok,
 								callback:function() {
 									location.replace("/index/index.do");
 								}
@@ -113,7 +113,7 @@
 					width:"400",
 					height:"400",
 					buttons:[{
-						caption:"Ok",
+						caption:com.caption.ok,
 						callback:function() {
 						}
 					}]

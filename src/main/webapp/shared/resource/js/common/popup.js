@@ -8,7 +8,7 @@
 
 			params.popupId = params.popupId || "popupDialog_"+$.nony.getTimeStamp();
 			params.popupMethod = "popupDialog";
-			params.type = params.type || "information";
+			params.type = params.type || com.message.I000;
 			params.header = params.header || params.type;
 			params.contents = params.contents || "";
 			params.width = params.width;
@@ -26,7 +26,7 @@
 			params.iframeName = params.iframeName || "popupDialogIframe_"+$.nony.getTimeStamp();
 
 			if ($.nony.isEmpty(params.buttons)) {
-				if ("information" == params.type) {
+				if (com.message.I000 == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				} else if ("question" == params.type || "confirm" == params.type) {
 					params.buttons = [{

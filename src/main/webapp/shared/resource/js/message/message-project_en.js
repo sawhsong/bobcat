@@ -1,8 +1,17 @@
 /**
  * Javascript Messages for Project
  */
-var caption = {
-};
-
-var message = {
-};
+/*!
+ * login page
+ */
+var login = {
+	caption:{
+	},
+	header:{
+		resetPassword:"Reset Password",
+		requestRegister:"Request Register"
+	},
+	message:{
+		confirmPassword:"Password is not matched."
+	}
+}

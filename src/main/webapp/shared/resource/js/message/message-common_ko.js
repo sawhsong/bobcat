@@ -36,6 +36,8 @@ var com = {
 		 */
 		ok:"확인",
 		cancel:"취소",
+		yes:"예",
+		no:"아니오",
 		close:"닫기",
 		reload:"Reload",
 		search:"조회",

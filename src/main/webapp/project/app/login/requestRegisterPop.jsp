@@ -32,67 +32,8 @@
 .buttonDiv {padding-top:18px;padding-bottom:0px;}
 .lblCheckEn {margin-top:6px;margin-left:12px;font-size:13px;}
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var popup = null;
-
-$(function() {
-	/*!
-	 * event
-	 */
-	$(document).keypress(function(event) {
-		if (event.which == 13) {
-		}
-	});
-
-	$("#btnRequest").click(function() {
-		doProcess();
-	});
-
-	/*!
-	 * process
-	 */
-	doProcess = function() {
-		if (!commonJs.doValidate("fmDefault")) {
-			return;
-		}
-
-		if ($("#password").val() != $("#passwordConfirm").val()) {
-			commonJs.error("<mc:msg key="login.message.confirmPassword"/>");
-		} else {
-			commonJs.ajaxSubmit({
-				url:"/login/exeRequestRegister.do",
-				dataType:"json",
-				formId:"fmDefault",
-				success:function(data, textStatus) {
-					var result = commonJs.parseAjaxResult(data, textStatus, "json");
-					if (result.isSuccess == true || result.isSuccess == "true") {
-						popup = commonJs.openDialog({
-							type:"information",
-							contents:result.message,
-							blind:true,
-							width:300,
-							buttons:[{
-								caption:"Ok",
-								callback:function() {
-									parent.popup.close();
-								}
-							}]
-						});
-					} else {
-						commonJs.error(result.message);
-					}
-				}
-			});
-		}
-	};
-
-	/*!
-	 * load event (document / window)
-	 */
-	$(window).load(function() {
-		$("[name=userName]").focus();
-	});
-});
 </script>
 </head>
 <%/************************************************************************************************

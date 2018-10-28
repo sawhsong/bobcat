@@ -1,5 +1,5 @@
 /**
- * 
+ * dataMigration.js
  */
 var popup = null;
 
@@ -27,12 +27,12 @@ $(function() {
 			width:300,
 			height:150,
 			buttons:[{
-				caption:"Yes",
+				caption:com.caption.yes,
 				callback:function() {
 					exeGenerate();
 				}
 			}, {
-				caption:"No",
+				caption:com.caption.no,
 				callback:function() {
 				}
 			}]
@@ -199,7 +199,7 @@ $(function() {
 
 									if ((index+1) == commonJs.getCountChecked("chkSourceData")) {
 										commonJs.openDialog({
-											type:"information",
+											type:com.message.I000,
 											contents:com.message.I801,
 											modal:true,
 											width:300,

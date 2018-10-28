@@ -37,9 +37,9 @@ $(function() {
 			$("#fmDefault").attr("enctype", "multipart/form-data");
 
 			commonJs.confirm({
-				contents:"<mc:msg key="Q001"/>",
+				contents:com.message.Q001,
 				buttons:[{
-					caption:"Yes",
+					caption:com.caption.yes,
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
@@ -50,7 +50,7 @@ $(function() {
 						});
 					}
 				}, {
-					caption:"No",
+					caption:com.caption.no,
 					callback:function() {
 					}
 				}]

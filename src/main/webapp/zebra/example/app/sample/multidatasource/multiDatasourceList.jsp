@@ -248,12 +248,12 @@ $(function() {
 		commonJs.confirm({
 			contents:"<mc:msg key="Q002"/>",
 			buttons:[{
-				caption:"Yes",
+				caption:com.caption.yes,
 				callback:function() {
 					exeDelete();
 				}
 			}, {
-				caption:"No",
+				caption:com.caption.no,
 				callback:function() {
 				}
 			}],
@@ -271,11 +271,11 @@ $(function() {
 
 				if (result.isSuccess == true || result.isSuccess == "true") {
 					commonJs.openDialog({
-						type:"information",
+						type:com.message.I000,
 						contents:result.message,
 						blind:true,
 						buttons:[{
-							caption:"Ok",
+							caption:com.caption.ok,
 							callback:function() {
 								doSearch();
 							}
@@ -392,7 +392,7 @@ $(function() {
 		commonJs.confirm({
 			contents:"<mc:msg key="Q003"/>",
 			buttons:[{
-				caption:"Yes",
+				caption:com.caption.yes,
 				callback:function() {
 					popupNotice = commonJs.openPopup({
 						popupId:"exportFile",
@@ -410,7 +410,7 @@ $(function() {
 					setTimeout(function() {popupNotice.close();}, 2000);
 				}
 			}, {
-				caption:"No",
+				caption:com.caption.no,
 				callback:function() {
 				}
 			}],

@@ -16,7 +16,7 @@ $(function() {
 			commonJs.openDialog({
 				contents:"<mc:msg key="W001"/>",
 				buttons:[{
-					caption:"Ok",
+					caption:com.caption.ok,
 					callback:function() {
 						$("#fmDefault").attr("target", "_parent").submit();
 					}
@@ -33,7 +33,7 @@ $(function() {
 			commonJs.openDialog({
 				contents:"<mc:msg key="W001"/>",
 				buttons:[{
-					caption:"Ok",
+					caption:com.caption.ok,
 					callback:function() {
 						$("#fmDefault").submit();
 					}
