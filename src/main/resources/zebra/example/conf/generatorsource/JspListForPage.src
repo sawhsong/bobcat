@@ -24,7 +24,9 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
@@ -122,6 +124,7 @@ $(function() {
 		var html = "";
 
 		searchResultDataCount = dataSet.getRowCnt();
+
 		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {

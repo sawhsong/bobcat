@@ -107,6 +107,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 		try {
 			FileUtil.createFolder(javaPath+"/"+menuPathStr);
 			FileUtil.createFolder(jspPath+"/"+menuPathStr);
+			FileUtil.createFolder(jspPath+"js/"+menuPathStr);
 
 			if (isCreateSpring) {
 				FileUtil.createFolder(springPath);
