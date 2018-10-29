@@ -50,6 +50,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		parent.popup.setHeader(framework.header.popupTitleEdit);
+		parent.popup.setHeader(framework.header.popHeaderEdit);
 	});
 });

@@ -33,7 +33,7 @@ $(function() {
 				originalName:originalName,
 				newName:newName
 			},
-			header:"downloadFile",
+			header:framework.header.fileDownload,
 			blind:false,
 			width:300,
 			height:150

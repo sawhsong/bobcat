@@ -373,7 +373,7 @@ $(function() {
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},
-						header:"exportFile",
+						header:framework.header.fileExport,
 						blind:false,
 						width:200,
 						height:100

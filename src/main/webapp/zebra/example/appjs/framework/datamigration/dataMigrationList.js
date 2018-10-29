@@ -161,7 +161,7 @@ $(function() {
 				tableName:tableName,
 				dataSource:dbFlag
 			},
-			header:"TableDetail",
+			header:framework.header.popHeaderDetail,
 			width:1300,
 			height:800
 		});
@@ -175,7 +175,7 @@ $(function() {
 
 		popup = commonJs.openPopup({
 			popupId:"ProcessInformation",
-			header:"Process Result",
+			header:framework.header.popHeaderResult,
 			width:600,
 			height:400,
 			blind:false,

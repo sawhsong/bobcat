@@ -138,13 +138,13 @@ $(function() {
 
 		if (param.mode == "Detail") {
 			url = "/zebra/framework/tablescript/getDetail.do";
-			header = "Table Script Details";
+			header = framework.header.popHeaderDetail;
 		} else if (param.mode == "New") {
 			url = "/zebra/framework/tablescript/getInsert.do";
-			header = "Table Script Creation";
+			header = framework.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/zebra/framework/tablescript/getUpdate.do";
-			header = "Table Script Creation";
+			header = framework.header.popHeaderEdit;
 		}
 
 		var popParam = {

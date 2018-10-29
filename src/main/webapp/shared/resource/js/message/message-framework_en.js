@@ -2,6 +2,9 @@
  * Javascript Messages for Framework
  */
 var framework = {
+	/*
+	 * framework common
+	 */
 	caption : {
 	},
 	header : {
@@ -10,12 +13,13 @@ var framework = {
 		dayOfWeekShort:["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
 		dayOfWeekLong:["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 		garbageCollection:"Garbage Collection",
-
-		/*!
-		 * board.notice
-		 */
-		popupTitleDetail:"Notice Detail",
-		popupTitleEdit:"New / Edit Notice"
+		fileExport:"File Export",
+		fileDownload:"File Download",
+		popHeaderEdit:"New / Edit",
+		popHeaderDetail:"Detail",
+		popHeaderResult:"Process Result",
+		popHeaderTableInfo:"Table Detail",
+		popHeaderGenerator:"Generator"
 	},
 	message : {
 	}

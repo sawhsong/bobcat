@@ -34,7 +34,7 @@ $(function() {
 				newName:newName,
 				webServiceUrl:"zebraRestNoticeBoard/download"
 			},
-			header:"downloadFile",
+			header:framework.header.fileDownload,
 			blind:false,
 			width:300,
 			height:150

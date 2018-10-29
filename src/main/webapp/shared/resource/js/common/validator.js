@@ -168,7 +168,7 @@
 			pattern.exec(msg);
 			var tail = (RegExp.$2) ? this._checkKor(eval(RegExp.$1), RegExp.$2) : "";
 
-			params.type = "warning";
+			params.type = "Warning";
 			params.width = 330;
 //			params.height = 200;
 			params.contents = msg.replace(pattern, eval(RegExp.$1) + tail);
@@ -195,7 +195,7 @@
 			pattern.exec(msg);
 			var tail = (RegExp.$2) ? this._checkKor(eval(RegExp.$1), RegExp.$2) : "";
 
-			params.type = "warning";
+			params.type = "Warning";
 			params.width = 330;
 			params.contents = msg.replace(pattern, eval(RegExp.$1) + tail);
 			$.nony.popup.openDialog(params);

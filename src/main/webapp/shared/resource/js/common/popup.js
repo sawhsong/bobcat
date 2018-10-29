@@ -36,9 +36,9 @@
 					}];
 				} else if ("Confirmation" == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
-				} else if ("Warning" == params.type) {
+				} else if (com.message.W000 == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
-				} else if ("Error" == params.type) {
+				} else if (com.message.E000 == params.type) {
 					params.buttons = [{caption:com.caption.ok, callback:function() {}}];
 				}
 			}

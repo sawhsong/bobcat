@@ -22,7 +22,7 @@ $(function() {
 		popup = commonJs.openPopup({
 			popupId:"SourceGeneratorInfo",
 			url:"/zebra/framework/sourcegenerator/getGeneratorInfo.do",
-			header:"Source Code Generator",
+			header:framework.header.popHeaderGenerator,
 			paramData:{},
 			blind:false,
 			width:760,

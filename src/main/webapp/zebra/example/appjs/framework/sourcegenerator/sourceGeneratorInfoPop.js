@@ -41,7 +41,7 @@ $(function() {
 
 		popupProcess = parent.commonJs.openPopup({
 			popupId:"ProcessInformation",
-			header:"Process Result",
+			header:framework.header.popHeaderResult,
 			width:600,
 			height:400,
 			blind:false,

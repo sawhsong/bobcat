@@ -189,13 +189,13 @@ $(function() {
 
 		if (param.mode == "Detail") {
 			url = "/zebra/sample/restwebservice/getDetail.do";
-			header = framework.header.popupTitleDetail;
+			header = framework.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
 			url = "/zebra/sample/restwebservice/getInsert.do";
-			header = framework.header.popupTitleEdit;
+			header = framework.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/zebra/sample/restwebservice/getUpdate.do";
-			header = framework.header.popupTitleEdit;
+			header = framework.header.popHeaderEdit;
 			height = 634;
 		}
 
@@ -354,7 +354,7 @@ $(function() {
 				newName:param.newName,
 				webServiceUrl:"zebraRestNoticeBoard/download"
 			},
-			header:"downloadFile",
+			header:framework.header.fileDownload,
 			blind:false,
 			width:300,
 			height:150
@@ -384,7 +384,7 @@ $(function() {
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},
-						header:"exportFile",
+						header:framework.header.fileExport,
 						blind:false,
 						width:200,
 						height:100

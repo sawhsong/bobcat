@@ -154,13 +154,13 @@ $(function() {
 
 		if (param.mode == "Detail") {
 			url = "/zebra/framework/domaindictionary/getDetail.do";
-			header = framework.header.popupTitleDetail;
+			header = framework.header.popHeaderDetail;
 		} else if (param.mode == "New") {
 			url = "/zebra/framework/domaindictionary/getInsert.do";
-			header = framework.header.popupTitleEdit;
+			header = framework.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/zebra/framework/domaindictionary/getUpdate.do";
-			header = framework.header.popupTitleEdit;
+			header = framework.header.popHeaderEdit;
 			height = 510;
 		}
 
@@ -275,7 +275,7 @@ $(function() {
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},
-						header:"exportFile",
+						header:framework.header.fileExport,
 						blind:false,
 						width:200,
 						height:100
