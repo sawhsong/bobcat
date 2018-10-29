@@ -24,6 +24,7 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 </style>
+<script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
 var popup = null;
 var searchResultDataCount = 0;
@@ -210,13 +211,13 @@ $(function() {
 
 		if (param.mode == "Detail") {
 			url = "/#MENU_URL#/getDetail.do";
-			header = "<mc:msg key="#THIS_MENU_ID#.header.popupHeaderDetail"/>";
+			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
 			url = "/#MENU_URL#/getInsert.do";
-			header = "<mc:msg key="#THIS_MENU_ID#.header.popupHeaderEdit"/>";
+			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/#MENU_URL#/getUpdate.do";
-			header = "<mc:msg key="#THIS_MENU_ID#.header.popupHeaderEdit"/>";
+			header = com.header.popHeaderEdit;
 			height = 634;
 		}
 

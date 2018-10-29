@@ -19,8 +19,6 @@
 
 # List - Etc
 #THIS_MENU_ID#.title.selectToDelete=삭제 하려면 선택 하세요.
-#THIS_MENU_ID#.title.popupTitleDetail=공지사항 상세
-#THIS_MENU_ID#.title.popupTitleEdit=공지사항 신규/수정
 
 # Detail, Insert, Update - Table Header
 #THIS_MENU_ID#.header.writer=작성자 ID

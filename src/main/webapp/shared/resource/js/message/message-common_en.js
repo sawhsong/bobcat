@@ -78,7 +78,14 @@ var com = {
 		insertDate:"Created Date",
 		updateUser:"Updated By",
 		updateDate:"Updated Date",
-		selectToDelete:"Select to delete"
+		selectToDelete:"Select to delete",
+		fileExport:"File Export",
+		fileDownload:"File Download",
+		popHeaderEdit:"New / Edit",
+		popHeaderDetail:"Detail",
+		popHeaderResult:"Process Result",
+		popHeaderTableInfo:"Table Detail",
+		popHeaderGenerator:"Generator"
 	},
 	message : {
 		loading:"Now processing.",

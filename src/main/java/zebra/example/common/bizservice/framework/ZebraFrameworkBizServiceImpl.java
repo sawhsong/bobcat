@@ -1290,8 +1290,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				BufferedReader bufferedReader = new BufferedReader(new FileReader(srcPath + "/" + srcJspFileName));
 				StringBuffer stringBuffer = new StringBuffer();
 				while ((tempString = bufferedReader.readLine()) != null) {
-					stringBuffer.append(tempString + "\n");
-
 					if (CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						isJsSection = true;
 					}
@@ -1300,9 +1298,12 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						isJsSection = false;
 					}
 
-					if (isJsSection) {
+					if (isJsSection && !CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						jsString += "\n"+tempString;
+						continue;
 					}
+
+					stringBuffer.append(tempString + "\n");
 				}
 				OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 				sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
@@ -1364,8 +1365,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				StringBuffer stringBuffer = new StringBuffer();
 				String tempString;
 				while ((tempString = bufferedReader.readLine()) != null) {
-					stringBuffer.append(tempString + "\n");
-
 					if (CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						isJsSection = true;
 					}
@@ -1374,9 +1373,12 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						isJsSection = false;
 					}
 
-					if (isJsSection) {
+					if (isJsSection && !CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						jsString += "\n"+tempString;
+						continue;
 					}
+
+					stringBuffer.append(tempString + "\n");
 				}
 				OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 				sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
@@ -1438,8 +1440,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				StringBuffer stringBuffer = new StringBuffer();
 				String tempString;
 				while ((tempString = bufferedReader.readLine()) != null) {
-					stringBuffer.append(tempString + "\n");
-
 					if (CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						isJsSection = true;
 					}
@@ -1448,9 +1448,12 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						isJsSection = false;
 					}
 
-					if (isJsSection) {
+					if (isJsSection && !CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						jsString += "\n"+tempString;
+						continue;
 					}
+
+					stringBuffer.append(tempString + "\n");
 				}
 				OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 				sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
@@ -1511,8 +1514,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				StringBuffer stringBuffer = new StringBuffer();
 				String tempString;
 				while ((tempString = bufferedReader.readLine()) != null) {
-					stringBuffer.append(tempString + "\n");
-
 					if (CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						isJsSection = true;
 					}
@@ -1521,9 +1522,12 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						isJsSection = false;
 					}
 
-					if (isJsSection) {
+					if (isJsSection && !CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
 						jsString += "\n"+tempString;
+						continue;
 					}
+
+					stringBuffer.append(tempString + "\n");
 				}
 				OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
 				sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
@@ -2460,7 +2464,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		String menuName = requestDataSet.getValue("menuName");
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), compilePath);
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
-		String srcFileName = rootPath + ConfigUtil.getProperty("name.source.js");
+		String srcFileName = ConfigUtil.getProperty("name.source.js");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
 		String jspTargetpath = jspPath + "js" + "/" + rootMenuId + "/" + thisMenuId;
 		String sourceString, tempString;

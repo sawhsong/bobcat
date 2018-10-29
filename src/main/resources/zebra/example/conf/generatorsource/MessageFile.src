@@ -19,8 +19,6 @@
 
 # List - Etc
 #THIS_MENU_ID#.title.selectToDelete=Select to delete
-#THIS_MENU_ID#.title.popupTitleDetail=Notice Detail
-#THIS_MENU_ID#.title.popupTitleEdit=New / Edit Notice
 
 # Detail, Insert, Update - Table Header
 #THIS_MENU_ID#.header.writer=Writer

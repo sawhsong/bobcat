@@ -78,7 +78,14 @@ var com = {
 		insertDate:"입력일",
 		updateUser:"수정자",
 		updateDate:"수정일",
-		selectToDelete:"삭제선택"
+		selectToDelete:"삭제선택",
+		fileExport:"파일변환",
+		fileDownload:"파일 다운로드",
+		popHeaderEdit:"신규/수정",
+		popHeaderDetail:"상세정보",
+		popHeaderResult:"처리결과",
+		popHeaderTableInfo:"테이블 정보",
+		popHeaderGenerator:"생성"
 	},
 	message : {
 		loading:"요청 작업을 처리중 입니다.",
