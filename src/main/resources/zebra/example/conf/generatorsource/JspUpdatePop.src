@@ -78,7 +78,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		parent.popup.setHeader("<mc:msg key="#THIS_MENU_ID#.title.popupTitleEdit"/>");
+		parent.popup.setHeader(com.header.popHeaderEdit);
 	});
 });
 </script>

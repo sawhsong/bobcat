@@ -44,7 +44,7 @@ $(function() {
 							form:"fmDefault",
 							action:"/#MENU_URL#/exeInsert.do",
 							data:{
-								articleId:"<%=requestDataSet.getValue("articleId")%>"
+								articleId:articleId
 							}
 						});
 					}
