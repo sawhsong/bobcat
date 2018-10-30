@@ -20,6 +20,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Comment;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -32,12 +33,16 @@ import zebra.config.MemoryBean;
 import zebra.data.DataSet;
 import zebra.example.common.extend.BaseBiz;
 import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
+import zebra.example.conf.resource.ormapper.dao.Dummy.DummyDao;
 import zebra.exception.FrameworkException;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.FileUtil;
 
 public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFrameworkBizService {
+	@Autowired
+	private DummyDao dummyDao;
+
 	/*!
 	 * DTO Generator
 	 */
@@ -2017,6 +2022,149 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 	}
 
 	/*!
+	 * Data Migration
+	 */
+	public int exeGenerateTable(String sourceDb, String targetDb, String tableName, String tableNamePrefix) throws Exception {
+		DataSet tableInfoDataSet;
+		String sql = "create table ", columnName, dataType, srcTableName, tgtTableName;
+		int result = 0;
+
+		try {
+			if (CommonUtil.equalsIgnoreCase(tableName, "users")) {
+				srcTableName = "e5zg0_users";
+				tgtTableName = tableNamePrefix+tableName;
+			} else {
+				srcTableName = tableName;
+				tgtTableName = tableNamePrefix+tableName;
+			}
+
+			// source db table info
+			dummyDao.setDataSourceName(sourceDb);
+			tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(srcTableName);
+
+			sql += tgtTableName+" (";
+			for (int i=0; i<tableInfoDataSet.getRowCnt(); i++) {
+				columnName = tableInfoDataSet.getValue(i, "COLUMN_NAME");
+				dataType = tableInfoDataSet.getValue(i, "DATA_TYPE");
+
+				columnName = (CommonUtil.equalsIgnoreCase(columnName, "date")) ? tableName+"_"+columnName : columnName;
+				sql += columnName+" "+getDataTypeStringForDataMigration(dataType)+", ";
+			}
+			sql += "insert_date date";
+			sql += ") ";
+			sql += "pctfree 20 pctused 80 tablespace "+ConfigUtil.getProperty("name.tableSpace.data")+" storage(initial 100k next 100k maxextents 2000 pctincrease 0)";
+
+			// create table to target db
+			dummyDao.resetDataSourceName();
+			result = dummyDao.exeGenerateTable(sql);
+
+			sql = "comment on table "+tgtTableName+" is 'Created for data migration on "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss")+"'";
+			result += dummyDao.exeGenerateTable(sql);
+
+			return result;
+		} catch (Exception ex) {
+			throw new FrameworkException(ex);
+		}
+	}
+
+	public int deleteData(String targetDb, String tableName, String tableNamePrefix) throws Exception {
+		try {
+			dummyDao.resetDataSourceName();
+			return dummyDao.deleteData("delete from "+tableNamePrefix+tableName);
+		} catch (Exception ex) {
+			throw new FrameworkException(ex);
+		}
+	}
+
+	public int insertData(String sourceDb, String targetDb, String tableName, String tableNamePrefix) throws Exception {
+		DataSet dataSet, tableInfoDataSet;
+		String selectColumn = "", insertColumn = "", sqlInsert = "", sqlSelect = "select ", srcTableName, tgtTableName;
+		String insertColumns[];
+		int result = 0;
+
+		try {
+			if (CommonUtil.equalsIgnoreCase(tableName, "users")) {
+				srcTableName = "e5zg0_users";
+				tgtTableName = tableNamePrefix+tableName;
+			} else {
+				srcTableName = tableName;
+				tgtTableName = tableNamePrefix+tableName;
+			}
+
+			// source db table info
+			dummyDao.setDataSourceName(sourceDb);
+			tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(srcTableName);
+
+			for (int i=0; i<tableInfoDataSet.getRowCnt(); i++) {
+				String dataType = getDataTypeForDataMigration(tableInfoDataSet.getValue(i, "DATA_TYPE"));
+
+				if (CommonUtil.equalsIgnoreCase(dataType, "date")) {
+					selectColumn += "date_format("+tableInfoDataSet.getValue(i, "COLUMN_NAME")+", '%Y%m%d%H%i%s') as "+tableInfoDataSet.getValue(i, "COLUMN_NAME");
+				} else {
+					selectColumn += tableInfoDataSet.getValue(i, "COLUMN_NAME");
+				}
+
+				if (i != tableInfoDataSet.getRowCnt()-1) {
+					selectColumn += ",";
+				}
+			}
+
+			// select data from source db
+			dummyDao.setDataSourceName(sourceDb);
+			dataSet = dummyDao.getDataSetBySQLQuery(sqlSelect+selectColumn+" from "+srcTableName);
+
+			for (int i=0; i<dataSet.getColumnCnt(); i++) {
+				insertColumn += CommonUtil.equalsIgnoreCase(tableInfoDataSet.getValue(i, "COLUMN_NAME"), "date") ? tableName+"_"+tableInfoDataSet.getValue(i, "COLUMN_NAME")+"," : tableInfoDataSet.getValue(i, "COLUMN_NAME")+",";
+			}
+			insertColumn += "insert_date";
+			insertColumns = CommonUtil.split(insertColumn, ",");
+
+			for (int i=0; i<dataSet.getRowCnt(); i++) {
+				sqlInsert = "";
+				sqlInsert += "insert into "+tgtTableName+" ("+insertColumn+") ";
+				sqlInsert += "values (";
+				for (int j=0; j<insertColumns.length; j++) {
+					String colName = CommonUtil.equalsIgnoreCase(insertColumns[j], tableName+"_date") ? CommonUtil.remove(insertColumns[j], tableName+"_") : insertColumns[j];
+					if (CommonUtil.equalsIgnoreCase(colName, "insert_date")) {continue;}
+					int rowIndex = tableInfoDataSet.getRowIndex("COLUMN_NAME", colName);
+					String dataType = getDataTypeForDataMigration(tableInfoDataSet.getValue(rowIndex, "DATA_TYPE"));
+					String value = CommonUtil.replace(dataSet.getValue(i, colName), "'", "''");
+
+					if (CommonUtil.equalsIgnoreCase(dataType, "date")) {
+						if (CommonUtil.isBlank(value) || CommonUtil.equals(value, "00000000000000")) {
+							sqlInsert += "null,";
+						} else {
+							sqlInsert += "to_date('"+value+"', 'yyyymmddhh24miss'),";
+						}
+					} else if (CommonUtil.equalsIgnoreCase(dataType, "number")) {
+						if (CommonUtil.isBlank(value)) {
+							sqlInsert += "null,";
+						} else {
+							sqlInsert += value+",";
+						}
+					} else {
+						if (CommonUtil.isBlank(value)) {
+							sqlInsert += "null,";
+						} else {
+							sqlInsert += "'"+value+"',";
+						}
+					}
+				}
+
+				sqlInsert += "sysdate";
+				sqlInsert += ")";
+
+				// insert into target db
+				dummyDao.resetDataSourceName();
+				result += dummyDao.insertData(sqlInsert);
+			}
+			return result;
+		} catch (Exception ex) {
+			throw new FrameworkException(ex);
+		}
+	}
+
+	/*!
 	 * Common for this service
 	 */
 	private int generateScriptFile(DataSet requestDataSet, DataSet detailDataSet, String fileName) throws Exception {
@@ -2279,6 +2427,28 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 			return "Date";
 		} else {
 			return "String";
+		}
+	}
+
+	private String getDataTypeStringForDataMigration(String dataType) {
+		if (CommonUtil.containsIgnoreCase(dataType, "int")) {
+			return "number(12)";
+		} else if (CommonUtil.containsIgnoreCase(dataType, "decimal")) {
+			return "number(12,2)";
+		} else if (CommonUtil.containsIgnoreCase(dataType, "date") || CommonUtil.containsIgnoreCase(dataType, "datetime")) {
+			return "date";
+		} else {
+			return "varchar2(1000)";
+		}
+	}
+
+	private String getDataTypeForDataMigration(String value) {
+		if (CommonUtil.containsIgnoreCase(value, "int") || CommonUtil.containsIgnoreCase(value, "decimal")) {
+			return "number";
+		} else if (CommonUtil.containsIgnoreCase(value, "date") || CommonUtil.containsIgnoreCase(value, "datetime")) {
+			return "date";
+		} else {
+			return "varchar2";
 		}
 	}
 

@@ -14,15 +14,26 @@
 
 	<sql-query name="query.zebra.Dummy.getTableListDataSetByCriteriaForAdditionalDataSource">
 	<![CDATA[
-		select TABLE_NAME,
-		       TABLE_COMMENT as COMMENTS
-		  from information_schema.tables
-		 where table_schema = 'hkaccount'
-		   and table_type = 'BASE TABLE'
-		   and table_name not like 'e5zg0_%'
-		   and table_name not like 'zo7dp_%'
+		select table_name as TABLE_NAME,
+		       table_comment as COMMENTS
+		  from (select a.table_name,
+		               a.table_comment
+		          from information_schema.tables a
+		         where a.table_schema = 'hkaccount'
+		           and a.table_type = 'BASE TABLE'
+		           and a.table_name not like 'e5zg0_%'
+		           and a.table_name not like 'zo7dp_%'
+		        union
+		        select a.table_name,
+		               a.table_comment
+		          from information_schema.tables a
+		         where a.table_schema = 'hkaccount'
+		           and a.table_type = 'BASE TABLE'
+		           and a.table_name = 'e5zg0_users'
+		       ) a
+		 where 1 = 1
 		   ${auto_fill}
-		 order by table_name
+		 order by a.table_name
 	]]>
 	</sql-query>
 
@@ -81,8 +92,6 @@
 		       ) as TABLE_DESCRIPTION
 		  from information_schema.columns a
 		 where a.table_schema = 'hkaccount'
-		   and a.table_name not like 'e5zg0_%'
-		   and a.table_name not like 'zo7dp_%'
 		   and upper(a.table_name) = upper('${table_name}')
 		 order by a.table_name
 	]]>

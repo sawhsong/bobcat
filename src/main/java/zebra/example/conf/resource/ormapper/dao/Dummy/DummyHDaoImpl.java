@@ -52,7 +52,7 @@ public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 		return selectAsDataSetBySQLQuery(sqlQuery);
 	}
 
-	public int createTable(String sql) throws Exception {
+	public int exeGenerateTable(String sql) throws Exception {
 		return executeSql(sql);
 	}
 

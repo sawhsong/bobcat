@@ -60,7 +60,7 @@ public interface DummyDao extends IDao {
 	 * @return int
 	 * @throws Exception
 	 */
-	public int createTable(String sql) throws Exception;
+	public int exeGenerateTable(String sql) throws Exception;
 	/**
 	 * Insert data with given sql
 	 * @param sql

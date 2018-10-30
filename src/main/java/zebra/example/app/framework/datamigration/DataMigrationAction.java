@@ -27,9 +27,9 @@ public class DataMigrationAction extends BaseAction {
 		return "detail";
 	}
 
-	public String exeGenerate() throws Exception {
+	public String doMigration() throws Exception {
 		try {
-			biz.exeGenerate(paramEntity);
+			biz.doMigration(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

@@ -23,7 +23,7 @@ $(function() {
 		}
 
 		commonJs.confirm({
-			contents:com.message.Q901,
+			contents:com.message.Q902,
 			width:300,
 			height:150,
 			buttons:[{
@@ -176,8 +176,8 @@ $(function() {
 		popup = commonJs.openPopup({
 			popupId:"ProcessInformation",
 			header:framework.header.popHeaderResult,
-			width:600,
-			height:400,
+			width:500,
+			height:300,
 			blind:false,
 			onLoad:function() {
 				$("input[name=chkSourceData]:checked").each(function(index) {
@@ -187,7 +187,7 @@ $(function() {
 						param.tableName = $this.val();
 
 						commonJs.ajaxSubmit({
-							url:"/zebra/framework/datamigration/exeGenerate.do",
+							url:"/zebra/framework/datamigration/doMigration.do",
 							dataType:"json",
 							data:param,
 							blind:false,

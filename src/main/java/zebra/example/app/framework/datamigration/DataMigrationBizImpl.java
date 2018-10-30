@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
+import zebra.example.common.bizservice.framework.ZebraFrameworkBizService;
 import zebra.example.common.extend.BaseBiz;
 import zebra.example.conf.resource.ormapper.dao.Dummy.DummyDao;
 import zebra.exception.FrameworkException;
@@ -12,6 +13,8 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
+	@Autowired
+	private ZebraFrameworkBizService zebraFrameworkBizService;
 	@Autowired
 	private DummyDao dummyDao;
 
@@ -42,7 +45,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteriaForAdditionalDataSource(queryAdvisor));
 			} else {
 				dummyDao.resetDataSourceName();
-//				queryAdvisor.addAutoFillCriteria("table_name", "table_name like 'DM_%'");
+				queryAdvisor.addAutoFillCriteria("table_name", "table_name like 'DM_%'");
 				paramEntity.setAjaxResponseDataSet(dummyDao.getTableListDataSetByCriteria(queryAdvisor));
 			}
 
@@ -79,7 +82,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeGenerate(ParamEntity paramEntity) throws Exception {
+	public ParamEntity doMigration(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		DataSet tableInfoDataSet;
 		String tableName = requestDataSet.getValue("tableName");
@@ -88,35 +91,21 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 		String tableNamePrefix = "DM_";
 
 		try {
-			if (CommonUtil.containsIgnoreCase(tableName, "e5zg0_")) {
-				if (CommonUtil.equalsIgnoreCase(tableName, "e5zg0_users")) {
-					tableName = "users";
-				} else {
-					paramEntity.setSuccess(true);
-					return paramEntity;
-				}
+			if (CommonUtil.equalsIgnoreCase(tableName, "e5zg0_users")) {
+				tableName = "users";
 			}
 
-			if (CommonUtil.containsIgnoreCase(tableName, "zo7dp_")) {
-				paramEntity.setSuccess(true);
-				return paramEntity;
-			}
-
-			if (!CommonUtil.equalsIgnoreCase(targetDb, "hkaccount")) {
-				dummyDao.setDataSourceName(targetDb);
-				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableNameForAdditionalDataSource(tableNamePrefix+tableName);
-			} else {
-				dummyDao.resetDataSourceName();
-				tableInfoDataSet = dummyDao.getTableDetailDataSetByTableName(tableNamePrefix+tableName);
-			}
+			// Table info of target db
+			dummyDao.resetDataSourceName();
+			tableInfoDataSet = dummyDao.getTableDetailDataSetByTableName(tableNamePrefix+tableName);
 
 			if (tableInfoDataSet == null || tableInfoDataSet.getRowCnt() <= 0) {
-				createTable(sourceDb, targetDb, tableName, tableNamePrefix);
+				zebraFrameworkBizService.exeGenerateTable(sourceDb, targetDb, tableName, tableNamePrefix);
 			} else {
-				deleteData(targetDb, tableName, tableNamePrefix);
+				zebraFrameworkBizService.deleteData(targetDb, tableName, tableNamePrefix);
 			}
 
-			insertData(sourceDb, targetDb, tableName, tableNamePrefix);
+			zebraFrameworkBizService.insertData(sourceDb, targetDb, tableName, tableNamePrefix);
 
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -124,7 +113,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 		}
 		return paramEntity;
 	}
-
+/*
 	private int createTable(String sourceDb, String targetDb, String tableName, String tableNamePrefix) throws Exception {
 		DataSet tableInfoDataSet;
 		String sql = "create table ", columnName, dataType, srcTableName, tgtTableName;
@@ -303,7 +292,7 @@ public class DataMigrationBizImpl extends BaseBiz implements DataMigrationBiz {
 			return "varchar";
 		}
 	}
-
+*/
 	private DataSet getDatasourceDataSet(String[] dataSourceNames) throws Exception {
 		DataSet dataSourceDataSet = new DataSet();
 

@@ -29,6 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var tableName = "<%=requestDataSet.getValue("tableName")%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -46,6 +47,7 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:button id="btnGenerate" caption="button.com.generate" iconClass="fa-gears"/>
 		<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 	</div>
 </div>

@@ -121,6 +121,7 @@ var com = {
 		Q003:"Are you sure to export?",
 
 		Q901:"Are you sure to create source code?",
+		Q902:"Are you sure to proceed data migration?",
 
 		W000:"Warning",
 		W001:"Session has timed out! Please log in again!",

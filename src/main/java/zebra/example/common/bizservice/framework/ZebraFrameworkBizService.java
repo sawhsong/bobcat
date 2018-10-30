@@ -43,6 +43,9 @@ public interface ZebraFrameworkBizService {
 	public int deleteTableCreationScriptFiles(String fileNames[]) throws Exception;
 
 	/*!
-	 * Common for this service
+	 * Data Migration
 	 */
+	public int exeGenerateTable(String sourceDb, String targetDb, String tableName, String tableNamePrefix) throws Exception;
+	public int deleteData(String targetDb, String tableName, String tableNamePrefix) throws Exception;
+	public int insertData(String sourceDb, String targetDb, String tableName, String tableNamePrefix) throws Exception;
 }
