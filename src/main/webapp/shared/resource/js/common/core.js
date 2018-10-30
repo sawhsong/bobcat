@@ -90,7 +90,7 @@ var nony = {
 
 		setTimeout(function() {
 			$("#" + formId).attr("action", action).attr("target", target).submit();
-		}, 300);
+		}, 50);
 //		$("#" + formId).attr("action", action).attr("target", target).submit();
 	},
 	doSubmit : function(params) {
@@ -999,7 +999,7 @@ var nony = {
 			$(window).resize(function() {
 				setTimeout(function() {
 					$.nony._doResizeScrollablePanel();
-				}, 20);
+				}, 10);
 			});
 		}
 
