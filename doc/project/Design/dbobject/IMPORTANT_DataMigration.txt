@@ -1,0 +1,18 @@
+USR_EMPLOYEE_WAGE		dm_wage
+USR_EMPLOYEE			dm_employee
+USR_FINANCE				dm_loan_lending / dm_loan_payment
+USR_ASSET				dm_asset
+USR_EXPENSE				dm_expense
+USR_INCOME				dm_template_sales / dm_template_other
+
+SYS_COMMON_CODE			dm_entity_type / dm_business_type / dm_template_type / dm_base_type / dm_wage_type / dm_visa_type / dm_record_keeping_type
+SYS_ORG					dm_users
+SYS_FINANCIAL_PERIOD	dm_period
+SYS_USER				dm_users
+SYS_TAX_MASTER			dm_tax
+SYS_INCOME_TYPE			dm_income_type
+SYS_EXPENSE_TYPE		excel file
+SYS_ASSET_TYPE			dm_asset_main_type
+SYS_REPAYMENT_TYPE		dm_payment_main_type
+SYS_BORROWING_TYPE		dm_lending_main_type
+SYS_LENDING_TYPE		dm_lending_main_type
