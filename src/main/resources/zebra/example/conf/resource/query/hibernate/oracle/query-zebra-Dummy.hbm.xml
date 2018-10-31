@@ -23,6 +23,10 @@
 		           and a.table_type = 'BASE TABLE'
 		           and a.table_name not like 'e5zg0_%'
 		           and a.table_name not like 'zo7dp_%'
+		           and a.table_name not like 'tax_2017%'
+		           and a.table_name not in ('asset_sub_type', 'bank', 'bank_balance', 'cashflow', 'cashflow_quarter', 'client', 'income_main_type', 'income_sub_type',
+		                                    'lending_sub_type', 'other_sub_type', 'payment_sub_type', 'personal_living', 'quarter_type', 'tax2', 'template_other_type'
+		                                   )
 		        union
 		        select a.table_name,
 		               a.table_comment
