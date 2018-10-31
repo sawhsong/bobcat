@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Server port="8005" shutdown="SHUTDOWN">
+<Server port="8006" shutdown="SHUTDOWN">
 	<Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
 	<Listener SSLEngine="on" className="org.apache.catalina.core.AprLifecycleListener"/>
 	<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
@@ -11,8 +11,8 @@
 	</GlobalNamingResources>
 
 	<Service name="Catalina">
-		<Connector connectionTimeout="20000" port="8895" protocol="HTTP/1.1" redirectPort="8443"/>
-		<Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/>
+		<Connector connectionTimeout="20000" port="8892" protocol="HTTP/1.1" redirectPort="8444"/>
+		<Connector port="8012" protocol="AJP/1.3" redirectPort="8444"/>
 
 		<Engine defaultHost="localhost" name="Catalina">
 			<Realm className="org.apache.catalina.realm.LockOutRealm">
@@ -22,13 +22,14 @@
 			<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="hkaccounting_access_log" suffix=".txt"/>
 
-				<Context docBase="D:/workspaceHKAccounting/hkaccounting/target/hkaccounting" path="" reloadable="true">
-					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkaccountJndi" username="hkaccount" password="hkaccount20170523" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
-<!-- 					<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.commons.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkmysqlJndi" username="hkaccount" password="hka0507!" type="javax.sql.DataSource" url="jdbc:mysql://hkaccounting.com.au:3306/hkaccount"/> -->
+				<Context docBase="C:/myworkspace/hkaccounting/target/hkaccounting" path="" reloadable="true">
+					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkaccountJndi" password="hkaccount20170523" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE" username="hkaccount"/>
+					<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkmysqlJndi" username="hkaccount" password="hka0507!" type="javax.sql.DataSource" url="jdbc:mysql://hkaccounting.com.au:3306/hkaccount"/>
 				</Context>
 
-<!-- 				<Context docBase="D:/workspaceHKAccounting/hkaccounting/target/hkaccounting.war" path="" reloadable="true"> -->
-<!-- 					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/alpacaJndi" password="alpaca" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE" username="alpaca"/> -->
+<!-- 				<Context docBase="C:/myworkspace/hkaccounting/target/hkaccounting.war" path="" reloadable="true"> -->
+<!-- 					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkaccountJndi" password="hkaccount20170523" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE" username="hkaccount"/> -->
+<!-- 					<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkmysqlJndi" username="hkaccount" password="hka0507!" type="javax.sql.DataSource" url="jdbc:mysql://hkaccounting.com.au:3306/hkaccount"/> -->
 <!-- 				</Context> -->
 			</Host>
 		</Engine>
