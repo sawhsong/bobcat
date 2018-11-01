@@ -579,7 +579,7 @@
 				var images, themeId = jsconfig.get("themeId");
 				menu.closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
 					images = $(this).prop("src");
-					if (themeId == "theme000" || themeId == "theme002" || themeId == "theme003" || themeId == "theme009") {
+					if (themeId.toUpperCase() == "theme000".toUpperCase() || themeId.toUpperCase() == "theme002".toUpperCase() || themeId.toUpperCase() == "theme003".toUpperCase() || themeId.toUpperCase() == "theme009".toUpperCase()) {
 						images = $.nony.replace(images, "White", "Black");
 					}
 
