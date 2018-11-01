@@ -45,7 +45,7 @@ $(function() {
 			garbageCollectorPopup = commonJs.openPopup({
 				popupId:"garbageCollector",
 				url:menuUrl,
-				header:framework.header.garbageCollection.header,
+				header:framework.header.garbageCollection,
 				width:640,
 				height:460,
 				draggable:true,
