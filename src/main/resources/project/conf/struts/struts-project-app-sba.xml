@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="sba" namespace="/sba" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Sba0202 - -->
+        <action class="project.app.sba.sba0202.Sba0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0202/Sba0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0202/Sba0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0202/Sba0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0202/Sba0202UpdatePop.jsp</result>
+        </action>
+        <!--Sba0204 - -->
+        <action class="project.app.sba.sba0204.Sba0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204UpdatePop.jsp</result>
+        </action>
+        <!--Sba0402 - -->
+        <action class="project.app.sba.sba0402.Sba0402Action" method="{1}" name="0402/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402UpdatePop.jsp</result>
+        </action>
+        <!--Sba0404 - -->
+        <action class="project.app.sba.sba0404.Sba0404Action" method="{1}" name="0404/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404UpdatePop.jsp</result>
+        </action>
+        <!--Sba0406 - -->
+        <action class="project.app.sba.sba0406.Sba0406Action" method="{1}" name="0406/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406UpdatePop.jsp</result>
+        </action>
+        <!--Sba0408 - -->
+        <action class="project.app.sba.sba0408.Sba0408Action" method="{1}" name="0408/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408UpdatePop.jsp</result>
+        </action>
+        <!--Sba0410 - -->
+        <action class="project.app.sba.sba0410.Sba0410Action" method="{1}" name="0410/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410UpdatePop.jsp</result>
+        </action>
+        <!--Sba0412 - -->
+        <action class="project.app.sba.sba0412.Sba0412Action" method="{1}" name="0412/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412UpdatePop.jsp</result>
+        </action>
+        <!--Sba0414 - -->
+        <action class="project.app.sba.sba0414.Sba0414Action" method="{1}" name="0414/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414UpdatePop.jsp</result>
+        </action>
+        <!--Sba0416 - -->
+        <action class="project.app.sba.sba0416.Sba0416Action" method="{1}" name="0416/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416UpdatePop.jsp</result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="odd" namespace="/odd" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Odd0202 - -->
+        <action class="project.app.odd.odd0202.Odd0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/odd/odd0202/Odd0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/odd/odd0202/Odd0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/odd/odd0202/Odd0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/odd/odd0202/Odd0202UpdatePop.jsp</result>
+        </action>
+        <!--Odd0204 - -->
+        <action class="project.app.odd.odd0204.Odd0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/odd/odd0204/Odd0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/odd/odd0204/Odd0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/odd/odd0204/Odd0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/odd/odd0204/Odd0204UpdatePop.jsp</result>
+        </action>
+    </package>
+</struts>

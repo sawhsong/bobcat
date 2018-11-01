@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="rkm" namespace="/rkm" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Rkm0202 - -->
+        <action class="project.app.rkm.rkm0202.Rkm0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0204 - -->
+        <action class="project.app.rkm.rkm0204.Rkm0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0206 - -->
+        <action class="project.app.rkm.rkm0206.Rkm0206Action" method="{1}" name="0206/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0402 - -->
+        <action class="project.app.rkm.rkm0402.Rkm0402Action" method="{1}" name="0402/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0404 - -->
+        <action class="project.app.rkm.rkm0404.Rkm0404Action" method="{1}" name="0404/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0602 - -->
+        <action class="project.app.rkm.rkm0602.Rkm0602Action" method="{1}" name="0602/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0604 - -->
+        <action class="project.app.rkm.rkm0604.Rkm0604Action" method="{1}" name="0604/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0606 - -->
+        <action class="project.app.rkm.rkm0606.Rkm0606Action" method="{1}" name="0606/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0802 - -->
+        <action class="project.app.rkm.rkm0802.Rkm0802Action" method="{1}" name="0802/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0804 - -->
+        <action class="project.app.rkm.rkm0804.Rkm0804Action" method="{1}" name="0804/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0806 - -->
+        <action class="project.app.rkm.rkm0806.Rkm0806Action" method="{1}" name="0806/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0806/Rkm0806List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0806/Rkm0806DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0806/Rkm0806InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0806/Rkm0806UpdatePop.jsp</result>
+        </action>
+    </package>
+</struts>
