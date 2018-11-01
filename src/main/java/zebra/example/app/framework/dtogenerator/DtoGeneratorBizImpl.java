@@ -68,7 +68,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String defaultDataSourceUser = ConfigUtil.getProperty("jdbc.user.name");
-		String dataSource = requestDataSet.getValue("dataSource");
+		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), defaultDataSourceUser);
 		String tableName = requestDataSet.getValue("tableName");
 
 		try {
@@ -127,7 +127,8 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		DataSet tableInfoDataSet;
 
 		String tableName = requestDataSet.getValue("tableName");
-		String dataSource = requestDataSet.getValue("dataSource");
+		String defaultDataSourceUser = ConfigUtil.getProperty("jdbc.user.name");
+		String dataSource = CommonUtil.nvl(requestDataSet.getValue("dataSource"), defaultDataSourceUser);
 
 		String system = requestDataSet.getValue("system");
 
@@ -152,7 +153,7 @@ public class DtoGeneratorBizImpl extends BaseBiz implements DtoGeneratorBiz {
 		boolean mybatisQueryFramework = CommonUtil.toBoolean(CommonUtil.nvl(requestDataSet.getValue("mybatisQueryFramework"), "N"));
 
 		try {
-			if (!CommonUtil.equalsIgnoreCase(dataSource, "ZEBRA")) {
+			if (!CommonUtil.equalsIgnoreCase(dataSource, defaultDataSourceUser)) {
 				dummyDao.setDataSourceName(dataSource);
 			} else {
 				dummyDao.resetDataSourceName();
