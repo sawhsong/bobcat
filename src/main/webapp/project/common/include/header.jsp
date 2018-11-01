@@ -123,7 +123,7 @@ $(function() {
 <%
 				if (CommonUtil.equals(loginIdHeaderPage, "dustin")) {
 %>
-				<div class="divGblMenuBreak">&nbsp;</div>
+				<div class="divGblMenuBreak"></div>
 				<div id="divFrameworkMenu" class="headerGblMenus">
 					<a id="aFrameworkMenu">Framework Menu</a>
 				</div>

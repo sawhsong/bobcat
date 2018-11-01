@@ -166,7 +166,7 @@ $(function() {
 				<div id="divThemeSelector" class="headerGblMenus">
 					<a id="aThemeSelector">${sessionScope.themeName}</a>
 				</div>
-				<div class="divGblMenuBreak">&nbsp;</div>
+				<div class="divGblMenuBreak"></div>
 				<c:forEach var="menu" items="${pageScope.globalMenu}" varStatus="status">
 				<div id="${menu.value['menuId']}" class="headerGblMenus">
 					<c:set var="menuName" value="menuName_${sessionScope.langCode}" scope="page"></c:set>
