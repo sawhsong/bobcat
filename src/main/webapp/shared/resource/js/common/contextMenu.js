@@ -579,7 +579,7 @@
 				var images, themeId = jsconfig.get("themeId");
 				menu.closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
 					images = $(this).prop("src");
-					if (themeId.toUpperCase() == "theme000".toUpperCase() || themeId.toUpperCase() == "theme002".toUpperCase() || themeId.toUpperCase() == "theme003".toUpperCase() || themeId.toUpperCase() == "theme009".toUpperCase()) {
+					if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
 						images = $.nony.replace(images, "White", "Black");
 					}
 
@@ -764,14 +764,14 @@
 					var images;
 					$(this).closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
 						images = $(this).prop("src");
-						if (themeId == "theme000" || themeId == "theme002" || themeId == "theme003" || themeId == "theme009") {
+						if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
 							images = $.nony.replace(images, "White", "Black");
 						}
 
 						$(this).prop("src", images);
 					});
 
-					if (themeId == "theme000" || themeId == "theme002" || themeId == "theme003" || themeId == "theme009") {
+					if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
 						imgSrc = $.nony.replace(imgSrc, "Black", "White");
 					}
 
