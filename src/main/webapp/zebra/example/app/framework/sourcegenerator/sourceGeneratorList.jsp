@@ -106,11 +106,11 @@
 		<thead>
 			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.sourcegenerator.title.selectToGenerate"/></th>
-				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuId"/></th>
-				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuName"/></th>
-				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuUrl"/></th>
-				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.menuDesc"/></th>
-				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.dataGridHeader.creationDate"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuId"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuName"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuUrl"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuDesc"/></th>
+				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.creationDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

@@ -110,11 +110,11 @@
 				<th class="thGrid">
 					<ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/>
 				</th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.dataGridHeader.subject"/></th>
-				<th class="thGrid"><mc:msg key="fwk.notice.dataGridHeader.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.dataGridHeader.writer"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.notice.dataGridHeader.createdDate"/></th>
-				<th class="thGrid sortable:numeric"><mc:msg key="fwk.notice.dataGridHeader.visitCount"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.gridHeader.subject"/></th>
+				<th class="thGrid"><mc:msg key="fwk.notice.gridHeader.file"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.gridHeader.writer"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.notice.gridHeader.createdDate"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="fwk.notice.gridHeader.visitCount"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

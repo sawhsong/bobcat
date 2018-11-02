@@ -90,14 +90,14 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.commoncode.dataGridHeader.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.codeType"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.description"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.programConstants"/></th>
-				<th class="thGrid sortable:number"><mc:msg key="fwk.commoncode.dataGridHeader.useYn"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.dataGridHeader.defaultYn"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.insertDate"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.dataGridHeader.updateDate"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.commoncode.gridHeader.selectToDelete"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.codeType"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.description"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.programConstants"/></th>
+				<th class="thGrid sortable:number"><mc:msg key="fwk.commoncode.gridHeader.useYn"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.defaultYn"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.gridHeader.insertDate"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.gridHeader.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

@@ -4,7 +4,8 @@
  *************************************************************************************************/
 var popup = null;
 var searchResultDataCount = 0;
-var attchedFileContextMenu = [];
+var langCode = commonJs.upperCase(jsconfig.get("langCode"));
+var dateFormat = jsconfig.get("dateFormatJs");
 
 $(function() {
 	/*!
@@ -22,29 +23,25 @@ $(function() {
 		doSearch();
 	});
 
+	$("#codeCategory").change(function(event) {
+		doSearch();
+	});
+
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
-	});
-
-	$("#icnFromDate").click(function(event) {
-		commonJs.openCalendar(event, "fromDate");
-	});
-
-	$("#icnToDate").click(function(event) {
-		commonJs.openCalendar(event, "toDate");
 	});
 
 	$("#icnCheck").click(function(event) {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
+	$("#commonCodeType").change(function(event) {
+		doSearch();
+	});
+
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
-
-			if ($(element).is("[name=searchWord]") || $(element).is("[name=fromDate]") || $(element).is("[name=toDate]")) {
-				doSearch();
-			}
 		}
 	});
 
@@ -103,46 +100,33 @@ $(function() {
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "", iLength = 200;
-				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
+				var isDefault = dataSet.getValue(i, "IS_DEFAULT");
+				var className = "chkEn", disabledStr = "";
 
-				gridTr.setClassName("noBorderHor noStripe");
+				if (isDefault == "Y") {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(dataSet.getValue(i, "CODE_TYPE")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
-
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				uiAnc.setText(dataSet.getValue(i, "CODE_TYPE")).setScript("getDetail('"+dataSet.getValue(i, "CODE_TYPE")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				var gridTd = new UiGridTd();
-				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
-					gridTd.addChild(iconAttachFile);
-				}
-				gridTr.addChild(gridTd);
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION_"+langCode)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "PROGRAM_CONSTANTS")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "IS_ACTIVE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(isDefault));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "INSERT_DATE"), dateFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
+					.addAttribute("isDefault:"+isDefault).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -150,7 +134,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -161,29 +145,25 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
-
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.boardAction);
+			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+		openPopup({mode:"Detail", codeType:codeType});
 	};
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 510;
+		var height = 754;
 
 		if (param.mode == "Detail") {
 			url = "/sys/0202/getDetail.do";
@@ -194,19 +174,18 @@ $(function() {
 		} else if (param.mode == "Edit") {
 			url = "/sys/0202/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 634;
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"commonCode"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				codeType:commonJs.nvl(param.codeType, "")
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:1100,
 			height:height
 		};
 
@@ -259,22 +238,27 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var codeType = $(img).attr("codeType"), isDefault = $(img).attr("isDefault");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == codeType) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
+		if (isDefault == "Y") {
+			ctxMenu.commonAction[2].disable = true;
+		} else {
+			ctxMenu.commonAction[2].disable = false;
+		}
+
+		ctxMenu.boardAction[0].fun = function() {getDetail(codeType);};
+		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", codeType:codeType});};
 		ctxMenu.boardAction[3].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.commonAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -324,10 +308,8 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
+		commonJs.getBootstrapSelectbox("codeCategory").focus();
 		setExportButtonContextMenu();
-		$("#searchWord").focus();
 		doSearch();
 	});
 });

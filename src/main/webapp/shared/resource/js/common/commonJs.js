@@ -232,9 +232,9 @@ $(window).load(function() {
 
 	if (jsconfig.get("useJqTooltip")) {$.nony._jqTooltip();}
 
-	$.nony._doResizeScrollablePanel();
-
 	if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
+
+	if (jsconfig.get("useScrollablePanel")) {$.nony._doResizeScrollablePanel();}
 });
 
 /*!

@@ -436,7 +436,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr class="noBorderHor">
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="#THIS_MENU_ID#.grid.subject"/></th>
 				<th class="thGrid"><mc:msg key="#THIS_MENU_ID#.grid.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="#THIS_MENU_ID#.grid.writerName"/></th>

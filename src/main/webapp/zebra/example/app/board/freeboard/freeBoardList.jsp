@@ -108,11 +108,11 @@
 		<thead>
 			<tr class="noBorderHor">
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.bbs.title.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.dataGridHeader.subject"/></th>
-				<th class="thGrid"><mc:msg key="fwk.bbs.dataGridHeader.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.dataGridHeader.writer"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.bbs.dataGridHeader.createdDate"/></th>
-				<th class="thGrid sortable:numeric"><mc:msg key="fwk.bbs.dataGridHeader.visitCount"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.gridHeader.subject"/></th>
+				<th class="thGrid"><mc:msg key="fwk.bbs.gridHeader.file"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.bbs.gridHeader.writer"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.bbs.gridHeader.createdDate"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="fwk.bbs.gridHeader.visitCount"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

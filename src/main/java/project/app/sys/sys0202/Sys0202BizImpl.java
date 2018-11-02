@@ -9,6 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.SysCommonCode.SysCommonCodeDao;
+import project.conf.resource.ormapper.dto.oracle.SysCommonCode;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -18,17 +22,9 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-
 public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 	@Autowired
-	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
+	private SysCommonCodeDao sysCommonCodeDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -42,12 +38,13 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String codeCategory = requestDataSet.getValue("codeCategory");
 
 		try {
-			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(true);
+			queryAdvisor.addAutoFillCriteria(codeCategory, "code_category = '"+codeCategory+"'");
 
-			paramEntity.setAjaxResponseDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(sysCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -58,14 +55,9 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setObject("resultDataSet", sysCommonCodeDao.getCommonCodeDataSetByCodeType(requestDataSet.getValue("codeType")));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -95,32 +87,60 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
-		String uid = CommonUtil.uid();
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		int result = -1;
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		String codeType = CommonUtil.upperCase(requestDataSet.getValue("codeTypeMaster"));
+		String processFrom = (String)paramEntity.getObject("processFrom");
+		DataSet detailDataSet;
+		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
+		int result = -1, masterDataRow = -1;
+		SysCommonCode sysCommonCode = new SysCommonCode();
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysCommonCode.setCodeType(codeType);
+			sysCommonCode.setCommonCode("0000000000");
+			sysCommonCode.setDescriptionEn(requestDataSet.getValue("descriptionEnMaster"));
+			sysCommonCode.setDescriptionKo(requestDataSet.getValue("descriptionKoMaster"));
+			sysCommonCode.setProgramConstants(codeType + "_0000000000");
+			sysCommonCode.setSortOrder("000");
+			sysCommonCode.setIsActive(CommonUtil.nvl(requestDataSet.getValue("isActiveMaster"), "N"));
+			sysCommonCode.setIsDefault(CommonCodeManager.getCodeByConstants("SIMPLE_YN_N"));
+			sysCommonCode.setInsertUserId((String)session.getAttribute("UserId"));
+			if (CommonUtil.equalsIgnoreCase(processFrom, "update")) {
+				detailDataSet = (DataSet)paramEntity.getObject("detailDataSet");
+				masterDataRow = (int)paramEntity.getObject("masterDataRow");
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+				sysCommonCode.setIsDefault(detailDataSet.getValue(masterDataRow, "IS_DEFAULT"));
+				sysCommonCode.setInsertUserId(detailDataSet.getValue(masterDataRow, "INSERT_USER_ID"));
+				sysCommonCode.setInsertDate(CommonUtil.toDate(detailDataSet.getValue(masterDataRow, "INSERT_DATE")));
+				sysCommonCode.setUpdateUserId((String)session.getAttribute("UserId"));
+				sysCommonCode.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			}
+
+			result = sysCommonCodeDao.insert(sysCommonCode);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			result = 0;
+			for (int i=0; i<detailLength; i++) {
+				String commonCode = requestDataSet.getValue("commonCodeDetail" + delimiter + i);
+
+				sysCommonCode.setCommonCode(commonCode);
+				sysCommonCode.setDescriptionEn(requestDataSet.getValue("descriptionEnDetail" + delimiter + i));
+				sysCommonCode.setDescriptionKo(requestDataSet.getValue("descriptionKoDetail" + delimiter + i));
+				sysCommonCode.setProgramConstants(codeType + "_" + CommonUtil.upperCase(commonCode));
+				sysCommonCode.setSortOrder(requestDataSet.getValue("sortOrderDetail" + delimiter + i));
+				sysCommonCode.setIsActive(CommonUtil.nvl(requestDataSet.getValue("isActiveDetail" + delimiter + i), "N"));
+
+				result += sysCommonCodeDao.insert(sysCommonCode);
+			}
+
+			if (result != detailLength) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
 			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+			paramEntity.setMessage("I801", getMessage("I801"));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -129,31 +149,24 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
-		int result = 0;
+		String codeType = CommonUtil.upperCase(requestDataSet.getValue("codeTypeMaster"));
+		DataSet detailDataSet;
+		int result = -1;
+		int masterDataRow = -1;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			detailDataSet = sysCommonCodeDao.getCommonCodeDataSetByCodeType(codeType);
+			masterDataRow = detailDataSet.getRowIndex("COMMON_CODE", "0000000000");
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			result = sysCommonCodeDao.delete(codeType);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
+
+			paramEntity.setObject("processFrom", "update");
+			paramEntity.setObject("masterDataRow", masterDataRow);
+			paramEntity.setObject("detailDataSet", detailDataSet);
+			paramEntity = exeInsert(paramEntity);
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
@@ -165,16 +178,16 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String codeType = requestDataSet.getValue("codeType");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		int result = 0;
+		String[] codeTypes = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		int result = -1;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
+			if (CommonUtil.isBlank(codeType)) {
+				result = sysCommonCodeDao.delete(codeTypes);
 			} else {
-				result = sysBoardDao.delete(articleId);
+				result = sysCommonCodeDao.delete(codeType);
 			}
 
 			if (result <= 0) {
@@ -193,30 +206,28 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
-		String pageTitle, fileName;
-		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
+		String codeType = requestDataSet.getValue("commonCodeType");
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			String pageTitle = "Common Code List";
+			String fileName = "CommonCodeList";
+			String[] columnHeader = {"code_type", "common_code", "description_en", "program_constants"};
 
-			exportHelper = ExportUtil.getExportHelper(fileType);
+			exportHelper = ExportUtil.getExportHelper(requestDataSet.getValue("fileType"));
 			exportHelper.setPageTitle(pageTitle);
 			exportHelper.setColumnHeader(columnHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
-			queryAdvisor.setRequestDataSet(requestDataSet);
+			queryAdvisor.addAutoFillCriteria(codeType, "code_type = '"+codeType+"'");
 			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
 				queryAdvisor.setPagination(false);
 			else {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysCommonCodeDao.getActiveCommonCodeDataSet(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

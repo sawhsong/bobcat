@@ -383,7 +383,7 @@
 
 			contentMessage = $.nony.replace(params.contents, "\n", "<br/>");
 
-			html += "<table id='temp_checkContentsHeight'><tr>";
+			html += "<table><tr>";
 			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
 			html += "<td style='padding:2px 4px;line-height:16px;white-space:nowrap;font-size:12px'>"+contentMessage+"</td>";
 			html += "</tr></table>";

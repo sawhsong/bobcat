@@ -58,9 +58,9 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.gridHeader.tableName"/></th>
 			<td class="tdEdit"><%=requestDataSet.getValue("tableName")%></td>
-			<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+			<th class="thEdit Rt"><mc:msg key="fwk.dtogenerator.gridHeader.tableDesc"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue("TABLE_DESCRIPTION")%></td>
 		</tr>
 	</table>

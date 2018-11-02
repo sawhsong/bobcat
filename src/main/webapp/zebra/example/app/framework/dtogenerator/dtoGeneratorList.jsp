@@ -107,8 +107,8 @@
 		<thead>
 			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.dtogenerator.title.selectToGenerate"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableName"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.dataGridHeader.tableDesc"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.gridHeader.tableName"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.gridHeader.tableDesc"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

@@ -97,12 +97,12 @@
 		<thead>
 			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.domaindictionary.title.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.name"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.nameAbbrev"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.dataType"/></th>
-				<th class="thGrid sortable:number"><mc:msg key="fwk.domaindictionary.dataGridHeader.dataLengh"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.dataGridHeader.desc"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="fwk.domaindictionary.dataGridHeader.lastUpdateDate"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.gridHeader.name"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.gridHeader.nameAbbrev"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.gridHeader.dataType"/></th>
+				<th class="thGrid sortable:number"><mc:msg key="fwk.domaindictionary.gridHeader.dataLengh"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.domaindictionary.gridHeader.desc"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="fwk.domaindictionary.gridHeader.lastUpdateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

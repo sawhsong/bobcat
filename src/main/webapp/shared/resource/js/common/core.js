@@ -958,10 +958,7 @@ var nony = {
 			heightHeader = $("#divHeaderHolder").outerHeight() || 0;
 			heightFooter = $("#divFooterHolder").outerHeight() || 0;
 		}
-//console.log("divHeaderHolder.height : "+$("#divHeaderHolder").height());
-//console.log("divHeaderHolder.outerheight : "+$("#divHeaderHolder").outerHeight());
-//console.log("divFooterHolder.height : "+$("#divFooterHolder").height());
-//console.log("divFooterHolder.outerheight : "+$("#divFooterHolder").outerHeight());
+
 		$("#"+mainDivId+" > div").each(function(index) {
 			if (isPopup) {
 				if (($(this).css("display") != "none") && ($(this).attr("id") != "divScrollablePanelPopup")) {
@@ -974,9 +971,8 @@ var nony = {
 			}
 		});
 
-		heightSum += ($("#divScrollablePanel").outerHeight() - $("#divScrollablePanel").height());
-//console.log("divScrollablePanel.outerheight : "+$("#divScrollablePanel").outerHeight());
-//console.log("divScrollablePanel.height : "+$("#divScrollablePanel").height());
+//		heightSum += ($("#divScrollablePanel").outerHeight() - $("#divScrollablePanel").height());
+
 		if (bodyLayout != null) {
 			if (bodyLayout.state.north.isClosed) {
 				heightHeader = 0;

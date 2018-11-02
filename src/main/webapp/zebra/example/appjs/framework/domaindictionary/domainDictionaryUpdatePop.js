@@ -64,6 +64,7 @@ $(function() {
 					commonJs.openDialog({
 						type:com.message.I000,
 						contents:result.message,
+						width:280,
 						blind:true,
 						buttons:[{
 							caption:com.caption.ok,
