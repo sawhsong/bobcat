@@ -14,4 +14,16 @@ var login = {
 	message:{
 		confirmPassword:"Password is not matched."
 	}
-}
+};
+
+/*!
+ * Sub System - sys
+ */
+var sys = {
+	caption:{
+	},
+	header:{
+	},
+	message:{
+	}
+};

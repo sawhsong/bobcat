@@ -14,4 +14,16 @@ var login = {
 	message:{
 		confirmPassword:"비밀번호가 일치하지 않습니다."
 	}
-}
+};
+
+/*!
+ * Sub System - sys
+ */
+var sys = {
+	caption:{
+	},
+	header:{
+	},
+	message:{
+	}
+};
