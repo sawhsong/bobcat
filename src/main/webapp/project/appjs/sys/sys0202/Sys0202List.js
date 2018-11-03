@@ -7,6 +7,8 @@ var searchResultDataCount = 0;
 var langCode = commonJs.upperCase(jsconfig.get("langCode"));
 var dateFormat = jsconfig.get("dateFormatJs");
 
+jsconfig.put("scrollablePanelHeightAdjust", -3);
+
 $(function() {
 	/*!
 	 * event
@@ -157,7 +159,7 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
+	getDetail = function(codeType) {
 		openPopup({mode:"Detail", codeType:codeType});
 	};
 
@@ -168,7 +170,7 @@ $(function() {
 		if (param.mode == "Detail") {
 			url = "/sys/0202/getDetail.do";
 			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
+		} else if (param.mode == "New") {
 			url = "/sys/0202/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
@@ -181,7 +183,8 @@ $(function() {
 			url:url,
 			paramData:{
 				mode:param.mode,
-				codeType:commonJs.nvl(param.codeType, "")
+				codeType:commonJs.nvl(param.codeType, ""),
+				codeCategory:$("#codeCategory").val()
 			},
 			header:header,
 			blind:true,
@@ -215,6 +218,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
@@ -254,9 +258,9 @@ $(function() {
 			ctxMenu.commonAction[2].disable = false;
 		}
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(codeType);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", codeType:codeType});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.commonAction[0].fun = function() {getDetail(codeType);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", codeType:codeType});};
+		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,

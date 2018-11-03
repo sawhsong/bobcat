@@ -8,6 +8,7 @@ package project.app.sys.sys0202;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseAction;
+import project.common.module.commoncode.CommonCodeManager;
 
 public class Sys0202Action extends BaseAction {
 	@Autowired
@@ -45,6 +46,7 @@ public class Sys0202Action extends BaseAction {
 	public String exeInsert() throws Exception {
 		try {
 			biz.exeInsert(paramEntity);
+			CommonCodeManager.reload();
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -54,6 +56,7 @@ public class Sys0202Action extends BaseAction {
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);
+			CommonCodeManager.reload();
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -63,6 +66,7 @@ public class Sys0202Action extends BaseAction {
 	public String exeDelete() throws Exception {
 		try {
 			biz.exeDelete(paramEntity);
+			CommonCodeManager.reload();
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

@@ -6,7 +6,7 @@
 /**
  * Layout
  */
-#divPagination {margin-top:-2px;}
+#divPagination {}
 #tblPagination {width:100%;}
 
 .tdPaginationLeft {width:32%;text-align:left;}

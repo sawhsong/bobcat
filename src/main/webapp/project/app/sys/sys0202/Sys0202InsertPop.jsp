@@ -9,7 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	String codeCategory = requestDataSet.getValue("codeCategory");
 %>
 <%/************************************************************************************************
 * HTML
@@ -25,6 +25,11 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+#liDummy {display:none;}
+#divDataArea.areaContainerPopup {padding-top:0px;}
+.dummyDetail {list-style:none;margin-top:4px;}
+.dragHandler {cursor:move;}
+.deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -52,7 +57,42 @@
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainerPopup">
+	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0202.searchHeader.codeType"/></caption>
+		<colgroup>
+			<col width="13%"/>
+			<col width="*"/>
+			<col width="13%"/>
+			<col width="15%"/>
+			<col width="11%"/>
+			<col width="10%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeType"/></th>
+			<td class="tdEdit"><ui:text name="codeTypeMaster" id="codeTypeMaster" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.codeType" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeCategory"/></th>
+			<td class="tdEdit"><ui:ccselect id="codeCategory" name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=codeCategory%>"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccradio name="isActiveMaster" codeType="SIMPLE_YN" selectedValue="Y"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
+			<td class="tdEdit"><ui:text name="descriptionEnMaster" id="descriptionEnMaster" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="descriptionKoMaster" id="descriptionKoMaster" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+		</tr>
+	</table>
+</div>
+<div class="breaker" style="height:5px;"></div>
+<div class="divButtonArea areaContainerPopup">
+	<div class="divButtonAreaLeft"></div>
+	<div class="divButtonAreaRight">
+		<ui:buttonGroup id="subButtonGroup">
+			<ui:button id="btnAdd" caption="button.com.add" iconClass="fa-plus"/>
+		</ui:buttonGroup>
+	</div>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -63,48 +103,7 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<table class="tblEdit">
-		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
-		</colgroup>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0202.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="sys0202.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0202.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="sys0202.header.writerEmail" option="email" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0202.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="sys0202.header.articleSubject" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0202.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
-			</td>
-		</tr>
-	</table>
+	<ul id="ulCommonCodeDetailHolder"></ul>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
@@ -115,6 +114,35 @@
 <%/************************************************************************************************
 * Additional Elements
 ************************************************************************************************/%>
+<li id="liDummy" class="dummyDetail">
+	<table class="tblEdit">
+		<colgroup>
+			<col width="3%"/>
+			<col width="13%"/>
+			<col width="*"/>
+			<col width="13%"/>
+			<col width="15%"/>
+			<col width="11%"/>
+			<col width="10%"/>
+		</colgroup>
+		<tr>
+			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="sys0202.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.commonCode"/></th>
+			<td class="tdEdit"><ui:text name="commonCodeDetail" id="commonCodeDetail" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.commonCode" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccradio name="isActiveDetail" codeType="SIMPLE_YN" selectedValue="Y"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.sortOrder"/></th>
+			<td class="tdEdit"><ui:text name="sortOrderDetail" id="sortOrderDetail" className="defClass" checkName="sys0202.header.sortOrder" options="mandatory" option="numeric"/></td>
+		</tr>
+		<tr>
+			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="sys0202.msg.delete"/>"><ui:icon id="iDeleteButton" className="fa-lg fa-times"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
+			<td class="tdEdit"><ui:text name="descriptionEnDetail" id="descriptionEnDetail" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="descriptionKoDetail" id="descriptionKoDetail" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+		</tr>
+	</table>
+</li>
 </form>
 <%/************************************************************************************************
 * Additional Form

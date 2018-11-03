@@ -984,10 +984,10 @@ var nony = {
 		}
 
 		if (isPopup) {
-			heightCorrection = 2;
+			heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 2;
 			$("#divScrollablePanelPopup").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		} else {
-			heightCorrection = 0;
+			heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 0;
 			$("#divScrollablePanel").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		}
 

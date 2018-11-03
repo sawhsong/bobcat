@@ -9,8 +9,17 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
+	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
+	String isActive = "", isDefault = "", disableFlag = "";
+	int masterRow = -1;
+
+	if (resultDataSet.getRowCnt() > 0) {
+		masterRow = resultDataSet.getRowIndex("COMMON_CODE", "0000000000");
+		isActive = resultDataSet.getValue(masterRow, "IS_ACTIVE");
+		isDefault = resultDataSet.getValue(masterRow, "IS_DEFAULT");
+		if (CommonUtil.equals(isDefault, "Y")) {disableFlag = "disabled";}
+	}
 %>
 <%/************************************************************************************************
 * HTML
@@ -26,9 +35,11 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.codeDetail {list-style:none;margin-top:4px;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -48,14 +59,39 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save" status="<%=disableFlag%>"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainerPopup">
+	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0202.searchHeader.codeType"/></caption>
+		<colgroup>
+			<col width="13%"/>
+			<col width="*"/>
+			<col width="13%"/>
+			<col width="15%"/>
+			<col width="11%"/>
+			<col width="10%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sys0202.header.codeType"/></th>
+			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0202.header.codeCategory"/></th>
+			<td class="tdEdit"><ui:ccselect id="codeCategory" name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=resultDataSet.getValue(masterRow, \"CODE_CATEGORY\")%>" status="disabled"/></td>
+			<th class="thEdit Rt"><mc:msg key="sys0202.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccradio name="rdoIsActiveMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sys0202.header.descriptionEn"/></th>
+			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_EN")%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0202.header.descriptionKo"/></th>
+			<td class="tdEdit" colspan="3"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_KO")%></td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -66,66 +102,47 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<table class="tblEdit">
-		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
-		</colgroup>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.writerName"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterName()%>(<%=sysBoard.getWriterId()%>)</td>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.writerEmail"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.updateDate"/></th>
-			<td class="tdEdit"><%=CommonUtil.toViewDateString(sysBoard.getUpdateDate())%></td>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.hitCount"/></th>
-			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysBoard.getHitCnt())%></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3"><%=sysBoard.getArticleSubject()%></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa className="defClass" style="height:214px;padding:0px 4px 0px 0px" value="<%=noticeBoard.getArticleContents()%>" status="display"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0202.header.attachedFile"/></th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
+	<ul>
 <%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							String repositoryPath = fileDataSet.getValue(i, "REPOSITORY_PATH");
-							String originalName = fileDataSet.getValue(i, "ORIGINAL_NAME");
-							String newName = fileDataSet.getValue(i, "NEW_NAME");
-							String icon = fileDataSet.getValue(i, "FILE_ICON");
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
+	if (resultDataSet.getRowCnt() > 0) {
+		for (int i=0; i<resultDataSet.getRowCnt(); i++) {
+			String rdoIsActiveName = "rdoIsActiveDetail_"+i;
+
+			isActive = resultDataSet.getValue(i, "IS_ACTIVE");
+
+			if (i == masterRow) {continue;}
 %>
-						<tr>
-							<td class="tdDefault">
-								<img src="<%=icon%>" style="margin-top:-4px;"/>
-								<a class="aEn" onclick="exeDownload('<%=repositoryPath%>', '<%=originalName%>', '<%=newName%>')">
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</a>
-							</td>
-						</tr>
+		<li class="codeDetail">
+			<table class="tblEdit">
+				<colgroup>
+					<col width="13%"/>
+					<col width="*"/>
+					<col width="13%"/>
+					<col width="15%"/>
+					<col width="11%"/>
+					<col width="10%"/>
+				</colgroup>
+				<tr>
+					<th class="thEdit rt"><mc:msg key="sys0202.header.commonCode"/></th>
+					<td class="tdEdit"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
+					<th class="thEdit rt"><mc:msg key="sys0202.header.isActive"/></th>
+					<td class="tdEdit"><ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled"/></td>
+					<th class="thEdit rt"><mc:msg key="sys0202.header.sortOrder"/></th>
+					<td class="tdEdit"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
+				</tr>
+				<tr>
+					<th class="thEdit rt"><mc:msg key="sys0202.header.descriptionEn"/></th>
+					<td class="tdEdit"><%=resultDataSet.getValue(i, "DESCRIPTION_EN")%></td>
+					<th class="thEdit rt"><mc:msg key="sys0202.header.descriptionKo"/></th>
+					<td class="tdEdit" colspan="3"><%=resultDataSet.getValue(i, "DESCRIPTION_KO")%></td>
+				</tr>
+			</table>
+		</li>
 <%
-						}
-					}
+		}
+	}
 %>
-					</table>
-				</div>
-			</td>
-		</tr>
-	</table>
+	</ul>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

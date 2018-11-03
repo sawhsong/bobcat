@@ -5,6 +5,8 @@ var popup = null;
 var searchResultDataCount = 0;
 var dateFormat = jsconfig.get("dateFormatJs");
 
+jsconfig.put("scrollablePanelHeightAdjust", 2);
+
 $(function() {
 	/*!
 	 * event
@@ -92,7 +94,7 @@ $(function() {
 				uiAnc.setText(dataSet.getValue(i, "TABLE_NAME")).setScript("getDetail('"+dataSet.getValue(i, "FILE_NAME")+"')");
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(dataSet.getValue(i, "DESCRIPTION"), 90)));
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "FILE_NAME")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(dataSet.getValue(i, "FILE_SIZE")+" KB"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "UPDATE_DATE_TIME")));

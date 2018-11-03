@@ -88,6 +88,7 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		String codeCategory = requestDataSet.getValue("codeCategory");
 		String codeType = CommonUtil.upperCase(requestDataSet.getValue("codeTypeMaster"));
 		String processFrom = (String)paramEntity.getObject("processFrom");
 		DataSet detailDataSet;
@@ -96,6 +97,7 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 		SysCommonCode sysCommonCode = new SysCommonCode();
 
 		try {
+			sysCommonCode.setCodeCategory(codeCategory);
 			sysCommonCode.setCodeType(codeType);
 			sysCommonCode.setCommonCode("0000000000");
 			sysCommonCode.setDescriptionEn(requestDataSet.getValue("descriptionEnMaster"));
@@ -163,6 +165,8 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			requestDataSet.addColumn("codeCategory", detailDataSet.getValue("CODE_CATEGORY"));
+			paramEntity.setRequestDataSet(requestDataSet);
 			paramEntity.setObject("processFrom", "update");
 			paramEntity.setObject("masterDataRow", masterDataRow);
 			paramEntity.setObject("detailDataSet", detailDataSet);
