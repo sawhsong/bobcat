@@ -35,7 +35,6 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-.codeDetail {list-style:none;margin-top:4px;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -67,20 +66,18 @@ var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
+		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/> : <%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></caption>
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="8%"/>
+			<col width="9%"/>
+			<col width="9%"/>
+			<col width="31%"/>
+			<col width="9%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.codeType"/></th>
-			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "CODE_TYPE")%></td>
 			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit"><ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
-		</tr>
-		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
 			<td class="tdEdit"><%=resultDataSet.getValue(masterRow, "DESCRIPTION_EN")%></td>
 			<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
@@ -91,54 +88,62 @@ var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
-<div class="breaker" style="height:5px;"></div>
+<div class="breaker"></div>
 </div>
 <div id="divScrollablePanelPopup">
 <%/************************************************************************************************
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<ul>
+	<table id="tblGrid" class="tblGrid">
+		<colgroup>
+			<col width="21%"/>
+			<col width="7%"/>
+			<col width="33%"/>
+			<col width="33%"/>
+			<col width="*"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="thGrid"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
+				<th class="thGrid"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+				<th class="thGrid"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+				<th class="thGrid"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+				<th class="thGrid"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
 <%
-	if (resultDataSet.getRowCnt() > 0) {
-		for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-			String rdoIsActiveName = "useYnDetail_"+i;
+		if (resultDataSet.getRowCnt() > 0) {
+			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
+				String rdoIsActiveName = "useYnDetail_"+i;
 
-			isActive = resultDataSet.getValue(i, "USE_YN");
+				isActive = resultDataSet.getValue(i, "USE_YN");
 
-			if (i == masterRow) {continue;}
+				pageContext.setAttribute("rdoIsActiveName", rdoIsActiveName);
+				pageContext.setAttribute("isActive", isActive);
+
+				if (i == masterRow) {continue;}
 %>
-		<li class="codeDetail">
-			<table class="tblEdit">
-				<colgroup>
-					<col width="13%"/>
-					<col width="*"/>
-					<col width="13%"/>
-					<col width="15%"/>
-					<col width="11%"/>
-					<col width="10%"/>
-				</colgroup>
-				<tr>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-					<td class="tdEdit"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-					<td class="tdEdit"><ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled" source="framework"/></td>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-					<td class="tdEdit"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
-				</tr>
-				<tr>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-					<td class="tdEdit"><%=resultDataSet.getValue(i, "DESCRIPTION_EN")%></td>
-					<th class="thEdit Rt"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-					<td class="tdEdit" colspan="3"><%=resultDataSet.getValue(i, "DESCRIPTION_KO")%></td>
-				</tr>
-			</table>
-		</li>
+			<tr>
+				<td class="tdGrid"><%=resultDataSet.getValue(i, "COMMON_CODE")%></td>
+				<td class="tdGrid ct"><ui:ccradio name="${rdoIsActiveName}" codeType="SIMPLE_YN" selectedValue="${isActive}" status="disabled" source="framework"/></td>
+				<td class="tdGrid"><%=resultDataSet.getValue(i, "DESCRIPTION_EN")%></td>
+				<td class="tdGrid"><%=resultDataSet.getValue(i, "DESCRIPTION_KO")%></td>
+				<td class="tdGrid ct"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
+			</tr>
+<%
+			}
+		} else {
+%>
+			<tr>
+				<td class="tdGrid Ct" colspan="5"><mc:msg key="I002"/></td>
+			</tr>
 <%
 		}
-	}
 %>
-	</ul>
+		</tbody>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

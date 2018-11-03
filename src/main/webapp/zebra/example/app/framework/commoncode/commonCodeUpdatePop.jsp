@@ -34,15 +34,19 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.thGrid {border-bottom:0px;}
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {background:#FFFFFF;}
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
-.dummyDetail {list-style:none;margin-top:4px;}
+.dummyDetail {list-style:none;}
 .dragHandler {cursor:move;}
 .deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
 var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
+var ds = commonJs.getDataSetFromJavaDataSet("<%=resultDataSet.toStringForJs()%>");
+var masterRow = <%=masterRow%>;
 </script>
 </head>
 <%/************************************************************************************************
@@ -69,32 +73,25 @@ var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></caption>
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="6%"/>
+			<col width="17%"/>
+			<col width="6%"/>
+			<col width="7%"/>
+			<col width="9%"/>
+			<col width="24%"/>
+			<col width="9%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
-			<td class="tdEdit">
-				<ui:text name="codeTypeMaster" id="codeTypeMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="fwk.commoncode.header.codeType" options="mandatory"/>
-			</td>
+			<td class="tdEdit"><ui:text name="codeTypeMaster" id="codeTypeMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="fwk.commoncode.header.codeType" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit">
-				<ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
-			</td>
-		</tr>
-		<tr>
+			<td class="tdEdit ct"><ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit">
-				<ui:text name="descriptionEnMaster" id="descriptionEnMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/>
-			</td>
+			<td class="tdEdit"><ui:text name="descriptionEnMaster" id="descriptionEnMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit">
-				<ui:text name="descriptionKoMaster" id="descriptionKoMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/>
-			</td>
+			<td class="tdEdit"><ui:text name="descriptionKoMaster" id="descriptionKoMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>
@@ -117,61 +114,33 @@ var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<ul id="ulCommonCodeDetailHolder">
-<%
-	if (resultDataSet.getRowCnt() > 0) {
-		for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-			String idSuffix = delimiter+i;
-			String rdoIsActiveName = "useYnDetail"+idSuffix;
-
-			isActive = resultDataSet.getValue(i, "USE_YN");
-
-			if (i == masterRow) {continue;}
-%>
-		<li id="liDummy<%=idSuffix%>" class="dummyDetail" index="<%=i%>">
-			<table class="tblEdit">
-				<colgroup>
-					<col width="3%"/>
-					<col width="13%"/>
-					<col width="*"/>
-					<col width="13%"/>
-					<col width="15%"/>
-					<col width="11%"/>
-					<col width="10%"/>
-				</colgroup>
-				<tr>
-					<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-					<td class="tdEdit">
-						<input type="text" id="commonCodeDetail<%=idSuffix%>" name="commonCodeDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "COMMON_CODE")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
-					</td>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-					<td class="tdEdit">
-						<ui:ccradio name="<%=rdoIsActiveName%>" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/>
-					</td>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-					<td class="tdEdit">
-						<input type="text" id="sortOrderDetail<%=idSuffix%>" name="sortOrderDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "SORT_ORDER")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
-					</td>
-				</tr>
-				<tr>
-					<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-					<td class="tdEdit">
-						<input type="text" id="descriptionEnDetail<%=idSuffix%>" name="descriptionEnDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "DESCRIPTION_EN")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
-					</td>
-					<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-					<td class="tdEdit" colspan="3">
-						<input type="text" id="descriptionKoDetail<%=idSuffix%>" name="descriptionKoDetail<%=idSuffix%>" value="<%=resultDataSet.getValue(i, "DESCRIPTION_KO")%>" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
-					</td>
-				</tr>
-			</table>
-		</li>
-<%
-		}
-	}
-%>
-	</ul>
+	<table id="tblGrid" class="tblGrid">
+		<colgroup>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="32%"/>
+			<col width="32%"/>
+			<col width="*"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="thGrid"></th>
+				<th class="thGrid"></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
+				<th class="thGrid mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
+			<tr>
+				<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulCommonCodeDetailHolder"></ul></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
@@ -183,41 +152,24 @@ var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 * Additional Elements
 ************************************************************************************************/%>
 <li id="liDummy" class="dummyDetail">
-	<table class="tblEdit">
+	<table class="tblGrid" style="border:0px">
 		<colgroup>
-			<col width="3%"/>
-			<col width="13%"/>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="32%"/>
+			<col width="32%"/>
 			<col width="*"/>
-			<col width="13%"/>
-			<col width="15%"/>
-			<col width="11%"/>
-			<col width="10%"/>
 		</colgroup>
-		<tr>
-			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><i id="iDragHandler" class="fa fa-lg fa-sort"></i></th>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.commonCode"/></th>
-			<td class="tdEdit">
-				<input type="text" id="commonCodeDetail" name="commonCodeDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.commonCode"/>" mandatory/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
-			<td class="tdEdit">
-				<ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.sortOrder"/></th>
-			<td class="tdEdit">
-				<input type="text" id="sortOrderDetail" name="sortOrderDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.sortOrder"/>" mandatory option="numeric"/>
-			</td>
-		</tr>
-		<tr>
-			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit">
-				<input type="text" id="descriptionEnDetail" name="descriptionEnDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionEn"/>" mandatory/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit" colspan="3">
-				<input type="text" id="descriptionKoDetail" name="descriptionKoDetail" class="txtEn" checkName="<mc:msg key="fwk.commoncode.header.descriptionKo"/>" mandatory/>
-			</td>
+		<tr class="noBorderAll">
+			<th id="thDragHander" class="thGrid dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
+			<th id="thDeleteButton" class="thGrid deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><ui:icon id="iDeleteButton" className="fa-lg fa-times"/></th>
+			<td class="tdGrid ct"><ui:text name="commonCodeDetail" id="commonCodeDetail" className="defClass" style="text-transform:uppercase" checkName="fwk.commoncode.header.commonCode" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionEnDetail" id="descriptionEnDetail" className="defClass" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionKoDetail" id="descriptionKoDetail" className="defClass" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="sortOrderDetail" id="sortOrderDetail" className="defClass ct" checkName="fwk.commoncode.header.sortOrder" option="numeric" options="mandatory"/></td>
 		</tr>
 	</table>
 </li>

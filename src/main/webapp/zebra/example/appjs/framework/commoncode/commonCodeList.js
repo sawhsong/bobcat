@@ -159,7 +159,7 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 754;
+		var height = 900;
 
 		if (param.mode == "Detail") {
 			url = "/zebra/framework/commoncode/getDetail.do";
@@ -182,7 +182,7 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:1000,
+			width:1700,
 			height:height
 		};
 
@@ -224,6 +224,7 @@ $(function() {
 						type:com.message.I000,
 						contents:result.message,
 						blind:true,
+						width:300,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
