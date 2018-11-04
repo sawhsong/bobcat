@@ -69,8 +69,7 @@ public class SysCountryCurrencyHDaoImpl extends BaseHDao implements SysCountryCu
 		queryAdvisor.addAutoFillCriteria(currencyCode, "lower(currency_alphabetic_code) like lower('"+currencyCode+"%')");
 		queryAdvisor.addOrderByClause("currency_name");
 
-//		return selectAsDataSet(queryAdvisor, "query.SysCountryCurrency.getCountryCurrencyDataSetBySearchCriteria");
-		return selectAllAsDataSet(queryAdvisor, new SysCountryCurrency());
+		return selectAsDataSet(queryAdvisor, "query.SysCountryCurrency.getCountryCurrencyDataSetBySearchCriteria");
 	}
 
 	public SysCountryCurrency getCountryCurrencyByCountryCurrencyId(String countryCurrencyId) throws Exception {

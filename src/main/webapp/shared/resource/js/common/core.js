@@ -987,7 +987,7 @@ var nony = {
 			heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 2;
 			$("#divScrollablePanelPopup").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		} else {
-			heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 0;
+			heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || -3;
 			$("#divScrollablePanel").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 		}
 

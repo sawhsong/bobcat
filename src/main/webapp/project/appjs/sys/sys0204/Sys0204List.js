@@ -4,7 +4,8 @@
  *************************************************************************************************/
 var popup = null;
 var searchResultDataCount = 0;
-var attchedFileContextMenu = [];
+var langCode = commonJs.upperCase(jsconfig.get("langCode"));
+var dateFormat = jsconfig.get("dateFormatJs");
 
 $(function() {
 	/*!
@@ -26,14 +27,6 @@ $(function() {
 		commonJs.clearSearchCriteria();
 	});
 
-	$("#icnFromDate").click(function(event) {
-		commonJs.openCalendar(event, "fromDate");
-	});
-
-	$("#icnToDate").click(function(event) {
-		commonJs.openCalendar(event, "toDate");
-	});
-
 	$("#icnCheck").click(function(event) {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
@@ -42,7 +35,7 @@ $(function() {
 		if (event.which == 13) {
 			var element = event.target;
 
-			if ($(element).is("[name=searchWord]") || $(element).is("[name=fromDate]") || $(element).is("[name=toDate]")) {
+			if ($(element).is("[name=currencyCode]") || $(element).is("[name=countryName]")) {
 				doSearch();
 			}
 		}
@@ -103,45 +96,25 @@ $(function() {
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "", iLength = 200;
-				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
 
-				gridTr.setClassName("noBorderHor noStripe");
-
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "COUNTRY_CURRENCY_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
-
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "CURRENCY_NAME"), 80)).setScript("getDetail('"+dataSet.getValue(i, "COUNTRY_CURRENCY_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				var gridTd = new UiGridTd();
-				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
-					gridTd.addChild(iconAttachFile);
-				}
-				gridTr.addChild(gridTd);
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CURRENCY_ALPHABETIC_CODE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CURRENCY_SYMBOL")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(dataSet.getValue(i, "COUNTRY_NAME"), 80)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "COUNTRY_CODE_3")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "INSERT_DATE"), dateFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("countryCurrencyId:"+dataSet.getValue(i, "COUNTRY_CURRENCY_ID"))
 					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
@@ -150,7 +123,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -161,52 +134,48 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
-
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.boardAction);
+			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getDetail = function(countryCurrencyId) {
+		openPopup({mode:"Detail", countryCurrencyId:countryCurrencyId});
 	};
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 510;
+		var height = 368;
 
 		if (param.mode == "Detail") {
 			url = "/sys/0204/getDetail.do";
 			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
+			height = 410;
+		} else if (param.mode == "New") {
 			url = "/sys/0204/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/sys/0204/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 634;
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"sys0204"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				countryCurrencyId:commonJs.nvl(param.countryCurrencyId, "")
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:950,
 			height:height
 		};
 
@@ -236,6 +205,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
@@ -259,22 +229,21 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var countryCurrencyId = $(img).attr("countryCurrencyId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == countryCurrencyId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.commonAction[0].fun = function() {getDetail(countryCurrencyId);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", countryCurrencyId:countryCurrencyId});};
+		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.commonAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -324,10 +293,34 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
+		commonJs.setAutoComplete($("#currencyCode"), {
+			method:"getCurrencyCode",
+			label:"currency_code",
+			value:"currency_code",
+			focus: function(event, ui) {
+				$("#currencyCode").val(ui.item.label);
+				return false;
+			},
+			select:function(event, ui) {
+				doSearch();
+			}
+		});
+
+		commonJs.setAutoComplete($("#countryName"), {
+			method:"getCountryName",
+			label:"country_name",
+			value:"country_name",
+			focus: function(event, ui) {
+				$("#countryName").val(ui.item.label);
+				return false;
+			},
+			select:function(event, ui) {
+				doSearch();
+			}
+		});
+
 		setExportButtonContextMenu();
-		$("#searchWord").focus();
+		$("#currencyCode").focus();
 		doSearch();
 	});
 });

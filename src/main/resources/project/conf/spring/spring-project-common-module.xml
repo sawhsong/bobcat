@@ -16,6 +16,11 @@
 		<property name="sysCommonCodeDao" ref="sysCommonCodeDao"/>
 	</bean>
 
+	<!--/* DataHelper */-->
+	<bean id="dataHelper" name="dataHelper" class="${name.package.project}.common.module.datahelper.DataHelper" parent="baseBiz">
+		<property name="sysUserDao" ref="sysUserDao"/>
+	</bean>
+
 	<!--/* Auto Completion */-->
 	<bean id="autoCompletionAction" name="autoCompletionAction" class="${name.package.project}.common.module.autocompletion.AutoCompletionAction"/>
 	<bean id="autoCompletionBiz" name="autoCompletionBiz" class="${name.package.project}.common.module.autocompletion.AutoCompletionBizImpl" parent="baseBiz"/>

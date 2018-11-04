@@ -29,13 +29,7 @@
 
 	<sql-query name="query.SysCountryCurrency.getCountryCurrencyDataSetBySearchCriteria">
 	<![CDATA[
-		select country_currency_id,
-		       currency_name,
-		       currency_alphabetic_code,
-		       currency_symbol,
-		       country_name,
-		       country_code_3,
-		       to_char(nvl(update_date, insert_date), '${dateFormat}') as update_date
+		select *
 		  from sys_country_currency
 		 where 1 = 1
 		${auto_fill}

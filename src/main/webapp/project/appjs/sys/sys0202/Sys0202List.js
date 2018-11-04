@@ -179,7 +179,7 @@ $(function() {
 		}
 
 		var popParam = {
-			popupId:"commonCode"+param.mode,
+			popupId:"sys0202"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
