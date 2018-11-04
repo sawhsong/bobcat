@@ -45,12 +45,12 @@ $(function() {
 			commonJs.confirm({
 				contents:com.message.Q002,
 				buttons:[{
-					caption:"Yes",
+					caption:com.caption.yes,
 					callback:function() {
 						exeDelete(params);
 					}
 				}, {
-					caption:"No",
+					caption:com.caption.no,
 					callback:function() {
 					}
 				}]
@@ -76,6 +76,7 @@ $(function() {
 						type:com.message.I000,
 						contents:result.message,
 						blind:true,
+						width:300,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
@@ -95,5 +96,10 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		setTimeout(function() {
+			$("#tblGrid").fixedHeaderTable({
+				attachTo:$("#divDataArea")
+			});
+		}, 500);
 	});
 });

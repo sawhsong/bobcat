@@ -34,9 +34,11 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.thGrid {border-bottom:0px;}
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {background:#FFFFFF;}
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
-.dummyDetail {list-style:none;margin-top:4px;}
+.dummyDetail {list-style:none;}
 .dragHandler {cursor:move;}
 .deleteButton {cursor:pointer;}
 </style>
@@ -44,6 +46,8 @@
 <script type="text/javascript">
 var delimiter = jsconfig.get("dataDelimiter");
 var commonCodeForUpdate = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
+var ds = commonJs.getDataSetFromJavaDataSet("<%=resultDataSet.toStringForJs()%>");
+var masterRow = <%=masterRow%>;
 </script>
 </head>
 <%/************************************************************************************************
@@ -70,28 +74,29 @@ var commonCodeForUpdate = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 <div id="divSearchCriteriaArea"></div>
 <div id="divInformArea" class="areaContainerPopup">
 	<table class="tblEdit">
-		<caption class="captionEdit"><mc:msg key="sys0202.searchHeader.codeType"/></caption>
 		<colgroup>
-			<col width="13%"/>
+			<col width="7%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="17%"/>
+			<col width="5%"/>
+			<col width="6%"/>
+			<col width="8%"/>
+			<col width="18%"/>
+			<col width="8%"/>
 			<col width="*"/>
-			<col width="13%"/>
-			<col width="15%"/>
-			<col width="11%"/>
-			<col width="10%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeType"/></th>
-			<td class="tdEdit"><ui:text name="codeTypeMaster" id="codeTypeMaster" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.codeType" options="mandatory"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeCategory"/></th>
 			<td class="tdEdit"><ui:ccselect id="codeCategory" name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=resultDataSet.getValue(masterRow, \"CODE_CATEGORY\")%>" status="disabled"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeType"/></th>
+			<td class="tdEdit"><ui:text name="codeTypeMaster" id="codeTypeMaster" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.codeType" options="mandatory"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.isActive"/></th>
 			<td class="tdEdit"><ui:ccradio name="isActiveMaster" codeType="SIMPLE_YN" selectedValue="<%=resultDataSet.getValue(masterRow, \"IS_ACTIVE\")%>"/></td>
-		</tr>
-		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
 			<td class="tdEdit"><ui:text name="descriptionEnMaster" id="descriptionEnMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="descriptionKoMaster" id="descriptionKoMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="descriptionKoMaster" id="descriptionKoMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>
@@ -114,55 +119,33 @@ var commonCodeForUpdate = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<ul id="ulCommonCodeDetailHolder">
-<%
-	if (resultDataSet.getRowCnt() > 0) {
-		for (int i=0; i<resultDataSet.getRowCnt(); i++) {
-			String idSuffix = delimiter+i;
-			String rdoIsActiveName = "isActiveDetail"+idSuffix;
-
-			isActive = resultDataSet.getValue(i, "IS_ACTIVE");
-
-			pageContext.setAttribute("idSuffix", idSuffix);
-			pageContext.setAttribute("rdoIsActiveName", rdoIsActiveName);
-			pageContext.setAttribute("isActive", isActive);
-
-			if (i == masterRow) {continue;}
-%>
-		<li id="liDummy<%=idSuffix%>" class="dummyDetail" index="<%=i%>">
-			<table class="tblEdit">
-				<colgroup>
-					<col width="3%"/>
-					<col width="13%"/>
-					<col width="*"/>
-					<col width="13%"/>
-					<col width="15%"/>
-					<col width="11%"/>
-					<col width="10%"/>
-				</colgroup>
-				<tr>
-					<th id="thDragHander<%=idSuffix%>" index="<%=i%>" class="thEdit Ct dragHandler" title="<mc:msg key="sys0202.msg.drag"/>"><i id="iDragHandler<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-sort"></i></th>
-					<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.commonCode"/></th>
-					<td class="tdEdit"><ui:text name="commonCodeDetail${idSuffix}" id="commonCodeDetail${idSuffix}" value="<%=resultDataSet.getValue(i, \"COMMON_CODE\")%>" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.commonCode" options="mandatory"/></td>
-					<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.isActive"/></th>
-					<td class="tdEdit"><ui:ccradio name="${rdoIsActiveName}" codeType="SIMPLE_YN" selectedValue="${isActive}"/></td>
-					<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.sortOrder"/></th>
-					<td class="tdEdit"><ui:text name="sortOrderDetail${idSuffix}" id="sortOrderDetail${idSuffix}" value="<%=resultDataSet.getValue(i, \"SORT_ORDER\")%>" className="defClass" checkName="sys0202.header.sortOrder" options="mandatory" option="numeric"/></td>
-				</tr>
-				<tr>
-					<th id="thDeleteButton<%=idSuffix%>" index="<%=i%>" class="thEdit Ct deleteButton" title="<mc:msg key="sys0202.msg.delete"/>"><i id="iDeleteButton<%=idSuffix%>" index="<%=i%>" class="fa fa-lg fa-times"></i></th>
-					<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
-					<td class="tdEdit"><ui:text name="descriptionEnDetail${idSuffix}" id="descriptionEnDetail${idSuffix}" className="defClass" value="<%=resultDataSet.getValue(i, \"DESCRIPTION_EN\")%>" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
-					<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
-					<td class="tdEdit" colspan="3"><ui:text name="descriptionKoDetail${idSuffix}" id="descriptionKoDetail${idSuffix}" className="defClass" value="<%=resultDataSet.getValue(i, \"DESCRIPTION_KO\")%>" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
-				</tr>
-			</table>
-		</li>
-<%
-		}
-	}
-%>
-	</ul>
+	<table id="tblGrid" class="tblGrid">
+		<colgroup>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="32%"/>
+			<col width="32%"/>
+			<col width="*"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="thGrid"></th>
+				<th class="thGrid"></th>
+				<th class="thGrid mandatory"><mc:msg key="sys0202.header.commonCode"/></th>
+				<th class="thGrid mandatory"><mc:msg key="sys0202.header.isActive"/></th>
+				<th class="thGrid mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
+				<th class="thGrid mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
+				<th class="thGrid mandatory"><mc:msg key="sys0202.header.sortOrder"/></th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
+			<tr>
+				<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulCommonCodeDetailHolder"></ul></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
@@ -174,31 +157,24 @@ var commonCodeForUpdate = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 * Additional Elements
 ************************************************************************************************/%>
 <li id="liDummy" class="dummyDetail">
-	<table class="tblEdit">
+	<table class="tblGrid" style="border:0px">
 		<colgroup>
-			<col width="3%"/>
-			<col width="13%"/>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="32%"/>
+			<col width="32%"/>
 			<col width="*"/>
-			<col width="13%"/>
-			<col width="15%"/>
-			<col width="11%"/>
-			<col width="10%"/>
 		</colgroup>
-		<tr>
-			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="sys0202.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.commonCode"/></th>
-			<td class="tdEdit"><ui:text name="commonCodeDetail" id="commonCodeDetail" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.commonCode" options="mandatory"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.isActive"/></th>
-			<td class="tdEdit"><ui:ccradio name="isActiveDetail" codeType="SIMPLE_YN" selectedValue="Y"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.sortOrder"/></th>
-			<td class="tdEdit"><ui:text name="sortOrderDetail" id="sortOrderDetail" className="defClass" checkName="sys0202.header.sortOrder" options="mandatory" option="numeric"/></td>
-		</tr>
-		<tr>
-			<th id="thDeleteButton" class="thEdit Ct deleteButton" title="<mc:msg key="sys0202.msg.delete"/>"><ui:icon id="iDeleteButton" className="fa-lg fa-times"/></th>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
-			<td class="tdEdit"><ui:text name="descriptionEnDetail" id="descriptionEnDetail" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="descriptionKoDetail" id="descriptionKoDetail" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+		<tr class="noBorderAll">
+			<th id="thDragHander" class="thGrid dragHandler" title="<mc:msg key="sys0202.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
+			<th id="thDeleteButton" class="thGrid deleteButton" title="<mc:msg key="sys0202.msg.delete"/>"><ui:icon id="iDeleteButton" className="fa-lg fa-times"/></th>
+			<td class="tdGrid ct"><ui:text name="commonCodeDetail" id="commonCodeDetail" className="defClass" style="text-transform:uppercase" checkName="sys0202.header.commonCode" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:ccradio name="isActiveDetail" codeType="SIMPLE_YN" selectedValue="Y"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionEnDetail" id="descriptionEnDetail" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionKoDetail" id="descriptionKoDetail" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="sortOrderDetail" id="sortOrderDetail" className="defClass ct" checkName="sys0202.header.sortOrder" option="numeric" options="mandatory"/></td>
 		</tr>
 	</table>
 </li>

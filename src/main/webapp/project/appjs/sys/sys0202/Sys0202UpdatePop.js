@@ -2,6 +2,8 @@
  * Framework Generated Javascript Source
  * - Sys0202UpdatePop.js
  *************************************************************************************************/
+var delimiter = jsconfig.get("dataDelimiter");
+
 $(function() {
 	/*!
 	 * event
@@ -84,7 +86,7 @@ $(function() {
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
 				if (groupIndex == ($("#ulCommonCodeDetailHolder .dummyDetail").length - 1)) {
-					if (name.indexOf("rdoIsActiveDetail") != -1) {
+					if (name.indexOf("isActiveDetail") != -1) {
 						if ($(this).val() == "Y") {$(this).prop("checked", true);}
 					}
 
@@ -93,6 +95,10 @@ $(function() {
 					}
 				}
 			});
+		});
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea")
 		});
 	});
 
@@ -156,6 +162,23 @@ $(function() {
 		$("#ulCommonCodeDetailHolder").disableSelection();
 	};
 
+	addCodeDetails = function() {
+		for (var i=0; i<ds.getRowCnt(); i++) {
+			var rowIdx = 0;
+
+			if (i == masterRow) {continue;}
+
+			$("#btnAdd").trigger("click");
+			rowIdx = delimiter+(i-1);
+
+			$("[name=commonCodeDetail"+rowIdx+"]").val(ds.getValue(i, "COMMON_CODE"));
+			commonJs.setCheckboxValue("useYnDetail"+rowIdx, ds.getValue(i, "USE_YN"));
+			$("[name=descriptionEnDetail"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION_EN"));
+			$("[name=descriptionKoDetail"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION_KO"));
+			$("[name=sortOrderDetail"+rowIdx+"]").val(ds.getValue(i, "SORT_ORDER"));
+		}
+	};
+
 	/*!
 	 * load event (document / window)
 	 */
@@ -166,6 +189,10 @@ $(function() {
 			$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(index) {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();
+
+					$("#tblGrid").fixedHeaderTable({
+						attachTo:$("#divDataArea")
+					});
 				}
 			});
 
@@ -184,5 +211,23 @@ $(function() {
 		parent.popup.setHeader(com.header.popHeaderEdit);
 		$("#codeTypeMaster").focus();
 		setSortable();
+
+		setTimeout(function() {
+			commonJs.showProcMessageOnElement("divScrollablePanelPopup");
+		}, 200);
+
+		setTimeout(function() {
+			$("#tblGrid").fixedHeaderTable({
+				attachTo:$("#divDataArea")
+			});
+		}, 400);
+
+		setTimeout(function() {
+			addCodeDetails();
+		}, 600);
+
+		setTimeout(function() {
+			commonJs.hideProcMessageOnElement("divScrollablePanelPopup");
+		}, 800);
 	});
 });

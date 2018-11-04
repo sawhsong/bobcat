@@ -96,6 +96,10 @@ $(function() {
 				}
 			});
 		});
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divDataArea")
+		});
 	});
 
 	/*!
@@ -167,6 +171,10 @@ $(function() {
 			$("#ulCommonCodeDetailHolder").find(".dummyDetail").each(function(index) {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();
+
+					$("#tblGrid").fixedHeaderTable({
+						attachTo:$("#divDataArea")
+					});
 				}
 			});
 

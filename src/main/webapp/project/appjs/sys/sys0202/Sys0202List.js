@@ -165,7 +165,7 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 754;
+		var height = 900;
 
 		if (param.mode == "Detail") {
 			url = "/sys/0202/getDetail.do";
@@ -188,7 +188,7 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:1100,
+			width:1700,
 			height:height
 		};
 
