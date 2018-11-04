@@ -16,8 +16,8 @@ public class Textarea extends TaglibSupport {
 	private String title;
 	private String placeHolder;
 	private String checkName;
-	private String maxbyte;
-	private String minbyte;
+	private String maxlength;
+	private String minlength;
 	private String checkFlag;
 	private String option;
 	private String options;
@@ -67,8 +67,8 @@ public class Textarea extends TaglibSupport {
 			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
 			if (CommonUtil.isNotBlank(placeHolder)) {html.append(" placeholder=\""+placeHolder+"\"");}
 			if (CommonUtil.isNotBlank(checkName)) {html.append(" checkName=\""+checkName+"\"");}
-			if (CommonUtil.isNotBlank(maxbyte)) {html.append(" maxbyte=\""+maxbyte+"\"");}
-			if (CommonUtil.isNotBlank(minbyte)) {html.append(" minbyte=\""+minbyte+"\"");}
+			if (CommonUtil.isNotBlank(maxlength)) {html.append(" maxlength=\""+maxlength+"\"");}
+			if (CommonUtil.isNotBlank(minlength)) {html.append(" minlength=\""+minlength+"\"");}
 			if (CommonUtil.isNotBlank(checkFlag)) {html.append(" checkFlag=\""+checkFlag+"\"");}
 			if (CommonUtil.isNotBlank(option)) {html.append(" option=\""+option+"\"");}
 			if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
@@ -160,20 +160,20 @@ public class Textarea extends TaglibSupport {
 		this.checkName = checkName;
 	}
 
-	public String getMaxbyte() {
-		return maxbyte;
+	public String getMaxlength() {
+		return maxlength;
 	}
 
-	public void setMaxbyte(String maxbyte) {
-		this.maxbyte = maxbyte;
+	public void setMaxlength(String maxlength) {
+		this.maxlength = maxlength;
 	}
 
-	public String getMinbyte() {
-		return minbyte;
+	public String getMinlength() {
+		return minlength;
 	}
 
-	public void setMinbyte(String minbyte) {
-		this.minbyte = minbyte;
+	public void setMinlength(String minlength) {
+		this.minlength = minlength;
 	}
 
 	public String getCheckFlag() {

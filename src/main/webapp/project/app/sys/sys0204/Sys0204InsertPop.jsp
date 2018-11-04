@@ -8,8 +8,7 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
-	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	DataSet resultDataSet = (DataSet)paramEntity.getRequestDataSet();
 %>
 <%/************************************************************************************************
 * HTML
@@ -64,6 +63,7 @@
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0204.caption.currency"/></caption>
 		<colgroup>
 			<col width="15%"/>
 			<col width="35%"/>
@@ -71,38 +71,44 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="sys0204.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="sys0204.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.currencyName"/></th>
+			<td class="tdEdit"><ui:text id="currencyName" name="currencyName" className="defClass" checkName="sys0204.header.currencyName" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencySymbol"/></th>
+			<td class="tdEdit"><ui:text id="currencySymbol" name="currencySymbol" className="defClass" maxlength="10" checkName="sys0204.header.currencySymbol"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="sys0204.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.currencyAlphaCode"/></th>
+			<td class="tdEdit"><ui:text id="currencyAlphabeticCode" name="currencyAlphabeticCode" className="defClass" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.currencyAlphaCode" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencyNumCode"/></th>
+			<td class="tdEdit"><ui:text id="currencyNumericCode" name="currencyNumericCode" className="defClass" maxlength="5" checkName="sys0204.header.currencyNumCode"/></td>
+		</tr>
+	</table>
+	<div class="horGap10"></div>
+	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0204.caption.country"/></caption>
+		<colgroup>
+			<col width="15%"/>
+			<col width="35%"/>
+			<col width="15%"/>
+			<col width="35%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.countryName"/></th>
+			<td class="tdEdit"><ui:text id="countryName" name="countryName" className="defClass" checkName="sys0204.header.countryName" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryLangCode"/></th>
+			<td class="tdEdit"><ui:text id="countryLanguageCode" name="countryLanguageCode" className="defClass" maxlength="5" checkName="sys0204.header.countryLangCode"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryCode2"/></th>
+			<td class="tdEdit"><ui:text id="countryCode2" name="countryCode2" className="defClass" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.countryCode2"/></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryCode3"/></th>
+			<td class="tdEdit"><ui:text id="countryCode3" name="countryCode3" className="defClass" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.countryCode3"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0204.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryNumCode"/></th>
+			<td class="tdEdit"><ui:text id="countryNumericCode" name="countryNumericCode" className="defClass" maxlength="5" checkName="sys0204.header.countryNumCode"/></td>
+			<th class="thEdit Rt"></th>
+			<td class="tdEdit"></td>
 		</tr>
 	</table>
 </div>

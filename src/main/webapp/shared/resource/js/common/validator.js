@@ -20,7 +20,7 @@
 
 			for (var i=0; i<objToCheck.length; i++) {
 				var elem = $.nony.getElement(objToCheck[i]);
-				var maxByte = $(elem).attr("maxByte"), minByte = $(elem).attr("minByte"), match = $(elem).attr("match"), mandatory = $(elem).attr("mandatory"), option = $(elem).attr("option");
+				var maxlength = $(elem).attr("maxlength"), minlength = $(elem).attr("minlength"), match = $(elem).attr("match"), mandatory = $(elem).attr("mandatory"), option = $(elem).attr("option");
 
 				if ($(elem)[0].tagName == "FIELDSET" || $(elem)[0].tagName == "fieldset" || $(elem).prop("type") == "RADIO" || $(elem).prop("type") == "radio") {continue;}
 
@@ -42,31 +42,31 @@
 					}
 				}
 
-				if (!$.nony.isEmpty(minByte)) {
+				if (!$.nony.isEmpty(minlength)) {
 					var msg = "";
 
-					if (parseInt(this._bytes($(elem).val())) < parseInt(minByte)) {
+					if (parseInt(this._bytes($(elem).val())) < parseInt(minlength)) {
 						if (!$.nony.isEmpty(option) && (option == "IncKor" || option == "incKor")) {
-							msg = $.nony.replace(this._messages["minByteIncKor_"+jsconfig.get("langCode")], "{minByte}", Math.round(minByte/2));
+							msg = $.nony.replace(this._messages["minlengthIncKor_"+jsconfig.get("langCode")], "{minlength}", Math.round(minlength/2));
 						} else if (!$.nony.isEmpty(option) && (option == "EngOnly" || option == "engOnly")) {
-							msg = $.nony.replace(this._messages["minByteEngOnly_"+jsconfig.get("langCode")], "{minByte}", minByte);
+							msg = $.nony.replace(this._messages["minlengthEngOnly_"+jsconfig.get("langCode")], "{minlength}", minlength);
 						} else {
-							msg = $.nony.replace(this._messages["minByte_"+jsconfig.get("langCode")], "{minByte}", minByte);
+							msg = $.nony.replace(this._messages["minlength_"+jsconfig.get("langCode")], "{minlength}", minlength);
 						}
 						return this._execError($(elem), msg, "select");
 					}
 				}
 
-				if (!$.nony.isEmpty(maxByte) && !$.nony.isEmpty($(elem).val())) {
+				if (!$.nony.isEmpty(maxlength) && !$.nony.isEmpty($(elem).val())) {
 					var msg = "";
 
-					if (parseInt(this._bytes($(elem).val())) > parseInt(maxByte)) {
+					if (parseInt(this._bytes($(elem).val())) > parseInt(maxlength)) {
 						if (!$.nony.isEmpty(option) && (option == "IncKor" || option == "incKor")) {
-							msg = $.nony.replace(this._messages["maxByteIncKor_"+jsconfig.get("langCode")], "{maxByte}", Math.round(maxByte/2));
+							msg = $.nony.replace(this._messages["maxlengthIncKor_"+jsconfig.get("langCode")], "{maxlength}", Math.round(maxlength/2));
 						} else if (!$.nony.isEmpty(option) && (option == "EngOnly" || option == "engOnly")) {
-							msg = $.nony.replace(this._messages["maxByteEngOnly_"+jsconfig.get("langCode")], "{maxByte}", maxByte);
+							msg = $.nony.replace(this._messages["maxlengthEngOnly_"+jsconfig.get("langCode")], "{maxlength}", maxlength);
 						} else {
-							msg = $.nony.replace(this._messages["maxByte_"+jsconfig.get("langCode")], "{maxByte}", maxByte);
+							msg = $.nony.replace(this._messages["maxlength_"+jsconfig.get("langCode")], "{maxlength}", maxlength);
 						}
 						return this._execError($(elem), msg, "select");
 					}
@@ -89,12 +89,12 @@
 			for (var i=0; i<$(objForm)[0].elements.length; i++) {
 				var element = $(objForm)[0].elements[i];
 				var type = $(element).attr("type");
-				var checkName = $(element).attr("checkName"), maxByte = $(element).attr("maxByte"), minByte = $(element).attr("minByte"), match = $(element).attr("match");
+				var checkName = $(element).attr("checkName"), maxlength = $(element).attr("maxlength"), minlength = $(element).attr("minlength"), match = $(element).attr("match");
 				var mandatory = $(element).attr("mandatory"), option = $(element).attr("option"), checkFlag = $(element).attr("checkFlag");
 
 				if (!$.nony.isEmpty(type)) {
 					if (type == "text" || type == "textarea" || type == "select" || type == "select-one") {
-						if (!$.nony.isEmpty(checkName) || !$.nony.isEmpty(maxByte) || !$.nony.isEmpty(minByte) || !$.nony.isEmpty(match) || !$.nony.isEmpty(mandatory) || !$.nony.isEmpty(option)) {
+						if (!$.nony.isEmpty(checkName) || !$.nony.isEmpty(maxlength) || !$.nony.isEmpty(minlength) || !$.nony.isEmpty(match) || !$.nony.isEmpty(mandatory) || !$.nony.isEmpty(option)) {
 							if (selectOption == "optional") {
 								if (checkFlag == "optional") {
 									if (!$.nony.isEmpty($(element).attr("name"))) {arrElem.push($(element).attr("name"));}
@@ -371,19 +371,19 @@
 			minSelect_en:"Please select at least one item.",
 			minSelect_ko:"적어도 한 가지 항목은 선택하여야 합니다.",
 
-			minByte_en:"{name} needs to be filled with minimum {minByte} characters.",
-			minByte_ko:"{name+은는} 최소 {minByte}자 이상 입력해야 합니다.",
-			minByteIncKor_en:"{name} needs to be included minimum {minByte} characters of Korean character.",
-			minByteIncKor_ko:"{name+은는} 최소 한글 {minByte}자 이상 입력해야 합니다.",
-			minByteEngOnly_en:"{name} needs to be included minimum {minByte} characters of English alphabet.",
-			minByteEngOnly_ko:"{name+은는} 최소 영문 {minByte}자 이상 입력해야 합니다.",
+			minlength_en:"{name} needs to be filled with minimum {minlength} characters.",
+			minlength_ko:"{name+은는} 최소 {minlength}자 이상 입력해야 합니다.",
+			minlengthIncKor_en:"{name} needs to be included minimum {minlength} characters of Korean character.",
+			minlengthIncKor_ko:"{name+은는} 최소 한글 {minlength}자 이상 입력해야 합니다.",
+			minlengthEngOnly_en:"{name} needs to be included minimum {minlength} characters of English alphabet.",
+			minlengthEngOnly_ko:"{name+은는} 최소 영문 {minlength}자 이상 입력해야 합니다.",
 
-			maxByte_en:"{name} needs to be filled with maximum {maxByte} characters.",
-			maxByte_ko:"{name+은는} 최대 {minByte}자 이하로 입력해야 합니다.",
-			maxByteIncKor_en:"{name} needs to be included maximum {minByte} characters of Korean character.",
-			maxByteIncKor_ko:"{name+은는} 최대 한글 {minByte}자 이하로 입력해야 합니다.",
-			maxByteEngOnly_en:"The {name} needs to be included maximum {minByte} characters of English alphabet.",
-			maxByteEngOnly_ko:"{name+은는} 최대 영문 {minByte}자 이하로 입력해야 합니다.",
+			maxlength_en:"{name} needs to be filled with maximum {maxlength} characters.",
+			maxlength_ko:"{name+은는} 최대 {maxlength}자 이하로 입력해야 합니다.",
+			maxlengthIncKor_en:"{name} needs to be included maximum {maxlength} characters of Korean character.",
+			maxlengthIncKor_ko:"{name+은는} 최대 한글 {maxlength}자 이하로 입력해야 합니다.",
+			maxlengthEngOnly_en:"The {name} needs to be included maximum {maxlength} characters of English alphabet.",
+			maxlengthEngOnly_ko:"{name+은는} 최대 영문 {maxlength}자 이하로 입력해야 합니다.",
 
 			match_en:"{name} is not matched.",
 			match_ko:"{name+이가} 일치하지 않습니다.",

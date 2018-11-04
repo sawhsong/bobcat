@@ -64,10 +64,10 @@
 			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>maxbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>maxlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>minbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>minlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>checkFlag</name><required>false</required><rtexprvalue>true</rtexprvalue>
@@ -115,10 +115,10 @@
 			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>maxbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>maxlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>minbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>minlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>checkFlag</name><required>false</required><rtexprvalue>true</rtexprvalue>
@@ -166,10 +166,10 @@
 			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>maxbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>maxlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>minbyte</name><required>false</required><rtexprvalue>true</rtexprvalue>
+			<name>minlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>checkFlag</name><required>false</required><rtexprvalue>true</rtexprvalue>

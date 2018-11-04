@@ -76,7 +76,7 @@
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableName"/></th>
 			<td class="tdEdit">
-				<ui:text name="tableName" id="tableName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxbyte="30"/>
+				<ui:text name="tableName" id="tableName" className="defClass" style="text-transform:uppercase" checkName="fwk.tablescript.header.tableName" options="mandatory" maxlength="30"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.tablescript.header.tableDesc"/></th>
 			<td class="tdEdit">

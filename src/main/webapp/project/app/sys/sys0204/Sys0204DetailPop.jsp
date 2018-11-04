@@ -8,9 +8,9 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
-	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
+	SysCountryCurrency sysCountryCurrency = (SysCountryCurrency)paramEntity.getObject("sysCountryCurrency");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -29,6 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var countryCurrencyId = "<%=sysCountryCurrency.getCountryCurrencyId()%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -67,6 +68,7 @@
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0204.caption.currency"/></caption>
 		<colgroup>
 			<col width="15%"/>
 			<col width="35%"/>
@@ -74,56 +76,64 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.writerName"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterName()%>(<%=sysBoard.getWriterId()%>)</td>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.writerEmail"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencyName"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCurrencyName()%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencySymbol"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCurrencySymbol()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.updateDate"/></th>
-			<td class="tdEdit"><%=CommonUtil.toViewDateString(sysBoard.getUpdateDate())%></td>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.hitCount"/></th>
-			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysBoard.getHitCnt())%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencyAlphaCode"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCurrencyAlphabeticCode()%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencyNumCode"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCurrencyNumericCode()%></td>
+		</tr>
+	</table>
+	<div class="horGap10"></div>
+	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0204.caption.country"/></caption>
+		<colgroup>
+			<col width="15%"/>
+			<col width="35%"/>
+			<col width="15%"/>
+			<col width="35%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryName"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCountryName()%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryLangCode"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCountryLanguageCode()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3"><%=sysBoard.getArticleSubject()%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryCode2"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCountryCode2()%></td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryCode3"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getCountryCode3()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa className="defClass" style="height:214px;padding:0px 4px 0px 0px" value="<%=noticeBoard.getArticleContents()%>" status="display"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryNumCode"/></th>
+			<td class="tdEdit" colspan="3"><%=sysCountryCurrency.getCountryNumericCode()%></td>
+		</tr>
+	</table>
+	<div class="horGap10"></div>
+	<table class="tblEdit">
+		<caption class="captionEdit"><mc:msg key="sys0204.caption.basic"/></caption>
+		<colgroup>
+			<col width="15%"/>
+			<col width="35%"/>
+			<col width="15%"/>
+			<col width="35%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="page.com.insertUser"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getInsertUserName()%></td>
+			<th class="thEdit Rt"><mc:msg key="page.com.insertDate"/></th>
+			<td class="tdEdit"><%=CommonUtil.toString(sysCountryCurrency.getInsertDate(), dateFormat)%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0204.header.attachedFile"/></th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							String repositoryPath = fileDataSet.getValue(i, "REPOSITORY_PATH");
-							String originalName = fileDataSet.getValue(i, "ORIGINAL_NAME");
-							String newName = fileDataSet.getValue(i, "NEW_NAME");
-							String icon = fileDataSet.getValue(i, "FILE_ICON");
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<img src="<%=icon%>" style="margin-top:-4px;"/>
-								<a class="aEn" onclick="exeDownload('<%=repositoryPath%>', '<%=originalName%>', '<%=newName%>')">
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</a>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="page.com.updateUser"/></th>
+			<td class="tdEdit"><%=sysCountryCurrency.getUpdateUserName()%></td>
+			<th class="thEdit Rt"><mc:msg key="page.com.updateDate"/></th>
+			<td class="tdEdit"><%=CommonUtil.toString(sysCountryCurrency.getUpdateDate(), dateFormat)%></td>
 		</tr>
 	</table>
 </div>

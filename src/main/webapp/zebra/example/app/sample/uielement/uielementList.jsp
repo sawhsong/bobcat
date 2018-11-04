@@ -210,21 +210,21 @@
 				<div class="accordionContents">
 					<div id="divBasicIcnImgBtn1">
 						<label for="txtWithIcon" class="lblEn hor">Input text</label>
-						<input type="text" id="txtWithIcon" name="txtWithIcon" class="txtEn hor" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithIcon"/>
+						<input type="text" id="txtWithIcon" name="txtWithIcon" class="txtEn hor" style="width:200px" checkName="txtTest1" maxlength="30" minlength="4" checkFlag="optional" mandatory placeholder="txtWithIcon"/>
 						<i id="icnWithIconEn" class="fa fa-calendar icnEn hor" title="icnWithIcon"></i>
 						<i id="icnWithIconDis" class="fa fa-calendar icnDis hor" title="icnWithIcon"></i>
 	
 						<div class="horGap20"></div>
 	
 						<label for="txtWithImage" class="lblEn hor mandatory">Input text</label>
-						<input type="text" id="txtWithImage" name="txtWithImage" class="txtEn hor success" value="" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithImage"/>
+						<input type="text" id="txtWithImage" name="txtWithImage" class="txtEn hor success" value="" style="width:200px" checkName="txtTest1" maxlength="30" minlength="4" checkFlag="optional" mandatory placeholder="txtWithImage"/>
 						<img id="imgWithImageEn" src="<mc:cp key="imgThemeCom"/>/generate_Black.png" class="imgEn hor" title="imgWithImageEn"/>
 						<img id="imgWithImageDis" src="<mc:cp key="imgThemeCom"/>/generate_Black.png" class="imgDis hor" title="imgWithImageDis"/>
 
 						<div class="horGap20"></div>
 	
 						<label for="txtTaglib" class="lblEn hor">Input text</label>
-						<ui:text id="txtTaglib" name="txtTaglib" className="defClass hor success" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" options="mandatory" placeHolder="txtTaglib"/>
+						<ui:text id="txtTaglib" name="txtTaglib" className="defClass hor success" style="width:200px" checkName="txtTest1" maxlength="30" minlength="4" checkFlag="optional" options="mandatory" placeHolder="txtTaglib"/>
 						<ui:img id="imgTaglib" src="<mc:cp key=imgThemeCom/>/generate_Black.png" className="defClass hor" style="margin-top:6px" title="imgTaglib"/>
 						<ui:icon id="icnTaglib" className="fa-calendar fa-lg icnDis hor" style="margin-top:8px" title="icnTaglib"/>
 					</div>
@@ -238,7 +238,7 @@
 						<div class="horGap20"></div>
 	
 						<label for="txtWithButton" class="lblEn hor mandatory">Input text</label>
-						<input type="text" id="txtWithButton" name="txtWithButton" class="txtEn hor error" value="" style="width:200px" checkName="txtTest1" maxbyte="30" minbyte="4" checkFlag="optional" mandatory placeholder="txtWithButton"/>
+						<input type="text" id="txtWithButton" name="txtWithButton" class="txtEn hor error" value="" style="width:200px" checkName="txtTest1" maxlength="30" minlength="4" checkFlag="optional" mandatory placeholder="txtWithButton"/>
 						<button id="btnPrintLog" type="button" class="btn btn-default"><i class="fa fa-save fa-lg"></i> Print Log</button>
 						<a id="btnAnchor" type="button" class="btn btn-primary"><i class="fa fa-list-alt fa-lg"></i> <mc:msg key="button.com.create"/></a>
 					</div>
