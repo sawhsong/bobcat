@@ -3,7 +3,8 @@
  */
 var popup;
 var searchResultDataCount = 0;
-var langCode = jsconfig.get("langCode");
+var langCode = commonJs.upperCase(jsconfig.get("langCode"));
+
 var contextMenu = [{
 	name:"Generate",
 	img:"fa-gears",
