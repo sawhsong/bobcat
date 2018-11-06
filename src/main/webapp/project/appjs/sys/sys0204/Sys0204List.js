@@ -42,28 +42,6 @@ $(function() {
 	});
 
 	/*!
-	 * context menus
-	 */
-	setExportButtonContextMenu = function() {
-		ctxMenu.commonExport[0].fun = function() {exeExport(ctxMenu.commonExport[0]);};
-		ctxMenu.commonExport[1].fun = function() {exeExport(ctxMenu.commonExport[1]);};
-		ctxMenu.commonExport[2].fun = function() {exeExport(ctxMenu.commonExport[2]);};
-		ctxMenu.commonExport[3].fun = function() {exeExport(ctxMenu.commonExport[3]);};
-		ctxMenu.commonExport[4].fun = function() {exeExport(ctxMenu.commonExport[4]);};
-		ctxMenu.commonExport[5].fun = function() {exeExport(ctxMenu.commonExport[5]);};
-
-		$("#btnExport").contextMenu(ctxMenu.commonExport, {
-			classPrefix:com.constants.ctxClassPrefixButton,
-			effectDuration:300,
-			effect:"slide",
-			borderRadius:"bottom 4px",
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0
-		});
-	};
-
-	/*!
 	 * process
 	 */
 	doSearch = function() {
@@ -319,7 +297,7 @@ $(function() {
 			}
 		});
 
-		setExportButtonContextMenu();
+		commonJs.setExportButtonContextMenu($("#btnExport"));
 		$("#currencyCode").focus();
 		doSearch();
 	});

@@ -2,9 +2,11 @@
  * Framework Generated Javascript Source
  * - Sys0402List.js
  *************************************************************************************************/
+jsconfig.put("scrollablePanelHeightAdjust", 4);
+
 var popup = null;
 var searchResultDataCount = 0;
-var attchedFileContextMenu = [];
+var langCode = commonJs.upperCase(jsconfig.get("langCode"));
 
 $(function() {
 	/*!
@@ -26,49 +28,27 @@ $(function() {
 		commonJs.clearSearchCriteria();
 	});
 
-	$("#icnFromDate").click(function(event) {
-		commonJs.openCalendar(event, "fromDate");
-	});
-
-	$("#icnToDate").click(function(event) {
-		commonJs.openCalendar(event, "toDate");
-	});
-
 	$("#icnCheck").click(function(event) {
 		commonJs.toggleCheckboxes("chkForDel");
+	});
+
+	$("#btnSetSort").click(function(event) {
+		openPopup({mode:"SetSort"});
+	});
+
+	$("#searchMenu").change(function() {
+		doSearch();
 	});
 
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
-
-			if ($(element).is("[name=searchWord]") || $(element).is("[name=fromDate]") || $(element).is("[name=toDate]")) {
-				doSearch();
-			}
 		}
 	});
 
 	/*!
 	 * context menus
 	 */
-	setExportButtonContextMenu = function() {
-		ctxMenu.commonExport[0].fun = function() {exeExport(ctxMenu.commonExport[0]);};
-		ctxMenu.commonExport[1].fun = function() {exeExport(ctxMenu.commonExport[1]);};
-		ctxMenu.commonExport[2].fun = function() {exeExport(ctxMenu.commonExport[2]);};
-		ctxMenu.commonExport[3].fun = function() {exeExport(ctxMenu.commonExport[3]);};
-		ctxMenu.commonExport[4].fun = function() {exeExport(ctxMenu.commonExport[4]);};
-		ctxMenu.commonExport[5].fun = function() {exeExport(ctxMenu.commonExport[5]);};
-
-		$("#btnExport").contextMenu(ctxMenu.commonExport, {
-			classPrefix:com.constants.ctxClassPrefixButton,
-			effectDuration:300,
-			effect:"slide",
-			borderRadius:"bottom 4px",
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0
-		});
-	};
 
 	/*!
 	 * process
@@ -96,53 +76,50 @@ $(function() {
 
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
-		var html = "";
+		var html = "", delimiter = "_";
 
 		searchResultDataCount = dataSet.getRowCnt();
 		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "", iLength = 200;
-				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
+				var menuPath = dataSet.getValue(i, "PATH");
+				var menuId = dataSet.getValue(i, "MENU_ID");
+				var menuName = dataSet.getValue(i, "MENU_NAME_"+langCode);
+				var deletable = dataSet.getValue(i, "DELETABLE");
+				var className = "chkEn", disabledStr = "";
+				var space = "", style = "", paramValue = "";
+				var iLevel = parseInt(dataSet.getValue(i, "MENU_LEVEL")) - 1;
 
-				gridTr.setClassName("noBorderHor noStripe");
+				style = (iLevel == 0 || iLevel == 1) ? "font-weight:bold;" : "";
+				for (var j=0; j<iLevel; j++) {
+					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				}
+
+				if (!commonJs.toBoolean(deletable)) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
+
+				paramValue = dataSet.getValue(i, "MENU_LEVEL")+delimiter+menuPath+delimiter+menuId+delimiter+deletable;
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(paramValue).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
-
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				uiAnc.setText(menuId).setScript("getDetail('"+paramValue+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).addChild(uiAnc));
 
-				var gridTd = new UiGridTd();
-				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
-					gridTd.addChild(iconAttachFile);
-				}
-				gridTr.addChild(gridTd);
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(menuName));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "MENU_URL")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "SORT_ORDER")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "IS_ACTIVE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("paramValue:"+paramValue).addAttribute("deletable:"+deletable).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -150,7 +127,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:8").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -159,54 +136,57 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
+			isPageable:false,
 			isFilter:false,
 			filterColumn:[1, 3],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
-
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.boardAction);
+			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getDetail = function(paramValue) {
+		openPopup({mode:"Detail", paramValue:paramValue});
 	};
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 510;
+		var width = 700, height = 0;
 
 		if (param.mode == "Detail") {
 			url = "/sys/0402/getDetail.do";
 			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
+			height = 300;
+		} else if (param.mode == "New") {
 			url = "/sys/0402/getInsert.do";
 			header = com.header.popHeaderEdit;
+			height = 390;
 		} else if (param.mode == "Edit") {
 			url = "/sys/0402/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 634;
+			height = 418;
+		} else if (param.mode == "SetSort") {
+			url = "/sys/0402/getUpdateSortOrder.do";
+			header = sys.sys0402.header.popHeaderSort;
+			width = 900;
+			height = 710;
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"menu"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				paramValue:param.paramValue
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:width,
 			height:height
 		};
 
@@ -236,6 +216,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
@@ -259,7 +240,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var deletable = $(img).attr("deletable"), paramValue = $(img).attr("paramValue");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == articleId) {
@@ -269,12 +250,17 @@ $(function() {
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		if (deletable == "true") {
+			ctxMenu.commonAction[2].disable = false;
+		} else {
+			ctxMenu.commonAction[2].disable = true;
+		}
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		ctxMenu.commonAction[0].fun = function() {getDetail(paramValue);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", paramValue:paramValue});};
+		ctxMenu.commonAction[2].fun = function() {doDelete();};
+
+		$(img).contextMenu(ctxMenu.commonAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -324,10 +310,8 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
-		setExportButtonContextMenu();
 		$("#searchWord").focus();
+		commonJs.setExportButtonContextMenu($("#btnExport"));
 		doSearch();
 	});
 });

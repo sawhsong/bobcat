@@ -9,26 +9,23 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.SysMenu.SysMenuDao;
+import project.conf.resource.ormapper.dto.oracle.SysMenu;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
 import zebra.export.ExportHelper;
+import zebra.util.BeanHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-
 public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 	@Autowired
-	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
+	private SysMenuDao sysMenuDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -41,14 +38,32 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet resultDataSet;
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 
 		try {
 			queryAdvisor.setRequestDataSet(requestDataSet);
-			queryAdvisor.setPagination(true);
+			queryAdvisor.setPagination(false);
 
-			paramEntity.setAjaxResponseDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			resultDataSet = sysMenuDao.getMenuDataSetBySearchCriteria(queryAdvisor);
+			resultDataSet.addColumn("DELETABLE", "true");
+			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
+				String menuId = resultDataSet.getValue(i, "MENU_ID");
+				String parentMenuId = resultDataSet.getValue(i, "PARENT_MENU_ID");
+				String root = resultDataSet.getValue(i, "ROOT");
+				boolean hasAction = BeanHelper.containsBean(CommonUtil.toCamelCaseStartLowerCase(menuId) + "Action");
+
+				if (hasAction) {
+					for (int j=0; j<resultDataSet.getRowCnt(); j++) {
+						String thisMenuId = resultDataSet.getValue(j, "MENU_ID");
+						if ((CommonUtil.equals(thisMenuId, menuId)) || (CommonUtil.equals(thisMenuId, parentMenuId)) || (CommonUtil.equals(thisMenuId, root))) {
+							resultDataSet.setValue(j, "DELETABLE", "false");
+						}
+					}
+				}
+			}
+
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -58,14 +73,23 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String paramValue = requestDataSet.getValue("paramValue");
+		String delimiter = "_";
+		String menuLevel = CommonUtil.split(paramValue, delimiter)[0];
+		String menuPath = CommonUtil.split(paramValue, delimiter)[1];
+		String menuId = CommonUtil.split(paramValue, delimiter)[2];
+		String deletable = CommonUtil.split(paramValue, delimiter)[3];
+		SysMenu sysMenu = new SysMenu();
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
+			sysMenu = sysMenuDao.getMenuByMenuId(menuId);
+			sysMenu.setInsertUserName(DataHelper.getUserNameById(sysMenu.getInsertUserId()));
+			sysMenu.setUpdateUserName(DataHelper.getUserNameById(sysMenu.getUpdateUserId()));
 
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setObject("sysMenu", sysMenu);
+			paramEntity.setObject("menuLevel", menuLevel);
+			paramEntity.setObject("menuPath", menuPath);
+			paramEntity.setObject("deletable", deletable);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -92,29 +116,53 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity getUpdateSortOrder(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
-		String uid = CommonUtil.uid();
-		String loggedInUserId = (String)session.getAttribute("UserId");
+		String menuId = requestDataSet.getValue("menuId");
+		String menuLevel = requestDataSet.getValue("menuLevel");
+		String level1MenuId = requestDataSet.getValue("level1");
+		String level2MenuId = requestDataSet.getValue("level2");
 		int result = -1;
+		SysMenu sysMenu = new SysMenu();
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysMenu = sysMenuDao.getMenuByMenuId(menuId);
+			if (CommonUtil.isNotBlank(sysMenu.getMenuId())) {
+				throw new FrameworkException("E910", getMessage("E910", paramEntity));
+			}
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			sysMenu = new SysMenu();
+			sysMenu.setMenuId(CommonUtil.upperCase(requestDataSet.getValue("menuId")));
+			if (CommonUtil.equalsIgnoreCase(menuLevel, "1")) {
+				sysMenu.setParentMenuId("");
+				sysMenu.setMenuIcon(CommonUtil.upperCase(requestDataSet.getValue("menuId")));
+			} else if (CommonUtil.equalsIgnoreCase(menuLevel, "2")) {
+				sysMenu.setParentMenuId(CommonUtil.upperCase(level1MenuId));
+				sysMenu.setMenuIcon(CommonUtil.upperCase(requestDataSet.getValue("menuId")));
+			} else if (CommonUtil.equalsIgnoreCase(menuLevel, "3")) {
+				sysMenu.setParentMenuId(CommonUtil.upperCase(level2MenuId));
+				sysMenu.setMenuIcon("");
+			}
+			sysMenu.setMenuNameEn(requestDataSet.getValue("menuNameEn"));
+			sysMenu.setMenuNameKo(requestDataSet.getValue("menuNameKo"));
+			sysMenu.setMenuUrl(requestDataSet.getValue("menuUrl"));
+			sysMenu.setSortOrder(requestDataSet.getValue("sortOrder"));
+			sysMenu.setDescription(requestDataSet.getValue("description"));
+			sysMenu.setIsActive(requestDataSet.getValue("isActive"));
+			sysMenu.setInsertUserId((String)session.getAttribute("UserId"));
+			sysMenu.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			result = sysMenuDao.insert(sysMenu);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -130,27 +178,23 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
-		int result = 0;
+		String menuId = requestDataSet.getValue("menuId");
+		int result = -1;
+		SysMenu sysMenu = new SysMenu();
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysMenu = sysMenuDao.getMenuByMenuId(menuId);
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			sysMenu.setMenuUrl(CommonUtil.nvl(requestDataSet.getValue("menuUrl"), "#"));
+			sysMenu.setSortOrder(requestDataSet.getValue("sortOrder"));
+			sysMenu.setIsActive(requestDataSet.getValue("isActive"));
+			sysMenu.setMenuNameEn(requestDataSet.getValue("menuNameEn"));
+			sysMenu.setMenuNameKo(requestDataSet.getValue("menuNameKo"));
+			sysMenu.setDescription(requestDataSet.getValue("description"));
+			sysMenu.setUpdateUserId((String)session.getAttribute("UserId"));
+			sysMenu.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			result = sysMenuDao.update(menuId, sysMenu);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -165,16 +209,50 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String menuId = requestDataSet.getValue("menuId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String menuIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		int result = -1;
+
+		try {
+			if (CommonUtil.isBlank(menuId)) {
+				result = sysMenuDao.delete(menuIds);
+			} else {
+				result = sysMenuDao.delete(menuId);
+			}
+
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity exeUpdateSortOrder(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		int dataLength = CommonUtil.toInt(requestDataSet.getValue("dataLength"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
-			} else {
-				result = sysBoardDao.delete(articleId);
+			for (int i=0; i<dataLength; i++) {
+				SysMenu sysMenu = new SysMenu();
+				String menuId = requestDataSet.getValue("menuId"+delimiter+i);
+
+				queryAdvisor.resetAll();
+
+				sysMenu.addUpdateColumn("sort_order", requestDataSet.getValue("sortOrder" + delimiter + i));
+				sysMenu.addUpdateColumn("update_user_id", (String)session.getAttribute("UserId"));
+				sysMenu.addUpdateColumn("update_date", CommonUtil.getSysdate(), "date");
+
+				result += sysMenuDao.updateSortOrder(menuId, sysMenu);
 			}
 
 			if (result <= 0) {
@@ -193,19 +271,14 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
-		String pageTitle, fileName;
-		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			String pageTitle = "Menu List";
+			String fileName = "MenuList";
 
-			exportHelper = ExportUtil.getExportHelper(fileType);
+			exportHelper = ExportUtil.getExportHelper(requestDataSet.getValue("fileType"));
 			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
@@ -216,7 +289,7 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysMenuDao.getMenuDataSetBySearchCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

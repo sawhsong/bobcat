@@ -8,6 +8,7 @@ package project.app.sys.sys0402;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseAction;
+import project.common.module.menu.MenuManager;
 
 public class Sys0402Action extends BaseAction {
 	@Autowired
@@ -42,9 +43,15 @@ public class Sys0402Action extends BaseAction {
 		return "update";
 	}
 
+	public String getUpdateSortOrder() throws Exception {
+		biz.getUpdateSortOrder(paramEntity);
+		return "updateSort";
+	}
+
 	public String exeInsert() throws Exception {
 		try {
 			biz.exeInsert(paramEntity);
+			MenuManager.reload();
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -54,6 +61,7 @@ public class Sys0402Action extends BaseAction {
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);
+			MenuManager.reload();
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -63,9 +71,20 @@ public class Sys0402Action extends BaseAction {
 	public String exeDelete() throws Exception {
 		try {
 			biz.exeDelete(paramEntity);
+			MenuManager.reload();
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String exeUpdateSortOrder() throws Exception {
+		try {
+			biz.exeUpdateSortOrder(paramEntity);
+			MenuManager.reload();
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", this.paramEntity);
 		return "ajaxResponse";
 	}
 
