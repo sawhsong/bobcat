@@ -30,9 +30,5 @@
 #THIS_MENU_ID#.header.articleContents=Contents
 #THIS_MENU_ID#.header.hitCount=Hit Count
 #THIS_MENU_ID#.header.attachedFile=Attached File
-#THIS_MENU_ID#.header.insertUser=User Inserted
-#THIS_MENU_ID#.header.insertDate=Date Inserted
-#THIS_MENU_ID#.header.updateUser=User Updated
-#THIS_MENU_ID#.header.updateDate=Date Updated
 
 # Message, Comments

@@ -94,7 +94,7 @@ $(function() {
 
 				style = (iLevel == 0 || iLevel == 1) ? "font-weight:bold;" : "";
 				for (var j=0; j<iLevel; j++) {
-					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				}
 
 				if (!commonJs.toBoolean(deletable)) {
@@ -110,7 +110,7 @@ $(function() {
 
 				var uiAnc = new UiAnchor();
 				uiAnc.setText(menuId).setScript("getDetail('"+paramValue+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).addChild(uiAnc));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).addTextBeforeChild(space).addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(menuName));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "MENU_URL")));

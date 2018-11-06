@@ -30,9 +30,5 @@
 #THIS_MENU_ID#.header.articleContents=내용
 #THIS_MENU_ID#.header.hitCount=조회건수
 #THIS_MENU_ID#.header.attachedFile=첨부파일
-#THIS_MENU_ID#.header.insertUser=입력자
-#THIS_MENU_ID#.header.insertDate=입력일
-#THIS_MENU_ID#.header.updateUser=수정자
-#THIS_MENU_ID#.header.updateDate=수정일
 
 # Message, Comments

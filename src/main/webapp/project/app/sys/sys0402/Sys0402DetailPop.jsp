@@ -8,9 +8,16 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
-	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	DataSet resultDataSet = (DataSet)paramEntity.getRequestDataSet();
+	SysMenu sysMenu = (SysMenu)paramEntity.getObject("sysMenu");
+	String menuLevel = (String)paramEntity.getObject("menuLevel");
+	String menuPath = (String)paramEntity.getObject("menuPath");
+	String deletable = (String)paramEntity.getObject("deletable");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String deleteStatus = "";
+	if (CommonUtil.equalsIgnoreCase(deletable, "false")) {
+		deleteStatus = "disabled";
+	}
 %>
 <%/************************************************************************************************
 * HTML
@@ -29,6 +36,9 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var deleteStatus = "<%=deleteStatus%>";
+var paramValue = "<%=resultDataSet.getValue("paramValue")%>";
+var menuId = "<%=sysMenu.getMenuId()%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -48,8 +58,7 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save" status="<%=deleteStatus%>"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -68,62 +77,52 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="20%"/>
+			<col width="30%"/>
+			<col width="20%"/>
+			<col width="30%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.writerName"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterName()%>(<%=sysBoard.getWriterId()%>)</td>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.writerEmail"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuLevel"/></th>
+			<td class="tdEdit"><%=menuLevel%></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuPath"/></th>
+			<td class="tdEdit"><%=menuPath%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.updateDate"/></th>
-			<td class="tdEdit"><%=CommonUtil.toViewDateString(sysBoard.getUpdateDate())%></td>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.hitCount"/></th>
-			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysBoard.getHitCnt())%></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuId"/></th>
+			<td class="tdEdit"><%=sysMenu.getMenuId()%></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuUrl"/></th>
+			<td class="tdEdit"><%=sysMenu.getMenuUrl()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3"><%=sysBoard.getArticleSubject()%></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.sortOrder"/></th>
+			<td class="tdEdit"><%=sysMenu.getSortOrder()%></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.isActive"/></th>
+			<td class="tdEdit"><%=sysMenu.getIsActive()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa className="defClass" style="height:214px;padding:0px 4px 0px 0px" value="<%=noticeBoard.getArticleContents()%>" status="display"/>
-			</td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuNameEn"/></th>
+			<td class="tdEdit" colspan="3"><%=sysMenu.getMenuNameEn()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.attachedFile"/></th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							String repositoryPath = fileDataSet.getValue(i, "REPOSITORY_PATH");
-							String originalName = fileDataSet.getValue(i, "ORIGINAL_NAME");
-							String newName = fileDataSet.getValue(i, "NEW_NAME");
-							String icon = fileDataSet.getValue(i, "FILE_ICON");
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<img src="<%=icon%>" style="margin-top:-4px;"/>
-								<a class="aEn" onclick="exeDownload('<%=repositoryPath%>', '<%=originalName%>', '<%=newName%>')">
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</a>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuNameKo"/></th>
+			<td class="tdEdit" colspan="3"><%=sysMenu.getMenuNameKo()%></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.description"/></th>
+			<td class="tdEdit" colspan="3"><%=sysMenu.getDescription()%></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
+			<td class="tdEdit"><%=sysMenu.getInsertUserName()%></td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
+			<td class="tdEdit"><%=CommonUtil.toString(sysMenu.getInsertDate(), dateFormat)%></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="page.com.updateUser"/></th>
+			<td class="tdEdit"><%=sysMenu.getUpdateUserName()%></td>
+			<th class="thEdit rt"><mc:msg key="page.com.updateDate"/></th>
+			<td class="tdEdit"><%=CommonUtil.toString(sysMenu.getUpdateDate(), dateFormat)%></td>
 		</tr>
 	</table>
 </div>
