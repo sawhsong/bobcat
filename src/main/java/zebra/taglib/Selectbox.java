@@ -43,7 +43,7 @@ public class Selectbox extends TaglibBodySupport {
 				classString = "bootstrapSelect";
 			}
 
-			html.append(" class=\""+classString+" "+className+"\"");
+			html.append(" class=\""+classString+" "+CommonUtil.nvl(className)+"\"");
 			html.append(">\n");
 
 			html.append(bodyContent.getString());

@@ -9,7 +9,12 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	DataSet dsMenu = MenuManager.getMenuDataSet();
+	DataSet dsMenu1 = MenuManager.getMenuDataSetByLevel(1);
+	DataSet dsMenu2 = MenuManager.getMenuDataSetByLevel(2);
 	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
 %>
 <%/************************************************************************************************
 * HTML
@@ -28,6 +33,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var dsMenu = commonJs.getDataSetFromJavaDataSet("<%=dsMenu.toStringForJs()%>");
+var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>");
 </script>
 </head>
 <%/************************************************************************************************
@@ -52,7 +59,36 @@
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainerPopup">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div id="divMenuLevel" style="float:left;padding-right:4px;">
+				<label for="menuLevel" class="lblEn hor"><mc:msg key="sys0402.header.menuLevel"/></label>
+				<ui:ccselect id="menuLevel" name="menuLevel" codeType="MENU_LEVEL"/>
+			</div>
+			<div class="horGap70"></div>
+			<div id="divLevel1" style="float:left;display:none;">
+				<label for="level1" class="lblEn hor"><mc:msg key="sys0402.header.level1"/></label>
+				<ui:select name="level1">
+<%
+				for (int i=0; i<dsMenu1.getRowCnt(); i++) {
+					if (!CommonUtil.equals(dsMenu1.getValue(i, "MENU_ID"), "QM")) {
+%>
+					<ui:seloption value="<%=dsMenu1.getValue(i, \"MENU_ID\")%>" text="<%=dsMenu1.getValue(i, \"MENU_ID\")%>"/>
+<%
+					}
+				}
+%>
+				</ui:select>
+			</div>
+			<div class="horGap30"></div>
+			<div id="divLevel2" style="float:left;display:none;">
+				<label for="level2" class="lblEn hor"><mc:msg key="sys0402.header.level2"/></label>
+				<select id="level2" name="level2" class="bootstrapSelect"></select>
+			</div>
+		</div>
+	</div>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -65,44 +101,40 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="20%"/>
+			<col width="30%"/>
+			<col width="20%"/>
+			<col width="30%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0402.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="sys0402.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0402.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="sys0402.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuId"/></th>
+			<td class="tdEdit"><ui:text name="menuId" id="menuId" className="defClass" style="text-transform:uppercase;" checkName="sys0402.header.menuId" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuUrl"/></th>
+			<td class="tdEdit"><ui:text name="menuUrl" id="menuUrl" className="defClass" checkName="sys0402.header.menuUrl" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0402.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="sys0402.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.sortOrder"/></th>
+			<td class="tdEdit"><ui:text name="sortOrder" id="sortOrder" className="defClass" checkName="sys0402.header.sortOrder" options="mandatory" option="numeric"/></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccradio name="isActive" codeType="SIMPLE_YN" selectedValue="Y"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;"/>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameEn"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameEn" id="menuNameEn" className="defClass" checkName="sys0402.header.menuNameEn" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0402.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameKo"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameKo" id="menuNameKo" className="defClass" checkName="sys0402.header.menuNameKo" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.description"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="description" id="description" className="defClass" checkName="sys0402.header.description"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
+			<td class="tdEdit"><ui:text name="insertUser" id="insertUser" className="defClass" value="<%=sysUser.getUserName()%>" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
+			<td class="tdEdit"><ui:text name="insertDate" id="insertDate" className="defClass" value="<%=CommonUtil.getSysdate(dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

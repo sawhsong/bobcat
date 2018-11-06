@@ -73,12 +73,12 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		String menuId = requestDataSet.getValue("menuId");
 		String paramValue = requestDataSet.getValue("paramValue");
-		String delimiter = "_";
 		String menuLevel = CommonUtil.split(paramValue, delimiter)[0];
 		String menuPath = CommonUtil.split(paramValue, delimiter)[1];
-		String menuId = CommonUtil.split(paramValue, delimiter)[2];
-		String deletable = CommonUtil.split(paramValue, delimiter)[3];
+		String deletable = CommonUtil.split(paramValue, delimiter)[2];
 		SysMenu sysMenu = new SysMenu();
 
 		try {
@@ -144,14 +144,14 @@ public class Sys0402BizImpl extends BaseBiz implements Sys0402Biz {
 			sysMenu = new SysMenu();
 			sysMenu.setMenuId(CommonUtil.upperCase(requestDataSet.getValue("menuId")));
 			if (CommonUtil.equalsIgnoreCase(menuLevel, "1")) {
-				sysMenu.setParentMenuId("");
+				sysMenu.setParentMenuId(null);
 				sysMenu.setMenuIcon(CommonUtil.upperCase(requestDataSet.getValue("menuId")));
 			} else if (CommonUtil.equalsIgnoreCase(menuLevel, "2")) {
 				sysMenu.setParentMenuId(CommonUtil.upperCase(level1MenuId));
 				sysMenu.setMenuIcon(CommonUtil.upperCase(requestDataSet.getValue("menuId")));
 			} else if (CommonUtil.equalsIgnoreCase(menuLevel, "3")) {
 				sysMenu.setParentMenuId(CommonUtil.upperCase(level2MenuId));
-				sysMenu.setMenuIcon("");
+				sysMenu.setMenuIcon(null);
 			}
 			sysMenu.setMenuNameEn(requestDataSet.getValue("menuNameEn"));
 			sysMenu.setMenuNameKo(requestDataSet.getValue("menuNameKo"));

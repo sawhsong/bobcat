@@ -9,8 +9,16 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
+	SysMenu sysMenu = (SysMenu)paramEntity.getObject("sysMenu");
+	String menuLevel = (String)paramEntity.getObject("menuLevel");
+	String menuPath = (String)paramEntity.getObject("menuPath");
+	String deletable = (String)paramEntity.getObject("deletable");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String deleteStatus = "";
+	if (CommonUtil.equalsIgnoreCase(deletable, "false")) {
+		deleteStatus = "disabled";
+	}
 %>
 <%/************************************************************************************************
 * HTML
@@ -66,73 +74,46 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="20%"/>
+			<col width="30%"/>
+			<col width="20%"/>
+			<col width="30%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0402.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysBoard.getWriterName()%>" checkName="sys0402.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0402.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysBoard.getWriterEmail()%>" checkName="sys0402.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuLevel"/></th>
+			<td class="tdEdit"><ui:text name="menuLevel" id="menuLevel" className="defClass" value="<%=menuLevel%>" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuPath"/></th>
+			<td class="tdEdit"><ui:text name="menuPath" id="menuPath" className="defClass" value="<%=menuPath%>" status="display"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0402.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" value="<%=sysBoard.getArticleSubject()%>" checkName="sys0402.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.menuId"/></th>
+			<td class="tdEdit"><ui:text name="menuId" id="menuId" className="defClass" value="<%=sysMenu.getMenuId()%>" status="display"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuUrl"/></th>
+			<td class="tdEdit"><ui:text name="menuUrl" id="menuUrl" className="defClass" value="<%=sysMenu.getMenuUrl()%>" checkName="sys0402.header.menuUrl" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0402.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.sortOrder"/></th>
+			<td class="tdEdit"><ui:text name="sortOrder" id="sortOrder" className="defClass" value="<%=sysMenu.getSortOrder()%>" checkName="sys0402.header.sortOrder" options="mandatory" option="numeric"/></td>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccradio name="isActive" codeType="SIMPLE_YN" selectedValue="<%=sysMenu.getIsActive()%>"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0402.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameEn"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameEn" id="menuNameEn" className="defClass" value="<%=sysMenu.getMenuNameEn()%>" checkName="sys0402.header.menuNameEn" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0402.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameKo"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameKo" id="menuNameKo" className="defClass" value="<%=sysMenu.getMenuNameKo()%>" checkName="sys0402.header.menuNameKo" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sys0402.header.description"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="description" id="description" className="defClass" value="<%=sysMenu.getDescription()%>" checkName="sys0402.header.description"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
+			<td class="tdEdit"><ui:text name="insertUser" id="insertUser" className="defClass" value="<%=sysMenu.getUpdateUserName()%>" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
+			<td class="tdEdit"><ui:text name="insertDate" id="insertDate" className="defClass" value="<%=CommonUtil.toString(sysMenu.getUpdateDate(), dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

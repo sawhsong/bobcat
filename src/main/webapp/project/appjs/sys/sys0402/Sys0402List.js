@@ -7,6 +7,7 @@ jsconfig.put("scrollablePanelHeightAdjust", 4);
 var popup = null;
 var searchResultDataCount = 0;
 var langCode = commonJs.upperCase(jsconfig.get("langCode"));
+var delimiter = jsconfig.get("dataDelimiter");
 
 $(function() {
 	/*!
@@ -76,7 +77,7 @@ $(function() {
 
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
-		var html = "", delimiter = "_";
+		var html = "";
 
 		searchResultDataCount = dataSet.getRowCnt();
 		$("#tblGridBody").html("");
@@ -102,14 +103,14 @@ $(function() {
 					disabledStr = "disabled";
 				}
 
-				paramValue = dataSet.getValue(i, "MENU_LEVEL")+delimiter+menuPath+delimiter+menuId+delimiter+deletable;
+				paramValue = dataSet.getValue(i, "MENU_LEVEL")+delimiter+menuPath+delimiter+deletable;
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(paramValue).addOptions(disabledStr);
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(menuId).addAttribute("paramValue:"+paramValue).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(menuId).setScript("getDetail('"+paramValue+"')");
+				uiAnc.setText(menuId).setScript("getDetail('"+menuId+"', '"+paramValue+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).addTextBeforeChild(space).addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(menuName));
@@ -119,7 +120,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "IS_ACTIVE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("paramValue:"+paramValue).addAttribute("deletable:"+deletable).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("menuId:"+menuId).addAttribute("paramValue:"+paramValue).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -138,7 +139,7 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -150,8 +151,12 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(paramValue) {
-		openPopup({mode:"Detail", paramValue:paramValue});
+	getDetail = function(menuId, paramValue) {
+		openPopup({
+			mode:"Detail",
+			menuId:menuId,
+			paramValue:paramValue
+		});
 	};
 
 	openPopup = function(param) {
@@ -182,6 +187,7 @@ $(function() {
 			url:url,
 			paramData:{
 				mode:param.mode,
+				menuId:param.menuId,
 				paramValue:param.paramValue
 			},
 			header:header,
@@ -240,10 +246,12 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var deletable = $(img).attr("deletable"), paramValue = $(img).attr("paramValue");
+		var menuId = $(img).attr("menuId"), paramValue = $(img).attr("paramValue");
+		var paramValues = paramValue.split(delimiter);
+		var deletable = paramValues[2];
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == menuId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
@@ -257,7 +265,7 @@ $(function() {
 		}
 
 		ctxMenu.commonAction[0].fun = function() {getDetail(paramValue);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", paramValue:paramValue});};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", menuId:menuId, paramValue:paramValue});};
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {

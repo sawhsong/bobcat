@@ -8,8 +8,6 @@ import project.common.extend.BaseHDao;
 import project.conf.resource.ormapper.dto.oracle.SysMenu;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
-import zebra.util.CommonUtil;
-import zebra.util.ConfigUtil;
 
 public class SysMenuHDaoImpl extends BaseHDao implements SysMenuDao {
 	public int insert(SysMenu sysMenu) throws Exception {
@@ -33,8 +31,7 @@ public class SysMenuHDaoImpl extends BaseHDao implements SysMenuDao {
 
 		if (!(sysMenuIds == null || sysMenuIds.length == 0)) {
 			for (int i=0; i<sysMenuIds.length; i++) {
-				String[] menuIdForDelete = CommonUtil.split(sysMenuIds[i], ConfigUtil.getProperty("delimiter.data"));
-				result += delete(menuIdForDelete[2]);
+				result += delete(sysMenuIds[i]);
 			}
 		}
 		return result;
