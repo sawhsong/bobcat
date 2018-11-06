@@ -37,10 +37,6 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
-	$("#commonCodeType").change(function(event) {
-		doSearch();
-	});
-
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
