@@ -23,6 +23,7 @@
             <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402DetailPop.jsp</result>
             <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402UpdatePop.jsp</result>
+            <result name="updateSort" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402UpdateSortPop.jsp</result>
         </action>
         <!--Sys0404 - Authority Group-->
         <action class="project.app.sys.sys0404.Sys0404Action" method="{1}" name="0404/*">
