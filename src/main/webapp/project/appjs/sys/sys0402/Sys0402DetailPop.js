@@ -40,7 +40,7 @@ $(function() {
 		}
 
 		if (param.mode == "Update") {
-			parent.popup.resizeTo(0, 114);
+			parent.popup.resizeTo(0, 72);
 		}
 
 		if (param.mode == "Delete") {

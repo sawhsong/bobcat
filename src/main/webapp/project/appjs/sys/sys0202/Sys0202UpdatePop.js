@@ -178,7 +178,7 @@ $(function() {
 			rowIdx = delimiter+(i-1);
 
 			$("[name=commonCodeDetail"+rowIdx+"]").val(ds.getValue(i, "COMMON_CODE"));
-			commonJs.setCheckboxValue("useYnDetail"+rowIdx, ds.getValue(i, "USE_YN"));
+			commonJs.setCheckboxValue("isActiveDetail"+rowIdx, ds.getValue(i, "IS_ACTIVE"));
 			$("[name=descriptionEnDetail"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION_EN"));
 			$("[name=descriptionKoDetail"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION_KO"));
 			$("[name=sortOrderDetail"+rowIdx+"]").val(ds.getValue(i, "SORT_ORDER"));

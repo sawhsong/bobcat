@@ -170,11 +170,11 @@ $(function() {
 		} else if (param.mode == "New") {
 			url = "/sys/0402/getInsert.do";
 			header = com.header.popHeaderEdit;
-			height = 390;
+			height = 388;
 		} else if (param.mode == "Edit") {
 			url = "/sys/0402/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 418;
+			height = 374;
 		} else if (param.mode == "SetSort") {
 			url = "/sys/0402/getUpdateSortOrder.do";
 			header = sys.sys0402.header.popHeaderSort;
@@ -264,7 +264,7 @@ $(function() {
 			ctxMenu.commonAction[2].disable = true;
 		}
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(paramValue);};
+		ctxMenu.commonAction[0].fun = function() {getDetail(menuId, paramValue);};
 		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", menuId:menuId, paramValue:paramValue});};
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
