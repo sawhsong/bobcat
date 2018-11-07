@@ -104,14 +104,14 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 			sysCommonCode.setDescriptionKo(requestDataSet.getValue("descriptionKoMaster"));
 			sysCommonCode.setProgramConstants(codeType + "_0000000000");
 			sysCommonCode.setSortOrder("000");
-			sysCommonCode.setIsActive(CommonUtil.nvl(requestDataSet.getValue("isActiveMaster"), "N"));
+			sysCommonCode.setIsActive(CommonUtil.nvl(CommonUtil.upperCase(requestDataSet.getValue("isActiveMaster")), "N"));
 			sysCommonCode.setIsDefault(CommonCodeManager.getCodeByConstants("SIMPLE_YN_N"));
 			sysCommonCode.setInsertUserId((String)session.getAttribute("UserId"));
 			if (CommonUtil.equalsIgnoreCase(processFrom, "update")) {
 				detailDataSet = (DataSet)paramEntity.getObject("detailDataSet");
 				masterDataRow = (int)paramEntity.getObject("masterDataRow");
 
-				sysCommonCode.setIsDefault(detailDataSet.getValue(masterDataRow, "IS_DEFAULT"));
+				sysCommonCode.setIsDefault(CommonUtil.upperCase(detailDataSet.getValue(masterDataRow, "IS_DEFAULT")));
 				sysCommonCode.setInsertUserId(detailDataSet.getValue(masterDataRow, "INSERT_USER_ID"));
 				sysCommonCode.setInsertDate(CommonUtil.toDate(detailDataSet.getValue(masterDataRow, "INSERT_DATE")));
 				sysCommonCode.setUpdateUserId((String)session.getAttribute("UserId"));
@@ -127,7 +127,7 @@ public class Sys0202BizImpl extends BaseBiz implements Sys0202Biz {
 			for (int i=0; i<detailLength; i++) {
 				String commonCode = requestDataSet.getValue("commonCodeDetail" + delimiter + i);
 
-				sysCommonCode.setCommonCode(commonCode);
+				sysCommonCode.setCommonCode(CommonUtil.upperCase(commonCode));
 				sysCommonCode.setDescriptionEn(requestDataSet.getValue("descriptionEnDetail" + delimiter + i));
 				sysCommonCode.setDescriptionKo(requestDataSet.getValue("descriptionKoDetail" + delimiter + i));
 				sysCommonCode.setProgramConstants(codeType + "_" + CommonUtil.upperCase(commonCode));
