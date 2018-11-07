@@ -1,5 +1,6 @@
 package zebra.taglib;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibBodySupport;
@@ -14,24 +15,30 @@ public class Selectbox extends TaglibBodySupport {
 	private String style;
 	private String isMultiple;
 	private String isBootstrap;
+	private String checkName;
 	private String options;	// for data validator
 
 	public int doAfterBody() {
 		try {
 			bodyContent = getBodyContent();
 			JspWriter jspWriter = bodyContent.getEnclosingWriter();
+			HttpSession httpSession = pageContext.getSession();
+			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
 			String classString = "";
+
+			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
 
 			html.append("<select");
 			html.append(" id=\""+CommonUtil.nvl(id, name)+"\"");
 			html.append(" name=\""+name+"\"");
 
-			if (CommonUtil.isNotEmpty(style)) {html.append(" style=\""+style+"\"");}
-			if (CommonUtil.isNotEmpty(options)) {html.append(" "+options);}
-			if (CommonUtil.isNotEmpty(script)) {html.append(" onchange=\""+script+"\"");}
+			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
+			if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
+			if (CommonUtil.isNotBlank(script)) {html.append(" onchange=\""+script+"\"");}
 			if (CommonUtil.toBoolean(isMultiple)) {html.append(" multiple=\"multiple\"");}
 			if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" "+status);}
+			if (CommonUtil.isNotBlank(checkName)) {html.append(" checkName=\""+checkName+"\"");}
 			// css class
 			if (!CommonUtil.toBoolean(isBootstrap, true)) {
 				if (CommonUtil.toBoolean(isMultiple)) {classString = "selMulti";}
@@ -122,6 +129,14 @@ public class Selectbox extends TaglibBodySupport {
 
 	public void setIsBootstrap(String isBootstrap) {
 		this.isBootstrap = isBootstrap;
+	}
+
+	public String getCheckName() {
+		return checkName;
+	}
+
+	public void setCheckName(String checkName) {
+		this.checkName = checkName;
 	}
 
 	public String getOptions() {

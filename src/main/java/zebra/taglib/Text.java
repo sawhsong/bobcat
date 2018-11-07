@@ -52,7 +52,7 @@ public class Text extends TaglibSupport {
 			if (CommonUtil.isNotBlank(script)) {
 				scripts = CommonUtil.split(script, ";");
 				for (int i=0; i<scripts.length; i++) {
-					eventFunc = CommonUtil.split(script, ":");
+					eventFunc = CommonUtil.split(scripts[i], ":");
 					scriptStr += " "+eventFunc[0]+"=\""+eventFunc[1]+"\"";
 				}
 			}

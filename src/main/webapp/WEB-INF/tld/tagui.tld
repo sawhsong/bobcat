@@ -562,6 +562,9 @@
 			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -575,6 +578,9 @@
 		</attribute>
 		<attribute>
 			<name>text</name><required>true</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attributes</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>isSelected</name><required>false</required><rtexprvalue>true</rtexprvalue>

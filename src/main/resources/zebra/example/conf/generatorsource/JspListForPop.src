@@ -163,7 +163,7 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});

@@ -4,72 +4,228 @@
  *************************************************************************************************/
 var popup = null;
 var searchResultDataCount = 0;
-var attchedFileContextMenu = [];
+var langCode = commonJs.upperCase(jsconfig.get("langCode"));
+var delimiter = jsconfig.get("dataDelimiter");
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
-	});
+	$("#btnSave").click(function(event) {
+		if (!commonJs.doValidate("fmDefault")) {
+			return;
+		}
 
-	$("#btnDelete").click(function(event) {
-		doDelete();
-	});
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/sys/0406/exeInsert.do",
+						dataType:"json",
+						formId:"fmDefault",
+						data:{
+						},
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-	$("#btnSearch").click(function(event) {
-		doSearch();
-	});
-
-	$("#btnClear").click(function(event) {
-		commonJs.clearSearchCriteria();
-	});
-
-	$("#icnFromDate").click(function(event) {
-		commonJs.openCalendar(event, "fromDate");
-	});
-
-	$("#icnToDate").click(function(event) {
-		commonJs.openCalendar(event, "toDate");
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											commonJs.doSubmit({
+												formId:"fmDefault",
+												action:"/sys/0406/getList.do"
+											});
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}]
+		});
 	});
 
 	$("#icnCheck").click(function(event) {
-		commonJs.toggleCheckboxes("chkForDel");
+		commonJs.toggleCheckboxes("chkToAssign");
+	});
+
+	$("[name=chkToAssign]").click(function(event) {
+		var thisChecked = $(this).prop("checked"), thisValue = $(this).val();
+		var thisValueItems = thisValue.split(delimiter);
+		var thisLevel = thisValueItems[0];
+		var thisPaths = thisValueItems[1].split("/");
+		var thisMenuId = thisValueItems[2];
+
+		$("[name=chkToAssign]").each(function(index) {
+			var val = $(this).val();
+			var valItems = val.split(delimiter);
+			var level = valItems[0];
+			var paths = valItems[1].split("/");
+
+			if (thisValue != val) {
+				if (thisLevel == "1") {
+					if (level > thisLevel && thisMenuId == paths[0]) {
+						$(this).prop("checked", thisChecked);
+					}
+				}
+
+				if (thisLevel == "2") {
+					if (thisChecked) {
+						if ((level > thisLevel && thisMenuId == paths[1]) || (level < thisLevel && thisPaths[0] == paths[0])) {
+							$(this).prop("checked", thisChecked);
+						}
+					} else {
+						if (level > thisLevel && thisMenuId == paths[1]) {
+							$(this).prop("checked", thisChecked);
+						}
+					}
+				}
+
+				if (thisLevel == "3") {
+					if (thisChecked) {
+						if ((level == "1" && thisPaths[0] == paths[0]) || (level == "2" && thisPaths[1] == paths[1])) {
+							$(this).prop("checked", thisChecked);
+						}
+					}
+				}
+			}
+		});
+
+		if (!thisChecked && thisLevel == "2") {
+			if (!hasChildChecked(thisLevel, thisPaths[0])) {
+				$("[name=chkToAssign]").each(function(index) {
+					var val = $(this).val();
+					var valItems = val.split(delimiter);
+					var level = valItems[0];
+					var paths = valItems[1].split("/");
+
+					if (paths[0] == thisPaths[0]) {
+						$(this).prop("checked", false);
+						return false;
+					}
+				});
+			}
+		}
+
+		if (!thisChecked && thisLevel == "3") {
+			if (!hasChildChecked(thisLevel, thisPaths[1])) {
+				$("[name=chkToAssign]").each(function(index) {
+					var val = $(this).val();
+					var valItems = val.split(delimiter);
+					var level = valItems[0];
+					var paths = valItems[1].split("/");
+
+					if (paths[1] == thisPaths[1]) {
+						$(this).prop("checked", false);
+						return false;
+					}
+				});
+			}
+
+			if (!hasChildChecked(2, thisPaths[0])) {
+				$("[name=chkToAssign]").each(function(index) {
+					var val = $(this).val();
+					var valItems = val.split(delimiter);
+					var level = valItems[0];
+					var paths = valItems[1].split("/");
+
+					if (paths[0] == thisPaths[0]) {
+						$(this).prop("checked", false);
+						return false;
+					}
+				});
+			}
+		}
+	});
+
+	$("#authGroup").change(function() {
+		$("#authGroupDesc").val($("#authGroup option:selected").attr("desc"));
+		setCheckbox();
 	});
 
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
-
-			if ($(element).is("[name=searchWord]") || $(element).is("[name=fromDate]") || $(element).is("[name=toDate]")) {
-				doSearch();
-			}
 		}
 	});
 
 	/*!
 	 * process
 	 */
+	setCheckbox = function() {
+		var selectedAuthGroup = $("#authGroup").val(), groupId = "";
+
+		if (commonJs.isEmpty(selectedAuthGroup)) {
+			return;
+		}
+
+		$("[name=chkToAssign]").each(function(index) {
+			groupId = $(this).attr("groupId");
+
+			if (!commonJs.isEmpty(groupId) && groupId.indexOf(selectedAuthGroup) != -1) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
+	};
+
+	hasChildChecked = function(paramLevel, paramMenuId) {
+		var rtn = false;
+
+		$("[name=chkToAssign]:checked").each(function(index) {
+			var val = $(this).val();
+			var valItems = val.split(delimiter);
+			var level = valItems[0];
+			var paths = valItems[1].split("/");
+
+			if (paramLevel == "2") {
+				if (level > paramLevel && paths[0] == paramMenuId || level == paramLevel && paths[0] == paramMenuId) {
+					rtn = true;
+				}
+			}
+
+			if (paramLevel == "3") {
+				if (level == paramLevel && paths[1] == paramMenuId) {
+					rtn = true;
+				}
+			}
+		});
+		return rtn;
+	};
+
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
-		if (commonJs.doValidate($("#fmDefault"))) {
-			setTimeout(function() {
-				commonJs.ajaxSubmit({
-					url:"/sys/0406/getList.do",
-					dataType:"json",
-					formId:"fmDefault",
-					success:function(data, textStatus) {
-						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+		setTimeout(function() {
+			commonJs.ajaxSubmit({
+				url:"/sys/0406/getList.do",
+				dataType:"json",
+				formId:"fmDefault",
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-						if (result.isSuccess == true || result.isSuccess == "true") {
-							renderDataGridTable(result);
-						}
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						renderDataGridTable(result);
 					}
-				});
-			}, 100);
-		}
+				}
+			});
+		}, 100);
 	};
 
 	renderDataGridTable = function(result) {
@@ -81,47 +237,28 @@ $(function() {
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "", iLength = 200;
-				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
+				var menuPath = dataSet.getValue(i, "PATH"), menuId = dataSet.getValue(i, "MENU_ID"), menuName = dataSet.getValue(i, "MENU_NAME_"+langCode);
+				var groupId = dataSet.getValue(i, "GROUP_ID"), space = "", style = "", paramValue = "";
+				var iLevel = commonJs.toNumber(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
 
-				gridTr.setClassName("noBorderHor noStripe");
+				style = (iLevel == 0 || iLevel == 1) ? "font-weight:bold;" : "";
+				for (var j=0; j<iLevel; j++) {
+					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				}
+
+				paramValue = dataSet.getValue(i, "LEVEL")+delimiter+menuPath;
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				uiChk.setId("chkToAssign").setName("chkToAssign").setValue(menuId).addAttribute("paramValue:"+paramValue).addAttribute("groupId:"+groupId);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
-
-				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
-
-				var gridTd = new UiGridTd();
-				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
-					gridTd.addChild(iconAttachFile);
-				}
-				gridTr.addChild(gridTd);
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
-
-				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(space+menuId));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(menuName));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "MENU_URL")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "SORT_ORDER")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "DESCRIPTION")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "IS_ACTIVE")));
 
 				html += gridTr.toHtmlString();
 			}
@@ -137,175 +274,21 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
+			isPageable:false,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
-
-		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.boardAction);
-		});
-
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
-	};
-
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
-	};
-
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
-
-		if (param.mode == "Detail") {
-			url = "/sys/0406/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sys/0406/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/sys/0406/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
-		}
-
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
-
-		popup = commonJs.openPopup(popParam);
-	};
-
-	doDelete = function() {
-		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn(com.message.I902);
-			return;
-		}
-
-		commonJs.confirm({
-			contents:com.message.Q002,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.ajaxSubmit({
-						url:"/sys/0406/exeDelete.do",
-						dataType:"json",
-						formId:"fmDefault",
-						success:function(data, textStatus) {
-							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-							if (result.isSuccess == true || result.isSuccess == "true") {
-								commonJs.openDialog({
-									type:com.message.I000,
-									contents:result.message,
-									blind:true,
-									buttons:[{
-										caption:com.caption.ok,
-										callback:function() {
-											doSearch();
-										}
-									}]
-								});
-							} else {
-								commonJs.error(result.message);
-							}
-						}
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
-		});
-	};
-
-	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
-
-		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
-				$(this).prop("checked", true);
-			} else {
-				$(this).prop("checked", false);
-			}
-		});
-
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
-
-		$(img).contextMenu(ctxMenu.boardAction, {
-			classPrefix:com.constants.ctxClassPrefixGrid,
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0,
-			verAdjust:2
-		});
-	};
-
-	exeExport = function(menuObject) {
-		$("[name=fileType]").remove();
-		$("[name=dataRange]").remove();
-
-		if (searchResultDataCount <= 0) {
-			commonJs.warn(com.message.I001);
-			return;
-		}
-
-		commonJs.confirm({
-			contents:com.message.Q003,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/sys/0406/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-					setTimeout(function() {popup.close();}, 3000);
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
-		});
 	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
-		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#searchWord").focus();
+		setCheckbox();
 		doSearch();
 	});
 });

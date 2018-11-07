@@ -8,6 +8,9 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
+	DataSet authGroupDataSet = (DataSet)paramEntity.getObject("authGroupDataSet");
+	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
+	String delimiter = ConfigUtil.getProperty("delimiter.data");
 %>
 <%/************************************************************************************************
 * HTML
@@ -47,42 +50,32 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
-			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<table class="tblDefault">
-				<colgroup>
-					<col width="50%"/>
-					<col width="50%"/>
-				</colgroup>
-				<tr>
-					<td class="tdDefault">
-						<label for="searchType" class="lblEn hor"><mc:msg key="sys0406.search.searchType"/></label>
-						<div style="float:left;padding-right:4px;">
-							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default"/>
-						</div>
-						<ui:text id="searchWord" name="searchWord" className="defClass hor" style="width:280px"/>
-					</td>
-					<td class="tdDefault">
-						<label for="fromDate" class="lblEn hor"><mc:msg key="sys0406.search.searchPeriod"/></label>
-						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="sys0406.search.searchDateFrom" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="sys0406.search.searchDateFrom"/>
-						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<ui:text id="toDate" name="toDate" className="defClass Ct hor" style="width:100px" checkName="sys0406.search.searchDateTo" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="sys0406.search.searchDateTo"/>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+	<table class="tblSearch">
+		<caption><mc:msg key="page.com.searchCriteria"/></caption>
+		<tr>
+			<td class="tdSearch">
+				<label for="authGroup" class="lblEn hor mandatory"><mc:msg key="sys0406.search.authGroup"/></label>
+				<div style="float:left;padding-right:4px;">
+					<ui:select id="authGroup" name="authGroup" checkName="sys0406.search.authGroup" options="mandatory">
+						<ui:seloption value="" text="==Select=="/>
+<%
+					for (int i=0; i<authGroupDataSet.getRowCnt(); i++) {
+%>
+						<option value="<%=authGroupDataSet.getValue(i, "GROUP_ID")%>" desc="<%=authGroupDataSet.getValue(i, "DESCRIPTION")%>"><%=authGroupDataSet.getValue(i, "GROUP_NAME")%></option>
+<%
+					}
+%>
+					</ui:select>
+				</div>
+				<ui:text id="authGroupDesc" name="authGroupDesc" className="defClass hor" style="font-weight:bold;width:500px" status="display"/>
+			</td>
+		</tr>
+	</table>
 </div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
@@ -98,32 +91,32 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
-			<col width="*"/>
-			<col width="5%"/>
-			<col width="15%"/>
 			<col width="10%"/>
-			<col width="8%"/>
+			<col width="20%"/>
+			<col width="15%"/>
+			<col width="7%"/>
+			<col width="*"/>
 			<col width="5%"/>
 		</colgroup>
 		<thead>
-			<tr class="noBorderHor">
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0406.grid.subject"/></th>
-				<th class="thGrid"><mc:msg key="sys0406.grid.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0406.grid.writerName"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sys0406.grid.date"/></th>
-				<th class="thGrid sortable:numeric"><mc:msg key="sys0406.grid.hitCount"/></th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
+			<tr>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="sys0406.grid.selectToAssign"/></th>
+				<th class="thGrid"><mc:msg key="sys0406.grid.menuId"/></th>
+				<th class="thGrid"><mc:msg key="sys0406.grid.menuName"/></th>
+				<th class="thGrid"><mc:msg key="sys0406.grid.menuUrl"/></th>
+				<th class="thGrid"><mc:msg key="sys0406.grid.sortOrder"/></th>
+				<th class="thGrid"><mc:msg key="sys0406.grid.menuDesc"/></th>
+				<th class="thGrid"><mc:msg key="sys0406.grid.isActive"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noBorderHor noStripe">
+			<tr>
 				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"></div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>
