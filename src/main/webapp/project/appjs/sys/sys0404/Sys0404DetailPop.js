@@ -10,10 +10,6 @@ $(function() {
 		doProcessByButton({mode:"Update"});
 	});
 
-	$("#btnReply").click(function(event) {
-		doProcessByButton({mode:"Reply"});
-	});
-
 	$("#btnDelete").click(function(event) {
 		doProcessByButton({mode:"Delete"});
 	});
@@ -22,33 +18,26 @@ $(function() {
 		parent.popup.close();
 	});
 
+	$(document).keypress(function(event) {
+		if (event.which == 13) {
+			var element = event.target;
+		}
+	});
+
 	/*!
 	 * process
 	 */
 	doProcessByButton = function(param) {
-		var articleId = "<%=sysBoard.getArticleId()%>";
-		var actionString = "";
-		var params = {};
+		var action = "";
 
 		if (param.mode == "Update") {
-			actionString = "/sys/0404/getUpdate.do";
-		} else if (param.mode == "Reply") {
-			actionString = "/sys/0404/getInsert.do";
+			action = "/sys/0404/getUpdate.do";
 		} else if (param.mode == "Delete") {
-			actionString = "/sys/0404/exeDelete.do";
+			action = "/sys/0404/exeDelete.do";
 		}
 
-		params = {
-			form:"fmDefault",
-			action:actionString,
-			data:{
-				mode:param.mode,
-				articleId:articleId
-			}
-		};
-
 		if (param.mode == "Update") {
-			parent.popup.resizeTo(0, 124);
+			parent.popup.resizeTo(0, 72);
 		}
 
 		if (param.mode == "Delete") {
@@ -58,11 +47,11 @@ $(function() {
 					caption:com.caption.yes,
 					callback:function() {
 						commonJs.ajaxSubmit({
-							url:actionString,
+							url:action,
 							dataType:"json",
 							formId:"fmDefault",
 							data:{
-								articleId:articleId
+								groupId:groupId
 							},
 							success:function(data, textStatus) {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
@@ -72,6 +61,7 @@ $(function() {
 										type:com.message.I000,
 										contents:result.message,
 										blind:true,
+										width:300,
 										buttons:[{
 											caption:com.caption.ok,
 											callback:function() {
@@ -93,7 +83,14 @@ $(function() {
 				}]
 			});
 		} else {
-			commonJs.doSubmit(params);
+			commonJs.doSubmit({
+				form:"fmDefault",
+				action:action,
+				data:{
+					mode:param.mode,
+					groupId:groupId
+				}
+			});
 		}
 	};
 

@@ -9,8 +9,8 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysAuthGroup sysAuthGroup = (SysAuthGroup)paramEntity.getObject("sysAuthGroup");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -72,67 +72,30 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysBoard.getWriterName()%>" checkName="sys0404.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysBoard.getWriterEmail()%>" checkName="sys0404.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sys0404.header.groupId"/></th>
+			<td class="tdEdit"><ui:text id="groupId" name="groupId" value="<%=sysAuthGroup.getGroupId()%>" className="defClass" checkName="sys0404.header.groupId" status="display"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccradio name="isActive" codeType="IS_ACTIVE" selectedValue="<%=sysAuthGroup.getIsActive()%>" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" value="<%=sysBoard.getArticleSubject()%>" checkName="sys0404.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.groupName"/></th>
+			<td class="tdEdit" colspan="3"><ui:text id="groupName" name="groupName" value="<%=sysAuthGroup.getGroupName()%>" className="defClass" checkName="sys0404.header.groupName" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0404.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sys0404.header.description"/></th>
+			<td class="tdEdit" colspan="3"><ui:text id="description" name="description" value="<%=sysAuthGroup.getDescription()%>" className="defClass" checkName="sys0404.header.description" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0404.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
+			<td class="tdEdit"><ui:text id="insertUser" name="insertUser" value="<%=sysAuthGroup.getInsertUserName()%>" className="defClass" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
+			<td class="tdEdit"><ui:text id="insertDate" name="insertDate" value="<%=CommonUtil.toString(sysAuthGroup.getInsertDate(), dateFormat)%>" className="defClass" status="display"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0404.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit rt"><mc:msg key="page.com.updateUser"/></th>
+			<td class="tdEdit"><ui:text id="updateUser" name="updateUser" value="<%=sysAuthGroup.getUpdateUserName()%>" className="defClass" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="page.com.updateDate"/></th>
+			<td class="tdEdit"><ui:text id="updateDate" name="updateDate" value="<%=CommonUtil.toString(sysAuthGroup.getUpdateDate(), dateFormat)%>" className="defClass" status="display"/></td>
 		</tr>
 	</table>
 </div>

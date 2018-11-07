@@ -10,6 +10,7 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -71,38 +72,22 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="sys0404.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="sys0404.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.isActive"/></th>
+			<td class="tdEdit" colspan="3"><ui:ccradio name="isActive" codeType="IS_ACTIVE" selectedValue="Y" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="sys0404.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.groupName"/></th>
+			<td class="tdEdit" colspan="3"><ui:text id="groupName" name="groupName" className="defClass" checkName="sys0404.header.groupName" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0404.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sys0404.header.description"/></th>
+			<td class="tdEdit" colspan="3"><ui:text id="description" name="description" className="defClass" checkName="sys0404.header.description" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sys0404.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
+			<td class="tdEdit"><ui:text id="insertUser" name="insertUser" value="<%=sysUser.getUserName()%>" className="defClass" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
+			<td class="tdEdit"><ui:text id="insertDate" name="insertDate" value="<%=CommonUtil.getSysdate(dateFormat)%>" className="defClass" status="display"/></td>
 		</tr>
 	</table>
 </div>

@@ -9,6 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.SysAuthGroup.SysAuthGroupDao;
+import project.conf.resource.ormapper.dao.SysMenuAuthLink.SysMenuAuthLinkDao;
+import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
+import project.conf.resource.ormapper.dto.oracle.SysAuthGroup;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -18,17 +24,13 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-
 public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 	@Autowired
-	private SysBoardDao sysBoardDao;
+	private SysAuthGroupDao sysAuthGroupDao;
 	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
+	private SysMenuAuthLinkDao sysMenuAuthLinkDao;
+	@Autowired
+	private SysUserDao sysUserDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -45,9 +47,9 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 
 		try {
 			queryAdvisor.setRequestDataSet(requestDataSet);
-			queryAdvisor.setPagination(true);
+			queryAdvisor.setPagination(false);
 
-			paramEntity.setAjaxResponseDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(sysAuthGroupDao.getAuthGroupDataSetBySearchCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -58,14 +60,15 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String groupId = requestDataSet.getValue("groupId");
+		SysAuthGroup sysAuthGroup = new SysAuthGroup();
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
+			sysAuthGroup = sysAuthGroupDao.getAuthGroupByGroupId(groupId);
+			sysAuthGroup.setInsertUserName(DataHelper.getUserNameById(sysAuthGroup.getInsertUserId()));
+			sysAuthGroup.setUpdateUserName(DataHelper.getUserNameById(sysAuthGroup.getUpdateUserId()));
 
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setObject("sysAuthGroup", sysAuthGroup);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -95,26 +98,19 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
-		String uid = CommonUtil.uid();
-		String loggedInUserId = (String)session.getAttribute("UserId");
+		String groupId = CommonUtil.uid();
 		int result = -1;
+		SysAuthGroup sysAuthGroup = new SysAuthGroup();
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysAuthGroup.setGroupId(groupId);
+			sysAuthGroup.setGroupName(requestDataSet.getValue("groupName"));
+			sysAuthGroup.setIsActive(requestDataSet.getValue("isActive"));
+			sysAuthGroup.setDescription(requestDataSet.getValue("description"));
+			sysAuthGroup.setInsertUserId((String)session.getAttribute("UserId"));
+			sysAuthGroup.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			result = sysAuthGroupDao.insert(sysAuthGroup);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -130,27 +126,20 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
-		int result = 0;
+		String groupId = requestDataSet.getValue("groupId");
+		int result = -1;
+		SysAuthGroup sysAuthGroup = new SysAuthGroup();
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysAuthGroup = sysAuthGroupDao.getAuthGroupByGroupId(groupId);
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			sysAuthGroup.setGroupName(requestDataSet.getValue("groupName"));
+			sysAuthGroup.setDescription(requestDataSet.getValue("description"));
+			sysAuthGroup.setIsActive(requestDataSet.getValue("isActive"));
+			sysAuthGroup.setUpdateUserId((String)session.getAttribute("UserId"));
+			sysAuthGroup.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			result = sysAuthGroupDao.update(groupId, sysAuthGroup);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -165,16 +154,20 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String groupId = requestDataSet.getValue("groupId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		int result = 0;
+		String groupIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		int result = -1;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
+			if (CommonUtil.isBlank(groupId)) {
+				result = sysAuthGroupDao.delete(groupIds);
+				result += sysMenuAuthLinkDao.deleteByAuthGroupIds(groupIds);
+				result += sysUserDao.updateAuthGroupIdByAuthGroupIds(groupIds, "Z");
 			} else {
-				result = sysBoardDao.delete(articleId);
+				result = sysAuthGroupDao.delete(groupId);
+				result += sysMenuAuthLinkDao.deleteByAuthGroupId(groupId);
+				result += sysUserDao.updateAuthGroupIdByAuthGroupId(groupId, "Z");
 			}
 
 			if (result <= 0) {
@@ -193,19 +186,14 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
-		String pageTitle, fileName;
-		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			String pageTitle = "Authority Group List";
+			String fileName = "AuthorityGroupList";
 
-			exportHelper = ExportUtil.getExportHelper(fileType);
+			exportHelper = ExportUtil.getExportHelper(requestDataSet.getValue("fileType"));
 			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
@@ -216,7 +204,7 @@ public class Sys0404BizImpl extends BaseBiz implements Sys0404Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysAuthGroupDao.getAuthGroupDataSetBySearchCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

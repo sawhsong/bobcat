@@ -50,40 +50,11 @@
 			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
 		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea" class="areaContainer">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<table class="tblDefault">
-				<colgroup>
-					<col width="50%"/>
-					<col width="50%"/>
-				</colgroup>
-				<tr>
-					<td class="tdDefault">
-						<label for="searchType" class="lblEn hor"><mc:msg key="sys0404.search.searchType"/></label>
-						<div style="float:left;padding-right:4px;">
-							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default"/>
-						</div>
-						<ui:text id="searchWord" name="searchWord" className="defClass hor" style="width:280px"/>
-					</td>
-					<td class="tdDefault">
-						<label for="fromDate" class="lblEn hor"><mc:msg key="sys0404.search.searchPeriod"/></label>
-						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="sys0404.search.searchDateFrom" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="sys0404.search.searchDateFrom"/>
-						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<ui:text id="toDate" name="toDate" className="defClass Ct hor" style="width:100px" checkName="sys0404.search.searchDateTo" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="sys0404.search.searchDateTo"/>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
+<div id="divSearchCriteriaArea"></div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
@@ -97,28 +68,32 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="3%"/>
-			<col width="*"/>
-			<col width="5%"/>
+			<col width="2%"/>
 			<col width="15%"/>
+			<col width="*"/>
+			<col width="6%"/>
 			<col width="10%"/>
 			<col width="8%"/>
-			<col width="5%"/>
+			<col width="10%"/>
+			<col width="8%"/>
+			<col width="4%"/>
 		</colgroup>
 		<thead>
-			<tr class="noBorderHor">
+			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0404.grid.subject"/></th>
-				<th class="thGrid"><mc:msg key="sys0404.grid.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0404.grid.writerName"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sys0404.grid.date"/></th>
-				<th class="thGrid sortable:numeric"><mc:msg key="sys0404.grid.hitCount"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0404.grid.groupName"/></th>
+				<th class="thGrid"><mc:msg key="sys0404.grid.description"/></th>
+				<th class="thGrid"><mc:msg key="sys0404.grid.isActive"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertUser"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateUser"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noBorderHor noStripe">
-				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
+			<tr>
+				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
