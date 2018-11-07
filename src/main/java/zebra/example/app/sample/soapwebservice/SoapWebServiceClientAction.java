@@ -2,9 +2,7 @@ package zebra.example.app.sample.soapwebservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import zebra.data.DataSet;
 import zebra.example.common.extend.BaseAction;
-import zebra.util.CommonUtil;
 
 public class SoapWebServiceClientAction extends BaseAction {
 	@Autowired
