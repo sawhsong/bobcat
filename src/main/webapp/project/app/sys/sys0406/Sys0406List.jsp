@@ -10,7 +10,6 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet authGroupDataSet = (DataSet)paramEntity.getObject("authGroupDataSet");
 	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
-	String delimiter = ConfigUtil.getProperty("delimiter.data");
 %>
 <%/************************************************************************************************
 * HTML
