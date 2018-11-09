@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -8,48 +10,55 @@ import zebra.util.CommonUtil;
 import zebra.util.TaglibUtil;
 
 public class Image extends TaglibSupport {
-	private String id;
-	private String src;
-	private String name;
-	private String title;
-	private String className;
-	private String style;
-	private String script;
-	private String status;
+	private String id = "";
+	private String src = "";
+	private String title = "";
+	private String className = "";
+	private String style = "";
+	private String script = "";
+	private String status = "";
+	private String attribute = "";
 
 	public int doStartTag() {
 		try {
-			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String classNamePrefix = "";
+			String classNamePrefix = "", attrStr = "", attrs[], attr[];
 
-			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
-				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
-					classNamePrefix = "imgDis";
-				} else {
-					classNamePrefix = "imgEn";
-				}
-				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+				classNamePrefix = "imgDis";
+			} else {
+				classNamePrefix = "imgEn";
 			}
+			className = (CommonUtil.isBlank(className)) ? classNamePrefix : classNamePrefix+" "+className;
+
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
+
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
+			}
 
 			html.append("<img id=\""+id+"\" src=\""+TaglibUtil.getMccpValue(httpSession, src)+"\"");
 
-			if (CommonUtil.isNotBlank(name)) {html.append(" name=\""+name+"\"");}
 			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(script)) {
 				if (!CommonUtil.containsIgnoreCase(status, "disabled")) {html.append(" onclick=\""+script+"\"");}
 			}
+			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 			if (CommonUtil.isNotBlank(status)) {html.append(" "+status+"");}
 
 			html.append("/>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -60,6 +69,15 @@ public class Image extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -74,14 +92,6 @@ public class Image extends TaglibSupport {
 
 	public void setSrc(String src) {
 		this.src = src;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getTitle() {
@@ -122,5 +132,13 @@ public class Image extends TaglibSupport {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 }

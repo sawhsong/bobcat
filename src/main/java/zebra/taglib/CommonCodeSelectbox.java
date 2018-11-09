@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -10,21 +12,22 @@ import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
 import zebra.util.CommonUtil;
 
 public class CommonCodeSelectbox extends TaglibSupport {
-	private String codeType;
-	private String name;
-	private String id;
-	private String langCode;
-	private String className;
-	private String selectedValue;
-	private String disabledValue;
-	private String status;
-	private String script;
-	private String style;
-	private String isMultiple;
-	private String isBootstrap;
-	private String caption;
-	private String options;	// for data validator
-	private String source;	// common_code source(framework / project)
+	private String codeType = "";
+	private String name = "";
+	private String id = "";
+	private String langCode = "";
+	private String className = "";
+	private String selectedValue = "";
+	private String disabledValue = "";
+	private String status = "";
+	private String script = "";
+	private String style = "";
+	private String isMultiple = "";
+	private String isBootstrap = "";
+	private String caption = "";
+	private String options = "";	// for data validator
+	private String source = "";	// common_code source(framework / project)
+	private String attribute = "";
 
 	public int doStartTag() {
 		try {
@@ -32,7 +35,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			HttpSession httpSession = pageContext.getSession();
 			StringBuffer html = new StringBuffer();
 			DataSet ds = new DataSet();
-			String defaultLangCode = "", classString = "";
+			String defaultLangCode = "", classString = "", attrStr = "", attrs[], attr[];
 
 			if (CommonUtil.isNotBlank(source) || CommonUtil.equalsIgnoreCase(source, "framework")) {
 				ds = ZebraCommonCodeManager.getCodeDataSetByCodeType(codeType);
@@ -41,6 +44,14 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			}
 
 			defaultLangCode = CommonUtil.nvl(langCode, (String)httpSession.getAttribute("langCode"));
+
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
+			}
 
 			html.append("<select");
 			html.append(" id=\"").append(CommonUtil.nvl(id, name)).append("\"");
@@ -63,6 +74,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			}
 
 			html.append(" class=\""+classString+" "+className+"\"");
+			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 			html.append(">\n");
 
 			if (CommonUtil.isNotEmpty(caption)) {html.append("<option value=\"\">"+caption+"</option>\n");}
@@ -79,6 +91,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			html.append("</select>\n");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -88,6 +101,15 @@ public class CommonCodeSelectbox extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getCodeType() {
 		return codeType;
 	}
@@ -206,5 +228,13 @@ public class CommonCodeSelectbox extends TaglibSupport {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 }

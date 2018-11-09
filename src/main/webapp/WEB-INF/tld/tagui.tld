@@ -28,6 +28,9 @@
 			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -37,7 +40,7 @@
 		<body-content>empty</body-content>
 		<description>Text</description>
 		<attribute>
-			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
@@ -77,6 +80,9 @@
 		</attribute>
 		<attribute>
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
@@ -88,7 +94,7 @@
 		<body-content>empty</body-content>
 		<description>Text</description>
 		<attribute>
-			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
@@ -128,6 +134,9 @@
 		</attribute>
 		<attribute>
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
@@ -181,6 +190,9 @@
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -190,7 +202,7 @@
 		<body-content>empty</body-content>
 		<description>Hidden</description>
 		<attribute>
-			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
@@ -204,6 +216,9 @@
 		<attribute>
 			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>icon</name>
@@ -212,36 +227,6 @@
 		<description>Icon</description>
 		<attribute>
 			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>name</name><required>false</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>img</name>
-		<tag-class>zebra.taglib.Image</tag-class>
-		<body-content>empty</body-content>
-		<description>Image</description>
-		<attribute>
-			<name>id</name><required>true</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>src</name><required>true</required><rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>name</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
@@ -257,6 +242,39 @@
 		</attribute>
 		<attribute>
 			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>img</name>
+		<tag-class>zebra.taglib.Image</tag-class>
+		<body-content>empty</body-content>
+		<description>Image</description>
+		<attribute>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>src</name><required>true</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -429,6 +447,9 @@
 		<attribute>
 			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>ccradio</name>
@@ -480,6 +501,9 @@
 		<attribute>
 			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>cccheck</name>
@@ -529,7 +553,13 @@
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -566,6 +596,9 @@
 		</attribute>
 		<attribute>
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -642,6 +675,9 @@
 		<attribute>
 			<name>source</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>check</name>
@@ -686,6 +722,9 @@
 		</attribute>
 		<attribute>
 			<name>isBootstrap</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>

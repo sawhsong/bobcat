@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -7,12 +9,13 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class Icon extends TaglibSupport {
-	private String id;
-	private String name;
-	private String title;
-	private String className;
-	private String style;
-	private String script;
+	private String id = "";
+	private String title = "";
+	private String className = "";
+	private String style = "";
+	private String script = "";
+	private String status = "";
+	private String attribute = "";
 
 	public int doStartTag() {
 		try {
@@ -20,27 +23,44 @@ public class Icon extends TaglibSupport {
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String classNamePrefix = "";
+			String classNamePrefix = "", attrStr = "", attrs[], attr[];
 
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
+
+			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+				classNamePrefix = "icnDis";
+			} else {
+				classNamePrefix = "icnEn";
+			}
+
 			if (CommonUtil.startsWithIgnoreCase(className, "fa-")) {
-				classNamePrefix = "fa";
+				classNamePrefix += " fa";
 			} else if (CommonUtil.startsWithIgnoreCase(className, "glyphicon-")) {
-				classNamePrefix = "glyphicon";
+				classNamePrefix += " glyphicon";
+			}
+			className = (CommonUtil.isBlank(className)) ? classNamePrefix : classNamePrefix+" "+className;
+
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
 			}
 
 			html.append("<i");
 
 			if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
-			if (CommonUtil.isNotBlank(name)) {html.append(" name=\""+name+"\"");}
 			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
-			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+classNamePrefix+" "+className+"\"");}
+			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
 			html.append("></i>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -51,20 +71,21 @@ public class Icon extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getTitle() {
@@ -97,5 +118,21 @@ public class Icon extends TaglibSupport {
 
 	public void setScript(String script) {
 		this.script = script;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 }

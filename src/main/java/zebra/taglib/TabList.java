@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -7,14 +9,14 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class TabList extends TaglibSupport {
-	private String caption;
-	private String title;
-	private String useAutoScript;
-	private String script;
-	private String isActive;
-	private String isClickable;
-	private String iconClass;
-	private String iconPosition;
+	private String caption = "";
+	private String title = "";
+	private String useAutoScript = "";
+	private String script = "";
+	private String isActive = "";
+	private String isClickable = "";
+	private String iconClass = "";
+	private String iconPosition = "";
 
 	public int doStartTag() {
 		try {
@@ -69,6 +71,7 @@ public class TabList extends TaglibSupport {
 			html.append("</li>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -78,6 +81,15 @@ public class TabList extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getCaption() {
 		return caption;
 	}

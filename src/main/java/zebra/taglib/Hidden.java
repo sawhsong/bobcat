@@ -1,31 +1,47 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class Hidden extends TaglibSupport {
-	private String id;
-	private String name;
-	private String className;
-	private String value;
-	private String style;
+	private String id = "";
+	private String name = "";
+	private String className = "";
+	private String value = "";
+	private String style = "";
+	private String attribute = "";
 
 	public int doStartTag() {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
 			StringBuffer html = new StringBuffer();
+			String attrStr = "", attrs[], attr[];
 
-			html.append("<input type=\"hidden\" id=\""+id+"\" name=\""+name+"\"");
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
+			}
+
+			html.append("<input type=\"hidden\"");
+			html.append(" id=\""+CommonUtil.nvl(id, name)+"\"");
+			html.append(" name=\""+name+"\"");
 
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(value)) {html.append(" value=\""+value+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
+			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
 			html.append("/>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -36,6 +52,15 @@ public class Hidden extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -74,5 +99,13 @@ public class Hidden extends TaglibSupport {
 
 	public void setStyle(String style) {
 		this.style = style;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 }

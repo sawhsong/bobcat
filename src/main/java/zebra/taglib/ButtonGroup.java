@@ -1,14 +1,16 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibBodySupport;
 import zebra.util.CommonUtil;
 
 public class ButtonGroup extends TaglibBodySupport {
-	private String id;
-	private String groupClass;
-	private String style;
+	private String id = "";
+	private String groupClass = "";
+	private String style = "";
 
 	public int doAfterBody() {
 		try {
@@ -33,6 +35,7 @@ public class ButtonGroup extends TaglibBodySupport {
 			html.append("</div>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -42,6 +45,15 @@ public class ButtonGroup extends TaglibBodySupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}

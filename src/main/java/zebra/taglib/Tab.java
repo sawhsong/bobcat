@@ -1,13 +1,15 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibBodySupport;
 import zebra.util.CommonUtil;
 
 public class Tab extends TaglibBodySupport {
-	private String id;
-	private String style;
+	private String id = "";
+	private String style = "";
 
 	public int doAfterBody() {
 		try {
@@ -22,6 +24,7 @@ public class Tab extends TaglibBodySupport {
 			html.append("</ul>").append("</div>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -31,6 +34,15 @@ public class Tab extends TaglibBodySupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}

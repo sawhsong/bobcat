@@ -9,13 +9,13 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class Pagination extends TaglibSupport {
-	private int totalRows;
-	private int maxRowsPerPage;
-	private int pageNumsPerPage;
-	private int currentPage;
-	private String formId;
-	private String formAction;
-	private String script;
+	private int totalRows = 0;
+	private int maxRowsPerPage = 0;
+	private int pageNumsPerPage = 0;
+	private int currentPage = 0;
+	private String formId = "";
+	private String formAction = "";
+	private String script = "";
 
 	public int doStartTag() {
 		try {

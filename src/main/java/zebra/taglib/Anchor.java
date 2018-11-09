@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -7,34 +9,48 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class Anchor extends TaglibSupport {
-	private String id;
-	private String caption;
-	private String className;
-	private String style;
-	private String script;
-	private String title;
-	private String status;
+	private String id = "";
+	private String caption = "";
+	private String className = "";
+	private String style = "";
+	private String script = "";
+	private String title = "";
+	private String attribute = "";
+	private String status = "";
 
 	public int doStartTag() {
 		try {
-			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String classNamePrefix = "";
+			String classNamePrefix = "", attrStr = "";
+			String attrs[], attr[];
 
-			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
-				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
-					classNamePrefix = "aDis";
-				} else {
-					classNamePrefix = "aEn";
-				}
-				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			/*!
+			 * set vlaues
+			 */
+			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+				classNamePrefix = "aDis";
+			} else {
+				classNamePrefix = "aEn";
 			}
+			className = (CommonUtil.isBlank(className)) ? classNamePrefix : classNamePrefix+" "+className;
+
 			caption = CommonUtil.containsIgnoreCase(caption, ".") ? getMessage(caption, langCode) : caption;
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
+			}
+
+			/*!
+			 * render
+			 */
 			html.append("<a");
 
 			if (CommonUtil.isNotBlank(id)) {html.append(" id=\""+id+"\"");}
@@ -44,6 +60,7 @@ public class Anchor extends TaglibSupport {
 				if (!CommonUtil.containsIgnoreCase(status, "disabled")) {html.append(" onclick=\""+script+"\"");}
 			}
 			if (CommonUtil.isNotBlank(title)) {html.append(" title=\""+title+"\"");}
+			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 			if (CommonUtil.isNotBlank(status)) {html.append(" "+status+"");}
 
 			html.append(">");
@@ -51,6 +68,7 @@ public class Anchor extends TaglibSupport {
 			html.append("</a>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -61,6 +79,15 @@ public class Anchor extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -107,6 +134,14 @@ public class Anchor extends TaglibSupport {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 
 	public String getStatus() {

@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -7,21 +9,22 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class Radio extends TaglibSupport {
-	private String name;
-	private String value;
-	private String text;
-	private String id;
-	private String isSelected;
-	private String isDisabled;
-	private String script;
-	private String labelClassName;
-	private String inputClassName;
-	private String labelStyle;
-	private String inputStyle;
-	private String displayType;	// inline / block
-	private String isBootstrap;
-	private String status;
-	private String options;	// for data validator
+	private String name = "";
+	private String value = "";
+	private String text = "";
+	private String id = "";
+	private String isSelected = "";
+	private String isDisabled = "";
+	private String script = "";
+	private String labelClassName = "";
+	private String inputClassName = "";
+	private String labelStyle = "";
+	private String inputStyle = "";
+	private String displayType = "";	// inline / block
+	private String isBootstrap = "";
+	private String status = "";
+	private String options = "";	// for data validator
+	private String attribute = "";
 
 	public int doStartTag() {
 		try {
@@ -29,9 +32,17 @@ public class Radio extends TaglibSupport {
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String disabledString = "", classSuffix = "";
+			String disabledString = "", classSuffix = "", attrStr = "", attrs[], attr[];
 
 			text = CommonUtil.containsIgnoreCase(text, ".") ? getMessage(text, langCode) : text;
+
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
+			}
 
 			if (CommonUtil.toBoolean(isBootstrap, true)) {
 				if (CommonUtil.toBoolean(isDisabled) || CommonUtil.equalsIgnoreCase(status, "disabled")) {
@@ -51,6 +62,7 @@ public class Radio extends TaglibSupport {
 					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
 					html.append("/>"+text+"</label></div>");
 				} else {
@@ -66,6 +78,7 @@ public class Radio extends TaglibSupport {
 					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
 					html.append("/>"+text+"</label>");
 				}
@@ -92,6 +105,7 @@ public class Radio extends TaglibSupport {
 					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
 					html.append("/>"+text+"</label>");
 				} else {
@@ -108,12 +122,14 @@ public class Radio extends TaglibSupport {
 					if (CommonUtil.toBoolean(isSelected)) {html.append(" checked");}
 					if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 					if (CommonUtil.isNotBlank(script)) {html.append(" onclick=\""+script+"\"");}
+					if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
 					html.append("/>"+text+"</label>");
 				}
 			}
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -123,6 +139,15 @@ public class Radio extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -241,5 +266,13 @@ public class Radio extends TaglibSupport {
 
 	public void setOptions(String options) {
 		this.options = options;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 }

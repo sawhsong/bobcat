@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -7,44 +9,46 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class Text extends TaglibSupport {
-	private String id;
-	private String name;
-	private String className;
-	private String value;
-	private String style;
-	private String script;
-	private String title;
-	private String placeHolder;
-	private String checkName;
-	private String maxlength;
-	private String minlength;
-	private String checkFlag;
-	private String option;
-	private String options;
-	private String status;
+	private String id = "";
+	private String name = "";
+	private String className = "";
+	private String value = "";
+	private String style = "";
+	private String script = "";
+	private String title = "";
+	private String placeHolder = "";
+	private String checkName = "";
+	private String maxlength = "";
+	private String minlength = "";
+	private String checkFlag = "";
+	private String option = "";
+	private String options = "";
+	private String attribute = "";
+	private String status = "";
 
 	public int doStartTag() {
 		try {
-			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String classNamePrefix = "", scriptStr = "";
-			String scripts[], eventFunc[];
+			String classNamePrefix = "", scriptStr = "", attrStr = "";
+			String scripts[], eventFunc[], attrs[], attr[];
 
-			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
-				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
-					options += " readonly";
-					classNamePrefix = "txtDis";
-				} else if (CommonUtil.containsIgnoreCase(status, "display")) {
-					options += " readonly";
-					classNamePrefix = "txtDpl";
-				} else {
-					classNamePrefix = "txtEn";
-				}
-				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			/*!
+			 * set vlaues
+			 */
+			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+				options += (CommonUtil.isBlank(options)) ? "readonly" : " readonly";
+				classNamePrefix = "txtDis";
+			} else if (CommonUtil.containsIgnoreCase(status, "display")) {
+				options += (CommonUtil.isBlank(options)) ? "readonly" : " readonly";
+				classNamePrefix = "txtDpl";
+			} else {
+				classNamePrefix = "txtEn";
 			}
+			className = (CommonUtil.isBlank(className)) ? classNamePrefix : classNamePrefix+" "+className;
+
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 			placeHolder = CommonUtil.containsIgnoreCase(placeHolder, ".") ? getMessage(placeHolder, langCode) : placeHolder;
 			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
@@ -57,7 +61,20 @@ public class Text extends TaglibSupport {
 				}
 			}
 
-			html.append("<input type=\"text\" id=\""+id+"\" name=\""+name+"\"");
+			if (CommonUtil.isNotBlank(attribute)) {
+				attrs = CommonUtil.split(attribute, ";");
+				for (int i=0; i<attrs.length; i++) {
+					attr = CommonUtil.split(attrs[i], ":");
+					attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+				}
+			}
+
+			/*!
+			 * render
+			 */
+			html.append("<input type=\"text\"");
+			html.append(" id=\""+CommonUtil.nvl(id, name)+"\"");
+			html.append(" name=\""+name+"\"");
 
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(value)) {html.append(" value=\""+value+"\"");}
@@ -70,11 +87,13 @@ public class Text extends TaglibSupport {
 			if (CommonUtil.isNotBlank(minlength)) {html.append(" minlength=\""+minlength+"\"");}
 			if (CommonUtil.isNotBlank(checkFlag)) {html.append(" checkFlag=\""+checkFlag+"\"");}
 			if (CommonUtil.isNotBlank(option)) {html.append(" option=\""+option+"\"");}
+			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 			if (CommonUtil.isNotBlank(options)) {html.append(" "+options);}
 
 			html.append("/>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -85,6 +104,15 @@ public class Text extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -195,6 +223,14 @@ public class Text extends TaglibSupport {
 
 	public void setOptions(String options) {
 		this.options = options;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 
 	public String getStatus() {

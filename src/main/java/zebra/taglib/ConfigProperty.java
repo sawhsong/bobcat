@@ -9,7 +9,7 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class ConfigProperty extends TaglibSupport {
-	private String key;
+	private String key = "";
 
 	public int doStartTag() {
 		try {

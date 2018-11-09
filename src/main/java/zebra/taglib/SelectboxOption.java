@@ -6,11 +6,11 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class SelectboxOption extends TaglibSupport {
-	private String value;
-	private String text;
-	private String attributes;
-	private String isSelected;
-	private String isDisabled;
+	private String value = "";
+	private String text = "";
+	private String attributes = "";
+	private String isSelected = "";
+	private String isDisabled = "";
 
 	public int doStartTag() {
 		try {

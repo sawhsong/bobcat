@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconHKAccount.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconPerci.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -132,23 +132,23 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerName"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysBoard.getWriterName()%>" checkName="#THIS_MENU_ID#.header.writerName" options="mandatory"/>
+				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="#THIS_MENU_ID#.header.writerName" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysBoard.getWriterEmail()%>" checkName="#THIS_MENU_ID#.header.writerEmail" option="email" options="mandatory"/>
+				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="#THIS_MENU_ID#.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" value="<%=sysBoard.getArticleSubject()%>" checkName="#THIS_MENU_ID#.header.articleSubject" options="mandatory"/>
+				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="#THIS_MENU_ID#.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
+				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>

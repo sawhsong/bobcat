@@ -1,5 +1,7 @@
 package zebra.taglib;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
@@ -7,16 +9,16 @@ import zebra.base.TaglibSupport;
 import zebra.util.CommonUtil;
 
 public class Button extends TaglibSupport {
-	private String id;
-	private String caption;
-	private String type;
-	private String title;
-	private String status;
-	private String script;
-	private String buttonClass;
-	private String buttonStyle;
-	private String iconClass;
-	private String iconStyle;
+	private String id = "";
+	private String caption = "";
+	private String type = "";
+	private String title = "";
+	private String status = "";
+	private String script = "";
+	private String buttonClass = "";
+	private String buttonStyle = "";
+	private String iconClass = "";
+	private String iconStyle = "";
 
 	public int doStartTag() {
 		try {
@@ -69,6 +71,7 @@ public class Button extends TaglibSupport {
 			html.append("</a>");
 
 			jspWriter.print(html.toString());
+			initialise();
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
@@ -78,6 +81,15 @@ public class Button extends TaglibSupport {
 	/*!
 	 * getter / setter
 	 */
+	@SuppressWarnings("rawtypes")
+	private void initialise() throws Exception {
+		Class cls = getClass();
+		Field fields[] = cls.getDeclaredFields();
+		for (int i=0; i<fields.length; i++) {
+			fields[i].set(this, "");
+		}
+	}
+
 	public String getId() {
 		return id;
 	}

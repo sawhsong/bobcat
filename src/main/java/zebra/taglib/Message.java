@@ -14,9 +14,9 @@ import zebra.data.DataSet;
 import zebra.util.CommonUtil;
 
 public class Message extends TaglibSupport {
-	private String key;
-	private String langCode;
-	private String defaultMsg;
+	private String key = "";
+	private String langCode = "";
+	private String defaultMsg = "";
 
 	public int doStartTag() {
 		try {
