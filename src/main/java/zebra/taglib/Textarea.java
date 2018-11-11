@@ -36,10 +36,10 @@ public class Textarea extends TaglibSupport {
 			String scripts[], eventFunc[], attrs[], attr[];
 
 			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
-				options += " readonly";
+				options += (CommonUtil.isBlank(options)) ? "readonly" : " readonly";
 				classNamePrefix = "txaDis";
 			} else if (CommonUtil.containsIgnoreCase(status, "display")) {
-				options += " readonly";
+				options += (CommonUtil.isBlank(options)) ? "readonly" : " readonly";
 				classNamePrefix = "txaDpl";
 			} else {
 				classNamePrefix = "txaEn";

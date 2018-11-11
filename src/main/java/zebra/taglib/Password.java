@@ -28,7 +28,6 @@ public class Password extends TaglibSupport {
 
 	public int doStartTag() {
 		try {
-			String defaultClassName = "defClass"; // Special Keyword for className
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
@@ -36,18 +35,17 @@ public class Password extends TaglibSupport {
 			String classNamePrefix = "", scriptStr = "", attrStr = "";
 			String scripts[], eventFunc[], attrs[], attr[];
 
-			if (CommonUtil.containsIgnoreCase(className, defaultClassName)) {
-				if (CommonUtil.containsIgnoreCase(status, "disabled")) {
-					options += " readonly";
-					classNamePrefix = "txtDis";
-				} else if (CommonUtil.containsIgnoreCase(status, "display")) {
-					options += " readonly";
-					classNamePrefix = "txtDpl";
-				} else {
-					classNamePrefix = "txtEn";
-				}
-				className = CommonUtil.replace(className, defaultClassName, classNamePrefix);
+			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+				options += (CommonUtil.isBlank(options)) ? "readonly" : " readonly";
+				classNamePrefix = "txtDis";
+			} else if (CommonUtil.containsIgnoreCase(status, "display")) {
+				options += (CommonUtil.isBlank(options)) ? "readonly" : " readonly";
+				classNamePrefix = "txtDpl";
+			} else {
+				classNamePrefix = "txtEn";
 			}
+			className = (CommonUtil.isBlank(className)) ? classNamePrefix : classNamePrefix+" "+className;
+
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 			placeHolder = CommonUtil.containsIgnoreCase(placeHolder, ".") ? getMessage(placeHolder, langCode) : placeHolder;
 			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
@@ -68,7 +66,9 @@ public class Password extends TaglibSupport {
 				}
 			}
 
-			html.append("<input type=\"password\" id=\""+id+"\" name=\""+name+"\"");
+			html.append("<input type=\"password\"");
+			html.append(" id=\""+CommonUtil.nvl(id, name)+"\"");
+			html.append(" name=\""+name+"\"");
 
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(value)) {html.append(" value=\""+value+"\"");}
