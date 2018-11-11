@@ -77,17 +77,17 @@
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.groupName"/></th>
-			<td class="tdEdit" colspan="3"><ui:text id="groupName" name="groupName" className="defClass" checkName="sys0404.header.groupName" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="groupName" checkName="sys0404.header.groupName" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0404.header.description"/></th>
-			<td class="tdEdit" colspan="3"><ui:text id="description" name="description" className="defClass" checkName="sys0404.header.description" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="description" checkName="sys0404.header.description" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
-			<td class="tdEdit"><ui:text id="insertUser" name="insertUser" value="<%=sysUser.getUserName()%>" className="defClass" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertUser" value="<%=sysUser.getUserName()%>" status="display"/></td>
 			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
-			<td class="tdEdit"><ui:text id="insertDate" name="insertDate" value="<%=CommonUtil.getSysdate(dateFormat)%>" className="defClass" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertDate" value="<%=CommonUtil.getSysdate(dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

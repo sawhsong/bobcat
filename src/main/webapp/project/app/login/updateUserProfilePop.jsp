@@ -114,11 +114,11 @@
 		<tr>
 			<th class="thEdit"><mc:msg key="login.header.language"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="language" name="language" codeType="LANGUAGE_TYPE" options="mandatory" selectedValue="<%=sysUser.getLanguage()%>"/>
+				<ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory" selectedValue="<%=sysUser.getLanguage()%>"/>
 			</td>
 			<th class="thEdit"><mc:msg key="login.header.themeType"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="themeType" name="themeType" codeType="USER_THEME_TYPE" options="mandatory" selectedValue="<%=sysUser.getThemeType()%>"/>
+				<ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory" selectedValue="<%=sysUser.getThemeType()%>"/>
 			</td>
 		</tr>
 		<tr>

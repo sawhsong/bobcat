@@ -68,7 +68,7 @@ var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>")
 		<div class="panel-body">
 			<div id="divMenuLevel" style="float:left;padding-right:4px;">
 				<label for="menuLevel" class="lblEn hor"><mc:msg key="sys0402.header.menuLevel"/></label>
-				<ui:ccselect id="menuLevel" name="menuLevel" codeType="MENU_LEVEL"/>
+				<ui:ccselect name="menuLevel" codeType="MENU_LEVEL"/>
 			</div>
 			<div class="horGap70"></div>
 			<div id="divLevel1" style="float:left;display:none;">
@@ -123,10 +123,10 @@ var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>")
 			<col width="15%"/>
 		</colgroup>
 		<tr>
-			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="sys0402.msg.drag"/>"><ui:icon name="iDragHandler" className="fa-lg fa-sort"/></th>
-			<td class="tdEdit"><ui:text id="menuId" name="menuId" className="defClass" status="display"/></td>
-			<td class="tdEdit"><ui:text id="menuName" name="menuName" className="defClass" status="display"/></td>
-			<td class="tdEdit"><ui:text id="sortOrder" name="sortOrder" className="defClass" status="display"/></td>
+			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="sys0402.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
+			<td class="tdEdit"><ui:text name="menuId" status="display"/></td>
+			<td class="tdEdit"><ui:text name="menuName" status="display"/></td>
+			<td class="tdEdit"><ui:text name="sortOrder" status="display"/></td>
 		</tr>
 	</table>
 </li>

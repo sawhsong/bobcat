@@ -67,7 +67,7 @@
 					<td class="tdDefault">
 						<label for="system" class="lblEn hor"><mc:msg key="fwk.tablescript.header.system"/></label>
 						<div style="float:left;">
-							<ui:select id="system" name="system" >
+							<ui:select name="system" >
 								<ui:seloption value="All" text="All"/>
 								<ui:seloption value="Project" text="Project"/>
 								<ui:seloption value="Framework" text="Framework"/>
@@ -76,7 +76,7 @@
 					</td>
 					<td class="tdDefault">
 						<label for="tableName" class="lblEn hor"><mc:msg key="fwk.tablescript.tableName"/></label>
-						<ui:text name="tableName" id="tableName" className="defClass hor" style="width:280px"/>
+						<ui:text name="tableName" className="hor" style="width:280px"/>
 					</td>
 				</tr>
 			</table>
@@ -108,7 +108,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableDesc"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.fileName"/></th>

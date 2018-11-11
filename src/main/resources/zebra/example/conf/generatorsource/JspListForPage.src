@@ -362,17 +362,17 @@ $(function() {
 					<td class="tdDefault">
 						<label for="searchType" class="lblEn hor"><mc:msg key="#THIS_MENU_ID#.search.searchType"/></label>
 						<div style="float:left;padding-right:4px;">
-							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default"/>
+							<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select=="/>
 						</div>
 						<ui:text name="searchWord" className="hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
 						<label for="fromDate" class="lblEn hor"><mc:msg key="#THIS_MENU_ID#.search.searchPeriod"/></label>
-						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="#THIS_MENU_ID#.search.searchDateFrom" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="#THIS_MENU_ID#.search.searchDateFrom"/>
+						<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="#THIS_MENU_ID#.search.searchDateFrom" option="date"/>
+						<ui:icon id="icnFromDate" className="fa-calendar hor" title="#THIS_MENU_ID#.search.searchDateFrom"/>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
 						<ui:text name="toDate" className="Ct hor" style="width:100px" checkName="#THIS_MENU_ID#.search.searchDateTo" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="#THIS_MENU_ID#.search.searchDateTo"/>
+						<ui:icon id="icnToDate" className="fa-calendar hor" title="#THIS_MENU_ID#.search.searchDateTo"/>
 					</td>
 				</tr>
 			</table>
@@ -402,7 +402,7 @@ $(function() {
 		</colgroup>
 		<thead>
 			<tr class="noBorderHor">
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="#THIS_MENU_ID#.grid.subject"/></th>
 				<th class="thGrid"><mc:msg key="#THIS_MENU_ID#.grid.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="#THIS_MENU_ID#.grid.writerName"/></th>

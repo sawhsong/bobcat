@@ -80,7 +80,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0404.grid.groupName"/></th>
 				<th class="thGrid"><mc:msg key="sys0404.grid.description"/></th>
 				<th class="thGrid"><mc:msg key="sys0404.grid.isActive"/></th>

@@ -61,7 +61,7 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="codeCategory" class="lblEn hor"><mc:msg key="sys0202.searchHeader.codeCategory"/></label>
-				<ui:ccselect id="codeCategory" name="codeCategory" codeType="CODE_CATEGORY" caption="==Select==" selectedValue="BIZ"/>
+				<ui:ccselect name="codeCategory" codeType="CODE_CATEGORY" caption="==Select==" selectedValue="BIZ"/>
 			</td>
 		</tr>
 	</table>
@@ -91,7 +91,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0202.gridHeader.codeType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0202.gridHeader.description"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0202.gridHeader.programConstants"/></th>

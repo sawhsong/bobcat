@@ -124,7 +124,7 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="Select to generate"/></th>
+								<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="Select to generate"/></th>
 								<th class="thGrid sortable:numeric">Index</th>
 								<th class="thGrid sortable:string">First Name</th>
 								<th class="thGrid sortable:date">Date</th>
@@ -140,7 +140,7 @@
 								<td class="tdGrid Ct"><%=i+1%></td>
 								<td class="tdGrid Lt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
 								<td class="tdGrid Lt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
-								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-tasks fa-lg icnEn" title="Action"/></td>
+								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-tasks fa-lg" title="Action"/></td>
 							</tr>
 <%
 						}
@@ -224,9 +224,9 @@
 						<div class="horGap20"></div>
 	
 						<label for="txtTaglib" class="lblEn hor">Input text</label>
-						<ui:text id="txtTaglib" name="txtTaglib" className="defClass hor success" style="width:200px" checkName="txtTest1" maxlength="30" minlength="4" checkFlag="optional" options="mandatory" placeHolder="txtTaglib"/>
-						<ui:img id="imgTaglib" src="<mc:cp key=imgThemeCom/>/generate_Black.png" className="defClass hor" style="margin-top:6px" title="imgTaglib"/>
-						<ui:icon id="icnTaglib" className="fa-calendar fa-lg icnDis hor" style="margin-top:8px" title="icnTaglib"/>
+						<ui:text name="txtTaglib" className="hor success" style="width:200px" checkName="txtTest1" maxlength="30" minlength="4" checkFlag="optional" options="mandatory" placeHolder="txtTaglib"/>
+						<ui:img id="imgTaglib" src="<mc:cp key=imgThemeCom/>/generate_Black.png" className="hor" style="margin-top:6px" title="imgTaglib"/>
+						<ui:icon id="icnTaglib" className="fa-calendar fa-lg hor" style="margin-top:8px" title="icnTaglib"/>
 					</div>
 					<div class="verGap20"></div>
 					<div id="divBasicIcnImgBtn2">
@@ -347,15 +347,15 @@
 						<tr>
 							<th class="thEdit Rt">Taglib Text</th>
 							<td class="tdEdit">
-								<ui:text id="txtTaglibEn" name="txtTaglibEn" className="defClass" placeHolder="txtFormElementsEn"/>
+								<ui:text name="txtTaglibEn" placeHolder="txtFormElementsEn"/>
 							</td>
 							<th class="thEdit Rt">Taglib txtDis</th>
 							<td class="tdEdit">
-								<ui:text id="txtTaglibDis" name="txtTaglibDis" className="defClass" placeHolder="txtFormElementsDis" status="disabled"/>
+								<ui:text name="txtTaglibDis" placeHolder="txtFormElementsDis" status="disabled"/>
 							</td>
 							<th class="thEdit Rt">Taglib txtDpl</th>
 							<td class="tdEdit">
-								<ui:text id="txtTaglibDpl" name="txtTaglibDpl" className="defClass" placeHolder="txtFormElementsDpl" status="display"/>
+								<ui:text name="txtTaglibDpl" placeHolder="txtFormElementsDpl" status="display"/>
 							</td>
 						</tr>
 					</table>
@@ -401,15 +401,15 @@
 						<tr>
 							<th class="thEdit Rt">Taglib txaEn</th>
 							<td class="tdEdit">
-								<ui:txa id="txaTaglibEn" name="txaTaglibEn" className="defClass" placeHolder="txaTaglibEn" style="height:80px" value="txaFormElementsEn"/>
+								<ui:txa name="txaTaglibEn" placeHolder="txaTaglibEn" style="height:80px" value="txaFormElementsEn"/>
 							</td>
 							<th class="thEdit Rt">Taglib txaDis</th>
 							<td class="tdEdit">
-								<ui:txa id="txaTaglibDis" name="txaTaglibDis" className="defClass" placeHolder="txaTaglibDis" style="height:80px" value="txaFormElementsDis" status="disabled"/>
+								<ui:txa name="txaTaglibDis" placeHolder="txaTaglibDis" style="height:80px" value="txaFormElementsDis" status="disabled"/>
 							</td>
 							<th class="thEdit Rt">Taglib txaDpl</th>
 							<td class="tdEdit">
-								<ui:txa id="txaTaglibDpl" name="txaTaglibDpl" className="defClass" placeHolder="txaTaglibDpl" style="height:80px" value="txaFormElementsDis" status="display"/>
+								<ui:txa name="txaTaglibDpl" placeHolder="txaTaglibDpl" style="height:80px" value="txaFormElementsDis" status="display"/>
 							</td>
 						</tr>
 					</table>
@@ -551,29 +551,29 @@
 						<tr>
 							<th class="thEdit">Single Selection(Taglib)</th>
 							<td class="tdEdit">
-								<ui:text id="txtEnWithTaglibSelectbox" name="txtEnWithTaglibSelectbox" className="defClass inline" style="width:200px;" placeHolder="txtEnWithTaglibSelectbox"/>
-								<ui:select id="selTaglibSingleSelection1" name="selTaglibSingleSelection1" className="hor default">
+								<ui:text name="txtEnWithTaglibSelectbox" className="inline" style="width:200px;" placeHolder="txtEnWithTaglibSelectbox"/>
+								<ui:select name="selTaglibSingleSelection1" className="hor default">
 									<ui:seloption value="SingleSelection1-0" text="SingleSelection1-0"/>
 									<ui:seloption value="SingleSelection1-1" text="SingleSelection1-1"/>
 									<ui:seloption value="SingleSelection1-2" text="SingleSelection1-2"/>
 									<ui:seloption value="SingleSelection1-3" text="SingleSelection1-3" isDisabled="true"/>
 									<ui:seloption value="SingleSelection1-4" text="SingleSelection1-4"/>
 								</ui:select>
-								<ui:select id="selTaglibSingleSelection2" name="selTaglibSingleSelection2" className="hor error">
+								<ui:select name="selTaglibSingleSelection2" className="hor error">
 									<ui:seloption value="SingleSelection2-0" text="SingleSelection2-0"/>
 									<ui:seloption value="SingleSelection2-1" text="SingleSelection2-1"/>
 									<ui:seloption value="SingleSelection2-2" text="SingleSelection2-2"/>
 									<ui:seloption value="SingleSelection2-3" text="SingleSelection2-3"/>
 									<ui:seloption value="SingleSelection2-4" text="SingleSelection2-4"/>
 								</ui:select>
-								<ui:select id="selTaglibSingleSelection3" name="selTaglibSingleSelection3" className="hor" status="disabled">
+								<ui:select name="selTaglibSingleSelection3" className="hor" status="disabled">
 									<ui:seloption value="SingleSelection2-0" text="SingleSelection2-0"/>
 									<ui:seloption value="SingleSelection2-1" text="SingleSelection2-1"/>
 									<ui:seloption value="SingleSelection2-2" text="SingleSelection2-2"/>
 									<ui:seloption value="SingleSelection2-3" text="SingleSelection2-3"/>
 									<ui:seloption value="SingleSelection2-4" text="SingleSelection2-4"/>
 								</ui:select>
-								<ui:text id="txtDisWithTaglibtSelectbox" name="txtDisWithTaglibSelectbox" className="defClass inline" style="width:200px;" options="disabled" placeHolder="txtDisWithTaglibSelectbox"/>
+								<ui:text name="txtDisWithTaglibSelectbox" className="inline" style="width:200px;" options="disabled" placeHolder="txtDisWithTaglibSelectbox"/>
 							</td>
 						</tr>
 						<tr>
@@ -811,22 +811,22 @@
 						<tr>
 							<th class="thEdit">Single Selection</th>
 							<td class="tdEdit">
-								<ui:ccselect id="selComCodeSingle1" name="selComCodeSingle1" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor default" selectedValue="REPOSITORY" script="alert($(this).val());" source="framework"/>
-								<ui:ccselect id="selComCodeSingle2" name="selComCodeSingle2" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor error" status="disabled" selectedValue="BBS" source="framework"/>
+								<ui:ccselect name="selComCodeSingle1" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor" selectedValue="REPOSITORY" script="alert($(this).val());" source="framework"/>
+								<ui:ccselect name="selComCodeSingle2" codeType="BOARD_TYPE" caption="==BOARD_TYPE==" className="hor error" status="disabled" selectedValue="BBS" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Multiple Selection(Default)</th>
 							<td class="tdEdit">
-								<ui:ccselect id="selComCodeMulti1" name="selComCodeMulti1" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" source="framework"/>
-								<ui:ccselect id="selComCodeMulti2" name="selComCodeMulti2" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" status="disabled" source="framework"/>
+								<ui:ccselect name="selComCodeMulti1" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" source="framework"/>
+								<ui:ccselect name="selComCodeMulti2" codeType="USER_THEME_TYPE" className="hor" style="width:200px;height:100px;" isMultiple="true" isBootstrap="false" status="disabled" source="framework"/>
 							</td>
 						</tr>
 						<tr>
 							<th class="thEdit">Multiple Selection(Bootstrap)</th>
 							<td class="tdEdit">
-								<ui:ccselect id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" source="framework"/>
-								<ui:ccselect id="selComCodeMulti3" name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor default" isMultiple="true" status="disabled" source="framework"/>
+								<ui:ccselect name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor" isMultiple="true" source="framework"/>
+								<ui:ccselect name="selComCodeMulti3" codeType="USER_THEME_TYPE" className="hor" isMultiple="true" status="disabled" source="framework"/>
 							</td>
 						</tr>
 					</table>

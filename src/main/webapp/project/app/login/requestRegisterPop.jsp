@@ -23,6 +23,7 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+text, password {padding:6px 12px;}
 .panelHolder {margin:0px auto;width:100%;text-align:center;}
 .panel {margin-top:20px;display:inline-block;width:360px;}
 .panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;background:url(<mc:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}
@@ -46,23 +47,23 @@
 		<div class="panel-body">
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-credit-card fa-lg addonIcon"/></div>
-				<ui:text id="userName" name="userName" className="form-control" placeHolder="login.header.userName" checkName="login.header.userName" options="mandatory"/>
+				<ui:text name="userName" className="form-control" placeHolder="login.header.userName" checkName="login.header.userName" options="mandatory"/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon"/></div>
-				<ui:text id="loginId" name="loginId" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
+				<ui:text name="loginId" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
-				<ui:password id="password" name="password" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
+				<ui:password name="password" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
-				<ui:password id="passwordConfirm" name="passwordConfirm" className="form-control" placeHolder="Confirm Password" checkName="login.header.password" options="mandatory"/>
+				<ui:password name="passwordConfirm" className="form-control" placeHolder="Confirm Password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-envelope fa-lg addonIcon"/></div>
-				<ui:text id="email" name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
+				<ui:text name="email" className="form-control" placeHolder="login.header.email" checkName="login.header.email" options="mandatory" option="email"/>
 			</div>
 			<ui:check name="sendEmail" value="Y" text="login.label.sendMail" displayType="block" isChecked="true"/>
 			<div class="buttonDiv">

@@ -70,17 +70,17 @@
 					<td class="tdDefault">
 						<label for="searchType" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchType"/></label>
 						<div style="float:left;padding-right:4px;">
-							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default" options="checkName='Search Type'" source="framework"/>
+							<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" checkName="Search Type" source="framework"/>
 						</div>
-						<ui:text id="searchWord" name="searchWord" className="defClass hor" style="width:280px"/>
+						<ui:text name="searchWord" className="hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
 						<label for="fromDate" class="lblEn hor"><mc:msg key="fwk.notice.searchHeader.searchPeriod"/></label>
-						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="From Date" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="From Date"/>
+						<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="From Date" option="date"/>
+						<ui:icon id="icnFromDate" className="fa-calendar hor" title="From Date"/>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<ui:text id="toDate" name="toDate" className="defClass Ct hor" style="width:100px" checkName="To Date" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="To Date"/>
+						<ui:text name="toDate" className="Ct hor" style="width:100px" checkName="To Date" option="date"/>
+						<ui:icon id="icnToDate" className="fa-calendar hor" title="To Date"/>
 					</td>
 				</tr>
 			</table>
@@ -111,7 +111,7 @@
 		<thead>
 			<tr class="noBorderHor">
 				<th class="thGrid">
-					<ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.notice.title.selectToDelete"/>
+					<ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="fwk.notice.title.selectToDelete"/>
 				</th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.notice.gridHeader.subject"/></th>
 				<th class="thGrid"><mc:msg key="fwk.notice.gridHeader.file"/></th>

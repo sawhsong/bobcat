@@ -75,57 +75,57 @@ var domainId = "<%=zebraDomainDictionary.getDomainId()%>";
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.domaindictionary.header.name"/></th>
 			<td class="tdEdit">
-				<ui:text name="domainName" id="domainName" className="defClass" value="<%=zebraDomainDictionary.getDomainName()%>" checkName="fwk.domaindictionary.header.name" options="mandatory"/>
+				<ui:text name="domainName" value="<%=zebraDomainDictionary.getDomainName()%>" checkName="fwk.domaindictionary.header.name" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.domaindictionary.header.nameAbbrev"/></th>
 			<td class="tdEdit">
-				<ui:text name="nameAbbreviation" id="nameAbbreviation" className="defClass" value="<%=zebraDomainDictionary.getNameAbbreviation()%>" checkName="fwk.domaindictionary.header.nameAbbrev" options="mandatory"/>
+				<ui:text name="nameAbbreviation" value="<%=zebraDomainDictionary.getNameAbbreviation()%>" checkName="fwk.domaindictionary.header.nameAbbrev" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.domaindictionary.header.dataType"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataType" name="dataType" codeType="DOMAIN_DATA_TYPE" selectedValue="<%=zebraDomainDictionary.getDataType()%>" options="mandatory" source="framework"/>
+				<ui:ccselect name="dataType" codeType="DOMAIN_DATA_TYPE" selectedValue="<%=zebraDomainDictionary.getDataType()%>" options="mandatory" source="framework"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataLength"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataLength" name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:ccselect name="dataLength" codeType="DOMAIN_DATA_LENGTH" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataLength(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataPrecision"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataPrecision" name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:ccselect name="dataPrecision" codeType="DOMAIN_DATA_PRECISION" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataPrecision(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.dataScale"/></th>
 			<td class="tdEdit">
-				<ui:ccselect id="dataScale" name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
+				<ui:ccselect name="dataScale" codeType="DOMAIN_DATA_SCALE" selectedValue="<%=CommonUtil.toString(zebraDomainDictionary.getDataScale(), numberFormat)%>" caption="==Select==" source="framework"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.desc"/></th>
 			<td class="tdEdit" colspan="3" style="height:200px">
-				<ui:txa name="description" id="description" value="<%=zebraDomainDictionary.getDescription()%>" className="defClass" style="height:200px;"/>
+				<ui:txa name="description" value="<%=zebraDomainDictionary.getDescription()%>" style="height:200px;"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertUser"/></th>
 			<td class="tdEdit">
-				<ui:text name="insertUser" id="insertUser" className="defClass" value="<%=zebraDomainDictionary.getInsertUserName()%>" status="display"/>
+				<ui:text name="insertUser" value="<%=zebraDomainDictionary.getInsertUserName()%>" status="display"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.insertDate"/></th>
 			<td class="tdEdit">
-				<ui:text name="insertDate" id="insertDate" className="defClass" value="<%=CommonUtil.toViewDateString(zebraDomainDictionary.getInsertDate())%>" status="display"/>
+				<ui:text name="insertDate" value="<%=CommonUtil.toViewDateString(zebraDomainDictionary.getInsertDate())%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.updateUser"/></th>
 			<td class="tdEdit">
-				<ui:text name="updateUser" id="updateUser" className="defClass" value="<%=zebraDomainDictionary.getUpdateUserName()%>" status="display"/>
+				<ui:text name="updateUser" value="<%=zebraDomainDictionary.getUpdateUserName()%>" status="display"/>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="fwk.domaindictionary.header.updateDate"/></th>
 			<td class="tdEdit">
-				<ui:text name="updateDate" id="updateDate" className="defClass" value="<%=CommonUtil.toViewDateString(zebraDomainDictionary.getUpdateDate())%>" status="display"/>
+				<ui:text name="updateDate" value="<%=CommonUtil.toViewDateString(zebraDomainDictionary.getUpdateDate())%>" status="display"/>
 			</td>
 		</tr>
 	</table>

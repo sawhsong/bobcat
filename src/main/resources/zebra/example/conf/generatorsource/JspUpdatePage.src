@@ -185,7 +185,7 @@ $(function() {
 		<tr>
 			<th class="thEdit"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
+				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>

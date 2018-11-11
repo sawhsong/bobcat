@@ -61,7 +61,7 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<label for="commonCodeType" class="lblEn hor"><mc:msg key="fwk.commoncode.searchHeader.codeType"/></label>
-			<ui:text name="commonCodeType" id="commonCodeType" className="defClass hor" style="width:280px"/>
+			<ui:text name="commonCodeType" className="hor" style="width:280px"/>
 		</div>
 	</div>
 </div>
@@ -90,7 +90,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.commoncode.gridHeader.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="fwk.commoncode.gridHeader.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.codeType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.description"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.programConstants"/></th>

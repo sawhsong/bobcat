@@ -88,15 +88,15 @@ var masterRow = <%=masterRow%>;
 		</colgroup>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeCategory"/></th>
-			<td class="tdEdit"><ui:ccselect id="codeCategory" name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=resultDataSet.getValue(masterRow, \"CODE_CATEGORY\")%>" status="disabled"/></td>
+			<td class="tdEdit"><ui:ccselect name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=resultDataSet.getValue(masterRow, \"CODE_CATEGORY\")%>" status="disabled"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.codeType"/></th>
-			<td class="tdEdit"><ui:text name="codeTypeMaster" id="codeTypeMaster" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" className="defClass" style="text-transform:uppercase;" checkName="sys0202.header.codeType" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="codeTypeMaster" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="sys0202.header.codeType" options="mandatory"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.isActive"/></th>
 			<td class="tdEdit"><ui:ccradio name="isActiveMaster" codeType="SIMPLE_YN" selectedValue="<%=resultDataSet.getValue(masterRow, \"IS_ACTIVE\")%>"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionEn"/></th>
-			<td class="tdEdit"><ui:text name="descriptionEnMaster" id="descriptionEnMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="descriptionEnMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0202.header.descriptionKo"/></th>
-			<td class="tdEdit"><ui:text name="descriptionKoMaster" id="descriptionKoMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="descriptionKoMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>
@@ -170,11 +170,11 @@ var masterRow = <%=masterRow%>;
 		<tr class="noBorderAll">
 			<th id="thDragHander" class="thGrid dragHandler" title="<mc:msg key="sys0202.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
 			<th id="thDeleteButton" class="thGrid deleteButton" title="<mc:msg key="sys0202.msg.delete"/>"><ui:icon id="iDeleteButton" className="fa-lg fa-times"/></th>
-			<td class="tdGrid ct"><ui:text name="commonCodeDetail" id="commonCodeDetail" className="defClass" style="text-transform:uppercase" checkName="sys0202.header.commonCode" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="commonCodeDetail" style="text-transform:uppercase" checkName="sys0202.header.commonCode" options="mandatory"/></td>
 			<td class="tdGrid ct"><ui:ccradio name="isActiveDetail" codeType="SIMPLE_YN" selectedValue="Y"/></td>
-			<td class="tdGrid ct"><ui:text name="descriptionEnDetail" id="descriptionEnDetail" className="defClass" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
-			<td class="tdGrid ct"><ui:text name="descriptionKoDetail" id="descriptionKoDetail" className="defClass" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
-			<td class="tdGrid ct"><ui:text name="sortOrderDetail" id="sortOrderDetail" className="defClass ct" checkName="sys0202.header.sortOrder" option="numeric" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionEnDetail" checkName="sys0202.header.descriptionEn" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionKoDetail" checkName="sys0202.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="sortOrderDetail" className="ct" checkName="sys0202.header.sortOrder" option="numeric" options="mandatory"/></td>
 		</tr>
 	</table>
 </li>

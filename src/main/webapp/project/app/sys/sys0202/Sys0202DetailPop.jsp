@@ -79,7 +79,7 @@ var codeType = "<%=resultDataSet.getValue(masterRow, "CODE_TYPE")%>";
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0202.header.codeCategory"/></th>
-			<td class="tdEdit"><ui:ccselect id="codeCategory" name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=resultDataSet.getValue(masterRow, \"CODE_CATEGORY\")%>" status="disabled"/></td>
+			<td class="tdEdit"><ui:ccselect name="codeCategory" codeType="CODE_CATEGORY" selectedValue="<%=resultDataSet.getValue(masterRow, \"CODE_CATEGORY\")%>" status="disabled"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0202.header.isActive"/></th>
 			<td class="tdEdit ct"><ui:ccradio name="rdoIsActiveMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" status="disabled"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0202.header.descriptionEn"/></th>

@@ -78,23 +78,23 @@ var articleId = "<%=dsRequest.getValue("articleId")%>";
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerName"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=freeBoard.getWriterName()%>" checkName="fwk.bbs.header.writerName" options="mandatory"/>
+				<ui:text name="writerName" value="<%=freeBoard.getWriterName()%>" checkName="fwk.bbs.header.writerName" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=freeBoard.getWriterEmail()%>" checkName="fwk.bbs.header.writerEmail" option="email" options="mandatory"/>
+				<ui:text name="writerEmail" value="<%=freeBoard.getWriterEmail()%>" checkName="fwk.bbs.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" value="<%=freeBoard.getArticleSubject()%>" checkName="fwk.bbs.header.articleSubject" options="mandatory"/>
+				<ui:text name="articleSubject" value="<%=freeBoard.getArticleSubject()%>" checkName="fwk.bbs.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" value="<%=freeBoard.getArticleContents()%>"/>
+				<ui:txa name="articleContents" value="<%=freeBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>

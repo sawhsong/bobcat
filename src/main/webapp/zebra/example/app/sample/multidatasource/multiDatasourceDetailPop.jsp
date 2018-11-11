@@ -93,7 +93,7 @@ var articleId = "<%=noticeBoard.getArticleId()%>";
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa className="defClass" style="height:214px;padding:0px 4px 0px 0px" value="<%=noticeBoard.getArticleContents()%>" status="display"/>
+				<ui:txa style="height:214px;padding:0px 4px 0px 0px" value="<%=noticeBoard.getArticleContents()%>" status="display"/>
 			</td>
 		</tr>
 		<tr>

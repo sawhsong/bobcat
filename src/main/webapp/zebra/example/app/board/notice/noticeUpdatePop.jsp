@@ -75,23 +75,23 @@ var articleId = "<%=noticeBoard.getArticleId()%>";
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.notice.header.writerName"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=noticeBoard.getWriterName()%>" checkName="fwk.notice.header.writerName" options="mandatory"/>
+				<ui:text name="writerName" value="<%=noticeBoard.getWriterName()%>" checkName="fwk.notice.header.writerName" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.notice.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=noticeBoard.getWriterEmail()%>" checkName="fwk.notice.header.writerEmail" option="email" options="mandatory"/>
+				<ui:text name="writerEmail" value="<%=noticeBoard.getWriterEmail()%>" checkName="fwk.notice.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.notice.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" value="<%=noticeBoard.getArticleSubject()%>" checkName="fwk.notice.header.articleSubject" options="mandatory"/>
+				<ui:text name="articleSubject" value="<%=noticeBoard.getArticleSubject()%>" checkName="fwk.notice.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.notice.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=noticeBoard.getArticleContents()%>"/>
+				<ui:txa name="articleContents" style="height:224px;" value="<%=noticeBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>

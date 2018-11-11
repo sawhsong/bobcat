@@ -65,11 +65,11 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="currencyCode" class="lblEn hor"><mc:msg key="sys0204.search.currencyCode"/></label>
-				<ui:text name="currencyCode" id="currencyCode" className="defClass hor" style="text-transform:uppercase;width:300px"/>
+				<ui:text name="currencyCode" className="hor" style="text-transform:uppercase;width:300px"/>
 			</td>
 			<td class="tdSearch">
 				<label for="countryName" class="lblEn hor"><mc:msg key="sys0204.search.countryName"/></label>
-				<ui:text name="countryName" id="countryName" className="defClass hor" style="width:300px"/>
+				<ui:text name="countryName" className="hor" style="width:300px"/>
 			</td>
 		</tr>
 	</table>
@@ -99,7 +99,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0204.grid.currencyName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0204.grid.currencyCode"/></th>
 				<th class="thGrid"><mc:msg key="sys0204.grid.currencySymbol"/></th>

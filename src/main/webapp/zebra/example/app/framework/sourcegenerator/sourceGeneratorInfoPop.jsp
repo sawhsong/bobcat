@@ -73,7 +73,7 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="javaSourcePath" name="javaSourcePath" className="defClass" value="<%=(String)paramEntity.getObject(\"javaPath\")%>" status="display"/>
+				<ui:text name="javaSourcePath" value="<%=(String)paramEntity.getObject(\"javaPath\")%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
@@ -106,7 +106,7 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.srcPath"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text name="jspSourcePath" id="jspSourcePath" className="defClass" value="<%=(String)paramEntity.getObject(\"jspPath\")%>" status="display"/>
+				<ui:text name="jspSourcePath" value="<%=(String)paramEntity.getObject(\"jspPath\")%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
@@ -150,7 +150,7 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.spring"/></th>
 			<td class="tdEdit">
-				<ui:text name="springConfigPath" id="springConfigPath" className="defClass" value="<%=(String)paramEntity.getObject(\"springPath\")%>" status="display"/>
+				<ui:text name="springConfigPath" value="<%=(String)paramEntity.getObject(\"springPath\")%>" status="display"/>
 			</td>
 			<td class="tdEdit">
 				<ui:check name="createSpring" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
@@ -159,7 +159,7 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.struts"/></th>
 			<td class="tdEdit">
-				<ui:text name="strutsConfigPath" id="strutsConfigPath" className="defClass" value="<%=(String)paramEntity.getObject(\"strutsPath\")%>" status="display"/>
+				<ui:text name="strutsConfigPath" value="<%=(String)paramEntity.getObject(\"strutsPath\")%>" status="display"/>
 			</td>
 			<td class="tdEdit">
 				<ui:check name="createStruts" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
@@ -168,10 +168,11 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.message"/></th>
 			<td class="tdEdit">
-				<ui:text name="messageConfigPath" id="messageConfigPath" className="defClass" value="<%=(String)paramEntity.getObject(\"messagePath\")%>" status="display"/>
+				<ui:text name="messageConfigPath" value="<%=(String)paramEntity.getObject(\"messagePath\")%>" status="display"/>
 			</td>
 			<td class="tdEdit">
 				<ui:check name="createMessage" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
+			</td>
 		</tr>
 	</table>
 </div>

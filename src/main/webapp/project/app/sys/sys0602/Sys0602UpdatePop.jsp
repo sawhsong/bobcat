@@ -74,23 +74,23 @@
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0602.header.writerName"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysBoard.getWriterName()%>" checkName="sys0602.header.writerName" options="mandatory"/>
+				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sys0602.header.writerName" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0602.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysBoard.getWriterEmail()%>" checkName="sys0602.header.writerEmail" option="email" options="mandatory"/>
+				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sys0602.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0602.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" value="<%=sysBoard.getArticleSubject()%>" checkName="sys0602.header.articleSubject" options="mandatory"/>
+				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sys0602.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0602.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
+				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>

@@ -66,7 +66,7 @@
 				<tr>
 					<td class="tdDefault">
 						<label for="dataSource" class="lblEn hor"><mc:msg key="fwk.dtogenerator.dataSource"/></label>
-						<ui:select id="dataSource" name="dataSource">
+						<ui:select name="dataSource">
 <%
 						for (int i=0; i<datasourceDataSet.getRowCnt(); i++) {
 							String selected = (CommonUtil.equalsIgnoreCase(datasourceDataSet.getValue(i, "VALUE"), defaultDatasource)) ? "selected" : "";
@@ -79,7 +79,7 @@
 					</td>
 					<td class="tdDefault">
 						<label for="tableName" class="lblEn hor"><mc:msg key="fwk.dtogenerator.tableName"/></label>
-						<ui:text id="tableName" name="tableName" className="defClass hor" style="width:280px"/>
+						<ui:text name="tableName" className="hor" style="width:280px"/>
 					</td>
 				</tr>
 			</table>
@@ -106,7 +106,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.dtogenerator.title.selectToGenerate"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="fwk.dtogenerator.title.selectToGenerate"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.gridHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.gridHeader.tableDesc"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>

@@ -24,6 +24,7 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 body {background:#FFFFFF;}
+text, password {padding:6px 12px;}
 .logoImage {margin:0px auto;width:100%;text-align:center;}
 .logoImage img {margin-top:5%;}
 .loginPanel {margin:0px auto;width:100%;text-align:center;}
@@ -70,21 +71,21 @@ body {background:#FFFFFF;}
 		<div class="panel-body">
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon"/></div>
-				<ui:text id="loginId" name="loginId" value="dustin" className="form-control" style="padding:6px 12px" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
+				<ui:text name="loginId" value="dustin" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
-				<ui:password id="password" name="password" value="dustin" className="form-control" style="padding:6px 12px" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
+				<ui:password name="password" value="dustin" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="buttonDiv">
 				<ui:button id="btnLogin" type="success" caption="login.button.login" iconClass="fa-key" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>
 			</div>
 			<div class="additionalLink">
 				<div class="passwordLink">
-					<ui:anchor id="aResetPassword" caption="login.button.resetPassword" className="aEn"/>
+					<ui:anchor id="aResetPassword" caption="login.button.resetPassword"/>
 				</div>
 				<div class="registerLink">
-					<ui:anchor id="aRequestRegister" caption="login.button.requestRegister" className="aEn"/>
+					<ui:anchor id="aRequestRegister" caption="login.button.requestRegister"/>
 				</div>
 			</div>
 		</div>

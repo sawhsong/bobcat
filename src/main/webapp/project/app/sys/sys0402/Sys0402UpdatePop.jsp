@@ -81,39 +81,39 @@
 		</colgroup>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.menuLevel"/></th>
-			<td class="tdEdit"><ui:text name="menuLevel" id="menuLevel" className="defClass" value="<%=menuLevel%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="menuLevel" value="<%=menuLevel%>" status="display"/></td>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.menuPath"/></th>
-			<td class="tdEdit"><ui:text name="menuPath" id="menuPath" className="defClass" value="<%=menuPath%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="menuPath" value="<%=menuPath%>" status="display"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.menuId"/></th>
-			<td class="tdEdit"><ui:text name="menuId" id="menuId" className="defClass" value="<%=sysMenu.getMenuId()%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="menuId" value="<%=sysMenu.getMenuId()%>" status="display"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuUrl"/></th>
-			<td class="tdEdit"><ui:text name="menuUrl" id="menuUrl" className="defClass" value="<%=sysMenu.getMenuUrl()%>" checkName="sys0402.header.menuUrl" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="menuUrl" value="<%=sysMenu.getMenuUrl()%>" checkName="sys0402.header.menuUrl" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.sortOrder"/></th>
-			<td class="tdEdit"><ui:text name="sortOrder" id="sortOrder" className="defClass" value="<%=sysMenu.getSortOrder()%>" checkName="sys0402.header.sortOrder" options="mandatory" option="numeric"/></td>
+			<td class="tdEdit"><ui:text name="sortOrder" value="<%=sysMenu.getSortOrder()%>" checkName="sys0402.header.sortOrder" options="mandatory" option="numeric"/></td>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.isActive"/></th>
 			<td class="tdEdit"><ui:ccradio name="isActive" codeType="SIMPLE_YN" selectedValue="<%=sysMenu.getIsActive()%>"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameEn"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="menuNameEn" id="menuNameEn" className="defClass" value="<%=sysMenu.getMenuNameEn()%>" checkName="sys0402.header.menuNameEn" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameEn" value="<%=sysMenu.getMenuNameEn()%>" checkName="sys0402.header.menuNameEn" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameKo"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="menuNameKo" id="menuNameKo" className="defClass" value="<%=sysMenu.getMenuNameKo()%>" checkName="sys0402.header.menuNameKo" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameKo" value="<%=sysMenu.getMenuNameKo()%>" checkName="sys0402.header.menuNameKo" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.description"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="description" id="description" className="defClass" value="<%=sysMenu.getDescription()%>" checkName="sys0402.header.description"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="description" value="<%=sysMenu.getDescription()%>" checkName="sys0402.header.description"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
-			<td class="tdEdit"><ui:text name="insertUser" id="insertUser" className="defClass" value="<%=sysMenu.getUpdateUserName()%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertUser" value="<%=sysMenu.getUpdateUserName()%>" status="display"/></td>
 			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
-			<td class="tdEdit"><ui:text name="insertDate" id="insertDate" className="defClass" value="<%=CommonUtil.toString(sysMenu.getUpdateDate(), dateFormat)%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertDate" value="<%=CommonUtil.toString(sysMenu.getUpdateDate(), dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

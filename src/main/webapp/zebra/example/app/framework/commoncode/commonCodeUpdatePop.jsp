@@ -85,13 +85,13 @@ var masterRow = <%=masterRow%>;
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.codeType"/></th>
-			<td class="tdEdit"><ui:text name="codeTypeMaster" id="codeTypeMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="fwk.commoncode.header.codeType" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="codeTypeMaster" value="<%=resultDataSet.getValue(masterRow, \"CODE_TYPE\")%>" style="text-transform:uppercase;" checkName="fwk.commoncode.header.codeType" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.useYn"/></th>
 			<td class="tdEdit ct"><ui:ccradio name="useYnMaster" codeType="SIMPLE_YN" selectedValue="<%=isActive%>" source="framework"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionEn"/></th>
-			<td class="tdEdit"><ui:text name="descriptionEnMaster" id="descriptionEnMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="descriptionEnMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_EN\")%>" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.commoncode.header.descriptionKo"/></th>
-			<td class="tdEdit"><ui:text name="descriptionKoMaster" id="descriptionKoMaster" className="defClass" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="descriptionKoMaster" value="<%=resultDataSet.getValue(masterRow, \"DESCRIPTION_KO\")%>" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>
@@ -165,11 +165,11 @@ var masterRow = <%=masterRow%>;
 		<tr class="noBorderAll">
 			<th id="thDragHander" class="thGrid dragHandler" title="<mc:msg key="fwk.commoncode.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
 			<th id="thDeleteButton" class="thGrid deleteButton" title="<mc:msg key="fwk.commoncode.msg.delete"/>"><ui:icon id="iDeleteButton" className="fa-lg fa-times"/></th>
-			<td class="tdGrid ct"><ui:text name="commonCodeDetail" id="commonCodeDetail" className="defClass" style="text-transform:uppercase" checkName="fwk.commoncode.header.commonCode" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="commonCodeDetail" style="text-transform:uppercase" checkName="fwk.commoncode.header.commonCode" options="mandatory"/></td>
 			<td class="tdGrid ct"><ui:ccradio name="useYnDetail" codeType="SIMPLE_YN" selectedValue="Y" source="framework"/></td>
-			<td class="tdGrid ct"><ui:text name="descriptionEnDetail" id="descriptionEnDetail" className="defClass" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/></td>
-			<td class="tdGrid ct"><ui:text name="descriptionKoDetail" id="descriptionKoDetail" className="defClass" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/></td>
-			<td class="tdGrid ct"><ui:text name="sortOrderDetail" id="sortOrderDetail" className="defClass ct" checkName="fwk.commoncode.header.sortOrder" option="numeric" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionEnDetail" checkName="fwk.commoncode.header.descriptionEn" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="descriptionKoDetail" checkName="fwk.commoncode.header.descriptionKo" options="mandatory"/></td>
+			<td class="tdGrid ct"><ui:text name="sortOrderDetail" className="ct" checkName="fwk.commoncode.header.sortOrder" option="numeric" options="mandatory"/></td>
 		</tr>
 	</table>
 </li>

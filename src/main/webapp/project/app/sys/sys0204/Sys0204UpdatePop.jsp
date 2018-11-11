@@ -75,15 +75,15 @@ var countryCurrencyId = "<%=sysCountryCurrency.getCountryCurrencyId()%>";
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.currencyName"/></th>
-			<td class="tdEdit"><ui:text id="currencyName" name="currencyName" className="defClass" value="<%=sysCountryCurrency.getCurrencyName()%>" checkName="sys0204.header.currencyName" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="currencyName" value="<%=sysCountryCurrency.getCurrencyName()%>" checkName="sys0204.header.currencyName" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencySymbol"/></th>
-			<td class="tdEdit"><ui:text id="currencySymbol" name="currencySymbol" className="defClass" value="<%=sysCountryCurrency.getCurrencySymbol()%>" maxlength="10" checkName="sys0204.header.currencySymbol"/></td>
+			<td class="tdEdit"><ui:text name="currencySymbol" value="<%=sysCountryCurrency.getCurrencySymbol()%>" maxlength="10" checkName="sys0204.header.currencySymbol"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.currencyAlphaCode"/></th>
-			<td class="tdEdit"><ui:text id="currencyAlphabeticCode" name="currencyAlphabeticCode" className="defClass" value="<%=sysCountryCurrency.getCurrencyAlphabeticCode()%>" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.currencyAlphaCode" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="currencyAlphabeticCode" value="<%=sysCountryCurrency.getCurrencyAlphabeticCode()%>" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.currencyAlphaCode" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.currencyNumCode"/></th>
-			<td class="tdEdit"><ui:text id="currencyNumericCode" name="currencyNumericCode" className="defClass" value="<%=sysCountryCurrency.getCurrencyNumericCode()%>" maxlength="5" checkName="sys0204.header.currencyNumCode"/></td>
+			<td class="tdEdit"><ui:text name="currencyNumericCode" value="<%=sysCountryCurrency.getCurrencyNumericCode()%>" maxlength="5" checkName="sys0204.header.currencyNumCode"/></td>
 		</tr>
 	</table>
 	<div class="horGap10"></div>
@@ -97,19 +97,19 @@ var countryCurrencyId = "<%=sysCountryCurrency.getCountryCurrencyId()%>";
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0204.header.countryName"/></th>
-			<td class="tdEdit"><ui:text id="countryName" name="countryName" className="defClass" value="<%=sysCountryCurrency.getCountryName()%>" checkName="sys0204.header.countryName" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="countryName" value="<%=sysCountryCurrency.getCountryName()%>" checkName="sys0204.header.countryName" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryLangCode"/></th>
-			<td class="tdEdit"><ui:text id="countryLanguageCode" name="countryLanguageCode" className="defClass" value="<%=sysCountryCurrency.getCountryLanguageCode()%>" maxlength="5" checkName="sys0204.header.countryLangCode"/></td>
+			<td class="tdEdit"><ui:text name="countryLanguageCode" value="<%=sysCountryCurrency.getCountryLanguageCode()%>" maxlength="5" checkName="sys0204.header.countryLangCode"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryCode2"/></th>
-			<td class="tdEdit"><ui:text id="countryCode2" name="countryCode2" className="defClass" value="<%=sysCountryCurrency.getCountryCode2()%>" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.countryCode2"/></td>
+			<td class="tdEdit"><ui:text name="countryCode2" value="<%=sysCountryCurrency.getCountryCode2()%>" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.countryCode2"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryCode3"/></th>
-			<td class="tdEdit"><ui:text id="countryCode3" name="countryCode3" className="defClass" value="<%=sysCountryCurrency.getCountryCode3()%>" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.countryCode3"/></td>
+			<td class="tdEdit"><ui:text name="countryCode3" value="<%=sysCountryCurrency.getCountryCode3()%>" maxlength="5" style="text-transform:uppercase;" checkName="sys0204.header.countryCode3"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.countryNumCode"/></th>
-			<td class="tdEdit"><ui:text id="countryNumericCode" name="countryNumericCode" className="defClass" value="<%=sysCountryCurrency.getCountryNumericCode()%>" maxlength="5" checkName="sys0204.header.countryNumCode"/></td>
+			<td class="tdEdit"><ui:text name="countryNumericCode" value="<%=sysCountryCurrency.getCountryNumericCode()%>" maxlength="5" checkName="sys0204.header.countryNumCode"/></td>
 			<th class="thEdit Rt"></th>
 			<td class="tdEdit"></td>
 		</tr>

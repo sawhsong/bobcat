@@ -67,17 +67,17 @@
 					<td class="tdDefault">
 						<label for="searchType" class="lblEn hor"><mc:msg key="bbs0202.search.searchType"/></label>
 						<div style="float:left;padding-right:4px;">
-							<ui:ccselect id="searchType" name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select==" className="default"/>
+							<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select=="/>
 						</div>
-						<ui:text id="searchWord" name="searchWord" className="defClass hor" style="width:280px"/>
+						<ui:text name="searchWord" className="hor" style="width:280px"/>
 					</td>
 					<td class="tdDefault">
 						<label for="fromDate" class="lblEn hor"><mc:msg key="bbs0202.search.searchPeriod"/></label>
-						<ui:text id="fromDate" name="fromDate" className="defClass Ct hor" style="width:100px" checkName="bbs0202.search.searchDateFrom" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar icnEn hor" title="bbs0202.search.searchDateFrom"/>
+						<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="bbs0202.search.searchDateFrom" option="date"/>
+						<ui:icon id="icnFromDate" className="fa-calendar hor" title="bbs0202.search.searchDateFrom"/>
 						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<ui:text id="toDate" name="toDate" className="defClass Ct hor" style="width:100px" checkName="bbs0202.search.searchDateTo" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar icnEn hor" title="bbs0202.search.searchDateTo"/>
+						<ui:text name="toDate" className="Ct hor" style="width:100px" checkName="bbs0202.search.searchDateTo" option="date"/>
+						<ui:icon id="icnToDate" className="fa-calendar hor" title="bbs0202.search.searchDateTo"/>
 					</td>
 				</tr>
 			</table>
@@ -107,7 +107,7 @@
 		</colgroup>
 		<thead>
 			<tr class="noBorderHor">
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="bbs0202.grid.subject"/></th>
 				<th class="thGrid"><mc:msg key="bbs0202.grid.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="bbs0202.grid.writerName"/></th>

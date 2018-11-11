@@ -73,29 +73,29 @@
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0404.header.groupId"/></th>
-			<td class="tdEdit"><ui:text id="groupId" name="groupId" value="<%=sysAuthGroup.getGroupId()%>" className="defClass" checkName="sys0404.header.groupId" status="display"/></td>
+			<td class="tdEdit"><ui:text name="groupId" value="<%=sysAuthGroup.getGroupId()%>" checkName="sys0404.header.groupId" status="display"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.isActive"/></th>
 			<td class="tdEdit"><ui:ccradio name="isActive" codeType="IS_ACTIVE" selectedValue="<%=sysAuthGroup.getIsActive()%>" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0404.header.groupName"/></th>
-			<td class="tdEdit" colspan="3"><ui:text id="groupName" name="groupName" value="<%=sysAuthGroup.getGroupName()%>" className="defClass" checkName="sys0404.header.groupName" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="groupName" value="<%=sysAuthGroup.getGroupName()%>" checkName="sys0404.header.groupName" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0404.header.description"/></th>
-			<td class="tdEdit" colspan="3"><ui:text id="description" name="description" value="<%=sysAuthGroup.getDescription()%>" className="defClass" checkName="sys0404.header.description" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="description" value="<%=sysAuthGroup.getDescription()%>" checkName="sys0404.header.description" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
-			<td class="tdEdit"><ui:text id="insertUser" name="insertUser" value="<%=sysAuthGroup.getInsertUserName()%>" className="defClass" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertUser" value="<%=sysAuthGroup.getInsertUserName()%>" status="display"/></td>
 			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
-			<td class="tdEdit"><ui:text id="insertDate" name="insertDate" value="<%=CommonUtil.toString(sysAuthGroup.getInsertDate(), dateFormat)%>" className="defClass" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertDate" value="<%=CommonUtil.toString(sysAuthGroup.getInsertDate(), dateFormat)%>" status="display"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="page.com.updateUser"/></th>
-			<td class="tdEdit"><ui:text id="updateUser" name="updateUser" value="<%=sysAuthGroup.getUpdateUserName()%>" className="defClass" status="display"/></td>
+			<td class="tdEdit"><ui:text name="updateUser" value="<%=sysAuthGroup.getUpdateUserName()%>" status="display"/></td>
 			<th class="thEdit rt"><mc:msg key="page.com.updateDate"/></th>
-			<td class="tdEdit"><ui:text id="updateDate" name="updateDate" value="<%=CommonUtil.toString(sysAuthGroup.getUpdateDate(), dateFormat)%>" className="defClass" status="display"/></td>
+			<td class="tdEdit"><ui:text name="updateDate" value="<%=CommonUtil.toString(sysAuthGroup.getUpdateDate(), dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

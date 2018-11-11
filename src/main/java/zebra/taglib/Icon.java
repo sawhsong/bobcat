@@ -33,9 +33,9 @@ public class Icon extends TaglibSupport {
 				classNamePrefix = "icnEn";
 			}
 
-			if (CommonUtil.startsWithIgnoreCase(className, "fa-")) {
+			if (CommonUtil.containsIgnoreCase(className, "fa-")) {
 				classNamePrefix += " fa";
-			} else if (CommonUtil.startsWithIgnoreCase(className, "glyphicon-")) {
+			} else if (CommonUtil.containsIgnoreCase(className, "glyphicon-")) {
 				classNamePrefix += " glyphicon";
 			}
 			className = (CommonUtil.isBlank(className)) ? classNamePrefix : classNamePrefix+" "+className;

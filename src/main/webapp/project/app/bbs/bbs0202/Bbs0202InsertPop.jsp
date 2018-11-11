@@ -73,23 +73,23 @@
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="bbs0202.header.writerName"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="bbs0202.header.writerName" options="mandatory"/>
+				<ui:text name="writerName" value="<%=sysUser.getUserName()%>" checkName="bbs0202.header.writerName" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="bbs0202.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="bbs0202.header.writerEmail" option="email" options="mandatory"/>
+				<ui:text name="writerEmail" value="<%=sysUser.getEmail()%>" checkName="bbs0202.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="bbs0202.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="bbs0202.header.articleSubject" options="mandatory"/>
+				<ui:text name="articleSubject" checkName="bbs0202.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="bbs0202.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass" style="height:224px;"/>
+				<ui:txa name="articleContents" style="height:224px;"/>
 			</td>
 		</tr>
 		<tr>

@@ -105,7 +105,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="fwk.sourcegenerator.title.selectToGenerate"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="fwk.sourcegenerator.title.selectToGenerate"/></th>
 				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuId"/></th>
 				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuName"/></th>
 				<th class="thGrid"><mc:msg key="fwk.sourcegenerator.gridHeader.menuUrl"/></th>

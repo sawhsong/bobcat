@@ -64,7 +64,7 @@ var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>")
 		<div class="panel-body">
 			<div id="divMenuLevel" style="float:left;padding-right:4px;">
 				<label for="menuLevel" class="lblEn hor"><mc:msg key="sys0402.header.menuLevel"/></label>
-				<ui:ccselect id="menuLevel" name="menuLevel" codeType="MENU_LEVEL"/>
+				<ui:ccselect name="menuLevel" codeType="MENU_LEVEL"/>
 			</div>
 			<div class="horGap70"></div>
 			<div id="divLevel1" style="float:left;display:none;">
@@ -108,33 +108,33 @@ var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>")
 		</colgroup>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuId"/></th>
-			<td class="tdEdit"><ui:text name="menuId" id="menuId" className="defClass" style="text-transform:uppercase;" checkName="sys0402.header.menuId" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="menuId" style="text-transform:uppercase;" checkName="sys0402.header.menuId" options="mandatory"/></td>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuUrl"/></th>
-			<td class="tdEdit"><ui:text name="menuUrl" id="menuUrl" className="defClass" checkName="sys0402.header.menuUrl" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="menuUrl" checkName="sys0402.header.menuUrl" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.sortOrder"/></th>
-			<td class="tdEdit"><ui:text name="sortOrder" id="sortOrder" className="defClass" checkName="sys0402.header.sortOrder" options="mandatory" option="numeric"/></td>
+			<td class="tdEdit"><ui:text name="sortOrder" checkName="sys0402.header.sortOrder" options="mandatory" option="numeric"/></td>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.isActive"/></th>
 			<td class="tdEdit"><ui:ccradio name="isActive" codeType="SIMPLE_YN" selectedValue="Y"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameEn"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="menuNameEn" id="menuNameEn" className="defClass" checkName="sys0402.header.menuNameEn" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameEn" checkName="sys0402.header.menuNameEn" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory"><mc:msg key="sys0402.header.menuNameKo"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="menuNameKo" id="menuNameKo" className="defClass" checkName="sys0402.header.menuNameKo" options="mandatory"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="menuNameKo" checkName="sys0402.header.menuNameKo" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sys0402.header.description"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="description" id="description" className="defClass" checkName="sys0402.header.description"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="description" checkName="sys0402.header.description"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="page.com.insertUser"/></th>
-			<td class="tdEdit"><ui:text name="insertUser" id="insertUser" className="defClass" value="<%=sysUser.getUserName()%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertUser" value="<%=sysUser.getUserName()%>" status="display"/></td>
 			<th class="thEdit rt"><mc:msg key="page.com.insertDate"/></th>
-			<td class="tdEdit"><ui:text name="insertDate" id="insertDate" className="defClass" value="<%=CommonUtil.getSysdate(dateFormat)%>" status="display"/></td>
+			<td class="tdEdit"><ui:text name="insertDate" value="<%=CommonUtil.getSysdate(dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

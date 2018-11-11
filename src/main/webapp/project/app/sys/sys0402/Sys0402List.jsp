@@ -103,7 +103,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg icnEn" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuId"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuName"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuUrl"/></th>

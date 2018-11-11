@@ -76,23 +76,23 @@ var articleId = "<%=requestDataSet.getValue("articleId")%>";
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerName"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerName" name="writerName" className="defClass" value="<%=sysUser.getUserName()%>" checkName="fwk.bbs.header.writerName" options="mandatory"/>
+				<ui:text name="writerName" value="<%=sysUser.getUserName()%>" checkName="fwk.bbs.header.writerName" options="mandatory"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerEmail"/></th>
 			<td class="tdEdit">
-				<ui:text id="writerEmail" name="writerEmail" className="defClass" value="<%=sysUser.getEmail()%>" checkName="fwk.bbs.header.writerEmail" option="email" options="mandatory"/>
+				<ui:text name="writerEmail" value="<%=sysUser.getEmail()%>" checkName="fwk.bbs.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:text id="articleSubject" name="articleSubject" className="defClass" checkName="fwk.bbs.header.articleSubject" options="mandatory"/>
+				<ui:text name="articleSubject" checkName="fwk.bbs.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.bbs.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa id="articleContents" name="articleContents" className="defClass"/>
+				<ui:txa name="articleContents"/>
 			</td>
 		</tr>
 		<tr>
