@@ -20,12 +20,8 @@ public class Sys0406Action extends BaseAction {
 	}
 
 	public String getList() throws Exception {
-		try {
-			biz.getList(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
+		biz.getList(paramEntity);
+		return "list";
 	}
 
 	public String exeInsert() throws Exception {

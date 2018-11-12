@@ -41,7 +41,7 @@ public class Sys0406BizImpl extends BaseBiz implements Sys0406Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		try {
 			setAuthorityGroup(paramEntity);
-			paramEntity.setAjaxResponseDataSet((DataSet)MemoryBean.get("menuDataSet"));
+			paramEntity.setObject("resultDataSet", MemoryBean.get("menuDataSet"));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

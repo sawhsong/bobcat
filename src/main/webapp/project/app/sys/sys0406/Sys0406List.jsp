@@ -8,8 +8,12 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
+	DataSet requestDataSet = paramEntity.getRequestDataSet();
+	DataSet resultDataSet = (DataSet)paramEntity.getObject("resultDataSet");
 	DataSet authGroupDataSet = (DataSet)paramEntity.getObject("authGroupDataSet");
 	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
+	String delimiter = ConfigUtil.getProperty("delimiter.data");
+	String selectedAuthGroup = requestDataSet.getValue("authGroup");
 %>
 <%/************************************************************************************************
 * HTML
@@ -64,8 +68,9 @@
 						<ui:seloption value="" text="==Select=="/>
 <%
 					for (int i=0; i<authGroupDataSet.getRowCnt(); i++) {
+						String selected = CommonUtil.equalsIgnoreCase(selectedAuthGroup, authGroupDataSet.getValue(i, "GROUP_ID")) ? "selected" : "";
 %>
-						<option value="<%=authGroupDataSet.getValue(i, "GROUP_ID")%>" desc="<%=authGroupDataSet.getValue(i, "DESCRIPTION")%>"><%=authGroupDataSet.getValue(i, "GROUP_NAME")%></option>
+						<option value="<%=authGroupDataSet.getValue(i, "GROUP_ID")%>" desc="<%=authGroupDataSet.getValue(i, "DESCRIPTION")%>" <%=selected%>><%=authGroupDataSet.getValue(i, "GROUP_NAME")%></option>
 <%
 					}
 %>
@@ -108,10 +113,44 @@
 				<th class="thGrid"><mc:msg key="sys0406.grid.isActive"/></th>
 			</tr>
 		</thead>
-		<tbody id="tblGridBody">
+		<tbody>
+<%
+		if (resultDataSet.getRowCnt() > 0) {
+			for (int i=0; i<resultDataSet.getRowCnt(); i++) {
+				String menuPath = resultDataSet.getValue(i, "PATH");
+				String menuId = resultDataSet.getValue(i, "MENU_ID");
+				String menuName = resultDataSet.getValue(i, "MENU_NAME_"+langCode);
+				String groupId = resultDataSet.getValue(i, "GROUP_ID");
+				String space = "", style = "", paramValue = "";
+				int iLevel = CommonUtil.toInt(resultDataSet.getValue(i, "LEVEL")) - 1;
+
+				style = (iLevel == 0 || iLevel == 1) ? "font-weight:bold;" : "";
+
+				for (int j=0; j<iLevel; j++) {
+					space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				}
+
+				paramValue = resultDataSet.getValue(i, "LEVEL")+delimiter+menuPath;
+%>
+			<tr>
+				<td class="tdGrid Ct"><input type="checkbox" id="chkToAssign" name="chkToAssign" class="inTblGrid chkEn" value="<%=menuId%>" paramValue="<%=paramValue%>" groupId="<%=groupId%>"/></td>
+				<td class="tdGrid" style="<%=style%>"><%=space%><%=menuId%></td>
+				<td class="tdGrid" style="<%=style%>"><%=menuName%></td>
+				<td class="tdGrid"><%=resultDataSet.getValue(i, "MENU_URL")%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "SORT_ORDER")%></td>
+				<td class="tdGrid"><%=resultDataSet.getValue(i, "DESCRIPTION")%></td>
+				<td class="tdGrid Ct"><%=resultDataSet.getValue(i, "IS_ACTIVE")%></td>
+			</tr>
+<%
+			}
+		} else {
+%>
 			<tr>
 				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
+<%
+		}
+%>
 		</tbody>
 	</table>
 </div>
