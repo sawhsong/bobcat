@@ -24,7 +24,7 @@
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
 body {background:#FFFFFF;}
-text, password {padding:6px 12px;}
+.form-control {padding:6px 12px;}
 .logoImage {margin:0px auto;width:100%;text-align:center;}
 .logoImage img {margin-top:5%;}
 .loginPanel {margin:0px auto;width:100%;text-align:center;}

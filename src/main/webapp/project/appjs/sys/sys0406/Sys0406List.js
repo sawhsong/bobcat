@@ -39,10 +39,7 @@ $(function() {
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
-											commonJs.doSubmit({
-												formId:"fmDefault",
-												action:"/sys/0406/getList.do"
-											});
+											doSearch();
 										}
 									}]
 								});
@@ -65,19 +62,20 @@ $(function() {
 	});
 
 	$("[name=chkToAssign]").click(function(event) {
-		var thisChecked = $(this).prop("checked"), thisValue = $(this).val();
+		var thisChecked = $(this).prop("checked"), thisValue = $(this).attr("paramValue");
+		var thisMenuId = $(this).val();
 		var thisValueItems = thisValue.split(delimiter);
 		var thisLevel = thisValueItems[0];
 		var thisPaths = thisValueItems[1].split("/");
-		var thisMenuId = thisValueItems[2];
-
+console.log("thisMenuId : "+thisMenuId);
+console.log("thisValue : "+thisValue);
 		$("[name=chkToAssign]").each(function(index) {
-			var val = $(this).val();
-			var valItems = val.split(delimiter);
+			var menuId = $(this).val(), paramVal = $(this).attr("paramValue");
+			var valItems = paramVal.split(delimiter);
 			var level = valItems[0];
 			var paths = valItems[1].split("/");
 
-			if (thisValue != val) {
+			if (thisValue != paramVal) {
 				if (thisLevel == "1") {
 					if (level > thisLevel && thisMenuId == paths[0]) {
 						$(this).prop("checked", thisChecked);
@@ -109,7 +107,7 @@ $(function() {
 		if (!thisChecked && thisLevel == "2") {
 			if (!hasChildChecked(thisLevel, thisPaths[0])) {
 				$("[name=chkToAssign]").each(function(index) {
-					var val = $(this).val();
+					var val = $(this).attr("paramValue");
 					var valItems = val.split(delimiter);
 					var level = valItems[0];
 					var paths = valItems[1].split("/");
@@ -125,7 +123,7 @@ $(function() {
 		if (!thisChecked && thisLevel == "3") {
 			if (!hasChildChecked(thisLevel, thisPaths[1])) {
 				$("[name=chkToAssign]").each(function(index) {
-					var val = $(this).val();
+					var val = $(this).attr("paramValue");
 					var valItems = val.split(delimiter);
 					var level = valItems[0];
 					var paths = valItems[1].split("/");
@@ -139,7 +137,7 @@ $(function() {
 
 			if (!hasChildChecked(2, thisPaths[0])) {
 				$("[name=chkToAssign]").each(function(index) {
-					var val = $(this).val();
+					var val = $(this).attr("paramValue");
 					var valItems = val.split(delimiter);
 					var level = valItems[0];
 					var paths = valItems[1].split("/");
@@ -226,6 +224,13 @@ $(function() {
 				}
 			});
 		}, 100);
+
+		setTimeout(function() {
+			setCheckbox();
+			$("[name=chkToAssign]").bind("click", function(event) {
+				clickCheckToAssign(event);
+			});
+		}, 200);
 	};
 
 	renderDataGridTable = function(result) {
@@ -250,7 +255,7 @@ $(function() {
 				paramValue = dataSet.getValue(i, "LEVEL")+delimiter+menuPath;
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkToAssign").setName("chkToAssign").setValue(menuId).addAttribute("paramValue:"+paramValue).addAttribute("groupId:"+groupId);
+				uiChk.setId("chkToAssign"+i).setName("chkToAssign").setValue(menuId).addAttribute("paramValue:"+paramValue).addAttribute("groupId:"+groupId);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setStyle(style).setText(space+menuId));
@@ -288,7 +293,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setCheckbox();
 		doSearch();
 	});
 });

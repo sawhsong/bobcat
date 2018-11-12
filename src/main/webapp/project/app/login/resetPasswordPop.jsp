@@ -23,7 +23,7 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-text, password {padding:6px 12px;}
+.form-control {padding:6px 12px;}
 .panelHolder {margin:0px auto;width:100%;text-align:center;}
 .panel {margin-top:20px;display:inline-block;width:360px;}
 .panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;background:url(<mc:cp key="imgIcon"/>/login.png) no-repeat 0px 0px;}

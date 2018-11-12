@@ -39,7 +39,7 @@
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
 .dummyDetail {list-style:none;}
-.dragHandler {cursor:move;}
+.dragHandler, .dragHandler > i {cursor:move;}
 .deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>

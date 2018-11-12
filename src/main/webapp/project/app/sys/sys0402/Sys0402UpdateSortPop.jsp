@@ -33,7 +33,7 @@
 #liDummy {display:none;}
 #divDataArea.areaContainerPopup {padding-top:0px;}
 .dummyMenu {list-style:none;margin-top:4px;}
-.dragHandler {cursor:move;}
+.dragHandler, .dragHandler > i {cursor:move;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">

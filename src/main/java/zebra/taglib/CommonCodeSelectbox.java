@@ -24,6 +24,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 	private String style = "";
 	private String isMultiple = "";
 	private String isBootstrap = "";
+	private String checkName = "";
 	private String caption = "";
 	private String options = "";	// for data validator
 	private String source = "";	// common_code source(framework / project)
@@ -44,6 +45,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			}
 
 			defaultLangCode = CommonUtil.nvl(langCode, (String)httpSession.getAttribute("langCode"));
+			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
 
 			if (CommonUtil.isNotBlank(attribute)) {
 				attrs = CommonUtil.split(attribute, ";");
@@ -61,6 +63,7 @@ public class CommonCodeSelectbox extends TaglibSupport {
 			if (CommonUtil.isNotEmpty(options)) {html.append(" "+options);}
 			if (CommonUtil.isNotEmpty(script)) {html.append(" onchange=\""+script+"\"");}
 			if (CommonUtil.toBoolean(isMultiple)) {html.append(" multiple=\"multiple\"");}
+			if (CommonUtil.isNotBlank(checkName)) {html.append(" checkName=\""+checkName+"\"");}
 			if (CommonUtil.equalsIgnoreCase(status, "disabled")) {html.append(" "+status);}
 			// css class
 			if (!CommonUtil.toBoolean(isBootstrap, true)) {
@@ -204,6 +207,14 @@ public class CommonCodeSelectbox extends TaglibSupport {
 
 	public void setIsBootstrap(String isBootstrap) {
 		this.isBootstrap = isBootstrap;
+	}
+
+	public String getCheckName() {
+		return checkName;
+	}
+
+	public void setCheckName(String checkName) {
+		this.checkName = checkName;
 	}
 
 	public String getCaption() {

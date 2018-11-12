@@ -49,7 +49,7 @@ UiCheckbox.prototype = {
 		if (!$.nony.isEmpty(this.className)) {str += " class=\""+this.className+"\"";}
 		if (!$.nony.isEmpty(this.style)) {str += " style=\""+this.style+"\"";}
 		if (!$.nony.isEmpty(this.script)) {str += " onclick=\""+this.script+"\"";}
-		if (!$.nony.isEmpty(this.value)) {str += "value=\""+this.value+"\"";}
+		if (!$.nony.isEmpty(this.value)) {str += " value=\""+this.value+"\"";}
 		if (!$.nony.isEmpty(this.attribute)) {
 			attrArray = this.attribute.split(";");
 			for (var i=0; i<attrArray.length; i++) {

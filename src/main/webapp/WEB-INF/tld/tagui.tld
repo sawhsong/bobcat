@@ -442,6 +442,9 @@
 			<name>caption</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
