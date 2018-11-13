@@ -29,6 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var articleId = "<%=sysBoard.getArticleId()%>";
 </script>
 </head>
 <%/************************************************************************************************

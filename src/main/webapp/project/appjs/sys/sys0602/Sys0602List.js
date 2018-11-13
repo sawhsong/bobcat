@@ -2,6 +2,8 @@
  * Framework Generated Javascript Source
  * - Sys0602List.js
  *************************************************************************************************/
+jsconfig.put("useJqTooltip", false);
+
 var popup = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
@@ -103,7 +105,7 @@ $(function() {
 
 				var uiAnc = new UiAnchor();
 				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc));
 
 				var gridTd = new UiGridTd();
 				gridTd.addClassName("Ct");
@@ -116,7 +118,7 @@ $(function() {
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")));
 
 				var iconAction = new UiIcon();
 				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
@@ -139,7 +141,7 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -214,6 +216,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {

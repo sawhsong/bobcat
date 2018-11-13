@@ -28,6 +28,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var articleId = "<%=requestDataSet.getValue("articleId")%>";
 </script>
 </head>
 <%/************************************************************************************************
