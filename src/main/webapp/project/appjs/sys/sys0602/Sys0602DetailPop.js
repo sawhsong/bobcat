@@ -22,9 +22,27 @@ $(function() {
 		parent.popup.close();
 	});
 
+	$(document).keypress(function(event) {
+		if (event.which == 13) {
+			var element = event.target;
+		}
+	});
+
 	/*!
 	 * process
 	 */
+	exeDownload = function(repositoryPath, originalName, newName) {
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:"/download.do",
+			data:{
+				repositoryPath:repositoryPath,
+				originalName:originalName,
+				newName:newName
+			}
+		});
+	};
+
 	doProcessByButton = function(param) {
 		var actionString = "";
 		var params = {};

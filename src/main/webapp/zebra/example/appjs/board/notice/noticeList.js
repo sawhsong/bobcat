@@ -77,7 +77,6 @@ $(function() {
 		var html = "";
 
 		searchResultDataCount = dataSet.getRowCnt();
-
 		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {
@@ -228,6 +227,7 @@ $(function() {
 						type:com.message.I000,
 						contents:result.message,
 						blind:true,
+						width:300,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {

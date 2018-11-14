@@ -92,6 +92,18 @@ public class Sys0602BizImpl extends BaseBiz implements Sys0602Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity getAttachedFile(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+
+		try {
+			paramEntity.setAjaxResponseDataSet(sysBoardFileDao.getBoardFileListDataSetByArticleId(requestDataSet.getValue("articleId")));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
