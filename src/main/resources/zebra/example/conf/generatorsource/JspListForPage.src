@@ -36,7 +36,7 @@ $(function() {
 	 * event
 	 */
 	$("#btnNew").click(function(event) {
-		doProcess({mode:"New"});
+		getInsert();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -102,7 +102,6 @@ $(function() {
 		var html = "";
 
 		searchResultDataCount = dataSet.getRowCnt();
-
 		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {
@@ -129,13 +128,13 @@ $(function() {
 
 				var uiAnc = new UiAnchor();
 				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc));
 
 				var gridTd = new UiGridTd();
 				gridTd.addClassName("Ct");
 				if (dataSet.getValue(i, "FILE_CNT") > 0) {
 					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
+					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID")).setScript("getAttachedFile(this)");
 					gridTd.addChild(iconAttachFile);
 				}
 				gridTr.addChild(gridTd);
@@ -199,6 +198,38 @@ $(function() {
 		commonJs.doSubmit({
 			action:action,
 			data:param
+		});
+	};
+
+	getInsert = function() {
+		commonJs.doSubmit({action:"/#MENU_URL#/getInsert.do"});
+	};
+
+	getDetail = function(articleId) {
+		commonJs.doSubmit({
+			action:"/#MENU_URL#/getDetail.do",
+			data:{
+				articleId:articleId
+			}
+		});
+	};
+
+	doProcess = function(param) {
+		var action = "";
+
+		if (param.mode == "Edit") {
+			action = "/#MENU_URL#/getUpdate.do";
+		} else if (param.mode == "Reply") {
+			action = "/#MENU_URL#/getInsert.do";
+		}
+
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:action,
+			data:{
+				mode:param.mode,
+				articleId:param.articleId
+			}
 		});
 	};
 
