@@ -117,7 +117,7 @@ $(function() {
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")));
 
 				var iconAction = new UiIcon();
 				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
@@ -286,6 +286,72 @@ $(function() {
 			position:"bottom",
 			horAdjust:0,
 			verAdjust:2
+		});
+	};
+
+	getAttachedFile = function(img) {
+		commonJs.ajaxSubmit({
+			url:"/sys/0604/getAttachedFile.do",
+			dataType:"json",
+			data:{
+				articleId:$(img).attr("articleId")
+			},
+			blind:false,
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var dataSet = result.dataSet;
+					attchedFileContextMenu = [];
+
+					for (var i=0; i<dataSet.getRowCnt(); i++) {
+						var repositoryPath = dataSet.getValue(i, "REPOSITORY_PATH");
+						var originalName = dataSet.getValue(i, "ORIGINAL_NAME");
+						var newName = dataSet.getValue(i, "NEW_NAME");
+						var fileIcon = dataSet.getValue(i, "FILE_ICON");
+						var fileSize = dataSet.getValue(i, "FILE_SIZE") / 1024;
+
+						attchedFileContextMenu.push({
+							name:originalName+" ("+commonJs.getNumberMask(fileSize, "0,0")+") KB",
+							title:originalName,
+							img:fileIcon,
+							repositoryPath:repositoryPath,
+							originalName:originalName,
+							newName:newName,
+							fun:function() {
+								var index = $(this).index();
+
+								downloadFile({
+									repositoryPath:attchedFileContextMenu[index].repositoryPath,
+									originalName:attchedFileContextMenu[index].originalName,
+									newName:attchedFileContextMenu[index].newName
+								});
+							}
+						});
+					}
+
+					$(img).contextMenu(attchedFileContextMenu, {
+						classPrefix:com.constants.ctxClassPrefixGrid,
+						displayAround:"trigger",
+						position:"bottom",
+						horAdjust:0,
+						verAdjust:2,
+						containment:$("#divScrollablePanel")
+					});
+				}
+			}
+		});
+	};
+
+	downloadFile = function(param) {
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:"/download.do",
+			data:{
+				repositoryPath:param.repositoryPath,
+				originalName:param.originalName,
+				newName:param.newName
+			}
 		});
 	};
 

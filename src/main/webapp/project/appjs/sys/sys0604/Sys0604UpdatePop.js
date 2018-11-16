@@ -19,7 +19,7 @@ $(function() {
 							form:"fmDefault",
 							action:"/sys/0604/exeUpdate.do",
 							data:{
-								articleId:"<%=sysBoard.getArticleId()%>"
+								articleId:articleId
 							}
 						});
 					}
