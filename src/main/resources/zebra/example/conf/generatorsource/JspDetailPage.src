@@ -65,9 +65,21 @@ $(function() {
 		});
 	};
 
+	exeDownload = function(repositoryPath, originalName, newName) {
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:"/download.do",
+			data:{
+				repositoryPath:repositoryPath,
+				originalName:originalName,
+				newName:newName
+			}
+		});
+	};
+
 	doProcessByButton = function(param) {
-		var articleId = "<%=sysBoard.getArticleId()%>";
 		var action = "";
+		var params = {};
 
 		if (param.mode == "Update") {
 			action = "/#MENU_URL#/getUpdate.do";
@@ -97,7 +109,7 @@ $(function() {
 							dataType:"json",
 							formId:"fmDefault",
 							data:{
-								articleId:articleId
+								articleId:params.data.articleId
 							},
 							success:function(data, textStatus) {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
@@ -181,10 +193,10 @@ $(function() {
 <div id="divDataArea" class="areaContainer">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="12%"/>
+			<col width="38%"/>
+			<col width="12%"/>
+			<col width="38%"/>
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.writerName"/></th>
@@ -193,7 +205,7 @@ $(function() {
 			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.updateDate"/></th>
+			<th class="thEdit Rt"><mc:msg key="page.com.updateDate"/></th>
 			<td class="tdEdit"><%=CommonUtil.toViewDateString(sysBoard.getUpdateDate())%></td>
 			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.hitCount"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysBoard.getHitCnt())%></td>
@@ -205,8 +217,9 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.attachedFile"/></th>
 			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td>
 <%
 					if (fileDataSet.getRowCnt() > 0) {
 						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
@@ -214,28 +227,33 @@ $(function() {
 							String originalName = fileDataSet.getValue(i, "ORIGINAL_NAME");
 							String newName = fileDataSet.getValue(i, "NEW_NAME");
 							String icon = fileDataSet.getValue(i, "FILE_ICON");
+							String delimiter = "";
 							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
+
+							if (i != 0) {
+								delimiter = ", &nbsp;";
+							}
 %>
-						<tr>
-							<td class="tdDefault">
-								<img src="<%=icon%>" style="margin-top:-4px;"/>
-								<a class="aEn" onclick="exeDownload('<%=repositoryPath%>', '<%=originalName%>', '<%=newName%>')">
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</a>
-							</td>
-						</tr>
+							<%=delimiter%>
+							<img src="<%=icon%>" style="margin-top:-4px;"/>
+							<a class="aEn" onclick="exeDownload('<%=repositoryPath%>', '<%=originalName%>', '<%=newName%>')">
+								<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
+							</a>
 <%
 						}
 					}
 %>
-					</table>
-				</div>
+						</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
+	</table>
+	<div class="breaker" style="height:5px"></div>
+	<table class="tblDefault" style="width:100%;">
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<textarea id="articleContents" name="articleContents" class="txaDpl" style="height:280px;" readonly><%=sysBoard.getArticleContents()%></textarea>
+			<td class="tdDefault">
+				<ui:txa name="articleContents" style="height:280px;" value="<%=sysBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 	</table>

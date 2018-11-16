@@ -71,7 +71,7 @@
 					$(fileElements[i]).bind("change", params, function() {
 						// Firfox - when selecting a file width also changed
 						if ($.nony.browser.FireFox) {
-							$(this).css("width", (params.width + params.widthComp - 6)+"px");
+							$(this).css("width", (params.width + params.widthComp - 0)+"px");
 						}
 						$("#txtStyledInput"+$(this).attr("id")).val($(this).val());
 					});

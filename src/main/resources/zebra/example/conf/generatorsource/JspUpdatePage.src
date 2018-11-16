@@ -45,7 +45,7 @@ $(function() {
 							form:"fmDefault",
 							action:"/#MENU_URL#/exeUpdate.do",
 							data:{
-								articleId:"<%=sysBoard.getArticleId()%>"
+								articleId:articleId
 							}
 						});
 					}
@@ -138,23 +138,29 @@ $(function() {
 			<col width="37%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerName"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerName"/></th>
 			<td class="tdEdit">
 				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="#THIS_MENU_ID#.header.writerName" options="mandatory"/>
 			</td>
-			<th class="thEdit mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerEmail"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerEmail"/></th>
 			<td class="tdEdit">
 				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="#THIS_MENU_ID#.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit mandatory"><mc:msg key="#THIS_MENU_ID#.header.articleSubject"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
 				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="#THIS_MENU_ID#.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit">
+			<th class="thEdit rt"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
+			<td class="tdEdit" colspan="3">
+				<ui:txa name="articleContents" value="<%=sysBoard.getArticleContents()%>"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">
 				<mc:msg key="#THIS_MENU_ID#.header.attachedFile"/><br/>
 			</th>
 			<td class="tdEdit" colspan="3">
@@ -183,13 +189,7 @@ $(function() {
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit">
+			<th class="thEdit rt">
 				<mc:msg key="#THIS_MENU_ID#.header.attachedFile"/><br/>
 				<div id="divButtonAreaRight">
 					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>

@@ -27,7 +27,8 @@ public class Icon extends TaglibSupport {
 
 			title = CommonUtil.containsIgnoreCase(title, ".") ? getMessage(title, langCode) : title;
 
-			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+			if (CommonUtil.containsIgnoreCase(status, "display")) {
+			} else if (CommonUtil.containsIgnoreCase(status, "disabled")) {
 				classNamePrefix = "icnDis";
 			} else {
 				classNamePrefix = "icnEn";

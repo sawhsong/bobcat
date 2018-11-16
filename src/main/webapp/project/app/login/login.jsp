@@ -61,7 +61,7 @@ body {background:#FFFFFF;}
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divLogo" class="logoImage">
-	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoHKAccount.png" style="width:130px;height:28px;"/>
+	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoHKAccount.png" style="width:130px;height:28px;" status="display"/>
 </div>
 <div id="divLoginPanel" class="loginPanel">
 	<div class="panel panel-default panelLogin">
@@ -70,11 +70,11 @@ body {background:#FFFFFF;}
 		</div>
 		<div class="panel-body">
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon" status="display"/></div>
 				<ui:text name="loginId" value="dustin" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
-				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon"/></div>
+				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon" status="display"/></div>
 				<ui:password name="password" value="dustin" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="buttonDiv">

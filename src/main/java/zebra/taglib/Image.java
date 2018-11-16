@@ -27,7 +27,8 @@ public class Image extends TaglibSupport {
 			StringBuffer html = new StringBuffer();
 			String classNamePrefix = "", attrStr = "", attrs[], attr[];
 
-			if (CommonUtil.containsIgnoreCase(status, "disabled")) {
+			if (CommonUtil.containsIgnoreCase(status, "display")) {
+			} else if (CommonUtil.containsIgnoreCase(status, "disabled")) {
 				classNamePrefix = "imgDis";
 			} else {
 				classNamePrefix = "imgEn";
