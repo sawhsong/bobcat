@@ -2,6 +2,7 @@
  * Framework Generated Javascript Source
  * - Sys0604List.js
  *************************************************************************************************/
+jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
@@ -11,7 +12,7 @@ $(function() {
 	 * event
 	 */
 	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+		getInsert();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -109,7 +110,7 @@ $(function() {
 				gridTd.addClassName("Ct");
 				if (dataSet.getValue(i, "FILE_CNT") > 0) {
 					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
+					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID")).setScript("getAttachedFile(this)");
 					gridTd.addChild(iconAttachFile);
 				}
 				gridTr.addChild(gridTd);
@@ -139,7 +140,7 @@ $(function() {
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			isFilter:false,
-			filterColumn:[1, 3],
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -155,40 +156,66 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getInsert = function() {
+		commonJs.doSubmit({action:"/sys/0604/getInsert.do"});
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+	getDetail = function(articleId) {
+		commonJs.doSubmit({
+			action:"/sys/0604/getDetail.do",
+			data:{
+				articleId:articleId
+			}
+		});
+	};
 
-		if (param.mode == "Detail") {
-			url = "/sys/0604/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sys/0604/getInsert.do";
-			header = com.header.popHeaderEdit;
+	doProcess = function(param) {
+		var action = "";
+
+		if (param.mode == "New" || param.mode == "Reply") {
+			action = "/sys/0604/getInsert.do";
 		} else if (param.mode == "Edit") {
-			url = "/sys/0604/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+			action = "/sys/0604/getUpdate.do";
+		} else if (param.mode == "Detail") {
+			action = "/sys/0604/getDetail.do";
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
+		commonJs.doSubmit({
+			action:action,
+			data:param
+		});
+	};
 
-		popup = commonJs.openPopup(popParam);
+	getInsert = function() {
+		commonJs.doSubmit({action:"/sys/0604/getInsert.do"});
+	};
+
+	getDetail = function(articleId) {
+		commonJs.doSubmit({
+			action:"/sys/0604/getDetail.do",
+			data:{
+				articleId:articleId
+			}
+		});
+	};
+
+	doProcess = function(param) {
+		var action = "";
+
+		if (param.mode == "Edit") {
+			action = "/sys/0604/getUpdate.do";
+		} else if (param.mode == "Reply") {
+			action = "/sys/0604/getInsert.do";
+		}
+
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:action,
+			data:{
+				mode:param.mode,
+				articleId:param.articleId
+			}
+		});
 	};
 
 	doDelete = function() {
@@ -214,6 +241,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
@@ -222,7 +250,7 @@ $(function() {
 									}]
 								});
 							} else {
-								commonJs.error(result.message);
+								commonJs.warn(result.message);
 							}
 						}
 					});
@@ -248,8 +276,8 @@ $(function() {
 		});
 
 		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
+		ctxMenu.boardAction[1].fun = function() {doProcess({mode:"Edit", articleId:articleId});};
+		ctxMenu.boardAction[2].fun = function() {doProcess({mode:"Reply", articleId:articleId});};
 		ctxMenu.boardAction[3].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.boardAction, {

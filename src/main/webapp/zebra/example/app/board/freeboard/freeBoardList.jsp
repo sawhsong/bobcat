@@ -98,7 +98,7 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
-			<col width="*%"/>
+			<col width="*"/>
 			<col width="5%"/>
 			<col width="18%"/>
 			<col width="8%"/>

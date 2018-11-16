@@ -8,6 +8,7 @@ package project.app.sys.sys0604;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseAction;
+import zebra.util.CommonUtil;
 
 public class Sys0604Action extends BaseAction {
 	@Autowired
@@ -42,22 +43,55 @@ public class Sys0604Action extends BaseAction {
 		return "update";
 	}
 
-	public String exeInsert() throws Exception {
+	public String getAttachedFile() throws Exception {
 		try {
-			biz.exeInsert(paramEntity);
+			biz.getAttachedFile(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
 
+	public String exeInsert() throws Exception {
+		try {
+			biz.exeInsert(paramEntity);
+
+			if (paramEntity.isSuccess()) {
+				paramEntity.setObject("action", "/sys/0604/getDefault.do");
+			} else {
+				paramEntity.setObject("script", "history.go(-1);");
+			}
+		} catch (Exception ex) {
+			paramEntity.setObject("script", "history.go(-1);");
+		} finally {
+			if (CommonUtil.isNotBlank(paramEntity.getRequestDataSet().getValue("articleContents"))) {
+				paramEntity.getRequestDataSet().setValue("articleContents", "");
+			}
+			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
+			paramEntity.setObject("message", paramEntity.getMessage());
+		}
+		return "pageHandler";
+	}
+
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);
+
+			if (paramEntity.isSuccess()) {
+				paramEntity.setObject("action", "/sys/0604/getDefault.do");
+			} else {
+				paramEntity.setObject("script", "history.go(-1);");
+			}
 		} catch (Exception ex) {
+			paramEntity.setObject("script", "history.go(-1);");
+		} finally {
+			if (CommonUtil.isNotBlank(paramEntity.getRequestDataSet().getValue("articleContents"))) {
+				paramEntity.getRequestDataSet().setValue("articleContents", "");
+			}
+			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
+			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
+		return "pageHandler";
 	}
 
 	public String exeDelete() throws Exception {

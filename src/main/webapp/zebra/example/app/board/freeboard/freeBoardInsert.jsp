@@ -69,9 +69,9 @@ var articleId = "<%=requestDataSet.getValue("articleId")%>";
 	<table class="tblEdit">
 		<colgroup>
 			<col width="12%"/>
-			<col width="37%"/>
+			<col width="38%"/>
 			<col width="12%"/>
-			<col width="37%"/>
+			<col width="38%"/>
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="fwk.bbs.header.writerName"/></th>

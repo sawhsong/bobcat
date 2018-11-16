@@ -77,7 +77,6 @@ $(function() {
 		var html = "";
 
 		searchResultDataCount = dataSet.getRowCnt();
-
 		$("#tblGridBody").html("");
 
 		if (dataSet.getRowCnt() > 0) {

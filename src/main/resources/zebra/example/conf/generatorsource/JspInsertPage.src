@@ -133,9 +133,9 @@ $(function() {
 	<table class="tblEdit">
 		<colgroup>
 			<col width="12%"/>
-			<col width="37%"/>
+			<col width="38%"/>
 			<col width="12%"/>
-			<col width="37%"/>
+			<col width="38%"/>
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerName"/></th>

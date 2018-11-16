@@ -32,8 +32,8 @@ $(function() {
 		}
 	});
 
-	$("#btnClose").click(function(event) {
-		parent.popup.close();
+	$("#btnBack").click(function(event) {
+		history.go(-1);
 	});
 
 	$("#btnAddFile").click(function(event) {
@@ -43,14 +43,27 @@ $(function() {
 		});
 	});
 
+	$(document).keypress(function(event) {
+		if (event.which == 13) {
+			var element = event.target;
+		}
+	});
+
 	/*!
 	 * process
 	 */
+	setEditor = function() {
+		$("#articleContents").ckeditor({
+			height:450,
+			toolbar:com.constants.toolbarDefault
+		});
+	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		setEditor();
 		$("#writerName").focus();
 	});
 });
