@@ -7,8 +7,6 @@
         <action class="project.app.bbs.bbs0202.Bbs0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/bbs/bbs0202/Bbs0202List.jsp</result>
             <result name="detail" type="debugDispatcherResult">/project/app/bbs/bbs0202/Bbs0202DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/bbs/bbs0202/Bbs0202InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/bbs/bbs0202/Bbs0202UpdatePop.jsp</result>
         </action>
         <!--Bbs0204 - Free Board-->
         <action class="project.app.bbs.bbs0204.Bbs0204Action" method="{1}" name="0204/*">

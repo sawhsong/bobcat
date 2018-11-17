@@ -29,6 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var articleId = "<%=sysBoard.getArticleId()%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -47,9 +48,6 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -92,7 +90,7 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="bbs0202.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa  style="height:214px;padding:0px 4px 0px 0px" value="<%=noticeBoard.getArticleContents()%>" status="display"/>
+				<ui:txa  style="height:214px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
