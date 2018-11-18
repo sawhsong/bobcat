@@ -22,9 +22,12 @@ import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
+import project.conf.resource.ormapper.dao.UsrIncome.UsrIncomeDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Rkm0202BizImpl extends BaseBiz implements Rkm0202Biz {
+	@Autowired
+	private UsrIncomeDao usrIncomeDao;
 	@Autowired
 	private SysBoardDao sysBoardDao;
 	@Autowired
@@ -42,13 +45,15 @@ public class Rkm0202BizImpl extends BaseBiz implements Rkm0202Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
 
 		try {
+			queryAdvisor.setObject("orgId", orgId);
+			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.setRequestDataSet(requestDataSet);
-			queryAdvisor.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setAjaxResponseDataSet(usrIncomeDao.getSalesIncomeDataSetByCriteria(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

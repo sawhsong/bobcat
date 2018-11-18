@@ -57,6 +57,7 @@
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<table class="tblSearch">
+		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
 			<col width="50%"/>
 			<col width="50%"/>

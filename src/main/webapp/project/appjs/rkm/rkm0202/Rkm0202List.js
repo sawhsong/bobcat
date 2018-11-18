@@ -11,43 +11,49 @@ $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+	$("#icnCheck").click(function(event) {
+		commonJs.toggleCheckboxes("chkForDel");
 	});
 
-	$("#btnDelete").click(function(event) {
-		doDelete();
+	$("#icnDataEntryDate").click(function(event) {
+		commonJs.openCalendar(event, "deDate");
 	});
 
-	$("#btnSearch").click(function(event) {
+	$("#financialYear").change(function() {
 		doSearch();
 	});
 
-	$("#btnClear").click(function(event) {
-		commonJs.clearSearchCriteria();
+	$("#quarterName").change(function() {
+		doSearch();
 	});
 
-	$("#icnFromDate").click(function(event) {
-		commonJs.openCalendar(event, "fromDate");
-	});
-
-	$("#icnToDate").click(function(event) {
-		commonJs.openCalendar(event, "toDate");
-	});
-
-	$("#icnCheck").click(function(event) {
-		commonJs.toggleCheckboxes("chkForDel");
+	$("#recordKeepingType").change(function() {
+		doSearch();
 	});
 
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
-
-			if ($(element).is("[name=searchWord]") || $(element).is("[name=fromDate]") || $(element).is("[name=toDate]")) {
-				doSearch();
-			}
 		}
 	});
+
+	/*!
+	 * context menus
+	 */
+	setDataEntryActionButtonContextMenu = function() {
+		ctxMenu.dataEntryAction[0].fun = function() {};
+		ctxMenu.dataEntryAction[1].fun = function() {};
+		ctxMenu.dataEntryAction[2].fun = function() {};
+
+		$("#icnDataEntryAction").contextMenu(ctxMenu.dataEntryAction, {
+			classPrefix:com.constants.ctxClassPrefixGrid,
+			effectDuration:300,
+			borderRadius:"bottom 4px",
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:0
+		});
+	};
 
 	/*!
 	 * process
@@ -75,7 +81,8 @@ $(function() {
 
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
-		var html = "";
+		var html = "", totHtml = "";
+		var totNonCash = 0, totCash = 0, totGross = 0, totGstFree = 0, totGst = 0, totNet = 0;
 
 		searchResultDataCount = dataSet.getRowCnt();
 		$("#tblGridBody").html("");
