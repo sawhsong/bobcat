@@ -776,10 +776,10 @@ if (CommonUtil.equalsIgnoreCase(authGroupIdAdminToolArea, "0") && isVisibleAdmin
 					</colgroup>
 					<tr>
 						<td class="tdDefaultRt" style="padding:0px 0px 2px 0px;" colspan="2">
-							<tag:buttonGroup id="buttonGroup">
+							<ui:buttonGroup id="buttonGroup">
 								<tag:button id="btnReloadUserAdminTool" caption="button.com.reload" iconClass="fa-refresh"/>
 								<tag:button id="btnReturnUserAdminTool" caption="button.com.return" iconClass="fa-history"/>
-							</tag:buttonGroup>
+							</ui:buttonGroup>
 						</td>
 					</tr>
 					<tr>

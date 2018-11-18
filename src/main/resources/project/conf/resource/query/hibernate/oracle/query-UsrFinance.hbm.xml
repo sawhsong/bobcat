@@ -5,4 +5,192 @@
  * - USR_FINANCE - Financial Loan Related Data Entry (Repayment / Borrowing / Lending)
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrFinance.getRepaymentSummaryDataSet">
+	<![CDATA[
+		select 'Repayment' as finance_entry_type,
+		       typ.repayment_type_id,
+		       typ.description,
+		       nvl(fin.finance_entry_count, 0) as finance_entry_count
+		  from sys_repayment_type typ,
+		       (select finance_type_id,
+		               count(*) as finance_entry_count
+		          from usr_finance
+		         where org_id = '${orgId}'
+		           and finance_year = '${financialYear}'
+		           and quarter_name = '${quarterName}'
+		           and finance_entry_type = 'REP'
+		         group by finance_type_id
+		       ) fin
+		 where typ.org_category = '${orgCategory}'
+		   and typ.repayment_type_id = fin.finance_type_id(+)
+		 order by typ.sort_order
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrFinance.getBorrowingSummaryDataSet">
+	<![CDATA[
+		select 'Borrowing' as finance_entry_type,
+		       typ.borrowing_type_id,
+		       typ.description,
+		       nvl(fin.finance_entry_count, 0) as finance_entry_count
+		  from sys_borrowing_type typ,
+		       (select finance_type_id,
+		               count(*) as finance_entry_count
+		          from usr_finance
+		         where org_id = '${orgId}'
+		           and finance_year = '${financialYear}'
+		           and quarter_name = '${quarterName}'
+		           and finance_entry_type = 'BOR'
+		         group by finance_type_id
+		       ) fin
+		 where typ.org_category = '${orgCategory}'
+		   and typ.borrowing_type_id = fin.finance_type_id(+)
+		 order by typ.sort_order
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrFinance.getLendingSummaryDataSet">
+	<![CDATA[
+		select 'Lending' as finance_entry_type,
+		       typ.lending_type_id,
+		       typ.description,
+		       nvl(fin.finance_entry_count, 0) as finance_entry_count
+		  from sys_lending_type typ,
+		       (select finance_type_id,
+		               count(*) as finance_entry_count
+		          from usr_finance
+		         where org_id = '${orgId}'
+		           and finance_year = '${financialYear}'
+		           and quarter_name = '${quarterName}'
+		           and finance_entry_type = 'LEN'
+		         group by finance_type_id
+		       ) fin
+		 where typ.org_category = '${orgCategory}'
+		   and typ.lending_type_id = fin.finance_type_id(+)
+		 order by typ.sort_order
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrFinance.getRepaymentDataSetByCriteria">
+	<![CDATA[
+		select ufn.finance_id,
+		       ufn.finance_year,
+		       ufn.quarter_name,
+		       (select description_${langCode} from sys_common_code where code_type = 'QUARTER_NAME' and common_code = ufn.quarter_name) as quarter_name_desc,
+		       ufn.org_id,
+		       ufn.finance_entry_type as finance_entry_type,
+		       (select description_${langCode} from sys_common_code where code_type = 'FINANCE_ENTRY_TYPE' and common_code = ufn.finance_entry_type) as finance_entry_type_desc,
+		       ufn.finance_type_id,
+		       srt.repayment_type as finance_type_code,
+		       srt.description as finance_type_desc,
+		       srt.is_apply_gst as finance_type_is_apply_gst,
+		       nvl(srt.gst_percentage, 0) as gst_percentage,
+		       srt.account_code,
+		       to_char(ufn.finance_date, '${dateFormat}') as finance_date,
+		       nvl(ufn.repayment_amt, 0) as repayment_amt,
+		       nvl(ufn.principal_amt, 0) as principal_amt,
+		       nvl(ufn.interest_percentage, 0) as interest_percentage,
+		       to_char(ufn.start_date, '${dateFormat}') as start_date,
+		       to_char(ufn.end_date, '${dateFormat}') as end_date,
+		       ufn.is_completed,
+		       ufn.description,
+		       (select count(*) from usr_finance_file where finance_id = ufn.finance_id) as finance_file_cnt,
+		       ufn.insert_user_id,
+		       to_char(ufn.insert_date, '${dateFormat}') as insert_date,
+		       ufn.update_user_id,
+		       to_char(ufn.update_date, '${dateFormat}') as update_date,
+		       to_char(nvl(ufn.update_date, ufn.insert_date), '${dateFormat}') as entry_date
+		  from usr_finance ufn,
+		       sys_repayment_type srt
+		 where ufn.finance_type_id = srt.repayment_type_id
+		   and ufn.finance_entry_type = '${financeEntryType}'
+		   and ufn.org_id = '${orgId}'
+		   and ufn.finance_year = '${financialYear}'
+		   and ufn.quarter_name = '${quarterName}'
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrFinance.getBorrowingDataSetByCriteria">
+		<![CDATA[
+			select ufn.finance_id,
+			       ufn.finance_year,
+			       ufn.quarter_name,
+			       (select description_${langCode} from sys_common_code where code_type = 'QUARTER_NAME' and common_code = ufn.quarter_name) as quarter_name_desc,
+			       ufn.org_id,
+			       ufn.finance_entry_type as finance_entry_type,
+			       (select description_${langCode} from sys_common_code where code_type = 'FINANCE_ENTRY_TYPE' and common_code = ufn.finance_entry_type) as finance_entry_type_desc,
+			       ufn.finance_type_id,
+			       sbt.borrowing_type as finance_type_code,
+			       sbt.description as finance_type_desc,
+			       sbt.is_apply_gst as finance_type_is_apply_gst,
+			       nvl(sbt.gst_percentage, 0) as gst_percentage,
+			       sbt.account_code,
+			       to_char(ufn.finance_date, '${dateFormat}') as finance_date,
+			       nvl(ufn.repayment_amt, 0) as repayment_amt,
+			       nvl(ufn.principal_amt, 0) as principal_amt,
+			       nvl(ufn.interest_percentage, 0) as interest_percentage,
+			       to_char(ufn.start_date, '${dateFormat}') as start_date,
+			       to_char(ufn.end_date, '${dateFormat}') as end_date,
+			       ufn.is_completed,
+			       ufn.description,
+			       (select count(*) from usr_finance_file where finance_id = ufn.finance_id) as finance_file_cnt,
+			       ufn.insert_user_id,
+			       to_char(ufn.insert_date, '${dateFormat}') as insert_date,
+			       ufn.update_user_id,
+			       to_char(ufn.update_date, '${dateFormat}') as update_date,
+			       to_char(nvl(ufn.update_date, ufn.insert_date), '${dateFormat}') as entry_date
+			  from usr_finance ufn,
+			       sys_borrowing_type sbt
+			 where ufn.finance_type_id = sbt.borrowing_type_id
+			   and ufn.finance_entry_type = '${financeEntryType}'
+			   and ufn.org_id = '${orgId}'
+			   and ufn.finance_year = '${financialYear}'
+			   and ufn.quarter_name = '${quarterName}'
+			${auto_fill}
+			${order_by_clause}
+		]]>
+	</sql-query>
+
+	<sql-query name="query.UsrFinance.getLendingDataSetByCriteria">
+		<![CDATA[
+			select ufn.finance_id,
+			       ufn.finance_year,
+			       ufn.quarter_name,
+			       (select description_${langCode} from sys_common_code where code_type = 'QUARTER_NAME' and common_code = ufn.quarter_name) as quarter_name_desc,
+			       ufn.org_id,
+			       ufn.finance_entry_type as finance_entry_type,
+			       (select description_${langCode} from sys_common_code where code_type = 'FINANCE_ENTRY_TYPE' and common_code = ufn.finance_entry_type) as finance_entry_type_desc,
+			       ufn.finance_type_id,
+			       slt.lending_type as finance_type_code,
+			       slt.description as finance_type_desc,
+			       slt.is_apply_gst as finance_type_is_apply_gst,
+			       nvl(slt.gst_percentage, 0) as gst_percentage,
+			       slt.account_code,
+			       to_char(ufn.finance_date, '${dateFormat}') as finance_date,
+			       nvl(ufn.repayment_amt, 0) as repayment_amt,
+			       nvl(ufn.principal_amt, 0) as principal_amt,
+			       nvl(ufn.interest_percentage, 0) as interest_percentage,
+			       to_char(ufn.start_date, '${dateFormat}') as start_date,
+			       to_char(ufn.end_date, '${dateFormat}') as end_date,
+			       ufn.is_completed,
+			       ufn.description,
+			       (select count(*) from usr_finance_file where finance_id = ufn.finance_id) as finance_file_cnt,
+			       ufn.insert_user_id,
+			       to_char(ufn.insert_date, '${dateFormat}') as insert_date,
+			       ufn.update_user_id,
+			       to_char(ufn.update_date, '${dateFormat}') as update_date,
+			       to_char(nvl(ufn.update_date, ufn.insert_date), '${dateFormat}') as entry_date
+			  from usr_finance ufn,
+			       sys_lending_type slt
+			 where ufn.finance_type_id = slt.lending_type_id
+			   and ufn.finance_entry_type = '${financeEntryType}'
+			   and ufn.org_id = '${orgId}'
+			   and ufn.finance_year = '${financialYear}'
+			   and ufn.quarter_name = '${quarterName}'
+			${auto_fill}
+			${order_by_clause}
+		]]>
+	</sql-query>
 </hibernate-mapping>

@@ -5,6 +5,11 @@
 package project.conf.resource.ormapper.dao.UsrIncome;
 
 import zebra.base.IDao;
+import zebra.data.DataSet;
+import zebra.data.QueryAdvisor;
 
 public interface UsrIncomeDao extends IDao {
+	public DataSet getSalesIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getOtherIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getIncomeSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 }

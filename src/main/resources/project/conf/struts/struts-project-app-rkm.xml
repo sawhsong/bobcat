@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="rkm" namespace="/rkm" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Rkm0202 - Sales Income-->
+        <action class="project.app.rkm.rkm0202.Rkm0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202UpdatePop.jsp</result>
+        </action>
+    </package>
+</struts>

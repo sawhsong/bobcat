@@ -6,4 +6,5 @@
     <include file="project/conf/struts/struts-project-app-login.xml"/>
     <include file="project/conf/struts/struts-project-app-sys.xml"/>
     <include file="project/conf/struts/struts-project-app-bbs.xml"/>
+    <include file="project/conf/struts/struts-project-app-rkm.xml"/>
 </struts>
