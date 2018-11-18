@@ -186,38 +186,6 @@ $(function() {
 		});
 	};
 
-	getInsert = function() {
-		commonJs.doSubmit({action:"/sys/0604/getInsert.do"});
-	};
-
-	getDetail = function(articleId) {
-		commonJs.doSubmit({
-			action:"/sys/0604/getDetail.do",
-			data:{
-				articleId:articleId
-			}
-		});
-	};
-
-	doProcess = function(param) {
-		var action = "";
-
-		if (param.mode == "Edit") {
-			action = "/sys/0604/getUpdate.do";
-		} else if (param.mode == "Reply") {
-			action = "/sys/0604/getInsert.do";
-		}
-
-		commonJs.doSubmit({
-			form:"fmDefault",
-			action:action,
-			data:{
-				mode:param.mode,
-				articleId:param.articleId
-			}
-		});
-	};
-
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
 			commonJs.warn(com.message.I902);

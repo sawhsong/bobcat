@@ -47,7 +47,7 @@ public class Bbs0204BizImpl extends BaseBiz implements Bbs0204Biz {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(sysBoardDao.getFreeBoardDataSetByCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -115,7 +115,7 @@ public class Bbs0204BizImpl extends BaseBiz implements Bbs0204Biz {
 
 		try {
 			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
+			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_FREE"));
 			sysBoard.setWriterId(loggedInUserId);
 			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
 			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));

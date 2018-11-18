@@ -56,33 +56,29 @@
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<table class="tblDefault">
-				<colgroup>
-					<col width="50%"/>
-					<col width="50%"/>
-				</colgroup>
-				<tr>
-					<td class="tdDefault">
-						<label for="searchType" class="lblEn hor"><mc:msg key="bbs0204.search.searchType"/></label>
-						<div style="float:left;padding-right:4px;">
-							<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select=="/>
-						</div>
-						<ui:text name="searchWord" className="hor" style="width:280px"/>
-					</td>
-					<td class="tdDefault">
-						<label for="fromDate" class="lblEn hor"><mc:msg key="bbs0204.search.searchPeriod"/></label>
-						<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="bbs0204.search.searchDateFrom" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar hor" title="bbs0204.search.searchDateFrom"/>
-						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<ui:text name="toDate" className="Ct hor" style="width:100px" checkName="bbs0204.search.searchDateTo" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar hor" title="bbs0204.search.searchDateTo"/>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+	<table class="tblSearch">
+		<colgroup>
+			<col width="50%"/>
+			<col width="50%"/>
+		</colgroup>
+		<tr>
+			<td class="tdSearch">
+				<label for="searchType" class="lblEn hor"><mc:msg key="sys0604.search.searchType"/></label>
+				<div style="float:left;padding-right:4px;">
+					<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select=="/>
+				</div>
+				<ui:text name="searchWord" className="hor" style="width:280px"/>
+			</td>
+			<td class="tdDefault">
+				<label for="fromDate" class="lblEn hor"><mc:msg key="sys0604.search.searchPeriod"/></label>
+				<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="sys0604.search.searchDateFrom" option="date"/>
+				<ui:icon id="icnFromDate" className="fa-calendar hor" title="sys0604.search.searchDateFrom"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="toDate" className="Ct hor" style="width:100px" checkName="sys0604.search.searchDateTo" option="date"/>
+				<ui:icon id="icnToDate" className="fa-calendar hor" title="sys0604.search.searchDateTo"/>
+			</td>
+		</tr>
+	</table>
 </div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************

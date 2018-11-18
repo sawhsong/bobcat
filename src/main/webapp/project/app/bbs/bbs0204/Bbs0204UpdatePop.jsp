@@ -29,6 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var articleId = "<%=requestDataSet.getValue("articleId")%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -36,19 +37,22 @@
 ************************************************************************************************/%>
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
-<div id="divPopupWindowHolder">
-<div id="divFixedPanelPopup">
+<div id="divHeaderHolder" class="ui-layout-north"><%@ include file="/project/common/include/header.jsp"%></div>
+<div id="divBodyHolder" class="ui-layout-center">
+<div id="divBodyLeft" class="ui-layout-west"><%@ include file="/project/common/include/bodyLeft.jsp"%></div>
+<div id="divBodyCenter" class="ui-layout-center">
+<div id="divFixedPanel">
 <div id="divLocationPathArea"><%@ include file="/project/common/include/bodyLocationPathArea.jsp"%></div>
 <%/************************************************************************************************
 * Real Contents - fixed panel(tab, button, search, information)
 ************************************************************************************************/%>
 <div id="divTabArea"></div>
-<div id="divButtonArea" class="areaContainerPopup">
+<div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -59,46 +63,46 @@
 ************************************************************************************************/%>
 <div class="breaker"></div>
 </div>
-<div id="divScrollablePanelPopup">
+<div id="divScrollablePanel">
 <%/************************************************************************************************
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
-<div id="divDataArea" class="areaContainerPopup">
+<div id="divDataArea" class="areaContainer">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="12%"/>
+			<col width="37%"/>
+			<col width="12%"/>
+			<col width="37%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="bbs0204.header.writerName"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="bbs0204.header.writerName"/></th>
 			<td class="tdEdit">
 				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="bbs0204.header.writerName" options="mandatory"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="bbs0204.header.writerEmail"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="bbs0204.header.writerEmail"/></th>
 			<td class="tdEdit">
 				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="bbs0204.header.writerEmail" option="email" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="bbs0204.header.articleSubject"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="bbs0204.header.articleSubject"/></th>
 			<td class="tdEdit" colspan="3">
 				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="bbs0204.header.articleSubject" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="bbs0204.header.articleContents"/></th>
+			<th class="thEdit rt"><mc:msg key="bbs0204.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
+				<ui:txa name="articleContents" value="<%=sysBoard.getArticleContents()%>"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
+			<th class="thEdit rt">
 				<mc:msg key="bbs0204.header.attachedFile"/><br/>
 			</th>
 			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
+				<div id="divAttachedFileList" style="width:100%;height:80px;overflow-y:auto;">
 					<table class="tblDefault withPadding">
 <%
 					if (fileDataSet.getRowCnt() > 0) {
@@ -123,14 +127,14 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
+			<th class="thEdit rt">
 				<mc:msg key="bbs0204.header.attachedFile"/><br/>
 				<div id="divButtonAreaRight">
 					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
 				</div>
 			</th>
 			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
+				<div id="divAttachedFile" style="width:100%;height:72px;overflow-y:auto;">
 				</div>
 			</td>
 		</tr>
@@ -142,6 +146,9 @@
 ************************************************************************************************/%>
 </div>
 </div>
+<div id="divBodyRight" class="ui-layout-east"><%@ include file="/project/common/include/bodyRight.jsp"%></div>
+</div>
+<div id="divFooterHolder" class="ui-layout-south"><%@ include file="/project/common/include/footer.jsp"%></div>
 <%/************************************************************************************************
 * Additional Elements
 ************************************************************************************************/%>

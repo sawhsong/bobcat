@@ -2,6 +2,7 @@
  * Framework Generated Javascript Source
  * - Bbs0204List.js
  *************************************************************************************************/
+jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
@@ -11,7 +12,7 @@ $(function() {
 	 * event
 	 */
 	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+		getInsert();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -109,14 +110,14 @@ $(function() {
 				gridTd.addClassName("Ct");
 				if (dataSet.getValue(i, "FILE_CNT") > 0) {
 					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
+					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID")).setScript("getAttachedFile(this)");
 					gridTd.addChild(iconAttachFile);
 				}
 				gridTr.addChild(gridTd);
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "VISIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "INSERT_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")));
 
 				var iconAction = new UiIcon();
 				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
@@ -155,40 +156,34 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getInsert = function() {
+		commonJs.doSubmit({action:"/bbs/0204/getInsert.do"});
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+	getDetail = function(articleId) {
+		commonJs.doSubmit({
+			action:"/bbs/0204/getDetail.do",
+			data:{
+				articleId:articleId
+			}
+		});
+	};
 
-		if (param.mode == "Detail") {
-			url = "/bbs/0204/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/bbs/0204/getInsert.do";
-			header = com.header.popHeaderEdit;
+	doProcess = function(param) {
+		var action = "";
+
+		if (param.mode == "New" || param.mode == "Reply") {
+			action = "/bbs/0204/getInsert.do";
 		} else if (param.mode == "Edit") {
-			url = "/bbs/0204/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+			action = "/bbs/0204/getUpdate.do";
+		} else if (param.mode == "Detail") {
+			action = "/bbs/0204/getDetail.do";
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
-
-		popup = commonJs.openPopup(popParam);
+		commonJs.doSubmit({
+			action:action,
+			data:param
+		});
 	};
 
 	doDelete = function() {
@@ -214,6 +209,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
@@ -258,6 +254,72 @@ $(function() {
 			position:"bottom",
 			horAdjust:0,
 			verAdjust:2
+		});
+	};
+
+	getAttachedFile = function(img) {
+		commonJs.ajaxSubmit({
+			url:"/bbs/0204/getAttachedFile.do",
+			dataType:"json",
+			data:{
+				articleId:$(img).attr("articleId")
+			},
+			blind:false,
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var dataSet = result.dataSet;
+					attchedFileContextMenu = [];
+
+					for (var i=0; i<dataSet.getRowCnt(); i++) {
+						var repositoryPath = dataSet.getValue(i, "REPOSITORY_PATH");
+						var originalName = dataSet.getValue(i, "ORIGINAL_NAME");
+						var newName = dataSet.getValue(i, "NEW_NAME");
+						var fileIcon = dataSet.getValue(i, "FILE_ICON");
+						var fileSize = dataSet.getValue(i, "FILE_SIZE") / 1024;
+
+						attchedFileContextMenu.push({
+							name:originalName+" ("+commonJs.getNumberMask(fileSize, "0,0")+") KB",
+							title:originalName,
+							img:fileIcon,
+							repositoryPath:repositoryPath,
+							originalName:originalName,
+							newName:newName,
+							fun:function() {
+								var index = $(this).index();
+
+								downloadFile({
+									repositoryPath:attchedFileContextMenu[index].repositoryPath,
+									originalName:attchedFileContextMenu[index].originalName,
+									newName:attchedFileContextMenu[index].newName
+								});
+							}
+						});
+					}
+
+					$(img).contextMenu(attchedFileContextMenu, {
+						classPrefix:com.constants.ctxClassPrefixGrid,
+						displayAround:"trigger",
+						position:"bottom",
+						horAdjust:0,
+						verAdjust:2,
+						containment:$("#divScrollablePanel")
+					});
+				}
+			}
+		});
+	};
+
+	downloadFile = function(param) {
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:"/download.do",
+			data:{
+				repositoryPath:param.repositoryPath,
+				originalName:param.originalName,
+				newName:param.newName
+			}
 		});
 	};
 
