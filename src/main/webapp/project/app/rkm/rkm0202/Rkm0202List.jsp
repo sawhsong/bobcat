@@ -68,10 +68,6 @@
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
-		<colgroup>
-			<col width="50%"/>
-			<col width="50%"/>
-		</colgroup>
 		<tr>
 			<td class="tdSearch">
 				<label for="financialYear" class="lblEn hor mandatory"><mc:msg key="rkm0202.search.financialYear"/></label>

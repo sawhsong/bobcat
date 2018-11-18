@@ -11,6 +11,18 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnDelete").click(function(event) {
+		doDelete();
+	});
+
+	$("#btnSearch").click(function(event) {
+		doSearch();
+	});
+
+	$("#btnClear").click(function(event) {
+		commonJs.clearSearchCriteria();
+	});
+
 	$("#icnCheck").click(function(event) {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
@@ -46,8 +58,9 @@ $(function() {
 		ctxMenu.dataEntryAction[2].fun = function() {};
 
 		$("#icnDataEntryAction").contextMenu(ctxMenu.dataEntryAction, {
-			classPrefix:com.constants.ctxClassPrefixGrid,
+			classPrefix:com.constants.ctxClassPrefixButton,
 			effectDuration:300,
+			effect:"slide",
 			borderRadius:"bottom 4px",
 			displayAround:"trigger",
 			position:"bottom",
@@ -61,74 +74,65 @@ $(function() {
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
-		if (commonJs.doValidate($("#fmDefault"))) {
-			setTimeout(function() {
-				commonJs.ajaxSubmit({
-					url:"/rkm/0202/getList.do",
-					dataType:"json",
-					formId:"fmDefault",
-					success:function(data, textStatus) {
-						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+		setTimeout(function() {
+			commonJs.ajaxSubmit({
+				url:"/rkm/0202/getList.do",
+				dataType:"json",
+				formId:"fmDefault",
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-						if (result.isSuccess == true || result.isSuccess == "true") {
-							renderDataGridTable(result);
-						}
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						renderDataGridTable(result);
 					}
-				});
-			}, 100);
-		}
+				}
+			});
+		}, 100);
+
+		setSummaryDataForAdminTool();
 	};
 
 	renderDataGridTable = function(result) {
 		var dataSet = result.dataSet;
 		var html = "", totHtml = "";
 		var totNonCash = 0, totCash = 0, totGross = 0, totGstFree = 0, totGst = 0, totNet = 0;
+		var totGridTr = new UiGridTr();
 
 		searchResultDataCount = dataSet.getRowCnt();
 		$("#tblGridBody").html("");
+		$("#tblGridFoot").html("");
 
 		if (dataSet.getRowCnt() > 0) {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "", iLength = 200;
-				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
 
-				gridTr.setClassName("noBorderHor noStripe");
+				totNonCash += parseFloat(dataSet.getValue(i, "NON_CASH_AMT"));
+				totCash += parseFloat(dataSet.getValue(i, "CASH_AMT"));
+				totGross += parseFloat(dataSet.getValue(i, "GROSS_AMT"));
+				totGstFree += parseFloat(dataSet.getValue(i, "GST_FREE_AMT"));
+				totGst += parseFloat(dataSet.getValue(i, "GST_AMT"));
+				totNet += parseFloat(dataSet.getValue(i, "NET_AMT"));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "INCOME_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
-
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				uiAnc.setText(dataSet.getValue(i, "QUARTER_DATE")).setScript("getDetail('"+dataSet.getValue(i, "INCOME_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				var gridTd = new UiGridTd();
-				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
-					gridTd.addChild(iconAttachFile);
-				}
-				gridTr.addChild(gridTd);
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "NON_CASH_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "CASH_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "GROSS_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "GST_FREE_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "GST_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "NET_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "IS_COMPLETED")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "INSERT_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "UPDATE_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("incomeId:"+dataSet.getValue(i, "INCOME_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -136,28 +140,40 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:12").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText("<mc:msg key=\"rkm0202.grid.incomeTotal\"/>"));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNonCash, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totCash, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGstFree, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+
+		totHtml += gridTr.toHtmlString();
+
 		$("#tblGridBody").append($(html));
+		$("#tblGridFoot").append($(totHtml));
 
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
+			isPageable:false,
 			isFilter:false,
 			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
-
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.boardAction);
+			$(this).contextMenu(ctxMenu.dataEntrySalesAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
@@ -311,10 +327,9 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
-		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#searchWord").focus();
+		setDataEntryActionButtonContextMenu();
+		commonJs.setFieldDateMask("deDate");
+		$(".numeric").number(true, 2);
 		doSearch();
 	});
 });

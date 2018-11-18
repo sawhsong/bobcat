@@ -39,9 +39,11 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		String inputValue = requestDataSet.getValue("inputValue");
+		String orgCategory = requestDataSet.getValue("orgCategoryAdminTool");
 
 		try {
 			queryAdvisor.addAutoFillCriteria(inputValue, "lower(login_id) like lower('"+inputValue+"%')");
+			queryAdvisor.addAutoFillCriteria(orgCategory, "org_id in (select org_id from sys_org where org_category = '"+CommonUtil.upperCase(orgCategory)+"')");
 			queryAdvisor.addOrderByClause("login_id");
 			paramEntity.setAjaxResponseDataSet(sysUserDao.getUserNameDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
@@ -55,9 +57,11 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		String inputValue = requestDataSet.getValue("inputValue");
+		String orgCategory = requestDataSet.getValue("orgCategoryAdminTool");
 
 		try {
 			queryAdvisor.addAutoFillCriteria(inputValue, "lower(user_name) like lower('"+inputValue+"%')");
+			queryAdvisor.addAutoFillCriteria(orgCategory, "org_id in (select org_id from sys_org where org_category = '"+CommonUtil.upperCase(orgCategory)+"')");
 			queryAdvisor.addOrderByClause("user_name");
 			paramEntity.setAjaxResponseDataSet(sysUserDao.getUserNameDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);

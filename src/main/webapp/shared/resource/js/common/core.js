@@ -681,16 +681,23 @@ var nony = {
 
 		var paramUrl = ($.nony.isEmpty(param.url)) ? "/common/autoCompletion/" : param.url;
 		var dataSource = [], option;
+		var additionalObject = param.addValElementNames;
+		var data = {};
 		var opt = {
 			source:dataSource,
 			minLength:1,
 			search:function(event, ui) {
+				data.inputValue = $(this).val();
+				if (additionalObject) {
+					for (var i=0; i<additionalObject.length; i++) {
+						data[additionalObject[i]] = $("#"+additionalObject[i]).val();
+					}
+				}
+
 				$.nony.ajax.ajaxSubmit({
 					url:paramUrl+param.method+".do",
 					dataType:"json",
-					data:{
-						inputValue:$(this).val()
-					},
+					data:data,
 					blind:false,
 					success:function(data, textStatus) {
 						var result = commonJs.parseAjaxResult(data, textStatus, "json");

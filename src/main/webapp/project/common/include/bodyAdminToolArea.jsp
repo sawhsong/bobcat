@@ -32,6 +32,11 @@ $(function() {
 		removeSessionValuesForAdminTool();
 	});
 
+	$("#orgCategoryAdminTool").change(function() {
+		$("#userNameAsAdminTool").val("");
+		$("#loginIdAsAdminTool").val("");
+	});
+
 	setSummaryDataForAdminTool = function() {
 		if (isVisibleAdminToolAdminToolArea) {
 			setSummaryIncomeForAdminTool();
@@ -426,7 +431,7 @@ $(function() {
 						}
 						$("#tblIncomeEntrySummaryForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblIncomeEntrySummaryForAdminTool");
+//						commonJs.hideProcMessageOnElement("tblIncomeEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -458,7 +463,7 @@ $(function() {
 						}
 						$("#tblExpenseEntrySummaryForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblExpenseEntrySummaryForAdminTool");
+//						commonJs.hideProcMessageOnElement("tblExpenseEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -490,7 +495,7 @@ $(function() {
 						}
 						$("#tblAssetEntrySummaryForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblAssetEntrySummaryForAdminTool");
+//						commonJs.hideProcMessageOnElement("tblAssetEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -522,7 +527,7 @@ $(function() {
 						}
 						$("#tblRepaymentEntrySummaryForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblRepaymentEntrySummaryForAdminTool");
+// 						commonJs.hideProcMessageOnElement("tblRepaymentEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -554,7 +559,7 @@ $(function() {
 						}
 						$("#tblBorrowingEntrySummaryForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblBorrowingEntrySummaryForAdminTool");
+// 						commonJs.hideProcMessageOnElement("tblBorrowingEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -586,7 +591,7 @@ $(function() {
 						}
 						$("#tblLendingEntrySummaryForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblLendingEntrySummaryForAdminTool");
+// 						commonJs.hideProcMessageOnElement("tblLendingEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -623,7 +628,7 @@ $(function() {
 						}
 						$("#tblEmployeeEntrySummaryBodyForAdminTool").append($(html));
 
-						commonJs.hideProcMessageOnElement("tblEmployeeEntrySummaryBodyForAdminTool");
+// 						commonJs.hideProcMessageOnElement("tblEmployeeEntrySummaryBodyForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -709,6 +714,7 @@ $(function() {
 			method:"getUserName",
 			label:"user_name",
 			value:"user_id",
+			addValElementNames:["orgCategoryAdminTool"],
 			focus:function(event, ui) {
 				$("#userNameAsAdminTool").val(ui.item.label);
 				return false;
@@ -733,6 +739,7 @@ $(function() {
 			method:"getLoginId",
 			label:"login_id",
 			value:"user_id",
+			addValElementNames:["orgCategoryAdminTool"],
 			focus:function(event, ui) {
 				$("#loginIdAsAdminTool").val(ui.item.label);
 				return false;
@@ -768,18 +775,24 @@ if (CommonUtil.equalsIgnoreCase(authGroupIdAdminToolArea, "0") && isVisibleAdmin
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<td class="tdAdminToolRt" style="vertical-align:top;">
+			<td class="tdAdminTool Rt" style="vertical-align:top;">
 				<table class="tblDefault">
 					<colgroup>
 						<col width="37%"/>
 						<col width="*"/>
 					</colgroup>
 					<tr>
-						<td class="tdDefaultRt" style="padding:0px 0px 2px 0px;" colspan="2">
+						<td class="tdDefault Rt" style="padding:0px 0px 2px 0px;" colspan="2">
 							<ui:buttonGroup id="buttonGroup">
-								<tag:button id="btnReloadUserAdminTool" caption="button.com.reload" iconClass="fa-refresh"/>
-								<tag:button id="btnReturnUserAdminTool" caption="button.com.return" iconClass="fa-history"/>
+								<ui:button id="btnReloadUserAdminTool" caption="button.com.reload" iconClass="fa-refresh"/>
+								<ui:button id="btnReturnUserAdminTool" caption="button.com.return" iconClass="fa-history"/>
 							</ui:buttonGroup>
+						</td>
+					</tr>
+					<tr>
+						<th class="thDefault" style="padding:2px 2px 1px 0px;"><mc:msg key="page.com.orgCategory"/></th>
+						<td class="tdDefault Lt" style="padding:2px 0px 1px 2px;">
+							<ui:ccselect name="orgCategoryAdminTool" codeType="ORG_CATEGORY" caption="==Select=="/>
 						</td>
 					</tr>
 					<tr>
@@ -797,9 +810,9 @@ if (CommonUtil.equalsIgnoreCase(authGroupIdAdminToolArea, "0") && isVisibleAdmin
 					<tr>
 						<td class="tdDefault" style="padding:4px 0px 0px 0px;" colspan="2">
 							<input type="hidden" id="userIdAdminTool" name="loginIdAdminTool" value="${sessionScope.UserIdForAdminTool}" class="txtDpl"/>
-							<input type="text" id="orgIdForAdminTool" name="orgIdForAdminTool" class="txtDplRt" value="${sessionScope.OrgIdForAdminTool}" disabled style="padding-top:1px;padding-bottom:1px;color:red;font-weight:bold;"/>
-							<input type="text" id="orgLegalNameForAdminTool" name="orgLegalNameForAdminTool" class="txtDplRt" value="${sessionScope.OrgLegalNameForAdminTool}" disabled style="padding-top:1px;padding-bottom:1px;color:red;font-weight:bold;"/>
-							<input type="text" id="orgCategoryDescForAdminTool" name="orgCategoryDescForAdminTool" class="txtDplRt" value="${sessionScope.OrgCategoryDescForAdminTool}" disabled style="padding-top:1px;padding-bottom:1px;color:red;font-weight:bold;"/>
+							<input type="text" id="orgIdForAdminTool" name="orgIdForAdminTool" class="txtDpl Rt" value="${sessionScope.OrgIdForAdminTool}" disabled style="padding-top:1px;padding-bottom:1px;color:red;font-weight:bold;"/>
+							<input type="text" id="orgLegalNameForAdminTool" name="orgLegalNameForAdminTool" class="txtDpl Rt" value="${sessionScope.OrgLegalNameForAdminTool}" disabled style="padding-top:1px;padding-bottom:1px;color:red;font-weight:bold;"/>
+							<input type="text" id="orgCategoryDescForAdminTool" name="orgCategoryDescForAdminTool" class="txtDpl Rt" value="${sessionScope.OrgCategoryDescForAdminTool}" disabled style="padding-top:1px;padding-bottom:1px;color:red;font-weight:bold;"/>
 						</td>
 					</tr>
 				</table>
