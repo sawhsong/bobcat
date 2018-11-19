@@ -68,7 +68,12 @@ var com = {
 		generate:"생성",
 		change:"변경",
 		"return":"돌아가기",
-		browse:"찾아보기"
+		browse:"찾아보기",
+
+		/*!
+		 * Caption etc
+		 */
+		total:"합계"
 	},
 	header : {
 		searchCriteria:"검색조건",

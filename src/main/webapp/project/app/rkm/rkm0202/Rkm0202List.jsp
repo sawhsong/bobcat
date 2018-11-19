@@ -118,21 +118,21 @@
 			<th class="thDataEntry"><mc:msg key="rkm0202.de.action"/></th>
 		</tr>
 		<tr>
-			<td class="tdDataEntry">
+			<td class="tdDataEntry ct">
 				<div style="display:inline-block;">
 					<ui:text name="deDate" className="hor" style="width:100px" checkName="rkm0202.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry"><ui:text name="deNonCash" className="rt numeric" checkName="rkm0202.de.nonCash" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry"><ui:text name="deCash" className="rt numeric" checkName="rkm0202.de.cash" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry"><ui:text name="deGrossSales" className="rt numeric" status="display"/></td>
-			<td class="tdDataEntry"><ui:text name="deGstFree" className="rt numeric" checkName="rkm0202.de.gstFree" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry"><ui:text name="deGst" className="rt numeric" status="display"/></td>
-			<td class="tdDataEntry"><ui:text name="deNetSales" className="rt numeric" status="display"/></td>
-			<td class="tdDataEntry"><ui:ccselect name="deRecordKeepingType" codeType="RECORD_KEEPING_TYPE"/></td>
-			<td class="tdDataEntry"><ui:text name="deRemark"/></td>
-			<td class="tdDataEntry"><ui:icon id="icnDataEntryAction" className="fa-tasks fa-lg" script="doDataEntryAction(this)"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deNonCash" className="rt numeric" checkName="rkm0202.de.nonCash" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deCash" className="rt numeric" checkName="rkm0202.de.cash" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deGrossSales" className="rt numeric" status="display"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deGstFree" className="rt numeric" checkName="rkm0202.de.gstFree" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deGst" className="rt numeric" status="display"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deNetSales" className="rt numeric" status="display"/></td>
+			<td class="tdDataEntry ct"><ui:ccselect name="deRecordKeepingType" codeType="RECORD_KEEPING_TYPE"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deRemark"/></td>
+			<td class="tdDataEntry ct"><ui:icon id="icnDataEntryAction" className="fa-tasks fa-lg" script="doDataEntryAction(this)"/></td>
 		</tr>
 	</table>
 </div>
@@ -177,13 +177,13 @@
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
+		<tfoot id="tblGridFoot" style="font-weight:bold;">
+		</tfoot>
 		<tbody id="tblGridBody">
 			<tr>
 				<td class="tdGrid Ct" colspan="12"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
-		<tfoot id="tblGridFoot" style="font-weight:bold;">
-		</tfoot>
 	</table>
 </div>
 <div id="divPagingArea"></div>

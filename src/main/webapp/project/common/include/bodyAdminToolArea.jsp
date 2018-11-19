@@ -430,8 +430,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblIncomeEntrySummaryForAdminTool").append($(html));
-
-//						commonJs.hideProcMessageOnElement("tblIncomeEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -462,8 +460,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblExpenseEntrySummaryForAdminTool").append($(html));
-
-//						commonJs.hideProcMessageOnElement("tblExpenseEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -494,8 +490,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblAssetEntrySummaryForAdminTool").append($(html));
-
-//						commonJs.hideProcMessageOnElement("tblAssetEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -526,8 +520,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblRepaymentEntrySummaryForAdminTool").append($(html));
-
-// 						commonJs.hideProcMessageOnElement("tblRepaymentEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -558,8 +550,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblBorrowingEntrySummaryForAdminTool").append($(html));
-
-// 						commonJs.hideProcMessageOnElement("tblBorrowingEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -590,8 +580,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblLendingEntrySummaryForAdminTool").append($(html));
-
-// 						commonJs.hideProcMessageOnElement("tblLendingEntrySummaryForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}
@@ -601,8 +589,6 @@ $(function() {
 	};
 
 	setSummaryEmployeeForAdminTool = function() {
-		commonJs.showProcMessageOnElement("tblEmployeeEntrySummaryBodyForAdminTool");
-
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
 				url:"/common/entrySummary/getEmployeeSummary.do",
@@ -627,8 +613,6 @@ $(function() {
 							html += "</tr>";
 						}
 						$("#tblEmployeeEntrySummaryBodyForAdminTool").append($(html));
-
-// 						commonJs.hideProcMessageOnElement("tblEmployeeEntrySummaryBodyForAdminTool");
 					} else {
 						commonJs.error(result.message);
 					}

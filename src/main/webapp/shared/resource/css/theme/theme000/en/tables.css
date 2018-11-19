@@ -109,7 +109,7 @@ table.tblDataEntry caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 	border-bottom:0px;
 	background-color:#F1F9F7;
 }
-.thDataEntry {padding:6px 6px;
+.thDataEntry {padding:6px 6px;text-align:center;
 	color:#555555;
 	border:1px solid #D3EBE0;
 	background:#F9F9F9;

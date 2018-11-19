@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Rkm0202List.js
+ * - Sba0202List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
@@ -11,6 +11,10 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnNew").click(function(event) {
+		openPopup({mode:"New"});
+	});
+
 	$("#btnDelete").click(function(event) {
 		doDelete();
 	});
@@ -27,19 +31,19 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
-	$("#icnDataEntryDate").click(function(event) {
-		commonJs.openCalendar(event, "deDate");
-	});
-
-	$("#financialYear").change(function() {
+	$("#entityType").change(function() {
 		doSearch();
 	});
 
-	$("#quarterName").change(function() {
+	$("#businessType").change(function() {
 		doSearch();
 	});
 
-	$("#recordKeepingType").change(function() {
+	$("#orgCategory").change(function() {
+		doSearch();
+	});
+
+	$("#wageType").change(function() {
 		doSearch();
 	});
 
@@ -50,21 +54,6 @@ $(function() {
 	});
 
 	/*!
-	 * context menus
-	 */
-	setDataEntryActionButtonContextMenu = function() {
-		ctxMenu.dataEntryAction[0].fun = function() {};
-		ctxMenu.dataEntryAction[1].fun = function() {};
-		ctxMenu.dataEntryAction[2].fun = function() {};
-
-		$("#icnDataEntryAction").contextMenu(ctxMenu.dataEntryAction, {
-			classPrefix:com.constants.ctxClassPrefixGrid,
-			displayAround:"trigger",
-			position:"bottom"
-		});
-	};
-
-	/*!
 	 * process
 	 */
 	doSearch = function() {
@@ -72,7 +61,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0202/getList.do",
+				url:"/sba/0202/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -84,51 +73,40 @@ $(function() {
 				}
 			});
 		}, 100);
-
-		setSummaryDataForAdminTool();
 	};
 
 	renderDataGridTable = function(result) {
 		var ds = result.dataSet;
-		var html = "", totHtml = "";
-		var totNonCash = 0, totCash = 0, totGross = 0, totGstFree = 0, totGst = 0, totNet = 0;
-		var totGridTr = new UiGridTr();
+		var html = "";
 
 		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
-		$("#tblGridFoot").html("");
 
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
-				totNonCash += parseFloat(ds.getValue(i, "NON_CASH_AMT"));
-				totCash += parseFloat(ds.getValue(i, "CASH_AMT"));
-				totGross += parseFloat(ds.getValue(i, "GROSS_AMT"));
-				totGstFree += parseFloat(ds.getValue(i, "GST_FREE_AMT"));
-				totGst += parseFloat(ds.getValue(i, "GST_AMT"));
-				totNet += parseFloat(ds.getValue(i, "NET_AMT"));
-
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "INCOME_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "ORG_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "QUARTER_DATE")).setScript("getDetail('"+ds.getValue(i, "INCOME_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
+				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "LEGAL_NAME"), 60)).setScript("getDetail('"+ds.getValue(i, "ORG_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NON_CASH_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "CASH_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_FREE_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "TRADING_NAME"), 50)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "USER_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ENTITY_TYPE_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BUSINESS_TYPE_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ORG_CATEGORY_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "WAGE_TYPE_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REVENUE_RANGE_FROM"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REVENUE_RANGE_TO"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "REGISTERED_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("incomeId:"+ds.getValue(i, "INCOME_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("orgId:"+ds.getValue(i, "ORG_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -136,32 +114,16 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:12").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:13").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNonCash, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totCash, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGstFree, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-
-		totHtml = totGridTr.toHtmlString();
-
 		$("#tblGridBody").append($(html));
-		$("#tblGridFoot").append($(totHtml));
 
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:false,
+			isPageable:true,
 			isFilter:false,
 			filterColumn:[],
 			totalResultRows:result.totalResultRows,
@@ -169,14 +131,14 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.dataEntrySalesAction);
+			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getDetail = function(orgId) {
+		openPopup({mode:"Detail", orgId:orgId});
 	};
 
 	openPopup = function(param) {
@@ -184,23 +146,23 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/rkm/0202/getDetail.do";
+			url = "/sba/0202/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0202/getInsert.do";
+			url = "/sba/0202/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/rkm/0202/getUpdate.do";
+			url = "/sba/0202/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"orgInfo"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				orgId:commonJs.nvl(param.orgId, "")
 			},
 			header:header,
 			blind:true,
@@ -223,7 +185,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeDelete.do",
+						url:"/sba/0202/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -258,22 +220,21 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var orgId = $(img).attr("orgId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == orgId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.commonAction[0].fun = function() {getDetail(orgId);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", orgId:orgId});};
+		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.commonAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -298,7 +259,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0202/exeExport.do",
+						url:"/sba/0202/exeExport.do",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
@@ -323,10 +284,35 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setDataEntryActionButtonContextMenu();
-		commonJs.setFieldDateMask("deDate");
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$(".numeric").number(true, 2);
+		$("#orgName").focus();
+
+		commonJs.setAutoComplete($("#orgName"), {
+			method:"getOrgName",
+			label:"org_name",
+			value:"org_name",
+			focus: function(event, ui) {
+				$("#orgName").val(ui.item.label);
+				return false;
+			},
+			select:function(event, ui) {
+				doSearch();
+			}
+		});
+
+		commonJs.setAutoComplete($("#abn"), {
+			method:"getAbn",
+			label:"abn",
+			value:"abn",
+			focus: function(event, ui) {
+				$("#abn").val(ui.item.label);
+				return false;
+			},
+			select:function(event, ui) {
+				doSearch();
+			}
+		});
+
 		doSearch();
 	});
 });

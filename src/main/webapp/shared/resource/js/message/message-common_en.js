@@ -68,7 +68,12 @@ var com = {
 		generate:"Generate",
 		change:"Change",
 		"return":"Return",
-		browse:"Browse"
+		browse:"Browse",
+
+		/*!
+		 * Caption etc
+		 */
+		total:"Total"
 	},
 	header : {
 		searchCriteria:"Search Criteria",
