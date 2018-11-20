@@ -1,10 +1,11 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sba0202List.js
+ * - Sba0204List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-var popup = null;
+var popup = null, popupLookup = null;
 var searchResultDataCount = 0;
+var toDateFormat = jsconfig.get("dateFormatJs");
 
 $(function() {
 	/*!
@@ -30,19 +31,19 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
-	$("#entityType").change(function() {
+	$("#authGroup").change(function() {
 		doSearch();
 	});
 
-	$("#businessType").change(function() {
+	$("#userType").change(function() {
 		doSearch();
 	});
 
-	$("#orgCategory").change(function() {
+	$("#userStatus").change(function() {
 		doSearch();
 	});
 
-	$("#wageType").change(function() {
+	$("#isActive").change(function() {
 		doSearch();
 	});
 
@@ -52,6 +53,36 @@ $(function() {
 		}
 	});
 
+	setActionButtonContextMenu = function() {
+		var ctxMenu = [{
+			name:sba.sba0204.caption.auth,
+			img:"fa-sitemap",
+			fun:function() {openPopup({mode:"UpdateAuthGroup"});}
+		}, {
+			name:sba.sba0204.caption.type,
+			img:"fa-users",
+			fun:function() {openPopup({mode:"UpdateUserType"});}
+		}, {
+			name:sba.sba0204.caption.status,
+			img:"fa-sliders",
+			fun:function() {openPopup({mode:"UpdateUserStatus"});}
+		}, {
+			name:sba.sba0204.caption.active,
+			img:"fa-adjust",
+			fun:function() {openPopup({mode:"UpdateActiveStatus"});}
+		}];
+
+		$("#btnAction").contextMenu(ctxMenu, {
+			classPrefix:com.constants.ctxClassPrefixButton,
+			effectDuration:300,
+			effect:"slide",
+			borderRadius:"bottom 4px",
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:-157
+		});
+	};
+
 	/*!
 	 * process
 	 */
@@ -60,7 +91,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/sba/0202/getList.do",
+				url:"/sba/0204/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -86,26 +117,24 @@ $(function() {
 				var gridTr = new UiGridTr();
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "ORG_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "USER_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "LEGAL_NAME"), 60)).setScript("getDetail('"+ds.getValue(i, "ORG_ID")+"')");
+				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "USER_NAME"), 60)).setScript("getDetail('"+ds.getValue(i, "USER_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "TRADING_NAME"), 50)));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "USER_CNT"), "#,###")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ENTITY_TYPE_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BUSINESS_TYPE_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ORG_CATEGORY_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "WAGE_TYPE_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REVENUE_RANGE_FROM"), "#,###")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REVENUE_RANGE_TO"), "#,###")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "REGISTERED_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "LOGIN_ID")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ORG_NAME"), 60)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "AUTH_GROUP_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "USER_TYPE_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "USER_STATUS_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "EMAIL")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_ACTIVE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("orgId:"+ds.getValue(i, "ORG_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("userId:"+ds.getValue(i, "USER_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -113,7 +142,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:13").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:11").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -136,36 +165,60 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(orgId) {
-		openPopup({mode:"Detail", orgId:orgId});
+	getDetail = function(userId) {
+		openPopup({mode:"Detail", userId:userId});
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+		var url = "", header = "", width = 940, height = 516;
 
 		if (param.mode == "Detail") {
-			url = "/sba/0202/getDetail.do";
+			url = "/sba/0204/getDetail.do";
 			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sba/0202/getInsert.do";
+			height = 446;
+		} else if (param.mode == "New") {
+			url = "/sba/0204/getInsert.do";
 			header = com.header.popHeaderEdit;
+			height = 620;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0202/getUpdate.do";
+			url = "/sba/0204/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 634;
+			height = 620;
+		} else if (param.mode == "UpdateAuthGroup") {
+			url = "/sba/0204/getActionContextMenu.do";
+			header = sba.sba0204.caption.auth;
+			width = 330; height = 240;
+		} else if (param.mode == "UpdateUserType") {
+			url = "/sba/0204/getActionContextMenu.do";
+			header = sba.sba0204.caption.type;
+			width = 330; height = 176;
+		} else if (param.mode == "UpdateUserStatus") {
+			url = "/sba/0204/getActionContextMenu.do";
+			header = sba.sba0204.caption.status;
+			width = 330; height = 220;
+		} else if (param.mode == "UpdateActiveStatus") {
+			url = "/sba/0204/getActionContextMenu.do";
+			header = sba.sba0204.caption.active;
+			width = 330; height = 176;
+		}
+
+		if (url.indexOf("getActionContextMenu") != -1) {
+			if (commonJs.getCountChecked("chkForDel") == 0) {
+				commonJs.warn(com.message.I902);
+				return;
+			}
 		}
 
 		var popParam = {
-			popupId:"orgInfo"+param.mode,
+			popupId:"user"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				orgId:commonJs.nvl(param.orgId, "")
+				userId:commonJs.nvl(param.userId, "")
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:width,
 			height:height
 		};
 
@@ -184,7 +237,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0202/exeDelete.do",
+						url:"/sba/0204/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -219,18 +272,18 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var orgId = $(img).attr("orgId");
+		var userId = $(img).attr("userId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == orgId) {
+			if (!$(this).is(":disabled") && $(this).val() == userId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(orgId);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", orgId:orgId});};
+		ctxMenu.commonAction[0].fun = function() {getDetail(userId);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", userId:userId});};
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {
@@ -258,7 +311,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sba/0202/exeExport.do",
+						url:"/sba/0204/exeExport.do",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
@@ -279,19 +332,47 @@ $(function() {
 		});
 	};
 
+	exeActionContextMenu = function(param) {
+		commonJs.ajaxSubmit({
+			url:"/sba/0204/exeActionContextMenu.do",
+			dataType:"json",
+			formId:"fmDefault",
+			data:param,
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					commonJs.openDialog({
+						type:com.message.I000,
+						contents:result.message,
+						blind:true,
+						buttons:[{
+							caption:com.caption.ok,
+							callback:function() {
+								doSearch();
+							}
+						}]
+					});
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
+
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		setActionButtonContextMenu();
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#orgName").focus();
 
-		commonJs.setAutoComplete($("#orgName"), {
-			method:"getOrgName",
-			label:"org_name",
-			value:"org_name",
+		commonJs.setAutoComplete($("#userName"), {
+			method:"getUserName",
+			label:"user_name",
+			value:"user_name",
 			focus: function(event, ui) {
-				$("#orgName").val(ui.item.label);
+				$("#userName").val(ui.item.label);
 				return false;
 			},
 			select:function(event, ui) {
@@ -299,18 +380,20 @@ $(function() {
 			}
 		});
 
-		commonJs.setAutoComplete($("#abn"), {
-			method:"getAbn",
-			label:"abn",
-			value:"abn",
+		commonJs.setAutoComplete($("#loginId"), {
+			method:"getLoginId",
+			label:"login_id",
+			value:"login_id",
 			focus: function(event, ui) {
-				$("#abn").val(ui.item.label);
+				$("#loginId").val(ui.item.label);
 				return false;
 			},
 			select:function(event, ui) {
 				doSearch();
 			}
 		});
+
+		$("#userName").focus();
 
 		doSearch();
 	});

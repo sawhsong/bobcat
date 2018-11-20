@@ -11,9 +11,11 @@ import project.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeDao;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dao.SysIncomeType.SysIncomeTypeDao;
 import project.conf.resource.ormapper.dao.SysLendingType.SysLendingTypeDao;
+import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysRepaymentType.SysRepaymentTypeDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
 import project.conf.resource.ormapper.dto.oracle.SysAuthGroup;
+import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
@@ -23,6 +25,7 @@ public class DataHelper extends BaseBiz {
 	@SuppressWarnings("unused")
 	private static Logger logger = LogManager.getLogger(DataHelper.class);
 	private static SysUserDao sysUserDao;
+	private static SysOrgDao sysOrgDao;
 	private static SysAuthGroupDao sysAuthGroupDao;
 	private static SysFinancialPeriodDao sysFinancialPeriodDao;
 	private static SysIncomeTypeDao sysIncomeTypeDao;
@@ -38,6 +41,14 @@ public class DataHelper extends BaseBiz {
 
 	public static void setSysUserDao(SysUserDao sysUserDao) {
 		DataHelper.sysUserDao = sysUserDao;
+	}
+
+	public static SysOrgDao getSysOrgDao() {
+		return sysOrgDao;
+	}
+
+	public static void setSysOrgDao(SysOrgDao sysOrgDao) {
+		DataHelper.sysOrgDao = sysOrgDao;
 	}
 
 	public static SysAuthGroupDao getSysAuthGroupDao() {
@@ -115,6 +126,19 @@ public class DataHelper extends BaseBiz {
 	public static String getUserNameById(String userId) throws Exception {
 		if (CommonUtil.isBlank(userId)) {return "";}
 		return getUserByUserId(userId).getUserName();
+	}
+
+	/*!
+	 * SysOrg
+	 */
+	public static SysOrg getOrgByOrgId(String orgId) throws Exception {
+		if (CommonUtil.isBlank(orgId)) {return new SysOrg();}
+		return sysOrgDao.getOrgByOrgId(orgId);
+	}
+
+	public static String getOrgNameById(String orgId) throws Exception {
+		if (CommonUtil.isBlank(orgId)) {return "";}
+		return getOrgByOrgId(orgId).getLegalName();
 	}
 
 	/*!

@@ -30,3 +30,21 @@ var sys = {
 		}
 	}
 };
+
+/*!
+ * Sub System - sba
+ */
+var sba = {
+	sba0204:{
+		caption:{
+			auth:"Update Authority Group",
+			type:"Update User Type",
+			status:"Update User Status",
+			active:"Update Active Status"
+		},
+		header:{
+		},
+		message:{
+		}
+	}
+};

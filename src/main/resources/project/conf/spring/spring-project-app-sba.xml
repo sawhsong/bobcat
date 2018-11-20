@@ -2,4 +2,7 @@
     <!--Sba0202 - Organisation Management-->
     <bean class="${name.package.project}.app.sba.sba0202.Sba0202Action" id="sba0202Action" name="sba0202Action"/>
     <bean class="${name.package.project}.app.sba.sba0202.Sba0202BizImpl" id="sba0202Biz" name="sba0202Biz" parent="baseBiz"/>
+    <!--Sba0204 - User Management-->
+    <bean class="${name.package.project}.app.sba.sba0204.Sba0204Action" id="sba0204Action" name="sba0204Action"/>
+    <bean class="${name.package.project}.app.sba.sba0204.Sba0204BizImpl" id="sba0204Biz" name="sba0204Biz" parent="baseBiz"/>
 </beans>

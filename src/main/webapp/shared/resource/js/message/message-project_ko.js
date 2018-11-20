@@ -30,3 +30,21 @@ var sys = {
 		}
 	}
 };
+
+/*!
+ * Sub System - sba
+ */
+var sba = {
+	sba0204:{
+		caption:{
+			auth:"권한그룹 변경",
+			type:"사용자 유형 변경",
+			status:"사용자 상태 변경",
+			active:"사용여부 변경"
+		},
+		header:{
+		},
+		message:{
+		}
+	}
+};

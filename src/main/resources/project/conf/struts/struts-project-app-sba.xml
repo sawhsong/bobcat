@@ -10,5 +10,12 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0202/Sba0202InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0202/Sba0202UpdatePop.jsp</result>
         </action>
+        <!--Sba0204 - User Management-->
+        <action class="project.app.sba.sba0204.Sba0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

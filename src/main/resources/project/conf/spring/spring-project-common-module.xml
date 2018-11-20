@@ -35,6 +35,7 @@
 	<!--/* DataHelper */-->
 	<bean id="dataHelper" name="dataHelper" class="${name.package.project}.common.module.datahelper.DataHelper" parent="baseBiz">
 		<property name="sysUserDao" ref="sysUserDao"/>
+		<property name="sysOrgDao" ref="sysOrgDao"/>
 		<property name="sysAuthGroupDao" ref="sysAuthGroupDao"/>
 		<property name="sysFinancialPeriodDao" ref="sysFinancialPeriodDao"/>
 		<property name="sysIncomeTypeDao" ref="sysIncomeTypeDao"/>
