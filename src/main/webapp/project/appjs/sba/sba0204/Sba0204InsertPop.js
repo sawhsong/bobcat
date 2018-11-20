@@ -2,12 +2,24 @@
  * Framework Generated Javascript Source
  * - Sba0204InsertPop.js
  *************************************************************************************************/
+var popup = null;
+
 $(function() {
 	/*!
 	 * event
 	 */
 	$("#btnSave").click(function(event) {
+		var fileValue = $("#photoPath").val();
+
 		if (commonJs.doValidate("fmDefault")) {
+			if (!commonJs.isEmpty(fileValue)) {
+				fileValue = fileValue.substring(fileValue.lastIndexOf(".")+1);
+				if (!(fileValue.toLowerCase() == "png" || fileValue.toLowerCase() == "jpg" || fileValue.toLowerCase() == "gif" || fileValue.toLowerCase() == "jpeg")) {
+					commonJs.doValidatorMessage($("#photoPath"), "notUploadable");
+					return;
+				}
+			}
+
 			$("#fmDefault").attr("enctype", "multipart/form-data");
 
 			commonJs.confirm({
@@ -17,10 +29,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sba/0204/exeInsert.do",
-							data:{
-								articleId:articleId
-							}
+							action:"/sba/0204/exeInsert.do"
 						});
 					}
 				}, {
@@ -36,10 +45,23 @@ $(function() {
 		parent.popup.close();
 	});
 
-	$("#btnAddFile").click(function(event) {
-		commonJs.addFileSelectObject({
-			appendToId:"divAttachedFile",
-			rowBreak:false
+	$("#icnOrgSearch").click(function(event) {
+		parent.popupLookup = parent.commonJs.openPopup({
+			popupId:"OrganisationLookup",
+			url:"/common/lookup/getDefault.do",
+			paramData:{
+				lookupType:"organisationName",
+				keyFieldId:"orgId",
+				valueFieldId:"orgName",
+				popupToSetValue:"parent.popup",
+				popupName:"parent.popupLookup",
+				lookupValue:$("#orgName").val()
+			},
+			blind:true,
+			modal:true,
+			header:sba.sba0204.header.popOrgLookup,
+			width:880,
+			height:680
 		});
 	});
 
@@ -57,6 +79,21 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#writerName").focus();
+		commonJs.setAutoComplete($("#orgName"), {
+			method:"getOrgId",
+			label:"legal_name",
+			value:"org_id",
+			focus:function(event, ui) {
+				$("#orgName").val(ui.item.label);
+				return false;
+			},
+			select:function(event, ui) {
+				$("#orgId").val(ui.item.value);
+				$("#orgName").val(ui.item.label);
+				return false;
+			}
+		});
+
+		$("#photoPath").focus();
 	});
 });

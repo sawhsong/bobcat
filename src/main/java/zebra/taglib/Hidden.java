@@ -2,6 +2,7 @@ package zebra.taglib;
 
 import java.lang.reflect.Field;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
 import zebra.base.TaglibSupport;
@@ -13,11 +14,14 @@ public class Hidden extends TaglibSupport {
 	private String className = "";
 	private String value = "";
 	private String style = "";
+	private String checkName = "";
 	private String attribute = "";
 
 	public int doStartTag() {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
+			HttpSession httpSession = pageContext.getSession();
+			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
 			String attrStr = "", attrs[], attr[];
 
@@ -29,12 +33,15 @@ public class Hidden extends TaglibSupport {
 				}
 			}
 
+			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
+
 			html.append("<input type=\"hidden\"");
 			html.append(" id=\""+CommonUtil.nvl(id, name)+"\"");
 			html.append(" name=\""+name+"\"");
 
 			if (CommonUtil.isNotBlank(className)) {html.append(" class=\""+className+"\"");}
 			if (CommonUtil.isNotBlank(value)) {html.append(" value=\""+value+"\"");}
+			if (CommonUtil.isNotBlank(checkName)) {html.append(" checkName=\""+checkName+"\"");}
 			if (CommonUtil.isNotBlank(style)) {html.append(" style=\""+style+"\"");}
 			if (CommonUtil.isNotBlank(attrStr)) {html.append(" "+attrStr+"");}
 
@@ -91,6 +98,14 @@ public class Hidden extends TaglibSupport {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getCheckName() {
+		return checkName;
+	}
+
+	public void setCheckName(String checkName) {
+		this.checkName = checkName;
 	}
 
 	public String getStyle() {

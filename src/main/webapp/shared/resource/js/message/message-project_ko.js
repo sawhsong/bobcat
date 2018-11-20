@@ -43,6 +43,7 @@ var sba = {
 			active:"사용여부 변경"
 		},
 		header:{
+			popOrgLookup:"업체 검색"
 		},
 		message:{
 		}

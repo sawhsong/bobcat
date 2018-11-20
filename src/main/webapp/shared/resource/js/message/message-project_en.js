@@ -43,6 +43,7 @@ var sba = {
 			active:"Update Active Status"
 		},
 		header:{
+			popOrgLookup:"Organisation Lookup"
 		},
 		message:{
 		}

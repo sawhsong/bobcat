@@ -197,6 +197,60 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>file</name>
+		<tag-class>zebra.taglib.File</tag-class>
+		<body-content>empty</body-content>
+		<description>File Selection</description>
+		<attribute>
+			<name>id</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name><required>true</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>className</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>script</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>placeHolder</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>maxlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>minlength</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>checkFlag</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>option</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>options</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>status</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>hidden</name>
 		<tag-class>zebra.taglib.Hidden</tag-class>
 		<body-content>empty</body-content>
@@ -212,6 +266,9 @@
 		</attribute>
 		<attribute>
 			<name>value</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>checkName</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>style</name><required>false</required><rtexprvalue>true</rtexprvalue>

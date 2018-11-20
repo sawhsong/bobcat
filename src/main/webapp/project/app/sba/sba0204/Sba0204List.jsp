@@ -75,7 +75,7 @@
 			<td class="tdSearch"><ui:text name="loginId" style="width:200px"/></td>
 			<th class="thSearch rt"><mc:msg key="sba0204.search.auth"/></th>
 			<td class="tdSearch">
-				<select id="authGroup" name="authGroup" class="bootstrapSelect">
+				<ui:select name="authGroup">
 					<option value="">==Select==</option>
 <%
 				for (int i=0; i<authGroupDataSet.getRowCnt(); i++) {
@@ -84,7 +84,7 @@
 <%
 				}
 %>
-				</select>
+				</ui:select>
 			</td>
 		</tr>
 		<tr>

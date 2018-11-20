@@ -10,10 +10,6 @@ $(function() {
 		doProcessByButton({mode:"Update"});
 	});
 
-	$("#btnReply").click(function(event) {
-		doProcessByButton({mode:"Reply"});
-	});
-
 	$("#btnDelete").click(function(event) {
 		doProcessByButton({mode:"Delete"});
 	});
@@ -33,7 +29,6 @@ $(function() {
 	 */
 	doProcessByButton = function(param) {
 		var action = "";
-		var params = {};
 
 		if (param.mode == "Update") {
 			action = "/sba/0204/getUpdate.do";

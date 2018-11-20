@@ -15,6 +15,7 @@ public class ConfigProperty extends TaglibSupport {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
 			HttpSession httpSession = pageContext.getSession();
+			JspPage jspPage = (JspPage)pageContext.getAttribute("javax.servlet.jsp.jspPage");
 			String langCode = CommonUtil.lowerCase((String)httpSession.getAttribute("langCode"));
 			String frameworkName = ConfigUtil.getProperty("name.framework");
 			String projectName = ConfigUtil.getProperty("name.project");
@@ -41,16 +42,21 @@ public class ConfigProperty extends TaglibSupport {
 			}
 
 			if (CommonUtil.equalsIgnoreCase(getKey(), "viewPageName")) {
-				JspPage jspPage = (JspPage)pageContext.getAttribute("javax.servlet.jsp.jspPage");
 				String name = jspPage.getClass().getName();
-
 				rtnString = CommonUtil.substringBefore(CommonUtil.substringAfterLast(name, "."), "_");
 			}
 
 			if (CommonUtil.equalsIgnoreCase(getKey(), "viewPageJsName")) {
-				JspPage jspPage = (JspPage)pageContext.getAttribute("javax.servlet.jsp.jspPage");
 				String removeString = "org/apache/jsp";
 				String replaceFrom[] = new String[] {"app", "_jsp"}, replaceTo[] = new String[] {"appjs", ".js"};
+				String name = CommonUtil.remove(CommonUtil.replace(jspPage.getClass().getName(), ".", "/"), removeString);
+
+				rtnString = CommonUtil.replaceEach(name, replaceFrom, replaceTo);
+			}
+
+			if (CommonUtil.equalsIgnoreCase(getKey(), "commonModuleViewPageJsName")) {
+				String removeString = "org/apache/jsp";
+				String replaceFrom[] = new String[] {"_jsp"}, replaceTo[] = new String[] {".js"};
 				String name = CommonUtil.remove(CommonUtil.replace(jspPage.getClass().getName(), ".", "/"), removeString);
 
 				rtnString = CommonUtil.replaceEach(name, replaceFrom, replaceTo);

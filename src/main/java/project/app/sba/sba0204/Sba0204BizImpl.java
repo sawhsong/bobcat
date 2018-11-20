@@ -84,12 +84,16 @@ public class Sba0204BizImpl extends BaseBiz implements Sba0204Biz {
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		String[] maxRowPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"));
 		String[] pageNumPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"));
+		String photoPath = ConfigUtil.getProperty("path.image.photo")+"/"+"DefaultUser_128_Black.png";
+		String defaultAuthGroup = "Z";
 
 		try {
 			setAuthorityGroup(paramEntity);
 
 			paramEntity.setObject("maxRowPerPage", maxRowPerPage);
 			paramEntity.setObject("pageNumPerPage", pageNumPerPage);
+			paramEntity.setObject("photoPath", photoPath);
+			paramEntity.setObject("defaultAuthGroup", defaultAuthGroup);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -100,6 +104,8 @@ public class Sba0204BizImpl extends BaseBiz implements Sba0204Biz {
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
 		String[] maxRowPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"));
 		String[] pageNumPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"));
+		String photoPath = ConfigUtil.getProperty("path.image.photo")+"/"+"DefaultUser_128_Black.png";
+		String defaultAuthGroup = "Z";
 
 		try {
 			setAuthorityGroup(paramEntity);
@@ -107,6 +113,8 @@ public class Sba0204BizImpl extends BaseBiz implements Sba0204Biz {
 			paramEntity = getDetail(paramEntity);
 			paramEntity.setObject("maxRowPerPage", maxRowPerPage);
 			paramEntity.setObject("pageNumPerPage", pageNumPerPage);
+			paramEntity.setObject("photoPath", photoPath);
+			paramEntity.setObject("defaultAuthGroup", defaultAuthGroup);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

@@ -721,6 +721,10 @@ var nony = {
 						}
 					}
 				});
+			},
+			open:function() {
+				$(this).autocomplete("widget").css("z-index", 1000);
+				return false;
 			}
 		};
 

@@ -1,17 +1,19 @@
 /**
  * OrganisationLookupPop.js
  */
-var popupObject = eval(popupName);
-
 $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnClose").click(function(event) {
+		parent.popupLookup.close();
+	});
+
 	/*!
 	 * process
 	 */
 	doSearch = function() {
-		commonJs.showProcMessageOnElement("tblGrid");
+		commonJs.showProcMessageOnElement("divScrollablePanelPopup");
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
@@ -38,37 +40,39 @@ $(function() {
 
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
-				html += "<tr>";
-				html += "<td class=\"tdGridCt\">"+ds.getValue(i, "ORG_ID")+"</td>";
-				html += "<td class=\"tdGrid\"><a onclick=\"setValue('"+ds.getValue(i, "ORG_ID")+"', '"+ds.getValue(i, "LEGAL_NAME")+"')\" class=\"aEn\">"+commonJs.abbreviate(ds.getValue(i, "LEGAL_NAME"), 60)+"</a></td>";
-				html += "<td class=\"tdGridCt\">"+commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")+"</td>";
-				html += "<td class=\"tdGrid\">"+commonJs.abbreviate(ds.getValue(i, "POSTAL_ADDRESS"), 60)+"</td>";
-				html += "</tr>";
+				var gridTr = new UiGridTr();
+
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ORG_ID")));
+
+				var uiAnc = new UiAnchor();
+				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "LEGAL_NAME"), 60)).setScript("setValue('"+ds.getValue(i, "ORG_ID")+"', '"+ds.getValue(i, "LEGAL_NAME")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "POSTAL_ADDRESS"), 60)));
+
+				html += gridTr.toHtmlString();
 			}
 		} else {
-			html += "<tr>";
-			html += "<td class=\"tdGridCt\" colspan=\"4\">com.message.I001</td>";
-			html += "</tr>";
+			var gridTr = new UiGridTr();
+
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:4").setText(com.message.I001));
+			html += gridTr.toHtmlString();
 		}
 
 		$("#tblGridBody").append($(html));
-		if (commonJs.browser.FireFox) {
-			gridWidthAdjust = -34;
-		} else {
-			gridWidthAdjust = -38;
-		}
 
 		$("#tblGrid").fixedHeaderTable({
-			baseDivElement:"divScrollablePanelPopup",
-			attachedPagingArea:true,
-			blockElementId:"tblGrid",
-			pagingAreaId:"divPagingArea",
+			attachTo:$("#divDataArea"),
+			pagingArea:$("#divPagingArea"),
+			isPageable:true,
+			isFilter:false,
+			filterColumn:[],
 			totalResultRows:result.totalResultRows,
-			script:"doSearch",
-			widthAdjust:gridWidthAdjust
+			script:"doSearch"
 		});
 
-		commonJs.hideProcMessageOnElement("tblGrid");
+		commonJs.hideProcMessageOnElement("divScrollablePanelPopup");
 	};
 
 	setValue = function(id, name) {
@@ -81,7 +85,6 @@ $(function() {
 
 			$(keyField).val(id);
 			$(valueField).val(name);
-		} else {
 		}
 
 		popupObject.close();
@@ -120,8 +123,6 @@ $(function() {
 			}
 		});
 
-		setTimeout(function() {
-			doSearch();
-		}, 400);
+		doSearch();
 	});
 });
