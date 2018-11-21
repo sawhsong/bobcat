@@ -89,7 +89,7 @@
 		</colgroup>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sba0204.header.changePhoto"/></th>
-			<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:540px;" value=" " checkName="sba0204.header.changePhoto"/></td>
+			<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:540px;" checkName="sba0204.header.changePhoto"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sba0204.header.userId"/></th>
