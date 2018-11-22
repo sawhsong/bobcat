@@ -18,7 +18,6 @@
 #THIS_MENU_ID#.grid.hitCount=조회건수
 
 # List - Etc
-#THIS_MENU_ID#.title.selectToDelete=삭제 하려면 선택 하세요.
 
 # Detail, Insert, Update - Table Header
 #THIS_MENU_ID#.header.writer=작성자 ID

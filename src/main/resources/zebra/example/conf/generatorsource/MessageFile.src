@@ -18,7 +18,6 @@
 #THIS_MENU_ID#.grid.hitCount=Hit Count
 
 # List - Etc
-#THIS_MENU_ID#.title.selectToDelete=Select to delete
 
 # Detail, Insert, Update - Table Header
 #THIS_MENU_ID#.header.writer=Writer

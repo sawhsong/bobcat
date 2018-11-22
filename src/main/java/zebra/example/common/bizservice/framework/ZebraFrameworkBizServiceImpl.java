@@ -1810,8 +1810,9 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcFileName = ConfigUtil.getProperty("name.source.propMessage");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
+		String tableName = dsRequest.getValue("tableName");
 		DataSet dsLang = ZebraCommonCodeManager.getCodeDataSetByCodeType("LANGUAGE_TYPE");
-
+logger.debug("tableName : "+tableName);
 		try {
 			if (CommonUtil.equalsIgnoreCase(isCreate, "Y")) {
 				targetPath = targetPath + "/" + rootMenuId + "/" + thisMenuId;

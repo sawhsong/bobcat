@@ -9,6 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
+import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
+import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -18,20 +25,11 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-
 public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	@Autowired
 	private SysOrgDao sysOrgDao;
 	@Autowired
 	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -63,14 +61,16 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String orgId = requestDataSet.getValue("orgId");
+		SysOrg sysOrg = new SysOrg();
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
+			sysOrg = sysOrgDao.getOrgByOrgId(orgId);
 
-			sysBoardDao.updateVisitCountByArticleId(articleId);
+			sysOrg.setInsertUserName(DataHelper.getUserNameById(sysOrg.getInsertUserId()));
+			sysOrg.setUpdateUserName(DataHelper.getUserNameById(sysOrg.getUpdateUserId()));
 
+			paramEntity.setObject("sysOrg", sysOrg);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

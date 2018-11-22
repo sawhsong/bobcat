@@ -105,5 +105,24 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		commonJs.setAutoComplete($("#tableName"), {
+			url:"/zebra/common/autoCompletion/",
+			method:"getTableName",
+			label:"table_name",
+			value:"table_name",
+			focus: function(event, ui) {
+				$("#tableName").val(ui.item.label);
+				return false;
+			},
+			select:function(event, ui) {
+				$("#tableName").val(ui.item.value);
+			},
+			open:function(event, ui) {
+				var autocomplete = $(".ui-autocomplete");
+				var oldTop = autocomplete.offset().top;
+				var newTop = oldTop - autocomplete.height()-$("#tableName").height()-16;
+				autocomplete.css("top", newTop);
+			}
+		});
 	});
 });

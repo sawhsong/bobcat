@@ -9,8 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysOrg sysOrg = (SysOrg)paramEntity.getObject("sysOrg");
 %>
 <%/************************************************************************************************
 * HTML
@@ -48,7 +47,6 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
@@ -68,10 +66,10 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="12%"/>
+			<col width="38%"/>
+			<col width="12%"/>
+			<col width="38%"/>
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0202.header.writerName"/></th>

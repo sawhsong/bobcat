@@ -55,6 +55,13 @@ public interface DummyDao extends IDao {
 	 */
 	public DataSet getDataSetBySQLQuery(String sqlQuery) throws Exception;
 	/**
+	 * Select all user tables by table name like search
+	 * @param sqlQuery
+	 * @return
+	 * @throws Exception
+	 */
+	public DataSet getTableNameDataSetByTableName(String tableName) throws Exception;
+	/**
 	 * Create table with given sql
 	 * @param sql
 	 * @return int

@@ -52,6 +52,14 @@ public class DummyHDaoImpl extends BaseHDao implements DummyDao {
 		return selectAsDataSetBySQLQuery(sqlQuery);
 	}
 
+	public DataSet getTableNameDataSetByTableName(String tableName) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addAutoFillCriteria(tableName, "upper(table_name) like upper('%"+tableName+"%')");
+
+		return selectAsDataSet(queryAdvisor, "query.zebra.Dummy.getTableNameDataSetByTableName");
+	}
+
 	public int exeGenerateTable(String sql) throws Exception {
 		return executeSql(sql);
 	}

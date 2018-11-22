@@ -12,6 +12,16 @@
 	]]>
 	</sql-query>
 
+	<sql-query name="query.zebra.Dummy.getTableNameDataSetByTableName">
+	<![CDATA[
+		select table_name
+		  from user_tables
+		 where 1 = 1
+		   ${auto_fill}
+		 order by table_name
+	]]>
+	</sql-query>
+
 	<sql-query name="query.zebra.Dummy.getTableListDataSetByCriteriaForAdditionalDataSource">
 	<![CDATA[
 		select table_name as TABLE_NAME,

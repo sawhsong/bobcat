@@ -29,4 +29,15 @@ public class AutoCompletionAction extends BaseAction {
 		}
 		return "ajaxResponse";
 	}
+
+	public String getTableName() throws Exception {
+		try {
+			biz.getTableName(paramEntity);
+		} catch (Exception ex) {
+			return "ajaxResponse";
+		} finally {
+			setRequestAttribute("paramEntity", paramEntity);
+		}
+		return "ajaxResponse";
+	}
 }

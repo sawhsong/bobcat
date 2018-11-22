@@ -66,7 +66,7 @@
 		<caption class="captionEdit"><mc:msg key="fwk.sourcegenerator.header.classSource"/></caption>
 		<colgroup>
 			<col width="20%"/>
-			<col width="20%"/>
+			<col width="25%"/>
 			<col width="20%"/>
 			<col width="*"/>
 		</colgroup>
@@ -94,12 +94,12 @@
 			</td>
 		</tr>
 	</table>
-	<div class="verGap10"></div>
+	<div class="verGap6"></div>
 	<table class="tblEdit">
 		<caption class="captionEdit"><mc:msg key="fwk.sourcegenerator.header.viewSource"/></caption>
 		<colgroup>
 			<col width="20%"/>
-			<col width="20%"/>
+			<col width="25%"/>
 			<col width="20%"/>
 			<col width="*"/>
 		</colgroup>
@@ -111,19 +111,19 @@
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.list"/></th>
-			<td class="tdEdit">
+			<td class="tdEdit" colspan="3">
 				<ui:check name="jspCreateList" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true" status="disabled"/>
-			</td>
-			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
-			<td class="tdEdit">
-				<ui:radio name="jspSubPageType" value="Popup" text="fwk.sourcegenerator.header.pop" isSelected="true"/>
-				<ui:radio name="jspSubPageType" value="Page" text="fwk.sourcegenerator.header.page"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.detail"/></th>
-			<td class="tdEdit" colspan="3">
+			<td class="tdEdit">
 				<ui:check name="jspCreateDetail" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
+			</td>
+			<th class="thEdit Rt" rowspan="3"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
+			<td class="tdEdit" rowspan="3">
+				<ui:radio name="jspSubPageType" value="Popup" text="fwk.sourcegenerator.header.pop" isSelected="true"/>
+				<ui:radio name="jspSubPageType" value="Page" text="fwk.sourcegenerator.header.page"/>
 			</td>
 		</tr>
 		<tr>
@@ -139,7 +139,7 @@
 			</td>
 		</tr>
 	</table>
-	<div class="verGap10"></div>
+	<div class="verGap6"></div>
 	<table class="tblEdit">
 		<caption class="captionEdit"><mc:msg key="fwk.sourcegenerator.header.configETC"/></caption>
 		<colgroup>
@@ -169,6 +169,7 @@
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.message"/></th>
 			<td class="tdEdit">
 				<ui:text name="messageConfigPath" value="<%=(String)paramEntity.getObject(\"messagePath\")%>" status="display"/>
+				<ui:text name="tableName" placeHolder="Table Name"/>
 			</td>
 			<td class="tdEdit">
 				<ui:check name="createMessage" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
