@@ -314,17 +314,19 @@
 		},
 		_setModal : function() {
 			if (this.modal) {
-				$.blockUI({
-					message:null,
-					overlayCSS:{
-						zIndex:"500",
-						cursor:"wait",
-						background:"#FFFFFF",
-						opacity:"0.0",
-						fadeIn:100,
-						fadeOut:100
-					}
-				});
+				if (($(".nonyPopWinBase").length + $(".nonyDialogBase").length) == 0) {
+					$.blockUI({
+						message:null,
+						overlayCSS:{
+							zIndex:"500",
+							cursor:"wait",
+							background:"#FFFFFF",
+							opacity:"0.0",
+							fadeIn:100,
+							fadeOut:100
+						}
+					});
+				}
 			}
 		},
 		_setBlind : function() {

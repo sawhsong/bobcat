@@ -2,8 +2,6 @@
  * Framework Generated Javascript Source
  * - Sba0204InsertPop.js
  *************************************************************************************************/
-var popup = null;
-
 $(function() {
 	/*!
 	 * event
@@ -57,8 +55,6 @@ $(function() {
 				popupName:"parent.popupLookup",
 				lookupValue:$("#orgName").val()
 			},
-			blind:true,
-			modal:true,
 			header:sba.sba0204.header.popOrgLookup,
 			width:880,
 			height:680

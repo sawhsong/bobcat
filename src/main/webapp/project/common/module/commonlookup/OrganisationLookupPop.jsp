@@ -94,8 +94,8 @@ var popupObject = eval(popupName);
 <div id="divDataArea" class="areaContainerPopup">
 	<table id="tblGrid" class="tblGrid sort">
 		<colgroup>
-			<col width="13%"/>
-			<col width="32%"/>
+			<col width="9%"/>
+			<col width="33%"/>
 			<col width="13%"/>
 			<col width="*"/>
 		</colgroup>

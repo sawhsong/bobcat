@@ -9,8 +9,11 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	DataSet authGroupDataSet = (DataSet)paramEntity.getObject("authGroupDataSet");
+	SysUser sysUser = (SysUser)paramEntity.getObject("sysUser");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String maxRowPerPage[] = (String[])paramEntity.getObject("maxRowPerPage");
+	String pageNumPerPage[] = (String[])paramEntity.getObject("pageNumPerPage");
 %>
 <%/************************************************************************************************
 * HTML
@@ -64,75 +67,118 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+	<div class="panel panel-default" style="width:120px;height:110px;">
+		<div class="panel-body">
+			<table class="tblDefault">
+				<tr>
+					<td class="tdDefaultCt">
+						<img id="img<%=sysUser.getUserId()%>" src="<%=sysUser.getPhotoPath()%>" class="imgDis" style="width:90px;height:90px;" title="<%=sysUser.getUserName()%>"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="18%"/>
+			<col width="32%"/>
+			<col width="18%"/>
+			<col width="32%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0204.header.writerName"/></th>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.changePhoto"/></th>
+			<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:540px;" checkName="sba0204.header.changePhoto"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.userId"/></th>
+			<td class="tdEdit"><ui:text name="userId" value="<%=sysUser.getUserId()%>" status="display"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.userName"/></th>
+			<td class="tdEdit"><ui:text name="userName" value="<%=sysUser.getUserName()%>" checkName="sba0204.header.userName" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.loginId"/></th>
+			<td class="tdEdit"><ui:text name="loginId" value="<%=sysUser.getLoginId()%>" checkName="sba0204.header.loginId" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.password"/></th>
+			<td class="tdEdit"><ui:text name="password" value="<%=sysUser.getLoginPassword()%>" checkName="sba0204.header.password" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.org"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0204.header.writerName" options="mandatory"/>
+				<ui:hidden name="orgId" value="<%=sysUser.getOrgId()%>" checkName="sba0204.header.org"/>
+				<ui:text name="orgName" className="hor" style="width:250px" value="<%=DataHelper.getOrgNameById(sysUser.getOrgId())%>" checkName="sba0204.header.org" options="mandatory"/>
+				<ui:icon id="icnOrgSearch" className="fa-search hor"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0204.header.writerEmail"/></th>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.authGroup"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sba0204.header.writerEmail" option="email" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0204.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sba0204.header.articleSubject" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0204.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0204.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
+				<ui:select name="authGroup" checkName="sba0204.header.authGroup" options="mandatory">
 <%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
+				for (int i=0; i<authGroupDataSet.getRowCnt(); i++) {
+					String selected = (CommonUtil.equals(authGroupDataSet.getValue(i, "GROUP_ID"), sysUser.getAuthGroupId())) ? "selected" : "";
 %>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
+					<option value="<%=authGroupDataSet.getValue(i, "GROUP_ID")%>" <%=selected%>><%=authGroupDataSet.getValue(i, "GROUP_NAME")%></option>
 <%
-						}
-					}
+				}
 %>
-					</table>
-				</div>
+				</ui:select>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0204.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.language"/></th>
+			<td class="tdEdit"><ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory" selectedValue="<%=sysUser.getLanguage()%>"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.themeType"/></th>
+			<td class="tdEdit"><ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory" selectedValue="<%=sysUser.getThemeType()%>"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.type"/></th>
+			<td class="tdEdit"><ui:ccselect name="userType" codeType="USER_TYPE" options="mandatory" selectedValue="<%=sysUser.getUserType()%>"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.email"/></th>
+			<td class="tdEdit"><ui:text name="email" value="<%=sysUser.getEmail()%>" checkName="sba0204.header.email" options="mandatory" option="email"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.maxRowsPerPage"/></th>
+			<td class="tdEdit">
+				<ui:select name="maxRowsPerPage" checkName="sba0204.header.maxRowsPerPage" options="mandatory">
+<%
+				for (int i=0; i<maxRowPerPage.length; i++) {
+					String selected = (CommonUtil.equals(maxRowPerPage[i], CommonUtil.toString(sysUser.getMaxRowPerPage(), "###"))) ? "selected" : "";
+%>
+					<option value="<%=maxRowPerPage[i]%>" <%=selected%>><%=maxRowPerPage[i]%></option>
+<%
+				}
+%>
+				</ui:select>
 			</td>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.pageNumsPerPage"/></th>
+			<td class="tdEdit">
+				<ui:select name="pageNumsPerPage" checkName="sba0204.header.pageNumsPerPage" options="mandatory">
+<%
+				for (int i=0; i<pageNumPerPage.length; i++) {
+					String selected = (CommonUtil.equals(pageNumPerPage[i], CommonUtil.toString(sysUser.getPageNumPerPage(), "###"))) ? "selected" : "";
+%>
+					<option value="<%=pageNumPerPage[i]%>" <%=selected%>><%=pageNumPerPage[i]%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.status"/></th>
+			<td class="tdEdit"><ui:ccselect name="userStatus" codeType="USER_STATUS" selectedValue="<%=sysUser.getUserStatus()%>" options="mandatory"/></td>
+			<th class="thEdit rt mandatory"><mc:msg key="sba0204.header.active"/></th>
+			<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory" selectedValue="<%=sysUser.getIsActive()%>"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.insertUser"/></th>
+			<td class="tdEdit"><ui:text name="insertUser" value="<%=sysUser.getInsertUserName()%>" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.insertDate"/></th>
+			<td class="tdEdit"><ui:text name="insertDate" value="<%=CommonUtil.toString(sysUser.getInsertDate(), dateFormat)%>" status="display"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.updateUser"/></th>
+			<td class="tdEdit"><ui:text name="updateUser" value="<%=sysUser.getUpdateUserName()%>" status="display"/></td>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.updateDate"/></th>
+			<td class="tdEdit"><ui:text name="updateDate" value="<%=CommonUtil.toString(sysUser.getUpdateDate(), dateFormat)%>" status="display"/></td>
 		</tr>
 	</table>
 </div>

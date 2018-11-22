@@ -114,9 +114,9 @@ var userId = "<%=sysUser.getUserId()%>";
 			<td class="tdEdit"><%=sysUser.getEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="sba0204.header.maxRowsPerPage"/></th>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.maxRowsPerPage"/></th>
 			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getMaxRowPerPage(), "#,###")%></td>
-			<th class="thEdit"><mc:msg key="sba0204.header.pageNumsPerPage"/></th>
+			<th class="thEdit rt"><mc:msg key="sba0204.header.pageNumsPerPage"/></th>
 			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getPageNumPerPage(), "#,###")%></td>
 		</tr>
 		<tr>

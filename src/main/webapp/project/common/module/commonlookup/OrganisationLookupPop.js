@@ -5,6 +5,14 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnSearch").click(function(event) {
+		doSearch();
+	});
+
+	$("#btnClear").click(function(event) {
+		commonJs.clearSearchCriteria();
+	});
+
 	$("#btnClose").click(function(event) {
 		parent.popupLookup.close();
 	});
