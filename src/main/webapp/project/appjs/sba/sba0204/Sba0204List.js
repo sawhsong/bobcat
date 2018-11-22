@@ -187,19 +187,19 @@ $(function() {
 		} else if (param.mode == "UpdateAuthGroup") {
 			url = "/sba/0204/getActionContextMenu.do";
 			header = sba.sba0204.caption.auth;
-			width = 330; height = 240;
+			width = 340; height = 366;
 		} else if (param.mode == "UpdateUserType") {
 			url = "/sba/0204/getActionContextMenu.do";
 			header = sba.sba0204.caption.type;
-			width = 330; height = 176;
+			width = 320; height = 180;
 		} else if (param.mode == "UpdateUserStatus") {
 			url = "/sba/0204/getActionContextMenu.do";
 			header = sba.sba0204.caption.status;
-			width = 330; height = 220;
+			width = 320; height = 220;
 		} else if (param.mode == "UpdateActiveStatus") {
 			url = "/sba/0204/getActionContextMenu.do";
 			header = sba.sba0204.caption.active;
-			width = 330; height = 176;
+			width = 320; height = 180;
 		}
 
 		if (url.indexOf("getActionContextMenu") != -1) {
@@ -346,6 +346,7 @@ $(function() {
 						type:com.message.I000,
 						contents:result.message,
 						blind:true,
+						width:300,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
