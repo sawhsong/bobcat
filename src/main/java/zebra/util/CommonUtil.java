@@ -113,6 +113,22 @@ public class CommonUtil extends StringUtils {
 		return sb.toString();
 	}
 
+	public static String toWordStartUpperCase(String value) {
+		String strRtn = "";
+		String[] str = value.split("_");
+		for (String temp : str) {
+			if (isBlank(strRtn)) {
+				strRtn += Character.toUpperCase(temp.charAt(0));
+				strRtn += temp.substring(1).toLowerCase();
+			} else {
+				strRtn += " ";
+				strRtn += Character.toUpperCase(temp.charAt(0));
+				strRtn += temp.substring(1).toLowerCase();
+			}
+		}
+		return strRtn;
+	}
+
 	public static int toInt(String value) {
 		return NumberUtils.toInt(value.trim().replaceAll(",", ""));
 	}

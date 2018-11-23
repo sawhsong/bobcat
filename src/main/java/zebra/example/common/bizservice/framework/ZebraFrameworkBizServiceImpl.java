@@ -1806,13 +1806,17 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
 		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
 		String menuName = dsRequest.getValue("menuName");
+		String tableName = dsRequest.getValue("tableName");
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), compilePath);
 		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
 		String srcFileName = ConfigUtil.getProperty("name.source.propMessage");
 		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
-		String tableName = dsRequest.getValue("tableName");
 		DataSet dsLang = ZebraCommonCodeManager.getCodeDataSetByCodeType("LANGUAGE_TYPE");
-logger.debug("tableName : "+tableName);
+		BufferedReader bufferedReader = null;
+		StringBuffer stringBuffer;
+		String sourceString = "", sourceStringWithTable = "", tempString;
+		DataSet dsTableInfo;
+
 		try {
 			if (CommonUtil.equalsIgnoreCase(isCreate, "Y")) {
 				targetPath = targetPath + "/" + rootMenuId + "/" + thisMenuId;
@@ -1820,18 +1824,38 @@ logger.debug("tableName : "+tableName);
 				File targetFile = new File(targetPath + "/" + targetFileName + ".properties");
 				createEmptyFile(targetFile);
 
-				BufferedReader bufferedReader = new BufferedReader(new FileReader(srcPath + "/" + srcFileName));
-				StringBuffer stringBuffer = new StringBuffer();
-				String tempString;
-				while ((tempString = bufferedReader.readLine()) != null) {
-					stringBuffer.append(tempString + "\n");
-				}
 				OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
-				String sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
 
-				sourceString = CommonUtil.replace(sourceString, "#MENU_ID_START_UPPER#", thisMenuIdUpperCamelCase);
-				sourceString = CommonUtil.replace(sourceString, "#MENU_NAME#", menuName);
-				sourceString = CommonUtil.replace(sourceString, "#THIS_MENU_ID#", thisMenuId);
+				if (CommonUtil.isBlank(tableName)) {
+					bufferedReader = new BufferedReader(new FileReader(srcPath + "/" + srcFileName));
+					stringBuffer = new StringBuffer();
+					while ((tempString = bufferedReader.readLine()) != null) {
+						stringBuffer.append(tempString + "\n");
+					}
+					sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
+					sourceString = CommonUtil.replace(sourceString, "#MENU_ID_START_UPPER#", thisMenuIdUpperCamelCase);
+					sourceString = CommonUtil.replace(sourceString, "#MENU_NAME#", menuName);
+					sourceString = CommonUtil.replace(sourceString, "#THIS_MENU_ID#", thisMenuId);
+				} else {
+					String search = "\n# List - Search\n", grid = "\n# List - Data Grid\n", header = "\n# Detail, Insert, Update - Table Header\n", listEtc = "\n# List - Etc\n";
+					dsTableInfo = dummyDao.getTableDetailDataSetByTableName(tableName);
+					sourceStringWithTable += "#############################################################################################\n";
+					sourceStringWithTable += "# Messages - "+thisMenuIdUpperCamelCase+" - "+menuName+"\n";
+					sourceStringWithTable += "#   - \n";
+					sourceStringWithTable += "#############################################################################################\n";
+					sourceStringWithTable += "# Button\n";
+					for (int i=0; i<dsTableInfo.getRowCnt(); i++) {
+						String colNameUpperWord = CommonUtil.toWordStartUpperCase(dsTableInfo.getValue(i, "COLUMN_NAME"));
+						String colNameLowerCamelCase = CommonUtil.toCamelCaseStartLowerCase(dsTableInfo.getValue(i, "COLUMN_NAME"));
+
+						search += thisMenuId+".search."+colNameLowerCamelCase+"="+colNameUpperWord+"\n";
+						grid += thisMenuId+".grid."+colNameLowerCamelCase+"="+colNameUpperWord+"\n";
+						header += thisMenuId+".header."+colNameLowerCamelCase+"="+colNameUpperWord+"\n";
+					}
+					sourceStringWithTable += search+grid+listEtc+header;
+					sourceStringWithTable += "# Message, Comments";
+					sourceString = sourceStringWithTable;
+				}
 
 				osWriter.write(sourceString);
 				osWriter.flush();
@@ -1846,17 +1870,21 @@ logger.debug("tableName : "+tableName);
 					targetFile = new File(targetPath + "/" + targetFileName + ".properties");
 					createEmptyFile(targetFile);
 
-					bufferedReader = new BufferedReader(new FileReader(srcPath + "/" + srcFileNameByLang));
-					stringBuffer = new StringBuffer();
-					while ((tempString = bufferedReader.readLine()) != null) {
-						stringBuffer.append(tempString + "\n");
-					}
 					osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
-					sourceString = stringBuffer.toString();
 
-					sourceString = CommonUtil.replace(sourceString, "#MENU_ID_START_UPPER#", thisMenuIdUpperCamelCase);
-					sourceString = CommonUtil.replace(sourceString, "#MENU_NAME#", menuName);
-					sourceString = CommonUtil.replace(sourceString, "#THIS_MENU_ID#", thisMenuId);
+					if (CommonUtil.isBlank(tableName)) {
+						bufferedReader = new BufferedReader(new FileReader(srcPath + "/" + srcFileNameByLang));
+						stringBuffer = new StringBuffer();
+						while ((tempString = bufferedReader.readLine()) != null) {
+							stringBuffer.append(tempString + "\n");
+						}
+						sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
+						sourceString = CommonUtil.replace(sourceString, "#MENU_ID_START_UPPER#", thisMenuIdUpperCamelCase);
+						sourceString = CommonUtil.replace(sourceString, "#MENU_NAME#", menuName);
+						sourceString = CommonUtil.replace(sourceString, "#THIS_MENU_ID#", thisMenuId);
+					} else {
+						sourceString = sourceStringWithTable;
+					}
 
 					osWriter.write(sourceString);
 					osWriter.flush();
