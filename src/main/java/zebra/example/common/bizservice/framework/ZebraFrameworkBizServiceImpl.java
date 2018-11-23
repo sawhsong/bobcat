@@ -1845,15 +1845,20 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 					sourceStringWithTable += "#############################################################################################\n";
 					sourceStringWithTable += "# Button\n";
 					for (int i=0; i<dsTableInfo.getRowCnt(); i++) {
+						String colName = dsTableInfo.getValue(i, "COLUMN_NAME");
 						String colNameUpperWord = CommonUtil.toWordStartUpperCase(dsTableInfo.getValue(i, "COLUMN_NAME"));
 						String colNameLowerCamelCase = CommonUtil.toCamelCaseStartLowerCase(dsTableInfo.getValue(i, "COLUMN_NAME"));
+
+						if (CommonUtil.isIn(colName, "INSERT_DATE", "UPDATE_DATE", "INSERT_USER_ID", "UPDATE_USER_ID")) {
+							continue;
+						}
 
 						search += thisMenuId+".search."+colNameLowerCamelCase+"="+colNameUpperWord+"\n";
 						grid += thisMenuId+".grid."+colNameLowerCamelCase+"="+colNameUpperWord+"\n";
 						header += thisMenuId+".header."+colNameLowerCamelCase+"="+colNameUpperWord+"\n";
 					}
 					sourceStringWithTable += search+grid+listEtc+header;
-					sourceStringWithTable += "# Message, Comments";
+					sourceStringWithTable += "\n# Message, Comments";
 					sourceString = sourceStringWithTable;
 				}
 
@@ -1891,7 +1896,7 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 				}
 
 				osWriter.close();
-				bufferedReader.close();
+				if (bufferedReader != null) {bufferedReader.close();}
 			}
 
 			return true;
