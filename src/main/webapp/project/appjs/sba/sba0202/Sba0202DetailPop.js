@@ -37,7 +37,7 @@ $(function() {
 		}
 
 		if (param.mode == "Update") {
-			parent.popup.resizeTo(0, 124);
+			parent.popup.resizeTo(0, 116);
 		}
 
 		if (param.mode == "Delete") {

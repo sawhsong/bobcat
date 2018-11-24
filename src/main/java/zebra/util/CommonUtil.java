@@ -230,6 +230,11 @@ public class CommonUtil extends StringUtils {
 		return new SimpleDateFormat(ConfigUtil.getProperty("format.default.dateTime")).parse(value);
 	}
 
+	public static Date toDate(String value, String format) throws Exception {
+		if (isBlank(value)) {return null;}
+		return new SimpleDateFormat(format).parse(value);
+	}
+
 	public static String toDateTimeString(long value) throws Exception {
 		return toDateTimeString(value, ConfigUtil.getProperty("format.dateTime.java"));
 	}

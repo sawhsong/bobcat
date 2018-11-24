@@ -35,7 +35,7 @@
 			this._setOptions(event, params);
 			this._createObjects();
 			this._setObjects();
-			this._setPosition();
+			this._setPosition(params);
 			this._setHeader();
 			this._bindEvent(params);
 			this._setEffect();
@@ -224,8 +224,8 @@
 
 			if (this.shadowEffect) {$(this.calendarBase).addClass("shadowForDivNonyCalendarBase");}
 		},
-		_setPosition : function() {
-			var correctionValueX = 8, correctionValueY = 18;
+		_setPosition : function(params) {
+			var correctionValueX = params.adjustX || 8, correctionValueY = params.adjustY || 18;
 
 			$(this.calendarBase).css("left", ($(this.clickedImg).offset().left + correctionValueX - this.width) + "px");
 			$(this.calendarBase).css("top", ($(this.clickedImg).offset().top + correctionValueY) + "px");

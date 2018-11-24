@@ -6,11 +6,44 @@ package project.conf.resource.ormapper.dao.SysOrg;
 
 import project.common.extend.BaseHDao;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
+import zebra.base.Dto;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
+import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
+	public int insert(Dto dto) throws Exception {
+		return insertWithDto(dto);
+	}
+
+	public int update(String orgId, Dto dto) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_id = '"+orgId+"'");
+		return updateWithDto(queryAdvisor, dto);
+	}
+
+	public int delete(String orgIds[]) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		int result = 0;
+		String idsForDel = "";
+
+		if (!(orgIds == null || orgIds.length == 0)) {
+			for (int i=0; i<orgIds.length; i++) {
+				idsForDel += CommonUtil.isBlank(idsForDel) ? "'"+orgIds[i]+"'" : ",'"+orgIds[i]+"'";
+			}
+			queryAdvisor.addWhereClause("org_id in ("+idsForDel+")");
+			result = deleteWithSQLQuery(queryAdvisor, new SysOrg());
+		}
+		return result;
+	}
+
+	public int delete(String orgId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_id = '"+orgId+"'");
+		return deleteWithSQLQuery(queryAdvisor, new SysOrg());
+	}
+
 	public DataSet getOrgNameDataSetForAutoCompletion(QueryAdvisor queryAdvisor) throws Exception {
 		return selectAsDataSet(queryAdvisor, "query.SysOrg.getOrgNameDataSetForAutoCompletion");
 	}

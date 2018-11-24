@@ -59,7 +59,7 @@ public interface SysUserDao extends IDao {
 	public int delete(String[] userIds) throws Exception;
 	/**
 	 * Delete SysUser record by Id
-	 * @param groupId
+	 * @param userId
 	 * @return
 	 * @throws Exception
 	 */

@@ -3,6 +3,7 @@
  * - Sba0204List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
+jsconfig.put("scrollablePanelHeightAdjust", 8);
 var popup = null, popupLookup = null;
 var searchResultDataCount = 0;
 var toDateFormat = jsconfig.get("dateFormatJs");
@@ -102,7 +103,7 @@ $(function() {
 					}
 				}
 			});
-		}, 100);
+		}, 200);
 	};
 
 	renderDataGridTable = function(result) {

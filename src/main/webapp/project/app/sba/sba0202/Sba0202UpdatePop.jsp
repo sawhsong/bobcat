@@ -9,8 +9,8 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysOrg sysOrg = (SysOrg)paramEntity.getObject("sysOrg");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -29,6 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var orgId = "<%=sysOrg.getOrgId()%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -66,73 +67,59 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="14%"/>
+			<col width="36%"/>
+			<col width="14%"/>
+			<col width="36%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0202.header.writerName"/></th>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgId"/></th>
+			<td class="tdEdit"><ui:text name="orgId" value="<%=sysOrg.getOrgId()%>" status="display"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.abn"/></th>
+			<td class="tdEdit"><ui:text name="abn" value="<%=CommonUtil.getFormatString(sysOrg.getAbn(), \"?? ??? ??? ???\")%>" checkName="sba0202.header.abn"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.legalName"/></th>
+			<td class="tdEdit"><ui:text name="legalName" value="<%=sysOrg.getLegalName()%>" checkName="sba0202.header.legalName" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.tradingName"/></th>
+			<td class="tdEdit"><ui:text name="tradingName" value="<%=sysOrg.getTradingName()%>" checkName="sba0202.header.tradingName"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.registeredDate"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0202.header.writerName" options="mandatory"/>
+				<ui:text name="registeredDate" className="Ct hor" style="width:100px" value="<%=CommonUtil.toString(sysOrg.getRegisteredDate(), dateFormat)%>" checkName="sba0202.header.registeredDate" option="date"/>
+				<ui:icon id="icnRegisteredDate" className="fa-calendar hor" title="sba0202.header.registeredDate"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0202.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sba0202.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" selectedValue="<%=sysOrg.getIsActive()%>"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0202.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sba0202.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgCategory"/></th>
+			<td class="tdEdit"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" selectedValue="<%=sysOrg.getOrgCategory()%>" checkName="sba0202.header.orgCategory" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.email"/></th>
+			<td class="tdEdit"><ui:text name="email" checkName="sba0202.header.email" value="<%=sysOrg.getEmail()%>"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.entityType"/></th>
+			<td class="tdEdit"><ui:ccselect name="entityType" codeType="ENTITY_TYPE" selectedValue="<%=sysOrg.getEntityType()%>" checkName="sba0202.header.entityType" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.businessType"/></th>
+			<td class="tdEdit"><ui:ccselect name="businessType" codeType="BUSINESS_TYPE" selectedValue="<%=sysOrg.getBusinessType()%>" checkName="sba0202.header.businessType" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0202.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.baseType"/></th>
+			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BASE_TYPE" selectedValue="<%=sysOrg.getBaseType()%>" checkName="sba0202.header.baseType" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.wageType"/></th>
+			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" selectedValue="<%=sysOrg.getWageType()%>" checkName="sba0202.header.wageType" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0202.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.rRangeFrom"/></th>
+			<td class="tdEdit"><ui:text name="rRangeFrom" className="rt numeric" value="<%=CommonUtil.toString(sysOrg.getRevenueRangeFrom())%>" checkName="sba0202.header.rRangeFrom" option="numeric"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.rRangeTo"/></th>
+			<td class="tdEdit"><ui:text name="rRangeTo" className="rt numeric" value="<%=CommonUtil.toString(sysOrg.getRevenueRangeTo())%>" checkName="sba0202.header.rRangeTo" option="numeric"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.postalAddress"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="postalAddress" value="<%=sysOrg.getPostalAddress()%>" checkName="sba0202.header.postalAddress"/></td>
 		</tr>
 	</table>
 </div>

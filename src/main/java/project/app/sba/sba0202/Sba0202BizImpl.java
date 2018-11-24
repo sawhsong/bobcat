@@ -10,11 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
 import project.common.module.datahelper.DataHelper;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
@@ -100,26 +98,32 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
+		SysOrg sysOrg = new SysOrg();
 		String uid = CommonUtil.uid();
 		String loggedInUserId = (String)session.getAttribute("UserId");
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		int result = -1;
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysOrg.setOrgId(uid);
+			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
+			sysOrg.setLegalName(CommonUtil.replace(requestDataSet.getValue("legalName"), "||", "&"));
+			sysOrg.setTradingName(requestDataSet.getValue("tradingName"));
+			sysOrg.setEmail(requestDataSet.getValue("email"));
+			sysOrg.setPostalAddress(requestDataSet.getValue("postalAddress"));
+			sysOrg.setRegisteredDate(CommonUtil.toDate(requestDataSet.getValue("registeredDate"), dateFormat));
+			sysOrg.setIsActive(requestDataSet.getValue("isActive"));
+			sysOrg.setOrgCategory(requestDataSet.getValue("orgCategory"));
+			sysOrg.setEntityType(requestDataSet.getValue("entityType"));
+			sysOrg.setBusinessType(requestDataSet.getValue("businessType"));
+			sysOrg.setBaseType(requestDataSet.getValue("baseType"));
+			sysOrg.setWageType(requestDataSet.getValue("wageType"));
+			sysOrg.setRevenueRangeFrom(CommonUtil.toDouble(requestDataSet.getValue("rRangeFrom")));
+			sysOrg.setRevenueRangeTo(CommonUtil.toDouble(requestDataSet.getValue("rRangeTo")));
+			sysOrg.setInsertUserId(loggedInUserId);
+			sysOrg.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			result = sysOrgDao.insert(sysOrg);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -135,27 +139,32 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
+		String orgId = requestDataSet.getValue("orgId");
+		SysOrg sysOrg = new SysOrg();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		int result = 0;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysOrg.setOrgId(orgId);
+			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
+			sysOrg.setLegalName(CommonUtil.replace(requestDataSet.getValue("legalName"), "||", "&"));
+			sysOrg.setTradingName(requestDataSet.getValue("tradingName"));
+			sysOrg.setEmail(requestDataSet.getValue("email"));
+			sysOrg.setPostalAddress(requestDataSet.getValue("postalAddress"));
+			sysOrg.setRegisteredDate(CommonUtil.toDate(requestDataSet.getValue("registeredDate"), dateFormat));
+			sysOrg.setIsActive(requestDataSet.getValue("isActive"));
+			sysOrg.setOrgCategory(requestDataSet.getValue("orgCategory"));
+			sysOrg.setEntityType(requestDataSet.getValue("entityType"));
+			sysOrg.setBusinessType(requestDataSet.getValue("businessType"));
+			sysOrg.setBaseType(requestDataSet.getValue("baseType"));
+			sysOrg.setWageType(requestDataSet.getValue("wageType"));
+			sysOrg.setRevenueRangeFrom(CommonUtil.toDouble(requestDataSet.getValue("rRangeFrom")));
+			sysOrg.setRevenueRangeTo(CommonUtil.toDouble(requestDataSet.getValue("rRangeTo")));
+			sysOrg.setUpdateUserId(loggedInUserId);
+			sysOrg.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			result = sysOrgDao.update(orgId, sysOrg);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -170,16 +179,16 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String orgId = requestDataSet.getValue("orgId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String orgIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
+			if (CommonUtil.isBlank(orgId)) {
+				result = sysOrgDao.delete(orgIds);
 			} else {
-				result = sysBoardDao.delete(articleId);
+				result = sysOrgDao.delete(orgId);
 			}
 
 			if (result <= 0) {

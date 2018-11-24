@@ -90,6 +90,8 @@ $(function() {
 			}
 		});
 
-		$("#photoPath").focus();
+		setTimeout(function() {
+			$("#photoPath").focus();
+		}, 100);
 	});
 });

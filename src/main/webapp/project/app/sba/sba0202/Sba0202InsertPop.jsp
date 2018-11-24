@@ -28,13 +28,6 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-$(function() {
-// 	$(window).load(function() {
-// 		commonJs.setFieldDateMask("registeredDate");
-// 		$(".numeric").number(true, 0);
-// 		$("#abn").focus();
-// 	});
-});
 </script>
 </head>
 <%/************************************************************************************************
@@ -112,7 +105,7 @@ $(function() {
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0202.header.baseType"/></th>
-			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BUSINESS_TYPE" checkName="sba0202.header.baseType" options="mandatory"/></td>
+			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BASE_TYPE" checkName="sba0202.header.baseType" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sba0202.header.wageType"/></th>
 			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" checkName="sba0202.header.wageType" options="mandatory"/></td>
 		</tr>
@@ -124,7 +117,7 @@ $(function() {
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0202.header.postalAddress"/></th>
-			<td class="tdEdit" colspan="3"><ui:text name="email" checkName="sba0202.header.email"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="postalAddress" checkName="sba0202.header.postalAddress"/></td>
 		</tr>
 	</table>
 </div>

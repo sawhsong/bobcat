@@ -335,7 +335,7 @@ var nony = {
 		if ($.nony.isEmpty(val)) {
 			val = "";
 		} else {
-//			val = $.nony.replace(val, "&amp;", "&");
+			val = $.nony.replace(val, "&amp;", "&");
 //			val = $.nony.replace(val, "&#35;", "#");
 //			val = $.nony.replace(val, "&lt;", "<");
 //			val = $.nony.replace(val, "&gt;", ">");
