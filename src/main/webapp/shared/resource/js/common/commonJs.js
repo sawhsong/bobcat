@@ -230,12 +230,12 @@ $(window).load(function() {
 	$.nony.fileElement.modifyFileSelectObject();
 
 	if ("Y" == jsconfig.get("autoSetSearchCriteria")) {$.nony._setAutoSearchCriteria(jsconfig.get("searchCriteriaDataSetString"));}
-
+	if (jsconfig.get("useScrollablePanel")) {$.nony._doResizeScrollablePanel();}
 	if (jsconfig.get("useJqTooltip")) {$.nony._jqTooltip();}
 
-	if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
-
-	if (jsconfig.get("useScrollablePanel")) {$.nony._doResizeScrollablePanel();}
+	setTimeout(function() {
+		if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
+	}, 10);
 });
 
 /*!

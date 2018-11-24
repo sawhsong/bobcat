@@ -657,7 +657,6 @@ var nony = {
 			options.width = "auto";
 			options.container = "body";
 			options.style = $(this).attr("class");
-
 			$(this).selectpicker(options);
 		});
 	},

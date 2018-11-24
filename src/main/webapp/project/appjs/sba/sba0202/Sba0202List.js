@@ -142,18 +142,19 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 510;
+		var height = 304;
 
 		if (param.mode == "Detail") {
 			url = "/sba/0202/getDetail.do";
 			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
+		} else if (param.mode == "New") {
 			url = "/sba/0202/getInsert.do";
 			header = com.header.popHeaderEdit;
+			height = 416;
 		} else if (param.mode == "Edit") {
 			url = "/sba/0202/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 634;
+			height = 416;
 		}
 
 		var popParam = {
@@ -165,7 +166,7 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:1000,
 			height:height
 		};
 

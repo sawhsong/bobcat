@@ -10,10 +10,6 @@ $(function() {
 		doProcessByButton({mode:"Update"});
 	});
 
-	$("#btnReply").click(function(event) {
-		doProcessByButton({mode:"Reply"});
-	});
-
 	$("#btnDelete").click(function(event) {
 		doProcessByButton({mode:"Delete"});
 	});
@@ -32,26 +28,13 @@ $(function() {
 	 * process
 	 */
 	doProcessByButton = function(param) {
-		var articleId = "<%=sysBoard.getArticleId()%>";
 		var actionString = "";
-		var params = {};
 
 		if (param.mode == "Update") {
 			actionString = "/sba/0202/getUpdate.do";
-		} else if (param.mode == "Reply") {
-			actionString = "/sba/0202/getInsert.do";
 		} else if (param.mode == "Delete") {
 			actionString = "/sba/0202/exeDelete.do";
 		}
-
-		params = {
-			form:"fmDefault",
-			action:actionString,
-			data:{
-				mode:param.mode,
-				articleId:articleId
-			}
-		};
 
 		if (param.mode == "Update") {
 			parent.popup.resizeTo(0, 124);
@@ -68,7 +51,7 @@ $(function() {
 							dataType:"json",
 							formId:"fmDefault",
 							data:{
-								articleId:articleId
+								orgId:orgId
 							},
 							success:function(data, textStatus) {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
@@ -100,7 +83,14 @@ $(function() {
 				}]
 			});
 		} else {
-			commonJs.doSubmit(params);
+			commonJs.doSubmit({
+				form:"fmDefault",
+				action:actionString,
+				data:{
+					mode:param.mode,
+					orgId:orgId
+				}
+			});
 		}
 	};
 

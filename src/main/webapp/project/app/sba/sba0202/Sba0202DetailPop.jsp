@@ -10,6 +10,8 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	SysOrg sysOrg = (SysOrg)paramEntity.getObject("sysOrg");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String intFormat = ConfigUtil.getProperty("format.default.integer");
 %>
 <%/************************************************************************************************
 * HTML
@@ -28,6 +30,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var orgId = "<%=sysOrg.getOrgId()%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -66,62 +69,56 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="12%"/>
-			<col width="38%"/>
-			<col width="12%"/>
-			<col width="38%"/>
+			<col width="14%"/>
+			<col width="36%"/>
+			<col width="14%"/>
+			<col width="36%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.writerName"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterName()%>(<%=sysBoard.getWriterId()%>)</td>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.writerEmail"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgId"/></th>
+			<td class="tdEdit"><%=sysOrg.getOrgId()%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.abn"/></th>
+			<td class="tdEdit"><%=CommonUtil.getFormatString(sysOrg.getAbn(), "?? ??? ???")%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.updateDate"/></th>
-			<td class="tdEdit"><%=CommonUtil.toViewDateString(sysBoard.getUpdateDate())%></td>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.hitCount"/></th>
-			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysBoard.getHitCnt())%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.legalName"/></th>
+			<td class="tdEdit"><%=sysOrg.getLegalName()%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.tradingName"/></th>
+			<td class="tdEdit"><%=sysOrg.getTradingName()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3"><%=sysBoard.getArticleSubject()%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.registeredDate"/></th>
+			<td class="tdEdit"><%=CommonUtil.toString(sysOrg.getRegisteredDate(), dateFormat)%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.isActive"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("IS_ACTIVE", sysOrg.getIsActive())%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa  style="height:214px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgCategory"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("ORG_CATEGORY", sysOrg.getOrgCategory())%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.email"/></th>
+			<td class="tdEdit"><%=sysOrg.getEmail()%></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.attachedFile"/></th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							String repositoryPath = fileDataSet.getValue(i, "REPOSITORY_PATH");
-							String originalName = fileDataSet.getValue(i, "ORIGINAL_NAME");
-							String newName = fileDataSet.getValue(i, "NEW_NAME");
-							String icon = fileDataSet.getValue(i, "FILE_ICON");
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<img src="<%=icon%>" style="margin-top:-4px;"/>
-								<a class="aEn" onclick="exeDownload('<%=repositoryPath%>', '<%=originalName%>', '<%=newName%>')">
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</a>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.entityType"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("ENTITY_TYPE", sysOrg.getEntityType())%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.businessType"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("BUSINESS_TYPE", sysOrg.getBusinessType())%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.baseType"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("BASE_TYPE", sysOrg.getBaseType())%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.wageType"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("WAGE_TYPE", sysOrg.getWageType())%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.rRangeFrom"/></th>
+			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysOrg.getRevenueRangeFrom(), intFormat)%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.rRangeTo"/></th>
+			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysOrg.getRevenueRangeTo(), intFormat)%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.postalAddress"/></th>
+			<td class="tdEdit" colspan="3"><%=sysOrg.getPostalAddress()%></td>
 		</tr>
 	</table>
 </div>

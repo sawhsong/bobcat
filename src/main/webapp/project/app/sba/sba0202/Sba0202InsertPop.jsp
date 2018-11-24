@@ -9,7 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -28,6 +28,13 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+$(function() {
+// 	$(window).load(function() {
+// 		commonJs.setFieldDateMask("registeredDate");
+// 		$(".numeric").number(true, 0);
+// 		$("#abn").focus();
+// 	});
+});
 </script>
 </head>
 <%/************************************************************************************************
@@ -65,44 +72,59 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="14%"/>
+			<col width="36%"/>
+			<col width="14%"/>
+			<col width="36%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0202.header.writerName"/></th>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgId"/></th>
+			<td class="tdEdit"><ui:text name="orgId" status="display"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.abn"/></th>
+			<td class="tdEdit"><ui:text name="abn" checkName="sba0202.header.abn"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.legalName"/></th>
+			<td class="tdEdit"><ui:text name="legalName" checkName="sba0202.header.legalName" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.tradingName"/></th>
+			<td class="tdEdit"><ui:text name="tradingName" checkName="sba0202.header.tradingName"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.registeredDate"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysUser.getUserName()%>" checkName="sba0202.header.writerName" options="mandatory"/>
+				<ui:text name="registeredDate" className="Ct hor" style="width:100px" value="<%=CommonUtil.getSysdate(dateFormat)%>" checkName="sba0202.header.registeredDate" option="date"/>
+				<ui:icon id="icnRegisteredDate" className="fa-calendar hor" title="sba0202.header.registeredDate"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0202.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysUser.getEmail()%>" checkName="sba0202.header.writerEmail" option="email" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0202.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" checkName="sba0202.header.articleSubject" options="mandatory"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgCategory"/></th>
+			<td class="tdEdit"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" checkName="sba0202.header.orgCategory" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.email"/></th>
+			<td class="tdEdit"><ui:text name="email" checkName="sba0202.header.email"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0202.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;"/>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.entityType"/></th>
+			<td class="tdEdit"><ui:ccselect name="entityType" codeType="ENTITY_TYPE" checkName="sba0202.header.entityType" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.businessType"/></th>
+			<td class="tdEdit"><ui:ccselect name="businessType" codeType="BUSINESS_TYPE" checkName="sba0202.header.businessType" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0202.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.baseType"/></th>
+			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BUSINESS_TYPE" checkName="sba0202.header.baseType" options="mandatory"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.wageType"/></th>
+			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" checkName="sba0202.header.wageType" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.rRangeFrom"/></th>
+			<td class="tdEdit"><ui:text name="rRangeFrom" className="rt numeric" checkName="sba0202.header.rRangeFrom" option="numeric"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.rRangeTo"/></th>
+			<td class="tdEdit"><ui:text name="rRangeTo" className="rt numeric" checkName="sba0202.header.rRangeTo" option="numeric"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0202.header.postalAddress"/></th>
+			<td class="tdEdit" colspan="3"><ui:text name="email" checkName="sba0202.header.email"/></td>
 		</tr>
 	</table>
 </div>

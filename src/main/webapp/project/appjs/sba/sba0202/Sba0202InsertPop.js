@@ -8,8 +8,6 @@ $(function() {
 	 */
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
-			$("#fmDefault").attr("enctype", "multipart/form-data");
-
 			commonJs.confirm({
 				contents:com.message.Q001,
 				buttons:[{
@@ -19,7 +17,6 @@ $(function() {
 							form:"fmDefault",
 							action:"/sba/0202/exeInsert.do",
 							data:{
-								articleId:articleId
 							}
 						});
 					}
@@ -36,11 +33,8 @@ $(function() {
 		parent.popup.close();
 	});
 
-	$("#btnAddFile").click(function(event) {
-		commonJs.addFileSelectObject({
-			appendToId:"divAttachedFile",
-			rowBreak:false
-		});
+	$("#icnRegisteredDate").click(function(event) {
+		commonJs.openCalendar(event, "registeredDate");
 	});
 
 	$(document).keypress(function(event) {
@@ -57,6 +51,10 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#writerName").focus();
+		setTimeout(function() {
+			commonJs.setFieldDateMask("registeredDate");
+			$(".numeric").number(true, 0);
+			$("#abn").focus();
+		}, 30);
 	});
 });
