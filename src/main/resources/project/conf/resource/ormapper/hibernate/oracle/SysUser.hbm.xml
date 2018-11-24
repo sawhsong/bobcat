@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!--/*
  * Framework Generated Hibernate Config hbm Source
- * - SYS_USER - User Info
+ * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
  */-->
 <hibernate-mapping>
 	<class name="project.conf.resource.ormapper.dto.oracle.SysUser" table="SYS_USER" lazy="false">
-		<meta attribute="class-description" inherit="false">User Info</meta>
+		<meta attribute="class-description" inherit="false">User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)</meta>
 
 		<id name="userId" column="USER_ID" type="java.lang.String" length="30"></id>
 
@@ -26,6 +26,7 @@
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="2000"/>
+		<property name="startUrl" column="START_URL" type="java.lang.String" length="100"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 	</class>
@@ -49,6 +50,7 @@
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
 		       PHOTO_PATH,
+		       START_URL,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
 		  FROM SYS_USER
@@ -80,6 +82,7 @@
 		       INSERT_DATE,
 		       INSERT_USER_ID,
 		       PHOTO_PATH,
+		       START_URL,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
 		       )
@@ -101,6 +104,7 @@
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
 		       ${PHOTO_PATH},
+		       ${START_URL},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
 		       )
@@ -126,6 +130,7 @@
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
 		       PHOTO_PATH = ${PHOTO_PATH},
+		       START_URL = ${START_URL},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}
 		 WHERE 1 = 1

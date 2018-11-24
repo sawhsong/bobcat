@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated DTO Source
- * - SYS_USER - User Info
+ * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
  *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
@@ -51,6 +51,8 @@ public class SysUser extends BaseDto implements Serializable {
 	private String INSERT_USER_ID;
 	private String photoPath;
 	private String PHOTO_PATH;
+	private String startUrl;
+	private String START_URL;
 	private Date updateDate;
 	private String UPDATE_DATE;
 	private String updateUserId;
@@ -247,6 +249,15 @@ public class SysUser extends BaseDto implements Serializable {
 		setValueFromAccessor("PHOTO_PATH", photoPath);
 	}
 
+	public String getStartUrl() {
+		return startUrl;
+	}
+
+	public void setStartUrl(String startUrl) throws Exception {
+		this.startUrl = startUrl;
+		setValueFromAccessor("START_URL", startUrl);
+	}
+
 	public Date getUpdateDate() {
 		return updateDate;
 	}
@@ -411,6 +422,7 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "photoPath : "+photoPath+"\n";
+		str += "startUrl : "+startUrl+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
 		str += "insertUserName : "+insertUserName+"\n";
@@ -442,6 +454,7 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"photoPath\" value=\""+photoPath+"\">";
+		str += "<column name=\"startUrl\" value=\""+startUrl+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
 		str += "<column name=\"insertUserName\" value=\""+insertUserName+"\">";
@@ -473,6 +486,7 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"photoPath\":\""+photoPath+"\", ";
+		str += "\"startUrl\":\""+startUrl+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";
 		str += "\"insertUserName\":\""+insertUserName+"\", ";
