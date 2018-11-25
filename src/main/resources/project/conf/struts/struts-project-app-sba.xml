@@ -18,5 +18,12 @@
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204UpdatePop.jsp</result>
             <result name="actionContextMenu" type="debugDispatcherResult">/project/app/sba/sba0204/Sba0204ActionContextMenuPop.jsp</result>
         </action>
+        <!--Sba0402 - Financial Period Type-->
+        <action class="project.app.sba.sba0402.Sba0402Action" method="{1}" name="0402/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

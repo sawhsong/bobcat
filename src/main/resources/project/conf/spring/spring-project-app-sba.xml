@@ -5,4 +5,7 @@
     <!--Sba0204 - User Management-->
     <bean class="${name.package.project}.app.sba.sba0204.Sba0204Action" id="sba0204Action" name="sba0204Action"/>
     <bean class="${name.package.project}.app.sba.sba0204.Sba0204BizImpl" id="sba0204Biz" name="sba0204Biz" parent="baseBiz"/>
+    <!--Sba0402 - Financial Period Type-->
+    <bean class="${name.package.project}.app.sba.sba0402.Sba0402Action" id="sba0402Action" name="sba0402Action"/>
+    <bean class="${name.package.project}.app.sba.sba0402.Sba0402BizImpl" id="sba0402Biz" name="sba0402Biz" parent="baseBiz"/>
 </beans>
