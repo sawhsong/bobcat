@@ -69,47 +69,33 @@ $(function() {
 		var ds = result.dataSet;
 		var html = "";
 
-		searchResultDataCount = dataSet.getRowCnt();
+		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
 
-		if (dataSet.getRowCnt() > 0) {
+		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "PERIOD_YEAR")+"_"+ds.getValue(i, "QUARTER_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "PERIOD_YEAR")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "FINANCIAL_YEAR")));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				uiAnc.setText(ds.getValue(i, "QUARTER_CODE_NAME")).setScript("getDetail('"+ds.getValue(i, "PERIOD_YEAR")+"', '"+ds.getValue(i, "QUARTER_CODE")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				var gridTd = new UiGridTd();
-				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
-					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"));
-					gridTd.addChild(iconAttachFile);
-				}
-				gridTr.addChild(gridTd);
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "CREATED_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "QUARTER_NAME_DESC")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "DATE_FROM")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "DATE_TO")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID"))
-					.setScript("doAction(this)").addAttribute("title:"+com.header.action);
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("periodYear:"+ds.getValue(i, "PERIOD_YEAR")).addAttribute("quarterCode:"+ds.getValue(i, "QUARTER_CODE"))
+					.setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -117,7 +103,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -133,10 +119,6 @@ $(function() {
 			script:"doSearch"
 		});
 
-		$("[name=icnAttachedFile]").each(function(index) {
-			$(this).contextMenu(attchedFileContextMenu);
-		});
-
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.boardAction);
 		});
@@ -144,8 +126,12 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getDetail = function(periodYear, quarterCode) {
+		openPopup({
+			mode:"Detail",
+			periodYear:periodYear,
+			quarterCode:quarterCode
+		});
 	};
 
 	openPopup = function(param) {
@@ -227,22 +213,22 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var periodYear = $(img).attr("periodYear");
+		var quarterCode = $(img).attr("quarterCode");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == periodYear+"_"+quarterCode) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.commonAction[0].fun = function() {getDetail(periodYear, quarterCode);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", periodYear:periodYear, quarterCode:quarterCode});};
+		ctxMenu.commonAction[3].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.commonAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -292,10 +278,8 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#searchWord").focus();
+		$("#periodYear").focus();
 		doSearch();
 	});
 });
