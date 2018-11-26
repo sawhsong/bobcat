@@ -25,5 +25,19 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0402/Sba0402UpdatePop.jsp</result>
         </action>
+        <!--Sba0404 - Income Type-->
+        <action class="project.app.sba.sba0404.Sba0404Action" method="{1}" name="0404/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0404/Sba0404UpdatePop.jsp</result>
+        </action>
+        <!--Sba0406 - Expenditure Type-->
+        <action class="project.app.sba.sba0406.Sba0406Action" method="{1}" name="0406/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

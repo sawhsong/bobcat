@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0202DetailPop.js
+ * - Sba0406DetailPop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -10,8 +10,11 @@ $(function() {
 		doProcessByButton({mode:"Update"});
 	});
 
+	$("#btnReply").click(function(event) {
+		doProcessByButton({mode:"Reply"});
+	});
+
 	$("#btnDelete").click(function(event) {
-		if ($("#btnDelete").attr("disabled") == "disabled") {return;}
 		doProcessByButton({mode:"Delete"});
 	});
 
@@ -29,13 +32,16 @@ $(function() {
 	 * process
 	 */
 	doProcessByButton = function(param) {
+		var articleId = "<%=sysBoard.getArticleId()%>";
 		var actionString = "";
 		var params = {};
 
 		if (param.mode == "Update") {
-			actionString = "/sys/0202/getUpdate.do";
+			actionString = "/sba/0406/getUpdate.do";
+		} else if (param.mode == "Reply") {
+			actionString = "/sba/0406/getInsert.do";
 		} else if (param.mode == "Delete") {
-			actionString = "/sys/0202/exeDelete.do";
+			actionString = "/sba/0406/exeDelete.do";
 		}
 
 		params = {
@@ -43,9 +49,13 @@ $(function() {
 			action:actionString,
 			data:{
 				mode:param.mode,
-				codeType:codeType
+				articleId:articleId
 			}
 		};
+
+		if (param.mode == "Update") {
+			parent.popup.resizeTo(0, 124);
+		}
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
@@ -53,7 +63,35 @@ $(function() {
 				buttons:[{
 					caption:com.caption.yes,
 					callback:function() {
-						exeDelete(params);
+						commonJs.ajaxSubmit({
+							url:actionString,
+							dataType:"json",
+							formId:"fmDefault",
+							data:{
+								articleId:articleId
+							},
+							success:function(data, textStatus) {
+								var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+								if (result.isSuccess == true || result.isSuccess == "true") {
+									commonJs.openDialog({
+										type:com.message.I000,
+										contents:result.message,
+										blind:true,
+										width:300,
+										buttons:[{
+											caption:com.caption.ok,
+											callback:function() {
+												parent.popup.close();
+												parent.doSearch();
+											}
+										}]
+									});
+								} else {
+									commonJs.error(result.message);
+								}
+							}
+						});
 					}
 				}, {
 					caption:com.caption.no,
@@ -66,46 +104,9 @@ $(function() {
 		}
 	};
 
-	exeDelete = function(params) {
-		commonJs.ajaxSubmit({
-			url:"/sys/0202/exeDelete.do",
-			dataType:"json",
-			formId:"fmDefault",
-			data:{
-				codeType:params.data.codeType
-			},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					commonJs.openDialog({
-						type:com.message.I000,
-						contents:result.message,
-						blind:true,
-						width:300,
-						buttons:[{
-							caption:com.caption.ok,
-							callback:function() {
-								parent.popup.close();
-								parent.doSearch();
-							}
-						}]
-					});
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-	};
-
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setTimeout(function() {
-			$("#tblGrid").fixedHeaderTable({
-				attachTo:$("#divDataArea")
-			});
-		}, 700);
 	});
 });
