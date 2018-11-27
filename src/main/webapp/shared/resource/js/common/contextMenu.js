@@ -1,24 +1,14 @@
-/*
- *contextMenu.js v 1.4.1
+/**
+ *contextMenu.js v 1.3.3
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *http://ignitersworld.com/lab/contextMenu.html
- *Copyright (c) 2013-2015 Sudhanshu Yadav.
+ *Copyright (c) 2013 Sudhanshu Yadav.
  *Dual licensed under the MIT and GPL licenses
  */
-;
-(function($, window, document, undefined) {
+;(function ($, window, document, undefined) {
 	"use strict";
-
-	$.single = (function() {
-		var single = $({});
-		return function(elm) {
-			single[0] = elm;
-			return single;
-		};
-	}());
-
-	$.fn.contextMenu = function(method, selector, option) {
+	$.fn.contextMenu = function (method, selector, option) {
 		//parameter fix
 		if (!methods[method]) {
 			option = selector;
@@ -38,22 +28,16 @@
 		}
 
 		var myoptions = option;
-		if ($.inArray(method, [ 'menu', 'popup', 'close', 'destroy' ]) > -1) {
+		if (method != 'update') {
 			option = iMethods.optionOtimizer(method, option);
-			this.each(function() {
-				var $this = $(this)
-				myoptions = $.extend({}, $.fn.contextMenu.defaults, option);
-				if (!myoptions.baseTrigger) {
-					myoptions.baseTrigger = $this;
-				}
-				methods[method].call($this, selector, myoptions)
-			});
-		} else {
-			methods[method].call(this, selector, myoptions)
+			myoptions = $.extend({}, $.fn.contextMenu.defaults, option);
+			if (!myoptions.baseTrigger) {
+				myoptions.baseTrigger = this;
+			}
 		}
+		methods[method].call(this, selector, myoptions);
 		return this;
 	};
-
 	$.fn.contextMenu.defaults = {
 		// Dustin modified
 		effect:"fade", // Dustin : slide / fade
@@ -62,42 +46,41 @@
 		widthAdjust:0, // Dustin : width adjustment
 		heightAdjust:0, // Dustin : height adjustment
 
-		triggerOn : 'click', //avaliable options are all event related mouse plus enter option
-		subMenuTriggerOn : 'hover click',
-		displayAround : 'cursor', // cursor or trigger
-		mouseClick : 'left',
-		verAdjust : 0,
-		horAdjust : 0,
-		top : 'auto',
-		left : 'auto',
-		closeOther : true, //to close other already opened context menu
-		containment : window,
-		winEventClose : true,
-		position : 'auto', //allowed values are top, left, bottom and right
-		closeOnClick : true, //close context menu on click/ trigger of any item in menu
+		triggerOn: 'click', //avaliable options are all event related mouse plus enter option
+		displayAround: 'cursor', // cursor or trigger
+		mouseClick: 'left',
+		verAdjust: 0,
+		horAdjust: 0,
+		top: 'auto',
+		left: 'auto',
+		closeOther:true, //to close other already opened context menu
+		containment:window,
+		winEventClose:true,
+		sizeStyle: 'manual', //allowed values are auto and content (popup size will be according content size - [auto / manual]) - Dustin : manual is working better, changed to manual as default value
+		position: 'auto', //allowed values are top, left, bottom and right
+		closeOnClick: true, //close context menu on click/ trigger of any item in menu
 
 		//callback
-		onOpen : function(data, event) {},
-		afterOpen : function(data, event) {},
-		onClose : function(data, event) {}
+		onOpen: function (data, event) {},
+		afterOpen: function (data, event) {},
+		onClose: function (data, event) {}
 	};
 
 	var methods = {
-		menu : function(selector, option) {
-			selector = iMethods.createMenuList(this, selector, option);
+		menu: function (selector, option) {
+			var trigger = $(this);
+			selector = iMethods.createMenuList(trigger, selector, option);
 			iMethods.contextMenuBind.call(this, selector, option, 'menu');
 		},
-		popup : function(selector, option) {
-//			$(selector).addClass('iw-contextMenu');
+		popup: function (selector, option) {
 			$(selector).addClass(option.classPrefix+'-contextMenu');
 			iMethods.contextMenuBind.call(this, selector, option, 'popup');
 		},
-		update : function(selector, option) {
+		update: function (selector, option) {
 			var self = this;
-			option = option || {};
-
-			this.each(function() {
-				var trgr = $(this), menuData = trgr.data('iw-menuData');
+			this.each(function () {
+				var trgr = $(this),
+					menuData = trgr.data('iw-menuData');
 				//refresh if any new element is added
 				if (!menuData) {
 					self.contextMenu('refresh');
@@ -110,12 +93,11 @@
 						var name = selector[i].name,
 							disable = selector[i].disable,
 							fun = selector[i].fun,
-							icon = selector[i].icon,
 							img = selector[i].img,
 							title = selector[i].title,
 							className = selector[i].className,
-							elm = menu.children('li').filter(function() {
-								return $(this).contents().filter(function() {
+							elm = menu.children('li').filter(function () {
+								return $(this).contents().filter(function () {
 									return this.nodeType == 3;
 								}).text() == name;
 							}),
@@ -125,23 +107,22 @@
 						disable != undefined && (disable ? elm.addClass(option.classPrefix+'-mDisable') : elm.removeClass(option.classPrefix+'-mDisable'));
 
 						//bind new function if provided
-						fun && elm.unbind('click.contextMenu').bind('click.contextMenu', fun);
+						fun && elm.unbind('click.contextMenu').bind('click.contextMenu',fun);
 
 						//update title
-						title != undefined && elm.attr('title', title);
+						title != undefined && elm.attr('title',title);
 
 						//update class name
-						className != undefined && elm.attr('class', className);
+						className!= undefined && elm.attr('class',className);
 
-						var imgIcon = elm.find('.'+option.classPrefix+'-mIcon');
-						if (imgIcon.length)
-							imgIcon.remove();
-
-						//update image or icon
+						//update image
 						if (img) {
-							elm.prepend('<img src="'+img+'" align="absmiddle" class="'+option.classPrefix+'-mIcon" />');
-						} else if (icon) {
-							elm.prepend('<span align="absmiddle" class="'+option.classPrefix+'-mIcon '+icon+'" />');
+							var imgIcon = elm.find('.'+option.classPrefix+'-mIcon');
+							if (imgIcon.length) {
+								imgIcon[0].src = img;
+							} else {
+								elm.prepend('<img src="' + img + '" align="absmiddle" class="'+option.classPrefix+'-mIcon" />');
+							}
 						}
 
 						//to change submenus
@@ -151,59 +132,51 @@
 					}
 				}
 
-				iMethods.onOff(menu);
-
-				//bind event again if trigger option has changed.
-				var triggerOn = option.triggerOn;
-				if (triggerOn) {
-					trgr.unbind('.contextMenu');
-
-					//add contextMenu identifier on all events
-					triggerOn = triggerOn.split(" ");
-					var events = [];
-					for (var i = 0, ln = triggerOn.length; i < ln; i++) {
-						events.push(triggerOn[i] + '.contextMenu')
-					}
-
-					//to bind event
-					trgr.bind(events.join(' '), iMethods.eventHandler);
-				}
-
-				//set menu data back to trigger element
+				iMethods.onOff(menu, option);
 				menuData.option = $.extend({}, menuData.option, option);
 				trgr.data('iw-menuData', menuData);
+
+				//bind event again if trigger option has changed.
+				var eventType = menuData.option.triggerOn;
+				if (option) {
+					if (eventType != option.triggerOn) {
+						trgr.unbind('.contextMenu');
+						//to bind event
+						trgr.bind(eventType + '.contextMenu', iMethods.eventHandler);
+					}
+				}
 			});
 		},
-		refresh : function() {
-			var menuData = this.filter(function() {
-				return !!$(this).data('iw-menuData');
-			}).data('iw-menuData'), newElm = this.filter(function() {
-				return !$(this).data('iw-menuData');
-			});
-			//to change basetrigger on refresh  
+		refresh: function () {
+			var menuData = this.filter(function () {
+					return !!$(this).data('iw-menuData');
+				}).data('iw-menuData'),
+				newElm = this.filter(function() {
+					return !$(this).data('iw-menuData');
+				});
+
+			//to change basetrigger on refresh
 			menuData.option.baseTrigger = this;
 			iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
 		},
-		open : function(sel, data) {
+		open: function(sel,data) {
 			data = data || {};
 			var e = data.event || $.Event('click');
-			if (data.top)
-				e.clientY = data.top;
-			if (data.left)
-				e.clientX = data.left;
+			if (data.top) e.clientY = data.top;
+			if (data.left) e.clientX = data.left;
 			this.each(function() {
-				iMethods.eventHandler.call(this, e);
+				iMethods.eventHandler.call(this,e);
 			});
 		},
 		//to force context menu to close
-		close : function() {
+		close: function() {
 			var menuData = this.data('iw-menuData');
 			if (menuData) {
 				iMethods.closeContextMenu(menuData.option, this, menuData.menu, null);
 			}
 		},
 		//to get value of a key
-		value : function(key) {
+		value: function(key) {
 			var menuData = this.data('iw-menuData');
 			if (menuData[key]) {
 				return menuData[key];
@@ -212,37 +185,38 @@
 			}
 			return null;
 		},
-		destroy : function() {
-			var trgr = this,
-				menuId = trgr.data('iw-menuData').menuId,
-				menu = $('.'+option.classPrefix+'-contextMenu[menuId=' + menuId + ']'),
-				menuData = menu.data('iw-menuData');
+		destroy: function() {
+			this.each(function() {
+				var trgr = $(this),
+					menuId = trgr.data('iw-menuData').menuId,
+					menu = $('.'+option.classPrefix+'-contextMenu[menuId=' + menuId + ']'),
+					menuData = menu.data('iw-menuData');
 
-			//Handle the situation of dynamically added element.
-			if (!menuData)
-				return;
+				//Handle the situation of dynamically added element.
+				if (!menuData) return;
 
-			if (menuData.noTrigger == 1) {
-				if (menu.hasClass(option.classPrefix+'-created')) {
-					menu.remove();
+				if (menuData.noTrigger == 1) {
+					if (menu.hasClass(option.classPrefix+'-created')) {
+						menu.remove();
+					} else {
+						menu.removeClass(option.classPrefix+'-contextMenu ' + menuId).removeAttr('menuId').removeData('iw-menuData');
+						//to destroy submenus
+						menu.find('li.'+option.classPrefix+'-mTrigger').contextMenu('destroy');
+					}
 				} else {
-					menu.removeClass(option.classPrefix+'-contextMenu ' + menuId).removeAttr('menuId').removeData('iw-menuData');
-					//to destroy submenus
-					menu.find('li.'+option.classPrefix+'-mTrigger').contextMenu('destroy');
+					menuData.noTrigger--;
+					menu.data('iw-menuData', menuData);
 				}
-			} else {
-				menuData.noTrigger--;
-				menu.data('iw-menuData', menuData);
-			}
-			trgr.unbind('.contextMenu').removeClass(option.classPrefix+'-mTrigger').removeData('iw-menuData');
+				trgr.unbind('.contextMenu').removeClass(option.classPrefix+'-mTrigger').removeData('iw-menuData');
+			});
 		}
 	};
 	var iMethods = {
-		contextMenuBind : function(selector, option, method) {
+		contextMenuBind: function(selector, option, method) {
 			var trigger = this,
 				menu = $(selector),
 				menuData = menu.data('iw-menuData');
-
+console.log("trigger :"+$(trigger).attr("id"));
 			//fallback
 			if (menu.length == 0) {
 				menu = trigger.find(selector);
@@ -266,7 +240,7 @@
 				if (!baseTrigger.data('iw-menuData')) {
 					menuId = Math.ceil(Math.random() * 100000);
 					baseTrigger.data('iw-menuData', {
-						'menuId' : menuId
+						'menuId': menuId
 					});
 				} else {
 					menuId = baseTrigger.data('iw-menuData').menuId;
@@ -279,11 +253,11 @@
 				var heightAdjustment = option.heightAdjust || 0;
 
 				menuData = {
-					'menuId' : menuId,
-					'menuWidth' : cloneMenu.outerWidth(true),
-					'menuHeight' : cloneMenu.outerHeight(true)+heightAdjustment,
-					'noTrigger' : 1,
-					'trigger' : trigger,
+					'menuId': menuId,
+					'menuWidth': cloneMenu.outerWidth(true),
+					'menuHeight': cloneMenu.outerHeight(true)+heightAdjustment,
+					'noTrigger': 1,
+					'trigger': trigger,
 					"effect":option.effect // Dustin : effect
 				};
 
@@ -298,55 +272,44 @@
 
 			//to set data on trigger
 			trigger.addClass(option.classPrefix+'-mTrigger').data('iw-menuData', {
-				'menuId' : menuData.menuId,
-				'option' : option,
-				'menu' : menu,
-				'menuSelector' : selector,
-				'method' : method
+				'menuId': menuData.menuId,
+				'option': option,
+				'menu': menu,
+				'menuSelector': selector,
+				'method': method
 			});
 
 			//hover fix
-			var triggerOn = option.triggerOn;
-			if (triggerOn.indexOf('hover') != -1) {
-				triggerOn = triggerOn.replace('hover', 'mouseenter');
+			var eventType;
+			if (option.triggerOn == 'hover') {
+				eventType = 'mouseenter';
 				//hover out if display is of context menu is on hover
 				if (baseTrigger.index(trigger) != -1) {
-					baseTrigger.add(menu).bind(
-						'mouseleave.contextMenu',
-						function(e) {
-							if ($(e.relatedTarget).closest('.'+option.classPrefix+'-contextMenu').length == 0) {
-								$('.'+option.classPrefix+'-contextMenu[menuId="' + menuData.menuId + '"]').fadeOut(100);
-							}
+					baseTrigger.add(menu).bind('mouseleave.contextMenu', function (e) {
+						if ($(e.relatedTarget).closest('.'+option.classPrefix+'-contextMenu').length == 0) {
+							$('.'+option.classPrefix+'-contextMenu[menuId="' + menuData.menuId + '"]').hide(100);
+						}
 					});
 				}
+			} else {
+				eventType = option.triggerOn;
 			}
 
-			trigger.delegate('input,a,.needs-click', 'click', function(e) {
-				e.stopImmediatePropagation()
-			});
-
-			//add contextMenu identifier on all events
-			triggerOn = triggerOn.split(' ');
-			var events = [];
-			for (var i = 0, ln = triggerOn.length; i < ln; i++) {
-				events.push(triggerOn[i] + '.contextMenu')
-			}
+			trigger.delegate('input,a,.needs-click','click',function(e){e.stopImmediatePropagation()});
 
 			//to bind event
-			trigger.bind(events.join(' '), iMethods.eventHandler);
+			trigger.bind(eventType + '.contextMenu', iMethods.eventHandler);
 
 			//to stop bubbling in menu
-			menu.bind('click mouseenter', function(e) {
-				e.stopPropagation();
+			menu.bind('click mouseenter', function (e) {
+				e.stopImmediatePropagation();
 			});
 
-			menu.delegate('li', 'click', function(e) {
-				if (option.closeOnClick
-						&& !$.single(this).hasClass('iw-has-submenu'))
-					iMethods.closeContextMenu(option, trigger, menu, e);
+			menu.delegate('li', 'click', function (e) {
+				if (option.closeOnClick) iMethods.closeContextMenu(option, trigger, menu, e);
 			});
 		},
-		eventHandler : function(e) {
+		eventHandler: function (e) {
 			e.preventDefault();
 			var trigger = $(this),
 				trgrData = trigger.data('iw-menuData'),
@@ -355,12 +318,12 @@
 				option = trgrData.option,
 				cntnmnt = option.containment,
 				clbckData = {
-					trigger : trigger,
-					menu : menu
+					trigger: trigger,
+					menu: menu
 				},
-			//check conditions
-			cntWin = cntnmnt == window,
-			btChck = option.baseTrigger.index(trigger) == -1;
+				//check conditions
+				cntWin = cntnmnt == window,
+				btChck = option.baseTrigger.index(trigger) == -1;
 
 			//to close previous open menu.
 			if (!btChck && option.closeOther) {
@@ -380,8 +343,7 @@
 				cLeft = 0,
 				menuHeight = menuData.menuHeight,
 				menuWidth = menuData.menuWidth,
-				va,
-				ha,
+				va, ha,
 				left = 0,
 				top = 0,
 				bottomMenu,
@@ -402,6 +364,7 @@
 			// Dustin - width adjustment
 			var widthAdjustment = option.widthAdjust || 20;
 			var heightAdjustment = option.heightAdjust || 0;
+
 			if (option.sizeStyle == 'auto') {
 				menuHeight = Math.min(menuHeight, cHeight);
 				menuHeight = (menuHeight + heightAdjustment);
@@ -414,10 +377,11 @@
 			}
 
 			if (option.displayAround == 'cursor') {
-				left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft()- cLeft;
+				left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft() - cLeft;
 				top = cntWin ? e.clientY : e.clientY + $(window).scrollTop() - cTop;
 				bottomMenu = top + menuHeight;
 				rightMenu = left + menuWidth;
+
 				//max height and width of context menu
 				if (bottomMenu > cHeight) {
 					if ((top - menuHeight) < 0) {
@@ -459,6 +423,7 @@
 
 				bottomMenu = top + menuHeight;
 				rightMenu = left + menuWidth;
+
 				//max height and width of context menu
 				if (bottomMenu > cHeight) {
 					if ((top - menuHeight) < 0) {
@@ -521,9 +486,6 @@
 						va = verAdjust;
 						left = left - leftShift;
 					}
-//					top = triggerTop + triggerHeight;
-//					va = verAdjust;
-//					left = left - leftShift;
 				} else if (option.position == 'right') {
 					menuWidth = Math.min(menuData.menuWidth, (cWidth - triggerLeft - triggerWidth));
 					left = triggerLeft + triggerWidth;
@@ -531,12 +493,17 @@
 				}
 			}
 
+			//to draw contextMenu
+			var outerLeftRight = menu.outerWidth(true) - menu.width(),
+				outerTopBottom = menu.outerHeight(true) - menu.height();
+
 			//applying css property
 			var cssObj = {
-				'position' : (cntWin || btChck) ? 'fixed' : 'absolute',
+				'position': (cntWin || btChck) ? 'fixed' : 'absolute',
 				// Dustin - for effect
-//				'display' : 'inline-block',
+//				'display': 'inline-block',
 				"display":"none",
+				// Dustin - menu width & height
 //				'height': '',
 //				'width': '',
 				'height':option.height,
@@ -578,6 +545,7 @@
 			 */
 //			menu.css(cssObj);
 			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
+
 			/*!
 			 * Dustin : border radius
 			 */
@@ -621,7 +589,7 @@
 			}
 
 			//to call after open call back
-			option.afterOpen.call(this, clbckData, e);
+//			option.afterOpen.call(this, clbckData, e);
 
 			//to add current menu class
 			if (trigger.closest('.'+option.classPrefix+'-contextMenu').length == 0) {
@@ -630,30 +598,30 @@
 			}
 
 			var dataParm = {
-				trigger : trigger,
-				menu : menu,
-				option : option,
-				method : trgrData.method
+				trigger: trigger,
+				menu: menu,
+				option: option,
+				method: trgrData.method
 			};
+
 			$('html').unbind('click', iMethods.clickEvent).click(dataParm, iMethods.clickEvent);
 			$(document).unbind('keydown', iMethods.keyEvent).keydown(dataParm, iMethods.keyEvent);
+
 			if (option.winEventClose) {
 				$(window).bind('scroll resize', dataParm, iMethods.scrollEvent);
 			}
 		},
-
-		scrollEvent : function(e) {
+		scrollEvent: function (e) {
 			iMethods.closeContextMenu(e.data.option, e.data.trigger, e.data.menu, e);
 		},
-
-		clickEvent : function(e) {
+		clickEvent: function (e) {
 			var button = e.data.trigger.get(0);
 
-			if ((button !== e.target) && ($(e.target).closest('.'+option.classPrefix+'-contextMenu').length == 0)) {
+			if ((button !== e.target) && ($(e.target).closest('.'+e.data.classPrefix+'-contextMenu').length == 0)) {
 				iMethods.closeContextMenu(e.data.option, e.data.trigger, e.data.menu, e);
 			}
 		},
-		keyEvent : function(e) {
+		keyEvent: function (e) {
 			e.preventDefault();
 			var menu = e.data.menu,
 				option = e.data.option,
@@ -667,24 +635,26 @@
 					optList = curMenu.children('li:not(.'+option.classPrefix+'-mDisable)'),
 					selected = optList.filter('.'+option.classPrefix+'-mSelected'),
 					index = optList.index(selected),
-					focusOn = function(elm) {
-						iMethods.selectMenu(curMenu, elm);
-						var menuData = elm.data(option.classPrefix+'-menuData');
-						if (menuData) {
-							iMethods.eventHandler.call(elm[0], e);
-						}
-					}, first = function() {
+					focusOn = function (elm) {
+						selected.removeClass(option.classPrefix+'-mSelected');
+						elm.addClass(option.classPrefix+'-mSelected');
+					},
+					first = function () {
 						focusOn(optList.filter(':first'));
-					}, last = function() {
+					},
+					last = function () {
 						focusOn(optList.filter(':last'));
-					}, next = function() {
+					},
+					next = function () {
 						focusOn(optList.filter(':eq(' + (index + 1) + ')'));
-					}, prev = function() {
+					},
+					prev = function () {
 						focusOn(optList.filter(':eq(' + (index - 1) + ')'));
-					}, subMenu = function() {
-						var menuData = selected.data(option.classPrefix+'-menuData');
+					},
+					subMenu = function () {
+						var menuData = selected.data('iw-menuData');
 						if (menuData) {
-							iMethods.eventHandler.call(selected[0], e);
+							selected.triggerHandler('mouseenter.contextMenu');
 							var selector = menuData.menu;
 							selector.addClass(option.classPrefix+'-curMenu');
 							curMenu.removeClass(option.classPrefix+'-curMenu');
@@ -693,24 +663,24 @@
 							selected = optList.filter('.'+option.classPrefix+'-mSelected');
 							first();
 						}
-					}, parMenu = function() {
+					},
+					parMenu = function () {
 						var selector = curMenu.data('iw-menuData').trigger;
 						var parMenu = selector.closest('.'+option.classPrefix+'-contextMenu');
 						if (parMenu.length != 0) {
 							curMenu.removeClass(option.classPrefix+'-curMenu').css('display', 'none');
 							parMenu.addClass(option.classPrefix+'-curMenu');
-					}
-				};
+						}
+					};
 				switch (keyCode) {
 				case 13:
 					selected.click();
 					break;
 				case 40:
-					(index == optList.length - 1 || selected.length == 0) ? first()
-							: next();
+					(index == optList.length - 1 || selected.length == 0) ? first(): next();
 					break;
 				case 38:
-					(index == 0 || selected.length == 0) ? last() : prev();
+					(index == 0 || selected.length == 0) ? last(): prev();
 					break;
 				case 33:
 					first();
@@ -727,34 +697,34 @@
 				}
 			}
 		},
-		closeContextMenu : function(option, trigger, menu, e) {
+		closeContextMenu: function (option, trigger, menu, e) {
 			//unbind all events from top DOM
 			$(document).unbind('keydown', iMethods.keyEvent);
 			$('html').unbind('click', iMethods.clickEvent);
 			$(window).unbind('scroll resize', iMethods.scrollEvent);
-			$('.'+option.classPrefix+'-contextMenu').css('display', 'none');
 
 			/*!
 			 * Dustin : main menu close effect here
 			 */
-//			$('.iw-contextMenu').hide();
-			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
-
-			if ("slide" == option.effect) {
-				$('.'+option.classPrefix+'-contextMenu').stop().slideUp(effectDuration, function() {});
-			} else {
-				$('.'+option.classPrefix+'-contextMenu').stop().fadeOut(effectDuration, function() {});
-			}
+			$('.iw-contextMenu').fadeOut(jsconfig.get("effectDuration"));
+console.log("effectDuration : "+jsconfig.get("effectDuration"));
+//			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
+//
+//			if ("slide" == option.effect) {
+//				$('.'+option.classPrefix+'-contextMenu').stop().slideUp(effectDuration, function() {});
+//			} else {
+//				$('.'+option.classPrefix+'-contextMenu').stop().fadeOut(effectDuration, function() {});
+//			}
 
 			$(document).focus();
 
 			//call close function
 			option.onClose.call(this, {
-				trigger : trigger,
-				menu : menu
+				trigger: trigger,
+				menu: menu
 			}, e);
 		},
-		getPxSize : function(size, of) {
+		getPxSize: function (size, of) {
 			if (!isNaN(size)) {
 				return size;
 			}
@@ -764,179 +734,154 @@
 				return parseInt(size);
 			}
 		},
-		selectMenu : function(menu, elm) {
-			//to select the list
-			var selected = menu.find('li.'+option.classPrefix+'-mSelected'),
-				submenu = selected.find('.'+option.classPrefix+'-contextMenu');
-//			if ((submenu.length != 0) && (selected[0] != elm[0])) {
-//				submenu.fadeOut(100);
-//			}
-//			selected.removeClass(option.classPrefix+'-mSelected');
-//			elm.addClass(option.classPrefix+'-mSelected');
-			//to select the list
-			var selected = menu.find('li.'+option.classPrefix+'-mSelected'),
-				submenu = selected.find('.'+option.classPrefix+'-contextMenu');
-			if ((submenu.length != 0) && (selected[0] != this)) {
-				/*!
-				 * Dustin : hide sub menu here
-				 */
-//				submenu.hide(200);
-				var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
+		menuHover: function (menu, option) {
+			menu.children('li').bind('mouseenter', function (e) {
+				//to make curmenu
+//				$('.'+option.classPrefix+'-curMenu').removeClass(option.classPrefix+'-curMenu');
+//				menu.addClass(option.classPrefix+'-curMenu');
+				//to select the list
+				var selected = menu.find('li.'+option.classPrefix+'-mSelected'),
+					submenu = selected.find('.'+option.classPrefix+'-contextMenu');
+console.log("selected : "+selected);
+console.log("submenu : "+submenu.length);
+				if ((submenu.length != 0) && (selected[0] != this)) {
+					/*!
+					 * Dustin : hide sub menu here
+					 */
+//					submenu.hide(200);
+					var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
 
-				if ("slide" == option.effect) {
-					submenu.stop().slideUp(effectDuration, function() {});
-				} else {
-					submenu.stop().fadeOut(effectDuration, function() {});
+					if ("slide" == option.effect) {
+						submenu.stop().slideUp(effectDuration, function() {});
+					} else {
+						submenu.stop().fadeOut(effectDuration, function() {});
+					}
 				}
-			}
-			selected.removeClass(option.classPrefix+'-mSelected');
-			$(this).addClass(option.classPrefix+'-mSelected');
+				selected.removeClass(option.classPrefix+'-mSelected');
+				$(this).addClass(option.classPrefix+'-mSelected');
+				/*!
+				 * Dustin : Logged in User - Header main menu
+				 */
+				var imgSrc = $(this).find("img").prop("src"), themeId = jsconfig.get("themeId");
+console.log("themeId : "+themeId);
+				if (!$.nony.isEmpty(imgSrc) && (imgSrc.indexOf("MyProfile") != -1 || imgSrc.indexOf("LogOut") != -1 || imgSrc.indexOf("QM") != -1)) {
+					var images;
+					$(this).closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
+						images = $(this).prop("src");
+						if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
+							images = $.nony.replace(images, "White", "Black");
+						}
 
-			/*!
-			 * Dustin : Logged in User - Header main menu
-			 */
-			var imgSrc = $(this).find("img").prop("src"), themeId = jsconfig.get("themeId");
-			if (!$.nony.isEmpty(imgSrc) && (imgSrc.indexOf("MyProfile") != -1 || imgSrc.indexOf("LogOut") != -1 || imgSrc.indexOf("QM") != -1)) {
-				var images;
-				$(this).closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
-					images = $(this).prop("src");
+						$(this).prop("src", images);
+					});
+
 					if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
-						images = $.nony.replace(images, "White", "Black");
+						imgSrc = $.nony.replace(imgSrc, "Black", "White");
 					}
 
-					$(this).prop("src", images);
-				});
-
-				if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
-					imgSrc = $.nony.replace(imgSrc, "Black", "White");
+					$(this).find("img").prop("src", imgSrc);
 				}
-
-				$(this).find("img").prop("src", imgSrc);
-			}
-		},
-		menuHover : function(menu) {
-			var lastEventTime = Date.now();
-			menu.children('li').bind(
-				'mouseenter.contextMenu click.contextMenu', function(e) {
-				//to make curmenu
-				$('.'+option.classPrefix+'-curMenu').removeClass(option.classPrefix+'-curMenu');
-				menu.addClass(option.classPrefix+'-curMenu');
-				iMethods.selectMenu(menu, $(this));
 			});
 		},
-		createMenuList : function(trgr, selector, option) {
+		createMenuList: function (trgr, selector, option) {
 			var baseTrigger = option.baseTrigger,
 				randomNum = Math.floor(Math.random() * 10000);
+console.log("randomNum : "+randomNum);
 			if ((typeof selector == 'object') && (!selector.nodeType) && (!selector.jquery)) {
+				// Dustin - ul -> div (because of bootstrap)
 				var menuList = $('<ul class="'+option.classPrefix+'-contextMenu '+option.classPrefix+'-created '+option.classPrefix+'-cm-menu" id="'+option.classPrefix+'-contextMenu' + randomNum + '"></ul>');
-				$.each(selector, function(index, selObj) {
-					var name = selObj.name, fun = selObj.fun
-							|| function() {
-							}, subMenu = selObj.subMenu, img = selObj.img
-							|| '', icon = selObj.icon || '', title = selObj.title
-							|| "", className = selObj.className
-							|| "", disable = selObj.disable, list = $('<li title="'
-							+ title
-							+ '" class="'
-							+ className
-							+ '">' + name + '</li>');
+//				var menuList = $('<div class="'+option.classPrefix+'-contextMenu '+option.classPrefix+'-created '+option.classPrefix+'-cm-menu" id="'+option.classPrefix+'-contextMenu' + randomNum + '"></div>');
+				$.each(selector,function(index,selObj){
+					var name = selObj.name,
+						fun = selObj.fun || function(){},
+						subMenu = selObj.subMenu,
+						img = selObj.img || '',
+						title = selObj.title || "",
+						className = selObj.className || "",
+						disable = selObj.disable,
+						list = $('<li title="' + title + '" class="' + className + '" userData="'+selObj.userData+'">' + name + '</li>');
 
 					if (img) {
-						list
-								.prepend('<img src="'
-										+ img
-										+ '" align="absmiddle" class="iw-mIcon" />');
-					} else if (icon) {
-						list
-								.prepend('<span align="absmiddle" class="'
-										+ "iw-mIcon "
-										+ icon
-										+ '" />');
-					}
-					//to add disable
-					if (disable) {
-						list.addClass('iw-mDisable');
+						// Dustin : to use image / icon font
+						if (img.indexOf("/shared") != -1) {
+							list.prepend('<img src="' + img + '" align="absmiddle" class="'+option.classPrefix+'-mIcon" />');
+						} else {
+							if ($.nony.startsWith(img, "fa-")) {
+								list.prepend("<i class='fa "+img+" fa-lg'></i>&nbsp;&nbsp;&nbsp;&nbsp;");
+							} else {
+								list.prepend("<span class='glyphicon "+img+"' style='font-size:1.1em'></span>&nbsp;&nbsp;&nbsp;&nbsp;");
+							}
+						}
 					}
 
-					if (!subMenu) {
-						list.bind('click.contextMenu',
-								function(e) {
-									fun.call(this, {
-										trigger : baseTrigger,
-										menu : menuList
-									}, e);
-								});
+					//to add disable
+					if (disable) {
+						list.addClass(option.classPrefix+'-mDisable');
 					}
+
+					list.bind('click.contextMenu', function(e){
+						fun.call(this,{trigger:baseTrigger,menu:menuList},e);
+					});
 
 					//to create sub menu
 					menuList.append(list);
 					if (subMenu) {
-						list
-								.addClass('iw-has-submenu')
-								.append(
-										'<div class="iw-cm-arrow-right" />');
-						iMethods.subMenu(list, subMenu,
-								baseTrigger, option);
+						list.append('<div class="'+option.classPrefix+'-cm-arrow-right" />');
+						iMethods.subMenu(list, subMenu, baseTrigger, option);
 					}
 				});
 
 				if (baseTrigger.index(trgr[0]) == -1) {
 					trgr.append(menuList);
 				} else {
-					var par = option.containment == window ? 'body'
-							: option.containment;
+					var par = option.containment == window ? 'body' : option.containment;
 					$(par).append(menuList);
 				}
 
-				iMethods.onOff($('#iw-contextMenu' + randomNum));
-				return '#iw-contextMenu' + randomNum;
+				iMethods.onOff($('#'+option.classPrefix+'-contextMenu' + randomNum), option);
+				return '#'+option.classPrefix+'-contextMenu' + randomNum;
 			} else if ($(selector).length != 0) {
 				var element = $(selector);
-				element.removeClass('iw-contextMenuCurrent').addClass(
-						'iw-contextMenu iw-cm-menu iw-contextMenu' + randomNum)
-						.attr('menuId', 'iw-contextMenu' + randomNum).css(
-								'display', 'none');
+				element.removeClass(option.classPrefix+'-contextMenuCurrent')
+					.addClass(option.classPrefix+'-contextMenu '+option.classPrefix+'-cm-menu '+option.classPrefix+'-contextMenu' + randomNum)
+					.attr('menuId', option.classPrefix+'-contextMenu' + randomNum)
+					.css('display', 'none');
 
 				//to create subMenu
-				element.find('ul').each(
-						function(index, element) {
-							var subMenu = $(this), parent = subMenu
-									.parent('li');
-							parent.append('<div class="iw-cm-arrow-right" />');
-							subMenu.addClass('iw-contextMenuCurrent');
-							iMethods.subMenu(parent, '.iw-contextMenuCurrent',
-									baseTrigger, option);
-						});
-				iMethods.onOff($('.iw-contextMenu' + randomNum));
-				return '.iw-contextMenu' + randomNum;
+//				element.find('ul').each(function (index, element) {
+				// Dustin - ul -> div (because of bootstrap)
+				element.find('div').each(function (index, element) {
+					var subMenu = $(this),
+						parent = subMenu.parent('li');
+					parent.append('<div class="'+option.classPrefix+'-cm-arrow-right" />');
+					subMenu.addClass(option.classPrefix+'-contextMenuCurrent');
+					iMethods.subMenu(parent, '.'+option.classPrefix+'-contextMenuCurrent', baseTrigger, option);
+				});
+				iMethods.onOff($('.'+option.classPrefix+'-contextMenu' + randomNum), option);
+				return '.'+option.classPrefix+'-contextMenu' + randomNum;
 			}
 		},
-		subMenu : function(trigger, selector, baseTrigger, option) {
+		subMenu: function (trigger, selector, baseTrigger, option) {
 			trigger.contextMenu('menu', selector, {
-				triggerOn : option.subMenuTriggerOn,
-				displayAround : 'trigger',
-				position : 'auto',
-				mouseClick : 'left',
-				baseTrigger : baseTrigger,
-				containment : option.containment
+				triggerOn: 'hover',
+				displayAround: 'trigger',
+				position: 'auto',
+				baseTrigger: baseTrigger,
+				containment: option.containment,
+				effect:option.effect // Dustin : effect
 			});
 		},
-		onOff : function(menu) {
-
-			menu.find('.iw-mOverlay').remove();
-			menu.find('.iw-mDisable').each(
-					function() {
-						var list = $(this);
-						list.append('<div class="iw-mOverlay"/>');
-						list.find('.iw-mOverlay').bind('click mouseenter',
-								function(event) {
-									event.stopPropagation();
-								});
-
-					});
-
+		onOff: function (menu, option) {
+			menu.find('.'+option.classPrefix+'-mOverlay').remove();
+			menu.find('.'+option.classPrefix+'-mDisable').each(function () {
+				var list = $(this);
+				list.append('<div class="'+option.classPrefix+'-mOverlay"/>');
+				list.find('.'+option.classPrefix+'-mOverlay').bind('click mouseenter', function (event) {
+					event.stopPropagation();
+				});
+			});
 		},
-		optionOtimizer : function(method, option) {
+		optionOtimizer: function (method, option) {
 			if (!option) {
 				return;
 			}
@@ -949,12 +894,13 @@
 				option.triggerOn = 'contextmenu';
 			}
 
-			if ($.inArray(option.triggerOn, [ 'hover', 'mouseenter',
-					'mouseover', 'mouseleave', 'mouseout', 'focusin',
-					'focusout' ]) != -1) {
+			if ($.inArray(option.triggerOn, ['hover', 'mouseenter', 'mouseover', 'mouseleave', 'mouseout', 'focusin', 'focusout']) != -1) {
 				option.displayAround = 'trigger';
 			}
 			return option;
+		},
+		onmouseHoverAndOut : function(obj) {
+			alert(obj);
 		}
 	};
 })(jQuery, window, document);

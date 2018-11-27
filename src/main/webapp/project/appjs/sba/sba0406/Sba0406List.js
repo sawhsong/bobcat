@@ -50,7 +50,7 @@ $(function() {
 	 */
 	setPreviewContextMenu = function() {
 		$("#btnPreview").contextMenu(menu, {
-			classPrefix:com.constants.ctxClassPrefixButton,
+//			classPrefix:com.constants.ctxClassPrefixButton,
 			borderRadius : "4px",
 			displayAround : "trigger",
 			position : "bottom",
@@ -290,7 +290,7 @@ $(function() {
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {
-//			classPrefix:com.constants.ctxClassPrefixGrid,
+			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,
