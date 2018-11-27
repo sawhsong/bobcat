@@ -122,63 +122,57 @@
 							subMenu = selector[i].subMenu;
 
 						//toggle disable if provided on update method
-						disable != undefined && (disable ? elm.addClass(option.classPrefix+'-mDisable') : elm.removeClass('iw-mDisable'));
+						disable != undefined && (disable ? elm.addClass(option.classPrefix+'-mDisable') : elm.removeClass(option.classPrefix+'-mDisable'));
 
 						//bind new function if provided
 						fun && elm.unbind('click.contextMenu').bind('click.contextMenu', fun);
 
-								//update title
-								title != undefined && elm.attr('title', title);
+						//update title
+						title != undefined && elm.attr('title', title);
 
-								//update class name
-								className != undefined
-										&& elm.attr('class', className);
+						//update class name
+						className != undefined && elm.attr('class', className);
 
-								var imgIcon = elm.find('.iw-mIcon');
-								if (imgIcon.length)
-									imgIcon.remove();
+						var imgIcon = elm.find('.'+option.classPrefix+'-mIcon');
+						if (imgIcon.length)
+							imgIcon.remove();
 
-								//update image or icon
-								if (img) {
-									elm
-											.prepend('<img src="'
-													+ img
-													+ '" align="absmiddle" class="iw-mIcon" />');
-								} else if (icon) {
-									elm
-											.prepend('<span align="absmiddle" class="iw-mIcon '
-													+ icon + '" />');
-								}
-
-								//to change submenus
-								if (subMenu) {
-									elm.contextMenu('update', subMenu);
-								}
-							}
+						//update image or icon
+						if (img) {
+							elm.prepend('<img src="'+img+'" align="absmiddle" class="'+option.classPrefix+'-mIcon" />');
+						} else if (icon) {
+							elm.prepend('<span align="absmiddle" class="'+option.classPrefix+'-mIcon '+icon+'" />');
 						}
 
-						iMethods.onOff(menu);
-
-						//bind event again if trigger option has changed.
-						var triggerOn = option.triggerOn;
-						if (triggerOn) {
-							trgr.unbind('.contextMenu');
-
-							//add contextMenu identifier on all events
-							triggerOn = triggerOn.split(" ");
-							var events = [];
-							for (var i = 0, ln = triggerOn.length; i < ln; i++) {
-								events.push(triggerOn[i] + '.contextMenu')
-							}
-
-							//to bind event
-							trgr.bind(events.join(' '), iMethods.eventHandler);
+						//to change submenus
+						if (subMenu) {
+							elm.contextMenu('update', subMenu);
 						}
+					}
+				}
 
-						//set menu data back to trigger element
-						menuData.option = $.extend({}, menuData.option, option);
-						trgr.data('iw-menuData', menuData);
-					});
+				iMethods.onOff(menu);
+
+				//bind event again if trigger option has changed.
+				var triggerOn = option.triggerOn;
+				if (triggerOn) {
+					trgr.unbind('.contextMenu');
+
+					//add contextMenu identifier on all events
+					triggerOn = triggerOn.split(" ");
+					var events = [];
+					for (var i = 0, ln = triggerOn.length; i < ln; i++) {
+						events.push(triggerOn[i] + '.contextMenu')
+					}
+
+					//to bind event
+					trgr.bind(events.join(' '), iMethods.eventHandler);
+				}
+
+				//set menu data back to trigger element
+				menuData.option = $.extend({}, menuData.option, option);
+				trgr.data('iw-menuData', menuData);
+			});
 		},
 		refresh : function() {
 			var menuData = this.filter(function() {
@@ -188,8 +182,7 @@
 			});
 			//to change basetrigger on refresh  
 			menuData.option.baseTrigger = this;
-			iMethods.contextMenuBind.call(newElm, menuData.menuSelector,
-					menuData.option);
+			iMethods.contextMenuBind.call(newElm, menuData.menuSelector, menuData.option);
 		},
 		open : function(sel, data) {
 			data = data || {};
@@ -206,8 +199,7 @@
 		close : function() {
 			var menuData = this.data('iw-menuData');
 			if (menuData) {
-				iMethods.closeContextMenu(menuData.option, this, menuData.menu,
-						null);
+				iMethods.closeContextMenu(menuData.option, this, menuData.menu, null);
 			}
 		},
 		//to get value of a key
@@ -221,34 +213,35 @@
 			return null;
 		},
 		destroy : function() {
-			var trgr = this, menuId = trgr.data('iw-menuData').menuId, menu = $('.iw-contextMenu[menuId='
-					+ menuId + ']'), menuData = menu.data('iw-menuData');
+			var trgr = this,
+				menuId = trgr.data('iw-menuData').menuId,
+				menu = $('.'+option.classPrefix+'-contextMenu[menuId=' + menuId + ']'),
+				menuData = menu.data('iw-menuData');
 
 			//Handle the situation of dynamically added element.
 			if (!menuData)
 				return;
 
 			if (menuData.noTrigger == 1) {
-				if (menu.hasClass('iw-created')) {
+				if (menu.hasClass(option.classPrefix+'-created')) {
 					menu.remove();
 				} else {
-					menu.removeClass('iw-contextMenu ' + menuId).removeAttr(
-							'menuId').removeData('iw-menuData');
+					menu.removeClass(option.classPrefix+'-contextMenu ' + menuId).removeAttr('menuId').removeData('iw-menuData');
 					//to destroy submenus
-					menu.find('li.iw-mTrigger').contextMenu('destroy');
+					menu.find('li.'+option.classPrefix+'-mTrigger').contextMenu('destroy');
 				}
 			} else {
 				menuData.noTrigger--;
 				menu.data('iw-menuData', menuData);
 			}
-			trgr.unbind('.contextMenu').removeClass('iw-mTrigger').removeData(
-					'iw-menuData');
+			trgr.unbind('.contextMenu').removeClass(option.classPrefix+'-mTrigger').removeData('iw-menuData');
 		}
 	};
 	var iMethods = {
 		contextMenuBind : function(selector, option, method) {
-			var trigger = this, menu = $(selector), menuData = menu
-					.data('iw-menuData');
+			var trigger = this,
+				menu = $(selector),
+				menuData = menu.data('iw-menuData');
 
 			//fallback
 			if (menu.length == 0) {
@@ -259,7 +252,11 @@
 			}
 
 			if (method == 'menu') {
-				iMethods.menuHover(menu);
+				/*!
+				 * Dustin : effect
+				 */
+//				iMethods.menuHover(menu);
+				iMethods.menuHover(menu, option);
 			}
 			//get base trigger
 			var baseTrigger = option.baseTrigger;
@@ -278,12 +275,16 @@
 				var cloneMenu = menu.clone();
 				cloneMenu.appendTo('body');
 
+				// Dustin - height adjustment
+				var heightAdjustment = option.heightAdjust || 0;
+
 				menuData = {
 					'menuId' : menuId,
 					'menuWidth' : cloneMenu.outerWidth(true),
-					'menuHeight' : cloneMenu.outerHeight(true),
+					'menuHeight' : cloneMenu.outerHeight(true)+heightAdjustment,
 					'noTrigger' : 1,
-					'trigger' : trigger
+					'trigger' : trigger,
+					"effect":option.effect // Dustin : effect
 				};
 
 				//to set data on selector
@@ -296,7 +297,7 @@
 			}
 
 			//to set data on trigger
-			trigger.addClass('iw-mTrigger').data('iw-menuData', {
+			trigger.addClass(option.classPrefix+'-mTrigger').data('iw-menuData', {
 				'menuId' : menuData.menuId,
 				'option' : option,
 				'menu' : menu,
@@ -311,18 +312,13 @@
 				//hover out if display is of context menu is on hover
 				if (baseTrigger.index(trigger) != -1) {
 					baseTrigger.add(menu).bind(
-							'mouseleave.contextMenu',
-							function(e) {
-								if ($(e.relatedTarget).closest(
-										'.iw-contextMenu').length == 0) {
-									$(
-											'.iw-contextMenu[menuId="'
-													+ menuData.menuId + '"]')
-											.fadeOut(100);
-								}
-							});
+						'mouseleave.contextMenu',
+						function(e) {
+							if ($(e.relatedTarget).closest('.'+option.classPrefix+'-contextMenu').length == 0) {
+								$('.'+option.classPrefix+'-contextMenu[menuId="' + menuData.menuId + '"]').fadeOut(100);
+							}
+					});
 				}
-
 			}
 
 			trigger.delegate('input,a,.needs-click', 'click', function(e) {
@@ -352,28 +348,46 @@
 		},
 		eventHandler : function(e) {
 			e.preventDefault();
-			var trigger = $(this), trgrData = trigger.data('iw-menuData'), menu = trgrData.menu, menuData = menu
-					.data('iw-menuData'), option = trgrData.option, cntnmnt = option.containment, clbckData = {
-				trigger : trigger,
-				menu : menu
-			},
+			var trigger = $(this),
+				trgrData = trigger.data('iw-menuData'),
+				menu = trgrData.menu,
+				menuData = menu.data('iw-menuData'),
+				option = trgrData.option,
+				cntnmnt = option.containment,
+				clbckData = {
+					trigger : trigger,
+					menu : menu
+				},
 			//check conditions
-			cntWin = cntnmnt == window, btChck = option.baseTrigger
-					.index(trigger) == -1;
+			cntWin = cntnmnt == window,
+			btChck = option.baseTrigger.index(trigger) == -1;
 
 			//to close previous open menu.
 			if (!btChck && option.closeOther) {
-				$('.iw-contextMenu').css('display', 'none');
+				$('.'+option.classPrefix+'-contextMenu').css('display', 'none');
 			}
 
 			//to reset already selected menu item
-			menu.find('.iw-mSelected').removeClass('iw-mSelected');
+			menu.find('.'+option.classPrefix+'-mSelected').removeClass(option.classPrefix+'-mSelected');
 
 			//call open callback
 			option.onOpen.call(this, clbckData, e);
 
-			var cObj = $(cntnmnt), cHeight = cObj.innerHeight(), cWidth = cObj
-					.innerWidth(), cTop = 0, cLeft = 0, menuHeight = menuData.menuHeight, menuWidth = menuData.menuWidth, va, ha, left = 0, top = 0, bottomMenu, rightMenu, verAdjust = va = parseInt(option.verAdjust), horAdjust = ha = parseInt(option.horAdjust);
+			var cObj = $(cntnmnt),
+				cHeight = cObj.innerHeight(),
+				cWidth = cObj.innerWidth(),
+				cTop = 0,
+				cLeft = 0,
+				menuHeight = menuData.menuHeight,
+				menuWidth = menuData.menuWidth,
+				va,
+				ha,
+				left = 0,
+				top = 0,
+				bottomMenu,
+				rightMenu,
+				verAdjust = va = parseInt(option.verAdjust),
+				horAdjust = ha = parseInt(option.horAdjust);
 
 			if (!cntWin) {
 				cTop = cObj.offset().top;
@@ -383,14 +397,25 @@
 				if (cObj.css('position') == 'static') {
 					cObj.css('position', 'relative');
 				}
+			}
 
+			// Dustin - width adjustment
+			var widthAdjustment = option.widthAdjust || 20;
+			var heightAdjustment = option.heightAdjust || 0;
+			if (option.sizeStyle == 'auto') {
+				menuHeight = Math.min(menuHeight, cHeight);
+				menuHeight = (menuHeight + heightAdjustment);
+
+				menuWidth = Math.min(menuWidth, cWidth);
+				menuWidth = (menuWidth + widthAdjustment);
+			} else {
+				menuHeight = (menuHeight + heightAdjustment);
+				menuWidth = (menuWidth + widthAdjustment);
 			}
 
 			if (option.displayAround == 'cursor') {
-				left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft()
-						- cLeft;
-				top = cntWin ? e.clientY : e.clientY + $(window).scrollTop()
-						- cTop;
+				left = cntWin ? e.clientX : e.clientX + $(window).scrollLeft()- cLeft;
+				top = cntWin ? e.clientY : e.clientY + $(window).scrollTop() - cTop;
 				bottomMenu = top + menuHeight;
 				rightMenu = left + menuWidth;
 				//max height and width of context menu
@@ -423,13 +448,11 @@
 					}
 				}
 			} else if (option.displayAround == 'trigger') {
-				var triggerHeight = trigger.outerHeight(true), triggerWidth = trigger
-						.outerWidth(true), triggerLeft = cntWin ? trigger
-						.offset().left
-						- cObj.scrollLeft() : trigger.offset().left - cLeft, triggerTop = cntWin ? trigger
-						.offset().top
-						- cObj.scrollTop()
-						: trigger.offset().top - cTop, leftShift = triggerWidth;
+				var triggerHeight = trigger.outerHeight(true),
+					triggerWidth = trigger.outerWidth(true),
+					triggerLeft = cntWin ? trigger.offset().left - cObj.scrollLeft() : trigger.offset().left - cLeft,
+					triggerTop = cntWin ? trigger.offset().top - cObj.scrollTop() : trigger.offset().top - cTop,
+					leftShift = triggerWidth;
 
 				left = triggerLeft + triggerWidth;
 				top = triggerTop;
@@ -470,17 +493,39 @@
 				}
 				//test end
 				if (option.position == 'top') {
+					menuHeight = Math.min(menuData.menuHeight, triggerTop);
 					top = triggerTop - menuHeight;
 					va = verAdjust;
 					left = left - leftShift;
 				} else if (option.position == 'left') {
+					menuWidth = Math.min(menuData.menuWidth, triggerLeft);
 					left = triggerLeft - menuWidth;
 					ha = horAdjust;
 				} else if (option.position == 'bottom') {
-					top = triggerTop + triggerHeight;
-					va = verAdjust;
-					left = left - leftShift;
+					/*!
+					 * Dustin modified(2016.02.24) - display the menu upward direction at the bottom of the page
+					 */
+					if ("actionInGrid" == option.classPrefix) {
+						menuHeight = Math.min(menuData.menuHeight, (cHeight - triggerTop - triggerHeight + menuHeight));
+
+						if (bottomMenu > cHeight) {
+							top = triggerTop + triggerHeight - menuHeight;
+						} else {
+							top = triggerTop + triggerHeight;
+						}
+						va = verAdjust;
+						left = left - leftShift;
+					} else {
+						menuHeight = Math.min(menuData.menuHeight, (cHeight - triggerTop - triggerHeight));
+						top = triggerTop + triggerHeight;
+						va = verAdjust;
+						left = left - leftShift;
+					}
+//					top = triggerTop + triggerHeight;
+//					va = verAdjust;
+//					left = left - leftShift;
 				} else if (option.position == 'right') {
+					menuWidth = Math.min(menuData.menuWidth, (cWidth - triggerLeft - triggerWidth));
 					left = triggerLeft + triggerWidth;
 					ha = horAdjust;
 				}
@@ -489,10 +534,24 @@
 			//applying css property
 			var cssObj = {
 				'position' : (cntWin || btChck) ? 'fixed' : 'absolute',
-				'display' : 'inline-block',
-				'height' : '',
-				'width' : ''
+				// Dustin - for effect
+//				'display' : 'inline-block',
+				"display":"none",
+//				'height': '',
+//				'width': '',
+				'height':option.height,
+				'width':option.width,
+				'overflow-y': menuHeight != menuData.menuHeight ? 'auto' : 'hidden',
+				'overflow-x': menuWidth != menuData.menuWidth ? 'auto' : 'hidden'
 			};
+
+			if (option.sizeStyle == 'auto') {
+				cssObj.height = menuHeight - outerTopBottom + 'px';
+				cssObj.width = menuWidth - outerLeftRight + 'px';
+			} else { // Dustin : width adjustment
+				cssObj.height = menuHeight + 'px';
+				cssObj.width = menuWidth + 'px';
+			}
 
 			//to get position from offset parent
 			if (option.left != 'auto') {
@@ -514,15 +573,60 @@
 			cssObj.left = left + ha + 'px';
 			cssObj.top = top + va + 'px';
 
-			menu.css(cssObj);
+			/*!
+			 * Dustin : open effect here
+			 */
+//			menu.css(cssObj);
+			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
+			/*!
+			 * Dustin : border radius
+			 */
+			if ($.nony.isEmpty(option.borderRadius)) {option.borderRadius = "3px";}
+
+			if (option.displayAround == "cursor") {// main menu
+				if ("slide" == option.effect) {
+					menu.css(cssObj).corner(option.borderRadius).delay(0).slideDown(effectDuration, function() {
+						option.afterOpen.call(this, clbckData, e);
+					});
+				} else {
+					menu.css(cssObj).corner(option.borderRadius).delay(0).fadeIn(effectDuration, function() {
+						option.afterOpen.call(this, clbckData, e);
+					});
+				}
+			} else if (option.displayAround == "trigger") {// sub menu
+				if ("slide" == option.effect) {
+					menu.css(cssObj).corner(option.borderRadius).delay(0).slideDown(effectDuration, function() {
+						option.afterOpen.call(this, clbckData, e);
+					});
+				} else {
+					menu.css(cssObj).corner(option.borderRadius).delay(0).fadeIn(effectDuration, function() {
+						option.afterOpen.call(this, clbckData, e);
+					});
+				}
+			}
+			/*!
+			 * Dustin : Logged in User - Header main menu
+			 */
+			var imgSrc = menu.find("img").prop("src");
+			if (!$.nony.isEmpty(imgSrc) && (imgSrc.indexOf("MyProfile") != -1 || imgSrc.indexOf("LogOut") != -1 || imgSrc.indexOf("QM") != -1)) {
+				var images, themeId = jsconfig.get("themeId");
+				menu.closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
+					images = $(this).prop("src");
+					if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
+						images = $.nony.replace(images, "White", "Black");
+					}
+
+					$(this).prop("src", images);
+				});
+			}
 
 			//to call after open call back
 			option.afterOpen.call(this, clbckData, e);
 
 			//to add current menu class
-			if (trigger.closest('.iw-contextMenu').length == 0) {
-				$('.iw-curMenu').removeClass('iw-curMenu');
-				menu.addClass('iw-curMenu');
+			if (trigger.closest('.'+option.classPrefix+'-contextMenu').length == 0) {
+				$('.'+option.classPrefix+'-curMenu').removeClass(option.classPrefix+'-curMenu');
+				menu.addClass(option.classPrefix+'-curMenu');
 			}
 
 			var dataParm = {
@@ -531,74 +635,70 @@
 				option : option,
 				method : trgrData.method
 			};
-			$('html').unbind('click', iMethods.clickEvent).click(dataParm,
-					iMethods.clickEvent);
-			$(document).unbind('keydown', iMethods.keyEvent).keydown(dataParm,
-					iMethods.keyEvent);
+			$('html').unbind('click', iMethods.clickEvent).click(dataParm, iMethods.clickEvent);
+			$(document).unbind('keydown', iMethods.keyEvent).keydown(dataParm, iMethods.keyEvent);
 			if (option.winEventClose) {
 				$(window).bind('scroll resize', dataParm, iMethods.scrollEvent);
 			}
 		},
 
 		scrollEvent : function(e) {
-			iMethods.closeContextMenu(e.data.option, e.data.trigger,
-					e.data.menu, e);
+			iMethods.closeContextMenu(e.data.option, e.data.trigger, e.data.menu, e);
 		},
 
 		clickEvent : function(e) {
 			var button = e.data.trigger.get(0);
 
-			if ((button !== e.target)
-					&& ($(e.target).closest('.iw-contextMenu').length == 0)) {
-				iMethods.closeContextMenu(e.data.option, e.data.trigger,
-						e.data.menu, e);
+			if ((button !== e.target) && ($(e.target).closest('.'+option.classPrefix+'-contextMenu').length == 0)) {
+				iMethods.closeContextMenu(e.data.option, e.data.trigger, e.data.menu, e);
 			}
 		},
 		keyEvent : function(e) {
 			e.preventDefault();
-			var menu = e.data.menu, option = e.data.option, keyCode = e.keyCode;
+			var menu = e.data.menu,
+				option = e.data.option,
+				keyCode = e.keyCode;
 			// handle cursor keys
 			if (keyCode == 27) {
 				iMethods.closeContextMenu(option, e.data.trigger, menu, e);
 			}
 			if (e.data.method == 'menu') {
-				var curMenu = $('.iw-curMenu'), optList = curMenu
-						.children('li:not(.iw-mDisable)'), selected = optList
-						.filter('.iw-mSelected'), index = optList
-						.index(selected), focusOn = function(elm) {
-					iMethods.selectMenu(curMenu, elm);
-					var menuData = elm.data('iw-menuData');
-					if (menuData) {
-						iMethods.eventHandler.call(elm[0], e);
-
-					}
-				}, first = function() {
-					focusOn(optList.filter(':first'));
-				}, last = function() {
-					focusOn(optList.filter(':last'));
-				}, next = function() {
-					focusOn(optList.filter(':eq(' + (index + 1) + ')'));
-				}, prev = function() {
-					focusOn(optList.filter(':eq(' + (index - 1) + ')'));
-				}, subMenu = function() {
-					var menuData = selected.data('iw-menuData');
-					if (menuData) {
-						iMethods.eventHandler.call(selected[0], e);
-						var selector = menuData.menu;
-						selector.addClass('iw-curMenu');
-						curMenu.removeClass('iw-curMenu');
-						curMenu = selector;
-						optList = curMenu.children('li:not(.iw-mDisable)');
-						selected = optList.filter('.iw-mSelected');
-						first();
-					}
-				}, parMenu = function() {
-					var selector = curMenu.data('iw-menuData').trigger;
-					var parMenu = selector.closest('.iw-contextMenu');
-					if (parMenu.length != 0) {
-						curMenu.removeClass('iw-curMenu')
-								.css('display', 'none');
-						parMenu.addClass('iw-curMenu');
+				var curMenu = $('.'+option.classPrefix+'-curMenu'),
+					optList = curMenu.children('li:not(.'+option.classPrefix+'-mDisable)'),
+					selected = optList.filter('.'+option.classPrefix+'-mSelected'),
+					index = optList.index(selected),
+					focusOn = function(elm) {
+						iMethods.selectMenu(curMenu, elm);
+						var menuData = elm.data(option.classPrefix+'-menuData');
+						if (menuData) {
+							iMethods.eventHandler.call(elm[0], e);
+						}
+					}, first = function() {
+						focusOn(optList.filter(':first'));
+					}, last = function() {
+						focusOn(optList.filter(':last'));
+					}, next = function() {
+						focusOn(optList.filter(':eq(' + (index + 1) + ')'));
+					}, prev = function() {
+						focusOn(optList.filter(':eq(' + (index - 1) + ')'));
+					}, subMenu = function() {
+						var menuData = selected.data(option.classPrefix+'-menuData');
+						if (menuData) {
+							iMethods.eventHandler.call(selected[0], e);
+							var selector = menuData.menu;
+							selector.addClass(option.classPrefix+'-curMenu');
+							curMenu.removeClass(option.classPrefix+'-curMenu');
+							curMenu = selector;
+							optList = curMenu.children('li:not(.'+option.classPrefix+'-mDisable)');
+							selected = optList.filter('.'+option.classPrefix+'-mSelected');
+							first();
+						}
+					}, parMenu = function() {
+						var selector = curMenu.data('iw-menuData').trigger;
+						var parMenu = selector.closest('.'+option.classPrefix+'-contextMenu');
+						if (parMenu.length != 0) {
+							curMenu.removeClass(option.classPrefix+'-curMenu').css('display', 'none');
+							parMenu.addClass(option.classPrefix+'-curMenu');
 					}
 				};
 				switch (keyCode) {
@@ -628,12 +728,24 @@
 			}
 		},
 		closeContextMenu : function(option, trigger, menu, e) {
-
 			//unbind all events from top DOM
 			$(document).unbind('keydown', iMethods.keyEvent);
 			$('html').unbind('click', iMethods.clickEvent);
 			$(window).unbind('scroll resize', iMethods.scrollEvent);
-			$('.iw-contextMenu').css('display', 'none');
+			$('.'+option.classPrefix+'-contextMenu').css('display', 'none');
+
+			/*!
+			 * Dustin : main menu close effect here
+			 */
+//			$('.iw-contextMenu').hide();
+			var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
+
+			if ("slide" == option.effect) {
+				$('.'+option.classPrefix+'-contextMenu').stop().slideUp(effectDuration, function() {});
+			} else {
+				$('.'+option.classPrefix+'-contextMenu').stop().fadeOut(effectDuration, function() {});
+			}
+
 			$(document).focus();
 
 			//call close function
@@ -654,84 +766,119 @@
 		},
 		selectMenu : function(menu, elm) {
 			//to select the list
-			var selected = menu.find('li.iw-mSelected'), submenu = selected
-					.find('.iw-contextMenu');
-			if ((submenu.length != 0) && (selected[0] != elm[0])) {
-				submenu.fadeOut(100);
+			var selected = menu.find('li.'+option.classPrefix+'-mSelected'),
+				submenu = selected.find('.'+option.classPrefix+'-contextMenu');
+//			if ((submenu.length != 0) && (selected[0] != elm[0])) {
+//				submenu.fadeOut(100);
+//			}
+//			selected.removeClass(option.classPrefix+'-mSelected');
+//			elm.addClass(option.classPrefix+'-mSelected');
+			//to select the list
+			var selected = menu.find('li.'+option.classPrefix+'-mSelected'),
+				submenu = selected.find('.'+option.classPrefix+'-contextMenu');
+			if ((submenu.length != 0) && (selected[0] != this)) {
+				/*!
+				 * Dustin : hide sub menu here
+				 */
+//				submenu.hide(200);
+				var effectDuration = option.effectDuration || jsconfig.get("effectDuration");
+
+				if ("slide" == option.effect) {
+					submenu.stop().slideUp(effectDuration, function() {});
+				} else {
+					submenu.stop().fadeOut(effectDuration, function() {});
+				}
 			}
-			selected.removeClass('iw-mSelected');
-			elm.addClass('iw-mSelected');
+			selected.removeClass(option.classPrefix+'-mSelected');
+			$(this).addClass(option.classPrefix+'-mSelected');
+
+			/*!
+			 * Dustin : Logged in User - Header main menu
+			 */
+			var imgSrc = $(this).find("img").prop("src"), themeId = jsconfig.get("themeId");
+			if (!$.nony.isEmpty(imgSrc) && (imgSrc.indexOf("MyProfile") != -1 || imgSrc.indexOf("LogOut") != -1 || imgSrc.indexOf("QM") != -1)) {
+				var images;
+				$(this).closest('.'+option.classPrefix+'-contextMenu').find("li img").each(function(index) {
+					images = $(this).prop("src");
+					if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
+						images = $.nony.replace(images, "White", "Black");
+					}
+
+					$(this).prop("src", images);
+				});
+
+				if (themeId.toUpperCase() == "THEME000" || themeId.toUpperCase() == "THEME002" || themeId.toUpperCase() == "THEME003" || themeId.toUpperCase() == "THEME009") {
+					imgSrc = $.nony.replace(imgSrc, "Black", "White");
+				}
+
+				$(this).find("img").prop("src", imgSrc);
+			}
 		},
 		menuHover : function(menu) {
 			var lastEventTime = Date.now();
 			menu.children('li').bind(
-					'mouseenter.contextMenu click.contextMenu', function(e) {
-						//to make curmenu
-						$('.iw-curMenu').removeClass('iw-curMenu');
-						menu.addClass('iw-curMenu');
-						iMethods.selectMenu(menu, $(this));
-					});
+				'mouseenter.contextMenu click.contextMenu', function(e) {
+				//to make curmenu
+				$('.'+option.classPrefix+'-curMenu').removeClass(option.classPrefix+'-curMenu');
+				menu.addClass(option.classPrefix+'-curMenu');
+				iMethods.selectMenu(menu, $(this));
+			});
 		},
 		createMenuList : function(trgr, selector, option) {
-			var baseTrigger = option.baseTrigger, randomNum = Math.floor(Math
-					.random() * 10000);
-			if ((typeof selector == 'object') && (!selector.nodeType)
-					&& (!selector.jquery)) {
-				var menuList = $('<ul class="iw-contextMenu iw-created iw-cm-menu" id="iw-contextMenu'
-						+ randomNum + '"></ul>');
-				$
-						.each(
-								selector,
-								function(index, selObj) {
-									var name = selObj.name, fun = selObj.fun
-											|| function() {
-											}, subMenu = selObj.subMenu, img = selObj.img
-											|| '', icon = selObj.icon || '', title = selObj.title
-											|| "", className = selObj.className
-											|| "", disable = selObj.disable, list = $('<li title="'
-											+ title
-											+ '" class="'
-											+ className
-											+ '">' + name + '</li>');
+			var baseTrigger = option.baseTrigger,
+				randomNum = Math.floor(Math.random() * 10000);
+			if ((typeof selector == 'object') && (!selector.nodeType) && (!selector.jquery)) {
+				var menuList = $('<ul class="'+option.classPrefix+'-contextMenu '+option.classPrefix+'-created '+option.classPrefix+'-cm-menu" id="'+option.classPrefix+'-contextMenu' + randomNum + '"></ul>');
+				$.each(selector, function(index, selObj) {
+					var name = selObj.name, fun = selObj.fun
+							|| function() {
+							}, subMenu = selObj.subMenu, img = selObj.img
+							|| '', icon = selObj.icon || '', title = selObj.title
+							|| "", className = selObj.className
+							|| "", disable = selObj.disable, list = $('<li title="'
+							+ title
+							+ '" class="'
+							+ className
+							+ '">' + name + '</li>');
 
-									if (img) {
-										list
-												.prepend('<img src="'
-														+ img
-														+ '" align="absmiddle" class="iw-mIcon" />');
-									} else if (icon) {
-										list
-												.prepend('<span align="absmiddle" class="'
-														+ "iw-mIcon "
-														+ icon
-														+ '" />');
-									}
-									//to add disable
-									if (disable) {
-										list.addClass('iw-mDisable');
-									}
+					if (img) {
+						list
+								.prepend('<img src="'
+										+ img
+										+ '" align="absmiddle" class="iw-mIcon" />');
+					} else if (icon) {
+						list
+								.prepend('<span align="absmiddle" class="'
+										+ "iw-mIcon "
+										+ icon
+										+ '" />');
+					}
+					//to add disable
+					if (disable) {
+						list.addClass('iw-mDisable');
+					}
 
-									if (!subMenu) {
-										list.bind('click.contextMenu',
-												function(e) {
-													fun.call(this, {
-														trigger : baseTrigger,
-														menu : menuList
-													}, e);
-												});
-									}
-
-									//to create sub menu
-									menuList.append(list);
-									if (subMenu) {
-										list
-												.addClass('iw-has-submenu')
-												.append(
-														'<div class="iw-cm-arrow-right" />');
-										iMethods.subMenu(list, subMenu,
-												baseTrigger, option);
-									}
+					if (!subMenu) {
+						list.bind('click.contextMenu',
+								function(e) {
+									fun.call(this, {
+										trigger : baseTrigger,
+										menu : menuList
+									}, e);
 								});
+					}
+
+					//to create sub menu
+					menuList.append(list);
+					if (subMenu) {
+						list
+								.addClass('iw-has-submenu')
+								.append(
+										'<div class="iw-cm-arrow-right" />');
+						iMethods.subMenu(list, subMenu,
+								baseTrigger, option);
+					}
+				});
 
 				if (baseTrigger.index(trgr[0]) == -1) {
 					trgr.append(menuList);
