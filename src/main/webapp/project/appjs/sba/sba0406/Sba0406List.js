@@ -86,9 +86,8 @@ $(function() {
 	renderDataGridTable = function(result) {
 		var ds = result.dataSet;
 		var html = "", delimiter = "_";
-		var mainMenu = {}, subMenu = [];
+		var subMenu = [];
 
-		menu = [];
 		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
 

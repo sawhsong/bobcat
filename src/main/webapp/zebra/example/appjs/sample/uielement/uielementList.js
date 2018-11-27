@@ -107,6 +107,48 @@ $(function() {
 		$("#txtJQueryDatePicker").datepicker("show");
 	});
 
+	var menu = [ {
+		name : 'create',
+		fun : function() {
+			alert('i am add button')
+		}
+	}, {
+		name : 'update',
+		subMenu : [ {
+			name : 'merge',
+			fun : function() {
+				alert('It will merge row')
+			}
+		}, {
+			name : 'replace',
+			subMenu : [ {
+				name : 'replace top 100',
+				fun : function() {
+					alert('It will replace top 100 rows');
+				}
+
+			}, {
+				name : 'replace all',
+				fun : function() {
+					alert('It will replace all rows');
+				}
+			} ]
+		} ]
+	}, {
+		name : 'delete',
+		subMenu : [ {
+			'name' : 'soft delete',
+			fun : function() {
+				alert('You can recover back');
+			}
+		}, {
+			'name' : 'hard delete',
+			fun : function() {
+				alert('It will delete permanently');
+			}
+		} ]
+	} ];
+
 	$(window).load(function() {
 		commonJs.changeTabSelection($("#tabCategory li:eq(0) a"));
 
@@ -175,6 +217,15 @@ $(function() {
 			height:500,
 			autoSlide:false,
 			arrowTheme:1
+		});
+
+		$("#btnAnchor").contextMenu(menu, {
+// classPrefix:com.constants.ctxClassPrefixButton,
+			borderRadius : "4px",
+			displayAround : "trigger",
+			position : "bottom",
+			horAdjust : 0,
+			verAdjust : 0
 		});
 	});
 });

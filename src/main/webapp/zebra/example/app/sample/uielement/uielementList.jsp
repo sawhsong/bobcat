@@ -552,7 +552,7 @@
 							<th class="thEdit">Single Selection(Taglib)</th>
 							<td class="tdEdit">
 								<ui:text name="txtEnWithTaglibSelectbox" className="inline" style="width:200px;" placeHolder="txtEnWithTaglibSelectbox"/>
-								<ui:select name="selTaglibSingleSelection1" className="hor default">
+								<ui:select name="selTaglibSingleSelection1" className="hor">
 									<ui:seloption value="SingleSelection1-0" text="SingleSelection1-0"/>
 									<ui:seloption value="SingleSelection1-1" text="SingleSelection1-1"/>
 									<ui:seloption value="SingleSelection1-2" text="SingleSelection1-2"/>
