@@ -39,5 +39,12 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0406/Sba0406UpdatePop.jsp</result>
         </action>
+        <!--Sba0408 - Asset Type-->
+        <action class="project.app.sba.sba0408.Sba0408Action" method="{1}" name="0408/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

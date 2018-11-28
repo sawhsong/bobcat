@@ -14,4 +14,7 @@
     <!--Sba0406 - Expenditure Type-->
     <bean class="${name.package.project}.app.sba.sba0406.Sba0406Action" id="sba0406Action" name="sba0406Action"/>
     <bean class="${name.package.project}.app.sba.sba0406.Sba0406BizImpl" id="sba0406Biz" name="sba0406Biz" parent="baseBiz"/>
+    <!--Sba0408 - Asset Type-->
+    <bean class="${name.package.project}.app.sba.sba0408.Sba0408Action" id="sba0408Action" name="sba0408Action"/>
+    <bean class="${name.package.project}.app.sba.sba0408.Sba0408BizImpl" id="sba0408Biz" name="sba0408Biz" parent="baseBiz"/>
 </beans>

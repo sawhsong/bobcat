@@ -87,6 +87,7 @@ $(function() {
 		var html = "", delimiter = "_";
 		var subMenu = [];
 
+		menu = [];
 		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
 
