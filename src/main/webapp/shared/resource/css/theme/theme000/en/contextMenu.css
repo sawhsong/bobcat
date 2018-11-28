@@ -71,7 +71,7 @@
 .header-mIcon {margin-top:-1px;padding:0px 15px 0px 0px;float:left;}
 
 /* Action button in Grid Table */
-.actionInGrid-contextMenu {display:none;z-index:1000;overflow:auto;font-size:1.1em;box-shadow:0px 2px 10px rgba(0, 0, 0, 0.4);
+.actionInGrid-contextMenu {display:none;z-index:1000;overflow:auto;font-size:1.0em;box-shadow:0px 2px 10px rgba(0, 0, 0, 0.4);
 	border:1px solid #AAAAAA;
 }
 .actionInGrid-cm-menu {padding:5px 0px;
@@ -92,7 +92,7 @@
 .actionInGrid-mIcon {margin-top:-1px;padding:0px 15px 0px 0px;float:left;}
 
 /* Action Button */
-.actionButton-contextMenu {display:none;z-index:1000;overflow:auto;font-size:1.1em;box-shadow:0px 1px 1px rgba(0, 0, 0, 0.4);
+.actionButton-contextMenu {display:none;z-index:1000;overflow:auto;font-size:1.0em;box-shadow:0px 1px 1px rgba(0, 0, 0, 0.4);
 	border:1px solid #AAAAAA;
 }
 .actionButton-cm-menu {padding:5px 0px;

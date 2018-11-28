@@ -92,7 +92,7 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
+			isPageable:false,
 			isFilter:false,
 			filterColumn:[],
 			totalResultRows:result.totalResultRows,

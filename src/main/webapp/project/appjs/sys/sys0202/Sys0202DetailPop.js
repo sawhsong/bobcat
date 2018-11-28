@@ -106,6 +106,6 @@ $(function() {
 			$("#tblGrid").fixedHeaderTable({
 				attachTo:$("#divDataArea")
 			});
-		}, 700);
+		}, 1000);
 	});
 });

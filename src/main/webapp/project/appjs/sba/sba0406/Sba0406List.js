@@ -3,6 +3,7 @@
  * - Sba0406List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
+jsconfig.put("scrollablePanelHeightAdjust", 6);
 var popup = null;
 var searchResultDataCount = 0;
 var menu = [];
@@ -50,8 +51,6 @@ $(function() {
 	 */
 	setPreviewContextMenu = function() {
 		$("#btnPreview").contextMenu(menu, {
-//			classPrefix:com.constants.ctxClassPrefixButton,
-			borderRadius : "4px",
 			displayAround : "trigger",
 			position : "bottom",
 			horAdjust : 0,
@@ -339,7 +338,7 @@ $(function() {
 	 */
 	$(window).load(function() {
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		setPreviewContextMenu();
+//		setPreviewContextMenu();
 		doSearch();
 	});
 });
