@@ -633,6 +633,7 @@ $(function() {
 				if (result.isSuccess == true || result.isSuccess == "true") {
 					var ds = result.dataSet;
 
+					$("#orgCategoryAdminTool").val(ds.getValue(0, "org_category"));
 					$("#userNameAsAdminTool").val(ds.getValue(0, "user_name"));
 					$("#loginIdAsAdminTool").val(ds.getValue(0, "login_id"));
 					$("#userIdAdminTool").val(ds.getValue(0, "user_id"));
@@ -776,7 +777,7 @@ if (CommonUtil.equalsIgnoreCase(authGroupIdAdminToolArea, "0") && isVisibleAdmin
 					<tr>
 						<th class="thDefault" style="padding:2px 2px 1px 0px;"><mc:msg key="page.com.orgCategory"/></th>
 						<td class="tdDefault Lt" style="padding:2px 0px 1px 2px;">
-							<ui:ccselect name="orgCategoryAdminTool" codeType="ORG_CATEGORY" caption="==Select=="/>
+							<ui:ccselect name="orgCategoryAdminTool" codeType="ORG_CATEGORY" caption="==Select==" selectedValue="${sessionScope.OrgCategoryForAdminTool}"/>
 						</td>
 					</tr>
 					<tr>

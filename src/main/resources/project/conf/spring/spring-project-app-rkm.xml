@@ -2,4 +2,10 @@
     <!--Rkm0202 - Sales Income-->
     <bean class="${name.package.project}.app.rkm.rkm0202.Rkm0202Action" id="rkm0202Action" name="rkm0202Action"/>
     <bean class="${name.package.project}.app.rkm.rkm0202.Rkm0202BizImpl" id="rkm0202Biz" name="rkm0202Biz" parent="baseBiz"/>
+    <!--Rkm0204 - Other Income T1-->
+    <bean class="${name.package.project}.app.rkm.rkm0204.Rkm0204Action" id="rkm0204Action" name="rkm0204Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0204.Rkm0204BizImpl" id="rkm0204Biz" name="rkm0204Biz" parent="baseBiz"/>
+    <!--Rkm0206 - Other Income T2-->
+    <bean class="${name.package.project}.app.rkm.rkm0206.Rkm0206Action" id="rkm0206Action" name="rkm0206Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0206.Rkm0206BizImpl" id="rkm0206Biz" name="rkm0206Biz" parent="baseBiz"/>
 </beans>

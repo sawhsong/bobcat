@@ -1,17 +1,19 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Rkm0202List.js
+ * - Rkm0204List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-jsconfig.put("scrollablePanelHeightAdjust", 6)
 var popup = null;
 var searchResultDataCount = 0;
-var attchedFileContextMenu = [];
 
 $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnNew").click(function(event) {
+		openPopup({mode:"New"});
+	});
+
 	$("#btnDelete").click(function(event) {
 		doDelete();
 	});
@@ -40,19 +42,12 @@ $(function() {
 		doSearch();
 	});
 
-	$("#recordKeepingType").change(function() {
-		doSearch();
-	});
-
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
 		}
 	});
 
-	/*!
-	 * context menus
-	 */
 	setDataEntryActionButtonContextMenu = function() {
 		ctxMenu.dataEntryAction[0].fun = function() {};
 		ctxMenu.dataEntryAction[1].fun = function() {};
@@ -60,8 +55,11 @@ $(function() {
 
 		$("#icnDataEntryAction").contextMenu(ctxMenu.dataEntryAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
+			effectDuration:300,
+			borderRadius:"bottom 4px",
 			displayAround:"trigger",
-			position:"bottom"
+			position:"bottom",
+			horAdjust:0
 		});
 	};
 
@@ -73,7 +71,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0202/getList.do",
+				url:"/rkm/0204/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -85,14 +83,11 @@ $(function() {
 				}
 			});
 		}, 200);
-
-		setSummaryDataForAdminTool();
 	};
 
 	renderDataGridTable = function(result) {
 		var ds = result.dataSet;
-		var html = "", totHtml = "";
-		var totNonCash = 0, totCash = 0, totGross = 0, totGstFree = 0, totGst = 0, totNet = 0;
+		var html = "", totHtml = "", totGross = 0, totGst = 0, totNet = 0;
 		var totGridTr = new UiGridTr();
 
 		searchResultDataCount = ds.getRowCnt();
@@ -102,11 +97,7 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
-
-				totNonCash += parseFloat(ds.getValue(i, "NON_CASH_AMT"));
-				totCash += parseFloat(ds.getValue(i, "CASH_AMT"));
 				totGross += parseFloat(ds.getValue(i, "GROSS_AMT"));
-				totGstFree += parseFloat(ds.getValue(i, "GST_FREE_AMT"));
 				totGst += parseFloat(ds.getValue(i, "GST_AMT"));
 				totNet += parseFloat(ds.getValue(i, "NET_AMT"));
 
@@ -115,15 +106,13 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "QUARTER_DATE")).setScript("getDetail('"+ds.getValue(i, "INCOME_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "INCOME_DATE")).setScript("getDetail('"+ds.getValue(i, "INCOME_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NON_CASH_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "CASH_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_FREE_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
@@ -137,24 +126,20 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:12").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNonCash, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totCash, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGstFree, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-
-		totHtml = totGridTr.toHtmlString();
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 
 		$("#tblGridBody").append($(html));
 		$("#tblGridFoot").append($(totHtml));
@@ -162,7 +147,7 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:false,
+			isPageable:true,
 			isFilter:false,
 			filterColumn:[],
 			totalResultRows:result.totalResultRows,
@@ -185,13 +170,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/rkm/0202/getDetail.do";
+			url = "/rkm/0204/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0202/getInsert.do";
+			url = "/rkm/0204/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/rkm/0202/getUpdate.do";
+			url = "/rkm/0204/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
@@ -224,7 +209,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeDelete.do",
+						url:"/rkm/0204/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -299,7 +284,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0202/exeExport.do",
+						url:"/rkm/0204/exeExport.do",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange

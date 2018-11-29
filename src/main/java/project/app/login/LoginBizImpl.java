@@ -269,6 +269,7 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			resultDataSet.setValue("login_id", sysUser.getLoginId());
 			resultDataSet.setValue("org_id", sysUser.getOrgId());
 			resultDataSet.setValue("org_name", sysOrg.getLegalName());
+			resultDataSet.setValue("org_category", sysOrg.getOrgCategory());
 			resultDataSet.setValue("org_category_desc", orgCategoryDesc);
 
 			paramEntity.setAjaxResponseDataSet(resultDataSet);

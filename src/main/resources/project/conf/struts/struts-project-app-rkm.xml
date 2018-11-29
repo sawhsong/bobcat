@@ -10,5 +10,19 @@
             <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0202/Rkm0202UpdatePop.jsp</result>
         </action>
+        <!--Rkm0204 - Other Income T1-->
+        <action class="project.app.rkm.rkm0204.Rkm0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0204/Rkm0204UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0206 - Other Income T2-->
+        <action class="project.app.rkm.rkm0206.Rkm0206Action" method="{1}" name="0206/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>
