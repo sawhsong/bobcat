@@ -22,6 +22,7 @@ import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
+import project.conf.resource.ormapper.dao.SysTaxMaster.SysTaxMasterDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
@@ -29,6 +30,8 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	private SysBoardDao sysBoardDao;
 	@Autowired
 	private SysBoardFileDao sysBoardFileDao;
+	@Autowired
+	private SysTaxMasterDao sysTaxMasterDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -42,12 +45,14 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
 
 		try {
+			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			queryAdvisor.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			paramEntity.setAjaxResponseDataSet(sysTaxMasterDao.getTaxMasterDataSetByCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {

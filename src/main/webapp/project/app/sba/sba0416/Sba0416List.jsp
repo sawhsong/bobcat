@@ -8,6 +8,7 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
+	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
 %>
 <%/************************************************************************************************
 * HTML
@@ -56,35 +57,49 @@
 	</div>
 </div>
 <div id="divSearchCriteriaArea" class="areaContainer">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<table class="tblDefault">
-				<colgroup>
-					<col width="50%"/>
-					<col width="50%"/>
-				</colgroup>
-				<tr>
-					<td class="tdDefault">
-						<label for="searchType" class="lblEn hor"><mc:msg key="sba0416.search.searchType"/></label>
-						<div style="float:left;padding-right:4px;">
-							<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select=="/>
-						</div>
-						<ui:text name="searchWord" className="hor" style="width:280px"/>
-					</td>
-					<td class="tdDefault">
-						<label for="fromDate" class="lblEn hor"><mc:msg key="sba0416.search.searchPeriod"/></label>
-						<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="sba0416.search.searchDateFrom" option="date"/>
-						<ui:icon id="icnFromDate" className="fa-calendar hor" title="sba0416.search.searchDateFrom"/>
-						<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-						<ui:text name="toDate" className="Ct hor" style="width:100px" checkName="sba0416.search.searchDateTo" option="date"/>
-						<ui:icon id="icnToDate" className="fa-calendar hor" title="sba0416.search.searchDateTo"/>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+	<table class="tblSearch">
+		<caption><mc:msg key="page.com.searchCriteria"/></caption>
+		<colgroup>
+			<col width="33%"/>
+			<col width="33%"/>
+			<col width="34%"/>
+		</colgroup>
+		<tr>
+			<td class="tdSearch">
+				<label for="taxYear" class="lblEn hor mandatory"><mc:msg key="sba0416.search.taxYear"/></label>
+				<ui:select name="taxYear">
+<%
+				for (int i=-5; i<6; i++) {
+					String selected = (currentYear == (currentYear + i)) ? "selected" : "";
+%>
+					<option value="<%=currentYear + i%>" <%=selected%>><%=currentYear + i%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
+			<td class="tdSearch">
+				<label for="wageType" class="lblEn hor"><mc:msg key="sba0416.search.wageType"/></label>
+				<ui:ccselect name="wageType" codeType="WAGE_TYPE" caption="==Select=="/>
+			</td>
+			<td class="tdSearch">
+				<label for="gross" class="lblEn hor"><mc:msg key="sba0416.search.gross"/></label>
+				<ui:text name="gross" style="width:250px"/>
+			</td>
+		</tr>
+	</table>
 </div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainer">
+	<table class="tblDataEntry" class="areaContainer">
+		<caption><mc:msg key="page.com.dataEntry"/></caption>
+		<tr>
+			<td class="tdDataEntry">
+				<label for="taxYear" class="lblEn hor mandatory"><mc:msg key="sba0416.info.uploadFile"/></label>
+				<ui:file name="fileUpload" style="width:300px"/>
+			</td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -98,27 +113,33 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
+			<col width="10%"/>
 			<col width="*"/>
-			<col width="5%"/>
 			<col width="15%"/>
+			<col width="15%"/>
+			<col width="10%"/>
+			<col width="10%"/>
 			<col width="10%"/>
 			<col width="8%"/>
 			<col width="5%"/>
 		</colgroup>
 		<thead>
-			<tr class="noBorderHor">
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sba0416.grid.subject"/></th>
-				<th class="thGrid"><mc:msg key="sba0416.grid.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sba0416.grid.writerName"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sba0416.grid.date"/></th>
-				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.hitCount"/></th>
+			<tr>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.taxYear"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.gross"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="sba0416.grid.quarter"/></th>
+				<th class="thGrid sortable:alphanumeric"><mc:msg key="sba0416.grid.wageType"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.resident"/></th>
+				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.nonResident"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="sba0416.grid.insertDate"/></th>
+				<th class="thGrid sortable:date"><mc:msg key="sba0416.grid.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noBorderHor noStripe">
-				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
+			<tr>
+				<td class="tdGrid Ct" colspan="10"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
