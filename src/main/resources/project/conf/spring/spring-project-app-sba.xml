@@ -17,4 +17,10 @@
     <!--Sba0408 - Asset Type-->
     <bean class="${name.package.project}.app.sba.sba0408.Sba0408Action" id="sba0408Action" name="sba0408Action"/>
     <bean class="${name.package.project}.app.sba.sba0408.Sba0408BizImpl" id="sba0408Biz" name="sba0408Biz" parent="baseBiz"/>
+    <!--Sba0410 - Repayment Type-->
+    <bean class="${name.package.project}.app.sba.sba0410.Sba0410Action" id="sba0410Action" name="sba0410Action"/>
+    <bean class="${name.package.project}.app.sba.sba0410.Sba0410BizImpl" id="sba0410Biz" name="sba0410Biz" parent="baseBiz"/>
+    <!--Sba0412 - Borrowing Type-->
+    <bean class="${name.package.project}.app.sba.sba0412.Sba0412Action" id="sba0412Action" name="sba0412Action"/>
+    <bean class="${name.package.project}.app.sba.sba0412.Sba0412BizImpl" id="sba0412Biz" name="sba0412Biz" parent="baseBiz"/>
 </beans>

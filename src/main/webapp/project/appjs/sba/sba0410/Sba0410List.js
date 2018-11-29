@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sba0408List.js
+ * - Sba0410List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
@@ -33,7 +33,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sba/0408/getList.do",
+					url:"/sba/0410/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -60,16 +60,16 @@ $(function() {
 				var gridTr = new UiGridTr();
 				var checkString = "";
 
-				if (!commonJs.isEmpty(ds.getValue(i, "ASSET_TYPE_ID"))) {
+				if (!commonJs.isEmpty(ds.getValue(i, "REPAYMENT_TYPE_ID"))) {
 					checkString = "checked";
 				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkToAssign").setName("chkToAssign").addAttribute(checkString).setValue(ds.getValue(i, "ASSET_TYPE_ID")+"_"+ds.getValue(i, "ASSET_TYPE_CODE"));
+				uiChk.setId("chkToAssign").setName("chkToAssign").addAttribute(checkString).setValue(ds.getValue(i, "REPAYMENT_TYPE_ID")+"_"+ds.getValue(i, "REPAYMENT_TYPE_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "ASSET_TYPE_NAME")).setScript("getDetail('"+ds.getValue(i, "ASSET_TYPE_ID")+"', '"+ds.getValue(i, "ASSET_TYPE_CODE")+"')");
+				uiAnc.setText(ds.getValue(i, "REPAYMENT_TYPE_NAME")).setScript("getDetail('"+ds.getValue(i, "REPAYMENT_TYPE_ID")+"', '"+ds.getValue(i, "REPAYMENT_TYPE_CODE")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_APPLY_GST")));
@@ -111,13 +111,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/sba/0408/getDetail.do";
+			url = "/sba/0410/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sba/0408/getInsert.do";
+			url = "/sba/0410/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0408/getUpdate.do";
+			url = "/sba/0410/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}

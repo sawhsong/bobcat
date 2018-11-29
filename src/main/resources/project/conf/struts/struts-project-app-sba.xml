@@ -46,5 +46,19 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0408/Sba0408UpdatePop.jsp</result>
         </action>
+        <!--Sba0410 - Repayment Type-->
+        <action class="project.app.sba.sba0410.Sba0410Action" method="{1}" name="0410/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0410/Sba0410UpdatePop.jsp</result>
+        </action>
+        <!--Sba0412 - Borrowing Type-->
+        <action class="project.app.sba.sba0412.Sba0412Action" method="{1}" name="0412/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

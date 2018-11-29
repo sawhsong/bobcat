@@ -214,12 +214,12 @@ var commonJs = {
  * 1
  */
 $(document).ready(function() {
-	if (!$.nony.isPopup()) {$.nony._doPageLayout(commonJs.getPageLayoutOptions());}
 });
 /*!
  * 2
  */
 $(window).ready(function() {
+	if (!$.nony.isPopup()) {$.nony._doPageLayout(commonJs.getPageLayoutOptions());}
 });
 /*!
  * 3
