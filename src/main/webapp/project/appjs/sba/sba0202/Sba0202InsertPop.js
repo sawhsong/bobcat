@@ -95,6 +95,7 @@ $(function() {
 	$(window).load(function() {
 		setTimeout(function() {
 			commonJs.setFieldDateMask("registeredDate");
+			commonJs.refreshBootstrapSelectbox();
 			setAbnFieldMask();
 			$(".numeric").number(true, 0);
 			$("#abn").focus();

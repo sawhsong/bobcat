@@ -669,6 +669,17 @@ var nony = {
 		});
 		return element;
 	},
+	refreshBootstrapSelectbox : function(id) {
+		if ($.nony.isEmpty(id)) {
+			$("select.bootstrapSelect").each(function(index) {
+				$(this).selectpicker("refresh");
+				$(this).selectpicker("render");
+			});
+		} else {
+			$("#"+id).selectpicker("refresh");
+			$("#"+id).selectpicker("render");
+		}
+	},
 	/*!
 	 * Auto Completion
 	 */

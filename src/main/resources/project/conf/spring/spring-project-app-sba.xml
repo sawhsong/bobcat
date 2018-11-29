@@ -23,4 +23,10 @@
     <!--Sba0412 - Borrowing Type-->
     <bean class="${name.package.project}.app.sba.sba0412.Sba0412Action" id="sba0412Action" name="sba0412Action"/>
     <bean class="${name.package.project}.app.sba.sba0412.Sba0412BizImpl" id="sba0412Biz" name="sba0412Biz" parent="baseBiz"/>
+    <!--Sba0414 - Lending Type-->
+    <bean class="${name.package.project}.app.sba.sba0414.Sba0414Action" id="sba0414Action" name="sba0414Action"/>
+    <bean class="${name.package.project}.app.sba.sba0414.Sba0414BizImpl" id="sba0414Biz" name="sba0414Biz" parent="baseBiz"/>
+    <!--Sba0416 - Tax Table Mgmt.-->
+    <bean class="${name.package.project}.app.sba.sba0416.Sba0416Action" id="sba0416Action" name="sba0416Action"/>
+    <bean class="${name.package.project}.app.sba.sba0416.Sba0416BizImpl" id="sba0416Biz" name="sba0416Biz" parent="baseBiz"/>
 </beans>

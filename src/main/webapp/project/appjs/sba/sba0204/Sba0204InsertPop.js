@@ -91,6 +91,7 @@ $(function() {
 		});
 
 		setTimeout(function() {
+			commonJs.refreshBootstrapSelectbox();
 			$("#photoPath").focus();
 		}, 100);
 	});

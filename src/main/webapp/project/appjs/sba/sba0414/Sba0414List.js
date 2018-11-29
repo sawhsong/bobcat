@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sba0412List.js
+ * - Sba0414List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
@@ -24,6 +24,12 @@ $(function() {
 		}
 	});
 
+	$(document).keypress(function(event) {
+		if (event.which == 13) {
+			var element = event.target;
+		}
+	});
+
 	/*!
 	 * process
 	 */
@@ -33,7 +39,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sba/0412/getList.do",
+					url:"/sba/0414/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -60,16 +66,16 @@ $(function() {
 				var gridTr = new UiGridTr();
 				var checkString = "";
 
-				if (!commonJs.isEmpty(ds.getValue(i, "BORROWING_TYPE_ID"))) {
+				if (!commonJs.isEmpty(ds.getValue(i, "LENDING_TYPE_ID"))) {
 					checkString = "checked";
 				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkToAssign").setName("chkToAssign").addAttribute(checkString).setValue(ds.getValue(i, "BORROWING_TYPE_ID")+"_"+ds.getValue(i, "BORROWING_TYPE_CODE"));
+				uiChk.setId("chkToAssign").setName("chkToAssign").addAttribute(checkString).setValue(ds.getValue(i, "LENDING_TYPE_ID")+"_"+ds.getValue(i, "LENDING_TYPE_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "BORROWING_TYPE_NAME")).setScript("getDetail('"+ds.getValue(i, "BORROWING_TYPE_ID")+"', '"+ds.getValue(i, "BORROWING_TYPE_CODE")+"')");
+				uiAnc.setText(ds.getValue(i, "LENDING_TYPE_NAME")).setScript("getDetail('"+ds.getValue(i, "LENDING_TYPE_ID")+"', '"+ds.getValue(i, "LENDING_TYPE_CODE")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_APPLY_GST")));
@@ -111,13 +117,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/sba/0412/getDetail.do";
+			url = "/sba/0414/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sba/0412/getInsert.do";
+			url = "/sba/0414/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0412/getUpdate.do";
+			url = "/sba/0414/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
@@ -142,6 +148,10 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		commonJs.setFieldDateMask("fromDate");
+		commonJs.setFieldDateMask("toDate");
+		commonJs.setExportButtonContextMenu($("#btnExport"));
+		$("#searchWord").focus();
 		doSearch();
 	});
 });

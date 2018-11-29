@@ -60,5 +60,19 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0412/Sba0412UpdatePop.jsp</result>
         </action>
+        <!--Sba0414 - Lending Type-->
+        <action class="project.app.sba.sba0414.Sba0414Action" method="{1}" name="0414/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0414/Sba0414UpdatePop.jsp</result>
+        </action>
+        <!--Sba0416 - Tax Table Mgmt.-->
+        <action class="project.app.sba.sba0416.Sba0416Action" method="{1}" name="0416/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

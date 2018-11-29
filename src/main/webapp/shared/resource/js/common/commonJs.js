@@ -102,6 +102,7 @@ var commonJs = {
 	setAccordion : function(params) {$.nony.setAccordion(params);},
 	expandAllAccordion : function(params) {$.nony.expandAllAccordion(params);},
 	getBootstrapSelectbox : function(id) {return $.nony.getBootstrapSelectbox(id);},
+	refreshBootstrapSelectbox : function(id) {return $.nony.refreshBootstrapSelectbox(id);},
 	setAutoComplete : function(jqObject, param) {$.nony.setAutoComplete(jqObject, param);},
 	/*!
 	 * controlling file elements
@@ -232,14 +233,7 @@ $(window).load(function() {
 	if ("Y" == jsconfig.get("autoSetSearchCriteria")) {$.nony._setAutoSearchCriteria(jsconfig.get("searchCriteriaDataSetString"));}
 	if (jsconfig.get("useScrollablePanel")) {$.nony._doResizeScrollablePanel();}
 	if (jsconfig.get("useJqTooltip")) {$.nony._jqTooltip();}
-
-	if ($.nony.isPopup()) {
-		setTimeout(function() {
-			if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
-		}, 50);
-	} else {
-		if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
-	}
+	if (jsconfig.get("useJqSelectmenu")) {$.nony._jqSelectmenu();}
 });
 
 /*!
