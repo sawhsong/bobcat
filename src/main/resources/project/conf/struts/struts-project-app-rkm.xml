@@ -52,5 +52,12 @@
             <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604UpdatePop.jsp</result>
         </action>
+        <!--Rkm0606 - Lending-->
+        <action class="project.app.rkm.rkm0606.Rkm0606Action" method="{1}" name="0606/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

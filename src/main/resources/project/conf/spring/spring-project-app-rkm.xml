@@ -20,4 +20,7 @@
     <!--Rkm0604 - Borrowing-->
     <bean class="${name.package.project}.app.rkm.rkm0604.Rkm0604Action" id="rkm0604Action" name="rkm0604Action"/>
     <bean class="${name.package.project}.app.rkm.rkm0604.Rkm0604BizImpl" id="rkm0604Biz" name="rkm0604Biz" parent="baseBiz"/>
+    <!--Rkm0606 - Lending-->
+    <bean class="${name.package.project}.app.rkm.rkm0606.Rkm0606Action" id="rkm0606Action" name="rkm0606Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0606.Rkm0606BizImpl" id="rkm0606Biz" name="rkm0606Biz" parent="baseBiz"/>
 </beans>

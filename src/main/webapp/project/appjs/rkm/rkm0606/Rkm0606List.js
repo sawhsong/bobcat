@@ -1,11 +1,11 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Rkm0604List.js
+ * - Rkm0606List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
-var borrowingTypeMenu = [];
+var lendingTypeMenu = [];
 
 $(function() {
 	/*!
@@ -51,7 +51,7 @@ $(function() {
 		doSearch();
 	});
 
-	$("#borrowingType").change(function() {
+	$("#lendingType").change(function() {
 		doSearch();
 	});
 
@@ -61,9 +61,9 @@ $(function() {
 		}
 	});
 
-	setDeBorrowingTypeContextMenu = function() {
+	setDeLendingTypeContextMenu = function() {
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getBorrowingTypeForContextMenu.do",
+			url:"/common/entryTypeSupporter/getLendingTypeForContextMenu.do",
 			dataType:"json",
 			data:{},
 			success:function(data, textStatus) {
@@ -73,13 +73,13 @@ $(function() {
 
 					if (ds.getRowCnt() > 0) {
 						for (var i=0; i<ds.getRowCnt(); i++) {
-							var borrowingType = ds.getValue(i, "BORROWING_TYPE");
+							var lendingType = ds.getValue(i, "LENDING_TYPE");
 
-							borrowingTypeMenu.push({
+							lendingTypeMenu.push({
 								name:ds.getValue(i, "DESCRIPTION"),
-								userData:borrowingType,
+								userData:lendingType,
 								fun:function() {
-									setDeBorrowingTypeSelectbox($(this).attr("userData"));
+									setDeLendingTypeSelectbox($(this).attr("userData"));
 								}
 							});
 						}
@@ -90,7 +90,7 @@ $(function() {
 			}
 		});
 
-		$("#btnDeBorrowingType").contextMenu(borrowingTypeMenu, {
+		$("#btnDeLendingType").contextMenu(lendingTypeMenu, {
 			borderRadius : "4px",
 			displayAround : "trigger",
 			position : "bottom",
@@ -122,7 +122,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0604/getList.do",
+				url:"/rkm/0606/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -225,13 +225,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/rkm/0604/getDetail.do";
+			url = "/rkm/0606/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0604/getInsert.do";
+			url = "/rkm/0606/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/rkm/0604/getUpdate.do";
+			url = "/rkm/0606/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
@@ -264,7 +264,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0604/exeDelete.do",
+						url:"/rkm/0606/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -402,7 +402,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0604/exeExport.do",
+						url:"/rkm/0606/exeExport.do",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
@@ -423,9 +423,9 @@ $(function() {
 		});
 	};
 
-	setDeBorrowingTypeSelectbox = function(type) {
-		$("#deBorrowingType").val(type);
-		$("#deBorrowingType").selectpicker("val", type);
+	setDeLendingTypeSelectbox = function(type) {
+		$("#deLendingType").val(type);
+		$("#deLendingType").selectpicker("val", type);
 	};
 
 	/*!
@@ -433,7 +433,7 @@ $(function() {
 	 */
 	$(window).load(function() {
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		setDeBorrowingTypeContextMenu();
+		setDeLendingTypeContextMenu();
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
 		commonJs.setFieldDateMask("deStartDate");
