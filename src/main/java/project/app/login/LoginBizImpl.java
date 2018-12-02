@@ -262,7 +262,7 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			paramEntity.setObject("orgCategoryForAdminTool", sysOrg.getOrgCategory());
 			paramEntity.setObject("orgCategoryDescForAdminTool", orgCategoryDesc);
 
-			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "org_category_desc"});
+			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "org_category", "org_category_desc"});
 			resultDataSet.addRow();
 			resultDataSet.setValue("user_id", sysUser.getUserId());
 			resultDataSet.setValue("user_name", sysUser.getUserName());

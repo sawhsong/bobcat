@@ -775,20 +775,20 @@ if (CommonUtil.equalsIgnoreCase(authGroupIdAdminToolArea, "0") && isVisibleAdmin
 						</td>
 					</tr>
 					<tr>
-						<th class="thDefault" style="padding:2px 2px 1px 0px;"><mc:msg key="page.com.orgCategory"/></th>
-						<td class="tdDefault Lt" style="padding:2px 0px 1px 2px;">
+						<th class="thDefault lt" style="padding:2px 2px 1px 0px;"><mc:msg key="page.com.orgCategory"/></th>
+						<td class="tdDefault lt" style="padding:2px 0px 1px 2px;">
 							<ui:ccselect name="orgCategoryAdminTool" codeType="ORG_CATEGORY" caption="==Select==" selectedValue="${sessionScope.OrgCategoryForAdminTool}"/>
 						</td>
 					</tr>
 					<tr>
-						<th class="thDefault" style="padding:2px 2px 1px 0px;"><mc:msg key="page.com.loginUserNameAs"/></th>
-						<td class="tdDefault" style="padding:2px 0px 1px 2px;">
+						<th class="thDefault lt" style="padding:2px 2px 1px 0px;"><mc:msg key="page.com.loginUserNameAs"/></th>
+						<td class="tdDefault lt" style="padding:2px 0px 1px 2px;">
 							<input type="text" id="userNameAsAdminTool" name="userNameAsAdminTool" value="${sessionScope.UserNameForAdminTool}" class="txtEn"/>
 						</td>
 					</tr>
 					<tr>
-						<th class="thDefault" style="padding:1px 2px 1px 0px;"><mc:msg key="page.com.loginUserLoginIdAs"/></th>
-						<td class="tdDefault" style="padding:1px 0px 1px 2px;">
+						<th class="thDefault lt" style="padding:1px 2px 1px 0px;"><mc:msg key="page.com.loginUserLoginIdAs"/></th>
+						<td class="tdDefault lt" style="padding:1px 0px 1px 2px;">
 							<input type="text" id="loginIdAsAdminTool" name="loginIdAsAdminTool" value="${sessionScope.LoginIdForAdminTool}" class="txtEn"/>
 						</td>
 					</tr>

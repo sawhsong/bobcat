@@ -8,4 +8,7 @@
     <!--Rkm0206 - Other Income T2-->
     <bean class="${name.package.project}.app.rkm.rkm0206.Rkm0206Action" id="rkm0206Action" name="rkm0206Action"/>
     <bean class="${name.package.project}.app.rkm.rkm0206.Rkm0206BizImpl" id="rkm0206Biz" name="rkm0206Biz" parent="baseBiz"/>
+    <!--Rkm0402 - General Expense-->
+    <bean class="${name.package.project}.app.rkm.rkm0402.Rkm0402Action" id="rkm0402Action" name="rkm0402Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0402.Rkm0402BizImpl" id="rkm0402Biz" name="rkm0402Biz" parent="baseBiz"/>
 </beans>

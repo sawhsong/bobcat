@@ -170,7 +170,7 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.dataEntrySalesAction);
+			$(this).contextMenu(ctxMenu.dataEntryListAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");

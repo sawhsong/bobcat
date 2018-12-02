@@ -90,7 +90,7 @@
 			<td class="tdSearch">
 				<label for="incomeType" class="lblEn hor mandatory"><mc:msg key="rkm0206.search.incomeType"/></label>
 				<div style="float:left;padding-right:4px;">
-					<ui:deSelect id="incomeType" name="incomeType" codeType="IncomeType" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedIncomeType%>"/>
+					<ui:deSelect name="incomeType" codeType="IncomeType" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedIncomeType%>"/>
 				</div>
 			</td>
 		</tr>
@@ -124,11 +124,11 @@
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry"><ui:text name="deGrossSales" className="rt numeric" checkName="rkm0206.de.grossSales" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry"><ui:text name="deGst" className="rt numeric" checkName="rkm0206.de.gst" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry"><ui:text name="deNetSales" className="rt numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deGrossSales" className="rt numeric" checkName="rkm0206.de.grossSales" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deGst" className="rt numeric" checkName="rkm0206.de.gst" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deNetSales" className="rt numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:deSelect name="deIncomeType" codeType="IncomeType" orgCategory="<%=orgCategory%>" options="mandatory"/></td>
-			<td class="tdDataEntry"><ui:text name="deRemark"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deRemark"/></td>
 			<td class="tdDataEntry Ct"><ui:icon id="icnDataEntryAction" className="fa-tasks fa-lg" script="doDataEntryAction(this)"/></td>
 		</tr>
 	</table>

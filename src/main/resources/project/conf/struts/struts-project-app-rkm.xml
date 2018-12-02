@@ -24,5 +24,12 @@
             <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0206/Rkm0206UpdatePop.jsp</result>
         </action>
+        <!--Rkm0402 - General Expense-->
+        <action class="project.app.rkm.rkm0402.Rkm0402Action" method="{1}" name="0402/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

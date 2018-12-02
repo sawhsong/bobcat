@@ -99,8 +99,8 @@ var ctxMenu = {
 		fun:function() {}
 	}],
 
-	// Data Entry Action context menu
-	dataEntrySalesAction : [{
+	// Data Entry List Screen Action context menu
+	dataEntryListAction : [{
 		name:com.caption.ctxEdit,
 		img:"fa-edit",
 		fun:function() {}
