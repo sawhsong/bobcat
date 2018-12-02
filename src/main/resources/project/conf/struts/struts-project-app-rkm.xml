@@ -59,5 +59,19 @@
             <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0606/Rkm0606UpdatePop.jsp</result>
         </action>
+        <!--Rkm0802 - Employee Management-->
+        <action class="project.app.rkm.rkm0802.Rkm0802Action" method="{1}" name="0802/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0802/Rkm0802UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0804 - Payment-->
+        <action class="project.app.rkm.rkm0804.Rkm0804Action" method="{1}" name="0804/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0804/Rkm0804UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

@@ -23,4 +23,10 @@
     <!--Rkm0606 - Lending-->
     <bean class="${name.package.project}.app.rkm.rkm0606.Rkm0606Action" id="rkm0606Action" name="rkm0606Action"/>
     <bean class="${name.package.project}.app.rkm.rkm0606.Rkm0606BizImpl" id="rkm0606Biz" name="rkm0606Biz" parent="baseBiz"/>
+    <!--Rkm0802 - Employee Management-->
+    <bean class="${name.package.project}.app.rkm.rkm0802.Rkm0802Action" id="rkm0802Action" name="rkm0802Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0802.Rkm0802BizImpl" id="rkm0802Biz" name="rkm0802Biz" parent="baseBiz"/>
+    <!--Rkm0804 - Payment-->
+    <bean class="${name.package.project}.app.rkm.rkm0804.Rkm0804Action" id="rkm0804Action" name="rkm0804Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0804.Rkm0804BizImpl" id="rkm0804Biz" name="rkm0804Biz" parent="baseBiz"/>
 </beans>

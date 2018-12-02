@@ -120,7 +120,7 @@
 		<tr>
 			<td class="tdDataEntry ct">
 				<div style="display:inline-block;">
-					<ui:text name="deDate" className="hor" style="width:100px" checkName="rkm0206.de.date" options="mandatory" option="date"/>
+					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0206.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>

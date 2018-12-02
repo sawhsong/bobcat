@@ -126,7 +126,7 @@
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
-					<ui:text name="deDate" className="hor" style="width:100px" checkName="rkm0606.de.date" options="mandatory" option="date"/>
+					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0606.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
@@ -136,13 +136,13 @@
 			<td class="tdDataEntry Ct"><ui:text name="deInterestPercentage" className="rt numeric" checkName="rkm0606.de.interestPercentage" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
-					<ui:text name="deStartDate" className="hor" style="width:100px" checkName="rkm0606.de.startDate" options="mandatory" option="date"/>
+					<ui:text name="deStartDate" className="ct hor" style="width:100px" checkName="rkm0606.de.startDate" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryStartDate" className="fa-calendar hor"/>
 				</div>
 			</td>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
-					<ui:text name="deEndDate" className="hor" style="width:100px" checkName="rkm0606.de.endDate" options="mandatory" option="date"/>
+					<ui:text name="deEndDate" className="ct hor" style="width:100px" checkName="rkm0606.de.endDate" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryEndDate" className="fa-calendar hor"/>
 				</div>
 			</td>
