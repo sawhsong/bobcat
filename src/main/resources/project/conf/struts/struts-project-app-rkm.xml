@@ -38,5 +38,19 @@
             <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404UpdatePop.jsp</result>
         </action>
+        <!--Rkm0602 - Repayment-->
+        <action class="project.app.rkm.rkm0602.Rkm0602Action" method="{1}" name="0602/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0602/Rkm0602UpdatePop.jsp</result>
+        </action>
+        <!--Rkm0604 - Borrowing-->
+        <action class="project.app.rkm.rkm0604.Rkm0604Action" method="{1}" name="0604/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0604/Rkm0604UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

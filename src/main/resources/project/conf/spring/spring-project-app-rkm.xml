@@ -14,4 +14,10 @@
     <!--Rkm0404 - Asset Expense-->
     <bean class="${name.package.project}.app.rkm.rkm0404.Rkm0404Action" id="rkm0404Action" name="rkm0404Action"/>
     <bean class="${name.package.project}.app.rkm.rkm0404.Rkm0404BizImpl" id="rkm0404Biz" name="rkm0404Biz" parent="baseBiz"/>
+    <!--Rkm0602 - Repayment-->
+    <bean class="${name.package.project}.app.rkm.rkm0602.Rkm0602Action" id="rkm0602Action" name="rkm0602Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0602.Rkm0602BizImpl" id="rkm0602Biz" name="rkm0602Biz" parent="baseBiz"/>
+    <!--Rkm0604 - Borrowing-->
+    <bean class="${name.package.project}.app.rkm.rkm0604.Rkm0604Action" id="rkm0604Action" name="rkm0604Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0604.Rkm0604BizImpl" id="rkm0604Biz" name="rkm0604Biz" parent="baseBiz"/>
 </beans>

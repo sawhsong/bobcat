@@ -1,11 +1,11 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Rkm0404List.js
+ * - Rkm0602List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
-var assetTypeMenu = [];
+var repaymentTypeMenu = [];
 
 $(function() {
 	/*!
@@ -43,7 +43,7 @@ $(function() {
 		doSearch();
 	});
 
-	$("#assetType").change(function() {
+	$("#repaymentType").change(function() {
 		doSearch();
 	});
 
@@ -53,9 +53,9 @@ $(function() {
 		}
 	});
 
-	setDeAssetTypeContextMenu = function() {
+	setDeRepaymentTypeContextMenu = function() {
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getAssetTypeForContextMenu.do",
+			url:"/common/entryTypeSupporter/getRepaymentTypeForContextMenu.do",
 			dataType:"json",
 			data:{},
 			success:function(data, textStatus) {
@@ -65,13 +65,13 @@ $(function() {
 
 					if (ds.getRowCnt() > 0) {
 						for (var i=0; i<ds.getRowCnt(); i++) {
-							var assetType = ds.getValue(i, "ASSET_TYPE");
+							var repaymentType = ds.getValue(i, "REPAYMENT_TYPE");
 
-							assetTypeMenu.push({
+							repaymentTypeMenu.push({
 								name:ds.getValue(i, "DESCRIPTION"),
-								userData:assetType,
+								userData:repaymentType,
 								fun:function() {
-									setDeAssetTypeSelectbox($(this).attr("userData"));
+									setDeRepaymentTypeSelectbox($(this).attr("userData"));
 								}
 							});
 						}
@@ -82,7 +82,7 @@ $(function() {
 			}
 		});
 
-		$("#btnDeAssetType").contextMenu(assetTypeMenu, {
+		$("#btnDeRepaymentType").contextMenu(repaymentTypeMenu, {
 			borderRadius : "4px",
 			displayAround : "trigger",
 			position : "bottom",
@@ -105,7 +105,6 @@ $(function() {
 			horAdjust:0
 		});
 	};
-
 	/*!
 	 * process
 	 */
@@ -114,7 +113,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0404/getList.do",
+				url:"/rkm/0602/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -132,7 +131,7 @@ $(function() {
 
 	renderDataGridTable = function(result) {
 		var ds = result.dataSet;
-		var html = "", totHtml = "", totGross = 0, totGst = 0, totNet = 0;
+		var html = "", totHtml = "", totAmt = 0;
 		var totGridTr = new UiGridTr();
 
 		searchResultDataCount = ds.getRowCnt();
@@ -142,30 +141,24 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
-				totGross += parseFloat(ds.getValue(i, "GROSS_AMT"));
-				totGst += parseFloat(ds.getValue(i, "GST_AMT"));
-				totNet += parseFloat(ds.getValue(i, "NET_AMT"));
+				totAmt += parseFloat(ds.getValue(i, "REPAYMENT_AMT"));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "ASSET_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "FINANCE_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "ASSET_DATE")).setScript("getDetail('"+ds.getValue(i, "ASSET_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "FINANCE_DATE")).setScript("getDetail('"+ds.getValue(i, "FINANCE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ASSET_TYPE_DESC"), 60)));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCOUNT_CODE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "ASSET_FILE_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "FINANCE_TYPE_DESC"), 60)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REPAYMENT_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ENTRY_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("assetId:"+ds.getValue(i, "ASSET_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("financeId:"+ds.getValue(i, "FINANCE_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -173,18 +166,14 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:12").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:8").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totAmt, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -219,13 +208,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/rkm/0404/getDetail.do";
+			url = "/rkm/0602/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0404/getInsert.do";
+			url = "/rkm/0602/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/rkm/0404/getUpdate.do";
+			url = "/rkm/0602/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
@@ -258,7 +247,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0404/exeDelete.do",
+						url:"/rkm/0602/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -315,71 +304,6 @@ $(function() {
 		});
 	};
 
-	getAttachedFile = function(img) {
-		commonJs.ajaxSubmit({
-			url:"/rkm/0404/getAttachedFile.do",
-			dataType:"json",
-			data:{
-				articleId:$(img).attr("articleId")
-			},
-			blind:false,
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					var dataSet = result.dataSet;
-					attchedFileContextMenu = [];
-
-					for (var i=0; i<dataSet.getRowCnt(); i++) {
-						var repositoryPath = dataSet.getValue(i, "REPOSITORY_PATH");
-						var originalName = dataSet.getValue(i, "ORIGINAL_NAME");
-						var newName = dataSet.getValue(i, "NEW_NAME");
-						var fileIcon = dataSet.getValue(i, "FILE_ICON");
-						var fileSize = dataSet.getValue(i, "FILE_SIZE")/1024;
-
-						attchedFileContextMenu.push({
-							name:originalName+" ("+commonJs.getNumberMask(fileSize, "0,0")+") KB",
-							title:originalName,
-							img:fileIcon,
-							repositoryPath:repositoryPath,
-							originalName:originalName,
-							newName:newName,
-							fun:function() {
-								var index = $(this).index();
-
-								downloadFile({
-									repositoryPath:attchedFileContextMenu[index].repositoryPath,
-									originalName:attchedFileContextMenu[index].originalName,
-									newName:attchedFileContextMenu[index].newName
-								});
-							}
-						});
-					}
-
-					$(img).contextMenu(attchedFileContextMenu, {
-						classPrefix:com.constants.ctxClassPrefixGrid,
-						displayAround:"trigger",
-						position:"bottom",
-						horAdjust:0,
-						verAdjust:2
-					});
-				}
-			}
-		});
-	};
-
-	downloadFile = function(param) {
-		commonJs.doSubmit({
-			form:"fmDefault",
-			action:"/download.do",
-			data:{
-				repositoryPath:param.repositoryPath,
-				originalName:param.originalName,
-				newName:param.newName
-			}
-		});
-	};
-
 	exeExport = function(menuObject) {
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
@@ -396,7 +320,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0404/exeExport.do",
+						url:"/rkm/0602/exeExport.do",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
@@ -417,9 +341,9 @@ $(function() {
 		});
 	};
 
-	setDeAssetTypeSelectbox = function(type) {
-		$("#deAssetType").val(type);
-		$("#deAssetType").selectpicker("val", type);
+	setDeRepaymentTypeSelectbox = function(type) {
+		$("#deRepaymentType").val(type);
+		$("#deRepaymentType").selectpicker("val", type);
 	};
 
 	/*!
@@ -427,7 +351,7 @@ $(function() {
 	 */
 	$(window).load(function() {
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		setDeAssetTypeContextMenu();
+		setDeRepaymentTypeContextMenu();
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
 		$(".numeric").number(true, 2);
