@@ -11,4 +11,7 @@
     <!--Rkm0402 - General Expense-->
     <bean class="${name.package.project}.app.rkm.rkm0402.Rkm0402Action" id="rkm0402Action" name="rkm0402Action"/>
     <bean class="${name.package.project}.app.rkm.rkm0402.Rkm0402BizImpl" id="rkm0402Biz" name="rkm0402Biz" parent="baseBiz"/>
+    <!--Rkm0404 - Asset Expense-->
+    <bean class="${name.package.project}.app.rkm.rkm0404.Rkm0404Action" id="rkm0404Action" name="rkm0404Action"/>
+    <bean class="${name.package.project}.app.rkm.rkm0404.Rkm0404BizImpl" id="rkm0404Biz" name="rkm0404Biz" parent="baseBiz"/>
 </beans>

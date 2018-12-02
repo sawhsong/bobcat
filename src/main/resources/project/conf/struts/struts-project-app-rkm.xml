@@ -31,5 +31,12 @@
             <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0402/Rkm0402UpdatePop.jsp</result>
         </action>
+        <!--Rkm0404 - Asset Expense-->
+        <action class="project.app.rkm.rkm0404.Rkm0404Action" method="{1}" name="0404/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/rkm/rkm0404/Rkm0404UpdatePop.jsp</result>
+        </action>
     </package>
 </struts>

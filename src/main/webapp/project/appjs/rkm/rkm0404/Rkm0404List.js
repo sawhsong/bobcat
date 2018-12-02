@@ -1,11 +1,11 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Rkm0402List.js
+ * - Rkm0404List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
 var searchResultDataCount = 0;
-var expenseTypeMenu = [];
+var assetTypeMenu = [];
 
 $(function() {
 	/*!
@@ -43,16 +43,8 @@ $(function() {
 		doSearch();
 	});
 
-	$("#expenseMainType").change(function() {
-		setExpenseSubType();
-	});
-
-	$("#expenseSubType").change(function() {
+	$("#assetType").change(function() {
 		doSearch();
-	});
-
-	$("#deExpenseMainType").change(function() {
-		setDeExpenseSubType();
 	});
 
 	$(document).keypress(function(event) {
@@ -61,11 +53,9 @@ $(function() {
 		}
 	});
 
-	setDeTypesContextMenu = function() {
-		var subMenu = [];
-
+	setDeAssetTypeContextMenu = function() {
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseTypesForContextMenu.do",
+			url:"/common/entryTypeSupporter/getAssetTypeForContextMenu.do",
 			dataType:"json",
 			data:{},
 			success:function(data, textStatus) {
@@ -75,37 +65,15 @@ $(function() {
 
 					if (ds.getRowCnt() > 0) {
 						for (var i=0; i<ds.getRowCnt(); i++) {
-							var expenseType = ds.getValue(i, "EXPENSE_TYPE");
-							var parentExpenseType = ds.getValue(i, "PARENT_EXPENSE_TYPE");
-							var iLevel = parseInt(ds.getValue(i, "LEVEL"));
-							var isLeaf = parseInt(ds.getValue(i, "IS_LEAF"));
+							var assetType = ds.getValue(i, "ASSET_TYPE");
 
-							if (iLevel == 1) {
-								if (subMenu.length != 0) {
-									expenseTypeMenu[expenseTypeMenu.length - 1].subMenu = subMenu;
-									subMenu = [];
+							assetTypeMenu.push({
+								name:ds.getValue(i, "DESCRIPTION"),
+								userData:assetType,
+								fun:function() {
+									setDeAssetTypeSelectbox($(this).attr("userData"));
 								}
-
-								expenseTypeMenu.push({
-									name:ds.getValue(i, "DESCRIPTION"),
-									userData:expenseType,
-									fun:function() {
-									}
-								});
-							} else {
-								subMenu.push({
-									name:ds.getValue(i, "DESCRIPTION"),
-									userData:parentExpenseType+"_"+expenseType,
-									fun:function() {
-										setDeTypeSelectboxes($(this).attr("userData"));
-									}
-								});
-							}
-
-							if (i == ds.getRowCnt()-1) {
-								expenseTypeMenu[expenseTypeMenu.length - 1].subMenu = subMenu;
-								subMenu = [];
-							}
+							});
 						}
 					}
 				} else {
@@ -114,7 +82,7 @@ $(function() {
 			}
 		});
 
-		$("#btnDeTypes").contextMenu(expenseTypeMenu, {
+		$("#btnDeAssetType").contextMenu(assetTypeMenu, {
 			borderRadius : "4px",
 			displayAround : "trigger",
 			position : "bottom",
@@ -146,7 +114,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0402/getList.do",
+				url:"/rkm/0404/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -179,25 +147,25 @@ $(function() {
 				totNet += parseFloat(ds.getValue(i, "NET_AMT"));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "EXPENSE_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "ASSET_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "EXPENSE_DATE")).setScript("getDetail('"+ds.getValue(i, "EXPENSE_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "ASSET_DATE")).setScript("getDetail('"+ds.getValue(i, "ASSET_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "PARENT_EXPENSE_TYPE_DESC"), 60)));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "EXPENSE_TYPE_DESC"), 60)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ASSET_TYPE_DESC"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCOUNT_CODE")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "ASSET_FILE_CNT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ENTRY_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("expenseId:"+ds.getValue(i, "EXPENSE_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("assetId:"+ds.getValue(i, "ASSET_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -213,10 +181,10 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -251,13 +219,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/rkm/0402/getDetail.do";
+			url = "/rkm/0404/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0402/getInsert.do";
+			url = "/rkm/0404/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/rkm/0402/getUpdate.do";
+			url = "/rkm/0404/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
@@ -290,7 +258,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0402/exeDelete.do",
+						url:"/rkm/0404/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -347,6 +315,71 @@ $(function() {
 		});
 	};
 
+	getAttachedFile = function(img) {
+		commonJs.ajaxSubmit({
+			url:"/rkm/0404/getAttachedFile.do",
+			dataType:"json",
+			data:{
+				articleId:$(img).attr("articleId")
+			},
+			blind:false,
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var dataSet = result.dataSet;
+					attchedFileContextMenu = [];
+
+					for (var i=0; i<dataSet.getRowCnt(); i++) {
+						var repositoryPath = dataSet.getValue(i, "REPOSITORY_PATH");
+						var originalName = dataSet.getValue(i, "ORIGINAL_NAME");
+						var newName = dataSet.getValue(i, "NEW_NAME");
+						var fileIcon = dataSet.getValue(i, "FILE_ICON");
+						var fileSize = dataSet.getValue(i, "FILE_SIZE")/1024;
+
+						attchedFileContextMenu.push({
+							name:originalName+" ("+commonJs.getNumberMask(fileSize, "0,0")+") KB",
+							title:originalName,
+							img:fileIcon,
+							repositoryPath:repositoryPath,
+							originalName:originalName,
+							newName:newName,
+							fun:function() {
+								var index = $(this).index();
+
+								downloadFile({
+									repositoryPath:attchedFileContextMenu[index].repositoryPath,
+									originalName:attchedFileContextMenu[index].originalName,
+									newName:attchedFileContextMenu[index].newName
+								});
+							}
+						});
+					}
+
+					$(img).contextMenu(attchedFileContextMenu, {
+						classPrefix:"actionInGrid",
+						displayAround:"trigger",
+						position:"bottom",
+						horAdjust:0,
+						verAdjust:2
+					});
+				}
+			}
+		});
+	};
+
+	downloadFile = function(param) {
+		commonJs.doSubmit({
+			form:"fmDefault",
+			action:"/download.do",
+			data:{
+				repositoryPath:param.repositoryPath,
+				originalName:param.originalName,
+				newName:param.newName
+			}
+		});
+	};
+
 	exeExport = function(menuObject) {
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
@@ -363,7 +396,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0402/exeExport.do",
+						url:"/rkm/0404/exeExport.do",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
@@ -384,93 +417,18 @@ $(function() {
 		});
 	};
 
-	setExpenseSubType = function() {
-		drawExpenseSubTypeSelectbox();
-		$("#expenseSubType").selectpicker("refresh");
-	};
-
-	drawExpenseSubTypeSelectbox = function() {
-		$("#expenseSubType option").each(function(index) {
-			$(this).remove();
-		});
-
-		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox.do",
-			dataType:"json",
-			data:{expenseMainType:$("#expenseMainType").val()},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					var ds = result.dataSet;
-
-					$("#expenseSubType").append("<option value=\"\">==Select==</option>");
-					if (ds.getRowCnt() > 0) {
-						for (var i=0; i<ds.getRowCnt(); i++) {
-							$("#expenseSubType").append("<option value=\""+ds.getValue(i, "EXPENSE_TYPE")+"\">"+ds.getValue(i, "DESCRIPTION")+"</option>");
-						}
-					}
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-	};
-
-	setDeExpenseSubType = function() {
-		drawDeExpenseSubTypeSelectbox();
-		$("#deExpenseSubType").selectpicker("refresh");
-	};
-
-	drawDeExpenseSubTypeSelectbox = function() {
-		$("#deExpenseSubType option").each(function(index) {
-			$(this).remove();
-		});
-
-		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox.do",
-			dataType:"json",
-			data:{expenseMainType:$("#deExpenseMainType").val()},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					var ds = result.dataSet;
-
-					$("#deExpenseSubType").append("<option value=\"\">==Select==</option>");
-					if (ds.getRowCnt() > 0) {
-						for (var i=0; i<ds.getRowCnt(); i++) {
-							$("#deExpenseSubType").append("<option value=\""+ds.getValue(i, "EXPENSE_TYPE")+"\">"+ds.getValue(i, "DESCRIPTION")+"</option>");
-						}
-					}
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-	};
-
-	setDeTypeSelectboxes = function(types) {
-		var mainType = types.split("_")[0];
-		var subType = types.split("_")[1];
-
-		$("#deExpenseMainType").val(mainType);
-		$("#deExpenseMainType").selectpicker("val", mainType);
-		setTimeout(function() {
-			setDeExpenseSubType();
-
-			$("#deExpenseSubType").val(subType);
-			$("#deExpenseSubType").selectpicker("val", subType);
-		}, 10);
+	setDeAssetTypeSelectbox = function(type) {
+		$("#deAssetType").val(type);
+		$("#deAssetType").selectpicker("val", type);
 	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setDeTypesContextMenu();
+		commonJs.setExportButtonContextMenu($("#btnExport"));
+		setDeAssetTypeContextMenu();
 		setDataEntryActionButtonContextMenu();
-		setExpenseSubType();
-		setDeExpenseSubType();
-
 		commonJs.setFieldDateMask("deDate");
 		$(".numeric").number(true, 2);
 		doSearch();
