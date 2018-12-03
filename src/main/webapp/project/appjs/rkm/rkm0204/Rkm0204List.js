@@ -143,6 +143,8 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 
+		totHtml = totGridTr.toHtmlString();
+
 		$("#tblGridBody").append($(html));
 		$("#tblGridFoot").append($(totHtml));
 

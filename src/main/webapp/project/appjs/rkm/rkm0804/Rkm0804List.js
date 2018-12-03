@@ -216,12 +216,15 @@ $(function() {
 
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(hourWorked, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(grossTotal, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(taxTotal, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(netTotal, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(superTotal, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
+
+		totHtml = totGridTr.toHtmlString();
 
 		$("#tblWageListBody").append($(html));
 		$("#tblWageListFoot").append($(totHtml));
