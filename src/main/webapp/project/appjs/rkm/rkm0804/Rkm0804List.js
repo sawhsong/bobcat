@@ -138,6 +138,8 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(netTotal, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(superTotal, "#,###.##")));
 
+		totHtml = totGridTr.toHtmlString();
+
 		$("#tblEmpListBody").append($(html));
 		$("#tblEmpListFoot").append($(totHtml));
 
