@@ -1,3 +1,20 @@
+@ 2018.12.05 - query backup for benchmarking menu
+select to_char(income_date, 'Mon') as income_date,
+       net_amt
+  from (select trunc(income_date, 'Mon') as income_date,
+               sum(net_amt) as net_amt
+          from usr_income
+         where income_year = '2017'
+           and quarter_name = 'SEP'
+           and org_id = '492'
+           and income_entry_type = 'SALES'
+           and record_keeping_type = 'RKPOS'
+         group by trunc(income_date, 'Mon')
+         order by income_date
+       )
+;
+
+
 @ 2018.10.26
 	# data migration
 		* exclude
