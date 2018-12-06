@@ -1,5 +1,12 @@
 -- Expense
-select *
+with src as (
+select typ.expense_type_id,
+       nvl(typ.parent_expense_type, typ.expense_type) as parent_expense_type,
+       typ.expense_type,
+       typ.description,
+       typ.sort_order,
+       exp.expense_month,
+       nvl(exp.net_amt, 0) as net_amt
   from ( select *
            from (select expense_type_id,
                         expense_type,
@@ -20,7 +27,22 @@ select *
          where expense_year = '2017'
            and org_id = '477'
          group by expense_type_id, to_char(expense_date, 'MON')
-       )
+       ) exp
+ where typ.expense_type_id = exp.expense_type_id(+)
+)
+select expense_type_id,
+       parent_expense_type,
+       description,
+       expense_month,
+       nvl(sum(net_amt), 0) as net_amt
+  from src
+ where expense_month is not null
+ group by expense_type_id,
+       parent_expense_type,
+       description,
+       expense_month
+ order by expense_type_id,
+       expense_month
 ;
 
 
