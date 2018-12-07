@@ -68,4 +68,19 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 			return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomeSummaryDataSetForCategoryEtc");
 		}
 	}
+
+	public DataSet getIncomePerformanceDataSet(String orgCategory, String orgId, String financialYear, String quarterName) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addVariable("orgCategory", orgCategory);
+		queryAdvisor.addVariable("orgId", orgId);
+		queryAdvisor.addVariable("financialYear", financialYear);
+		queryAdvisor.addVariable("quarterName", quarterName);
+
+		if (CommonUtil.equalsIgnoreCase(orgCategory, "A")) {
+			return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomePerformanceDataSetForCategoryA");
+		} else {
+			return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomePerformanceDataSetForCategoryEtc");
+		}
+	}
 }

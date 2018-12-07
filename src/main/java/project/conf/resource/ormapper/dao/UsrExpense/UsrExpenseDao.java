@@ -11,4 +11,5 @@ import zebra.data.QueryAdvisor;
 public interface UsrExpenseDao extends IDao {
 	public DataSet getExpenseSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getExpenseDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getExpensePerformanceDataSet(String orgCategory, String orgId, String financialYear, String quarterName) throws Exception;
 }

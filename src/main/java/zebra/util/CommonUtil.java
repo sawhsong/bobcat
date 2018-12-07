@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.stream.DoubleStream;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -159,6 +160,10 @@ public class CommonUtil extends StringUtils {
 	public static double abs(double doubleValue) throws Exception {
 		if (isEmpty(toString(doubleValue))|| doubleValue == 0) {return 0;}
 		else {return (doubleValue < 0) ? doubleValue*(-1) : doubleValue*1;}
+	}
+
+	public static double sum(double...values) throws Exception {
+		return DoubleStream.of(values).sum();
 	}
 
 	public static String toString(double val) {

@@ -1,48 +1,82 @@
 -- Expense
-with src as (
-select typ.expense_type_id,
-       nvl(typ.parent_expense_type, typ.expense_type) as parent_expense_type,
-       typ.expense_type,
-       typ.description,
-       typ.sort_order,
-       exp.expense_month,
-       nvl(exp.net_amt, 0) as net_amt
-  from ( select *
-           from (select expense_type_id,
-                        expense_type,
-                        parent_expense_type,
-                        description,
-                        sort_order
-                   from sys_expense_type
-                  where org_category = 'C'
-                )
-        connect by prior expense_type = parent_expense_type
-          start with parent_expense_type is null
-          order siblings by sort_order
-       ) typ,
-       (select expense_type_id,
-               to_char(expense_date, 'MON') as expense_month,
+with src_data as (
+select sort_order as display_order,
+       description as type_name,
+       decode(expense_month, 'JUL', nvl(net_amt, 0), 0) as jul,
+       decode(expense_month, 'AUG', nvl(net_amt, 0), 0) as aug,
+       decode(expense_month, 'SEP', nvl(net_amt, 0), 0) as sep,
+       decode(expense_month, 'OCT', nvl(net_amt, 0), 0) as oct,
+       decode(expense_month, 'NOV', nvl(net_amt, 0), 0) as nov,
+       decode(expense_month, 'DEC', nvl(net_amt, 0), 0) as dec,
+       decode(expense_month, 'JAN', nvl(net_amt, 0), 0) as jan,
+       decode(expense_month, 'FEB', nvl(net_amt, 0), 0) as feb,
+       decode(expense_month, 'MAR', nvl(net_amt, 0), 0) as mar,
+       decode(expense_month, 'APR', nvl(net_amt, 0), 0) as apr,
+       decode(expense_month, 'MAY', nvl(net_amt, 0), 0) as may,
+       decode(expense_month, 'JUN', nvl(net_amt, 0), 0) as jun
+  from (select expense_type,
+               description,
+               sort_order,
+               expense_month,
                nvl(sum(net_amt), 0) as net_amt
-          from usr_expense
-         where expense_year = '2017'
-           and org_id = '477'
-         group by expense_type_id, to_char(expense_date, 'MON')
-       ) exp
- where typ.expense_type_id = exp.expense_type_id(+)
+          from (select typ.expense_type,
+                       typ.description,
+                       typ.sort_order,
+                       exp.expense_month,
+                       nvl(exp.net_amt, 0) as net_amt
+                  from ( select a.expense_type_id,
+                                nvl(a.parent_expense_type, a.expense_type) as expense_type,
+                                (select description from sys_expense_type where org_category = 'C' and expense_type = a.parent_expense_type) as description,
+                                a.sort_order
+                           from (select expense_type_id,
+                                        expense_type,
+                                        parent_expense_type,
+                                        description,
+                                        sort_order
+                                   from sys_expense_type
+                                  where org_category = 'C'
+                                ) a
+                        connect by prior a.expense_type = a.parent_expense_type
+                          start with a.parent_expense_type is null
+                          order siblings by a.sort_order
+                       ) typ,
+                       (select expense_type_id,
+                               to_char(expense_date, 'MON') as expense_month,
+                               nvl(sum(net_amt), 0) as net_amt
+                          from usr_expense
+                         where expense_year = '2017'
+                           and org_id = '477'
+                         group by expense_type_id, to_char(expense_date, 'MON')
+                       ) exp
+                 where typ.expense_type_id = exp.expense_type_id(+)
+                 order by typ.sort_order
+               ) src
+         where expense_month is not null
+         group by expense_type,
+               description,
+               sort_order,
+               expense_month
+         order by sort_order,
+               expense_month
+        )
 )
-select expense_type_id,
-       parent_expense_type,
-       description,
-       expense_month,
-       nvl(sum(net_amt), 0) as net_amt
-  from src
- where expense_month is not null
- group by expense_type_id,
-       parent_expense_type,
-       description,
-       expense_month
- order by expense_type_id,
-       expense_month
+select substr(display_order, 3, 2) as display_order,
+       type_name,
+       nvl(sum(jul), 0) as jul,
+       nvl(sum(aug), 0) as aug,
+       nvl(sum(sep), 0) as sep,
+       nvl(sum(oct), 0) as oct,
+       nvl(sum(nov), 0) as nov,
+       nvl(sum(dec), 0) as dec,
+       nvl(sum(jan), 0) as jan,
+       nvl(sum(feb), 0) as feb,
+       nvl(sum(mar), 0) as mar,
+       nvl(sum(apr), 0) as apr,
+       nvl(sum(may), 0) as may,
+       nvl(sum(jun), 0) as jun
+  from src_data
+ group by substr(display_order, 3, 2),
+       type_name
 ;
 
 

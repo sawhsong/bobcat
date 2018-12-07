@@ -35,4 +35,15 @@ public class UsrExpenseHDaoImpl extends BaseHDao implements UsrExpenseDao {
 
 		return selectAsDataSet(queryAdvisor, "query.UsrExpense.getExpenseDataSetByCriteria");
 	}
+
+	public DataSet getExpensePerformanceDataSet(String orgCategory, String orgId, String financialYear, String quarterName) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addVariable("orgCategory", orgCategory);
+		queryAdvisor.addVariable("orgId", orgId);
+		queryAdvisor.addVariable("financialYear", financialYear);
+		queryAdvisor.addVariable("quarterName", quarterName);
+
+		return selectAsDataSet(queryAdvisor, "query.UsrExpense.getExpensePerformanceDataSet");
+	}
 }
