@@ -8,6 +8,13 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
+	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String defaultPeriodYear = (String)session.getAttribute("DefaultPeriodYear");
+	String defaultQuarterName = (String)session.getAttribute("DefaultQuarterName");
+	String paramFinancialYear = requestDataSet.getValue("financialYear");
+	String paramQuarterName = requestDataSet.getValue("quarterName");
+	String selectedFinancialYear = CommonUtil.nvl(paramFinancialYear, defaultPeriodYear);
+	String selectedQuarterName = CommonUtil.nvl(paramQuarterName, defaultQuarterName);
 %>
 <%/************************************************************************************************
 * HTML
@@ -63,27 +70,15 @@
 		</colgroup>
 		<tr>
 			<td class="tdSearch">
-				<label for="financialYear" class="lblEn hor mandatory"><mc:msg key="rkm0206.search.financialYear"/></label>
+				<label for="financialYear" class="lblEn hor mandatory"><mc:msg key="cst0202.search.financialYear"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:deSelect name="financialYear" codeType="FinancialYear" selectedValue="<%=selectedFinancialYear%>"/>
 				</div>
 			</td>
 			<td class="tdSearch">
-				<label for="quarterName" class="lblEn hor mandatory"><mc:msg key="rkm0206.search.quarter"/></label>
+				<label for="quarterName" class="lblEn hor mandatory"><mc:msg key="cst0202.search.quarter"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:ccselect name="quarterName" codeType="QUARTER_NAME" selectedValue="<%=selectedQuarterName%>"/>
-				</div>
-			</td>
-			<td class="tdSearch">
-				<label for="expenseMainType" class="lblEn hor mandatory"><mc:msg key="rkm0402.search.mainType"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:deSelect name="expenseMainType" codeType="ExpenseMainType" caption="==Select==" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedExpenseMainType%>"/>
-				</div>
-			</td>
-			<td class="tdSearch">
-				<label for="expenseSubType" class="lblEn hor mandatory"><mc:msg key="rkm0402.search.subType"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:deSelect name="expenseSubType" codeType="ExpenseSubType" caption="==Select==" orgCategory="<%=orgCategory%>" parentCode="<%=selectedExpenseMainType%>" selectedValue="<%=selectedExpenseSubType%>"/>
 				</div>
 			</td>
 		</tr>
@@ -103,23 +98,41 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="*"/>
-			<col width="6%"/>
-			<col width="15%"/>
-			<col width="10%"/>
-			<col width="8%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
 		</colgroup>
 		<thead>
-			<tr class="noBorderHor">
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="bbs0202.grid.subject"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.file"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="bbs0202.grid.writerName"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="bbs0202.grid.date"/></th>
-				<th class="thGrid sortable:numeric"><mc:msg key="bbs0202.grid.hitCount"/></th>
+			<tr>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.type"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.jul"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.aug"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.sep"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.oct"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.nov"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.dec"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.jan"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.feb"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.mar"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.apr"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.may"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.jun"/></th>
+				<th class="thGrid"><mc:msg key="bbs0202.grid.tot"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noBorderHor noStripe">
-				<td class="tdGrid Ct" colspan="5"><mc:msg key="I002"/></td>
+			<tr>
+				<td class="tdGrid Ct" colspan="14"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
