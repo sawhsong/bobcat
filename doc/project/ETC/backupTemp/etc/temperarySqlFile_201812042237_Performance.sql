@@ -1,3 +1,54 @@
+select DISPLAY_ORDER,
+       TYPE_NAME,
+       nvl(sum(jul), 0) as JUL_AMT,
+       nvl(sum(aug), 0) as AUG_AMT,
+       nvl(sum(sep), 0) as SEP_AMT,
+       nvl(sum(oct), 0) as OCT_AMT,
+       nvl(sum(nov), 0) as NOV_AMT,
+       nvl(sum(dec), 0) as DEC_AMT,
+       nvl(sum(jan), 0) as JAN_AMT,
+       nvl(sum(feb), 0) as FEB_AMT,
+       nvl(sum(mar), 0) as MAR_AMT,
+       nvl(sum(apr), 0) as APR_AMT,
+       nvl(sum(may), 0) as MAY_AMT,
+       nvl(sum(jun), 0) as JUN_AMT
+  from (select lpad(typ.income_type_id, 2, '0') as display_order,
+               typ.description as type_name,
+               decode(uim.income_month, '07', nvl(net_amt, 0), 0) as jul,
+               decode(uim.income_month, '08', nvl(net_amt, 0), 0) as aug,
+               decode(uim.income_month, '09', nvl(net_amt, 0), 0) as sep,
+               decode(uim.income_month, '10', nvl(net_amt, 0), 0) as oct,
+               decode(uim.income_month, '11', nvl(net_amt, 0), 0) as nov,
+               decode(uim.income_month, '12', nvl(net_amt, 0), 0) as dec,
+               decode(uim.income_month, '01', nvl(net_amt, 0), 0) as jan,
+               decode(uim.income_month, '02', nvl(net_amt, 0), 0) as feb,
+               decode(uim.income_month, '03', nvl(net_amt, 0), 0) as mar,
+               decode(uim.income_month, '04', nvl(net_amt, 0), 0) as apr,
+               decode(uim.income_month, '05', nvl(net_amt, 0), 0) as may,
+               decode(uim.income_month, '06', nvl(net_amt, 0), 0) as jun
+          from (select income_type_id,
+                       description
+                  from sys_income_type
+                 where org_category = 'C'
+               ) typ,
+               (select nvl(income_type_id, '0') as income_type_id,
+                       to_char(income_date, 'MM') as income_month,
+                       nvl(sum(gross_amt), 0) as net_amt
+                  from usr_income
+                 where income_year = '2017'
+                   and org_id = '477'
+                 group by income_type_id, to_char(income_date, 'MM')
+               ) uim
+         where typ.income_type_id = uim.income_type_id(+)
+       )
+ group by display_order,
+       type_name
+ order by display_order
+;
+
+
+
+
 -- Expense
 with src_data as (
 select sort_order as display_order,
@@ -131,33 +182,48 @@ select lpad(typ.income_type_id, 2, '0') as display_order,
 ;
 
 -- Income - B, C Type
-select lpad(typ.income_type_id, 2, '0') as display_order,
-       typ.description as type_name,
-       decode(uim.income_month, 'JUL', nvl(net_amt, 0), 0) as jul,
-       decode(uim.income_month, 'AUG', nvl(net_amt, 0), 0) as aug,
-       decode(uim.income_month, 'SEP', nvl(net_amt, 0), 0) as sep,
-       decode(uim.income_month, 'OCT', nvl(net_amt, 0), 0) as oct,
-       decode(uim.income_month, 'NOV', nvl(net_amt, 0), 0) as nov,
-       decode(uim.income_month, 'DEC', nvl(net_amt, 0), 0) as dec,
-       decode(uim.income_month, 'JAN', nvl(net_amt, 0), 0) as jan,
-       decode(uim.income_month, 'FEB', nvl(net_amt, 0), 0) as feb,
-       decode(uim.income_month, 'MAR', nvl(net_amt, 0), 0) as mar,
-       decode(uim.income_month, 'APR', nvl(net_amt, 0), 0) as apr,
-       decode(uim.income_month, 'MAY', nvl(net_amt, 0), 0) as may,
-       decode(uim.income_month, 'JUN', nvl(net_amt, 0), 0) as jun
-  from (select income_type_id,
-               description
-          from sys_income_type
-         where org_category = 'A'
-       ) typ,
-       (select nvl(income_type_id, '0') as income_type_id,
-               to_char(income_date, 'MON') as income_month,
-               nvl(sum(net_amt), 0) as net_amt
-          from usr_income
-         where income_year = '2017'
-           and org_id = '492'
-         group by income_type_id, to_char(income_date, 'MON')
-       ) uim
- where typ.income_type_id = uim.income_type_id(+)
+select display_order,
+       type_name,
+       nvl(sum(jul), 0) as jul,
+       nvl(sum(aug), 0) as aug,
+       nvl(sum(sep), 0) as sep,
+       nvl(sum(oct), 0) as oct,
+       nvl(sum(nov), 0) as nov,
+       nvl(sum(dec), 0) as dec,
+       nvl(sum(jan), 0) as jan,
+       nvl(sum(feb), 0) as feb,
+       nvl(sum(mar), 0) as mar,
+       nvl(sum(apr), 0) as apr,
+       nvl(sum(may), 0) as may,
+       nvl(sum(jun), 0) as jun
+  from (select lpad(typ.income_type_id, 2, '0') as display_order,
+               typ.description as type_name,
+               decode(uim.income_month, 'JUL', nvl(net_amt, 0), 0) as jul,
+               decode(uim.income_month, 'AUG', nvl(net_amt, 0), 0) as aug,
+               decode(uim.income_month, 'SEP', nvl(net_amt, 0), 0) as sep,
+               decode(uim.income_month, 'OCT', nvl(net_amt, 0), 0) as oct,
+               decode(uim.income_month, 'NOV', nvl(net_amt, 0), 0) as nov,
+               decode(uim.income_month, 'DEC', nvl(net_amt, 0), 0) as dec,
+               decode(uim.income_month, 'JAN', nvl(net_amt, 0), 0) as jan,
+               decode(uim.income_month, 'FEB', nvl(net_amt, 0), 0) as feb,
+               decode(uim.income_month, 'MAR', nvl(net_amt, 0), 0) as mar,
+               decode(uim.income_month, 'APR', nvl(net_amt, 0), 0) as apr,
+               decode(uim.income_month, 'MAY', nvl(net_amt, 0), 0) as may,
+               decode(uim.income_month, 'JUN', nvl(net_amt, 0), 0) as jun
+          from (select income_type_id,
+                       description
+                  from sys_income_type
+                 where org_category = 'C'
+               ) typ,
+               (select nvl(income_type_id, '0') as income_type_id,
+                       to_char(income_date, 'MON') as income_month,
+                       nvl(sum(gross_amt), 0) as net_amt
+                  from usr_income
+                 where income_year = '2017'
+                   and org_id = '477'
+                 group by income_type_id, to_char(income_date, 'MON')
+               ) uim
+         where typ.income_type_id = uim.income_type_id(+)
+       )
  order by display_order
 ;

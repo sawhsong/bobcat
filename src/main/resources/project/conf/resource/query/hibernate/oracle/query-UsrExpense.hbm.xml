@@ -84,18 +84,18 @@
 		with src_data as (
 		select sort_order as display_order,
 		       description as type_name,
-		       decode(expense_month, 'JUL', nvl(net_amt, 0), 0) as jul,
-		       decode(expense_month, 'AUG', nvl(net_amt, 0), 0) as aug,
-		       decode(expense_month, 'SEP', nvl(net_amt, 0), 0) as sep,
-		       decode(expense_month, 'OCT', nvl(net_amt, 0), 0) as oct,
-		       decode(expense_month, 'NOV', nvl(net_amt, 0), 0) as nov,
-		       decode(expense_month, 'DEC', nvl(net_amt, 0), 0) as dec,
-		       decode(expense_month, 'JAN', nvl(net_amt, 0), 0) as jan,
-		       decode(expense_month, 'FEB', nvl(net_amt, 0), 0) as feb,
-		       decode(expense_month, 'MAR', nvl(net_amt, 0), 0) as mar,
-		       decode(expense_month, 'APR', nvl(net_amt, 0), 0) as apr,
-		       decode(expense_month, 'MAY', nvl(net_amt, 0), 0) as may,
-		       decode(expense_month, 'JUN', nvl(net_amt, 0), 0) as jun
+		       decode(expense_month, '07', nvl(net_amt, 0), 0) as jul,
+		       decode(expense_month, '08', nvl(net_amt, 0), 0) as aug,
+		       decode(expense_month, '09', nvl(net_amt, 0), 0) as sep,
+		       decode(expense_month, '10', nvl(net_amt, 0), 0) as oct,
+		       decode(expense_month, '11', nvl(net_amt, 0), 0) as nov,
+		       decode(expense_month, '12', nvl(net_amt, 0), 0) as dec,
+		       decode(expense_month, '01', nvl(net_amt, 0), 0) as jan,
+		       decode(expense_month, '02', nvl(net_amt, 0), 0) as feb,
+		       decode(expense_month, '03', nvl(net_amt, 0), 0) as mar,
+		       decode(expense_month, '04', nvl(net_amt, 0), 0) as apr,
+		       decode(expense_month, '05', nvl(net_amt, 0), 0) as may,
+		       decode(expense_month, '06', nvl(net_amt, 0), 0) as jun
 		  from (select expense_type,
 		               description,
 		               sort_order,
@@ -123,12 +123,12 @@
 		                          order siblings by a.sort_order
 		                       ) typ,
 		                       (select expense_type_id,
-		                               to_char(expense_date, 'MON') as expense_month,
+		                               to_char(expense_date, 'MM') as expense_month,
 		                               nvl(sum(net_amt), 0) as net_amt
 		                          from usr_expense
 		                         where expense_year = '${financialYear}'
 		                           and org_id = '${orgId}'
-		                         group by expense_type_id, to_char(expense_date, 'MON')
+		                         group by expense_type_id, to_char(expense_date, 'MM')
 		                       ) exp
 		                 where typ.expense_type_id = exp.expense_type_id(+)
 		                 order by typ.sort_order

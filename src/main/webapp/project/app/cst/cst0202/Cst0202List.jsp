@@ -59,6 +59,7 @@
 		</ui:buttonGroup>
 	</div>
 </div>
+<div id="divAdminToolArea"><%@ include file="/project/common/include/bodyAdminToolArea.jsp"%></div>
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
@@ -114,20 +115,20 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.type"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.jul"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.aug"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.sep"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.oct"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.nov"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.dec"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.jan"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.feb"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.mar"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.apr"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.may"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.jun"/></th>
-				<th class="thGrid"><mc:msg key="bbs0202.grid.tot"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.type"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.jul"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.aug"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.sep"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.oct"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.nov"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.dec"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.jan"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.feb"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.mar"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.apr"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.may"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.jun"/></th>
+				<th class="thGrid"><mc:msg key="cst0202.grid.tot"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

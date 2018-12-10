@@ -27,7 +27,9 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 
 		try {
 			income = usrIncomeDao.getIncomePerformanceDataSet(orgCategory, orgId, financialYear, quarterName);
+logger.debug("income : "+income);
 			expense = usrExpenseDao.getExpensePerformanceDataSet(orgCategory, orgId, financialYear, quarterName);
+logger.debug("expense : "+expense);
 			result.addName(header);
 
 			for (int i=0; i<income.getRowCnt(); i++) {
@@ -47,71 +49,121 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 				totMay += CommonUtil.toDouble(income.getValue(i, "MAY"));
 				totJun += CommonUtil.toDouble(income.getValue(i, "JUN"));
 
-				for (int j=0; j<income.getColumnCnt(); j++) {
-					rowTot += CommonUtil.toDouble(income.getValue(i, j));
-					result.setValue(result.getRowCnt()-1, j, CommonUtil.toString(rowTot, "#,###.00"));
-				}
-				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(rowTot, "#,###.00"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "JUL"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "AUG"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "SEP"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "OCT"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "NOV"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "DEC"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "JAN"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "FEB"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "MAR"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "APR"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "MAY"));
+				rowTot += CommonUtil.toDouble(income.getValue(i, "JUN"));
+
+				result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", income.getValue(i, "DISPLAY_ORDER"));
+				result.setValue(result.getRowCnt()-1, "TYPE_NAME", income.getValue(i, "TYPE_NAME"));
+				result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.getNumberMask(income.getValue(i, "JUL"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.getNumberMask(income.getValue(i, "AUG"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.getNumberMask(income.getValue(i, "SEP"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "OCT", CommonUtil.getNumberMask(income.getValue(i, "OCT"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "NOV", CommonUtil.getNumberMask(income.getValue(i, "NOV"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "DEC", CommonUtil.getNumberMask(income.getValue(i, "DEC"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "JAN", CommonUtil.getNumberMask(income.getValue(i, "JAN"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "FEB", CommonUtil.getNumberMask(income.getValue(i, "FEB"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "MAR", CommonUtil.getNumberMask(income.getValue(i, "MAR"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "APR", CommonUtil.getNumberMask(income.getValue(i, "APR"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.getNumberMask(income.getValue(i, "MAY"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.getNumberMask(income.getValue(i, "JUN"), "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(rowTot, "#,##0.00"));
 			}
+
 			result.addRow();
 			result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", "99-TOT");
-			result.setValue(result.getRowCnt()-1, "TYPE_NAME", "TOT");
-			result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.toString(totJul, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.toString(totAug, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.toString(totSep, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "OCT", CommonUtil.toString(totOct, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "NOV", CommonUtil.toString(totNov, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "DEC", CommonUtil.toString(totDec, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "JAN", CommonUtil.toString(totJan, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "FEB", CommonUtil.toString(totFeb, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "MAR", CommonUtil.toString(totMar, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "APR", CommonUtil.toString(totApr, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.toString(totMay, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}));
+			result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Total");
+			result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.toString(totJul, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.toString(totAug, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.toString(totSep, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "OCT", CommonUtil.toString(totOct, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "NOV", CommonUtil.toString(totNov, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "DEC", CommonUtil.toString(totDec, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "JAN", CommonUtil.toString(totJan, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "FEB", CommonUtil.toString(totFeb, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "MAR", CommonUtil.toString(totMar, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "APR", CommonUtil.toString(totApr, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.toString(totMay, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,##0.00"));
+			result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}), "#,##0.00"));
 
 			rowTot = 0;
 			totJul = totAug = totSep = totOct = totNov = totDec = totJan = totFeb = totMar = totApr = totMay = totJun = 0;
 
-			for (int i=0; i<expense.getRowCnt(); i++) {
-				result.addRow();
+			if (expense.getRowCnt() > 0) {
+				for (int i=0; i<expense.getRowCnt(); i++) {
+					result.addRow();
 
-				rowTot = 0;
-				totJul += CommonUtil.toDouble(expense.getValue(i, "JUL"));
-				totAug += CommonUtil.toDouble(expense.getValue(i, "AUG"));
-				totSep += CommonUtil.toDouble(expense.getValue(i, "SEP"));
-				totOct += CommonUtil.toDouble(expense.getValue(i, "OCT"));
-				totNov += CommonUtil.toDouble(expense.getValue(i, "NOV"));
-				totDec += CommonUtil.toDouble(expense.getValue(i, "DEC"));
-				totJan += CommonUtil.toDouble(expense.getValue(i, "JAN"));
-				totFeb += CommonUtil.toDouble(expense.getValue(i, "FEB"));
-				totMar += CommonUtil.toDouble(expense.getValue(i, "MAR"));
-				totApr += CommonUtil.toDouble(expense.getValue(i, "APR"));
-				totMay += CommonUtil.toDouble(expense.getValue(i, "MAY"));
-				totJun += CommonUtil.toDouble(expense.getValue(i, "JUN"));
+					rowTot = 0;
+					totJul += CommonUtil.toDouble(expense.getValue(i, "JUL"));
+					totAug += CommonUtil.toDouble(expense.getValue(i, "AUG"));
+					totSep += CommonUtil.toDouble(expense.getValue(i, "SEP"));
+					totOct += CommonUtil.toDouble(expense.getValue(i, "OCT"));
+					totNov += CommonUtil.toDouble(expense.getValue(i, "NOV"));
+					totDec += CommonUtil.toDouble(expense.getValue(i, "DEC"));
+					totJan += CommonUtil.toDouble(expense.getValue(i, "JAN"));
+					totFeb += CommonUtil.toDouble(expense.getValue(i, "FEB"));
+					totMar += CommonUtil.toDouble(expense.getValue(i, "MAR"));
+					totApr += CommonUtil.toDouble(expense.getValue(i, "APR"));
+					totMay += CommonUtil.toDouble(expense.getValue(i, "MAY"));
+					totJun += CommonUtil.toDouble(expense.getValue(i, "JUN"));
 
-				for (int j=0; j<expense.getColumnCnt(); j++) {
-					rowTot += CommonUtil.toDouble(expense.getValue(i, j));
-					result.setValue(result.getRowCnt()-1, j, CommonUtil.toString(rowTot, "#,###.00"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "JUL"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "AUG"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "SEP"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "OCT"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "NOV"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "DEC"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "JAN"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "FEB"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "MAR"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "APR"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "MAY"));
+					rowTot += CommonUtil.toDouble(expense.getValue(i, "JUN"));
+
+					result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", expense.getValue(i, "DISPLAY_ORDER"));
+					result.setValue(result.getRowCnt()-1, "TYPE_NAME", expense.getValue(i, "TYPE_NAME"));
+					result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.getNumberMask(expense.getValue(i, "JUL"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.getNumberMask(expense.getValue(i, "AUG"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.getNumberMask(expense.getValue(i, "SEP"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "OCT", CommonUtil.getNumberMask(expense.getValue(i, "OCT"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "NOV", CommonUtil.getNumberMask(expense.getValue(i, "NOV"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "DEC", CommonUtil.getNumberMask(expense.getValue(i, "DEC"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "JAN", CommonUtil.getNumberMask(expense.getValue(i, "JAN"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "FEB", CommonUtil.getNumberMask(expense.getValue(i, "FEB"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "MAR", CommonUtil.getNumberMask(expense.getValue(i, "MAR"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "APR", CommonUtil.getNumberMask(expense.getValue(i, "APR"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.getNumberMask(expense.getValue(i, "MAY"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.getNumberMask(expense.getValue(i, "JUN"), "#,##0.00"));
+					result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(rowTot, "#,##0.00"));
 				}
-				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(rowTot, "#,###.00"));
+				result.addRow();
+				result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", "99-TOT");
+				result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Total");
+				result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.toString(totJul, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.toString(totAug, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.toString(totSep, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "OCT", CommonUtil.toString(totOct, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "NOV", CommonUtil.toString(totNov, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "DEC", CommonUtil.toString(totDec, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "JAN", CommonUtil.toString(totJan, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "FEB", CommonUtil.toString(totFeb, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "MAR", CommonUtil.toString(totMar, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "APR", CommonUtil.toString(totApr, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.toString(totMay, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,##0.00"));
+				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}), "#,##0.00"));
 			}
-			result.addRow();
-			result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", "99-TOT");
-			result.setValue(result.getRowCnt()-1, "TYPE_NAME", "TOT");
-			result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.toString(totJul, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.toString(totAug, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.toString(totSep, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "OCT", CommonUtil.toString(totOct, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "NOV", CommonUtil.toString(totNov, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "DEC", CommonUtil.toString(totDec, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "JAN", CommonUtil.toString(totJan, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "FEB", CommonUtil.toString(totFeb, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "MAR", CommonUtil.toString(totMar, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "APR", CommonUtil.toString(totApr, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.toString(totMay, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,###.00"));
-			result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}));
+logger.debug("result : "+result);
 		} catch (Exception ex) {
 			throw new FrameworkException(ex);
 		}
