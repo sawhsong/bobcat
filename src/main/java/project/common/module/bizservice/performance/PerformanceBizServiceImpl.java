@@ -27,9 +27,8 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 
 		try {
 			income = usrIncomeDao.getIncomePerformanceDataSet(orgCategory, orgId, financialYear, quarterName);
-logger.debug("income : "+income);
 			expense = usrExpenseDao.getExpensePerformanceDataSet(orgCategory, orgId, financialYear, quarterName);
-logger.debug("expense : "+expense);
+
 			result.addName(header);
 
 			for (int i=0; i<income.getRowCnt(); i++) {
@@ -163,7 +162,6 @@ logger.debug("expense : "+expense);
 				result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,##0.00"));
 				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}), "#,##0.00"));
 			}
-logger.debug("result : "+result);
 		} catch (Exception ex) {
 			throw new FrameworkException(ex);
 		}

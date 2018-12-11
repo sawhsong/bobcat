@@ -99,19 +99,19 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="*"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="8%"/>
 		</colgroup>
 		<thead>
 			<tr>

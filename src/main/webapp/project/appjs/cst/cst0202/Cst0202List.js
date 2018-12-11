@@ -77,6 +77,10 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(ds.getValue(i, "JUN")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(ds.getValue(i, "TOT")));
 
+				if (ds.getValue(i, "TYPE_NAME") == "Total") {
+					gridTr.setStyle("font-weight:bold;background:#f6f6f6;");
+				}
+
 				html += gridTr.toHtmlString();
 			}
 		} else {
