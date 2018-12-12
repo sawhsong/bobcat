@@ -15,6 +15,7 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
+import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
@@ -86,6 +87,24 @@ public class RestServiceSupport {
 		Response wsResponse = webClient.path(serviceUrl).accept(new String[] {acceptTypeHeader}).post(paramEntity.toJsonString());
 		return (String)wsResponse.readEntity(String.class);
 	}
+
+	public static String get(String providerUrl, String serviceUrl, String acceptTypeHeader, QueryAdvisor queryAdvisor) throws Exception {
+		if (CommonUtil.isBlank(providerUrl) || CommonUtil.isBlank(serviceUrl) || CommonUtil.isBlank(acceptTypeHeader)) {
+			return "";
+		}
+
+		DataSet queryParam = queryAdvisor.getVariableDataSet();
+		WebClient webClient = WebClient.create(providerUrl);
+		webClient.path(serviceUrl);
+		if (queryParam.getRowCnt() > 1) {
+			for (int i=0; i<queryParam.getRowCnt(); i++) {
+				webClient.query(queryParam.getValue(i, 0), queryParam.getValue(i, 1));
+			}
+		}
+		Response wsResponse = webClient.accept(new String[] {acceptTypeHeader}).get();
+		return (String)wsResponse.readEntity(String.class);
+	}
+
 	/**
 	 * Post for file download
 	 * @param serviceUrl
