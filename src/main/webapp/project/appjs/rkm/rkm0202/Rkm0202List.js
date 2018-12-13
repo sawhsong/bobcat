@@ -3,7 +3,7 @@
  * - Rkm0202List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-jsconfig.put("scrollablePanelHeightAdjust", 6)
+jsconfig.put("scrollablePanelHeightAdjust", 6);
 var popup = null;
 var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
