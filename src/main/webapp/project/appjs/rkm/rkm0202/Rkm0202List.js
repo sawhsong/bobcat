@@ -12,6 +12,10 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnNew").click(function(event) {
+		openPopup({mode:"New"});
+	});
+
 	$("#btnDelete").click(function(event) {
 		doDelete();
 	});
@@ -269,54 +273,15 @@ $(function() {
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[0].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
+		ctxMenu.dataEntryListAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.dataEntryListAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,
 			verAdjust:2
-		});
-	};
-
-	exeExport = function(menuObject) {
-		$("[name=fileType]").remove();
-		$("[name=dataRange]").remove();
-
-		if (searchResultDataCount <= 0) {
-			commonJs.warn(com.message.I001);
-			return;
-		}
-
-		commonJs.confirm({
-			contents:com.message.Q003,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/rkm/0202/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-					setTimeout(function() {popup.close();}, 3000);
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
 		});
 	};
 
