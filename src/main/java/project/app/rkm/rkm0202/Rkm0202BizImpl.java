@@ -61,35 +61,27 @@ public class Rkm0202BizImpl extends BaseBiz implements Rkm0202Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String incomeIdDate = requestDataSet.getValue("incomeIdDate");
+		String incomeId, date = "";
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
+			incomeId = CommonUtil.split(incomeIdDate, "_")[0];
+			date = CommonUtil.split(incomeIdDate, "_")[1];
 
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setAjaxResponseDataSet(usrIncomeDao.getSalesIncomeDataSetByCriteria(paramEntity.getQueryAdvisor()));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
 		return paramEntity;
 	}
+
+
 
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity = getDetail(paramEntity);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

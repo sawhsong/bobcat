@@ -14,7 +14,7 @@
 		       (select description_${langCode} from sys_common_code where code_type = 'QUARTER_CODE' and common_code = src.quarter_code) as quarter_code_desc,
 		       src.quarter_name as quarter_name,
 		       (select description_${langCode} from sys_common_code where code_type = 'QUARTER_NAME' and common_code = src.quarter_name) as quarter_name_desc,
-		       uin.income_id as income_id,
+		       nvl(uin.income_id, '-1') as income_id,
 		       uin.org_id as org_id,
 		       (select legal_name from sys_org where org_id = uin.org_id) as org_name,
 		       uin.income_entry_type as income_entry_type,
