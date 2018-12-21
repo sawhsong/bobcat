@@ -649,4 +649,34 @@ public class DataSet {
 
 		return sb.toString();
 	}
+
+	public String toJsonStringNoDataSet() {
+		StringBuffer sb = new StringBuffer();
+
+		if (getRowCnt() <= 0) {
+			sb.append("{}");
+		} else {
+			for (int i=0; i<getRowCnt(); i++) {
+				sb.append("{");
+				for (int j=0; j<getColumnCnt(); j++) {
+					String val = getValue(i, j);
+					if (CommonUtil.startsWith(val, "[")) {
+						sb.append("\"").append(getName(j)).append("\":").append(val);
+					} else {
+						sb.append("\"").append(getName(j)).append("\":").append("\"").append(val).append("\"");
+					}
+
+					if (j < getColumnCnt()-1) {
+						sb.append(",");
+					}
+				}
+				sb.append("}");
+				if (i < getRowCnt()-1) {
+					sb.append(",");
+				}
+			}
+		}
+
+		return sb.toString();
+	}
 }
