@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import zebra.base.Action;
+import zebra.util.ConfigUtil;
 import zebra.wssupport.RestServiceSupport;
 
 public class RestServiceExportAction extends Action {
@@ -20,6 +21,7 @@ public class RestServiceExportAction extends Action {
 	private long contentLength;
 
 	public String execute() throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		MultipartBody multipartBody;
 		InputStream inputStream;
 		String fileName;
@@ -28,7 +30,7 @@ public class RestServiceExportAction extends Action {
 		paramEntity.setObject("dataRange", requestDataSet.getValue("dataRange"));
 		paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
 
-		multipartBody = RestServiceSupport.postForFileDownload(requestDataSet.getValue("webServiceUrl"), paramEntity);
+		multipartBody = RestServiceSupport.postForFileDownload(providerUrl, requestDataSet.getValue("webServiceUrl"), paramEntity);
 		inputStream = RestServiceSupport.getFileInputStreamFromMultipartBody(multipartBody);
 		fileName = RestServiceSupport.getFileNameFromMultipartBody(multipartBody);
 		setContentLength(inputStream.available());

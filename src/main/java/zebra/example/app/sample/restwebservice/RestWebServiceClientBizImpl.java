@@ -7,6 +7,7 @@ import zebra.data.ParamEntity;
 import zebra.example.common.extend.BaseBiz;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoard;
 import zebra.exception.FrameworkException;
+import zebra.util.ConfigUtil;
 import zebra.wssupport.RestServiceSupport;
 
 public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServiceClientBiz {
@@ -21,12 +22,13 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 	}
 
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		String result = "";
 
 		try {
 			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
 			paramEntity.setPagination(true);
-			result = RestServiceSupport.post("zebraRestNoticeBoard/getList", "application/json", paramEntity);
+			result = RestServiceSupport.post(providerUrl, "zebraRestNoticeBoard/getList", "application/json", paramEntity);
 			paramEntity.setObjectFromJsonString(result);
 
 			if (!paramEntity.isSuccess()) {
@@ -42,12 +44,13 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 	}
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		ZebraBoard zebraBoard = new ZebraBoard();
 		String result = "";
 
 		try {
 			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
-			result = RestServiceSupport.post("zebraRestNoticeBoard/getDetail", "application/json", paramEntity);
+			result = RestServiceSupport.post(providerUrl, "zebraRestNoticeBoard/getDetail", "application/json", paramEntity);
 			paramEntity.setObjectFromJsonString(result);
 
 			// ParamEntity will always return DataSet even if the object is Dto
@@ -80,11 +83,12 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 	}
 
 	public ParamEntity getAttachedFile(ParamEntity paramEntity) throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		String result = "";
 
 		try {
 			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
-			result = RestServiceSupport.post("zebraRestNoticeBoard/getAttachedFile", "application/json", paramEntity);
+			result = RestServiceSupport.post(providerUrl, "zebraRestNoticeBoard/getAttachedFile", "application/json", paramEntity);
 			paramEntity.setObjectFromJsonString(result);
 			paramEntity.setAjaxResponseDataSet((DataSet)paramEntity.getObject("fileDataSet"));
 		} catch (Exception ex) {
@@ -95,6 +99,7 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 	}
 
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
 		String result = "";
@@ -107,7 +112,7 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 			paramEntity.setObject("userId", userId);
 			paramEntity.setObject("ipAddress", remoteIp);
 
-			result = RestServiceSupport.postAttachment("zebraRestNoticeBoard/exeInsert", "multipart/mixed", "application/json", paramEntity, fileDataSet);
+			result = RestServiceSupport.postAttachment(providerUrl, "zebraRestNoticeBoard/exeInsert", "multipart/mixed", "application/json", paramEntity, fileDataSet);
 			paramEntity.setObjectFromJsonString(result);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -117,6 +122,7 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 	}
 
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
 		String result = "";
@@ -129,7 +135,7 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 			paramEntity.setObject("userId", userId);
 			paramEntity.setObject("ipAddress", remoteIp);
 
-			result = RestServiceSupport.postAttachment("zebraRestNoticeBoard/exeUpdate", "multipart/mixed", "application/json", paramEntity, fileDataSet);
+			result = RestServiceSupport.postAttachment(providerUrl, "zebraRestNoticeBoard/exeUpdate", "multipart/mixed", "application/json", paramEntity, fileDataSet);
 			paramEntity.setObjectFromJsonString(result);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -139,11 +145,12 @@ public class RestWebServiceClientBizImpl extends BaseBiz implements RestWebServi
 	}
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		String result = "";
 
 		try {
 			paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
-			result = RestServiceSupport.post("zebraRestNoticeBoard/exeDelete", "application/json", paramEntity);
+			result = RestServiceSupport.post(providerUrl, "zebraRestNoticeBoard/exeDelete", "application/json", paramEntity);
 			paramEntity.setObjectFromJsonString(result);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

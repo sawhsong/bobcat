@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import zebra.base.Action;
+import zebra.util.ConfigUtil;
 import zebra.wssupport.RestServiceSupport;
 
 public class RestServiceDownloadAction extends Action {
@@ -20,6 +21,7 @@ public class RestServiceDownloadAction extends Action {
 	private long contentLength;
 
 	public String execute() throws Exception {
+		String providerUrl = ConfigUtil.getProperty("webService.provider.url");
 		String repositoryPath = "", originalName = "", newName = "", webServiceUrl = "";
 		MultipartBody multipartBody;
 		InputStream inputStream;
@@ -35,7 +37,7 @@ public class RestServiceDownloadAction extends Action {
 		paramEntity.setObject("webServiceUrl", webServiceUrl);
 		paramEntity.setObject("requestDataSet", paramEntity.getRequestDataSet());
 
-		multipartBody = RestServiceSupport.postForFileDownload(webServiceUrl, paramEntity);
+		multipartBody = RestServiceSupport.postForFileDownload(providerUrl, webServiceUrl, paramEntity);
 		inputStream = RestServiceSupport.getFileInputStreamFromMultipartBody(multipartBody);
 		setContentLength(inputStream.available());
 		setContentDisposition("attachment; filename="+URLEncoder.encode(originalName, "UTF-8"));
