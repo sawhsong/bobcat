@@ -4,7 +4,7 @@
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 jsconfig.put("scrollablePanelHeightAdjust", 6);
-var popup = null;
+var popup = null, dateFormat = jsconfig.get("dateFormatJs");
 
 $(function() {
 	/*!
@@ -186,7 +186,18 @@ $(function() {
 				var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
 				if (result.isSuccess == true || result.isSuccess == "true") {
+					var ds = result.dataSet;
 
+					$("#deDate").val(commonJs.getDateTimeMask(ds.getValue(0, "INCOME_DATE"), dateFormat));
+					$("#deNonCash").val(commonJs.getNumberMask(ds.getValue(0, "NON_CASH_AMT"), "#,###.##"));
+					$("#deCash").val(commonJs.getNumberMask(ds.getValue(0, "CASH_AMT"), "#,###.##"));
+					$("#deGrossSales").val(commonJs.getNumberMask(ds.getValue(0, "GROSS_AMT"), "#,###.##"));
+					$("#deGstFree").val(commonJs.getNumberMask(ds.getValue(0, "GST_FREE_AMT"), "#,###.##"));
+					$("#deGst").val(commonJs.getNumberMask(ds.getValue(0, "GST_AMT"), "#,###.##"));
+					$("#deNetSales").val(commonJs.getNumberMask(ds.getValue(0, "NET_AMT"), "#,###.##"));
+					$("#deRecordKeepingType").val(ds.getValue(0, "RECORD_KEEPING_TYPE"));
+					commonJs.refreshBootstrapSelectbox("deRecordKeepingType");
+					$("#deRemark").val(ds.getValue(0, "DESCRIPTION"));
 				} else {
 					commonJs.error(result.message);
 				}

@@ -6,6 +6,7 @@ package project.conf.resource.ormapper.dao.UsrIncome;
 
 import project.common.extend.BaseHDao;
 import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dto.oracle.UsrIncome;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
@@ -82,5 +83,12 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 		} else {
 			return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomePerformanceDataSetForCategoryEtc");
 		}
+	}
+
+	public DataSet getIncomeDataSetById(String incomeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+		return selectAllAsDataSet(queryAdvisor, new UsrIncome());
 	}
 }
