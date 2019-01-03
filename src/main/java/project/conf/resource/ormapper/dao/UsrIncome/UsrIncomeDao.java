@@ -14,4 +14,5 @@ public interface UsrIncomeDao extends IDao {
 	public DataSet getIncomeSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getIncomePerformanceDataSet(String orgCategory, String orgId, String financialYear, String quarterName) throws Exception;
 	public DataSet getIncomeDataSetById(String incomeId) throws Exception;
+	public DataSet getIncomeDataSetByIdForUpdate(String incomeId, String incomeDate) throws Exception;
 }

@@ -91,4 +91,12 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
 		return selectAllAsDataSet(queryAdvisor, new UsrIncome());
 	}
+
+	public DataSet getIncomeDataSetByIdForUpdate(String incomeId, String incomeDate) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addVariable("incomeDate", incomeDate);
+		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+		return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomeDataSetByIdForUpdate");
+	}
 }

@@ -64,12 +64,13 @@ public class Rkm0202BizImpl extends BaseBiz implements Rkm0202Biz {
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String incomeIdDate = requestDataSet.getValue("incomeIdDate");
-		String incomeId;
+		String incomeId = "", incomeDate = "";
 
 		try {
 			incomeId = CommonUtil.split(incomeIdDate, "_")[0];
+			incomeDate = CommonUtil.split(incomeIdDate, "_")[1];
 
-			paramEntity.setAjaxResponseDataSet(usrIncomeDao.getIncomeDataSetById(incomeId));
+			paramEntity.setAjaxResponseDataSet(usrIncomeDao.getIncomeDataSetByIdForUpdate(incomeId, incomeDate));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

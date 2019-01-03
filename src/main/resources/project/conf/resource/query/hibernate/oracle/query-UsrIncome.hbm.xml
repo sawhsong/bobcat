@@ -64,6 +64,60 @@
 	]]>
 	</sql-query>
 
+	<sql-query name="query.UsrIncome.getIncomeDataSetByIdForUpdate">
+	<![CDATA[
+		select income_id,
+		       to_char(income_date, 'dd-mm-yyyy') as income_date,
+		       income_entry_type,
+		       income_year,
+		       is_completed,
+		       org_id,
+		       quarter_name,
+		       applied_gst,
+		       cash_amt,
+		       description,
+		       gross_amt,
+		       gst_amt,
+		       gst_free_amt,
+		       income_type_id,
+		       to_char(insert_date, 'dd-mm-yyyy') as insert_date,
+		       insert_user_id,
+		       net_amt,
+		       non_cash_amt,
+		       record_keeping_type,
+		       to_char(update_date, 'dd-mm-yyyy') as update_date,
+		       update_user_id
+		  from usr_income
+		 where 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		union
+		select '-1' as income_id,
+		       '${incomeDate}' as income_date,
+		       null as income_entry_type,
+		       null as income_year,
+		       null as is_completed,
+		       null as org_id,
+		       null as quarter_name,
+		       null as applied_gst,
+		       null as cash_amt,
+		       null as description,
+		       null as gross_amt,
+		       null as gst_amt,
+		       null as gst_free_amt,
+		       null as income_type_id,
+		       null as insert_date,
+		       null as insert_user_id,
+		       null as net_amt,
+		       null as non_cash_amt,
+		       null as record_keeping_type,
+		       null as update_date,
+		       null as update_user_id
+		  from usr_income
+		 order by income_id desc
+	]]>
+	</sql-query>
+
 	<sql-query name="query.UsrIncome.getOtherIncomeDataSetByCriteria">
 	<![CDATA[
 		select uin.income_id as income_id,

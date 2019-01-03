@@ -118,6 +118,7 @@
 		<tr>
 			<td class="tdDataEntry ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deIncomeId"/>
 					<ui:text name="deDate" className="ct hor" style="width:90px" checkName="rkm0202.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>

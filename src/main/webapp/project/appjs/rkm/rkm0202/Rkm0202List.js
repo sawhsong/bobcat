@@ -4,7 +4,7 @@
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 jsconfig.put("scrollablePanelHeightAdjust", 6);
-var popup = null, dateFormat = jsconfig.get("dateFormatJs");
+var popup = null;
 
 $(function() {
 	/*!
@@ -68,6 +68,8 @@ $(function() {
 	 */
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
+
+		refreshDataEntry();
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
@@ -188,16 +190,9 @@ $(function() {
 				if (result.isSuccess == true || result.isSuccess == "true") {
 					var ds = result.dataSet;
 
-					$("#deDate").val(commonJs.getDateTimeMask(ds.getValue(0, "INCOME_DATE"), dateFormat));
-					$("#deNonCash").val(commonJs.getNumberMask(ds.getValue(0, "NON_CASH_AMT"), "#,###.##"));
-					$("#deCash").val(commonJs.getNumberMask(ds.getValue(0, "CASH_AMT"), "#,###.##"));
-					$("#deGrossSales").val(commonJs.getNumberMask(ds.getValue(0, "GROSS_AMT"), "#,###.##"));
-					$("#deGstFree").val(commonJs.getNumberMask(ds.getValue(0, "GST_FREE_AMT"), "#,###.##"));
-					$("#deGst").val(commonJs.getNumberMask(ds.getValue(0, "GST_AMT"), "#,###.##"));
-					$("#deNetSales").val(commonJs.getNumberMask(ds.getValue(0, "NET_AMT"), "#,###.##"));
-					$("#deRecordKeepingType").val(ds.getValue(0, "RECORD_KEEPING_TYPE"));
-					commonJs.refreshBootstrapSelectbox("deRecordKeepingType");
-					$("#deRemark").val(ds.getValue(0, "DESCRIPTION"));
+					refreshDataEntry();
+					setDataEntryValues(ds);
+					$("#deNonCash").focus();
 				} else {
 					commonJs.error(result.message);
 				}
@@ -276,7 +271,7 @@ $(function() {
 
 	doDataEntryAction = function(img) {
 		ctxMenu.dataEntryAction[0].fun = function() {alert("save");};
-		ctxMenu.dataEntryAction[1].fun = function() {alert("cancel");};
+		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
 		ctxMenu.dataEntryAction[2].fun = function() {alert("delete");};
 
 		$(img).contextMenu(ctxMenu.dataEntryAction, {
@@ -288,9 +283,44 @@ $(function() {
 		});
 	};
 
+	refreshDataEntry = function() {
+		$("#deIncomeId").val("");
+		$("#deDate").val("");
+		$("#deNonCash").val("");
+		$("#deCash").val("");
+		$("#deGrossSales").val("");
+		$("#deGstFree").val("");
+		$("#deGst").val("");
+		$("#deNetSales").val("");
+		$("#deRecordKeepingType").val("");
+		commonJs.refreshBootstrapSelectbox("deRecordKeepingType");
+		$("#deRemark").val("");
+	};
+
+	setDataEntryValues = function(dataSet) {
+		$("#deIncomeId").val(commonJs.nvl(dataSet.getValue(0, "INCOME_ID"), ""));
+		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "INCOME_DATE"), ""));
+		$("#deNonCash").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "NON_CASH_AMT"), "#,###.##"), "0.00"));
+		$("#deCash").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "CASH_AMT"), "#,###.##"), "0.00"));
+		$("#deGrossSales").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), "#,###.##"), "0.00"));
+		$("#deGstFree").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "GST_FREE_AMT"), "#,###.##"), "0.00"));
+		$("#deGst").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), "#,###.##"), "0.00"));
+		$("#deNetSales").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), "#,###.##"), "0.00"));
+		$("#deRecordKeepingType").val(commonJs.nvl(dataSet.getValue(0, "RECORD_KEEPING_TYPE"), ""));
+		commonJs.refreshBootstrapSelectbox("deRecordKeepingType");
+		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
+	};
 	/*!
 	 * load event (document / window)
 	 */
+	$(document).ready(function() {
+		$("input:text").focus(function() {
+			if ($(this).hasClass("txtEn")) {
+				$(this).select();
+			}
+		});
+	});
+
 	$(window).load(function() {
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
