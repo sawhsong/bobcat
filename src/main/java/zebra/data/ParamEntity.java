@@ -233,11 +233,107 @@ public class ParamEntity {
 		return queryAdvisor;
 	}
 
+	public void setObjectFromXmlString(String xmlString) throws Exception {
+		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xmlString)));
+//		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(HtmlUtil.htmlToHexForXml(xmlString))));
+		Element root = doc.getDocumentElement();
+		String nodeName = root.getNodeName(), nodeValue = "";
+
+		if (CommonUtil.equalsIgnoreCase(nodeName, "paramEntity")) {
+			NodeList nodeList = root.getChildNodes();
+
+			for (int i=0; i<nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					nodeName = CommonUtil.nvl(node.getNodeName());
+					nodeValue = CommonUtil.nvl(node.getTextContent());
+
+					if (CommonUtil.equalsIgnoreCase(nodeName, "isSuccess")) {
+						setSuccess(CommonUtil.equalsIgnoreCase(nodeValue, "true"));
+					} else if (CommonUtil.equalsIgnoreCase(nodeName, "messageCode")) {
+						setMessageCode(nodeValue);
+					} else if (CommonUtil.equalsIgnoreCase(nodeName, "message")) {
+						setMessage(nodeValue);
+					} else {
+						if (isDataSet(node)) {
+							setObject(nodeName, new DataSet(node));
+						} else {
+							setObject(nodeName, nodeValue);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void setObjectFromJsonString(String jsonString) throws Exception {
+		JSONObject jsonObject = (JSONObject)JSONSerializer.toJSON(jsonString);
+
+		for (Object keys : jsonObject.keySet()) {
+			String key = (String)keys;
+			Object value = jsonObject.get(key);
+
+			if (CommonUtil.equalsIgnoreCase(key, "isSuccess")) {
+				setSuccess(jsonObject.getBoolean("isSuccess"));
+			} else if (CommonUtil.equalsIgnoreCase(key, "messageCode")) {
+				setMessageCode(jsonObject.getString("messageCode"));
+			} else if (CommonUtil.equalsIgnoreCase(key, "message")) {
+				setMessage(jsonObject.getString("message"));
+			} else {
+				if (value instanceof JSONObject) {
+					if (isDataSet((JSONObject)value)) {
+						setObject(key, new DataSet((JSONObject)value));
+					} else {
+						setObject(key, value);
+					}
+				} else {
+					setObject(key, value);
+				}
+			}
+		}
+	}
+
+	public void setDataSetValueFromJsonResultset(DataSet dataSet) throws Exception {
+		if (dataSet != null && dataSet.getNames() != null) {
+			dataSet.addRow();
+			for (int i=0; i<dataSet.getColumnCnt(); i++) {
+				dataSet.setValue(dataSet.getRowCnt()-1, dataSet.getName(i), getObject(dataSet.getName(i)));
+			}
+		}
+	}
+
+	private boolean isDataSet(Node node) {
+		NodeList nodeList = node.getChildNodes();
+
+		if (nodeList != null) {
+			for (int i=0; i<nodeList.getLength(); i++) {
+				Node child = nodeList.item(i);
+
+				if (child.getNodeType() == Node.ELEMENT_NODE) {
+					Element element = (Element)child;
+
+					if (CommonUtil.equalsIgnoreCase(element.getNodeName(), "dataSetHeader")) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isDataSet(JSONObject jsonObject) {
+		JSONObject json = (JSONObject)jsonObject;
+		return json.containsKey("dataSetHeader");
+	}
+
 	@SuppressWarnings("rawtypes")
 	public String toString() {
 		String rtn = "";
 		String searchCriteriaDataSetDebugMode = ConfigUtil.getProperty("log.debug.searchCriteriaDataSet");
 
+		rtn += "========== ParamEntity Log Start ==========\n";
 		rtn += "ParamEntity Success Flag [isSuccess] : " + isSuccess + "\n";
 		if (!(object == null || object.isEmpty())) {
 			for (Iterator keys = object.keySet().iterator(); keys.hasNext();) {
@@ -261,6 +357,7 @@ public class ParamEntity {
 			}
 		}
 		rtn += "\n";
+		rtn += "========== ParamEntity Log End ==========\n";
 
 		return rtn;
 	}
@@ -314,40 +411,6 @@ public class ParamEntity {
 		return sb.toString();
 	}
 
-	public void setObjectFromXmlString(String xmlString) throws Exception {
-		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xmlString)));
-//		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(HtmlUtil.htmlToHexForXml(xmlString))));
-		Element root = doc.getDocumentElement();
-		String nodeName = root.getNodeName(), nodeValue = "";
-
-		if (CommonUtil.equalsIgnoreCase(nodeName, "paramEntity")) {
-			NodeList nodeList = root.getChildNodes();
-
-			for (int i=0; i<nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-					nodeName = CommonUtil.nvl(node.getNodeName());
-					nodeValue = CommonUtil.nvl(node.getTextContent());
-
-					if (CommonUtil.equalsIgnoreCase(nodeName, "isSuccess")) {
-						setSuccess(CommonUtil.equalsIgnoreCase(nodeValue, "true"));
-					} else if (CommonUtil.equalsIgnoreCase(nodeName, "messageCode")) {
-						setMessageCode(nodeValue);
-					} else if (CommonUtil.equalsIgnoreCase(nodeName, "message")) {
-						setMessage(nodeValue);
-					} else {
-						if (isDataSet(node)) {
-							setObject(nodeName, new DataSet(node));
-						} else {
-							setObject(nodeName, nodeValue);
-						}
-					}
-				}
-			}
-		}
-	}
-
 	/*!
 	 * Only return user-defined values
 	 */
@@ -399,55 +462,5 @@ public class ParamEntity {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	public void setObjectFromJsonString(String jsonString) throws Exception {
-		JSONObject jsonObject = (JSONObject)JSONSerializer.toJSON(jsonString);
-
-		for (Object keys : jsonObject.keySet()) {
-			String key = (String)keys;
-			Object value = jsonObject.get(key);
-
-			if (CommonUtil.equalsIgnoreCase(key, "isSuccess")) {
-				setSuccess(jsonObject.getBoolean("isSuccess"));
-			} else if (CommonUtil.equalsIgnoreCase(key, "messageCode")) {
-				setMessageCode(jsonObject.getString("messageCode"));
-			} else if (CommonUtil.equalsIgnoreCase(key, "message")) {
-				setMessage(jsonObject.getString("message"));
-			} else {
-				if (value instanceof JSONObject) {
-					if (isDataSet((JSONObject)value)) {
-						setObject(key, new DataSet((JSONObject)value));
-					}
-				} else {
-					setObject(key, value);
-				}
-			}
-		}
-	}
-
-	private boolean isDataSet(Node node) {
-		NodeList nodeList = node.getChildNodes();
-
-		if (nodeList != null) {
-			for (int i=0; i<nodeList.getLength(); i++) {
-				Node child = nodeList.item(i);
-
-				if (child.getNodeType() == Node.ELEMENT_NODE) {
-					Element element = (Element)child;
-
-					if (CommonUtil.equalsIgnoreCase(element.getNodeName(), "dataSetHeader")) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
-	private boolean isDataSet(JSONObject jsonObject) {
-		JSONObject json = (JSONObject)jsonObject;
-		return json.containsKey("dataSetHeader");
 	}
 }
