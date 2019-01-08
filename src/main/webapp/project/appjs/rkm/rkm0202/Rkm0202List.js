@@ -20,6 +20,7 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		refreshDataEntry();
 	});
 
 	$("#icnCheck").click(function(event) {
@@ -43,9 +44,12 @@ $(function() {
 	});
 
 	$(document).keypress(function(event) {
+		var element = event.target;
+
 		if (event.which == 13) {
-			var element = event.target;
 		}
+
+		onEditDataEntry($(element));
 	});
 
 	/*!
@@ -66,6 +70,10 @@ $(function() {
 	/*!
 	 * process
 	 */
+	onEditDataEntry = function(jqObj) {
+console.log($(jqObj).val());
+	};
+
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
