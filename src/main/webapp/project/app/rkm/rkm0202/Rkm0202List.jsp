@@ -123,10 +123,10 @@
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry ct"><ui:text name="deNonCash" className="rt numeric" checkName="rkm0202.de.nonCash" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry ct"><ui:text name="deCash" className="rt numeric" checkName="rkm0202.de.cash" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deNonCash" className="rt numeric" checkName="rkm0202.de.nonCash" options="mandatory"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deCash" className="rt numeric" checkName="rkm0202.de.cash" options="mandatory"/></td>
 			<td class="tdDataEntry ct"><ui:text name="deGrossSales" className="rt numeric" status="display"/></td>
-			<td class="tdDataEntry ct"><ui:text name="deGstFree" className="rt numeric" checkName="rkm0202.de.gstFree" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry ct"><ui:text name="deGstFree" className="rt numeric" checkName="rkm0202.de.gstFree" options="mandatory"/></td>
 			<td class="tdDataEntry ct"><ui:text name="deGst" className="rt numeric" status="display"/></td>
 			<td class="tdDataEntry ct"><ui:text name="deNetSales" className="rt numeric" status="display"/></td>
 			<td class="tdDataEntry ct"><ui:ccselect name="deRecordKeepingType" codeType="RECORD_KEEPING_TYPE"/></td>

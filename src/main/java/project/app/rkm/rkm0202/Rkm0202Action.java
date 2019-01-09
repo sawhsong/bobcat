@@ -36,26 +36,28 @@ public class Rkm0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-
-
-
-	public String exeInsert() throws Exception {
+	public String calculateDataEntry() throws Exception {
 		try {
-			biz.exeInsert(paramEntity);
+			biz.calculateDataEntry(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
 
-	public String exeUpdate() throws Exception {
+	public String exeSave() throws Exception {
 		try {
-			biz.exeUpdate(paramEntity);
+			biz.exeSave(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
+
+
+
+
+
 
 	public String exeDelete() throws Exception {
 		try {

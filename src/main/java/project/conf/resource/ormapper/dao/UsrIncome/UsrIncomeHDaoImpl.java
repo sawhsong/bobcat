@@ -7,12 +7,23 @@ package project.conf.resource.ormapper.dao.UsrIncome;
 import project.common.extend.BaseHDao;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dto.oracle.UsrIncome;
+import zebra.base.Dto;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
+	public int insert(Dto dto) throws Exception {
+		return insertWithSQLQuery(dto);
+	}
+
+	public int update(String incomeId, Dto dto) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+		return updateWithSQLQuery(queryAdvisor, dto);
+	}
+
 	public DataSet getSalesIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgId = (String)queryAdvisor.getObject("orgId");

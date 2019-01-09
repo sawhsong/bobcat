@@ -43,13 +43,21 @@ $(function() {
 		doSearch();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
 		var element = event.target;
-
 		if (event.which == 13) {
+			if ($(element).attr("name") == "deRemark") {
+				doSave();
+			}
 		}
 
 		onEditDataEntry($(element));
+	});
+
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
+		}
 	});
 
 	/*!
@@ -71,7 +79,28 @@ $(function() {
 	 * process
 	 */
 	onEditDataEntry = function(jqObj) {
-console.log($(jqObj).val());
+		var name = $(jqObj).attr("name");
+		if (name == "deNonCash" || name == "deCash" || name == "deGstFree") {
+			commonJs.ajaxSubmit({
+				url:"/rkm/0202/calculateDataEntry.do",
+				dataType:"json",
+				data:{
+					nonCash:$("#deNonCash").val(),
+					cash:$("#deCash").val(),
+					gstFree:$("#deGstFree").val()
+				},
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						var ds = result.dataSet;
+						$("#deGrossSales").val(ds.getValue(0, "grossSales"));
+						$("#deGst").val(ds.getValue(0, "gst"));
+						$("#deNetSales").val(ds.getValue(0, "netSales"));
+					}
+				}
+			});
+		}
 	};
 
 	doSearch = function() {
@@ -208,6 +237,51 @@ console.log($(jqObj).val());
 		});
 	};
 
+	doSave = function() {
+		if (!commonJs.doValidate("fmDefault")) {
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0202/exeSave.do",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
+
 	doDelete = function() {
 		if (commonJs.getCountChecked("chkForDel") == 0) {
 			commonJs.warn(com.message.I902);
@@ -278,9 +352,9 @@ console.log($(jqObj).val());
 	};
 
 	doDataEntryAction = function(img) {
-		ctxMenu.dataEntryAction[0].fun = function() {alert("save");};
+		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
 		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
-		ctxMenu.dataEntryAction[2].fun = function() {alert("delete");};
+		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.dataEntryAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
@@ -321,14 +395,6 @@ console.log($(jqObj).val());
 	/*!
 	 * load event (document / window)
 	 */
-	$(document).ready(function() {
-		$("input:text").focus(function() {
-			if ($(this).hasClass("txtEn")) {
-				$(this).select();
-			}
-		});
-	});
-
 	$(window).load(function() {
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
