@@ -8,7 +8,7 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
-int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
+	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
 %>
 <%/************************************************************************************************
 * HTML
@@ -68,7 +68,7 @@ int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
 <%
 					for (int i=-5; i<6; i++) {
 %>
-						<option value="<%=currentYear + i%>"><%=currentYear + i%></option>
+						<option value="<%=currentYear - i%>"><%=currentYear - i%></option>
 <%
 					}
 %>

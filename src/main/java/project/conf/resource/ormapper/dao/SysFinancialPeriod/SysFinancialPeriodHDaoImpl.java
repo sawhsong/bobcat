@@ -34,4 +34,11 @@ public class SysFinancialPeriodHDaoImpl extends BaseHDao implements SysFinancial
 
 		return selectAsDataSet(queryAdvisor, "query.SysFinancialPeriod.getPeriodDataSetByCriteria");
 	}
+
+	public SysFinancialPeriod getFinancialPeriodByPeriodYearAndCode(String periodYear, String quarterCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("period_year = '"+periodYear+"'");
+		queryAdvisor.addWhereClause("quarter_code = '"+quarterCode+"'");
+		return (SysFinancialPeriod)selectAllToDto(queryAdvisor, new SysFinancialPeriod());
+	}
 }

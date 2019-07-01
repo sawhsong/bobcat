@@ -9,6 +9,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
+import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
+import project.conf.resource.ormapper.dto.oracle.SysBoard;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -18,18 +23,9 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-
 public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 	@Autowired
 	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
 	@Autowired
 	private SysFinancialPeriodDao sysFinancialPeriodDao;
 
@@ -63,13 +59,11 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String periodYear = requestDataSet.getValue("periodYear");
+		String quarterCode = requestDataSet.getValue("quarterCode");
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
+			paramEntity.setObject("sysFinancialPeriod", sysFinancialPeriodDao.getFinancialPeriodByPeriodYearAndCode(periodYear, quarterCode));
 
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
