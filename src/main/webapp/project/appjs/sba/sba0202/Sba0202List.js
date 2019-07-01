@@ -258,6 +258,7 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var fileType = menuObject.fileType, tm = 3000;
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/sba/0202/exeExport.do",
@@ -270,7 +271,6 @@ $(function() {
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
 import project.common.module.datahelper.DataHelper;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import zebra.data.DataSet;
@@ -26,8 +25,6 @@ import zebra.util.ExportUtil;
 public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	@Autowired
 	private SysOrgDao sysOrgDao;
-	@Autowired
-	private SysBoardDao sysBoardDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -207,30 +204,36 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
+		String columnHeader[], fileHeader[];
 		String pageTitle, fileName;
 		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
+		HttpSession session = paramEntity.getSession();
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			pageTitle = "Organisation List";
+			fileName = "OrganisationList";
+			columnHeader = new String[]{"legal_name", "trading_name", "abn", "user_cnt", "entity_type_name", "business_type_name", "org_category_name", "wage_type_name",
+					"revenue_range_from", "revenue_range_to", "registered_date"};
+			fileHeader = new String[]{"Leagal Name", "Trading Name", "ABN", "Users", "Entity Type", "Business Type", "Org Category", "Wage Type",
+					"R Range From", "R Range To", "Registered Date"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);
 			exportHelper.setPageTitle(pageTitle);
 			exportHelper.setColumnHeader(columnHeader);
+			exportHelper.setFileHeader(fileHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
 			queryAdvisor.setRequestDataSet(requestDataSet);
+			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
 				queryAdvisor.setPagination(false);
 			else {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysOrgDao.getOrgDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

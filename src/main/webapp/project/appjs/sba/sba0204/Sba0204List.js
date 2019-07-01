@@ -80,7 +80,7 @@ $(function() {
 			borderRadius:"bottom 4px",
 			displayAround:"trigger",
 			position:"bottom",
-			horAdjust:-157
+			horAdjust:-140
 		});
 	};
 

@@ -323,7 +323,6 @@ $(function() {
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
