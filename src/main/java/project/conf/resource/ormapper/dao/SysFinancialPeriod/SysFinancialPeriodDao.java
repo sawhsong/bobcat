@@ -11,6 +11,22 @@ import zebra.data.QueryAdvisor;
 
 public interface SysFinancialPeriodDao extends IDao {
 	/**
+	 * Insert
+	 * @param sysFinancialPeriod
+	 * @return
+	 * @throws Exception
+	 */
+	public int insert(SysFinancialPeriod sysFinancialPeriod) throws Exception;
+	/**
+	 * Update with key
+	 * @param sysFinancialPeriod
+	 * @param periodYear
+	 * @param quarterCode
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateWithKey(SysFinancialPeriod sysFinancialPeriod, String periodYear, String quarterCode) throws Exception;
+	/**
 	 * Get this financial year
 	 * @return SysFinancialPeriod
 	 * @throws Exception

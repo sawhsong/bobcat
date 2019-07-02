@@ -34,8 +34,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var periodYear = "<%=requestDataSet.getValue("periodYear")%>";
-var quarterCode = "<%=requestDataSet.getValue("quarterCode")%>";
+var periodYearParam = "<%=requestDataSet.getValue("periodYear")%>";
+var quarterCodeParam = "<%=requestDataSet.getValue("quarterCode")%>";
 </script>
 </head>
 <%/************************************************************************************************

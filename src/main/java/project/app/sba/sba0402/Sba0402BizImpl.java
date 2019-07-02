@@ -14,6 +14,7 @@ import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -129,27 +130,25 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String periodYear = requestDataSet.getValue("periodYearParam");
+		String quarterCode = requestDataSet.getValue("quarterCodeParam");
 		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
+		SysFinancialPeriod sysFinancialPeriod;
 		int result = 0;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysFinancialPeriod = sysFinancialPeriodDao.getFinancialPeriodByPeriodYearAndCode(periodYear, quarterCode);
+			sysFinancialPeriod.setPeriodYear(requestDataSet.getValue("periodYear"));
+			sysFinancialPeriod.setQuarterCode(requestDataSet.getValue("quarterCode"));
+			sysFinancialPeriod.setFinancialYear(requestDataSet.getValue("financialYearFrom")+"-"+requestDataSet.getValue("financialYearTo"));
+			sysFinancialPeriod.setQuarterName(requestDataSet.getValue("quarterName"));
+			sysFinancialPeriod.setDateFrom(CommonUtil.toDate(requestDataSet.getValue("dateFrom"), dateFormat));
+			sysFinancialPeriod.setDateTo(CommonUtil.toDate(requestDataSet.getValue("dateTo"), dateFormat));
+			sysFinancialPeriod.setUpdateUserId(loggedInUserId);
+			sysFinancialPeriod.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			result = sysFinancialPeriodDao.updateWithKey(sysFinancialPeriod, periodYear, quarterCode);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}

@@ -11,6 +11,17 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class SysFinancialPeriodHDaoImpl extends BaseHDao implements SysFinancialPeriodDao {
+	public int insert(SysFinancialPeriod sysFinancialPeriod) throws Exception {
+		return insertWithDto(sysFinancialPeriod);
+	}
+
+	public int updateWithKey(SysFinancialPeriod sysFinancialPeriod, String periodYear, String quarterCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("period_year = '" + periodYear + "'");
+		queryAdvisor.addWhereClause("quarter_code = '" + quarterCode + "'");
+		return updateWithDto(queryAdvisor, sysFinancialPeriod);
+	}
+
 	public SysFinancialPeriod getCurrentFinancialPeriod() throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("trunc(sysdate) between trunc(date_from) and trunc(date_to)");
