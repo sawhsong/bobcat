@@ -8,8 +8,6 @@ $(function() {
 	 */
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
-			$("#fmDefault").attr("enctype", "multipart/form-data");
-
 			commonJs.confirm({
 				contents:com.message.Q001,
 				buttons:[{
@@ -17,9 +15,10 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sba/0402/exeUpdate.do",
+							action:"/sba/0402/exeUpdate",
 							data:{
-								articleId:"<%=sysBoard.getArticleId()%>"
+								periodYear:periodYear,
+								quarterCode:quarterCode
 							}
 						});
 					}
@@ -36,13 +35,6 @@ $(function() {
 		parent.popup.close();
 	});
 
-	$("#btnAddFile").click(function(event) {
-		commonJs.addFileSelectObject({
-			appendToId:"divAttachedFile",
-			rowBreak:false
-		});
-	});
-
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
 			var element = event.target;
@@ -57,6 +49,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		parent.popup.setHeader(com.header.popHeaderEdit);
+		commonJs.setFieldDateMask("dateFrom");
+		commonJs.setFieldDateMask("dateTo");
 	});
 });

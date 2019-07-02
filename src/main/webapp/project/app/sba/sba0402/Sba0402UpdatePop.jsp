@@ -9,8 +9,13 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysFinancialPeriod sysFinancialPeriod = (SysFinancialPeriod)paramEntity.getObject("sysFinancialPeriod");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
+
+	String financialYear[] = CommonUtil.split(sysFinancialPeriod.getFinancialYear(), "-");
+	String yearFrom = financialYear[0];
+	String yearTo = financialYear[1];
 %>
 <%/************************************************************************************************
 * HTML
@@ -29,6 +34,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var periodYear = "<%=requestDataSet.getValue("periodYear")%>";
+var quarterCode = "<%=requestDataSet.getValue("quarterCode")%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -66,73 +73,61 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.periodYear"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0402.header.writerName" options="mandatory"/>
+				<ui:select name="periodYear" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = (CommonUtil.equals(CommonUtil.toString(currentYear - i), sysFinancialPeriod.getPeriodYear())) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.writerEmail"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.quarterCode"/></th>
+			<td class="tdEdit"><ui:ccselect name="quarterCode" codeType="QUARTER_CODE" options="mandatory" selectedValue="<%=sysFinancialPeriod.getQuarterCode()%>"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.financialYear"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sba0402.header.writerEmail" option="email" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sba0402.header.articleSubject" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0402.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0402.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
+				<ui:select name="financialYearFrom" options="mandatory">
 <%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
+				for (int i=-5; i<6; i++) {
+					String seleted = (CommonUtil.equals(CommonUtil.toString(currentYear - i), yearFrom)) ? "selected" : "";
 %>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
 <%
-						}
-					}
+				}
 %>
-					</table>
-				</div>
+				</ui:select>
+				-
+				<ui:select name="financialYearTo" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = (CommonUtil.equals(CommonUtil.toString(currentYear - i), yearTo)) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
 			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.quarterName"/></th>
+			<td class="tdEdit"><ui:ccselect name="quarterName" codeType="QUARTER_NAME" options="mandatory" selectedValue="<%=sysFinancialPeriod.getQuarterName()%>"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0402.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.dateFrom"/></th>
+			<td class="tdEdit"><ui:text name="dateFrom" value="<%=CommonUtil.toString(sysFinancialPeriod.getDateFrom(), dateFormat)%>" style="width:80px" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.dateTo"/></th>
+			<td class="tdEdit"><ui:text name="dateTo" value="<%=CommonUtil.toString(sysFinancialPeriod.getDateTo(), dateFormat)%>" style="width:80px" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>

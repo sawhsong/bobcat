@@ -147,7 +147,7 @@ $(function() {
 		} else if (param.mode == "Edit") {
 			url = "/sba/0402/getUpdate";
 			header = com.header.popHeaderEdit;
-			height = 250;
+			height = 280;
 		}
 
 		var popParam = {

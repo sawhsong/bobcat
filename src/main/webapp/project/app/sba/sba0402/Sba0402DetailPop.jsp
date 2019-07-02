@@ -69,10 +69,10 @@ var quarterCode = "<%=requestDataSet.getValue("quarterCode")%>";
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0402.header.periodYear"/></th>
