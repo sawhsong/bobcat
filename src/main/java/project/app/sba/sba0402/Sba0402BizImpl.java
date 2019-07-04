@@ -10,10 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
@@ -95,26 +93,22 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
-		String uid = CommonUtil.uid();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
 		String loggedInUserId = (String)session.getAttribute("UserId");
 		int result = -1;
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysFinancialPeriod.setPeriodYear(requestDataSet.getValue("periodYear"));
+			sysFinancialPeriod.setQuarterCode(requestDataSet.getValue("quarterCode"));
+			sysFinancialPeriod.setFinancialYear(requestDataSet.getValue("financialYearFrom")+"-"+requestDataSet.getValue("financialYearTo"));
+			sysFinancialPeriod.setQuarterName(requestDataSet.getValue("quarterName"));
+			sysFinancialPeriod.setDateFrom(CommonUtil.toDate(requestDataSet.getValue("dateFrom"), dateFormat));
+			sysFinancialPeriod.setDateTo(CommonUtil.toDate(requestDataSet.getValue("dateTo"), dateFormat));
+			sysFinancialPeriod.setInsertUserId(loggedInUserId);
+			sysFinancialPeriod.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			result = sysFinancialPeriodDao.insert(sysFinancialPeriod);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}

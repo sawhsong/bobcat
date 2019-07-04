@@ -9,7 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
 %>
 <%/************************************************************************************************
 * HTML
@@ -71,38 +71,55 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.periodYear"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysUser.getUserName()%>" checkName="sba0402.header.writerName" options="mandatory"/>
+				<ui:select name="periodYear" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == currentYear) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.writerEmail"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.quarterCode"/></th>
+			<td class="tdEdit"><ui:ccselect name="quarterCode" codeType="QUARTER_CODE" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.financialYear"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysUser.getEmail()%>" checkName="sba0402.header.writerEmail" option="email" options="mandatory"/>
+				<ui:select name="financialYearFrom" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == (currentYear - 1)) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
+				-
+				<ui:select name="financialYearTo" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == currentYear) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
 			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.quarterName"/></th>
+			<td class="tdEdit"><ui:ccselect name="quarterName" codeType="QUARTER_NAME" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" checkName="sba0402.header.articleSubject" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0402.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0402.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.dateFrom"/></th>
+			<td class="tdEdit"><ui:text name="dateFrom" style="width:80px" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0402.header.dateTo"/></th>
+			<td class="tdEdit"><ui:text name="dateTo" style="width:80px" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>

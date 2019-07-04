@@ -136,14 +136,15 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 170;
 
 		if (param.mode == "Detail") {
 			url = "/sba/0402/getDetail";
 			header = com.header.popHeaderDetail;
+			height = 170;
 		} else if (param.mode == "New") {
 			url = "/sba/0402/getInsert";
 			header = com.header.popHeaderEdit;
+			height = 280;
 		} else if (param.mode == "Edit") {
 			url = "/sba/0402/getUpdate";
 			header = com.header.popHeaderEdit;
