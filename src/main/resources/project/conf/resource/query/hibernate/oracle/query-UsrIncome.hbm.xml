@@ -310,7 +310,7 @@
 		               ) typ,
 		               (select nvl(income_type_id, '0') as income_type_id,
 		                       to_char(income_date, 'MM') as income_month,
-		                       nvl(sum(gross_amt), 0) as net_amt
+		                       nvl(sum(gross_amt - gst_amt), 0) as net_amt
 		                  from usr_income
 		                 where income_year = '${financialYear}'
 		                   and org_id = '${orgId}'

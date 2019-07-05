@@ -8,11 +8,12 @@ import project.common.extend.BaseHDao;
 import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
+import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class SysFinancialPeriodHDaoImpl extends BaseHDao implements SysFinancialPeriodDao {
 	public int insert(SysFinancialPeriod sysFinancialPeriod) throws Exception {
-		return insertWithDto(sysFinancialPeriod);
+		return insertWithSQLQuery(sysFinancialPeriod);
 	}
 
 	public int updateWithKey(SysFinancialPeriod sysFinancialPeriod, String periodYear, String quarterCode) throws Exception {
@@ -20,6 +21,26 @@ public class SysFinancialPeriodHDaoImpl extends BaseHDao implements SysFinancial
 		queryAdvisor.addWhereClause("period_year = '" + periodYear + "'");
 		queryAdvisor.addWhereClause("quarter_code = '" + quarterCode + "'");
 		return updateWithDto(queryAdvisor, sysFinancialPeriod);
+	}
+
+	public int deleteWithKey(String periodYear, String quarterCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("period_year = '" + periodYear + "'");
+		queryAdvisor.addWhereClause("quarter_code = '" + quarterCode + "'");
+		return deleteWithSQLQuery(queryAdvisor, new SysFinancialPeriod());
+	}
+
+	public int deleteWithKeys(String keyIds[]) throws Exception {
+		int result = 0;
+
+		if (!(keyIds == null || keyIds.length == 0)) {
+			for (int i=0; i<keyIds.length; i++) {
+				String periodYear = CommonUtil.split(keyIds[i], "_")[0];
+				String quarterCode = CommonUtil.split(keyIds[i], "_")[1];
+				result += deleteWithKey(periodYear, quarterCode);
+			}
+		}
+		return result;
 	}
 
 	public SysFinancialPeriod getCurrentFinancialPeriod() throws Exception {

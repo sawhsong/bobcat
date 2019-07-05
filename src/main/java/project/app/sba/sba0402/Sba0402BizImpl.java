@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
 import zebra.data.DataSet;
@@ -23,8 +22,6 @@ import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
 public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
-	@Autowired
-	private SysBoardDao sysBoardDao;
 	@Autowired
 	private SysFinancialPeriodDao sysFinancialPeriodDao;
 
@@ -157,16 +154,17 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String periodYear = requestDataSet.getValue("periodYear");
+		String quarterCode = requestDataSet.getValue("quarterCode");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String keyIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
+			if (CommonUtil.isBlank(periodYear) && CommonUtil.isBlank(quarterCode)) {
+				result = sysFinancialPeriodDao.deleteWithKeys(keyIds);
 			} else {
-				result = sysBoardDao.delete(articleId);
+				result = sysFinancialPeriodDao.deleteWithKey(periodYear, quarterCode);
 			}
 
 			if (result <= 0) {
@@ -185,19 +183,24 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
+		String columnHeader[], fileHeader[];
 		String pageTitle, fileName;
 		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
+		HttpSession session = paramEntity.getSession();
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
+
+			pageTitle = "Financial Period List";
+			fileName = "FinancialPeriodList";
+			columnHeader = new String[]{"period_year", "financial_year", "quarter_code_name", "quarter_name_desc", "date_from", "date_to"};
+			fileHeader = new String[] {"Period Year", "Financial Year", "Quarter Code", "Quarter Name", "Date From", "Date To"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);
 			exportHelper.setPageTitle(pageTitle);
 			exportHelper.setColumnHeader(columnHeader);
+			exportHelper.setFileHeader(fileHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
@@ -208,7 +211,7 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysFinancialPeriodDao.getPeriodDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

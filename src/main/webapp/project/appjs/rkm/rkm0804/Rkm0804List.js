@@ -110,11 +110,11 @@ $(function() {
 				superTotal += parseFloat(ds.getValue(i, "SUPER_AMT"));
 
 				var uiAncSurname = new UiAnchor();
-				uiAncSurname.setText(ds.getValue(i, "SURNAME")).setScript("getWageList('"+ds.getValue(i, "EMPLOYEE_ID")+"')");
+				uiAncSurname.setText(ds.getValue(i, "SURNAME")).setScript("getWageList('"+$("#financialYear").val()+"', '"+$("#quarterName").val()+"', '"+ds.getValue(i, "EMPLOYEE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncSurname));
 
 				var uiAncGivenName = new UiAnchor();
-				uiAncGivenName.setText(ds.getValue(i, "GIVEN_NAME")).setScript("getWageList('"+ds.getValue(i, "EMPLOYEE_ID")+"')");
+				uiAncGivenName.setText(ds.getValue(i, "GIVEN_NAME")).setScript("getWageList('"+$("#financialYear").val()+"', '"+$("#quarterName").val()+"', '"+ds.getValue(i, "EMPLOYEE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncGivenName));
 
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_WAGE"), "#,###.##")));
@@ -154,17 +154,21 @@ $(function() {
 		});
 
 		commonJs.hideProcMessageOnElement("tblEmpList");
-		getWageList("");
+		getWageList("", "", "");
 	};
 
-	getWageList = function(employeeId) {
+	getWageList = function(financialYear, quarterName, employeeId) {
 		commonJs.showProcMessageOnElement("tblWageList");
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
 				url:"/rkm/0804/getWageList.do",
 				dataType:"json",
-				data:{employeeId:employeeId},
+				data:{
+					financialYear:financialYear,
+					quarterName:quarterName,
+					employeeId:employeeId
+				},
 				success:function(data, textStatus) {
 					var result = commonJs.parseAjaxResult(data, textStatus, "json");
 

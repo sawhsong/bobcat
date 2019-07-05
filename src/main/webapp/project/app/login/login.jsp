@@ -71,11 +71,11 @@ body {background:#FFFFFF;}
 		<div class="panel-body">
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-user fa-lg addonIcon" status="display"/></div>
-				<ui:text name="loginId" value="dustin" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
+				<ui:text name="loginId" value="" className="form-control" placeHolder="login.header.loginId" checkName="login.header.loginId" options="mandatory"/>
 			</div>
 			<div class="input-group">
 				<div class="input-group-addon"><ui:icon className="fa-lock fa-lg addonIcon" status="display"/></div>
-				<ui:password name="password" value="dustin" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
+				<ui:password name="password" value="" className="form-control" placeHolder="login.header.password" checkName="login.header.password" options="mandatory"/>
 			</div>
 			<div class="buttonDiv">
 				<ui:button id="btnLogin" type="success" caption="login.button.login" iconClass="fa-key" buttonStyle="padding-top:8px;width:100%;height:40px;font-size:14px;"/>

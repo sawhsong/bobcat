@@ -133,7 +133,8 @@
 		                 where typ.expense_type_id = exp.expense_type_id(+)
 		                 order by typ.sort_order
 		               ) src
-		         where expense_month is not null
+--		         where expense_month is not null
+		         where description is not null
 		         group by expense_type,
 		               description,
 		               sort_order,
@@ -159,6 +160,30 @@
 		  from src_data
 		 group by substr(display_order, 3, 2),
 		       type_name
+		union
+		select '91' as display_order,
+		       'Wage' as type_name,
+		       decode(wage_month, '07', nvl(net_amt, 0), 0) as jul,
+		       decode(wage_month, '08', nvl(net_amt, 0), 0) as aug,
+		       decode(wage_month, '09', nvl(net_amt, 0), 0) as sep,
+		       decode(wage_month, '10', nvl(net_amt, 0), 0) as oct,
+		       decode(wage_month, '11', nvl(net_amt, 0), 0) as nov,
+		       decode(wage_month, '12', nvl(net_amt, 0), 0) as dec,
+		       decode(wage_month, '01', nvl(net_amt, 0), 0) as jan,
+		       decode(wage_month, '02', nvl(net_amt, 0), 0) as feb,
+		       decode(wage_month, '03', nvl(net_amt, 0), 0) as mar,
+		       decode(wage_month, '04', nvl(net_amt, 0), 0) as apr,
+		       decode(wage_month, '05', nvl(net_amt, 0), 0) as may,
+		       decode(wage_month, '06', nvl(net_amt, 0), 0) as jun
+		  from (select to_char(uem.start_date, 'MM') as wage_month,
+		               sum(nvl(ewg.gross_wage, 0)) as net_amt
+		          from usr_employee_wage ewg,
+		               usr_employee uem
+		         where ewg.wage_year = '${financialYear}'
+		           and ewg.org_id = '${orgId}'
+		           and ewg.employee_id = uem.employee_id
+		         group by to_char(uem.start_date, 'MM')
+		       )
 		 order by display_order
 	]]>
 	</sql-query>

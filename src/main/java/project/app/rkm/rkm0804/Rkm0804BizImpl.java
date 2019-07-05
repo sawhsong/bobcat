@@ -66,9 +66,13 @@ public class Rkm0804BizImpl extends BaseBiz implements Rkm0804Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
+		String financialYear = requestDataSet.getValue("financialYear");
+		String quarterName = requestDataSet.getValue("quarterName");
 		String employeeId = requestDataSet.getValue("employeeId");
 
 		try {
+			queryAdvisor.setObject("financialYear", financialYear);
+			queryAdvisor.setObject("quarterName", quarterName);
 			queryAdvisor.setObject("employeeId", employeeId);
 			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 

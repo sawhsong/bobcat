@@ -53,6 +53,8 @@
 		  from usr_employee_wage ewg,
 		       usr_employee uem
 		 where ewg.employee_id = uem.employee_id
+		   and ewg.wage_year = '${financialYear}'
+		   and ewg.quarter_name = '${quarterName}'
 		   and ewg.employee_id = '${employeeId}'
 	]]>
 	</sql-query>

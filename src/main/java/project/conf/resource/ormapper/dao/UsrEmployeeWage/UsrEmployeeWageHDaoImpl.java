@@ -35,10 +35,14 @@ public class UsrEmployeeWageHDaoImpl extends BaseHDao implements UsrEmployeeWage
 	}
 
 	public DataSet getWageListDataSetByEmployeeId(QueryAdvisor queryAdvisor) throws Exception {
+		String financialYear = (String)queryAdvisor.getObject("financialYear");
+		String quarterName = (String)queryAdvisor.getObject("quarterName");
 		String employeeId = (String)queryAdvisor.getObject("employeeId");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String langCode = (String)queryAdvisor.getObject("langCode");
 
+		queryAdvisor.addVariable("financialYear", financialYear);
+		queryAdvisor.addVariable("quarterName", quarterName);
 		queryAdvisor.addVariable("employeeId", employeeId);
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addVariable("langCode", langCode);

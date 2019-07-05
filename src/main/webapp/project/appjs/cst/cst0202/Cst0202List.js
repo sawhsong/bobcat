@@ -12,6 +12,14 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#financialYear").change(function() {
+		doSearch();
+	});
+
+	$("#quarterName").change(function() {
+		doSearch();
+	});
+
 	$("#btnSearch").click(function(event) {
 		doSearch();
 	});

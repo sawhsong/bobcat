@@ -15,9 +15,6 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 	@Autowired
 	private UsrExpenseDao usrExpenseDao;
 
-	/*!
-	 * DTO Generator
-	 */
 	public DataSet getPerformanceDataSet(String orgCategory, String orgId, String financialYear, String quarterName) throws Exception {
 		String header[] = new String[] {"DISPLAY_ORDER", "TYPE_NAME", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "TOT"};
 		DataSet income = new DataSet();

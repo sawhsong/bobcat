@@ -27,6 +27,21 @@ public interface SysFinancialPeriodDao extends IDao {
 	 */
 	public int updateWithKey(SysFinancialPeriod sysFinancialPeriod, String periodYear, String quarterCode) throws Exception;
 	/**
+	 * Delete with key
+	 * @param periodYear
+	 * @param quarterCode
+	 * @return
+	 * @throws Exception
+	 */
+	public int deleteWithKey(String periodYear, String quarterCode) throws Exception;
+	/**
+	 * Delete with key array
+	 * @param keyIds
+	 * @return
+	 * @throws Exception
+	 */
+	public int deleteWithKeys(String keyIds[]) throws Exception;
+	/**
 	 * Get this financial year
 	 * @return SysFinancialPeriod
 	 * @throws Exception
