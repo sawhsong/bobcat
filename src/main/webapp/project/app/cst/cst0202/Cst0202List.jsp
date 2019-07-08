@@ -138,7 +138,18 @@
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"></div>
+<div id="divPagingArea"></div>
+<div class="verGap10"></div>
+<table class="tblDefault withPadding">
+	<colgroup>
+		<col width="*"/>
+	</colgroup>
+	<tr>
+		<td class="tdDefault">
+			<ui:img src="" id="imgChart"/>
+		</td>
+	</tr>
+</table>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

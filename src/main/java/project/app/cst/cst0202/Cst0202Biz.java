@@ -10,4 +10,5 @@ import zebra.data.ParamEntity;
 public interface Cst0202Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getChart(ParamEntity paramEntity) throws Exception;
 }

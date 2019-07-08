@@ -21,6 +21,7 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 		DataSet expense = new DataSet();
 		DataSet result = new DataSet();
 		double rowTot = 0, totJul = 0, totAug = 0, totSep = 0, totOct = 0, totNov = 0, totDec = 0, totJan = 0, totFeb = 0, totMar = 0, totApr = 0, totMay = 0, totJun = 0;
+		double incomeTot = 0, expenseTot = 0;
 
 		try {
 			income = usrIncomeDao.getIncomePerformanceDataSet(orgCategory, orgId, financialYear, quarterName);
@@ -77,7 +78,7 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 
 			result.addRow();
 			result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", "99-TOT");
-			result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Total");
+			result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Income Total");
 			result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.toString(totJul, "#,##0.00"));
 			result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.toString(totAug, "#,##0.00"));
 			result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.toString(totSep, "#,##0.00"));
@@ -90,7 +91,8 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 			result.setValue(result.getRowCnt()-1, "APR", CommonUtil.toString(totApr, "#,##0.00"));
 			result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.toString(totMay, "#,##0.00"));
 			result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,##0.00"));
-			result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}), "#,##0.00"));
+			incomeTot = CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun});
+			result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(incomeTot, "#,##0.00"));
 
 			rowTot = 0;
 			totJul = totAug = totSep = totOct = totNov = totDec = totJan = totFeb = totMar = totApr = totMay = totJun = 0;
@@ -144,7 +146,7 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 				}
 				result.addRow();
 				result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", "99-TOT");
-				result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Total");
+				result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Expense Total");
 				result.setValue(result.getRowCnt()-1, "JUL", CommonUtil.toString(totJul, "#,##0.00"));
 				result.setValue(result.getRowCnt()-1, "AUG", CommonUtil.toString(totAug, "#,##0.00"));
 				result.setValue(result.getRowCnt()-1, "SEP", CommonUtil.toString(totSep, "#,##0.00"));
@@ -157,7 +159,13 @@ public class PerformanceBizServiceImpl extends BaseBiz implements PerformanceBiz
 				result.setValue(result.getRowCnt()-1, "APR", CommonUtil.toString(totApr, "#,##0.00"));
 				result.setValue(result.getRowCnt()-1, "MAY", CommonUtil.toString(totMay, "#,##0.00"));
 				result.setValue(result.getRowCnt()-1, "JUN", CommonUtil.toString(totJun, "#,##0.00"));
-				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun}), "#,##0.00"));
+				expenseTot = CommonUtil.sum(new double[] {totJul, totAug, totSep, totOct, totNov, totDec, totJan, totFeb, totMar, totApr, totMay, totJun});
+				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString(expenseTot, "#,##0.00"));
+
+				result.addRow();
+				result.setValue(result.getRowCnt()-1, "DISPLAY_ORDER", "99-TOT");
+				result.setValue(result.getRowCnt()-1, "TYPE_NAME", "Grand Total");
+				result.setValue(result.getRowCnt()-1, "TOT", CommonUtil.toString((incomeTot - expenseTot), "#,##0.00"));
 			}
 		} catch (Exception ex) {
 			throw new FrameworkException(ex);

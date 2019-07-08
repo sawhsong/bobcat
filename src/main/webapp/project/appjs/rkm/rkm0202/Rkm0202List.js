@@ -97,6 +97,8 @@ $(function() {
 						$("#deGrossSales").val(ds.getValue(0, "grossSales"));
 						$("#deGst").val(ds.getValue(0, "gst"));
 						$("#deNetSales").val(ds.getValue(0, "netSales"));
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});
@@ -118,6 +120,8 @@ $(function() {
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						renderDataGridTable(result);
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});

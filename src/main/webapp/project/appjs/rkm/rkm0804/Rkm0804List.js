@@ -83,6 +83,8 @@ $(function() {
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						renderEmpListGridTable(result);
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});
@@ -174,6 +176,8 @@ $(function() {
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						renderWageListGridTable(result);
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});

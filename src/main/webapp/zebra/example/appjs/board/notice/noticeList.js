@@ -65,6 +65,8 @@ $(function() {
 		
 						if (result.isSuccess == true || result.isSuccess == "true") {
 							renderDataGridTable(result);
+						} else {
+							commonJs.error(result.message);
 						}
 					}
 				});
@@ -315,6 +317,8 @@ $(function() {
 						horAdjust:0,
 						verAdjust:2
 					});
+				} else {
+					commonJs.error(result.message);
 				}
 			}
 		});

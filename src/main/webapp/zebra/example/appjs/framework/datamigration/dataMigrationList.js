@@ -122,6 +122,8 @@ $(function() {
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						renderTargetDataTable(result);
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});

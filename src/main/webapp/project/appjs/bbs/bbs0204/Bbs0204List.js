@@ -66,6 +66,8 @@ $(function() {
 
 						if (result.isSuccess == true || result.isSuccess == "true") {
 							renderDataGridTable(result);
+						} else {
+							commonJs.error(result.message);
 						}
 					}
 				});
@@ -306,6 +308,8 @@ $(function() {
 						verAdjust:2,
 						containment:$("#divScrollablePanel")
 					});
+				} else {
+					commonJs.error(result.message);
 				}
 			}
 		});
