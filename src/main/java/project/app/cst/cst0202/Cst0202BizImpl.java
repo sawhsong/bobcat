@@ -35,7 +35,6 @@ import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
 import zebra.util.CommonUtil;
-import zebra.util.ConfigUtil;
 import zebra.util.FileUtil;
 
 public class Cst0202BizImpl extends BaseBiz implements Cst0202Biz {
@@ -94,7 +93,7 @@ public class Cst0202BizImpl extends BaseBiz implements Cst0202Biz {
 
 		try {
 			String realPath = (String)MemoryBean.get("applicationRealPath");
-			String webPath = "/shared/repository/temp/vmchart"; //ConfigUtil.getProperty("path.dir.temp") + "/vmchart"; "/shared/repository/temp/vmchart"
+			String webPath = "/shared/repository/temp/vmchart";
 			String chartFileName = "/vmchart" + CommonUtil.uid() + ".png";
 
 			queryAdvisor.setRequestDataSet(requestDataSet);
@@ -113,7 +112,7 @@ public class Cst0202BizImpl extends BaseBiz implements Cst0202Biz {
 				files[i].delete();
 			}
 
-			JFreeChart chart = ChartFactory.createLineChart3D("", "Month", "Amount", dataset, PlotOrientation.VERTICAL, true, true, false);
+			JFreeChart chart = ChartFactory.createLineChart("", "Month", "Amount", dataset, PlotOrientation.VERTICAL, true, true, false);
 			chart.setBackgroundPaint(Color.WHITE);
 			chart.setTitle("Annual Performance ("+financialYear+")");
 
@@ -126,6 +125,7 @@ public class Cst0202BizImpl extends BaseBiz implements Cst0202Biz {
 
 			renderer = (LineAndShapeRenderer)plot.getRenderer();
 			renderer.setItemLabelAnchorOffset(5);
+			renderer.setBaseShapesVisible(true);
 			for (int i=0; i<dataset.getRowCount(); i++) {
 				renderer.setSeriesItemLabelGenerator(i, generator);
 				renderer.setSeriesItemLabelsVisible(i, true);

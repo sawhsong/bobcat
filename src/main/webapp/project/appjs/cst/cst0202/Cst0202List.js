@@ -4,10 +4,6 @@
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 
-var popup = null;
-var searchResultDataCount = 0;
-var attchedFileContextMenu = [];
-
 $(function() {
 	/*!
 	 * event
@@ -68,7 +64,7 @@ $(function() {
 
 						if (result.isSuccess == true || result.isSuccess == "true") {
 							var ds = result.dataSet;
-console.log("chartFilePath : "+ds.getValue(0, "chartFilePath"));
+
 							$("#imgChart").attr("src", ds.getValue(0, "chartFilePath"));
 						} else {
 							commonJs.error(result.message);
@@ -84,7 +80,6 @@ console.log("chartFilePath : "+ds.getValue(0, "chartFilePath"));
 		var html = "", totHtml = "", totGross = 0, totGst = 0, totNet = 0;
 		var totGridTr = new UiGridTr();
 
-		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
 
 		if (ds.getRowCnt() > 0) {
@@ -126,15 +121,15 @@ console.log("chartFilePath : "+ds.getValue(0, "chartFilePath"));
 
 		$("#tblGridBody").append($(html));
 
-		$("#tblGrid").fixedHeaderTable({
-			attachTo:$("#divDataArea"),
-			pagingArea:$("#divPagingArea"),
-			isPageable:false,
-			isFilter:false,
-			filterColumn:[],
-			totalResultRows:result.totalResultRows,
-			script:"doSearch"
-		});
+//		$("#tblGrid").fixedHeaderTable({
+//			attachTo:$("#divDataArea"),
+//			pagingArea:$("#divPagingArea"),
+//			isPageable:false,
+//			isFilter:false,
+//			filterColumn:[],
+//			totalResultRows:result.totalResultRows,
+//			script:"doSearch"
+//		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
