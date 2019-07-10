@@ -137,18 +137,25 @@
 			</tr>
 		</tbody>
 	</table>
+	<div class="verGap10"></div>
+	<div style="text-align:center">
+		<div style="width:80%;display:inline-block;">
+			<canvas id="cvChart"></canvas>
+		</div>
+	</div>
+<!--
+	<table class="tblDefault withPadding">
+		<colgroup>
+			<col width="*"/>
+		</colgroup>
+		<tr>
+			<td class="tdDefault Ct">
+				<img src="" id="imgChart"/>
+			</td>
+		</tr>
+	</table>
+-->
 </div>
-<div class="verGap10"></div>
-<table class="tblDefault withPadding">
-	<colgroup>
-		<col width="*"/>
-	</colgroup>
-	<tr>
-		<td class="tdDefault Ct">
-			<img src="" id="imgChart"/>
-		</td>
-	</tr>
-</table>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer

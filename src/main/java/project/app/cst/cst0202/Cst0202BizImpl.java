@@ -152,7 +152,7 @@ public class Cst0202BizImpl extends BaseBiz implements Cst0202Biz {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
 		for (int i=0; i<ds.getRowCnt()-1; i++) {
-			for (int j=1; j<ds.getColumnCnt()-1; j++) {
+			for (int j=2; j<ds.getColumnCnt()-1; j++) {
 				dataset.addValue(CommonUtil.toDouble(ds.getValue(i, j)), ds.getValue(i, "TYPE_NAME"), ds.getName(j));
 			}
 		}

@@ -54,24 +54,24 @@ $(function() {
 				});
 			}, 200);
 
-			setTimeout(function() {
-				commonJs.ajaxSubmit({
-					url:"/cst/0202/getChart",
-					dataType:"json",
-					formId:"fmDefault",
-					success:function(data, textStatus) {
-						var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-						if (result.isSuccess == true || result.isSuccess == "true") {
-							var ds = result.dataSet;
-
-							$("#imgChart").attr("src", ds.getValue(0, "chartFilePath"));
-						} else {
-							commonJs.error(result.message);
-						}
-					}
-				});
-			}, 400);
+//			setTimeout(function() {
+//				commonJs.ajaxSubmit({
+//					url:"/cst/0202/getChart",
+//					dataType:"json",
+//					formId:"fmDefault",
+//					success:function(data, textStatus) {
+//						var result = commonJs.parseAjaxResult(data, textStatus, "json");
+//
+//						if (result.isSuccess == true || result.isSuccess == "true") {
+//							var ds = result.dataSet;
+//
+//							$("#imgChart").attr("src", ds.getValue(0, "chartFilePath"));
+//						} else {
+//							commonJs.error(result.message);
+//						}
+//					}
+//				});
+//			}, 400);
 		}
 	};
 
@@ -131,9 +131,74 @@ $(function() {
 //			script:"doSearch"
 //		});
 
+		renderChart(ds);
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
+	renderChart = function(ds) {
+		var ctx = $("#cvChart")[0].getContext("2d");
+		var maxAmt = 0;
+		var dataLabels = new Array();
+		for (var i=2; i<ds.getColumnCnt()-1; i++) {
+			dataLabels.push(ds.getName(i));
+		}
+
+		var dataset = new Array();
+		for (var i=0; i<ds.getRowCnt()-1; i++) {
+			var dataitems = {}, data = new Array(), color = new Array();
+			dataitems.label = ds.getValue(i, "TYPE_NAME");
+			dataitems.fill = false;
+			for (var j=2; j<ds.getColumnCnt()-1; j++) {
+				var val = commonJs.replace(ds.getValue(i, j), ",", "");
+				data.push(val);
+				color.push(chartColor["border"+(i)]);
+				if (maxAmt < val) {
+					maxAmt = Math.ceil(val);
+				}
+			}
+			dataitems.data = data;
+			dataitems.borderColor = color;
+			dataitems.borderWidth = 1;
+
+			dataset.push(dataitems);
+		}
+
+		var myChart = new Chart(ctx, {
+			type:"line",
+			data:{
+				labels:dataLabels,
+				datasets:dataset
+			},
+			options:{
+				title:{
+					display:true,
+					text:"Annual Performance ("+$("#financialYear option:selected").text()+")"
+				},
+				scales:{
+					xAxes:[{
+						display:true,
+						scaleLabel:{
+							display:true,
+							labelString:"Month"
+						}
+					}],
+					yAxes:[{
+						display:true,
+						scaleLabel:{
+							display:true,
+							labelString:"Amount"
+						},
+						ticks:{
+							min:0,
+							max:maxAmt,
+							stepSize:10000
+						}
+					}]
+				}
+			}
+		});
+
+	}
 	/*!
 	 * load event (document / window)
 	 */

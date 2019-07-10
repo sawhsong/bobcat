@@ -32,6 +32,40 @@ var jsconfig = {
 		}
 	}
 };
+var chartColor = {
+	background0:"rgba(255, 99, 132, 0.2)",
+	border0:"rgba(255, 99, 132, 1)",
+	background1:"rgba(54, 162, 235, 0.2)",
+	border1:"rgba(54, 162, 235, 1)",
+	background2:"rgba(255, 159, 64, 0.2)",
+	border2:"rgba(255, 159, 64, 1)",
+	background3:"rgba(75, 192, 192, 0.2)",
+	border3:"rgba(75, 192, 192, 1)",
+	background4:"rgba(255, 205, 86, 0.2)",
+	border4:"rgba(255, 205, 86, 1)",
+	background5:"rgba(153, 102, 255, 0.2)",
+	border5:"rgba(153, 102, 255, 1)",
+	background6:"rgba(201, 203, 207, 0.2)",
+	border6:"rgba(201, 203, 207, 1)",
+	background7:"rgba(194, 24, 91, 0.2)",
+	border7:"rgba(194, 24, 91, 1)",
+	background8:"rgba(85, 139, 47, 0.2)",
+	border8:"rgba(85, 139, 47, 1)",
+	background9:"rgba(245, 127, 23, 0.2)",
+	border9:"rgba(245, 127, 23, 1)",
+	background10:"rgba(121, 85, 72, 0.2)",
+	border10:"rgba(121, 85, 72, 1)",
+	background11:"rgba(0, 0, 0, 0.2)",
+	border11:"rgba(0, 0, 0, 1)",
+	background12:"rgba(221, 44, 0, 0.2)",
+	border12:"rgba(221, 44, 0, 1)",
+	background13:"rgba(251, 192, 45, 0.2)",
+	border13:"rgba(251, 192, 45, 1)",
+	background14:"rgba(174, 234, 0, 0.2)",
+	border14:"rgba(174, 234, 0, 1)",
+	background15:"rgba(0, 131, 143, 0.2)",
+	border15:"rgba(0, 131, 143, 1)"
+};
 
 /**
  * declare nony

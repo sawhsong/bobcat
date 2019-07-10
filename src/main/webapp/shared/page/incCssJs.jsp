@@ -27,6 +27,7 @@
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/superfish.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/bootstrap-select.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/bowser.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/Chart.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="ckEditor"/>/ckeditor.js"></script>
 <script type="text/javascript" src="<mc:cp key="ckEditor"/>/adapters/jquery.js"></script>
