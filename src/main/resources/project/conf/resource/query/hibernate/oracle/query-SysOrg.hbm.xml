@@ -26,6 +26,7 @@
 		       (select description_${langCode} from sys_common_code where code_type = 'WAGE_TYPE' and common_code = org.wage_type) as wage_type_name,
 		       org.revenue_range_from,
 		       org.revenue_range_to,
+		       org.logo_path,
 		       org.is_active,
 		       org.insert_user_id,
 		       to_char(org.insert_date, '${dateFormat}') as insert_date,

@@ -20,7 +20,7 @@ public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 	public int update(String orgId, Dto dto) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("org_id = '"+orgId+"'");
-		return updateWithDto(queryAdvisor, dto);
+		return updateColumns(queryAdvisor, dto);
 	}
 
 	public int delete(String orgIds[]) throws Exception {

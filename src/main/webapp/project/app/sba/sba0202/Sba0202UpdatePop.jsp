@@ -65,6 +65,14 @@ var orgId = "<%=sysOrg.getOrgId()%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+	<table class="tblDefault">
+		<tr>
+			<td class="tdDefault Lt">
+				<img id="img<%=sysOrg.getOrgId()%>" src="<%=sysOrg.getLogoPath()%>" class="imgDis" title="<%=sysOrg.getLegalName()%>"/>
+			</td>
+		</tr>
+	</table>
+	<div class="verGap4"></div>
 	<table class="tblEdit">
 		<colgroup>
 			<col width="14%"/>
@@ -72,6 +80,10 @@ var orgId = "<%=sysOrg.getOrgId()%>";
 			<col width="14%"/>
 			<col width="36%"/>
 		</colgroup>
+		<tr>
+			<th class="thEdit rt"><mc:msg key="sba0202.header.changeLogo"/></th>
+			<td class="tdEdit" colspan="3"><ui:file name="logoPath" style="width:540px;" checkName="sba0202.header.changeLogo"/></td>
+		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0202.header.orgId"/></th>
 			<td class="tdEdit"><ui:text name="orgId" value="<%=sysOrg.getOrgId()%>" status="display"/></td>

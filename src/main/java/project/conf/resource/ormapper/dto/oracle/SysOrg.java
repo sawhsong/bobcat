@@ -41,6 +41,8 @@ public class SysOrg extends BaseDto implements Serializable {
 	private String INSERT_USER_ID;
 	private String isActive;
 	private String IS_ACTIVE;
+	private String logoPath;
+	private String LOGO_PATH;
 	private String postalAddress;
 	private String POSTAL_ADDRESS;
 	private Date registeredDate;
@@ -202,6 +204,15 @@ public class SysOrg extends BaseDto implements Serializable {
 		setValueFromAccessor("IS_ACTIVE", isActive);
 	}
 
+	public String getLogoPath() {
+		return logoPath;
+	}
+
+	public void setLogoPath(String logoPath) throws Exception {
+		this.logoPath = logoPath;
+		setValueFromAccessor("LOGO_PATH", logoPath);
+	}
+
 	public String getPostalAddress() {
 		return postalAddress;
 	}
@@ -309,10 +320,10 @@ public class SysOrg extends BaseDto implements Serializable {
 		dataSet.setValue(dataSet.getRowCnt()-1, columnName, value);
 		for (int i=0; i<field.length; i++) {
 			if (field[i].getName().equals(CommonUtil.toCamelCaseStartLowerCase(columnName))) {
-				if (CommonUtil.containsIgnoreCase(getFrwVarNumberColumn(), columnName)) {
+				if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarNumberColumn(), ","))) {
 					field[i].set(this, CommonUtil.toDouble(value));
-				} else if (CommonUtil.containsIgnoreCase(getFrwVarDateColumn(), columnName)) {
-					if (CommonUtil.equalsIgnoreCase(value, "SYSDATE")) {
+				} else if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarDateColumn(), ","))) {
+					if (CommonUtil.equalsIgnoreCase(value, "SYSDATE") || CommonUtil.containsIgnoreCase(value, "SYSDATE")) {
 						field[i].set(this, CommonUtil.toDate(CommonUtil.getSysdate()));
 					} else {
 						field[i].set(this, CommonUtil.toDate(value));
@@ -356,9 +367,9 @@ public class SysOrg extends BaseDto implements Serializable {
 	public void addUpdateColumn(String columnName, String columnValue) throws Exception {
 		String dataType = "";
 
-		if (CommonUtil.containsIgnoreCase(getFrwVarNumberColumn(), columnName)) {
+		if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarNumberColumn(), ","))) {
 			dataType = "Number";
-		} else if (CommonUtil.containsIgnoreCase(getFrwVarDateColumn(), columnName)) {
+		} else if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarDateColumn(), ","))) {
 			dataType = "Date";
 		} else {
 			dataType = "String";
@@ -406,6 +417,7 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "isActive : "+isActive+"\n";
+		str += "logoPath : "+logoPath+"\n";
 		str += "postalAddress : "+postalAddress+"\n";
 		str += "registeredDate : "+registeredDate+"\n";
 		str += "revenueRangeFrom : "+revenueRangeFrom+"\n";
@@ -437,6 +449,7 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"isActive\" value=\""+isActive+"\">";
+		str += "<column name=\"logoPath\" value=\""+logoPath+"\">";
 		str += "<column name=\"postalAddress\" value=\""+postalAddress+"\">";
 		str += "<column name=\"registeredDate\" value=\""+registeredDate+"\">";
 		str += "<column name=\"revenueRangeFrom\" value=\""+revenueRangeFrom+"\">";
@@ -468,6 +481,7 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"isActive\":\""+isActive+"\", ";
+		str += "\"logoPath\":\""+logoPath+"\", ";
 		str += "\"postalAddress\":\""+postalAddress+"\", ";
 		str += "\"registeredDate\":\""+registeredDate+"\", ";
 		str += "\"revenueRangeFrom\":\""+revenueRangeFrom+"\", ";

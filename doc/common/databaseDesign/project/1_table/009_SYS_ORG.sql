@@ -21,6 +21,7 @@ create table sys_org (
     revenue_range_from              number(12,2),                                                   -- Revenue Range From
     revenue_range_to                number(12,2),                                                   -- Revenue Range To
     is_active                       varchar2(1),                                                    -- Is Active
+    logo_path                       varchar2(2000),                                                 -- Org Logo path
     insert_user_id                  varchar2(30),                                                   -- Insert User UID
     insert_date                     date                        default sysdate,                    -- Insert Date
     update_user_id                  varchar2(30),                                                   -- Update User UID
@@ -47,6 +48,7 @@ comment on column sys_org.wage_type          is 'Wage Type - sys_common_code.wag
 comment on column sys_org.revenue_range_from is 'Revenue Range From';
 comment on column sys_org.revenue_range_to   is 'Revenue Range To';
 comment on column sys_org.is_active          is 'Is active?';
+comment on column sys_org.logo_path          is 'Org Logo path';
 comment on column sys_org.insert_user_id     is 'Insert User UID';
 comment on column sys_org.insert_date        is 'Insert Date';
 comment on column sys_org.update_user_id     is 'Update User UID';

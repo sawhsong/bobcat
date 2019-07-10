@@ -13,6 +13,7 @@ import project.common.extend.BaseBiz;
 import project.common.module.datahelper.DataHelper;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
+import zebra.config.MemoryBean;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -21,6 +22,7 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
+import zebra.util.FileUtil;
 
 public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	@Autowired
@@ -74,7 +76,10 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	}
 
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
+		String logoPath = ConfigUtil.getProperty("path.image.orglogo")+"/"+"DefaultLogo.png";
+
 		try {
+			paramEntity.setObject("logoPath", logoPath);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -94,11 +99,15 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
 		SysOrg sysOrg = new SysOrg();
 		String uid = CommonUtil.uid();
 		String loggedInUserId = (String)session.getAttribute("UserId");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String defaultFileName = "DefaultLogo.png";
+		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String pathToSave = ConfigUtil.getProperty("path.image.orglogo");
 		int result = -1;
 
 		try {
@@ -120,6 +129,18 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 			sysOrg.setInsertUserId(loggedInUserId);
 			sysOrg.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
+			if (fileDataSet.getRowCnt() > 0) {
+				String fileName = fileDataSet.getValue("NEW_NAME"), fullPath = "";
+
+				fileName = uid+"_"+fileName;
+				fullPath = rootPath + pathToSave + "/" + fileName;
+				FileUtil.moveFile(fileDataSet, fullPath);
+
+				sysOrg.setLogoPath(pathToSave + "/" + fileName);
+			} else {
+				sysOrg.setLogoPath(pathToSave + "/" + defaultFileName);
+			}
+
 			result = sysOrgDao.insert(sysOrg);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -135,15 +156,19 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
 		String loggedInUserId = (String)session.getAttribute("UserId");
 		String orgId = requestDataSet.getValue("orgId");
 		SysOrg sysOrg = new SysOrg();
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String pathToSave = ConfigUtil.getProperty("path.image.orglogo");
 		int result = 0;
 
 		try {
-			sysOrg.setOrgId(orgId);
+			sysOrg = sysOrgDao.getOrgByOrgId(orgId);
+
 			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
 			sysOrg.setLegalName(CommonUtil.replace(requestDataSet.getValue("legalName"), "||", "&"));
 			sysOrg.setTradingName(requestDataSet.getValue("tradingName"));
@@ -160,6 +185,18 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 			sysOrg.setRevenueRangeTo(CommonUtil.toDouble(requestDataSet.getValue("rRangeTo")));
 			sysOrg.setUpdateUserId(loggedInUserId);
 			sysOrg.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			if (fileDataSet.getRowCnt() > 0) {
+				String fileName = fileDataSet.getValue("NEW_NAME"), fullPath = "";
+
+				fileName = orgId+"_"+fileName;
+				fullPath = rootPath + pathToSave + "/" + fileName;
+				FileUtil.moveFile(fileDataSet, fullPath);
+
+				sysOrg.setLogoPath(pathToSave + "/" + fileName);
+			}
+
+			sysOrg.addUpdateColumnFromField();
 
 			result = sysOrgDao.update(orgId, sysOrg);
 			if (result <= 0) {

@@ -71,7 +71,7 @@
 		<div class="panel-body">
 			<table class="tblDefault">
 				<tr>
-					<td class="tdDefaultCt">
+					<td class="tdDefault Ct">
 						<img id="img<%=sysUser.getUserId()%>" src="<%=sysUser.getPhotoPath()%>" class="imgDis" style="width:90px;height:90px;" title="<%=sysUser.getUserName()%>"/>
 					</td>
 				</tr>

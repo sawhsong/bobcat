@@ -145,19 +145,19 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 304;
 
 		if (param.mode == "Detail") {
-			url = "/sba/0202/getDetail.do";
+			url = "/sba/0202/getDetail";
 			header = com.header.popHeaderDetail;
+			height = 370;
 		} else if (param.mode == "New") {
-			url = "/sba/0202/getInsert.do";
+			url = "/sba/0202/getInsert";
 			header = com.header.popHeaderEdit;
-			height = 416;
+			height = 525;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0202/getUpdate.do";
+			url = "/sba/0202/getUpdate";
 			header = com.header.popHeaderEdit;
-			height = 416;
+			height = 525;
 		}
 
 		var popParam = {

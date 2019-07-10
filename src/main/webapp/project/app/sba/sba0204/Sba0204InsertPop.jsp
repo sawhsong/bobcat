@@ -73,7 +73,7 @@
 		<div class="panel-body">
 			<table class="tblDefault">
 				<tr>
-					<td class="tdDefaultCt">
+					<td class="tdDefault Ct">
 						<img id="imgUserPhoto" src="<%=photoPath%>" class="imgDis" style="width:90px;height:90px;"/>
 					</td>
 				</tr>
