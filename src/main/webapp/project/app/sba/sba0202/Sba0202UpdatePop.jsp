@@ -67,7 +67,7 @@ var orgId = "<%=sysOrg.getOrgId()%>";
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblDefault">
 		<tr>
-			<td class="tdDefault Lt">
+			<td class="tdDefault Lt" style="width:250px;height:80px;vertical-align:bottom">
 				<img id="img<%=sysOrg.getOrgId()%>" src="<%=sysOrg.getLogoPath()%>" class="imgDis" title="<%=sysOrg.getLegalName()%>"/>
 			</td>
 		</tr>

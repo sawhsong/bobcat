@@ -66,7 +66,7 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblDefault">
 		<tr>
-			<td class="tdDefault Lt">
+			<td class="tdDefault Lt" style="width:250px;height:80px;vertical-align:bottom">
 				<img id="imgOrgLogo" src="<%=logoPath%>" class="imgDis"/>
 			</td>
 		</tr>
