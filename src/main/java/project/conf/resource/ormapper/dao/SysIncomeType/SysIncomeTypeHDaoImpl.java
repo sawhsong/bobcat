@@ -11,6 +11,13 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class SysIncomeTypeHDaoImpl extends BaseHDao implements SysIncomeTypeDao {
+	public int updateWithKey(SysIncomeType sysIncomeType, String incomeTypeId, String incomeTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("income_type_id = '" + incomeTypeId + "'");
+		queryAdvisor.addWhereClause("income_type = '" + incomeTypeCode + "'");
+		return updateWithDto(queryAdvisor, sysIncomeType);
+	}
+
 	public DataSet getIncomeTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgCategory = requestDataSet.getValue("orgCategory");

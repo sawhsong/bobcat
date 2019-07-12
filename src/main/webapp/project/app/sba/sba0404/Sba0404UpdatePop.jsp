@@ -10,6 +10,7 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	SysIncomeType sysIncomeType = (SysIncomeType)paramEntity.getObject("sysIncomeType");
+	String gstFormat = "#,##0.00";
 %>
 <%/************************************************************************************************
 * HTML
@@ -79,6 +80,34 @@
 			<td class="tdEdit">
 				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" status="disabled" selectedValue="<%=sysIncomeType.getOrgCategory()%>" checkName="sba0404.header.orgCategory" options="mandatory"/>
 			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0404.header.incomeType"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="incomeType" codeType="INCOME_TYPE" status="disabled" selectedValue="<%=sysIncomeType.getIncomeType()%>" checkName="sba0404.header.incomeType" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0404.header.description"/></th>
+			<td class="tdEdit">
+				<ui:text name="description" value="<%=sysIncomeType.getDescription()%>" checkName="sba0404.header.description" options="mandatory"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0404.header.isApplyGst"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="isApplyGst" codeType="SIMPLE_YN" selectedValue="<%=sysIncomeType.getIsApplyGst()%>" checkName="sba0404.header.isApplyGst" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0404.header.gstPercentage"/></th>
+			<td class="tdEdit">
+				<ui:text name="gstPercentage" value="<%=CommonUtil.toString(sysIncomeType.getGstPercentage(), gstFormat)%>" className="numeric" checkName="sba0404.header.gstPercentage" options="mandatory"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0404.header.accountCode"/></th>
+			<td class="tdEdit">
+				<ui:text name="accountCode" value="<%=sysIncomeType.getAccountCode()%>" checkName="sba0404.header.accountCode"/>
+			</td>
+			<th class="thEdit Rt"></th>
+			<td class="tdEdit"></td>
 		</tr>
 	</table>
 </div>

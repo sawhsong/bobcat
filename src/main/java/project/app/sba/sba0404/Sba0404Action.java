@@ -32,20 +32,6 @@ public class Sba0404Action extends BaseAction {
 		return "update";
 	}
 
-	public String getInsert() throws Exception {
-		biz.getInsert(paramEntity);
-		return "insert";
-	}
-
-	public String exeInsert() throws Exception {
-		try {
-			biz.exeInsert(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);
@@ -53,20 +39,5 @@ public class Sba0404Action extends BaseAction {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String exeDelete() throws Exception {
-		try {
-			biz.exeDelete(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String exeExport() throws Exception {
-		biz.exeExport(paramEntity);
-		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
 	}
 }

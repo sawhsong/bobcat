@@ -119,7 +119,7 @@ $(function() {
 			header:com.header.popHeaderEdit,
 			blind:true,
 			width:800,
-			height:600
+			height:300
 		});
 	};
 

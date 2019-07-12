@@ -11,6 +11,15 @@ import zebra.data.QueryAdvisor;
 
 public interface SysIncomeTypeDao extends IDao {
 	/**
+	 * Update with key(incomeTypeId, incomeTypeCode)
+	 * @param sysIncomeType
+	 * @param incomeTypeId
+	 * @param incomeTypeCode
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateWithKey(SysIncomeType sysIncomeType, String incomeTypeId, String incomeTypeCode) throws Exception;
+	/**
 	 * Get dataset by search criteria
 	 * @param queryAdvisor
 	 * @return

@@ -18,7 +18,7 @@ public interface SysFinancialPeriodDao extends IDao {
 	 */
 	public int insert(SysFinancialPeriod sysFinancialPeriod) throws Exception;
 	/**
-	 * Update with key
+	 * Update with key(periodYear, quarterCode)
 	 * @param sysFinancialPeriod
 	 * @param periodYear
 	 * @param quarterCode

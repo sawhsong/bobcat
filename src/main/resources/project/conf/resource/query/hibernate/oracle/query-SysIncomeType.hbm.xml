@@ -13,7 +13,7 @@
 		       inc_type.org_category as org_category,
 		       (select description_${langCode} from sys_common_code where code_type = 'ORG_CATEGORY' and common_code = inc_type.org_category) as org_category_name,
 		       com_code.common_code as income_type_code,
-		       com_code.description_${langCode} as income_type_name,
+		       nvl(inc_type.description, com_code.description_${langCode}) as income_type_name,
 		       inc_type.is_apply_gst as is_apply_gst,
 		       inc_type.gst_percentage as gst_percentage,
 		       inc_type.account_code as account_code,
