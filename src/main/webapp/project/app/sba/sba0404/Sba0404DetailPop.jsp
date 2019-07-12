@@ -9,8 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysIncomeType sysIncomeType = (SysIncomeType)paramEntity.getObject("sysIncomeType");
 %>
 <%/************************************************************************************************
 * HTML
@@ -48,8 +47,6 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnReply" caption="button.com.reply" iconClass="fa-reply-all"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -74,10 +71,19 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0404.header.writerName"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterName()%>(<%=sysBoard.getWriterId()%>)</td>
-			<th class="thEdit Rt"><mc:msg key="sba0404.header.writerEmail"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0404.header.incomeTypeId"/></th>
+			<td class="tdEdit">
+				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0404.header.writerName" options="mandatory"/>
+				<%=sysIncomeType.getIncomeTypeId()%>
+			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0404.header.orgCategory"/></th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("ORG_CATEGORY", sysIncomeType.getOrgCategory())%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0404.header.incomeTypeId"/></th>
+			<td class="tdEdit"><%=sysIncomeType.getIncomeTypeId()%></td>
+			<th class="thEdit Rt"><mc:msg key="sba0404.header.incomeType"/></th>
+			<td class="tdEdit"><%=sysIncomeType.getIncomeType()%></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0404.header.updateDate"/></th>

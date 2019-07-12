@@ -27,19 +27,14 @@ public class Sba0404Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
+	public String getUpdate() throws Exception {
+		biz.getUpdate(paramEntity);
+		return "update";
 	}
 
 	public String getInsert() throws Exception {
 		biz.getInsert(paramEntity);
 		return "insert";
-	}
-
-	public String getUpdate() throws Exception {
-		biz.getUpdate(paramEntity);
-		return "update";
 	}
 
 	public String exeInsert() throws Exception {

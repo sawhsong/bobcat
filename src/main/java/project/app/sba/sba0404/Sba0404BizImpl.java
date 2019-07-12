@@ -59,16 +59,13 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String incomeTypeId = requestDataSet.getValue("incomeTypeId");
+		String incomeTypeCode = requestDataSet.getValue("incomeTypeCode");
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setObject("sysIncomeType", sysIncomeTypeDao.getIncomeTypeByKeys(incomeTypeId, incomeTypeCode));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -78,16 +75,6 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity = getDetail(paramEntity);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

@@ -313,11 +313,13 @@ public class Sba0204BizImpl extends BaseBiz implements Sba0204Biz {
 		try {
 			String pageTitle = "User List";
 			String fileName = "UserList";
-			String[] columnHeader = {"user_id", "user_name", "login_id", "org_id", "auth_group_name", "user_type", "user_status", "email", "is_active", "update_date"};
+			String columnHeader[] = {"user_id", "user_name", "login_id", "org_id", "auth_group_name", "user_type", "user_status", "email", "is_active", "update_date"};
+			String fileHeader[] = {"User Id", "User Name", "Login Id", "Organisation Id", "Auth Group Name", "User Type", "User Status", "Email", "Is Active", "Update Date"};
 
 			exportHelper = ExportUtil.getExportHelper(requestDataSet.getValue("fileType"));
 			exportHelper.setPageTitle(pageTitle);
 			exportHelper.setColumnHeader(columnHeader);
+			exportHelper.setFileHeader(fileHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(2000);
 

@@ -20,7 +20,7 @@ public class SysIncomeTypeHDaoImpl extends BaseHDao implements SysIncomeTypeDao 
 		queryAdvisor.addWhereClause("inc_type.org_category(+) = '"+orgCategory+"'");
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addVariable("langCode", langCode);
-		queryAdvisor.addOrderByClause("com_code.sort_order");
+		queryAdvisor.addOrderByClause("inc_type.sort_order");
 
 		return selectAsDataSet(queryAdvisor, "query.SysIncomeType.getIncomeTypeDataSetByCriteria");
 	}
@@ -32,5 +32,14 @@ public class SysIncomeTypeHDaoImpl extends BaseHDao implements SysIncomeTypeDao 
 		queryAdvisor.addOrderByClause("sort_order");
 
 		return selectAllAsDataSet(queryAdvisor, new SysIncomeType());
+	}
+
+	public SysIncomeType getIncomeTypeByKeys(String incomeTypeId, String incomeTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("income_type_id = '"+incomeTypeId+"'");
+		queryAdvisor.addWhereClause("income_type = '"+incomeTypeCode+"'");
+
+		return (SysIncomeType)selectAllToDto(queryAdvisor, new SysIncomeType());
 	}
 }
