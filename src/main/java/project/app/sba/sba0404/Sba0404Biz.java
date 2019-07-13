@@ -12,4 +12,5 @@ public interface Sba0404Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
+	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception;
 }

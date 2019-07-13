@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysIncomeType.SysIncomeTypeDao;
 import project.conf.resource.ormapper.dto.oracle.SysIncomeType;
 import zebra.data.DataSet;
@@ -17,6 +18,7 @@ import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
 import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 	@Autowired
@@ -92,5 +94,87 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 			throw new FrameworkException(paramEntity, ex);
 		}
 		return paramEntity;
+	}
+
+	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		HttpSession session = paramEntity.getSession();
+		String orgCategory = requestDataSet.getValue("orgCategory");
+		String chkToSave = requestDataSet.getValue("chkToSave");
+		String keyIds[] = CommonUtil.splitWithTrim(chkToSave, ConfigUtil.getProperty("delimiter.record"));
+		String loggedInUserId = (String)session.getAttribute("UserId");
+		DataSet existingData;
+		SysIncomeType sysIncomeType;
+		int resultInsert = 0;
+
+		try {
+			existingData = sysIncomeTypeDao.getIncomeTypeDataSetByOrgCategory(orgCategory);
+			sysIncomeTypeDao.deleteByOrgCategory(orgCategory);
+
+			for (int i=0; i<keyIds.length; i++) {
+				String incomeTypeId = "", incomeTypeCode = "";
+
+				if (CommonUtil.startsWith(keyIds[i], "_")) {
+					incomeTypeId = "";
+					incomeTypeCode = CommonUtil.remove(keyIds[i], "_");
+				} else {
+					incomeTypeId = CommonUtil.split(keyIds[i], "_")[0];
+					incomeTypeCode = CommonUtil.split(keyIds[i], "_")[1];
+				}
+
+				if (CommonUtil.isNotBlank(incomeTypeId)) {
+					int existingIndex = existingData.getRowIndex("INCOME_TYPE_ID", incomeTypeId);
+					SysIncomeType existObj = (SysIncomeType)existingData.getRowAsDto(existingIndex, new SysIncomeType());
+
+					resultInsert += sysIncomeTypeDao.insert(existObj);
+				} else {
+					String uid = CommonUtil.uid();
+
+					sysIncomeType = new SysIncomeType();
+					sysIncomeType.setIncomeTypeId(uid);
+					sysIncomeType.setOrgCategory(orgCategory);
+					sysIncomeType.setIncomeType(incomeTypeCode);
+					sysIncomeType.setDescription(CommonCodeManager.getCodeDescription("INCOME_TYPE", incomeTypeCode));
+					sysIncomeType.setIsApplyGst("Y");
+					sysIncomeType.setGstPercentage(10);
+					sysIncomeType.setSortOrder(getSortOrder(orgCategory));
+					sysIncomeType.setInsertUserId(loggedInUserId);
+					sysIncomeType.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+					resultInsert += sysIncomeTypeDao.insert(sysIncomeType);
+				}
+			}
+
+			if (resultInsert <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	private String getSortOrder(String orgCategory) throws Exception {
+		String ord1 = "", ord2 = "";
+		DataSet ds;
+
+		if (CommonUtil.equals(orgCategory, "A")) {
+			ord1 = "01";
+		} else if (CommonUtil.equals(orgCategory, "B")) {
+			ord1 = "02";
+		} else if (CommonUtil.equals(orgCategory, "C")) {
+			ord1 = "03";
+		} else if (CommonUtil.equals(orgCategory, "D")) {
+			ord1 = "04";
+		}
+
+		ds = sysIncomeTypeDao.getMaxSortOrderDataSetByOrgCategory(orgCategory);
+		ord2 = CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue(0, 0), 2, 3))+1);
+		ord2 = CommonUtil.leftPad(ord2, 2, "0");
+
+		return ord1+ord2+"00";
 	}
 }

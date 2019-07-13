@@ -10,11 +10,53 @@ $(function() {
 	 * event
 	 */
 	$("#icnCheck").click(function(event) {
-		commonJs.toggleCheckboxes("chkToAssign");
+		commonJs.toggleCheckboxes("chkToSave");
 	});
 
 	$("#orgCategory").change(function(event) {
 		doSearch();
+	});
+
+	$("#btnSave").click(function() {
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/sba/0404/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						data:{
+						},
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}]
+		});
 	});
 
 	$(document).keypress(function(event) {
@@ -50,8 +92,7 @@ $(function() {
 	};
 
 	renderDataGridTable = function(result) {
-		var ds = result.dataSet;
-		var html = "";
+		var ds = result.dataSet, html = "";
 
 		$("#tblGridBody").html("");
 
@@ -65,7 +106,7 @@ $(function() {
 				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkToAssign").setName("chkToAssign").setOptions(checkString).setValue(ds.getValue(i, "INCOME_TYPE_ID")+"_"+ds.getValue(i, "INCOME_TYPE_CODE"));
+				uiChk.setName("chkToSave").setOptions(checkString).setValue(ds.getValue(i, "INCOME_TYPE_ID")+"_"+ds.getValue(i, "INCOME_TYPE_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 

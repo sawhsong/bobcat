@@ -25,6 +25,18 @@
 		   and com_code.common_code <> '0000000000'
 		   and com_code.is_active = 'Y'
 		   and com_code.common_code = inc_type.income_type(+)
+		${auto_fill}
+		${where_clause}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.SysIncomeType.getMaxSortOrderDataSetByOrgCategory">
+	<![CDATA[
+		select nvl(max(sort_order), 0) as sort_order
+		  from sys_income_type
+		 where 1 = 1
+		${auto_fill}
 		${where_clause}
 		${order_by_clause}
 	]]>

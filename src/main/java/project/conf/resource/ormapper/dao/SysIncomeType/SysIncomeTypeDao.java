@@ -11,6 +11,13 @@ import zebra.data.QueryAdvisor;
 
 public interface SysIncomeTypeDao extends IDao {
 	/**
+	 * Add a new item
+	 * @param sysIncomeType
+	 * @return
+	 * @throws Exception
+	 */
+	public int insert(SysIncomeType sysIncomeType) throws Exception;
+	/**
 	 * Update with key(incomeTypeId, incomeTypeCode)
 	 * @param sysIncomeType
 	 * @param incomeTypeId
@@ -19,6 +26,13 @@ public interface SysIncomeTypeDao extends IDao {
 	 * @throws Exception
 	 */
 	public int updateWithKey(SysIncomeType sysIncomeType, String incomeTypeId, String incomeTypeCode) throws Exception;
+	/**
+	 * Delete by org catetory
+	 * @param orgCategory
+	 * @return
+	 * @throws Exception
+	 */
+	public int deleteByOrgCategory(String orgCategory) throws Exception;
 	/**
 	 * Get dataset by search criteria
 	 * @param queryAdvisor
@@ -41,4 +55,11 @@ public interface SysIncomeTypeDao extends IDao {
 	 * @throws Exception
 	 */
 	public SysIncomeType getIncomeTypeByKeys(String incomeTypeId, String incomeTypeCode) throws Exception;
+	/**
+	 * Get sortorder dataset by orgCategory
+	 * @param orgCategory
+	 * @return
+	 * @throws Exception
+	 */
+	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception;
 }
