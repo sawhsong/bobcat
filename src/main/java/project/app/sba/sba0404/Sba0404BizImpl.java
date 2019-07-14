@@ -150,8 +150,35 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 					}
 				}
 
+<<<<<<< HEAD
 				if (resultInsert <= 0) {
 					throw new FrameworkException("E801", getMessage("E801", paramEntity));
+=======
+				if (CommonUtil.isNotBlank(incomeTypeId)) {
+					int existingIndex = existingData.getRowIndex("INCOME_TYPE_ID", incomeTypeId);
+					SysIncomeType existObj = (SysIncomeType)existingData.getRowAsDto(existingIndex, new SysIncomeType());
+
+					existObj.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+					existObj.setUpdateUserId(loggedInUserId);
+					existObj.setSortOrder(getSortOrder(orgCategory));
+
+					resultInsert += sysIncomeTypeDao.insert(existObj);
+				} else {
+					String uid = CommonUtil.uid();
+
+					sysIncomeType = new SysIncomeType();
+					sysIncomeType.setIncomeTypeId(uid);
+					sysIncomeType.setOrgCategory(orgCategory);
+					sysIncomeType.setIncomeType(incomeTypeCode);
+					sysIncomeType.setDescription(CommonCodeManager.getCodeDescription("INCOME_TYPE", incomeTypeCode));
+					sysIncomeType.setIsApplyGst("Y");
+					sysIncomeType.setGstPercentage(10);
+					sysIncomeType.setSortOrder(getSortOrder(orgCategory));
+					sysIncomeType.setInsertUserId(loggedInUserId);
+					sysIncomeType.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+					resultInsert += sysIncomeTypeDao.insert(sysIncomeType);
+>>>>>>> refs/remotes/origin/master
 				}
 			}
 
