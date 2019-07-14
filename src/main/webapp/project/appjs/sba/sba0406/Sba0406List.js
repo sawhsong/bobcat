@@ -67,7 +67,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sba/0406/getList.do",
+					url:"/sba/0406/getList",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -124,7 +124,7 @@ $(function() {
 				}
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_APPLY_GST")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_PERCENTAGE"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_PERCENTAGE"), "#,##0.00")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ACCOUNT_CODE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "SORT_ORDER")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
@@ -202,23 +202,23 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/sba/0406/getDetail.do";
+			url = "/sba/0406/getDetail";
 			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sba/0406/getInsert.do";
+		} else if (param.mode == "New") {
+			url = "/sba/0406/getInsert";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0406/getUpdate.do";
+			url = "/sba/0406/getUpdate";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"expenseType"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				path:commonJs.nvl(param.path, "")
 			},
 			header:header,
 			blind:true,
@@ -241,7 +241,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0406/exeDelete.do",
+						url:"/sba/0406/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -276,18 +276,18 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var path = $(img).attr("path");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == path) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
+		ctxMenu.commonAction[0].fun = function() {getDetail(path);};
+		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", path:path});};
 		ctxMenu.commonAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonAction, {
@@ -315,7 +315,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sba/0406/exeExport.do",
+						url:"/sba/0406/exeExport",
 						paramData:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
@@ -340,7 +340,6 @@ $(function() {
 	 */
 	$(window).load(function() {
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-//		setPreviewContextMenu();
 		doSearch();
 	});
 });

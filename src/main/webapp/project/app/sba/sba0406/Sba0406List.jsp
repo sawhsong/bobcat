@@ -47,7 +47,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnPreview" caption="Preview" iconClass="fa-eye-slash"/>
+			<ui:button id="btnPreview" caption="sba0406.search.preview" iconClass="fa-eye-slash"/>
 			<ui:button id="btnSetSort" caption="sba0406.search.setSort" iconClass="fa-sort-numeric-asc"/>
 			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
@@ -63,9 +63,7 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="orgCategory" class="lblEn hor mandatory"><mc:msg key="sba0406.search.orgCategory"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY"/>
-				</div>
+				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" className="hor"/>
 			</td>
 		</tr>
 	</table>

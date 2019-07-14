@@ -9,7 +9,7 @@
 	<![CDATA[
 		 select level,
 		        connect_by_isleaf as is_leaf,
-		        org_category||'/'||substr(sys_connect_by_path(expense_type, '/'), 2) as path,
+		        expense_type_id||'/'||org_category||'/'||substr(sys_connect_by_path(expense_type, '/'), 2) as path,
 		        expense_type_id,
 		        org_category,
 		        expense_type,

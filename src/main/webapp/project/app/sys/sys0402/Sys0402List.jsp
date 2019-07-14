@@ -65,7 +65,7 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="searchMenu" class="lblEn hor"><mc:msg key="sys0402.search.searchType"/></label>
-				<ui:select name="searchMenu">
+				<ui:select name="searchMenu" className="hor">
 					<ui:seloption value="" text="==Select=="/>
 <%
 				for (int i=0; i<menuDataSet.getRowCnt(); i++) {

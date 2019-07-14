@@ -59,13 +59,21 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 
 	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String path = requestDataSet.getValue("path");
+		String keyValues[] = CommonUtil.split(path, "/");
+		String expenseTypeId = "", orgCatetory = "", expenseTypeCode = "";
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
+			if (keyValues.length == 3) {
+				expenseTypeId = keyValues[0];
+				orgCatetory = keyValues[1];
+				expenseTypeCode = keyValues[2];
+			} else {
+				expenseTypeId = keyValues[0];
+				orgCatetory = keyValues[1];
+				expenseTypeCode = keyValues[3];
+			}
+			paramEntity.setObject("sysExpenseType", sysExpenseTypeDao.getExpenseTypeByKeys(expenseTypeId, orgCatetory, expenseTypeCode));
 
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {

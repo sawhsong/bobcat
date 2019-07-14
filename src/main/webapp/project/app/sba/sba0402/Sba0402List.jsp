@@ -62,18 +62,16 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="periodYear" class="lblEn hor"><mc:msg key="sba0402.search.periodYear"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:select name="periodYear">
-						<option value="">==Select==</option>
+				<ui:select name="periodYear" className="hor">
+					<option value="">==Select==</option>
 <%
-					for (int i=-5; i<6; i++) {
+				for (int i=-5; i<6; i++) {
 %>
-						<option value="<%=currentYear - i%>"><%=currentYear - i%></option>
+					<option value="<%=currentYear - i%>"><%=currentYear - i%></option>
 <%
-					}
+				}
 %>
-					</ui:select>
-				</div>
+				</ui:select>
 			</td>
 		</tr>
 	</table>
