@@ -126,6 +126,9 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 					int existingIndex = existingData.getRowIndex("INCOME_TYPE_ID", incomeTypeId);
 					SysIncomeType existObj = (SysIncomeType)existingData.getRowAsDto(existingIndex, new SysIncomeType());
 
+					existObj.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+					existObj.setUpdateUserId(loggedInUserId);
+					existObj.setSortOrder(getSortOrder(orgCategory));
 					resultInsert += sysIncomeTypeDao.insert(existObj);
 				} else {
 					String uid = CommonUtil.uid();
@@ -172,7 +175,7 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 		}
 
 		ds = sysIncomeTypeDao.getMaxSortOrderDataSetByOrgCategory(orgCategory);
-		ord2 = CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue(0, 0), 2, 3))+1);
+		ord2 = CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue(0, 0), 2, 4))+1);
 		ord2 = CommonUtil.leftPad(ord2, 2, "0");
 
 		return ord1+ord2+"00";

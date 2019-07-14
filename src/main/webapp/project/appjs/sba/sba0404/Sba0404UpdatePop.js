@@ -25,12 +25,7 @@ $(function() {
 	});
 
 	$("#isApplyGst").change(function() {
-		var val = $("#isApplyGst").val();
-		if (val == "N") {
-			$("#gstPercentage").prop("readonly", true).removeClass("txtEn").addClass("txtDis").val("0");
-		} else {
-			$("#gstPercentage").prop("readonly", false).removeClass("txtDis").addClass("txtEn");
-		}
+		setGstPercentageStatus();
 	});
 
 	$("#btnClose").click(function(event) {
@@ -46,6 +41,15 @@ $(function() {
 	/*!
 	 * process
 	 */
+	setGstPercentageStatus = function() {
+		var val = $("#isApplyGst").val();
+		if (val == "N") {
+			$("#gstPercentage").prop("readonly", true).removeClass("txtEn").addClass("txtDis").val("0");
+		} else {
+			$("#gstPercentage").prop("readonly", false).removeClass("txtDis").addClass("txtEn");
+		}
+	};
+
 	changeObjectStatus = function(status) {
 		if (status == "enable") {
 			$("#orgCategory").prop("disabled", false);
@@ -99,5 +103,6 @@ $(function() {
 	 */
 	$(window).load(function() {
 		$(".numeric").number(true, 2);
+		setGstPercentageStatus();
 	});
 });
