@@ -111,45 +111,48 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 			existingData = sysIncomeTypeDao.getIncomeTypeDataSetByOrgCategory(orgCategory);
 			sysIncomeTypeDao.deleteByOrgCategory(orgCategory);
 
-			for (int i=0; i<keyIds.length; i++) {
-				String incomeTypeId = "", incomeTypeCode = "";
+			if (keyIds != null) {
+				for (int i=0; i<keyIds.length; i++) {
+					String incomeTypeId = "", incomeTypeCode = "";
 
-				if (CommonUtil.startsWith(keyIds[i], "_")) {
-					incomeTypeId = "";
-					incomeTypeCode = CommonUtil.remove(keyIds[i], "_");
-				} else {
-					incomeTypeId = CommonUtil.split(keyIds[i], "_")[0];
-					incomeTypeCode = CommonUtil.split(keyIds[i], "_")[1];
+					if (CommonUtil.startsWith(keyIds[i], "_")) {
+						incomeTypeId = "";
+						incomeTypeCode = CommonUtil.remove(keyIds[i], "_");
+					} else {
+						incomeTypeId = CommonUtil.split(keyIds[i], "_")[0];
+						incomeTypeCode = CommonUtil.split(keyIds[i], "_")[1];
+					}
+
+					if (CommonUtil.isNotBlank(incomeTypeId)) {
+						int existingIndex = existingData.getRowIndex("INCOME_TYPE_ID", incomeTypeId);
+						SysIncomeType existObj = (SysIncomeType)existingData.getRowAsDto(existingIndex, new SysIncomeType());
+
+						existObj.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+						existObj.setUpdateUserId(loggedInUserId);
+						existObj.setSortOrder(getSortOrder(orgCategory));
+
+						resultInsert += sysIncomeTypeDao.insert(existObj);
+					} else {
+						String uid = CommonUtil.uid();
+
+						sysIncomeType = new SysIncomeType();
+						sysIncomeType.setIncomeTypeId(uid);
+						sysIncomeType.setOrgCategory(orgCategory);
+						sysIncomeType.setIncomeType(incomeTypeCode);
+						sysIncomeType.setDescription(CommonCodeManager.getCodeDescription("INCOME_TYPE", incomeTypeCode));
+						sysIncomeType.setIsApplyGst("Y");
+						sysIncomeType.setGstPercentage(10);
+						sysIncomeType.setSortOrder(getSortOrder(orgCategory));
+						sysIncomeType.setInsertUserId(loggedInUserId);
+						sysIncomeType.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+						resultInsert += sysIncomeTypeDao.insert(sysIncomeType);
+					}
 				}
 
-				if (CommonUtil.isNotBlank(incomeTypeId)) {
-					int existingIndex = existingData.getRowIndex("INCOME_TYPE_ID", incomeTypeId);
-					SysIncomeType existObj = (SysIncomeType)existingData.getRowAsDto(existingIndex, new SysIncomeType());
-
-					existObj.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-					existObj.setUpdateUserId(loggedInUserId);
-					existObj.setSortOrder(getSortOrder(orgCategory));
-					resultInsert += sysIncomeTypeDao.insert(existObj);
-				} else {
-					String uid = CommonUtil.uid();
-
-					sysIncomeType = new SysIncomeType();
-					sysIncomeType.setIncomeTypeId(uid);
-					sysIncomeType.setOrgCategory(orgCategory);
-					sysIncomeType.setIncomeType(incomeTypeCode);
-					sysIncomeType.setDescription(CommonCodeManager.getCodeDescription("INCOME_TYPE", incomeTypeCode));
-					sysIncomeType.setIsApplyGst("Y");
-					sysIncomeType.setGstPercentage(10);
-					sysIncomeType.setSortOrder(getSortOrder(orgCategory));
-					sysIncomeType.setInsertUserId(loggedInUserId);
-					sysIncomeType.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-
-					resultInsert += sysIncomeTypeDao.insert(sysIncomeType);
+				if (resultInsert <= 0) {
+					throw new FrameworkException("E801", getMessage("E801", paramEntity));
 				}
-			}
-
-			if (resultInsert <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
 			paramEntity.setSuccess(true);
