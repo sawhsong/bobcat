@@ -288,7 +288,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.getBootstrapSelectbox("codeCategory").focus();
 		commonJs.setExportButtonContextMenu($("#btnExport"));
 		doSearch();
 	});
