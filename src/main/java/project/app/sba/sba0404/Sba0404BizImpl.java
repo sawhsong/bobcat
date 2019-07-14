@@ -129,6 +129,7 @@ public class Sba0404BizImpl extends BaseBiz implements Sba0404Biz {
 					existObj.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 					existObj.setUpdateUserId(loggedInUserId);
 					existObj.setSortOrder(getSortOrder(orgCategory));
+
 					resultInsert += sysIncomeTypeDao.insert(existObj);
 				} else {
 					String uid = CommonUtil.uid();
