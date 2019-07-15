@@ -53,21 +53,6 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String periodYear = requestDataSet.getValue("periodYear");
-		String quarterCode = requestDataSet.getValue("quarterCode");
-
-		try {
-			paramEntity.setObject("sysFinancialPeriod", sysFinancialPeriodDao.getFinancialPeriodByPeriodYearAndCode(periodYear, quarterCode));
-
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -78,8 +63,12 @@ public class Sba0402BizImpl extends BaseBiz implements Sba0402Biz {
 	}
 
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String periodYear = requestDataSet.getValue("periodYear");
+		String quarterCode = requestDataSet.getValue("quarterCode");
+
 		try {
-			paramEntity = getDetail(paramEntity);
+			paramEntity.setObject("sysFinancialPeriod", sysFinancialPeriodDao.getFinancialPeriodByPeriodYearAndCode(periodYear, quarterCode));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

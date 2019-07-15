@@ -30,6 +30,17 @@ var ctxMenu = {
 		fun:function() {}
 	}],
 
+	// Common simple action context menu
+	commonSimpleAction : [{
+		name:com.caption.ctxEdit,
+		img:"fa-edit",
+		fun:function() {}
+	}, {
+		name:com.caption.ctxDelete,
+		img:"fa-times",
+		fun:function() {}
+	}],
+
 	// Export context menu
 	commonExport : [{
 		name:com.caption.ctxExportExcelAll,

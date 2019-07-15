@@ -85,7 +85,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "FINANCIAL_YEAR")));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "QUARTER_CODE_NAME")).setScript("getDetail('"+ds.getValue(i, "PERIOD_YEAR")+"', '"+ds.getValue(i, "QUARTER_CODE")+"')");
+				uiAnc.setText(ds.getValue(i, "QUARTER_CODE_NAME")).setScript("getUpdate('"+ds.getValue(i, "PERIOD_YEAR")+"', '"+ds.getValue(i, "QUARTER_CODE")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "QUARTER_NAME_DESC")));
@@ -121,35 +121,27 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.commonAction);
+			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(periodYear, quarterCode) {
+	getUpdate = function(periodYear, quarterCode) {
 		openPopup({
-			mode:"Detail",
+			mode:"Edit",
 			periodYear:periodYear,
 			quarterCode:quarterCode
 		});
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "";
+		var url = "", header = com.header.popHeaderEdit;
 
-		if (param.mode == "Detail") {
-			url = "/sba/0402/getDetail";
-			header = com.header.popHeaderDetail;
-			height = 170;
-		} else if (param.mode == "New") {
+		if (param.mode == "New") {
 			url = "/sba/0402/getInsert";
-			header = com.header.popHeaderEdit;
-			height = 280;
 		} else if (param.mode == "Edit") {
 			url = "/sba/0402/getUpdate";
-			header = com.header.popHeaderEdit;
-			height = 280;
 		}
 
 		var popParam = {
@@ -163,7 +155,7 @@ $(function() {
 			header:header,
 			blind:true,
 			width:700,
-			height:height
+			height:280
 		};
 
 		popup = commonJs.openPopup(popParam);
@@ -227,11 +219,10 @@ $(function() {
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(periodYear, quarterCode);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", periodYear:periodYear, quarterCode:quarterCode});};
-		ctxMenu.commonAction[2].fun = function() {doDelete();};
+		ctxMenu.commonSimpleAction[0].fun = function() {openPopup({mode:"Edit", periodYear:periodYear, quarterCode:quarterCode});};
+		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.commonAction, {
+		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",

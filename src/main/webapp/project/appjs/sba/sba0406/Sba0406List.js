@@ -111,7 +111,7 @@ $(function() {
 
 				if (isLeaf == 0) {
 					var uiAnc = new UiAnchor();
-					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getDetail('"+path+"')");
+					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getUpdate('"+path+"')");
 					gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(""));
@@ -119,7 +119,7 @@ $(function() {
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(""));
 
 					var uiAnc = new UiAnchor();
-					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getDetail('"+path+"')");
+					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getUpdate('"+path+"')");
 					gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 				}
 
@@ -185,7 +185,7 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.commonAction);
+			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
@@ -193,24 +193,17 @@ $(function() {
 		setPreviewContextMenu();
 	};
 
-	getDetail = function(path) {
-		openPopup({mode:"Detail", path:path});
+	getUpdate = function(path) {
+		openPopup({mode:"Edit", path:path});
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+		var url = "", header = com.header.popHeaderEdit;
 
-		if (param.mode == "Detail") {
-			url = "/sba/0406/getDetail";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New") {
+		if (param.mode == "New") {
 			url = "/sba/0406/getInsert";
-			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/sba/0406/getUpdate";
-			header = com.header.popHeaderEdit;
-			height = 634;
 		}
 
 		var popParam = {
@@ -222,8 +215,8 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:800,
-			height:height
+			width:900,
+			height:300
 		};
 
 		popup = commonJs.openPopup(popParam);
@@ -286,11 +279,10 @@ $(function() {
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(path);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", path:path});};
-		ctxMenu.commonAction[2].fun = function() {doDelete();};
+		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(path);};
+		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.commonAction, {
+		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",

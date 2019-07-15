@@ -9,8 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysExpenseType sysExpenseType = (SysExpenseType)paramEntity.getObject("sysExpenseType");
 %>
 <%/************************************************************************************************
 * HTML
@@ -72,66 +71,23 @@
 			<col width="35%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.expenseTypeId"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0406.header.writerName" options="mandatory"/>
+				<ui:text name="expenseTypeId" value="<%=sysExpenseType.getExpenseTypeId()%>" status="display" checkName="sba0406.header.expenseTypeId" options="mandatory"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.writerEmail"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.orgCategory"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sba0406.header.writerEmail" option="email" options="mandatory"/>
+				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" status="disabled" selectedValue="<%=sysExpenseType.getOrgCategory()%>" checkName="sba0406.header.orgCategory" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sba0406.header.articleSubject" options="mandatory"/>
+			<th class="thEdit Rt"><mc:msg key="sba0406.header.mainExpenseType"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="mainExpenseType" codeType="EXPENSE_MAIN_TYPE" status="disabled" selectedValue="<%=sysExpenseType.getParentExpenseType()%>" caption="==Select==" checkName="sba0406.header.mainExpenseType"/>
 			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0406.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0406.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0406.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
+			<th class="thEdit Rt"><mc:msg key="sba0406.header.expenseType"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="expenseType" codeType="EXPENSE_SUB_TYPE" status="disabled" selectedValue="<%=sysExpenseType.getExpenseType()%>" caption="==Select==" checkName="sba0406.header.expenseType" options="mandatory"/>
 			</td>
 		</tr>
 	</table>

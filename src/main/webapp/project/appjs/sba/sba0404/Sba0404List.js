@@ -159,7 +159,7 @@ $(function() {
 			},
 			header:com.header.popHeaderEdit,
 			blind:true,
-			width:800,
+			width:900,
 			height:300
 		});
 	};
