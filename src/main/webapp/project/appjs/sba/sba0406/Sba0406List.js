@@ -175,7 +175,7 @@ $(function() {
 		$("#tblGridBody").append($(html));
 
 		$("#tblGrid").fixedHeaderTable({
-			attachTo:$("#divDataArea"),
+			attachTo:$("#divTest"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,
 			isFilter:false,
