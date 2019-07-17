@@ -21,15 +21,13 @@ import zebra.util.ExportUtil;
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
 import project.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.SysExpenseType;
 
 public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	@Autowired
 	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
 	@Autowired
 	private SysExpenseTypeDao sysExpenseTypeDao;
 
@@ -57,31 +55,6 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String path = requestDataSet.getValue("path");
-		String keyValues[] = CommonUtil.split(path, "/");
-		String expenseTypeId = "", orgCatetory = "", expenseTypeCode = "";
-
-		try {
-			if (keyValues.length == 3) {
-				expenseTypeId = keyValues[0];
-				orgCatetory = keyValues[1];
-				expenseTypeCode = keyValues[2];
-			} else {
-				expenseTypeId = keyValues[0];
-				orgCatetory = keyValues[1];
-				expenseTypeCode = keyValues[3];
-			}
-			paramEntity.setObject("sysExpenseType", sysExpenseTypeDao.getExpenseTypeByKeys(expenseTypeId, orgCatetory, expenseTypeCode));
-
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -92,8 +65,23 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	}
 
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String path = requestDataSet.getValue("path");
+		String keyValues[] = CommonUtil.split(path, "/");
+		String expenseTypeId = "", orgCategory = "", expenseTypeCode = "";
+
 		try {
-			paramEntity = getDetail(paramEntity);
+			if (keyValues.length == 3) {
+				expenseTypeId = keyValues[0];
+				orgCategory = keyValues[1];
+				expenseTypeCode = keyValues[2];
+			} else {
+				expenseTypeId = keyValues[0];
+				orgCategory = keyValues[1];
+				expenseTypeCode = keyValues[3];
+			}
+			paramEntity.setObject("sysExpenseType", sysExpenseTypeDao.getExpenseTypeByKeys(expenseTypeId, orgCategory, expenseTypeCode));
+
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -139,27 +127,25 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String expenseTypeId = requestDataSet.getValue("expenseTypeId");
+		String orgCategory = requestDataSet.getValue("orgCategory");
+		String expenseTypeCode = requestDataSet.getValue("expenseType");
 		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
+		SysExpenseType sysExpenseType;
 		int result = 0;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysExpenseType = sysExpenseTypeDao.getExpenseTypeByKeys(expenseTypeId, orgCategory, expenseTypeCode);
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			sysExpenseType.setParentExpenseType(requestDataSet.getValue("mainExpenseType"));
+			sysExpenseType.setDescription(requestDataSet.getValue("description"));
+			sysExpenseType.setAccountCode(requestDataSet.getValue("accountCode"));
+			sysExpenseType.setIsApplyGst(requestDataSet.getValue("isApplyGst"));
+			sysExpenseType.setGstPercentage(CommonUtil.toDouble(requestDataSet.getValue("gstPercentage")));
+			sysExpenseType.setUpdateUserId(loggedInUserId);
+			sysExpenseType.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			result = sysExpenseTypeDao.updateWithKey(sysExpenseType, expenseTypeId, expenseTypeCode);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}

@@ -10,20 +10,12 @@ $(function() {
 	 */
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
-			$("#fmDefault").attr("enctype", "multipart/form-data");
-
 			commonJs.confirm({
 				contents:com.message.Q001,
 				buttons:[{
 					caption:com.caption.yes,
 					callback:function() {
-						commonJs.doSubmit({
-							form:"fmDefault",
-							action:"/sba/0406/exeUpdate.do",
-							data:{
-								articleId:"<%=sysBoard.getArticleId()%>"
-							}
-						});
+						exeSave();
 					}
 				}, {
 					caption:com.caption.no,
@@ -34,15 +26,12 @@ $(function() {
 		}
 	});
 
-	$("#btnClose").click(function(event) {
-		parent.popup.close();
+	$("#isApplyGst").change(function() {
+		setGstPercentageStatus();
 	});
 
-	$("#btnAddFile").click(function(event) {
-		commonJs.addFileSelectObject({
-			appendToId:"divAttachedFile",
-			rowBreak:false
-		});
+	$("#btnClose").click(function(event) {
+		parent.popup.close();
 	});
 
 	$(document).keypress(function(event) {
@@ -54,10 +43,68 @@ $(function() {
 	/*!
 	 * process
 	 */
+	setGstPercentageStatus = function() {
+		var val = $("#isApplyGst").val();
+		if (val == "N") {
+			$("#gstPercentage").prop("readonly", true).removeClass("txtEn").addClass("txtDis").val("0");
+		} else {
+			$("#gstPercentage").prop("readonly", false).removeClass("txtDis").addClass("txtEn");
+		}
+	};
+
+	changeObjectStatus = function(status) {
+		if (status == "enable") {
+			$("#orgCategory").prop("disabled", false);
+			$("#mainExpenseType").prop("disabled", false);
+			$("#expenseType").prop("disabled", false);
+		} else {
+			$("#orgCategory").prop("disabled", true);
+			$("#mainExpenseType").prop("disabled", true);
+			$("#expenseType").prop("disabled", true);
+		}
+		$("#orgCategory").selectpicker("refresh");
+		$("#mainExpenseType").selectpicker("refresh");
+		$("#expenseType").selectpicker("refresh");
+	};
+
+	exeSave = function() {
+		changeObjectStatus("enable");
+
+		commonJs.ajaxSubmit({
+			url:"/sba/0406/exeUpdate",
+			dataType:"json",
+			formId:"fmDefault",
+			data:{
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					commonJs.openDialog({
+						type:com.message.I000,
+						contents:result.message,
+						blind:true,
+						width:300,
+						buttons:[{
+							caption:com.caption.ok,
+							callback:function() {
+								parent.popup.close();
+								parent.doSearch();
+							}
+						}]
+					});
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		$(".numeric").number(true, 2);
+		setGstPercentageStatus();
 	});
 });

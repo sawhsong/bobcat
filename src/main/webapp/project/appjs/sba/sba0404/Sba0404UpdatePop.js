@@ -54,14 +54,12 @@ $(function() {
 		if (status == "enable") {
 			$("#orgCategory").prop("disabled", false);
 			$("#incomeType").prop("disabled", false);
-			$("#orgCategory").selectpicker("refresh");
-			$("#incomeType").selectpicker("refresh");
 		} else {
 			$("#orgCategory").prop("disabled", true);
 			$("#incomeType").prop("disabled", true);
-			$("#orgCategory").selectpicker("refresh");
-			$("#incomeType").selectpicker("refresh");
 		}
+		$("#orgCategory").selectpicker("refresh");
+		$("#incomeType").selectpicker("refresh");
 	};
 
 	exeSave = function() {

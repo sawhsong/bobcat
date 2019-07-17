@@ -19,7 +19,7 @@ public class SysIncomeTypeHDaoImpl extends BaseHDao implements SysIncomeTypeDao 
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("income_type_id = '" + incomeTypeId + "'");
 		queryAdvisor.addWhereClause("income_type = '" + incomeTypeCode + "'");
-		return updateWithDto(queryAdvisor, sysIncomeType);
+		return updateWithSQLQuery(queryAdvisor, sysIncomeType);
 	}
 
 	public int deleteByOrgCategory(String orgCategory) throws Exception {

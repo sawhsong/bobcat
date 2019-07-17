@@ -11,6 +11,13 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class SysExpenseTypeHDaoImpl extends BaseHDao implements SysExpenseTypeDao {
+	public int updateWithKey(SysExpenseType sysExpenseType, String expenseTypeId, String expenseTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("expense_type_id = '" + expenseTypeId + "'");
+		queryAdvisor.addWhereClause("expense_type = '" + expenseTypeCode + "'");
+		return updateWithSQLQuery(queryAdvisor, sysExpenseType);
+	}
+
 	public DataSet getExpenseTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgCategory = requestDataSet.getValue("orgCategory");
