@@ -47,5 +47,14 @@ var sba = {
 		},
 		message:{
 		}
+	},
+	sba0406:{
+		caption:{
+		},
+		header:{
+			popHeaderSort:"정렬순서 조정"
+		},
+		message:{
+		}
 	}
 };

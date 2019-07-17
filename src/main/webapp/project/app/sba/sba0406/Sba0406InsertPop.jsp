@@ -9,7 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+	String orgCategory = requestDataSet.getValue("orgCategory");
 %>
 <%/************************************************************************************************
 * HTML
@@ -65,43 +65,47 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="18%"/>
+			<col width="32%"/>
+			<col width="18%"/>
+			<col width="32%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.orgCategory"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysUser.getUserName()%>" checkName="sba0406.header.writerName" options="mandatory"/>
+				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" status="disabled" selectedValue="<%=orgCategory%>" checkName="sba0406.header.orgCategory" options="mandatory"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.writerEmail"/></th>
+			<th class="thEdit Rt"></th>
+			<td class="tdEdit"></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.mainExpenseType"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysUser.getEmail()%>" checkName="sba0406.header.writerEmail" option="email" options="mandatory"/>
+				<ui:ccselect name="mainExpenseType" codeType="EXPENSE_MAIN_TYPE" checkName="sba0406.header.mainExpenseType" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0406.header.expenseType"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="expenseType" codeType="EXPENSE_SUB_TYPE" caption="==Select==" checkName="sba0406.header.expenseType"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" checkName="sba0406.header.articleSubject" options="mandatory"/>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.description"/></th>
+			<td class="tdEdit">
+				<ui:text name="description" checkName="sba0406.header.description" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt"><mc:msg key="sba0406.header.accountCode"/></th>
+			<td class="tdEdit">
+				<ui:text name="accountCode" checkName="sba0406.header.accountCode"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0406.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;"/>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.isApplyGst"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="isApplyGst" codeType="SIMPLE_YN" selectedValue="N" checkName="sba0406.header.isApplyGst" options="mandatory"/>
 			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0406.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
-				</div>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.gstPercentage"/></th>
+			<td class="tdEdit">
+				<ui:text name="gstPercentage" className="numeric" checkName="sba0406.header.gstPercentage" options="mandatory"/>
 			</td>
 		</tr>
 	</table>

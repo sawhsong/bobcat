@@ -10,6 +10,7 @@ import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 
 public interface SysExpenseTypeDao extends IDao {
+	public int insert(SysExpenseType sysExpenseType) throws Exception;
 	public int updateWithKey(SysExpenseType sysExpenseType, String expenseTypeId, String expenseTypeCode) throws Exception;
 	public DataSet getExpenseTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public SysExpenseType getExpenseTypeByKeys(String expenseTypeId, String orgCategory, String expenseTypeCode) throws Exception;

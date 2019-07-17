@@ -2,7 +2,6 @@
  * Framework Generated Javascript Source
  * - Sba0406List.js
  *************************************************************************************************/
-jsconfig.put("useJqTooltip", false);
 jsconfig.put("scrollablePanelHeightAdjust", 6);
 var popup = null;
 var searchResultDataCount = 0;
@@ -199,11 +198,17 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = com.header.popHeaderEdit;
+		var width = 900, height = 300;
 
 		if (param.mode == "New") {
 			url = "/sba/0406/getInsert";
+			height = 500;
 		} else if (param.mode == "Edit") {
 			url = "/sba/0406/getUpdate";
+		} else if (param.mode == "SetSort") {
+			url = "/sba/0406/getUpdateSortOrder";
+			header = sba.sba0406.header.popHeaderSort;
+			height = 600;
 		}
 
 		var popParam = {
@@ -211,12 +216,13 @@ $(function() {
 			url:url,
 			paramData:{
 				mode:param.mode,
-				path:commonJs.nvl(param.path, "")
+				path:param.path,
+				orgCategory:$("#orgCategory").val()
 			},
 			header:header,
 			blind:true,
-			width:900,
-			height:300
+			width:width,
+			height:height
 		};
 
 		popup = commonJs.openPopup(popParam);

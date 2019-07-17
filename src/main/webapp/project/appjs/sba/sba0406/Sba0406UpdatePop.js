@@ -94,6 +94,7 @@ $(function() {
 						}]
 					});
 				} else {
+					changeObjectStatus("disable");
 					commonJs.error(result.message);
 				}
 			}

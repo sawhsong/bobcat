@@ -92,26 +92,32 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
 		String uid = CommonUtil.uid();
 		String loggedInUserId = (String)session.getAttribute("UserId");
+		String orgCategory = requestDataSet.getValue("orgCategory");
+		String parentExpenseType = requestDataSet.getValue("mainExpenseType");
+		String expenseType = requestDataSet.getValue("expenseType");
+		SysExpenseType sysExpenseType = new SysExpenseType();
 		int result = -1;
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysExpenseType.setExpenseTypeId(uid);
+			sysExpenseType.setOrgCategory(orgCategory);
+			if (CommonUtil.isBlank(expenseType)) {
+				sysExpenseType.setExpenseType(parentExpenseType);
+			} else {
+				sysExpenseType.setParentExpenseType(parentExpenseType);
+				sysExpenseType.setExpenseType(expenseType);
+			}
+			sysExpenseType.setDescription(requestDataSet.getValue("description"));
+			sysExpenseType.setIsApplyGst(requestDataSet.getValue("isApplyGst"));
+			sysExpenseType.setGstPercentage(CommonUtil.toDouble(requestDataSet.getValue("gstPercentage")));
+			sysExpenseType.setAccountCode(requestDataSet.getValue("accountCode"));
+			sysExpenseType.setSortOrder(getSortOrder(orgCategory, parentExpenseType, expenseType));
+			sysExpenseType.setInsertUserId(loggedInUserId);
+			sysExpenseType.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			result = sysExpenseTypeDao.insert(sysExpenseType);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -220,5 +226,26 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 			throw new FrameworkException(paramEntity, ex);
 		}
 		return paramEntity;
+	}
+
+	private String getSortOrder(String orgCategory, String parentExpenseType, String expenseType) throws Exception {
+		String ord1 = "", ord2 = "", ord3 = "";
+		DataSet ds = new DataSet();
+
+		if (CommonUtil.equals(orgCategory, "A")) {
+			ord1 = "01";
+		} else if (CommonUtil.equals(orgCategory, "B")) {
+			ord1 = "02";
+		} else if (CommonUtil.equals(orgCategory, "C")) {
+			ord1 = "03";
+		} else if (CommonUtil.equals(orgCategory, "D")) {
+			ord1 = "04";
+		}
+
+//		ds = sysExpenseTypeDao.getMaxSortOrderDataSetByOrgCategoryAndType(orgCategory);
+		ord2 = CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue(0, 0), 2, 4))+1);
+		ord2 = CommonUtil.leftPad(ord2, 2, "0");
+
+		return ord1+ord2+"00";
 	}
 }

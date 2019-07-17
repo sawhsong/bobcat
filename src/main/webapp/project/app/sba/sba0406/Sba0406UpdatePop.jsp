@@ -84,7 +84,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0406.header.mainExpenseType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.mainExpenseType"/></th>
 			<td class="tdEdit">
 <%
 			if (CommonUtil.equals(level, "2")) {
@@ -114,7 +114,7 @@
 			<td class="tdEdit">
 				<ui:text name="description" value="<%=sysExpenseType.getDescription()%>" checkName="sba0406.header.description" options="mandatory"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.accountCode"/></th>
+			<th class="thEdit Rt"><mc:msg key="sba0406.header.accountCode"/></th>
 			<td class="tdEdit">
 				<ui:text name="accountCode" value="<%=sysExpenseType.getAccountCode()%>" checkName="sba0406.header.accountCode"/>
 			</td>
