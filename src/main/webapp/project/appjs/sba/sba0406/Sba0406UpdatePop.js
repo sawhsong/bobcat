@@ -2,6 +2,8 @@
  * Framework Generated Javascript Source
  * - Sba0406UpdatePop.js
  *************************************************************************************************/
+jsconfig.put("jqSelectmenuInterval", 100);
+
 $(function() {
 	/*!
 	 * event
@@ -57,6 +59,5 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		parent.popup.setHeader(com.header.popHeaderEdit);
 	});
 });

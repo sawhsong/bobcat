@@ -10,6 +10,9 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	SysExpenseType sysExpenseType = (SysExpenseType)paramEntity.getObject("sysExpenseType");
+	String level = "", gstFormat = "#,##0.00";
+	if (CommonUtil.isBlank(sysExpenseType.getParentExpenseType())) {level = "1";}
+	else {level = "2";}
 %>
 <%/************************************************************************************************
 * HTML
@@ -83,11 +86,47 @@
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0406.header.mainExpenseType"/></th>
 			<td class="tdEdit">
+<%
+			if (CommonUtil.equals(level, "2")) {
+%>
 				<ui:ccselect name="mainExpenseType" codeType="EXPENSE_MAIN_TYPE" status="disabled" selectedValue="<%=sysExpenseType.getParentExpenseType()%>" caption="==Select==" checkName="sba0406.header.mainExpenseType"/>
+<%
+			}
+%>
 			</td>
-			<th class="thEdit Rt"><mc:msg key="sba0406.header.expenseType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.expenseType"/></th>
 			<td class="tdEdit">
+<%
+			if (CommonUtil.equals(level, "1")) {
+%>
+				<ui:ccselect name="expenseType" codeType="EXPENSE_MAIN_TYPE" status="disabled" selectedValue="<%=sysExpenseType.getExpenseType()%>" caption="==Select==" checkName="sba0406.header.mainExpenseType"/>
+<%
+			} else {
+%>
 				<ui:ccselect name="expenseType" codeType="EXPENSE_SUB_TYPE" status="disabled" selectedValue="<%=sysExpenseType.getExpenseType()%>" caption="==Select==" checkName="sba0406.header.expenseType" options="mandatory"/>
+<%
+			}
+%>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.description"/></th>
+			<td class="tdEdit">
+				<ui:text name="description" value="<%=sysExpenseType.getDescription()%>" checkName="sba0406.header.description" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.accountCode"/></th>
+			<td class="tdEdit">
+				<ui:text name="accountCode" value="<%=sysExpenseType.getAccountCode()%>" checkName="sba0406.header.accountCode"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.isApplyGst"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="isApplyGst" codeType="SIMPLE_YN" selectedValue="<%=sysExpenseType.getIsApplyGst()%>" checkName="sba0406.header.isApplyGst" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.gstPercentage"/></th>
+			<td class="tdEdit">
+				<ui:text name="gstPercentage" value="<%=CommonUtil.toString(sysExpenseType.getGstPercentage(), gstFormat)%>" className="numeric" checkName="sba0406.header.gstPercentage" options="mandatory"/>
 			</td>
 		</tr>
 	</table>
