@@ -9,6 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
+import project.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeDao;
+import project.conf.resource.ormapper.dto.oracle.SysExpenseType;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -17,13 +21,6 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-import project.conf.resource.ormapper.dto.oracle.SysExpenseType;
 
 public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	@Autowired
@@ -56,7 +53,17 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	}
 
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String orgCategory = requestDataSet.getValue("orgCategory");
+		HttpSession session = paramEntity.getSession();
+
 		try {
+			queryAdvisor.addVariable("langCode", (String)session.getAttribute("langCode"));
+			queryAdvisor.addVariable("orgCategory", orgCategory);
+
+			paramEntity.setObject("mainExpenseType", sysExpenseTypeDao.getMainExpenseTypeDataSetWithCommonCodeByOrgCetegory(queryAdvisor));
+			paramEntity.setObject("expenseType", sysExpenseTypeDao.getExpenseTypeDataSetWithCommonCodeByOrgCetegory(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -166,17 +173,33 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String expenseTypeId = requestDataSet.getValue("expenseTypeId");
+		String orgCategory = requestDataSet.getValue("orgCategory");
+		String expenseType = requestDataSet.getValue("expenseType");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String paths[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
+			if (CommonUtil.isNotBlank(chkForDel)) {
+				for (int i=0; i<paths.length; i++) {
+					String keyValues[] = CommonUtil.split(paths[i], "/");
+					if (keyValues.length == 3) {
+						expenseTypeId = keyValues[0];
+						orgCategory = keyValues[1];
+						expenseType = keyValues[2];
+					} else {
+						expenseTypeId = keyValues[0];
+						orgCategory = keyValues[1];
+						expenseType = keyValues[3];
+					}
+					result += sysExpenseTypeDao.deleteWithKey(expenseTypeId, orgCategory, expenseType);
+				}
 			} else {
-				result = sysBoardDao.delete(articleId);
+				result = sysExpenseTypeDao.deleteWithKey(expenseTypeId, orgCategory, expenseType);
 			}
+
+			
 
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -242,10 +265,16 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 			ord1 = "04";
 		}
 
-//		ds = sysExpenseTypeDao.getMaxSortOrderDataSetByOrgCategoryAndType(orgCategory);
-		ord2 = CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue(0, 0), 2, 4))+1);
-		ord2 = CommonUtil.leftPad(ord2, 2, "0");
+		if (CommonUtil.isBlank(expenseType)) {
+			ds = sysExpenseTypeDao.getMaxParentExpenseTypeSortOrderDataSetByOrgCategory(orgCategory);
+			ord2 = CommonUtil.leftPad(CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue("SORT_ORDER"), 2, 4))+1), 2, "0");
+			ord3 = "00";
+		} else {
+			ds = sysExpenseTypeDao.getMaxExpenseTypeSortOrderDataSetByOrgCategory(orgCategory, parentExpenseType);
+			ord2 = CommonUtil.substring(ds.getValue("SORT_ORDER"), 2, 4);
+			ord3 = CommonUtil.leftPad(CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue("SORT_ORDER"), 4))+1), 2, "0");
+		}
 
-		return ord1+ord2+"00";
+		return ord1+ord2+ord3;
 	}
 }

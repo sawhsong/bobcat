@@ -55,6 +55,7 @@ var quarterCodeParam = "<%=requestDataSet.getValue("quarterCode")%>";
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>

@@ -15,7 +15,7 @@ $(function() {
 				buttons:[{
 					caption:com.caption.yes,
 					callback:function() {
-						exeSave();
+						doSave();
 					}
 				}, {
 					caption:com.caption.no,
@@ -28,6 +28,22 @@ $(function() {
 
 	$("#isApplyGst").change(function() {
 		setGstPercentageStatus();
+	});
+
+	$("#btnDelete").click(function(event) {
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					doDelete();
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}]
+		});
 	});
 
 	$("#btnClose").click(function(event) {
@@ -67,7 +83,7 @@ $(function() {
 		$("#expenseType").selectpicker("refresh");
 	};
 
-	exeSave = function() {
+	doSave = function() {
 		changeObjectStatus("enable");
 
 		commonJs.ajaxSubmit({
@@ -75,6 +91,42 @@ $(function() {
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					commonJs.openDialog({
+						type:com.message.I000,
+						contents:result.message,
+						blind:true,
+						width:300,
+						buttons:[{
+							caption:com.caption.ok,
+							callback:function() {
+								parent.popup.close();
+								parent.doSearch();
+							}
+						}]
+					});
+				} else {
+					changeObjectStatus("disable");
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
+
+	doDelete = function() {
+		changeObjectStatus("enable");
+
+		commonJs.ajaxSubmit({
+			url:"/sba/0406/exeDelete",
+			dataType:"json",
+			data:{
+				orgCategory:$("#orgCategory").val(),
+				expenseTypeId:$("#expenseTypeId").val(),
+				expenseType:$("#expenseType").val()
 			},
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, "json");

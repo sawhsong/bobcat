@@ -53,6 +53,10 @@ $(function() {
 		}
 	});
 
+	$("#btnDelete").click(function(event) {
+		doDelete();
+	});
+
 	$("#btnClose").click(function(event) {
 		parent.popup.close();
 	});
@@ -66,6 +70,51 @@ $(function() {
 	/*!
 	 * process
 	 */
+	doDelete = function() {
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/sba/0402/exeDelete",
+						dataType:"json",
+//						formId:"fmDefault",
+						data:{
+							periodYear:periodYearParam,
+							quarterCode:quarterCodeParam
+						},
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											parent.popup.close();
+											parent.doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
 
 	/*!
 	 * load event (document / window)

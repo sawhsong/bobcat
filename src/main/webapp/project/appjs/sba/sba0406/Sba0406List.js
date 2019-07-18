@@ -60,6 +60,95 @@ $(function() {
 	/*!
 	 * process
 	 */
+	setCheckbox = function() {
+		alert("val : ");
+//		var thisChecked = $(this).prop("checked"), thisMenuId = $(this).val(), thisValue = $(this).attr("paramValue");
+//		var thisValueItems = thisValue.split(delimiter);
+//		var thisLevel = thisValueItems[0];
+//		var thisPaths = thisValueItems[1].split("/");
+//
+//		$("[name=chkToAssign]").each(function(index) {
+//			var val = $(this).attr("paramValue");
+//			var valItems = val.split(delimiter);
+//			var level = valItems[0];
+//			var paths = valItems[1].split("/");
+//
+//			if (thisValue != val) {
+//				if (thisLevel == "1") {
+//					if (level > thisLevel && thisMenuId == paths[0]) {
+//						$(this).prop("checked", thisChecked);
+//					}
+//				}
+//
+//				if (thisLevel == "2") {
+//					if (thisChecked) {
+//						if ((level > thisLevel && thisMenuId == paths[1]) || (level < thisLevel && thisPaths[0] == paths[0])) {
+//							$(this).prop("checked", thisChecked);
+//						}
+//					} else {
+//						if (level > thisLevel && thisMenuId == paths[1]) {
+//							$(this).prop("checked", thisChecked);
+//						}
+//					}
+//				}
+//
+//				if (thisLevel == "3") {
+//					if (thisChecked) {
+//						if ((level == "1" && thisPaths[0] == paths[0]) || (level == "2" && thisPaths[1] == paths[1])) {
+//							$(this).prop("checked", thisChecked);
+//						}
+//					}
+//				}
+//			}
+//		});
+//
+//		if (!thisChecked && thisLevel == "2") {
+//			if (!hasChildChecked(thisLevel, thisPaths[0])) {
+//				$("[name=chkToAssign]").each(function(index) {
+//					var val = $(this).attr("paramValue");
+//					var valItems = val.split(delimiter);
+//					var level = valItems[0];
+//					var paths = valItems[1].split("/");
+//
+//					if (paths[0] == thisPaths[0]) {
+//						$(this).prop("checked", false);
+//						return false;
+//					}
+//				});
+//			}
+//		}
+//
+//		if (!thisChecked && thisLevel == "3") {
+//			if (!hasChildChecked(thisLevel, thisPaths[1])) {
+//				$("[name=chkToAssign]").each(function(index) {
+//					var val = $(this).attr("paramValue");
+//					var valItems = val.split(delimiter);
+//					var level = valItems[0];
+//					var paths = valItems[1].split("/");
+//
+//					if (paths[1] == thisPaths[1]) {
+//						$(this).prop("checked", false);
+//						return false;
+//					}
+//				});
+//			}
+//
+//			if (!hasChildChecked(2, thisPaths[0])) {
+//				$("[name=chkToAssign]").each(function(index) {
+//					var val = $(this).attr("paramValue");
+//					var valItems = val.split(delimiter);
+//					var level = valItems[0];
+//					var paths = valItems[1].split("/");
+//
+//					if (paths[0] == thisPaths[0]) {
+//						$(this).prop("checked", false);
+//						return false;
+//					}
+//				});
+//			}
+//		}
+	};
+
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
@@ -183,6 +272,10 @@ $(function() {
 			script:"doSearch"
 		});
 
+		$("[name=chkForDel]").bind("click", function() {
+			setCheckbox();
+		});
+
 		$("[name=icnAction]").each(function(index) {
 			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
@@ -284,6 +377,8 @@ $(function() {
 				$(this).prop("checked", false);
 			}
 		});
+
+		setCheckbox();
 
 		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(path);};
 		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};

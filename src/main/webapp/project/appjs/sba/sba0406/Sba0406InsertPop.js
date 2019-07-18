@@ -33,6 +33,7 @@ $(function() {
 	});
 
 	$("#mainExpenseType").change(function() {
+		setExpenseType();
 		setDescription();
 	});
 
@@ -49,6 +50,10 @@ $(function() {
 	/*!
 	 * process
 	 */
+	setExpenseType = function() {
+		$("#expenseType").selectpicker("val", "");
+	};
+
 	setDescription = function() {
 		var text = "";
 		if (!commonJs.isEmpty($("#expenseType").val())) {

@@ -10,6 +10,8 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	String orgCategory = requestDataSet.getValue("orgCategory");
+	DataSet mainExpenseType = (DataSet)paramEntity.getObject("mainExpenseType");
+	DataSet expenseType = (DataSet)paramEntity.getObject("expenseType");
 %>
 <%/************************************************************************************************
 * HTML
@@ -25,6 +27,9 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.inserted {
+	background:#F2F5F9 !important;
+}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -81,11 +86,31 @@
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sba0406.header.mainExpenseType"/></th>
 			<td class="tdEdit">
-				<ui:ccselect name="mainExpenseType" codeType="EXPENSE_MAIN_TYPE" checkName="sba0406.header.mainExpenseType" options="mandatory"/>
+				<ui:select name="mainExpenseType" checkName="sba0406.header.mainExpenseType" options="mandatory">
+<%
+				for (int i=0; i<mainExpenseType.getRowCnt(); i++) {
+					String klass = CommonUtil.isNotBlank(mainExpenseType.getValue(i, "EXPENSE_TYPE")) ? "inserted" : " ";
+					pageContext.setAttribute("klass", klass);
+%>
+					<ui:seloption value="<%=mainExpenseType.getValue(i, \"COMMON_CODE\")%>" attributes="class:${klass}" text="<%=mainExpenseType.getValue(i, \"DESCRIPTION\")%>"/>
+<%
+				}
+%>
+				</ui:select>
 			</td>
 			<th class="thEdit Rt"><mc:msg key="sba0406.header.expenseType"/></th>
 			<td class="tdEdit">
-				<ui:ccselect name="expenseType" codeType="EXPENSE_SUB_TYPE" caption="==Select==" checkName="sba0406.header.expenseType"/>
+				<ui:select name="expenseType" checkName="sba0406.header.expenseType">
+					<ui:seloption value="" text="==Select=="/>
+<%
+				for (int i=0; i<expenseType.getRowCnt(); i++) {
+					String isDisabled = CommonUtil.isBlank(expenseType.getValue(i, "EXPENSE_TYPE")) ? "" : "Y";
+%>
+					<ui:seloption value="<%=expenseType.getValue(i, \"COMMON_CODE\")%>" isDisabled="<%=isDisabled%>" text="<%=expenseType.getValue(i, \"DESCRIPTION\")%>"/>
+<%
+				}
+%>
+				</ui:select>
 			</td>
 		</tr>
 		<tr>

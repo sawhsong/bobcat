@@ -22,6 +22,14 @@ public class SysExpenseTypeHDaoImpl extends BaseHDao implements SysExpenseTypeDa
 		return updateWithSQLQuery(queryAdvisor, sysExpenseType);
 	}
 
+	public int deleteWithKey(String expenseTypeId, String orgCategory, String expenseType) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("expense_type_id = '" + expenseTypeId + "'");
+		queryAdvisor.addWhereClause("org_category = '" + orgCategory + "'");
+		queryAdvisor.addWhereClause("expense_type = '" + expenseType + "'");
+		return deleteWithSQLQuery(queryAdvisor, new SysExpenseType());
+	}
+
 	public DataSet getExpenseTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgCategory = requestDataSet.getValue("orgCategory");
@@ -58,6 +66,30 @@ public class SysExpenseTypeHDaoImpl extends BaseHDao implements SysExpenseTypeDa
 		queryAdvisor.addWhereClause("parent_expense_type = '"+parentTypeCode+"'");
 		queryAdvisor.addOrderByClause("sort_order");
 
+		return selectAllAsDataSet(queryAdvisor, new SysExpenseType());
+	}
+
+	public DataSet getMainExpenseTypeDataSetWithCommonCodeByOrgCetegory(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAsDataSet(queryAdvisor, "query.SysExpenseType.getMainExpenseTypeDataSetWithCommonCodeByOrgCetegory");
+	}
+
+	public DataSet getExpenseTypeDataSetWithCommonCodeByOrgCetegory(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAsDataSet(queryAdvisor, "query.SysExpenseType.getExpenseTypeDataSetWithCommonCodeByOrgCetegory");
+	}
+
+	public DataSet getMaxParentExpenseTypeSortOrderDataSetByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("parent_expense_type is null");
+		queryAdvisor.addOrderByClause("sort_order desc");
+		return selectAllAsDataSet(queryAdvisor, new SysExpenseType());
+	}
+
+	public DataSet getMaxExpenseTypeSortOrderDataSetByOrgCategory(String orgCategory, String parentExpenseType) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("parent_expense_type = '"+parentExpenseType+"'");
+		queryAdvisor.addOrderByClause("sort_order desc");
 		return selectAllAsDataSet(queryAdvisor, new SysExpenseType());
 	}
 }

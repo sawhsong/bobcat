@@ -31,4 +31,38 @@
 		  order siblings by sort_order
 	]]>
 	</sql-query>
+
+	<sql-query name="query.SysExpenseType.getMainExpenseTypeDataSetWithCommonCodeByOrgCetegory">
+	<![CDATA[
+		select scc.common_code,
+		       scc.sort_order as scc_sort_order,
+		       exp.expense_type,
+		       exp.sort_order as exp_sort_order,
+		       scc.description_${langCode} as description
+		  from sys_common_code scc,
+		       sys_expense_type exp
+		 where scc.code_type = 'EXPENSE_MAIN_TYPE'
+		   and scc.common_code <> '0000000000'
+		   and exp.org_category(+) = '${orgCategory}'
+		   and scc.common_code = exp.expense_type(+)
+		 order by exp.sort_order, scc.sort_order
+	]]>
+	</sql-query>
+
+	<sql-query name="query.SysExpenseType.getExpenseTypeDataSetWithCommonCodeByOrgCetegory">
+	<![CDATA[
+		select scc.common_code,
+		       scc.sort_order as scc_sort_order,
+		       exp.expense_type,
+		       exp.sort_order as exp_sort_order,
+		       scc.description_${langCode} as description
+		  from sys_common_code scc,
+		       sys_expense_type exp
+		 where scc.code_type = 'EXPENSE_SUB_TYPE'
+		   and scc.common_code <> '0000000000'
+		   and exp.org_category(+) = '${orgCategory}'
+		   and scc.common_code = exp.expense_type(+)
+		 order by exp.sort_order, scc.sort_order
+	]]>
+	</sql-query>
 </hibernate-mapping>
