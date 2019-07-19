@@ -60,93 +60,41 @@ $(function() {
 	/*!
 	 * process
 	 */
-	setCheckbox = function() {
-		alert("val : ");
-//		var thisChecked = $(this).prop("checked"), thisMenuId = $(this).val(), thisValue = $(this).attr("paramValue");
-//		var thisValueItems = thisValue.split(delimiter);
-//		var thisLevel = thisValueItems[0];
-//		var thisPaths = thisValueItems[1].split("/");
-//
-//		$("[name=chkToAssign]").each(function(index) {
-//			var val = $(this).attr("paramValue");
-//			var valItems = val.split(delimiter);
-//			var level = valItems[0];
-//			var paths = valItems[1].split("/");
-//
-//			if (thisValue != val) {
-//				if (thisLevel == "1") {
-//					if (level > thisLevel && thisMenuId == paths[0]) {
-//						$(this).prop("checked", thisChecked);
-//					}
-//				}
-//
-//				if (thisLevel == "2") {
-//					if (thisChecked) {
-//						if ((level > thisLevel && thisMenuId == paths[1]) || (level < thisLevel && thisPaths[0] == paths[0])) {
-//							$(this).prop("checked", thisChecked);
-//						}
-//					} else {
-//						if (level > thisLevel && thisMenuId == paths[1]) {
-//							$(this).prop("checked", thisChecked);
-//						}
-//					}
-//				}
-//
-//				if (thisLevel == "3") {
-//					if (thisChecked) {
-//						if ((level == "1" && thisPaths[0] == paths[0]) || (level == "2" && thisPaths[1] == paths[1])) {
-//							$(this).prop("checked", thisChecked);
-//						}
-//					}
-//				}
-//			}
-//		});
-//
-//		if (!thisChecked && thisLevel == "2") {
-//			if (!hasChildChecked(thisLevel, thisPaths[0])) {
-//				$("[name=chkToAssign]").each(function(index) {
-//					var val = $(this).attr("paramValue");
-//					var valItems = val.split(delimiter);
-//					var level = valItems[0];
-//					var paths = valItems[1].split("/");
-//
-//					if (paths[0] == thisPaths[0]) {
-//						$(this).prop("checked", false);
-//						return false;
-//					}
-//				});
-//			}
-//		}
-//
-//		if (!thisChecked && thisLevel == "3") {
-//			if (!hasChildChecked(thisLevel, thisPaths[1])) {
-//				$("[name=chkToAssign]").each(function(index) {
-//					var val = $(this).attr("paramValue");
-//					var valItems = val.split(delimiter);
-//					var level = valItems[0];
-//					var paths = valItems[1].split("/");
-//
-//					if (paths[1] == thisPaths[1]) {
-//						$(this).prop("checked", false);
-//						return false;
-//					}
-//				});
-//			}
-//
-//			if (!hasChildChecked(2, thisPaths[0])) {
-//				$("[name=chkToAssign]").each(function(index) {
-//					var val = $(this).attr("paramValue");
-//					var valItems = val.split(delimiter);
-//					var level = valItems[0];
-//					var paths = valItems[1].split("/");
-//
-//					if (paths[0] == thisPaths[0]) {
-//						$(this).prop("checked", false);
-//						return false;
-//					}
-//				});
-//			}
-//		}
+	setCheckbox = function(obj) {
+		var $obj = obj, val = $obj.val(), delimiter = "/", isClickedObjChecked = $obj.prop("checked");
+		var clickedVals = val.split(delimiter), clickedNewVal = clickedVals[1]+delimiter+clickedVals[2];
+		var shouldParentChecked = false, $shouldBeChecked;
+
+		$("[name=chkForDel]").each(function(index) {
+			var thisVal = $(this).val();
+			var thisVals = thisVal.split(delimiter), thisNewVal = thisVals[1]+delimiter+thisVals[2];
+
+			if (clickedNewVal == thisNewVal) {
+				if (clickedVals.length == 3) {
+					$(this).prop("checked", isClickedObjChecked);
+				} else {
+					if (thisVals.length == 3) {
+						$(this).prop("checked", isClickedObjChecked);
+					} else {
+						if ($(this).prop("checked")) {
+							shouldParentChecked = true;
+						}
+					}
+				}
+			}
+		});
+
+		if (!isClickedObjChecked && shouldParentChecked) {
+			$("[name=chkForDel]").each(function(index) {
+				var thisVal = $(this).val();
+				var thisVals = thisVal.split(delimiter), thisNewVal = thisVals[1]+delimiter+thisVals[2];
+
+				if ((clickedNewVal == thisNewVal) && (thisVals.length == 3)) {
+					shouldParentChecked = $(this).prop("checked", shouldParentChecked);
+					return false;
+				}
+			});
+		}
 	};
 
 	doSearch = function() {
@@ -168,7 +116,7 @@ $(function() {
 						}
 					}
 				});
-			}, 200);
+			}, 300);
 		}
 	};
 
@@ -273,7 +221,7 @@ $(function() {
 		});
 
 		$("[name=chkForDel]").bind("click", function() {
-			setCheckbox();
+			setCheckbox($(this));
 		});
 
 		$("[name=icnAction]").each(function(index) {
@@ -301,7 +249,7 @@ $(function() {
 		} else if (param.mode == "SetSort") {
 			url = "/sba/0406/getUpdateSortOrder";
 			header = sba.sba0406.header.popHeaderSort;
-			height = 600;
+			width = 800, height = 500;
 		}
 
 		var popParam = {
@@ -369,16 +317,18 @@ $(function() {
 
 	doAction = function(img) {
 		var path = $(img).attr("path");
+		var $checkbox;
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == path) {
 				$(this).prop("checked", true);
+				$checkbox = $(this);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		setCheckbox();
+		setCheckbox($checkbox);
 
 		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(path);};
 		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
@@ -411,7 +361,8 @@ $(function() {
 						url:"/sba/0406/exeExport",
 						paramData:{
 							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
+							dataRange:menuObject.dataRange,
+							orgCategory:$("#orgCategory").val()
 						},
 						header:"exportFile",
 						blind:false,

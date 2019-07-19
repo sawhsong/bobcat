@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeDao;
 import project.conf.resource.ormapper.dto.oracle.SysExpenseType;
+import project.conf.resource.ormapper.dto.oracle.SysMenu;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -23,8 +23,6 @@ import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
 public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
-	@Autowired
-	private SysBoardDao sysBoardDao;
 	@Autowired
 	private SysExpenseTypeDao sysExpenseTypeDao;
 
@@ -89,6 +87,15 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 			}
 			paramEntity.setObject("sysExpenseType", sysExpenseTypeDao.getExpenseTypeByKeys(expenseTypeId, orgCategory, expenseTypeCode));
 
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getUpdateSortOrder(ParamEntity paramEntity) throws Exception {
+		try {
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -171,6 +178,40 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity exeUpdateSortOrder(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		int dataLength = CommonUtil.toInt(requestDataSet.getValue("dataLength"));
+		int result = 0;
+
+		try {
+			for (int i=0; i<dataLength; i++) {
+				SysMenu sysMenu = new SysMenu();
+				String menuId = requestDataSet.getValue("menuId"+delimiter+i);
+
+				queryAdvisor.resetAll();
+
+				sysMenu.addUpdateColumn("sort_order", requestDataSet.getValue("sortOrder" + delimiter + i));
+				sysMenu.addUpdateColumn("update_user_id", (String)session.getAttribute("UserId"));
+				sysMenu.addUpdateColumn("update_date", CommonUtil.getSysdate(), "date");
+
+//				result += sysMenuDao.updateSortOrder(menuId, sysMenu);
+			}
+
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String expenseTypeId = requestDataSet.getValue("expenseTypeId");
@@ -217,18 +258,20 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
+		String columnHeader[], fileHeader[];
 		String pageTitle, fileName;
 		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			pageTitle = "Expense Type List";
+			fileName = "ExpenseTypeList";
+			columnHeader = new String[] {"EXPENSE_TYPE_ID", "EXPENSE_TYPE", "PARENT_EXPENSE_TYPE", "DESCRIPTION", "IS_APPLY_GST", "GST_PERCENTAGE", "ACCOUNT_CODE", "SORT_ORDER"};
+			fileHeader = new String[] {"Expense Type Id", "Expense Type", "Parent Expense Type", "Expense Type Meaning", "Is Apply GST", "GST Percentage", "Account Code", "Sort Order"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);
 			exportHelper.setPageTitle(pageTitle);
+			exportHelper.setFileHeader(fileHeader);
 			exportHelper.setColumnHeader(columnHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
@@ -240,7 +283,7 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysExpenseTypeDao.getExpenseTypeDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

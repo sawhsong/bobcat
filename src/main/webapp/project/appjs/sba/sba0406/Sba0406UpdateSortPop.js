@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0402UpdateSortPop.js
+ * - Sba0406UpdateSortPop.js
  *************************************************************************************************/
 var langCode = commonJs.upperCase(jsconfig.get("langCode"));
 var delimiter = jsconfig.get("dataDelimiter");

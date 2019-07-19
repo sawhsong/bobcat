@@ -12,8 +12,10 @@ public interface Sba0406Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getUpdateSortOrder(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
+	public ParamEntity exeUpdateSortOrder(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception;
 }

@@ -37,6 +37,11 @@ public class Sba0406Action extends BaseAction {
 		return "update";
 	}
 
+	public String getUpdateSortOrder() throws Exception {
+		biz.getUpdateSortOrder(paramEntity);
+		return "updateSort";
+	}
+
 	public String exeInsert() throws Exception {
 		try {
 			biz.exeInsert(paramEntity);
@@ -52,6 +57,15 @@ public class Sba0406Action extends BaseAction {
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String exeUpdateSortOrder() throws Exception {
+		try {
+			biz.exeUpdateSortOrder(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", this.paramEntity);
 		return "ajaxResponse";
 	}
 
