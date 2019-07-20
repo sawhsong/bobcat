@@ -22,6 +22,20 @@ public class SysExpenseTypeHDaoImpl extends BaseHDao implements SysExpenseTypeDa
 		return updateWithSQLQuery(queryAdvisor, sysExpenseType);
 	}
 
+	public int updateSortOrder(String expenseTypeId, SysExpenseType sysExpenseType) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("expense_type_id = '"+expenseTypeId+"'");
+		return updateColumns(queryAdvisor, sysExpenseType);
+	}
+
+	public int updateSubTypeSortOrder(String orgCategory, String expenseType, String mainTypeOrder) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addVariable("mainTypeOrder", mainTypeOrder);
+		queryAdvisor.addWhereClause("org_category = '" + orgCategory + "'");
+		queryAdvisor.addWhereClause("parent_expense_type = '" + expenseType + "'");
+		return updateWithSQLQuery(queryAdvisor, "query.SysExpenseType.updateSubTypeSortOrder");
+	}
+
 	public int deleteWithKey(String expenseTypeId, String orgCategory, String expenseType) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("expense_type_id = '" + expenseTypeId + "'");
@@ -91,5 +105,9 @@ public class SysExpenseTypeHDaoImpl extends BaseHDao implements SysExpenseTypeDa
 		queryAdvisor.addWhereClause("parent_expense_type = '"+parentExpenseType+"'");
 		queryAdvisor.addOrderByClause("sort_order desc");
 		return selectAllAsDataSet(queryAdvisor, new SysExpenseType());
+	}
+
+	public DataSet getExpenseTypeDataSetByOrgCetegoryForSort(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAsDataSet(queryAdvisor, "query.SysExpenseType.getExpenseTypeDataSetByOrgCetegoryForSort");
 	}
 }

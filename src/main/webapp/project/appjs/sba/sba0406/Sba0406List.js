@@ -249,7 +249,7 @@ $(function() {
 		} else if (param.mode == "SetSort") {
 			url = "/sba/0406/getUpdateSortOrder";
 			header = sba.sba0406.header.popHeaderSort;
-			width = 800, height = 500;
+			width = 850, height = 700;
 		}
 
 		var popParam = {

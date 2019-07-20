@@ -65,4 +65,30 @@
 		 order by exp.sort_order, scc.sort_order
 	]]>
 	</sql-query>
+
+	<sql-query name="query.SysExpenseType.getExpenseTypeDataSetByOrgCetegoryForSort">
+	<![CDATA[
+		select expense_type_id,
+		       org_category,
+		       expense_type,
+		       parent_expense_type,
+		       description,
+		       sort_order
+		  from sys_expense_type
+		 where 1 = 1
+		${auto_fill}
+		${where_clause}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.SysExpenseType.updateSubTypeSortOrder">
+	<![CDATA[
+		update sys_expense_type
+		   set sort_order = substr(sort_order, 1, 2)||'${mainTypeOrder}'||substr(sort_order, -2)
+		 where 1 = 1
+		${auto_fill}
+		${where_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

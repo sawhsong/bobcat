@@ -2,37 +2,25 @@
  * Framework Generated Javascript Source
  * - Sba0406UpdateSortPop.js
  *************************************************************************************************/
-var langCode = commonJs.upperCase(jsconfig.get("langCode"));
 var delimiter = jsconfig.get("dataDelimiter");
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#menuLevel").change(function(event) {
+	$("#expenseTypeLevel").change(function(event) {
 		var value = $(this).val();
 
-		if (value == 2) {
-			$("#divLevel1").css("display", "block");
-			$("#divLevel2").css("display", "none");
-		} else if (value == 3) {
-			$("#divLevel1").css("display", "block");
-			$("#divLevel2").css("display", "block");
+		if (value == "Main") {
+			$("#divExpenseMainType").css("display", "none");
 		} else {
-			$("#divLevel1").css("display", "none");
-			$("#divLevel2").css("display", "none");
+			$("#divExpenseMainType").css("display", "block");
 		}
 
-		setLevel2Selectbox();
 		refreshDataArea();
 	});
 
-	$("#level1").change(function(event) {
-		setLevel2Selectbox();
-		refreshDataArea();
-	});
-
-	$("#level2").change(function(event) {
+	$("#mainType").change(function(event) {
 		refreshDataArea();
 	});
 
@@ -43,11 +31,12 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sys/0402/exeUpdateSortOrder.do",
+						url:"/sba/0406/exeUpdateSortOrder",
 						dataType:"json",
 						formId:"fmDefault",
 						data:{
-							dataLength:$("#ulMenuHolder .dummyMenu").length
+							dataLength:$("#ulMenuHolder .dummyMenu").length,
+							orgCategory:orgCategory
 						},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, "json");
@@ -57,6 +46,7 @@ $(function() {
 									type:com.message.I000,
 									contents:result.message,
 									blind:true,
+									width:300,
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
@@ -92,41 +82,19 @@ $(function() {
 	/*!
 	 * process
 	 */
-	setLevel2Selectbox = function() {
-		var level1MenuId = $("#level1").val();
-
-		$("#level2").find("option").remove();
-		for (var i=0; i<dsMenu2.getRowCnt(); i++) {
-			var parentMenu = dsMenu2.getValue(i, "PARENT_MENU_ID");
-			if (parentMenu == level1MenuId) {
-				$("#level2").append("<option value=\""+dsMenu2.getValue(i, "MENU_ID")+"\">"+dsMenu2.getValue(i, "MENU_ID")+"</option>");
-			}
-		}
-		$("#level2").selectpicker("refresh");
-	};
-
 	refreshDataArea = function() {
-		var menuLevel = $("#menuLevel").val();
-		var level1MenuId = $("#level1").val();
-		var level2MenuId = $("#level2").val();
+		var typeLevel = $("#expenseTypeLevel").val();
+		var mainType = $("#mainType").val();
 
 		$("#ulMenuHolder").empty();
 
-		for (var i=0; i<dsMenu.getRowCnt(); i++) {
-			if (dsMenu.getValue(i, "MENU_ID") == "QM") {
-				continue;
-			}
-
-			if (menuLevel == 1) {
-				if (dsMenu.getValue(i, "LEVEL") == 1) {
+		for (var i=0; i<dsExpenseType.getRowCnt(); i++) {
+			if (typeLevel == "Main") {
+				if (commonJs.isEmpty(dsExpenseType.getValue(i, "PARENT_EXPENSE_TYPE"))) {
 					renderElement(i);
 				}
-			} else if (menuLevel == 2) {
-				if (dsMenu.getValue(i, "LEVEL") == 2 && dsMenu.getValue(i, "PARENT_MENU_ID") == level1MenuId) {
-					renderElement(i);
-				}
-			} else if (menuLevel == 3) {
-				if (dsMenu.getValue(i, "LEVEL") == 3 && dsMenu.getValue(i, "PARENT_MENU_ID") == level2MenuId) {
+			} else {
+				if (dsExpenseType.getValue(i, "PARENT_EXPENSE_TYPE") == mainType) {
 					renderElement(i);
 				}
 			}
@@ -152,16 +120,20 @@ $(function() {
 
 		$(elem).css("display", "block").appendTo($("#ulMenuHolder"));
 		$(elem).find("input[type=text]").each(function(index) {
-			if ($(this).attr("id") == "menuId") {
-				$(this).val(dsMenu.getValue(dsIndex, "MENU_ID"));
+			if ($(this).attr("id") == "expenseTypeId") {
+				$(this).val(dsExpenseType.getValue(dsIndex, "EXPENSE_TYPE_ID"));
 			}
 
-			if ($(this).attr("id") == "menuName") {
-				$(this).val(dsMenu.getValue(dsIndex, "MENU_NAME_"+langCode));
+			if ($(this).attr("id") == "expenseType") {
+				$(this).val(dsExpenseType.getValue(dsIndex, "EXPENSE_TYPE"));
+			}
+
+			if ($(this).attr("id") == "description") {
+				$(this).val(dsExpenseType.getValue(dsIndex, "DESCRIPTION"));
 			}
 
 			if ($(this).attr("id") == "sortOrder") {
-				$(this).val(dsMenu.getValue(dsIndex, "SORT_ORDER"));
+				$(this).val(dsExpenseType.getValue(dsIndex, "SORT_ORDER"));
 			}
 		});
 	};
@@ -171,9 +143,8 @@ $(function() {
 			axis:"y",
 			handle:".dragHandler",
 			stop:function() {
-				var menuLevel = $("#menuLevel").val();
-				var level1MenuId = $("#level1").val();
-				var level2MenuId = $("#level2").val();
+				var typeLevel = $("#expenseTypeLevel").val();
+				var mainType = $("#mainType").val();
 
 				$("#ulMenuHolder").find(".dummyMenu").each(function(groupIndex) {
 					$(this).find("input[type=text]").each(function(index) {
@@ -188,18 +159,14 @@ $(function() {
 						$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
 						if (name.indexOf("sortOrder") != -1) {
-							if (menuLevel == 1) {
-								$(this).val(commonJs.lpad((groupIndex+1), 2, "0")+"0000");
-							} else if (menuLevel == 2) {
-								var level1Sort = commonJs.nvl(dsMenu.getValue(dsMenu.getRowIndex("MENU_ID", level1MenuId), "SORT_ORDER"), "000000");
+							var orgCategoryPrefix = getOrgCategoryPrefix();
+							if (typeLevel == "Main") {
+								$(this).val(orgCategoryPrefix + commonJs.lpad((groupIndex+1), 2, "0")+"00");
+							} else {
+								var mainSort = commonJs.nvl(dsExpenseType.getValue(dsExpenseType.getRowIndex("EXPENSE_TYPE", mainType), "SORT_ORDER"), "000000");
 
-								level1Sort = level1Sort.substring(0, 2);
-								$(this).val(level1Sort + commonJs.lpad((groupIndex+1), 2, "0")+"00");
-							} else if (menuLevel == 3) {
-								var level2Sort = commonJs.nvl(dsMenu.getValue(dsMenu.getRowIndex("MENU_ID", level2MenuId), "SORT_ORDER"), "000000");
-
-								level2Sort = level2Sort.substring(0, 4);
-								$(this).val(level2Sort + commonJs.lpad((groupIndex+1), 2, "0"));
+								mainSort = mainSort.substring(2, 4);
+								$(this).val(orgCategoryPrefix + mainSort + commonJs.lpad((groupIndex+1), 2, "0"));
 							}
 						}
 					});
@@ -210,13 +177,17 @@ $(function() {
 		$("#ulMenuHolder").disableSelection();
 	};
 
+	getOrgCategoryPrefix = function() {
+		if (orgCategory == "A") {return "01";}
+		else if (orgCategory == "B") {return "02";}
+		else if (orgCategory == "C") {return "03";}
+		else {return "04";}
+	};
+
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#level1").selectpicker({width:"80px"}).selectpicker("refresh");
-		$("#level2").selectpicker({width:"90px"}).selectpicker("refresh");
-		setLevel2Selectbox();
 		refreshDataArea();
 		setSortable();
 	});

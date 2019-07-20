@@ -9,12 +9,8 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	DataSet dsMenu = MenuManager.getMenuDataSet();
-	DataSet dsMenu1 = MenuManager.getMenuDataSetByLevel(1);
-	DataSet dsMenu2 = MenuManager.getMenuDataSetByLevel(2);
-	SysUser sysUser = (SysUser)session.getAttribute("SysUser");
-	String dateFormat = ConfigUtil.getProperty("format.date.java");
-	String langCode = CommonUtil.upperCase((String)session.getAttribute("langCode"));
+	DataSet dsExpenseType = (DataSet)paramEntity.getObject("expenseType");
+	String orgCategory = requestDataSet.getValue("orgCategory");
 %>
 <%/************************************************************************************************
 * HTML
@@ -37,8 +33,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var dsMenu = commonJs.getDataSetFromJavaDataSet("<%=dsMenu.toStringForJs()%>");
-var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>");
+var dsExpenseType = commonJs.getDataSetFromJavaDataSet("<%=dsExpenseType.toStringForJs()%>");
+var orgCategory = "<%=orgCategory%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -73,25 +69,20 @@ var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>")
 					<ui:seloption value="Sub" text="Expense Sub Type"/>
 				</ui:select>
 			</div>
-			<div class="horGap70"></div>
+			<div class="horGap50"></div>
 			<div id="divExpenseMainType" style="float:left;display:none;">
 				<label for="mainType" class="lblEn hor"><mc:msg key="sba0406.header.mainType"/></label>
-				<ui:select name="mainType">
+				<ui:select name="mainType" className="hor">
 <%
-				for (int i=0; i<dsMenu1.getRowCnt(); i++) {
-					if (!CommonUtil.equals(dsMenu1.getValue(i, "MENU_ID"), "QM")) {
+				for (int i=0; i<dsExpenseType.getRowCnt(); i++) {
+					if (CommonUtil.isBlank(dsExpenseType.getValue(i, "PARENT_EXPENSE_TYPE"))) {
 %>
-					<ui:seloption value="<%=dsMenu1.getValue(i, \"MENU_ID\")%>" text="<%=dsMenu1.getValue(i, \"MENU_ID\")%>"/>
+					<ui:seloption value="<%=dsExpenseType.getValue(i, \"EXPENSE_TYPE\")%>" text="<%=dsExpenseType.getValue(i, \"DESCRIPTION\")%>"/>
 <%
 					}
 				}
 %>
 				</ui:select>
-			</div>
-			<div class="horGap30"></div>
-			<div id="divLevel2" style="float:left;display:none;">
-				<label for="level2" class="lblEn hor"><mc:msg key="sba0406.header.level2"/></label>
-				<select id="level2" name="level2" class="bootstrapSelect"></select>
 			</div>
 		</div>
 	</div>
@@ -122,13 +113,15 @@ var dsMenu2 = commonJs.getDataSetFromJavaDataSet("<%=dsMenu2.toStringForJs()%>")
 		<colgroup>
 			<col width="3%"/>
 			<col width="15%"/>
+			<col width="15%"/>
 			<col width="*"/>
 			<col width="15%"/>
 		</colgroup>
 		<tr>
 			<th id="thDragHander" class="thEdit Ct dragHandler" title="<mc:msg key="sba0406.msg.drag"/>"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
-			<td class="tdEdit"><ui:text name="menuId" status="display"/></td>
-			<td class="tdEdit"><ui:text name="menuName" status="display"/></td>
+			<td class="tdEdit"><ui:text name="expenseTypeId" status="display"/></td>
+			<td class="tdEdit"><ui:text name="expenseType" status="display"/></td>
+			<td class="tdEdit"><ui:text name="description" status="display"/></td>
 			<td class="tdEdit"><ui:text name="sortOrder" status="display"/></td>
 		</tr>
 	</table>

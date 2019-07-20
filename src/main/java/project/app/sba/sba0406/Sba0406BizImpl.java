@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import project.common.extend.BaseBiz;
 import project.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeDao;
 import project.conf.resource.ormapper.dto.oracle.SysExpenseType;
-import project.conf.resource.ormapper.dto.oracle.SysMenu;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -95,7 +94,15 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 	}
 
 	public ParamEntity getUpdateSortOrder(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String orgCategory = requestDataSet.getValue("orgCategory");
+
 		try {
+			queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+			queryAdvisor.addOrderByClause("sort_order asc");
+			paramEntity.setObject("expenseType", sysExpenseTypeDao.getExpenseTypeDataSetByOrgCetegoryForSort(queryAdvisor));
+
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -183,21 +190,30 @@ public class Sba0406BizImpl extends BaseBiz implements Sba0406Biz {
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		String expenseTypeLevel = requestDataSet.getValue("expenseTypeLevel");
+		String orgCategory = requestDataSet.getValue("orgCategory");
 		int dataLength = CommonUtil.toInt(requestDataSet.getValue("dataLength"));
 		int result = 0;
 
 		try {
 			for (int i=0; i<dataLength; i++) {
-				SysMenu sysMenu = new SysMenu();
-				String menuId = requestDataSet.getValue("menuId"+delimiter+i);
+				SysExpenseType sysExpenseType = new SysExpenseType();
+				String expenseTypeId = requestDataSet.getValue("expenseTypeId"+delimiter+i);
+				String expenseType = requestDataSet.getValue("expenseType"+delimiter+i);
+				String sortOrder = requestDataSet.getValue("sortOrder" + delimiter + i);
+				String mainTypeOrder = CommonUtil.substring(sortOrder, 2, 4);
 
 				queryAdvisor.resetAll();
 
-				sysMenu.addUpdateColumn("sort_order", requestDataSet.getValue("sortOrder" + delimiter + i));
-				sysMenu.addUpdateColumn("update_user_id", (String)session.getAttribute("UserId"));
-				sysMenu.addUpdateColumn("update_date", CommonUtil.getSysdate(), "date");
+				sysExpenseType.addUpdateColumn("sort_order", sortOrder);
+				sysExpenseType.addUpdateColumn("update_user_id", (String)session.getAttribute("UserId"));
+				sysExpenseType.addUpdateColumn("update_date", CommonUtil.getSysdate(), "date");
 
-//				result += sysMenuDao.updateSortOrder(menuId, sysMenu);
+				result += sysExpenseTypeDao.updateSortOrder(expenseTypeId, sysExpenseType);
+
+				if (CommonUtil.equalsIgnoreCase(expenseTypeLevel, "Main")) {
+					result += sysExpenseTypeDao.updateSubTypeSortOrder(orgCategory, expenseType, mainTypeOrder);
+				}
 			}
 
 			if (result <= 0) {

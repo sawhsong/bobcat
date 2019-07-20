@@ -12,6 +12,8 @@ import zebra.data.QueryAdvisor;
 public interface SysExpenseTypeDao extends IDao {
 	public int insert(SysExpenseType sysExpenseType) throws Exception;
 	public int updateWithKey(SysExpenseType sysExpenseType, String expenseTypeId, String expenseTypeCode) throws Exception;
+	public int updateSortOrder(String expenseTypeId, SysExpenseType sysExpenseType) throws Exception;
+	public int updateSubTypeSortOrder(String orgCategory, String expenseType, String mainTypeOrder) throws Exception;
 	public int deleteWithKey(String expenseTypeId, String orgCategory, String expenseType) throws Exception;
 	public DataSet getExpenseTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public SysExpenseType getExpenseTypeByKeys(String expenseTypeId, String orgCategory, String expenseTypeCode) throws Exception;
@@ -21,4 +23,5 @@ public interface SysExpenseTypeDao extends IDao {
 	public DataSet getExpenseTypeDataSetWithCommonCodeByOrgCetegory(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getMaxParentExpenseTypeSortOrderDataSetByOrgCategory(String orgCategory) throws Exception;
 	public DataSet getMaxExpenseTypeSortOrderDataSetByOrgCategory(String orgCategory, String parentExpenseType) throws Exception;
+	public DataSet getExpenseTypeDataSetByOrgCetegoryForSort(QueryAdvisor queryAdvisor) throws Exception;
 }
