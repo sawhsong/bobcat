@@ -9,27 +9,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeDao;
+import project.conf.resource.ormapper.dto.oracle.SysAssetType;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeDao;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Sba0408BizImpl extends BaseBiz implements Sba0408Biz {
-	@Autowired
-	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
 	@Autowired
 	private SysAssetTypeDao sysAssetTypeDao;
 
@@ -52,33 +43,6 @@ public class Sba0408BizImpl extends BaseBiz implements Sba0408Biz {
 			queryAdvisor.setRequestDataSet(requestDataSet);
 
 			paramEntity.setAjaxResponseDataSet(sysAssetTypeDao.getAssetTypeDataSetByCriteria(queryAdvisor));
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
-
-		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
-		try {
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -87,44 +51,13 @@ public class Sba0408BizImpl extends BaseBiz implements Sba0408Biz {
 	}
 
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity = getDetail(paramEntity);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
-		String uid = CommonUtil.uid();
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		int result = -1;
+		String assetTypeId = requestDataSet.getValue("assetTypeId");
+		String assetTypeCode = requestDataSet.getValue("assetTypeCode");
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
-
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
+			paramEntity.setObject("sysAssetType", sysAssetTypeDao.getAssetTypeByKeys(assetTypeId, assetTypeCode));
 			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -134,27 +67,23 @@ public class Sba0408BizImpl extends BaseBiz implements Sba0408Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String assetTypeId = requestDataSet.getValue("assetTypeId");
+		String assetTypeCode = requestDataSet.getValue("assetType");
 		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
+		SysAssetType sysAssetType;
 		int result = 0;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysAssetType = sysAssetTypeDao.getAssetTypeByKeys(assetTypeId, assetTypeCode);
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			sysAssetType.setDescription(requestDataSet.getValue("description"));
+			sysAssetType.setIsApplyGst(requestDataSet.getValue("isApplyGst"));
+			sysAssetType.setGstPercentage(CommonUtil.toDouble(requestDataSet.getValue("gstPercentage")));
+			sysAssetType.setAccountCode(requestDataSet.getValue("accountCode"));
+			sysAssetType.setUpdateUserId(loggedInUserId);
+			sysAssetType.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			result = sysAssetTypeDao.updateWithKey(sysAssetType, assetTypeId, assetTypeCode);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -167,22 +96,63 @@ public class Sba0408BizImpl extends BaseBiz implements Sba0408Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
+	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		int result = 0;
+		HttpSession session = paramEntity.getSession();
+		String orgCategory = requestDataSet.getValue("orgCategory");
+		String chkToSave = requestDataSet.getValue("chkToSave");
+		String keyIds[] = CommonUtil.splitWithTrim(chkToSave, ConfigUtil.getProperty("delimiter.record"));
+		String loggedInUserId = (String)session.getAttribute("UserId");
+		DataSet existingData;
+		SysAssetType sysAssetType;
+		int resultInsert = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
-			} else {
-				result = sysBoardDao.delete(articleId);
-			}
+			existingData = sysAssetTypeDao.getAssetTypeDataSetByOrgCategory(orgCategory);
+			sysAssetTypeDao.deleteByOrgCategory(orgCategory);
 
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			if (keyIds != null) {
+				for (int i=0; i<keyIds.length; i++) {
+					String assetTypeId = "", assetTypeCode = "";
+
+					if (CommonUtil.startsWith(keyIds[i], "_")) {
+						assetTypeId = "";
+						assetTypeCode = CommonUtil.remove(keyIds[i], "_");
+					} else {
+						assetTypeId = CommonUtil.split(keyIds[i], "_")[0];
+						assetTypeCode = CommonUtil.split(keyIds[i], "_")[1];
+					}
+
+					if (CommonUtil.isNotBlank(assetTypeId)) {
+						int existingIndex = existingData.getRowIndex("ASSET_TYPE_ID", assetTypeId);
+						SysAssetType existObj = (SysAssetType)existingData.getRowAsDto(existingIndex, new SysAssetType());
+
+						existObj.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+						existObj.setUpdateUserId(loggedInUserId);
+						existObj.setSortOrder(getSortOrder(orgCategory));
+
+						resultInsert += sysAssetTypeDao.insert(existObj);
+					} else {
+						String uid = CommonUtil.uid();
+
+						sysAssetType = new SysAssetType();
+						sysAssetType.setAssetTypeId(uid);
+						sysAssetType.setOrgCategory(orgCategory);
+						sysAssetType.setAssetType(assetTypeCode);
+						sysAssetType.setDescription(CommonCodeManager.getCodeDescription("ASSET_TYPE", assetTypeCode));
+						sysAssetType.setIsApplyGst("Y");
+						sysAssetType.setGstPercentage(10);
+						sysAssetType.setSortOrder(getSortOrder(orgCategory));
+						sysAssetType.setInsertUserId(loggedInUserId);
+						sysAssetType.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+						resultInsert += sysAssetTypeDao.insert(sysAssetType);
+					}
+				}
+
+				if (resultInsert <= 0) {
+					throw new FrameworkException("E801", getMessage("E801", paramEntity));
+				}
 			}
 
 			paramEntity.setSuccess(true);
@@ -193,41 +163,24 @@ public class Sba0408BizImpl extends BaseBiz implements Sba0408Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[];
-		String pageTitle, fileName;
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
+	private String getSortOrder(String orgCategory) throws Exception {
+		String ord1 = "", ord2 = "";
+		DataSet ds;
 
-		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
-
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
-
-			queryAdvisor.setRequestDataSet(requestDataSet);
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
-			}
-
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
-
-			paramEntity.setSuccess(true);
-			paramEntity.setFileToExport(exportHelper.createFile());
-			paramEntity.setFileNameToExport(exportHelper.getFileName());
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
+		if (CommonUtil.equals(orgCategory, "A")) {
+			ord1 = "01";
+		} else if (CommonUtil.equals(orgCategory, "B")) {
+			ord1 = "02";
+		} else if (CommonUtil.equals(orgCategory, "C")) {
+			ord1 = "03";
+		} else if (CommonUtil.equals(orgCategory, "D")) {
+			ord1 = "04";
 		}
-		return paramEntity;
+
+		ds = sysAssetTypeDao.getMaxSortOrderDataSetByOrgCategory(orgCategory);
+		ord2 = CommonUtil.toString(CommonUtil.toInt(CommonUtil.substring(ds.getValue(0, 0), 2, 4))+1);
+		ord2 = CommonUtil.leftPad(ord2, 2, "0");
+
+		return ord1+ord2+"00";
 	}
 }

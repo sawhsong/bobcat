@@ -11,6 +11,23 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class SysAssetTypeHDaoImpl extends BaseHDao implements SysAssetTypeDao {
+	public int insert(SysAssetType sysAssetType) throws Exception {
+		return insertWithSQLQuery(sysAssetType);
+	}
+
+	public int updateWithKey(SysAssetType sysAssetType, String assetTypeId, String assetTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("asset_type_id = '" + assetTypeId + "'");
+		queryAdvisor.addWhereClause("asset_type = '" + assetTypeCode + "'");
+		return updateWithSQLQuery(queryAdvisor, sysAssetType);
+	}
+
+	public int deleteByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		return deleteWithSQLQuery(queryAdvisor, new SysAssetType());
+	}
+
 	public DataSet getAssetTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgCategory = requestDataSet.getValue("orgCategory");
@@ -33,5 +50,18 @@ public class SysAssetTypeHDaoImpl extends BaseHDao implements SysAssetTypeDao {
 		queryAdvisor.addOrderByClause("sort_order");
 
 		return selectAllAsDataSet(queryAdvisor, new SysAssetType());
+	}
+
+	public SysAssetType getAssetTypeByKeys(String assetTypeId, String assetTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("asset_type_id = '"+assetTypeId+"'");
+		queryAdvisor.addWhereClause("asset_type = '"+assetTypeCode+"'");
+		return (SysAssetType)selectAllToDto(queryAdvisor, new SysAssetType());
+	}
+
+	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		return selectAsDataSet(queryAdvisor, "query.SysAssetType.getMaxSortOrderDataSetByOrgCategory");
 	}
 }

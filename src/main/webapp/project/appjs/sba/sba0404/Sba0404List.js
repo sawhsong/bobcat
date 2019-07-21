@@ -87,7 +87,7 @@ $(function() {
 						}
 					}
 				});
-			}, 200);
+			}, 300);
 		}
 	};
 
@@ -108,7 +108,6 @@ $(function() {
 				var uiChk = new UiCheckbox();
 				uiChk.setName("chkToSave").setOptions(checkString).setValue(ds.getValue(i, "INCOME_TYPE_ID")+"_"+ds.getValue(i, "INCOME_TYPE_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
-
 
 				if (!commonJs.isEmpty(ds.getValue(i, "INCOME_TYPE_ID"))) {
 					var uiAnc = new UiAnchor();
