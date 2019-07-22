@@ -9,8 +9,8 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysRepaymentType sysRepaymentType = (SysRepaymentType)paramEntity.getObject("sysRepaymentType");
+	String gstFormat = "#,##0.00";
 %>
 <%/************************************************************************************************
 * HTML
@@ -66,73 +66,48 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="18%"/>
+			<col width="32%"/>
+			<col width="18%"/>
+			<col width="32%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.repaymentTypeId"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0410.header.writerName" options="mandatory"/>
+				<ui:text name="repaymentTypeId" value="<%=sysRepaymentType.getRepaymentTypeId()%>" status="display" checkName="sba0410.header.repaymentTypeId" options="mandatory"/>
 			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.writerEmail"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.orgCategory"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sba0410.header.writerEmail" option="email" options="mandatory"/>
+				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" status="disabled" selectedValue="<%=sysRepaymentType.getOrgCategory()%>" checkName="sba0410.header.orgCategory" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sba0410.header.articleSubject" options="mandatory"/>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.repaymentType"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="repaymentType" codeType="REPAYMENT_TYPE" status="disabled" selectedValue="<%=sysRepaymentType.getRepaymentType()%>" checkName="sba0410.header.repaymentType" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.description"/></th>
+			<td class="tdEdit">
+				<ui:text name="description" value="<%=sysRepaymentType.getDescription()%>" checkName="sba0410.header.description" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0410.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.isApplyGst"/></th>
+			<td class="tdEdit">
+				<ui:ccselect name="isApplyGst" codeType="SIMPLE_YN" selectedValue="<%=sysRepaymentType.getIsApplyGst()%>" checkName="sba0410.header.isApplyGst" options="mandatory"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0410.header.gstPercentage"/></th>
+			<td class="tdEdit">
+				<ui:text name="gstPercentage" value="<%=CommonUtil.toString(sysRepaymentType.getGstPercentage(), gstFormat)%>" className="numeric" checkName="sba0410.header.gstPercentage" options="mandatory"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0410.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
-<%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
-%>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
-<%
-						}
-					}
-%>
-					</table>
-				</div>
+			<th class="thEdit Rt"><mc:msg key="sba0410.header.accountCode"/></th>
+			<td class="tdEdit">
+				<ui:text name="accountCode" value="<%=sysRepaymentType.getAccountCode()%>" checkName="sba0410.header.accountCode"/>
 			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0410.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt"></th>
+			<td class="tdEdit"></td>
 		</tr>
 	</table>
 </div>

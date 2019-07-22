@@ -11,6 +11,23 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class SysRepaymentTypeHDaoImpl extends BaseHDao implements SysRepaymentTypeDao {
+	public int insert(SysRepaymentType sysRepaymentType) throws Exception {
+		return insertWithSQLQuery(sysRepaymentType);
+	}
+
+	public int updateWithKey(SysRepaymentType sysRepaymentType, String repaymentTypeId, String repaymentTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("repayment_type_id = '" + repaymentTypeId + "'");
+		queryAdvisor.addWhereClause("repayment_type = '" + repaymentTypeCode + "'");
+		return updateWithSQLQuery(queryAdvisor, sysRepaymentType);
+	}
+
+	public int deleteByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		return deleteWithSQLQuery(queryAdvisor, new SysRepaymentType());
+	}
+
 	public DataSet getRepaymentTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgCategory = requestDataSet.getValue("orgCategory");
@@ -33,5 +50,18 @@ public class SysRepaymentTypeHDaoImpl extends BaseHDao implements SysRepaymentTy
 		queryAdvisor.addOrderByClause("sort_order");
 
 		return selectAllAsDataSet(queryAdvisor, new SysRepaymentType());
+	}
+
+	public SysRepaymentType getRepaymentTypeByKeys(String repaymentTypeId, String repaymentTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("repayment_type_id = '"+repaymentTypeId+"'");
+		queryAdvisor.addWhereClause("repayment_type = '"+repaymentTypeCode+"'");
+		return (SysRepaymentType)selectAllToDto(queryAdvisor, new SysRepaymentType());
+	}
+
+	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		return selectAsDataSet(queryAdvisor, "query.SysRepaymentType.getMaxSortOrderDataSetByOrgCategory");
 	}
 }
