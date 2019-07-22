@@ -11,6 +11,23 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class SysBorrowingTypeHDaoImpl extends BaseHDao implements SysBorrowingTypeDao {
+	public int insert(SysBorrowingType sysBorrowingType) throws Exception {
+		return insertWithSQLQuery(sysBorrowingType);
+	}
+
+	public int updateWithKey(SysBorrowingType sysBorrowingType, String borrowingTypeId, String borrowingTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("borrowing_type_id = '" + borrowingTypeId + "'");
+		queryAdvisor.addWhereClause("borrowing_type = '" + borrowingTypeCode + "'");
+		return updateWithSQLQuery(queryAdvisor, sysBorrowingType);
+	}
+
+	public int deleteByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		return deleteWithSQLQuery(queryAdvisor, new SysBorrowingType());
+	}
+
 	public DataSet getBorrowingTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgCategory = requestDataSet.getValue("orgCategory");
@@ -33,5 +50,18 @@ public class SysBorrowingTypeHDaoImpl extends BaseHDao implements SysBorrowingTy
 		queryAdvisor.addOrderByClause("sort_order");
 
 		return selectAllAsDataSet(queryAdvisor, new SysBorrowingType());
+	}
+
+	public SysBorrowingType getBorrowingTypeByKeys(String borrowingTypeId, String borrowingTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("borrowing_type_id = '"+borrowingTypeId+"'");
+		queryAdvisor.addWhereClause("borrowing_type = '"+borrowingTypeCode+"'");
+		return (SysBorrowingType)selectAllToDto(queryAdvisor, new SysBorrowingType());
+	}
+
+	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		return selectAsDataSet(queryAdvisor, "query.SysBorrowingType.getMaxSortOrderDataSetByOrgCategory");
 	}
 }

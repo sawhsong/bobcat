@@ -4,18 +4,59 @@
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
-var searchResultDataCount = 0;
 
 $(function() {
 	/*!
 	 * event
 	 */
 	$("#icnCheck").click(function(event) {
-		commonJs.toggleCheckboxes("chkToAssign");
+		commonJs.toggleCheckboxes("chkToSave");
 	});
 
 	$("#orgCategory").change(function(event) {
 		doSearch();
+	});
+
+	$("#btnSave").click(function() {
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/sba/0412/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						data:{
+						},
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}]
+		});
 	});
 
 	$(document).keypress(function(event) {
@@ -51,10 +92,8 @@ $(function() {
 	};
 
 	renderDataGridTable = function(result) {
-		var ds = result.dataSet;
-		var html = "";
+		var ds = result.dataSet, html = "";
 
-		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
 
 		if (ds.getRowCnt() > 0) {
@@ -67,15 +106,19 @@ $(function() {
 				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkToAssign").setName("chkToAssign").addAttribute(checkString).setValue(ds.getValue(i, "BORROWING_TYPE_ID")+"_"+ds.getValue(i, "BORROWING_TYPE_CODE"));
+				uiChk.setName("chkToSave").setOptions(checkString).setValue(ds.getValue(i, "BORROWING_TYPE_ID")+"_"+ds.getValue(i, "BORROWING_TYPE_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
-				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "BORROWING_TYPE_NAME")).setScript("getDetail('"+ds.getValue(i, "BORROWING_TYPE_ID")+"', '"+ds.getValue(i, "BORROWING_TYPE_CODE")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+				if (!commonJs.isEmpty(ds.getValue(i, "BORROWING_TYPE_ID"))) {
+					var uiAnc = new UiAnchor();
+					uiAnc.setText(ds.getValue(i, "BORROWING_TYPE_NAME")).setScript("getUpdate('"+ds.getValue(i, "BORROWING_TYPE_ID")+"', '"+ds.getValue(i, "BORROWING_TYPE_CODE")+"')");
+					gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
+				} else {
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BORROWING_TYPE_NAME")));
+				}
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_APPLY_GST")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_PERCENTAGE"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_PERCENTAGE"), "#,##0.00")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ACCOUNT_CODE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
@@ -104,40 +147,20 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
-	};
-
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
-
-		if (param.mode == "Detail") {
-			url = "/sba/0412/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sba/0412/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/sba/0412/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
-		}
-
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
+	getUpdate = function(borrowingTypeId, borrowingTypeCode) {
+		popup = commonJs.openPopup({
+			popupId:"BorrowingTypeUpdate",
+			url:"/sba/0412/getUpdate",
 			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				mode:"Update",
+				borrowingTypeId:borrowingTypeId,
+				borrowingTypeCode:borrowingTypeCode
 			},
-			header:header,
+			header:com.header.popHeaderEdit,
 			blind:true,
-			width:800,
-			height:height
-		};
-
-		popup = commonJs.openPopup(popParam);
+			width:900,
+			height:300
+		});
 	};
 
 	/*!

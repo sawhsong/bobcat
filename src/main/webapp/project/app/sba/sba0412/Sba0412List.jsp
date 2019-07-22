@@ -57,9 +57,7 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="orgCategory" class="lblEn hor mandatory"><mc:msg key="sba0412.search.orgCategory"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY"/>
-				</div>
+				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" className="hor"/>
 			</td>
 		</tr>
 	</table>
