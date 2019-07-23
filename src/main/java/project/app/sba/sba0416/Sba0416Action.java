@@ -27,9 +27,9 @@ public class Sba0416Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
+	public String getUpload() throws Exception {
+		biz.getUpload(paramEntity);
+		return "upload";
 	}
 
 	public String getInsert() throws Exception {

@@ -10,7 +10,7 @@ import zebra.data.ParamEntity;
 public interface Sba0416Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getUpload(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception;

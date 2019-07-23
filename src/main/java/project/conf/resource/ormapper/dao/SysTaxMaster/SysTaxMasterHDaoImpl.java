@@ -5,8 +5,10 @@
 package project.conf.resource.ormapper.dao.SysTaxMaster;
 
 import project.common.extend.BaseHDao;
+import project.conf.resource.ormapper.dto.oracle.SysTaxMaster;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
+import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
@@ -14,17 +16,29 @@ public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String taxYear = requestDataSet.getValue("taxYear");
 		String wageType = requestDataSet.getValue("wageType");
-		String gross = requestDataSet.getValue("gross");
+		double rangeFrom = CommonUtil.toDouble(requestDataSet.getValue("rangeFrom"));
+		double rangeTo = CommonUtil.toDouble(requestDataSet.getValue("rangeTo"));
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String langCode = (String)queryAdvisor.getObject("langCode");
 
 		queryAdvisor.addWhereClause("tax.tax_year = '"+taxYear+"'");
-		queryAdvisor.addAutoFillCriteria(gross, "tax.gross = '"+gross+"'");
 		queryAdvisor.addAutoFillCriteria(wageType, "tax.wage_type = '"+wageType+"'");
+		if (rangeFrom > 0) {
+			queryAdvisor.addAutoFillCriteria(CommonUtil.toString(rangeFrom), "tax.gross >= '"+rangeFrom+"'");
+		}
+		if (rangeTo > 0) {
+			queryAdvisor.addAutoFillCriteria(CommonUtil.toString(rangeTo), "tax.gross <= '"+rangeTo+"'");
+		}
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addVariable("langCode", langCode);
 		queryAdvisor.addOrderByClause("tax.tax_year desc, tax.gross desc, tax.wage_type desc");
 
 		return selectAsDataSet(queryAdvisor, "query.SysTaxMaster.getTaxMasterDataSetByCriteria");
+	}
+
+	public SysTaxMaster getTaxMasterById(String taxMasterId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("tax_master_id = '"+taxMasterId+"'");
+		return (SysTaxMaster)selectAllToDto(queryAdvisor, new SysTaxMaster());
 	}
 }

@@ -21,15 +21,12 @@ import zebra.util.ExportUtil;
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
 import project.conf.resource.ormapper.dao.SysTaxMaster.SysTaxMasterDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	@Autowired
 	private SysBoardDao sysBoardDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
 	@Autowired
 	private SysTaxMasterDao sysTaxMasterDao;
 
@@ -61,16 +58,12 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getUpload(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String taxMasterId = requestDataSet.getValue("taxMasterId");
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setObject("sysTaxMaster", sysTaxMasterDao.getTaxMasterById(taxMasterId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -88,8 +81,11 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	}
 
 	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String taxMasterId = requestDataSet.getValue("taxMasterId");
+
 		try {
-			paramEntity = getDetail(paramEntity);
+			paramEntity.setObject("sysTaxMaster", sysTaxMasterDao.getTaxMasterById(taxMasterId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

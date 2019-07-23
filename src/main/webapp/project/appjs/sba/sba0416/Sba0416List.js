@@ -10,6 +10,10 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnUpload").click(function(event) {
+		openPopup({mode:"Upload"});
+	});
+
 	$("#btnNew").click(function(event) {
 		openPopup({mode:"New"});
 	});
@@ -40,11 +44,6 @@ $(function() {
 
 	$(document).keypress(function(event) {
 		if (event.which == 13) {
-			var element = event.target;
-
-			if ($(element).is("[name=gross]")) {
-				doSearch();
-			}
 		}
 	});
 
@@ -75,8 +74,7 @@ $(function() {
 	};
 
 	renderDataGridTable = function(result) {
-		var ds = result.dataSet;
-		var html = "";
+		var ds = result.dataSet, html = "";
 
 		searchResultDataCount = ds.getRowCnt();
 		$("#tblGridBody").html("");
@@ -85,20 +83,16 @@ $(function() {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
-				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "TAX_MASTER_ID"));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
-
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(new UiCheckbox().setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "TAX_MASTER_ID"))));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "TAX_YEAR")));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.getNumberMask(ds.getValue(i, "GROSS"), "#,###.##")).setScript("getDetail('"+ds.getValue(i, "TAX_MASTER_ID")+"')");
+				uiAnc.setText(commonJs.getNumberMask(ds.getValue(i, "GROSS"), "#,##0.00")).setScript("getUpdate('"+ds.getValue(i, "TAX_MASTER_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Rt").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "QUARTER_CODE_DESC")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "WAGE_TYPE_DESC")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "RESIDENT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NON_RESIDENT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "RESIDENT"), "#,##0.00")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NON_RESIDENT"), "#,##0.00")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
 
@@ -111,7 +105,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -128,42 +122,43 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.commonAction);
+			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getUpdate = function(taxMasterId) {
+		openPopup({
+			mode:"Edit",
+			taxMasterId:taxMasterId
+		});
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+		var url = "", header = "", width = 800, height = 300;
 
-		if (param.mode == "Detail") {
-			url = "/sba/0416/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
+		if (param.mode == "Upload") {
+			url = "/sba/0416/getUpload.do";
+			header = "Upload Tax Master Excel File";
+		} else if (param.mode == "New") {
 			url = "/sba/0416/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
 			url = "/sba/0416/getUpdate.do";
 			header = com.header.popHeaderEdit;
-			height = 634;
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"TaxTable"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				taxMasterId:param.taxMasterId
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:width,
 			height:height
 		};
 
@@ -217,21 +212,20 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var taxMasterId = $(img).attr("taxMasterId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == taxMasterId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.commonAction[2].fun = function() {doDelete();};
+		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(taxMasterId);};
+		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.commonAction, {
+		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -266,7 +260,6 @@ $(function() {
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,

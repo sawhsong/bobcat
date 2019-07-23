@@ -84,10 +84,10 @@
 				<ui:ccselect name="wageType" codeType="WAGE_TYPE" caption="==Select=="/>
 			</td>
 			<td class="tdSearch">
-				<label for="gross" class="lblEn hor"><mc:msg key="sba0416.search.gross"/></label>
-				<ui:text name="grossFrom" className="hor ct numeric" style="width:100px"/>
+				<label for="rangeFrom" class="lblEn hor"><mc:msg key="sba0416.search.range"/></label>
+				<ui:text name="rangeFrom" className="hor ct numeric" style="width:100px"/>
 				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-				<ui:text name="grossTo" className="hor ct numeric" style="width:100px"/>
+				<ui:text name="rangeTo" className="hor ct numeric" style="width:100px"/>
 			</td>
 		</tr>
 	</table>
@@ -106,33 +106,31 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="3%"/>
-			<col width="10%"/>
+			<col width="11%"/>
 			<col width="*"/>
-			<col width="15%"/>
-			<col width="15%"/>
+			<col width="16%"/>
+			<col width="12%"/>
+			<col width="12%"/>
 			<col width="10%"/>
 			<col width="10%"/>
-			<col width="10%"/>
-			<col width="8%"/>
-			<col width="5%"/>
+			<col width="6%"/>
 		</colgroup>
 		<thead>
 			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.taxYear"/></th>
 				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.gross"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sba0416.grid.quarter"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sba0416.grid.wageType"/></th>
 				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.resident"/></th>
 				<th class="thGrid sortable:numeric"><mc:msg key="sba0416.grid.nonResident"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sba0416.grid.insertDate"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sba0416.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="10"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

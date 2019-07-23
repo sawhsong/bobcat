@@ -9,8 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
-	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	SysTaxMaster sysTaxMaster = (SysTaxMaster)paramEntity.getObject("sysTaxMaster");
+	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
+	String numberFormat = "#,##0.00";
 %>
 <%/************************************************************************************************
 * HTML
@@ -48,6 +49,7 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -66,73 +68,39 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.writerName"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.taxMasgerId"/></th>
+			<td class="tdEdit"><ui:text name="taxMasgerId" value="<%=sysTaxMaster.getTaxMasterId()%>" status="display" checkName="sba0416.header.taxMasgerId" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.taxYear"/></th>
 			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysBoard.getWriterName()%>" checkName="sba0416.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysBoard.getWriterEmail()%>" checkName="sba0416.header.writerEmail" option="email" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" value="<%=sysBoard.getArticleSubject()%>" checkName="sba0416.header.articleSubject" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0416.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;" value="<%=sysBoard.getArticleContents()%>"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0416.header.attachedFile"/><br/>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFileList" style="width:100%;height:100px;overflow-y:auto;">
-					<table class="tblDefault withPadding">
+				<ui:select name="taxYear" options="mandatory">
 <%
-					if (fileDataSet.getRowCnt() > 0) {
-						for (int i=0; i<fileDataSet.getRowCnt(); i++) {
-							double fileSize = CommonUtil.toDouble(fileDataSet.getValue(i, "FILE_SIZE")) / 1024;
+				for (int i=-5; i<6; i++) {
+					String seleted = (CommonUtil.equals(CommonUtil.toString(currentYear - i), sysTaxMaster.getTaxYear())) ? "selected" : "";
 %>
-						<tr>
-							<td class="tdDefault">
-								<label class="lblCheckEn">
-									<input type="checkbox" id="chkForDel_<%=i%>" name="chkForDel" class="chkEn" value="<%=fileDataSet.getValue(i, "FILE_ID")%>" title="Select to Delete"/>
-									<img src="<%=fileDataSet.getValue(i, "FILE_ICON")%>" style="margin-top:-4px;"/>
-									<%=fileDataSet.getValue(i, "ORIGINAL_NAME")%> (<%=CommonUtil.getNumberMask(fileSize)%> KB)
-								</label>
-							</td>
-						</tr>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
 <%
-						}
-					}
+				}
 %>
-					</table>
-				</div>
+				</ui:select>
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="sba0416.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.wageType"/></th>
+			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" options="mandatory" selectedValue="<%=sysTaxMaster.getWageType()%>"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0416.header.grossIncome"/></th>
+			<td class="tdEdit"><ui:text name="grossIncome" value="<%=CommonUtil.toString(sysTaxMaster.getGross(), numberFormat)%>" checkName="sba0416.header.grossIncome" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sba0416.header.resident"/></th>
+			<td class="tdEdit"><ui:text name="resident" value="<%=CommonUtil.toString(sysTaxMaster.getResident(), numberFormat)%>" checkName="sba0416.header.resident"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0416.header.nonResident"/></th>
+			<td class="tdEdit"><ui:text name="nonResident" value="<%=CommonUtil.toString(sysTaxMaster.getNonResident(), numberFormat)%>" checkName="sba0416.header.nonResident"/></td>
 		</tr>
 	</table>
 </div>
