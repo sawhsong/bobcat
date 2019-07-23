@@ -105,7 +105,7 @@ $(function() {
 					}
 				}
 			});
-		}, 200);
+		}, 500);
 	};
 
 	renderDataGridTable = function(result) {

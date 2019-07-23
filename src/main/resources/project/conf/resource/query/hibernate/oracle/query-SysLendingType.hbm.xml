@@ -29,4 +29,15 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.SysLendingType.getMaxSortOrderDataSetByOrgCategory">
+	<![CDATA[
+		select nvl(max(sort_order), 0) as sort_order
+		  from sys_lending_type
+		 where 1 = 1
+		${auto_fill}
+		${where_clause}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

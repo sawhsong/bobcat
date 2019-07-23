@@ -57,9 +57,7 @@
 		<tr>
 			<td class="tdSearch">
 				<label for="orgCategory" class="lblEn hor mandatory"><mc:msg key="sba0414.search.orgCategory"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY"/>
-				</div>
+				<ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" className="hor"/>
 			</td>
 		</tr>
 	</table>
@@ -92,8 +90,8 @@
 				<th class="thGrid"><mc:msg key="sba0414.grid.isApplyGst"/></th>
 				<th class="thGrid"><mc:msg key="sba0414.grid.gstPercentage"/></th>
 				<th class="thGrid"><mc:msg key="sba0414.grid.accountCode"/></th>
-				<th class="thGrid"><mc:msg key="sba0414.grid.insertDate"/></th>
-				<th class="thGrid"><mc:msg key="sba0414.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

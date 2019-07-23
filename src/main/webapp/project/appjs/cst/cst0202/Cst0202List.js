@@ -52,7 +52,7 @@ $(function() {
 						}
 					}
 				});
-			}, 200);
+			}, 500);
 
 //			setTimeout(function() {
 //				commonJs.ajaxSubmit({

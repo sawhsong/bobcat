@@ -90,8 +90,8 @@
 				<th class="thGrid"><mc:msg key="sba0412.grid.isApplyGst"/></th>
 				<th class="thGrid"><mc:msg key="sba0412.grid.gstPercentage"/></th>
 				<th class="thGrid"><mc:msg key="sba0412.grid.accountCode"/></th>
-				<th class="thGrid"><mc:msg key="sba0412.grid.insertDate"/></th>
-				<th class="thGrid"><mc:msg key="sba0412.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

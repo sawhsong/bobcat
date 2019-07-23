@@ -27,28 +27,9 @@ public class Sba0414Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
-	}
-
-	public String getInsert() throws Exception {
-		biz.getInsert(paramEntity);
-		return "insert";
-	}
-
 	public String getUpdate() throws Exception {
 		biz.getUpdate(paramEntity);
 		return "update";
-	}
-
-	public String exeInsert() throws Exception {
-		try {
-			biz.exeInsert(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
 	}
 
 	public String exeUpdate() throws Exception {
@@ -60,18 +41,12 @@ public class Sba0414Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String exeDelete() throws Exception {
+	public String exeSave() throws Exception {
 		try {
-			biz.exeDelete(paramEntity);
+			biz.exeSave(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String exeExport() throws Exception {
-		biz.exeExport(paramEntity);
-		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
 	}
 }

@@ -88,7 +88,7 @@ $(function() {
 					}
 				}
 			});
-		}, 200);
+		}, 500);
 
 		setSummaryDataForAdminTool();
 	};
