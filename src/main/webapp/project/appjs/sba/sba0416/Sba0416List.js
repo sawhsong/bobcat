@@ -281,7 +281,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#taxYear").focus();
+		$(".numeric").number(true, 2);
 		doSearch();
 	});
 });

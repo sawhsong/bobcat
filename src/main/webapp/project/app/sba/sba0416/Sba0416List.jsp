@@ -48,6 +48,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnUpload" caption="button.com.Upload" iconClass="fa-upload"/>
 			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
@@ -72,7 +73,7 @@
 				for (int i=-5; i<6; i++) {
 					String selected = (currentYear == (currentYear + i)) ? "selected" : "";
 %>
-					<option value="<%=currentYear + i%>" <%=selected%>><%=currentYear + i%></option>
+					<option value="<%=currentYear - i%>" <%=selected%>><%=currentYear - i%></option>
 <%
 				}
 %>
@@ -84,22 +85,14 @@
 			</td>
 			<td class="tdSearch">
 				<label for="gross" class="lblEn hor"><mc:msg key="sba0416.search.gross"/></label>
-				<ui:text name="gross" style="width:250px"/>
+				<ui:text name="grossFrom" className="hor ct numeric" style="width:100px"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="grossTo" className="hor ct numeric" style="width:100px"/>
 			</td>
 		</tr>
 	</table>
 </div>
-<div id="divInformArea" class="areaContainer">
-	<table class="tblDataEntry" class="areaContainer">
-		<caption><mc:msg key="page.com.dataEntry"/></caption>
-		<tr>
-			<td class="tdDataEntry">
-				<label for="taxYear" class="lblEn hor mandatory"><mc:msg key="sba0416.info.uploadFile"/></label>
-				<ui:file name="fileUpload" style="width:300px"/>
-			</td>
-		</tr>
-	</table>
-</div>
+<div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
