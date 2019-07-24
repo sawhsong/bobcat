@@ -9,8 +9,6 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
-	String numberFormat = "#,##0.00";
 %>
 <%/************************************************************************************************
 * HTML
@@ -66,39 +64,12 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="17%"/>
-			<col width="33%"/>
-			<col width="17%"/>
-			<col width="33%"/>
+			<col width="20%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0416.header.taxMasterId"/></th>
-			<td class="tdEdit"><ui:text name="taxMasterId" status="display" checkName="sba0416.header.taxMasterId"/></td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.taxYear"/></th>
-			<td class="tdEdit">
-				<ui:select name="taxYear" options="mandatory">
-<%
-				for (int i=-5; i<6; i++) {
-					String seleted = ((currentYear - i) == currentYear) ? "selected" : "";
-%>
-					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
-<%
-				}
-%>
-				</ui:select>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.wageType"/></th>
-			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" options="mandatory"/></td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.grossIncome"/></th>
-			<td class="tdEdit"><ui:text name="grossIncome" className="numeric" checkName="sba0416.header.grossIncome" options="mandatory"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0416.header.resident"/></th>
-			<td class="tdEdit"><ui:text name="resident" className="numeric" checkName="sba0416.header.resident"/></td>
-			<th class="thEdit Rt"><mc:msg key="sba0416.header.nonResident"/></th>
-			<td class="tdEdit"><ui:text name="nonResident" className="numeric" checkName="sba0416.header.nonResident"/></td>
+			<th class="thEdit Rt"><mc:msg key="sba0416.info.uploadFile"/></th>
+			<td class="tdEdit"><ui:file name="taxMasterFile"/></td>
 		</tr>
 	</table>
 </div>

@@ -139,13 +139,14 @@ $(function() {
 		var url = "", header = "", width = 800, height = 300;
 
 		if (param.mode == "Upload") {
-			url = "/sba/0416/getUpload.do";
+			url = "/sba/0416/getUpload";
 			header = "Upload Tax Master Excel File";
+			width = 400, height = 150;
 		} else if (param.mode == "New") {
-			url = "/sba/0416/getInsert.do";
+			url = "/sba/0416/getInsert";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0416/getUpdate.do";
+			url = "/sba/0416/getUpdate";
 			header = com.header.popHeaderEdit;
 		}
 
@@ -248,13 +249,14 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/sba/0416/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,
@@ -265,8 +267,7 @@ $(function() {
 				caption:com.caption.no,
 				callback:function() {
 				}
-			}],
-			blind:true
+			}]
 		});
 	};
 
@@ -274,6 +275,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		commonJs.setExportButtonContextMenu($("#btnExport"));
 		$(".numeric").number(true, 2);
 		doSearch();
 	});

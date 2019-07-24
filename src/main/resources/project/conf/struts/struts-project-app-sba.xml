@@ -74,6 +74,7 @@
             <result name="detail" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416DetailPop.jsp</result>
             <result name="insert" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416UpdatePop.jsp</result>
+            <result name="upload" type="debugDispatcherResult">/project/app/sba/sba0416/Sba0416UploadPop.jsp</result>
         </action>
     </package>
 </struts>

@@ -12,6 +12,35 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
+	public int insert(SysTaxMaster sysTaxMaster) throws Exception {
+		return insertWithSQLQuery(sysTaxMaster);
+	}
+
+	public int updateWithKey(SysTaxMaster sysTaxMaster, String taxMasterId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("tax_master_id = '" + taxMasterId + "'");
+		return updateWithSQLQuery(queryAdvisor, sysTaxMaster);
+	}
+
+	public int delete(String[] taxMasterIds) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String ids = "";
+
+		if (!(taxMasterIds == null || taxMasterIds.length == 0)) {
+			for (int i=0; i<taxMasterIds.length; i++) {
+				ids += CommonUtil.isBlank(ids) ? "'"+taxMasterIds[i]+"'" : ", '"+taxMasterIds[i]+"'";
+			}
+		}
+		queryAdvisor.addWhereClause("tax_master_id in ("+ids+")");
+		return deleteWithSQLQuery(queryAdvisor, new SysTaxMaster());
+	}
+
+	public int delete(String taxMasterId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("tax_master_id = '"+taxMasterId+"'");
+		return deleteWithSQLQuery(queryAdvisor, new SysTaxMaster());
+	}
+
 	public DataSet getTaxMasterDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String taxYear = requestDataSet.getValue("taxYear");

@@ -19,14 +19,10 @@ import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
 import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysTaxMaster.SysTaxMasterDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.SysTaxMaster;
 
 public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
-	@Autowired
-	private SysBoardDao sysBoardDao;
 	@Autowired
 	private SysTaxMasterDao sysTaxMasterDao;
 
@@ -59,11 +55,7 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	}
 
 	public ParamEntity getUpload(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String taxMasterId = requestDataSet.getValue("taxMasterId");
-
 		try {
-			paramEntity.setObject("sysTaxMaster", sysTaxMasterDao.getTaxMasterById(taxMasterId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -96,26 +88,22 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
+		SysTaxMaster sysTaxMaster = new SysTaxMaster();
 		String uid = CommonUtil.uid();
 		String loggedInUserId = (String)session.getAttribute("UserId");
 		int result = -1;
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			sysTaxMaster.setTaxMasterId(uid);
+			sysTaxMaster.setTaxYear(requestDataSet.getValue("taxYear"));
+			sysTaxMaster.setWageType(requestDataSet.getValue("wageType"));
+			sysTaxMaster.setGross(CommonUtil.toDouble(requestDataSet.getValue("grossIncome")));
+			sysTaxMaster.setResident(CommonUtil.toDouble(requestDataSet.getValue("resident")));
+			sysTaxMaster.setNonResident(CommonUtil.toDouble(requestDataSet.getValue("nonResident")));
+			sysTaxMaster.setInsertUserId(loggedInUserId);
+			sysTaxMaster.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			result = sysTaxMasterDao.insert(sysTaxMaster);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -131,27 +119,23 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String taxMasterId = requestDataSet.getValue("taxMasterId");
 		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
+		SysTaxMaster sysTaxMaster;
 		int result = 0;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysTaxMaster = sysTaxMasterDao.getTaxMasterById(taxMasterId);
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
+			sysTaxMaster.setTaxYear(requestDataSet.getValue("taxYear"));
+			sysTaxMaster.setWageType(requestDataSet.getValue("wageType"));
+			sysTaxMaster.setGross(CommonUtil.toDouble(requestDataSet.getValue("grossIncome")));
+			sysTaxMaster.setResident(CommonUtil.toDouble(requestDataSet.getValue("resident")));
+			sysTaxMaster.setNonResident(CommonUtil.toDouble(requestDataSet.getValue("nonResident")));
+			sysTaxMaster.setUpdateUserId(loggedInUserId);
+			sysTaxMaster.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+			result = sysTaxMasterDao.updateWithKey(sysTaxMaster, taxMasterId);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -166,16 +150,16 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String taxMasterId = requestDataSet.getValue("taxMasterId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String taxMasterIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
+			if (CommonUtil.isBlank(taxMasterId)) {
+				result = sysTaxMasterDao.delete(taxMasterIds);
 			} else {
-				result = sysBoardDao.delete(articleId);
+				result = sysTaxMasterDao.delete(taxMasterId);
 			}
 
 			if (result <= 0) {
@@ -194,22 +178,26 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		ExportHelper exportHelper;
-		String columnHeader[];
+		String columnHeader[], fileHeader[];
 		String pageTitle, fileName;
 		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
+		HttpSession session = paramEntity.getSession();
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			pageTitle = "Tax Master List";
+			fileName = "TaxMasterList";
+			columnHeader = new String[]{"TAX_YEAR", "WAGE_TYPE_DESC", "GROSS", "RESIDENT", "NON_RESIDENT"};
+			fileHeader = new String[] {"Tax Year", "Wage Type", "Gross", "Resident", "Non Resident"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);
 			exportHelper.setPageTitle(pageTitle);
 			exportHelper.setColumnHeader(columnHeader);
+			exportHelper.setFileHeader(fileHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
+			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
 				queryAdvisor.setPagination(false);
@@ -217,7 +205,7 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(sysTaxMasterDao.getTaxMasterDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

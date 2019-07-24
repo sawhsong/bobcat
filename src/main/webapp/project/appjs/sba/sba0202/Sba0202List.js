@@ -260,14 +260,13 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
-					var fileType = menuObject.fileType, tm = 3000;
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/sba/0202/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,

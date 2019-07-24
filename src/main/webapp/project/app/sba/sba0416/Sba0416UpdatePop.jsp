@@ -74,8 +74,8 @@
 			<col width="33%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.taxMasgerId"/></th>
-			<td class="tdEdit"><ui:text name="taxMasgerId" value="<%=sysTaxMaster.getTaxMasterId()%>" status="display" checkName="sba0416.header.taxMasgerId" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.taxMasterId"/></th>
+			<td class="tdEdit"><ui:text name="taxMasterId" value="<%=sysTaxMaster.getTaxMasterId()%>" status="display" checkName="sba0416.header.taxMasterId" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.taxYear"/></th>
 			<td class="tdEdit">
 				<ui:select name="taxYear" options="mandatory">
@@ -93,14 +93,14 @@
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.wageType"/></th>
 			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" options="mandatory" selectedValue="<%=sysTaxMaster.getWageType()%>"/></td>
-			<th class="thEdit Rt"><mc:msg key="sba0416.header.grossIncome"/></th>
-			<td class="tdEdit"><ui:text name="grossIncome" value="<%=CommonUtil.toString(sysTaxMaster.getGross(), numberFormat)%>" checkName="sba0416.header.grossIncome" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.header.grossIncome"/></th>
+			<td class="tdEdit"><ui:text name="grossIncome" value="<%=CommonUtil.toString(sysTaxMaster.getGross(), numberFormat)%>" className="numeric" checkName="sba0416.header.grossIncome" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sba0416.header.resident"/></th>
-			<td class="tdEdit"><ui:text name="resident" value="<%=CommonUtil.toString(sysTaxMaster.getResident(), numberFormat)%>" checkName="sba0416.header.resident"/></td>
+			<td class="tdEdit"><ui:text name="resident" value="<%=CommonUtil.toString(sysTaxMaster.getResident(), numberFormat)%>" className="numeric" checkName="sba0416.header.resident"/></td>
 			<th class="thEdit Rt"><mc:msg key="sba0416.header.nonResident"/></th>
-			<td class="tdEdit"><ui:text name="nonResident" value="<%=CommonUtil.toString(sysTaxMaster.getNonResident(), numberFormat)%>" checkName="sba0416.header.nonResident"/></td>
+			<td class="tdEdit"><ui:text name="nonResident" value="<%=CommonUtil.toString(sysTaxMaster.getNonResident(), numberFormat)%>" className="numeric" checkName="sba0416.header.nonResident"/></td>
 		</tr>
 	</table>
 </div>
