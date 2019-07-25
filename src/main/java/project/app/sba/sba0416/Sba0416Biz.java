@@ -17,4 +17,5 @@ public interface Sba0416Biz {
 	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception;
+	public ParamEntity exeFileUpload(ParamEntity paramEntity) throws Exception;
 }

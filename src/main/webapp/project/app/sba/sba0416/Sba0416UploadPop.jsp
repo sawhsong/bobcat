@@ -64,12 +64,12 @@
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblEdit">
 		<colgroup>
-			<col width="20%"/>
+			<col width="35%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sba0416.info.uploadFile"/></th>
-			<td class="tdEdit"><ui:file name="taxMasterFile"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sba0416.info.uploadFile"/></th>
+			<td class="tdEdit"><ui:file name="taxMasterFile" style="width:300px" checkName="sba0416.info.uploadFile" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>

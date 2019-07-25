@@ -74,4 +74,22 @@ public class Sba0416Action extends BaseAction {
 		setRequestAttribute("paramEntity", paramEntity);
 		return "export";
 	}
+
+	public String exeFileUpload() throws Exception {
+		try {
+			biz.exeFileUpload(paramEntity);
+
+			if (paramEntity.isSuccess()) {
+				paramEntity.setObject("script", "parent.popup.close(); parent.doSearch();");
+			} else {
+				paramEntity.setObject("script", "history.go(-1);");
+			}
+		} catch (Exception ex) {
+			paramEntity.setObject("script", "history.go(-1);");
+		} finally {
+			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
+			paramEntity.setObject("message", paramEntity.getMessage());
+		}
+		return "pageHandler";
+	}
 }

@@ -9,6 +9,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.conf.resource.ormapper.dao.SysTaxMaster.SysTaxMasterDao;
+import project.conf.resource.ormapper.dto.oracle.SysTaxMaster;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -17,10 +20,7 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.conf.resource.ormapper.dao.SysTaxMaster.SysTaxMasterDao;
-import project.conf.resource.ormapper.dto.oracle.SysTaxMaster;
+import zebra.util.FileUtil;
 
 public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 	@Autowired
@@ -210,6 +210,30 @@ public class Sba0416BizImpl extends BaseBiz implements Sba0416Biz {
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());
 			paramEntity.setFileNameToExport(exportHelper.getFileName());
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity exeFileUpload(ParamEntity paramEntity) throws Exception {
+		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		int result = -1;
+
+		try {
+			FileUtil.moveFile(fileDataSet);
+
+			queryAdvisor.setObject("session", session);
+
+			result = sysTaxMasterDao.insertWithExcelFile(queryAdvisor, fileDataSet);
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

@@ -4,6 +4,19 @@
  *************************************************************************************************/
 package project.conf.resource.ormapper.dao.SysTaxMaster;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Iterator;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import project.common.extend.BaseHDao;
 import project.conf.resource.ormapper.dto.oracle.SysTaxMaster;
 import zebra.data.DataSet;
@@ -14,6 +27,46 @@ import zebra.util.ConfigUtil;
 public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
 	public int insert(SysTaxMaster sysTaxMaster) throws Exception {
 		return insertWithSQLQuery(sysTaxMaster);
+	}
+
+	public int insertWithExcelFile(QueryAdvisor queryAdvisor, DataSet fileDataSet) throws Exception {
+		HttpSession session = (HttpSession)queryAdvisor.getObject("session");
+		SysTaxMaster sysTaxMaster;
+		String loggedInUserId = (String)session.getAttribute("UserId");
+		String filePath = fileDataSet.getValue("REPOSITORY_PATH");
+		String fileName = fileDataSet.getValue("NEW_NAME");
+		File file = new File(filePath+"/"+fileName);
+		Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
+		Sheet sheet = workbook.getSheetAt(0);
+		int result = 0;
+
+		for (Iterator<Row> rowIter = sheet.iterator(); rowIter.hasNext();) {
+			Row row = rowIter.next();
+
+			if (row.getPhysicalNumberOfCells() < 5) {continue;}
+			if (row.getCell(0).getCellTypeEnum() == CellType.STRING && CommonUtil.equalsIgnoreCase(row.getCell(0).getStringCellValue(), "Tax Master List")) {continue;}
+			if (row.getCell(0).getCellTypeEnum() == CellType.STRING && CommonUtil.equalsIgnoreCase(row.getCell(0).getStringCellValue(), "Tax Year")) {continue;}
+
+			sysTaxMaster = new SysTaxMaster();
+			sysTaxMaster.setTaxMasterId(CommonUtil.uid());
+			sysTaxMaster.setInsertUserId(loggedInUserId);
+			sysTaxMaster.setInsertDate(CommonUtil.getSysdateAsDate());
+
+			Cell cell = row.getCell(0);
+			if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+				sysTaxMaster.setTaxYear(CommonUtil.toString(cell.getNumericCellValue(), "####"));	// cell0 : TaxYear
+			} else {
+				sysTaxMaster.setTaxYear(cell.getStringCellValue());	// cell0 : TaxYear
+			}
+			sysTaxMaster.setWageType(row.getCell(1).getStringCellValue());	// cell1 : WageType
+			sysTaxMaster.setGross(row.getCell(2).getNumericCellValue());	// cell2 : Gross
+			sysTaxMaster.setResident(row.getCell(3).getNumericCellValue());	// cell3 : Resident
+			sysTaxMaster.setNonResident(row.getCell(4).getNumericCellValue());	// cell4 : NonResident
+
+			result += insertWithSQLQuery(sysTaxMaster);
+		}
+		workbook.close();
+		return result;
 	}
 
 	public int updateWithKey(SysTaxMaster sysTaxMaster, String taxMasterId) throws Exception {

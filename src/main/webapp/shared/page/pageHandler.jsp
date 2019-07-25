@@ -49,7 +49,7 @@ $(function() {
 		if ($.nony.isEmpty(messageCode) || messageCode.indexOf("I") != -1) {
 			dialogType = com.message.I000;
 		} else if (messageCode.indexOf("E") != -1) {
-			dialogType = "error";
+			dialogType = "Error";
 		} else {
 			dialogType = com.message.I000;
 		}
@@ -65,6 +65,11 @@ $(function() {
 					modal:true,
 					blind:false,
 					width:330,
+					buttons:[{
+						caption:com.caption.ok,
+						callback:function() {
+						}
+					}],
 					oncloseCallback:function() {
 						doProcess();
 					}

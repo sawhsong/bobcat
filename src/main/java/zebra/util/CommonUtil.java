@@ -431,9 +431,13 @@ public class CommonUtil extends StringUtils {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		return simpleDateFormat.format(new Date(date));
 	}
-	/**
+	/*!
 	 * getSysdate("yyyy-MM-dd HH:mm:ss")
 	 */
+	public static Date getSysdateAsDate() throws Exception {
+		return toDate(getSysdate(""));
+	}
+
 	public static String getSysdate() {
 		return getSysdate("");
 	}

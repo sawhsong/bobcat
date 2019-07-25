@@ -141,7 +141,7 @@ $(function() {
 		if (param.mode == "Upload") {
 			url = "/sba/0416/getUpload";
 			header = "Upload Tax Master Excel File";
-			width = 400, height = 150;
+			width = 500, height = 300;
 		} else if (param.mode == "New") {
 			url = "/sba/0416/getInsert";
 			header = com.header.popHeaderEdit;
