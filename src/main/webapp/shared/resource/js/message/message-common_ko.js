@@ -33,6 +33,7 @@ var com = {
 		ctxReply:"답변",
 		ctxDetail:"상세",
 		ctxCancel:"취소",
+		ctxComplete:"확정",
 
 		// Context Export Menu
 		ctxExportExcelAll:"엑셀로 변환 (전체)",

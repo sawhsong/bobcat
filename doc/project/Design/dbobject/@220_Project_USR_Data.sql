@@ -29,9 +29,9 @@ select idx as income_id,
        sash_sales as cash_amt,
        (card_sales + sash_sales) as gross_amt,
        gst_free_sales as gst_free_amt,
-       trunc(((card_sales + sash_sales) / 11), 2) as gst_amt,
+       trunc(((card_sales + sash_sales - gst_free_sales) / 10), 2) as gst_amt,
        null as applied_gst,
-       trunc((card_sales + sash_sales) - trunc(((card_sales + sash_sales) / 11), 2), 2) as net_amt,
+       trunc((card_sales + sash_sales) - trunc(((card_sales + sash_sales - gst_free_sales) / 10), 2), 2) as net_amt,
        case complete_flag
             when '1' then 'Y'
             else 'N'

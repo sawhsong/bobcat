@@ -13,7 +13,7 @@ public interface Rkm0202Biz {
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
 	public ParamEntity calculateDataEntry(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception;
-
+	public ParamEntity exeComplete(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception;
 }

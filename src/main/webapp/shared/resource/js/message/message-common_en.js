@@ -33,6 +33,7 @@ var com = {
 		ctxReply:"Reply",
 		ctxDetail:"Detail",
 		ctxCancel:"Cancel",
+		ctxComplete:"Complete",
 
 		// Context Export Menu
 		ctxExportExcelAll:"Export To Excel (All)",

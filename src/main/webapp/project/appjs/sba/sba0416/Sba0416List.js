@@ -255,7 +255,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sba/0416/exeExport.do",
+						url:"/sba/0416/exeExport",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

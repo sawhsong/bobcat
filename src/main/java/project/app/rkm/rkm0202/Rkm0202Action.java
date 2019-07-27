@@ -54,10 +54,14 @@ public class Rkm0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-
-
-
-
+	public String exeComplete() throws Exception {
+		try {
+			biz.exeComplete(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
 
 	public String exeDelete() throws Exception {
 		try {

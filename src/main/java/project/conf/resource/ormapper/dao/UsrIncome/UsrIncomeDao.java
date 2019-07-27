@@ -4,6 +4,7 @@
  *************************************************************************************************/
 package project.conf.resource.ormapper.dao.UsrIncome;
 
+import project.conf.resource.ormapper.dto.oracle.UsrIncome;
 import zebra.base.Dto;
 import zebra.base.IDao;
 import zebra.data.DataSet;
@@ -12,10 +13,13 @@ import zebra.data.QueryAdvisor;
 public interface UsrIncomeDao extends IDao {
 	public int insert(Dto dto) throws Exception;
 	public int update(String incomeId, Dto dto) throws Exception;
+	public int exeComplete(String incomeIdDates[]) throws Exception;
+	public int delete(String incomeIdDates[]) throws Exception;
 	public DataSet getSalesIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getOtherIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getIncomeSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getIncomePerformanceDataSet(String orgCategory, String orgId, String financialYear, String quarterName) throws Exception;
 	public DataSet getIncomeDataSetById(String incomeId) throws Exception;
+	public UsrIncome getIncomeById(String incomeId) throws Exception;
 	public DataSet getIncomeDataSetByIdForUpdate(String incomeId, String incomeDate) throws Exception;
 }

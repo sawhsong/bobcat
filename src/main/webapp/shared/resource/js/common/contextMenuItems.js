@@ -119,6 +119,10 @@ var ctxMenu = {
 		name:com.caption.ctxDelete,
 		img:"fa-trash",
 		fun:function() {}
+	}, {
+		name:com.caption.ctxComplete,
+		img:"fa-check-square",
+		fun:function() {}
 	}],
 
 	// Data Entry Action context menu

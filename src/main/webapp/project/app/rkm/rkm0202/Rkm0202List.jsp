@@ -56,9 +56,11 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
+			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -147,17 +149,18 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="3%"/>
+			<col width="2%"/>
+			<col width="8%"/>
+			<col width="9%"/>
+			<col width="9%"/>
+			<col width="9%"/>
+			<col width="9%"/>
+			<col width="7%"/>
+			<col width="7%"/>
 			<col width="*"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
+			<col width="7%"/>
+			<col width="8%"/>
+			<col width="8%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
@@ -170,9 +173,10 @@
 				<th class="thGrid"><mc:msg key="rkm0202.grid.gstFree"/></th>
 				<th class="thGrid"><mc:msg key="rkm0202.grid.gst"/></th>
 				<th class="thGrid"><mc:msg key="rkm0202.grid.netSales"/></th>
+				<th class="thGrid"><mc:msg key="rkm0202.grid.recordKeepingType"/></th>
 				<th class="thGrid"><mc:msg key="rkm0202.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0202.grid.insertDate"/></th>
-				<th class="thGrid"><mc:msg key="rkm0202.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
@@ -180,7 +184,7 @@
 		</tfoot>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="12"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="13"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

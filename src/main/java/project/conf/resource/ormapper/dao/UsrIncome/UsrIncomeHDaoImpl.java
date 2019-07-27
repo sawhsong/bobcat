@@ -24,6 +24,42 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 		return updateWithSQLQuery(queryAdvisor, dto);
 	}
 
+	public int exeComplete(String incomeIdDates[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		UsrIncome usrIncome;
+		int result = 0;
+
+		for (int i=0; i<incomeIdDates.length; i++) {
+			String incomeId = CommonUtil.split(incomeIdDates[i], "_")[0];
+
+			usrIncome = new UsrIncome();
+			queryAdvisor = new QueryAdvisor();
+
+			usrIncome.addUpdateColumn("is_completed", "Y");
+			queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+
+			result += updateColumns(queryAdvisor, usrIncome);
+		}
+
+		return result;
+	}
+
+	public int delete(String incomeIdDates[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		int result = 0;
+
+		for (int i=0; i<incomeIdDates.length; i++) {
+			String incomeId = CommonUtil.split(incomeIdDates[i], "_")[0];
+
+			queryAdvisor = new QueryAdvisor();
+			queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+
+			result += deleteWithSQLQuery(queryAdvisor, new UsrIncome());
+		}
+
+		return result;
+	}
+
 	public DataSet getSalesIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgId = (String)queryAdvisor.getObject("orgId");
@@ -101,6 +137,13 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 
 		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
 		return selectAllAsDataSet(queryAdvisor, new UsrIncome());
+	}
+
+	public UsrIncome getIncomeById(String incomeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+		return (UsrIncome)selectAllToDto(queryAdvisor, new UsrIncome());
 	}
 
 	public DataSet getIncomeDataSetByIdForUpdate(String incomeId, String incomeDate) throws Exception {

@@ -4,12 +4,17 @@
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 jsconfig.put("scrollablePanelHeightAdjust", 6);
-var popup = null;
+var searchResultDataCount = 0;
+var numberFormat = "#,##0.00";
 
 $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnComplete").click(function(event) {
+		doComplete();
+	});
+
 	$("#btnDelete").click(function(event) {
 		doDelete();
 	});
@@ -78,33 +83,6 @@ $(function() {
 	/*!
 	 * process
 	 */
-	onEditDataEntry = function(jqObj) {
-		var name = $(jqObj).attr("name");
-		if (name == "deNonCash" || name == "deCash" || name == "deGstFree") {
-			commonJs.ajaxSubmit({
-				url:"/rkm/0202/calculateDataEntry.do",
-				dataType:"json",
-				data:{
-					nonCash:$("#deNonCash").val(),
-					cash:$("#deCash").val(),
-					gstFree:$("#deGstFree").val()
-				},
-				success:function(data, textStatus) {
-					var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-					if (result.isSuccess == true || result.isSuccess == "true") {
-						var ds = result.dataSet;
-						$("#deGrossSales").val(ds.getValue(0, "grossSales"));
-						$("#deGst").val(ds.getValue(0, "gst"));
-						$("#deNetSales").val(ds.getValue(0, "netSales"));
-					} else {
-						commonJs.error(result.message);
-					}
-				}
-			});
-		}
-	};
-
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
@@ -125,7 +103,7 @@ $(function() {
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -160,12 +138,13 @@ $(function() {
 				uiAnc.setText(ds.getValue(i, "QUARTER_DATE")).setScript("getEdit('"+keyVal+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NON_CASH_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "CASH_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_FREE_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NON_CASH_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "CASH_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_FREE_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "RECORD_KEEPING_TYPE_DESC")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
@@ -179,18 +158,19 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:12").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:13").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNonCash, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totCash, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGstFree, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNonCash, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totCash, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGstFree, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -218,9 +198,44 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
+	onEditDataEntry = function(jqObj) {
+		var name = $(jqObj).attr("name");
+		if (name == "deNonCash" || name == "deCash" || name == "deGstFree") {
+			commonJs.ajaxSubmit({
+				url:"/rkm/0202/calculateDataEntry",
+				dataType:"json",
+				data:{
+					nonCash:$("#deNonCash").val(),
+					cash:$("#deCash").val(),
+					gstFree:$("#deGstFree").val()
+				},
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						var ds = result.dataSet;
+						$("#deGrossSales").val(ds.getValue(0, "grossSales"));
+						$("#deGst").val(ds.getValue(0, "gst"));
+						$("#deNetSales").val(ds.getValue(0, "netSales"));
+					} else {
+						commonJs.error(result.message);
+					}
+				}
+			});
+		}
+	};
+
 	getEdit = function(incomeIdDate) {
+		$("input:checkbox[name=chkForDel]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == incomeIdDate) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
+
 		commonJs.ajaxSubmit({
-			url:"/rkm/0202/getEdit.do",
+			url:"/rkm/0202/getEdit",
 			dataType:"json",
 			data:{
 				incomeIdDate:incomeIdDate
@@ -252,7 +267,53 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeSave.do",
+						url:"/rkm/0202/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
+
+	doComplete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0202/exeComplete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -298,7 +359,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeDelete.do",
+						url:"/rkm/0202/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -345,6 +406,7 @@ $(function() {
 
 		ctxMenu.dataEntryListAction[0].fun = function() {getEdit(incomeIdDate);};
 		ctxMenu.dataEntryListAction[1].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[2].fun = function() {doComplete();};
 
 		$(img).contextMenu(ctxMenu.dataEntryListAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
@@ -370,36 +432,71 @@ $(function() {
 	};
 
 	refreshDataEntry = function() {
-		$("#deIncomeId").val("");
-		$("#deDate").val("");
-		$("#deNonCash").val("");
-		$("#deCash").val("");
-		$("#deGrossSales").val("");
-		$("#deGstFree").val("");
-		$("#deGst").val("");
-		$("#deNetSales").val("");
-		$("#deRecordKeepingType").val("");
+		$("#divInformArea").find(":input").each(function() {
+			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
+				$(this).attr("checked", false);
+			} else {
+				$(this).val("");
+			}
+		});
+
 		commonJs.refreshBootstrapSelectbox("deRecordKeepingType");
-		$("#deRemark").val("");
 	};
 
 	setDataEntryValues = function(dataSet) {
 		$("#deIncomeId").val(commonJs.nvl(dataSet.getValue(0, "INCOME_ID"), ""));
 		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "INCOME_DATE"), ""));
-		$("#deNonCash").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "NON_CASH_AMT"), "#,###.##"), "0.00"));
-		$("#deCash").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "CASH_AMT"), "#,###.##"), "0.00"));
-		$("#deGrossSales").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), "#,###.##"), "0.00"));
-		$("#deGstFree").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "GST_FREE_AMT"), "#,###.##"), "0.00"));
-		$("#deGst").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), "#,###.##"), "0.00"));
-		$("#deNetSales").val(commonJs.nvl(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), "#,###.##"), "0.00"));
+		$("#deNonCash").val(commonJs.getNumberMask(dataSet.getValue(0, "NON_CASH_AMT"), numberFormat));
+		$("#deCash").val(commonJs.getNumberMask(dataSet.getValue(0, "CASH_AMT"), numberFormat));
+		$("#deGrossSales").val(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), numberFormat));
+		$("#deGstFree").val(commonJs.getNumberMask(dataSet.getValue(0, "GST_FREE_AMT"), numberFormat));
+		$("#deGst").val(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), numberFormat));
+		$("#deNetSales").val(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), numberFormat));
 		$("#deRecordKeepingType").val(commonJs.nvl(dataSet.getValue(0, "RECORD_KEEPING_TYPE"), ""));
 		commonJs.refreshBootstrapSelectbox("deRecordKeepingType");
 		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
+	};
+
+	exeExport = function(menuObject) {
+		$("[name=fileType]").remove();
+		$("[name=dataRange]").remove();
+
+		if (searchResultDataCount <= 0) {
+			commonJs.warn(com.message.I001);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q003,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
+					popup = commonJs.openPopup({
+						popupId:"exportFile",
+						url:"/rkm/0202/exeExport",
+						paramData:param,
+						header:"exportFile",
+						blind:false,
+						width:200,
+						height:100
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}]
+		});
 	};
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		commonJs.setExportButtonContextMenu($("#btnExport"));
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
 		$(".numeric").number(true, 2);
