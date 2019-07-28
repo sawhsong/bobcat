@@ -150,17 +150,18 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
-			<col width="8%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
+			<col width="5%"/>
 			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="8%"/>
 			<col width="7%"/>
 			<col width="*"/>
 			<col width="7%"/>
-			<col width="8%"/>
-			<col width="8%"/>
+			<col width="7%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
@@ -175,6 +176,7 @@
 				<th class="thGrid"><mc:msg key="rkm0202.grid.netSales"/></th>
 				<th class="thGrid"><mc:msg key="rkm0202.grid.recordKeepingType"/></th>
 				<th class="thGrid"><mc:msg key="rkm0202.grid.isCompleted"/></th>
+				<th class="thGrid"><mc:msg key="rkm0202.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
@@ -184,7 +186,7 @@
 		</tfoot>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="13"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="14"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
