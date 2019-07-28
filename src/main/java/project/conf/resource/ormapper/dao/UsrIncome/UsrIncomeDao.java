@@ -14,7 +14,9 @@ public interface UsrIncomeDao extends IDao {
 	public int insert(Dto dto) throws Exception;
 	public int update(String incomeId, Dto dto) throws Exception;
 	public int exeComplete(String incomeIdDates[]) throws Exception;
+	public int exeCompleteByIncomeIds(String incomeIds[]) throws Exception;
 	public int delete(String incomeIdDates[]) throws Exception;
+	public int deleteByIncomeIds(String incomeIds[]) throws Exception;
 	public DataSet getSalesIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getOtherIncomeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getIncomeSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
@@ -22,4 +24,5 @@ public interface UsrIncomeDao extends IDao {
 	public DataSet getIncomeDataSetById(String incomeId) throws Exception;
 	public UsrIncome getIncomeById(String incomeId) throws Exception;
 	public DataSet getIncomeDataSetByIdForUpdate(String incomeId, String incomeDate) throws Exception;
+	public DataSet getIncomeDataSetByIdOnlyForUpdate(String incomeId) throws Exception;
 }

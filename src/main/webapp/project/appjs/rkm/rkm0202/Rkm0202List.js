@@ -90,7 +90,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0202/getList.do",
+				url:"/rkm/0202/getList",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {

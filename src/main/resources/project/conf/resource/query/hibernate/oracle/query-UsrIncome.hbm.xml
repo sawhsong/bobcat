@@ -118,6 +118,36 @@
 	]]>
 	</sql-query>
 
+	<sql-query name="query.UsrIncome.getIncomeDataSetByIdOnlyForUpdate">
+	<![CDATA[
+		select income_id,
+		       to_char(income_date, 'dd-mm-yyyy') as income_date,
+		       income_entry_type,
+		       income_year,
+		       is_completed,
+		       org_id,
+		       quarter_name,
+		       applied_gst,
+		       cash_amt,
+		       description,
+		       gross_amt,
+		       gst_amt,
+		       gst_free_amt,
+		       income_type_id,
+		       to_char(insert_date, 'dd-mm-yyyy') as insert_date,
+		       insert_user_id,
+		       net_amt,
+		       non_cash_amt,
+		       record_keeping_type,
+		       to_char(update_date, 'dd-mm-yyyy') as update_date,
+		       update_user_id
+		  from usr_income
+		 where 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
 	<sql-query name="query.UsrIncome.getOtherIncomeDataSetByCriteria">
 	<![CDATA[
 		select uin.income_id as income_id,
@@ -154,7 +184,7 @@
 		   and uin.quarter_name = '${quarterName}'
 		   and uin.org_id = '${orgId}'
 		   and uin.income_entry_type = '${incomeEntryType}'
-		   and uin.income_type_id = sit.income_type_id
+		   and uin.income_type_id = sit.income_type_id(+)
 		${auto_fill}
 		${order_by_clause}
 	]]>

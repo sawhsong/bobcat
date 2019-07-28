@@ -20,18 +20,12 @@ import zebra.util.ExportUtil;
 
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
 import project.conf.resource.ormapper.dao.UsrIncome.UsrIncomeDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.UsrIncome;
 
 public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 	@Autowired
-	private SysBoardDao sysBoardDao;
-	@Autowired
 	private UsrIncomeDao usrIncomeDao;
-	@Autowired
-	private SysBoardFileDao sysBoardFileDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -71,16 +65,12 @@ public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
+		String incomeId = requestDataSet.getValue("incomeId");
 
 		try {
-			paramEntity.setObject("sysBoard", sysBoardDao.getBoardByArticleId(articleId));
-			paramEntity.setObject("fileDataSet", sysBoardFileDao.getBoardFileListDataSetByArticleId(articleId));
-
-			sysBoardDao.updateVisitCountByArticleId(articleId);
-
+			paramEntity.setAjaxResponseDataSet(usrIncomeDao.getIncomeDataSetByIdOnlyForUpdate(incomeId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -88,48 +78,69 @@ public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity = getDetail(paramEntity);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
+	public ParamEntity calculateDataEntry(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet result = new DataSet(new String[] {"netSales"});
+		double grossSales = CommonUtil.toDouble(requestDataSet.getValue("grossSales"));
+		double gst = CommonUtil.toDouble(requestDataSet.getValue("gst"));
+		double netSales = 0;
+
+		try {
+			result.addRow();
+
+			netSales = (grossSales - gst);
+
+			result.setValue("netSales", CommonUtil.toString(netSales, "#,##0.00"));
+
+			paramEntity.setAjaxResponseDataSet(result);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception {
+		DataSet dsReq = paramEntity.getRequestDataSet();
 		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		SysBoard sysBoard = new SysBoard();
-		String uid = CommonUtil.uid();
-		String loggedInUserId = (String)session.getAttribute("UserId");
+		UsrIncome usrIncome = new UsrIncome();
+		String incomeId = CommonUtil.nvl(dsReq.getValue("deIncomeId"), "-1");
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String userId = (String)session.getAttribute("UserId");
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
+		String saveType = (CommonUtil.equals(incomeId, "-1")) ? "I" : "U";
 		int result = -1;
 
 		try {
-			sysBoard.setArticleId(uid);
-			sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setInsertUserId(loggedInUserId);
-			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
+			if (CommonUtil.equals(saveType, "I")) {
+				usrIncome.setIncomeId(CommonUtil.uid());
+			} else {
+				usrIncome = usrIncomeDao.getIncomeById(incomeId);
+			}
 
-			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
+			usrIncome.setIncomeYear(dsReq.getValue("financialYear"));
+			usrIncome.setQuarterName(dsReq.getValue("quarterName"));
+			usrIncome.setOrgId(orgId);
+			usrIncome.setIncomeEntryType(CommonCodeManager.getCodeByConstants("INCOME_ENTRY_TYPE_OTHTA"));
+			usrIncome.setIncomeDate(CommonUtil.toDate(dsReq.getValue("deDate"), dateFormat));
+			usrIncome.setGrossAmt(CommonUtil.toDouble(dsReq.getValue("deGrossSales")));
+			usrIncome.setGstAmt(CommonUtil.toDouble(dsReq.getValue("deGst")));
+			usrIncome.setNetAmt(CommonUtil.toDouble(dsReq.getValue("deNetSales")));
+			usrIncome.setDescription(dsReq.getValue("deRemark"));
+
+			if (CommonUtil.equals(saveType, "I")) {
+				usrIncome.setIsCompleted("N");
+				usrIncome.setInsertUserId(userId);
+				usrIncome.setInsertDate(CommonUtil.getSysdateAsDate());
+
+				result = usrIncomeDao.insert(usrIncome);
+			} else {
+				usrIncome.setUpdateUserId(userId);
+				usrIncome.setUpdateDate(CommonUtil.getSysdateAsDate());
+
+				result = usrIncomeDao.update(incomeId, usrIncome);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -142,30 +153,15 @@ public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
+	public ParamEntity exeComplete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		HttpSession session = paramEntity.getSession();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleId = requestDataSet.getValue("articleId");
-		String fileIdsToDelete[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		SysBoard sysBoard;
+		String incomeIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			sysBoard = sysBoardDao.getBoardByArticleId(articleId);
-			sysBoard.setArticleId(articleId);
-			sysBoard.setWriterId(loggedInUserId);
-			sysBoard.setWriterName(requestDataSet.getValue("writerName"));
-			sysBoard.setWriterEmail(requestDataSet.getValue("writerEmail"));
-			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
-			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
-			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
-			sysBoard.setUpdateUserId(loggedInUserId);
-			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			result = usrIncomeDao.exeCompleteByIncomeIds(incomeIds);
 
-			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -180,17 +176,12 @@ public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String articleId = requestDataSet.getValue("articleId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String articleIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String incomeIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(articleId)) {
-				result = sysBoardDao.delete(articleIds);
-			} else {
-				result = sysBoardDao.delete(articleId);
-			}
+			result = usrIncomeDao.deleteByIncomeIds(incomeIds);
 
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -207,23 +198,31 @@ public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
+		String orgCategory = CommonUtil.nvl((String)session.getAttribute("OrgCategoryForAdminTool"), (String)session.getAttribute("OrgCategory"));
 		ExportHelper exportHelper;
-		String columnHeader[];
+		String columnHeader[], fileHeader[];
 		String pageTitle, fileName;
 		String fileType = requestDataSet.getValue("fileType");
 		String dataRange = requestDataSet.getValue("dataRange");
 
 		try {
-			pageTitle = "Board List";
-			fileName = "BoardList";
-			columnHeader = new String[]{"article_id", "writer_name", "writer_email", "article_subject", "created_date"};
+			pageTitle = "Other Sales Income List";
+			fileName = "OtherSalesIncomeList";
+			columnHeader = new String[] {"INCOME_DATE", "GROSS_AMT", "GST_AMT", "NET_AMT", "IS_COMPLETED", "DESCRIPTION"};
+			fileHeader = new String[] {"Date", "Gross Sales", "GST", "Net Sales", "Is Completed", "Description"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);
 			exportHelper.setPageTitle(pageTitle);
 			exportHelper.setColumnHeader(columnHeader);
+			exportHelper.setFileHeader(fileHeader);
 			exportHelper.setFileName(fileName);
 			exportHelper.setPdfWidth(1000);
 
+			queryAdvisor.setObject("orgId", orgId);
+			queryAdvisor.setObject("orgCategory", orgCategory);
+			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
 				queryAdvisor.setPagination(false);
@@ -231,7 +230,7 @@ public class Rkm0204BizImpl extends BaseBiz implements Rkm0204Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(sysBoardDao.getNoticeBoardDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(usrIncomeDao.getOtherIncomeDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

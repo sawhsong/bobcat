@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.UsrIncome.UsrIncomeDao;
 import project.conf.resource.ormapper.dto.oracle.UsrIncome;
 import zebra.data.DataSet;
@@ -119,7 +120,7 @@ public class Rkm0202BizImpl extends BaseBiz implements Rkm0202Biz {
 			usrIncome.setIncomeYear(dsReq.getValue("financialYear"));
 			usrIncome.setQuarterName(dsReq.getValue("quarterName"));
 			usrIncome.setOrgId(orgId);
-			usrIncome.setIncomeEntryType("SALES");
+			usrIncome.setIncomeEntryType(CommonCodeManager.getCodeByConstants("INCOME_ENTRY_TYPE_SALES"));
 			usrIncome.setRecordKeepingType(dsReq.getValue("deRecordKeepingType"));
 			usrIncome.setIncomeDate(CommonUtil.toDate(dsReq.getValue("deDate"), dateFormat));
 			usrIncome.setNonCashAmt(CommonUtil.toDouble(dsReq.getValue("deNonCash")));

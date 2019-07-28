@@ -44,6 +44,24 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 		return result;
 	}
 
+	public int exeCompleteByIncomeIds(String incomeIds[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		UsrIncome usrIncome;
+		int result = 0;
+
+		for (int i=0; i<incomeIds.length; i++) {
+			usrIncome = new UsrIncome();
+			queryAdvisor = new QueryAdvisor();
+
+			usrIncome.addUpdateColumn("is_completed", "Y");
+			queryAdvisor.addWhereClause("income_id = '"+incomeIds[i]+"'");
+
+			result += updateColumns(queryAdvisor, usrIncome);
+		}
+
+		return result;
+	}
+
 	public int delete(String incomeIdDates[]) throws Exception {
 		QueryAdvisor queryAdvisor;
 		int result = 0;
@@ -53,6 +71,20 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 
 			queryAdvisor = new QueryAdvisor();
 			queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+
+			result += deleteWithSQLQuery(queryAdvisor, new UsrIncome());
+		}
+
+		return result;
+	}
+
+	public int deleteByIncomeIds(String incomeIds[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		int result = 0;
+
+		for (int i=0; i<incomeIds.length; i++) {
+			queryAdvisor = new QueryAdvisor();
+			queryAdvisor.addWhereClause("income_id = '"+incomeIds[i]+"'");
 
 			result += deleteWithSQLQuery(queryAdvisor, new UsrIncome());
 		}
@@ -152,5 +184,12 @@ public class UsrIncomeHDaoImpl extends BaseHDao implements UsrIncomeDao {
 		queryAdvisor.addVariable("incomeDate", incomeDate);
 		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
 		return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomeDataSetByIdForUpdate");
+	}
+
+	public DataSet getIncomeDataSetByIdOnlyForUpdate(String incomeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("income_id = '"+incomeId+"'");
+		return selectAsDataSet(queryAdvisor, "query.UsrIncome.getIncomeDataSetByIdOnlyForUpdate");
 	}
 }

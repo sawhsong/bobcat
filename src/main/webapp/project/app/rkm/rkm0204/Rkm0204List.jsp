@@ -54,7 +54,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -111,6 +111,7 @@
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deIncomeId"/>
 					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0204.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
@@ -155,8 +156,8 @@
 				<th class="thGrid"><mc:msg key="rkm0204.grid.netSales"/></th>
 				<th class="thGrid"><mc:msg key="rkm0204.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="rkm0204.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0204.grid.insertDate"/></th>
-				<th class="thGrid"><mc:msg key="rkm0204.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
