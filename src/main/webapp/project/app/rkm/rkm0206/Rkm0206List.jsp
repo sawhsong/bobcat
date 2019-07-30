@@ -57,7 +57,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -120,6 +120,7 @@
 		<tr>
 			<td class="tdDataEntry ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deIncomeId"/>
 					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0206.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
@@ -145,16 +146,17 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="3%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
+			<col width="2%"/>
+			<col width="7%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="10%"/>
 			<col width="*"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="4%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="3%"/>
 		</colgroup>
 		<thead>
 			<tr>
@@ -163,16 +165,17 @@
 				<th class="thGrid"><mc:msg key="rkm0206.grid.grossSales"/></th>
 				<th class="thGrid"><mc:msg key="rkm0206.grid.gst"/></th>
 				<th class="thGrid"><mc:msg key="rkm0206.grid.netSales"/></th>
+				<th class="thGrid"><mc:msg key="rkm0206.grid.incomeType"/></th>
 				<th class="thGrid"><mc:msg key="rkm0206.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="rkm0206.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0206.grid.insertDate"/></th>
-				<th class="thGrid"><mc:msg key="rkm0206.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.insertDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="10"><mc:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="11"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 		<tfoot id="tblGridFoot" style="font-weight:bold;">

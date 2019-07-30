@@ -3,15 +3,15 @@
  * - Rkm0206List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-var popup = null;
 var searchResultDataCount = 0;
+var numberFormat = "#,##0.00";
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+	$("#btnComplete").click(function(event) {
+		doComplete();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -24,6 +24,7 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		refreshDataEntry();
 	});
 
 	$("#icnCheck").click(function(event) {
@@ -46,9 +47,20 @@ $(function() {
 		doSearch();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
+		var element = event.target;
 		if (event.which == 13) {
-			var element = event.target;
+			if ($(element).attr("name") == "deRemark") {
+				doSave();
+			}
+		}
+
+		onEditDataEntry($(element));
+	});
+
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
 		}
 	});
 
@@ -73,9 +85,11 @@ $(function() {
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
+		refreshDataEntry();
+
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0206/getList.do",
+				url:"/rkm/0206/getList",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -83,10 +97,12 @@ $(function() {
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						renderDataGridTable(result);
+					} else {
+						commonJs.error(result.message);
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -112,12 +128,13 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "INCOME_DATE")).setScript("getDetail('"+ds.getValue(i, "INCOME_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "INCOME_DATE")).setScript("getEdit('"+ds.getValue(i, "INCOME_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "INCOME_TYPE_DESC")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "INSERT_DATE")));
@@ -132,7 +149,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:11").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -141,6 +158,7 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
 		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -169,40 +187,150 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	onEditDataEntry = function(jqObj) {
+		var name = $(jqObj).attr("name");
+		if (name == "deGrossSales" || name == "deGst") {
+			commonJs.ajaxSubmit({
+				url:"/rkm/0204/calculateDataEntry",
+				dataType:"json",
+				data:{
+					grossSales:$("#deGrossSales").val(),
+					gst:$("#deGst").val()
+				},
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						var ds = result.dataSet;
+						$("#deNetSales").val(ds.getValue(0, "netSales"));
+					} else {
+						commonJs.error(result.message);
+					}
+				}
+			});
+		}
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+	getEdit = function(incomeId) {
+		$("input:checkbox[name=chkForDel]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == incomeId) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
 
-		if (param.mode == "Detail") {
-			url = "/rkm/0206/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0206/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/rkm/0206/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+		commonJs.ajaxSubmit({
+			url:"/rkm/0206/getEdit",
+			dataType:"json",
+			data:{
+				incomeId:incomeId
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var ds = result.dataSet;
+
+					refreshDataEntry();
+					setDataEntryValues(ds);
+					$("#deGrossSales").focus();
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
+
+	doSave = function() {
+		if (!commonJs.doValidate("fmDefault")) {
+			return;
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0206/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-		popup = commonJs.openPopup(popParam);
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
+
+	doComplete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0206/exeComplete",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
 	};
 
 	doDelete = function() {
@@ -217,7 +345,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0206/exeDelete.do",
+						url:"/rkm/0206/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -252,28 +380,62 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var incomeId = $(img).attr("incomeId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == incomeId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[0].fun = function() {getEdit(incomeId);};
+		ctxMenu.dataEntryListAction[1].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[2].fun = function() {doComplete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.dataEntryListAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,
 			verAdjust:2
 		});
+	};
+
+	doDataEntryAction = function(img) {
+		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
+		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
+		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
+
+		$(img).contextMenu(ctxMenu.dataEntryAction, {
+			classPrefix:com.constants.ctxClassPrefixGrid,
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:0,
+			verAdjust:2
+		});
+	};
+
+	refreshDataEntry = function() {
+		$("#divInformArea").find(":input").each(function() {
+			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
+				$(this).attr("checked", false);
+			} else {
+				$(this).val("");
+			}
+		});
+	};
+
+	setDataEntryValues = function(dataSet) {
+		$("#deIncomeId").val(commonJs.nvl(dataSet.getValue(0, "INCOME_ID"), ""));
+		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "INCOME_DATE"), ""));
+		$("#deGrossSales").val(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), numberFormat));
+		$("#deGst").val(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), numberFormat));
+		$("#deNetSales").val(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), numberFormat));
+		$("#deIncomeType").val(commonJs.nvl(dataSet.getValue(0, "INCOME_TYPE_ID"), ""));
+		commonJs.refreshBootstrapSelectbox("deIncomeType");
+		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
 	};
 
 	exeExport = function(menuObject) {
@@ -290,19 +452,19 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0206/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						url:"/rkm/0206/exeExport",
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
@@ -317,9 +479,9 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		commonJs.setExportButtonContextMenu($("#btnExport"));
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
-		commonJs.setExportButtonContextMenu($("#btnExport"));
 		$(".numeric").number(true, 2);
 		doSearch();
 	});
