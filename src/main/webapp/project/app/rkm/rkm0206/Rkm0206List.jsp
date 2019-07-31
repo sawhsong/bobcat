@@ -151,12 +151,12 @@
 			<col width="8%"/>
 			<col width="8%"/>
 			<col width="8%"/>
-			<col width="10%"/>
+			<col width="11%"/>
 			<col width="*"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="3%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
