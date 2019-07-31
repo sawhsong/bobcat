@@ -1,5 +1,6 @@
 package zebra.taglib;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
 import project.common.module.datahelper.DataHelper;
@@ -20,6 +21,7 @@ public class DataEntryTypeCodeSelectbox extends TaglibSupport {
 	private String style;
 	private String isMultiple;
 	private String isBootstrap;
+	private String checkName = "";
 	private String caption;
 	private String options;	// for data validator
 	private String source;	// common_code source(framework / project)
@@ -29,6 +31,7 @@ public class DataEntryTypeCodeSelectbox extends TaglibSupport {
 	public int doStartTag() {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
+			HttpSession httpSession = pageContext.getSession();
 			StringBuffer html = new StringBuffer();
 			DataSet ds = new DataSet();
 			String classString = "";
@@ -51,11 +54,15 @@ public class DataEntryTypeCodeSelectbox extends TaglibSupport {
 				ds = DataHelper.getLendingTypeDataSetByOrgCategory(orgCategory);
 			}
 
+			langCode = CommonUtil.nvl(langCode, (String)httpSession.getAttribute("langCode"));
+			checkName = CommonUtil.containsIgnoreCase(checkName, ".") ? getMessage(checkName, langCode) : checkName;
+
 			html.append("<select");
 			html.append(" id=\"").append(CommonUtil.nvl(id, name)).append("\"");
 			html.append(" name=\"").append(name).append("\"");
 
 			if (CommonUtil.isNotEmpty(style)) {html.append(" style=\""+style+"\"");}
+			if (CommonUtil.isNotBlank(checkName)) {html.append(" checkName=\""+checkName+"\"");}
 			if (CommonUtil.isNotEmpty(options)) {html.append(" "+options);}
 			if (CommonUtil.isNotEmpty(script)) {html.append(" onchange=\""+script+"\"");}
 			if (CommonUtil.equalsIgnoreCase(isMultiple, "true") || CommonUtil.equalsIgnoreCase(isMultiple, "yes")) {html.append(" multiple=\"multiple\"");}
@@ -256,6 +263,14 @@ public class DataEntryTypeCodeSelectbox extends TaglibSupport {
 
 	public void setIsBootstrap(String isBootstrap) {
 		this.isBootstrap = isBootstrap;
+	}
+
+	public String getCheckName() {
+		return checkName;
+	}
+
+	public void setCheckName(String checkName) {
+		this.checkName = checkName;
 	}
 
 	public String getCaption() {

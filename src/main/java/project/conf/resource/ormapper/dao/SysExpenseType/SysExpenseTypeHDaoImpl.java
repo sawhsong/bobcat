@@ -63,6 +63,13 @@ public class SysExpenseTypeHDaoImpl extends BaseHDao implements SysExpenseTypeDa
 		return (SysExpenseType)selectAllToDto(queryAdvisor, new SysExpenseType());
 	}
 
+	public SysExpenseType getExpenseTypeByOrgCategoryExpenseType(String orgCategory, String expenseTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("expense_type = '"+expenseTypeCode+"'");
+		return (SysExpenseType)selectAllToDto(queryAdvisor, new SysExpenseType());
+	}
+
 	public DataSet getExpenseMainTypeDataSetByOrgCategory(String orgCategory) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 

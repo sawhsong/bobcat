@@ -59,7 +59,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -91,13 +91,13 @@
 				</div>
 			</td>
 			<td class="tdSearch">
-				<label for="expenseMainType" class="lblEn hor mandatory"><mc:msg key="rkm0402.search.mainType"/></label>
+				<label for="expenseMainType" class="lblEn hor"><mc:msg key="rkm0402.search.mainType"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:deSelect name="expenseMainType" codeType="ExpenseMainType" caption="==Select==" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedExpenseMainType%>"/>
 				</div>
 			</td>
 			<td class="tdSearch">
-				<label for="expenseSubType" class="lblEn hor mandatory"><mc:msg key="rkm0402.search.subType"/></label>
+				<label for="expenseSubType" class="lblEn hor"><mc:msg key="rkm0402.search.subType"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:deSelect name="expenseSubType" codeType="ExpenseSubType" caption="==Select==" orgCategory="<%=orgCategory%>" parentCode="<%=selectedExpenseMainType%>" selectedValue="<%=selectedExpenseSubType%>"/>
 				</div>
@@ -110,12 +110,12 @@
 		<caption><mc:msg key="page.com.dataEntry"/></caption>
 		<colgroup>
 			<col width="9%"/>
-			<col width="7%"/>
+			<col width="8%"/>
+			<col width="13%"/>
+			<col width="14%"/>
 			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
+			<col width="8%"/>
+			<col width="8%"/>
 			<col width="*"/>
 			<col width="4%"/>
 		</colgroup>
@@ -133,13 +133,15 @@
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deExpenseId"/>
+					<ui:hidden name="deExpenseTypeId"/>
 					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0206.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
 			<td class="tdDataEntry Ct"><ui:button id="btnDeTypes" caption="rkm0402.de.expenseTypes" iconClass="fa-caret-down"/></td>
-			<td class="tdDataEntry Ct"><ui:deSelect name="deExpenseMainType" codeType="ExpenseMainType" caption="==Select==" orgCategory="<%=orgCategory%>" options="mandatory"/></td>
-			<td class="tdDataEntry Ct"><ui:deSelect name="deExpenseSubType" codeType="ExpenseSubType" caption="==Select==" orgCategory="<%=orgCategory%>" parentCode="<%=selectedExpenseMainType%>" options="mandatory"/></td>
+			<td class="tdDataEntry Ct"><ui:deSelect name="deExpenseMainType" codeType="ExpenseMainType" caption="==Select==" checkName="rkm0402.de.mainType" orgCategory="<%=orgCategory%>" options="mandatory"/></td>
+			<td class="tdDataEntry Ct"><ui:deSelect name="deExpenseSubType" codeType="ExpenseSubType" caption="==Select==" checkName="rkm0402.de.subType" orgCategory="<%=orgCategory%>" parentCode="<%=selectedExpenseMainType%>" options="mandatory"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deGrossExpense" className="rt numeric" checkName="rkm0402.de.grossExpense" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deGst" className="rt numeric" checkName="rkm0402.de.gst" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deNetExpense" className="rt numeric" status="display"/></td>
@@ -161,13 +163,13 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="6%"/>
+			<col width="15%"/>
+			<col width="15%"/>
 			<col width="5%"/>
-			<col width="14%"/>
-			<col width="14%"/>
-			<col width="4%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
 			<col width="*"/>
 			<col width="6%"/>
 			<col width="6%"/>
@@ -185,7 +187,7 @@
 				<th class="thGrid"><mc:msg key="rkm0402.grid.netExpense"/></th>
 				<th class="thGrid"><mc:msg key="rkm0402.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="rkm0402.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0402.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

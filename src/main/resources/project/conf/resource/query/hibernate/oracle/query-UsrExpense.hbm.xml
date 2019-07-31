@@ -79,6 +79,40 @@
 	]]>
 	</sql-query>
 
+	<sql-query name="query.UsrExpense.getExpenseDataSetByExpenseIdForUpdate">
+	<![CDATA[
+		select exp.expense_id,
+		       exp.expense_year,
+		       exp.quarter_name,
+		       exp.org_id,
+		       exp.expense_type_id,
+		       ext.parent_expense_type as parent_expense_type,
+		       ext.expense_type as expense_type_code,
+		       ext.description as expense_type_desc,
+		       ext.is_apply_gst as expense_type_is_apply_gst,
+		       nvl(ext.gst_percentage, 0) as gst_percentage,
+		       ext.account_code,
+		       to_char(exp.expense_date, '${dateFormat}') as expense_date,
+		       nvl(exp.gross_amt, 0) as gross_amt,
+		       nvl(exp.gst_amt, 0) as gst_amt,
+		       nvl(exp.applied_gst, 0) as applied_gst,
+		       nvl(exp.net_amt, 0) as net_amt,
+		       exp.is_completed,
+		       exp.description,
+		       exp.insert_user_id,
+		       to_char(exp.insert_date, '${dateFormat}') as insert_date,
+		       exp.update_user_id,
+		       to_char(exp.update_date, '${dateFormat}') as update_date,
+		       to_char(nvl(exp.update_date, exp.insert_date), '${dateFormat}') as entry_date
+		  from usr_expense exp,
+		       sys_expense_type ext
+		 where exp.expense_type_id = ext.expense_type_id
+		${where_clause}
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
 	<sql-query name="query.UsrExpense.getExpensePerformanceDataSet">
 	<![CDATA[
 		with src_data as (

@@ -3,16 +3,16 @@
  * - Rkm0402List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-var popup = null;
 var searchResultDataCount = 0;
+var numberFormat = "#,##0.00";
 var expenseTypeMenu = [];
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+	$("#btnComplete").click(function(event) {
+		doComplete();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -25,6 +25,8 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		flushSubType("expenseSubType");
+		refreshDataEntry();
 	});
 
 	$("#icnCheck").click(function(event) {
@@ -56,16 +58,36 @@ $(function() {
 	});
 
 	$(document).keypress(function(event) {
+		var element = event.target;
 		if (event.which == 13) {
-			var element = event.target;
+			if ($(element).attr("name") == "deRemark") {
+				doSave();
+			}
+		}
+
+		onEditDataEntry($(element));
+	});
+
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
 		}
 	});
+
+	flushSubType = function(subTypeSelectId) {
+		$("#"+subTypeSelectId+" option").each(function(index) {
+			$(this).remove();
+		});
+		$("#"+subTypeSelectId).append("<option value=\"\">==Select==</option>");
+
+		$("#"+subTypeSelectId).selectpicker("refresh");
+	};
 
 	setDeTypesContextMenu = function() {
 		var subMenu = [];
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseTypesForContextMenu.do",
+			url:"/common/entryTypeSupporter/getExpenseTypesForContextMenu",
 			dataType:"json",
 			data:{},
 			success:function(data, textStatus) {
@@ -144,9 +166,11 @@ $(function() {
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
+		refreshDataEntry();
+
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0402/getList.do",
+				url:"/rkm/0402/getList",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -159,7 +183,7 @@ $(function() {
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -185,16 +209,16 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "EXPENSE_DATE")).setScript("getDetail('"+ds.getValue(i, "EXPENSE_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "EXPENSE_DATE")).setScript("getEdit('"+ds.getValue(i, "EXPENSE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "PARENT_EXPENSE_TYPE_DESC"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "EXPENSE_TYPE_DESC"), 60)));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCOUNT_CODE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ACCOUNT_CODE")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 40)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ENTRY_DATE")));
 
@@ -216,9 +240,9 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, numberFormat)));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -246,40 +270,150 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	onEditDataEntry = function(jqObj) {
+		var name = $(jqObj).attr("name");
+		if (name == "deGrossExpense" || name == "deGst") {
+			commonJs.ajaxSubmit({
+				url:"/rkm/0402/calculateDataEntry",
+				dataType:"json",
+				data:{
+					grossExpense:$("#deGrossExpense").val(),
+					gst:$("#deGst").val()
+				},
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						var ds = result.dataSet;
+						$("#deNetExpense").val(ds.getValue(0, "netExpense"));
+					} else {
+						commonJs.error(result.message);
+					}
+				}
+			});
+		}
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+	getEdit = function(expenseId) {
+		$("input:checkbox[name=chkForDel]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == expenseId) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
 
-		if (param.mode == "Detail") {
-			url = "/rkm/0402/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0402/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/rkm/0402/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+		commonJs.ajaxSubmit({
+			url:"/rkm/0402/getEdit",
+			dataType:"json",
+			data:{
+				expenseId:expenseId
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var ds = result.dataSet;
+
+					refreshDataEntry();
+					setDataEntryValues(ds);
+					$("#deGrossExpense").focus();
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
+
+	doSave = function() {
+		if (!commonJs.doValidate("fmDefault")) {
+			return;
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0402/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-		popup = commonJs.openPopup(popParam);
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
+
+	doComplete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0402/exeComplete",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
 	};
 
 	doDelete = function() {
@@ -294,7 +428,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0402/exeDelete.do",
+						url:"/rkm/0402/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -329,18 +463,19 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var expenseId = $(img).attr("expenseId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == expenseId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.dataEntryListAction[0].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
+		ctxMenu.dataEntryListAction[0].fun = function() {getEdit(expenseId);};
 		ctxMenu.dataEntryListAction[1].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[2].fun = function() {doComplete();};
 
 		$(img).contextMenu(ctxMenu.dataEntryListAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
@@ -351,46 +486,47 @@ $(function() {
 		});
 	};
 
-	exeExport = function(menuObject) {
-		$("[name=fileType]").remove();
-		$("[name=dataRange]").remove();
+	doDataEntryAction = function(img) {
+		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
+		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
+		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
 
-		if (searchResultDataCount <= 0) {
-			commonJs.warn(com.message.I001);
-			return;
-		}
-
-		commonJs.confirm({
-			contents:com.message.Q003,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/rkm/0402/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-					setTimeout(function() {popup.close();}, 3000);
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		$(img).contextMenu(ctxMenu.dataEntryAction, {
+			classPrefix:com.constants.ctxClassPrefixGrid,
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:0,
+			verAdjust:2
 		});
+	};
+
+	refreshDataEntry = function() {
+		$("#divInformArea").find(":input").each(function() {
+			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
+				$(this).attr("checked", false);
+			} else {
+				$(this).val("");
+			}
+		});
+	};
+
+	setDataEntryValues = function(dataSet) {
+		$("#deExpenseId").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_ID"), ""));
+		$("#deExpenseTypeId").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_TYPE_ID"), ""));
+		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_DATE"), ""));
+		$("#deExpenseMainType").val(commonJs.nvl(dataSet.getValue(0, "PARENT_EXPENSE_TYPE"), ""));
+		commonJs.refreshBootstrapSelectbox("deExpenseMainType");
+		$("#deExpenseSubType").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_TYPE_CODE"), ""));
+		commonJs.refreshBootstrapSelectbox("deExpenseSubType");
+		$("#deGrossExpense").val(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), numberFormat));
+		$("#deGst").val(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), numberFormat));
+		$("#deNetExpense").val(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), numberFormat));
+		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
 	};
 
 	setExpenseSubType = function() {
 		drawExpenseSubTypeSelectbox();
-		$("#expenseSubType").selectpicker("refresh");
+		commonJs.refreshBootstrapSelectbox("expenseSubType");
 	};
 
 	drawExpenseSubTypeSelectbox = function() {
@@ -399,7 +535,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox.do",
+			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox",
 			dataType:"json",
 			data:{expenseMainType:$("#expenseMainType").val()},
 			success:function(data, textStatus) {
@@ -431,9 +567,11 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox.do",
+			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox",
 			dataType:"json",
-			data:{expenseMainType:$("#deExpenseMainType").val()},
+			data:{
+				expenseMainType:$("#deExpenseMainType").val()
+			},
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, "json");
 				if (result.isSuccess == true || result.isSuccess == "true") {
@@ -457,26 +595,66 @@ $(function() {
 		var subType = types.split("_")[1];
 
 		$("#deExpenseMainType").val(mainType);
-		$("#deExpenseMainType").selectpicker("val", mainType);
+		commonJs.refreshBootstrapSelectbox("deExpenseMainType");
 		setTimeout(function() {
 			setDeExpenseSubType();
 
 			$("#deExpenseSubType").val(subType);
-			$("#deExpenseSubType").selectpicker("val", subType);
+			commonJs.refreshBootstrapSelectbox("deExpenseSubType");
 		}, 10);
+	};
+
+	exeExport = function(menuObject) {
+		$("[name=fileType]").remove();
+		$("[name=dataRange]").remove();
+
+		if (searchResultDataCount <= 0) {
+			commonJs.warn(com.message.I001);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q003,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
+					popup = commonJs.openPopup({
+						popupId:"exportFile",
+						url:"/rkm/0402/exeExport",
+						paramData:param,
+						header:"exportFile",
+						blind:false,
+						width:200,
+						height:100
+					});
+					setTimeout(function() {popup.close();}, 3000);
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
 	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
+		commonJs.setExportButtonContextMenu($("#btnExport"));
+		commonJs.setFieldDateMask("deDate");
+		$(".numeric").number(true, 2);
+
 		setDeTypesContextMenu();
 		setDataEntryActionButtonContextMenu();
 		setExpenseSubType();
 		setDeExpenseSubType();
 
-		commonJs.setFieldDateMask("deDate");
-		$(".numeric").number(true, 2);
 		doSearch();
 	});
 });
