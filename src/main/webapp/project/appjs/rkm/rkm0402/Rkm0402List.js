@@ -508,6 +508,7 @@ $(function() {
 				$(this).val("");
 			}
 		});
+		flushSubType("deExpenseSubType");
 	};
 
 	setDataEntryValues = function(dataSet) {
