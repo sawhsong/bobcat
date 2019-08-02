@@ -120,9 +120,9 @@ public class Rkm0402BizImpl extends BaseBiz implements Rkm0402Biz {
 			sysExpenseType = sysExpenseTypeDao.getExpenseTypeByOrgCategoryExpenseType(orgCategory, dsReq.getValue("deExpenseSubType"));
 			usrExpense.setExpenseTypeId(sysExpenseType.getExpenseTypeId());
 			usrExpense.setExpenseDate(CommonUtil.toDate(dsReq.getValue("deDate"), dateFormat));
-			usrExpense.setGrossAmt(CommonUtil.toDouble(dsReq.getValue("deGrossSales")));
+			usrExpense.setGrossAmt(CommonUtil.toDouble(dsReq.getValue("deGrossExpense")));
 			usrExpense.setGstAmt(CommonUtil.toDouble(dsReq.getValue("deGst")));
-			usrExpense.setNetAmt(CommonUtil.toDouble(dsReq.getValue("deNetSales")));
+			usrExpense.setNetAmt(CommonUtil.toDouble(dsReq.getValue("deNetExpense")));
 			usrExpense.setDescription(dsReq.getValue("deRemark"));
 
 			if (CommonUtil.equals(saveType, "I")) {

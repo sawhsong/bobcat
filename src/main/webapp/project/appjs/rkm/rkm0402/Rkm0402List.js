@@ -57,7 +57,7 @@ $(function() {
 		setDeExpenseSubType();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
 		var element = event.target;
 		if (event.which == 13) {
 			if ($(element).attr("name") == "deRemark") {
@@ -515,14 +515,18 @@ $(function() {
 		$("#deExpenseId").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_ID"), ""));
 		$("#deExpenseTypeId").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_TYPE_ID"), ""));
 		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_DATE"), ""));
-		$("#deExpenseMainType").val(commonJs.nvl(dataSet.getValue(0, "PARENT_EXPENSE_TYPE"), ""));
-		commonJs.refreshBootstrapSelectbox("deExpenseMainType");
-		$("#deExpenseSubType").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_TYPE_CODE"), ""));
-		commonJs.refreshBootstrapSelectbox("deExpenseSubType");
+
 		$("#deGrossExpense").val(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), numberFormat));
 		$("#deGst").val(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), numberFormat));
 		$("#deNetExpense").val(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), numberFormat));
 		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
+
+		$("#deExpenseMainType").val(commonJs.nvl(dataSet.getValue(0, "PARENT_EXPENSE_TYPE"), ""));
+		commonJs.refreshBootstrapSelectbox("deExpenseMainType");
+
+		setDeExpenseSubType();
+		$("#deExpenseSubType").val(commonJs.nvl(dataSet.getValue(0, "EXPENSE_TYPE_CODE"), ""));
+		commonJs.refreshBootstrapSelectbox("deExpenseSubType");
 	};
 
 	setExpenseSubType = function() {
@@ -632,7 +636,6 @@ $(function() {
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
