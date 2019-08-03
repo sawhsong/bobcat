@@ -6,11 +6,56 @@ package project.conf.resource.ormapper.dao.UsrFinance;
 
 import project.common.extend.BaseHDao;
 import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dto.oracle.UsrExpense;
+import project.conf.resource.ormapper.dto.oracle.UsrFinance;
+import zebra.base.Dto;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
+	public int insert(Dto dto) throws Exception {
+		return insertWithSQLQuery(dto);
+	}
+
+	public int update(String financeId, Dto dto) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("finance_id = '"+financeId+"'");
+		return updateWithSQLQuery(queryAdvisor, dto);
+	}
+
+	public int exeCompleteByFinanceIds(String financeIds[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		UsrFinance usrFinance;
+		int result = 0;
+
+		for (int i=0; i<financeIds.length; i++) {
+			usrFinance = new UsrFinance();
+			queryAdvisor = new QueryAdvisor();
+
+			usrFinance.addUpdateColumn("is_completed", "Y");
+			queryAdvisor.addWhereClause("finance_id = '"+financeIds[i]+"'");
+
+			result += updateColumns(queryAdvisor, usrFinance);
+		}
+
+		return result;
+	}
+
+	public int deleteByFinanceIds(String financeIds[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		int result = 0;
+
+		for (int i=0; i<financeIds.length; i++) {
+			queryAdvisor = new QueryAdvisor();
+			queryAdvisor.addWhereClause("finance_id = '"+financeIds[i]+"'");
+
+			result += deleteWithSQLQuery(queryAdvisor, new UsrFinance());
+		}
+
+		return result;
+	}
+
 	public DataSet getRepaymentSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
 		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getRepaymentSummaryDataSet");
 	}
@@ -84,5 +129,23 @@ public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
 		queryAdvisor.addOrderByClause("ufn.finance_date desc, slt.sort_order");
 
 		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getLendingDataSetByCriteria");
+	}
+
+	public DataSet getFinanceDataSetByFinanceIdForUpdate(String financeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+
+		queryAdvisor.addVariable("dateFormat", dateFormat);
+		queryAdvisor.addWhereClause("ufn.finance_id = '"+financeId+"'");
+		queryAdvisor.addOrderByClause("ufn.finance_date desc, srt.sort_order");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getFinanceDataSetByFinanceIdForUpdate");
+	}
+
+	public UsrFinance getFinanceById(String financeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("finance_id = '"+financeId+"'");
+		return (UsrFinance)selectAllToDto(queryAdvisor, new UsrFinance());
 	}
 }

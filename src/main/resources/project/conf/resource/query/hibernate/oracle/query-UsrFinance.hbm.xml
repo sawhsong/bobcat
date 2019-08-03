@@ -112,6 +112,42 @@
 	]]>
 	</sql-query>
 
+	<sql-query name="query.UsrFinance.getFinanceDataSetByFinanceIdForUpdate">
+	<![CDATA[
+		select ufn.finance_id,
+		       ufn.finance_year,
+		       ufn.quarter_name,
+		       ufn.org_id,
+		       ufn.finance_entry_type as finance_entry_type,
+		       ufn.finance_type_id,
+		       srt.repayment_type as finance_type_code,
+		       srt.description as finance_type_desc,
+		       srt.is_apply_gst as finance_type_is_apply_gst,
+		       nvl(srt.gst_percentage, 0) as gst_percentage,
+		       srt.account_code,
+		       to_char(ufn.finance_date, '${dateFormat}') as finance_date,
+		       nvl(ufn.repayment_amt, 0) as repayment_amt,
+		       nvl(ufn.principal_amt, 0) as principal_amt,
+		       nvl(ufn.interest_percentage, 0) as interest_percentage,
+		       to_char(ufn.start_date, '${dateFormat}') as start_date,
+		       to_char(ufn.end_date, '${dateFormat}') as end_date,
+		       ufn.is_completed,
+		       ufn.description,
+		       (select count(*) from usr_finance_file where finance_id = ufn.finance_id) as finance_file_cnt,
+		       ufn.insert_user_id,
+		       to_char(ufn.insert_date, '${dateFormat}') as insert_date,
+		       ufn.update_user_id,
+		       to_char(ufn.update_date, '${dateFormat}') as update_date,
+		       to_char(nvl(ufn.update_date, ufn.insert_date), '${dateFormat}') as entry_date
+		  from usr_finance ufn,
+		       sys_repayment_type srt
+		 where ufn.finance_type_id = srt.repayment_type_id
+		${where_clause}
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
 	<sql-query name="query.UsrFinance.getBorrowingDataSetByCriteria">
 		<![CDATA[
 			select ufn.finance_id,

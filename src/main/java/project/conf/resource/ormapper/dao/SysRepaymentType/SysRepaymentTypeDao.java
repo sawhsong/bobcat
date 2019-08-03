@@ -17,4 +17,5 @@ public interface SysRepaymentTypeDao extends IDao {
 	public DataSet getRepaymentTypeDataSetByOrgCategory(String orgCategory) throws Exception;
 	public SysRepaymentType getRepaymentTypeByKeys(String repaymentTypeId, String repaymentTypeCode) throws Exception;
 	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception;
+	public SysRepaymentType getRepaymentTypeByOrgCategoryRepaymentType(String orgCategory, String repaymentTypeCode) throws Exception;
 }

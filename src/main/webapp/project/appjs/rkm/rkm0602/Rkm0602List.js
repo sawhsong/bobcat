@@ -3,16 +3,15 @@
  * - Rkm0602List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-var popup = null;
 var searchResultDataCount = 0;
-var repaymentTypeMenu = [];
+var numberFormat = "#,##0.00";
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+	$("#btnComplete").click(function(event) {
+		doComplete();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -25,6 +24,8 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		$("#deRepaymentType").selectpicker("refresh");
+		refreshDataEntry();
 	});
 
 	$("#icnCheck").click(function(event) {
@@ -47,49 +48,20 @@ $(function() {
 		doSearch();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
+		var element = event.target;
 		if (event.which == 13) {
-			var element = event.target;
+			if ($(element).attr("name") == "deRemark") {
+				doSave();
+			}
 		}
 	});
 
-	setDeRepaymentTypeContextMenu = function() {
-		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getRepaymentTypeForContextMenu.do",
-			dataType:"json",
-			data:{},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					var ds = result.dataSet;
-
-					if (ds.getRowCnt() > 0) {
-						for (var i=0; i<ds.getRowCnt(); i++) {
-							var repaymentType = ds.getValue(i, "REPAYMENT_TYPE");
-
-							repaymentTypeMenu.push({
-								name:ds.getValue(i, "DESCRIPTION"),
-								userData:repaymentType,
-								fun:function() {
-									setDeRepaymentTypeSelectbox($(this).attr("userData"));
-								}
-							});
-						}
-					}
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-
-		$("#btnDeRepaymentType").contextMenu(repaymentTypeMenu, {
-			borderRadius : "4px",
-			displayAround : "trigger",
-			position : "bottom",
-			horAdjust : 0,
-			verAdjust : 0
-		});
-	};
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
+		}
+	});
 
 	setDataEntryActionButtonContextMenu = function() {
 		ctxMenu.dataEntryAction[0].fun = function() {};
@@ -105,15 +77,18 @@ $(function() {
 			horAdjust:0
 		});
 	};
+
 	/*!
 	 * process
 	 */
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
+		refreshDataEntry();
+
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0602/getList.do",
+				url:"/rkm/0602/getList",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -126,7 +101,7 @@ $(function() {
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -150,11 +125,11 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "FINANCE_DATE")).setScript("getDetail('"+ds.getValue(i, "FINANCE_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "FINANCE_DATE")).setScript("getEdit('"+ds.getValue(i, "FINANCE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "FINANCE_TYPE_DESC"), 60)));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REPAYMENT_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "FINANCE_TYPE_DESC")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "REPAYMENT_AMT"), numberFormat)));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ENTRY_DATE")));
@@ -175,7 +150,7 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totAmt, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totAmt, numberFormat)));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -203,40 +178,126 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getEdit = function(financeId) {
+		$("input:checkbox[name=chkForDel]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == financeId) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
+
+		commonJs.ajaxSubmit({
+			url:"/rkm/0602/getEdit",
+			dataType:"json",
+			data:{
+				financeId:financeId
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var ds = result.dataSet;
+
+					refreshDataEntry();
+					setDataEntryValues(ds);
+					$("#deRepaymentAmt").focus();
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
-
-		if (param.mode == "Detail") {
-			url = "/rkm/0602/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0602/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/rkm/0602/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+	doSave = function() {
+		if (!commonJs.doValidate("fmDefault")) {
+			return;
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0602/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-		popup = commonJs.openPopup(popParam);
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
+
+	doComplete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0602/exeComplete",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
 	};
 
 	doDelete = function() {
@@ -251,7 +312,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0602/exeDelete.do",
+						url:"/rkm/0602/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -286,18 +347,19 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var financeId = $(img).attr("financeId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == financeId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.dataEntryListAction[0].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
+		ctxMenu.dataEntryListAction[0].fun = function() {getEdit(financeId);};
 		ctxMenu.dataEntryListAction[1].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[2].fun = function() {doComplete();};
 
 		$(img).contextMenu(ctxMenu.dataEntryListAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
@@ -306,6 +368,41 @@ $(function() {
 			horAdjust:0,
 			verAdjust:2
 		});
+	};
+
+	doDataEntryAction = function(img) {
+		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
+		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
+		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
+
+		$(img).contextMenu(ctxMenu.dataEntryAction, {
+			classPrefix:com.constants.ctxClassPrefixGrid,
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:0,
+			verAdjust:2
+		});
+	};
+
+	refreshDataEntry = function() {
+		$("#divInformArea").find(":input").each(function() {
+			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
+				$(this).attr("checked", false);
+			} else {
+				$(this).val("");
+			}
+		});
+		$("#repaymentType").selectpicker("refresh");
+		$("#deRepaymentType").selectpicker("refresh");
+	};
+
+	setDataEntryValues = function(dataSet) {
+		$("#definanceId").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_ID"), ""));
+		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_DATE"), ""));
+		$("#deRepaymentAmt").val(commonJs.getNumberMask(dataSet.getValue(0, "REPAYMENT_AMT"), numberFormat));
+		$("#deRepaymentType").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_TYPE_CODE"), ""));
+		commonJs.refreshBootstrapSelectbox("deRepaymentType");
+		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
 	};
 
 	exeExport = function(menuObject) {
@@ -322,19 +419,19 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0602/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						url:"/rkm/0602/exeExport",
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
@@ -345,17 +442,11 @@ $(function() {
 		});
 	};
 
-	setDeRepaymentTypeSelectbox = function(type) {
-		$("#deRepaymentType").val(type);
-		$("#deRepaymentType").selectpicker("val", type);
-	};
-
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		setDeRepaymentTypeContextMenu();
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
 		$(".numeric").number(true, 2);

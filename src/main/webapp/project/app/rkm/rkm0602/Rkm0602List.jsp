@@ -57,7 +57,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -88,7 +88,7 @@
 				</div>
 			</td>
 			<td class="tdSearch">
-				<label for="repaymentType" class="lblEn hor mandatory"><mc:msg key="rkm0602.search.repaymentType"/></label>
+				<label for="repaymentType" class="lblEn hor"><mc:msg key="rkm0602.search.repaymentType"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:deSelect name="repaymentType" codeType="RepaymentType" caption="==Select==" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedRepaymentType%>"/>
 				</div>
@@ -100,16 +100,14 @@
 	<table class="tblDataEntry">
 		<caption><mc:msg key="page.com.dataEntry"/></caption>
 		<colgroup>
-			<col width="9%"/>
-			<col width="13%"/>
-			<col width="13%"/>
-			<col width="9%"/>
+			<col width="10%"/>
+			<col width="18%"/>
+			<col width="10%"/>
 			<col width="*"/>
 			<col width="4%"/>
 		</colgroup>
 		<tr>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0602.de.date"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0602.de.repaymentType"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0602.de.repaymentType"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0602.de.repaymentAmt"/></th>
 			<th class="thDataEntry"><mc:msg key="rkm0602.de.remark"/></th>
@@ -118,11 +116,11 @@
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deFinanceId"/>
 					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0602.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry Ct"><ui:button id="btnDeRepaymentType" caption="rkm0602.de.repaymentType" iconClass="fa-caret-down"/></td>
 			<td class="tdDataEntry Ct"><ui:deSelect name="deRepaymentType" codeType="RepaymentType" caption="==Select==" orgCategory="<%=orgCategory%>" options="mandatory"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deRepaymentAmt" className="rt numeric" checkName="rkm0602.de.repaymentAmt" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deRemark"/></td>
@@ -142,13 +140,13 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="3%"/>
-			<col width="6%"/>
-			<col width="15%"/>
+			<col width="2%"/>
+			<col width="7%"/>
+			<col width="17%"/>
 			<col width="12%"/>
 			<col width="*"/>
-			<col width="6%"/>
-			<col width="6%"/>
+			<col width="7%"/>
+			<col width="7%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
@@ -159,7 +157,7 @@
 				<th class="thGrid"><mc:msg key="rkm0602.grid.repaymentAmt"/></th>
 				<th class="thGrid"><mc:msg key="rkm0602.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="rkm0602.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0602.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

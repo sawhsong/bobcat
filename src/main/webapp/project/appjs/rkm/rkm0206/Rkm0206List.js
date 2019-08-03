@@ -24,6 +24,7 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		$("#deIncomeType").selectpicker("refresh");
 		refreshDataEntry();
 	});
 
@@ -425,6 +426,8 @@ $(function() {
 				$(this).val("");
 			}
 		});
+		$("#incomeType").selectpicker("refresh");
+		$("#deIncomeType").selectpicker("refresh");
 	};
 
 	setDataEntryValues = function(dataSet) {

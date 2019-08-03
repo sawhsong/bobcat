@@ -1,3 +1,7 @@
+@@ 2019.08.04
+	# NEVER DELETE BasicData > IncomeType, ExpenditureType, AssetType, RepaymentType, BorrowingType, LendingType
+		* TypeId will be re-generated and lose relation to USR_*** table key
+
 @ 2018.12.05 - query backup for benchmarking menu
 select to_char(income_date, 'Mon') as income_date,
        net_amt

@@ -64,4 +64,11 @@ public class SysRepaymentTypeHDaoImpl extends BaseHDao implements SysRepaymentTy
 		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
 		return selectAsDataSet(queryAdvisor, "query.SysRepaymentType.getMaxSortOrderDataSetByOrgCategory");
 	}
+
+	public SysRepaymentType getRepaymentTypeByOrgCategoryRepaymentType(String orgCategory, String repaymentTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("repayment_type = '"+repaymentTypeCode+"'");
+		return (SysRepaymentType)selectAllToDto(queryAdvisor, new SysRepaymentType());
+	}
 }
