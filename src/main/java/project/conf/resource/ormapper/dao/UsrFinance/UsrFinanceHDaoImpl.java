@@ -6,7 +6,6 @@ package project.conf.resource.ormapper.dao.UsrFinance;
 
 import project.common.extend.BaseHDao;
 import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dto.oracle.UsrExpense;
 import project.conf.resource.ormapper.dto.oracle.UsrFinance;
 import zebra.base.Dto;
 import zebra.data.DataSet;
