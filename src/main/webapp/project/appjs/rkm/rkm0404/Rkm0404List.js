@@ -3,16 +3,15 @@
  * - Rkm0404List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-var popup = null;
 var searchResultDataCount = 0;
-var assetTypeMenu = [];
+var numberFormat = "#,##0.00";
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+	$("#btnComplete").click(function(event) {
+		doComplete();
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -25,6 +24,7 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		refreshDataEntry();
 	});
 
 	$("#icnCheck").click(function(event) {
@@ -47,49 +47,22 @@ $(function() {
 		doSearch();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
+		var element = event.target;
 		if (event.which == 13) {
-			var element = event.target;
+			if ($(element).attr("name") == "deRemark") {
+				doSave();
+			}
 		}
+
+		onEditDataEntry($(element));
 	});
 
-	setDeAssetTypeContextMenu = function() {
-		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getAssetTypeForContextMenu.do",
-			dataType:"json",
-			data:{},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					var ds = result.dataSet;
-
-					if (ds.getRowCnt() > 0) {
-						for (var i=0; i<ds.getRowCnt(); i++) {
-							var assetType = ds.getValue(i, "ASSET_TYPE");
-
-							assetTypeMenu.push({
-								name:ds.getValue(i, "DESCRIPTION"),
-								userData:assetType,
-								fun:function() {
-									setDeAssetTypeSelectbox($(this).attr("userData"));
-								}
-							});
-						}
-					}
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-
-		$("#btnDeAssetType").contextMenu(assetTypeMenu, {
-			borderRadius : "4px",
-			displayAround : "trigger",
-			position : "bottom",
-			horAdjust : 0,
-			verAdjust : 0
-		});
-	};
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
+		}
+	});
 
 	setDataEntryActionButtonContextMenu = function() {
 		ctxMenu.dataEntryAction[0].fun = function() {};
@@ -112,9 +85,11 @@ $(function() {
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
+		refreshDataEntry();
+
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0404/getList.do",
+				url:"/rkm/0404/getList",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -127,7 +102,7 @@ $(function() {
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -153,15 +128,19 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "ASSET_DATE")).setScript("getDetail('"+ds.getValue(i, "ASSET_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "ASSET_DATE")).setScript("getEdit('"+ds.getValue(i, "ASSET_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ASSET_TYPE_DESC"), 60)));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCOUNT_CODE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "ASSET_FILE_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ASSET_TYPE_DESC"), 40)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ACCOUNT_CODE")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), numberFormat)));
+
+				var fileAnc = new UiAnchor();
+				fileAnc.setText(commonJs.abbreviate(ds.getValue(i, "ASSET_FILE_NAME"), 30)).setScript("downloadFile('"+ds.getValue(i, "ASSET_FILE_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(fileAnc));
+
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 60)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_COMPLETED")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ENTRY_DATE")));
@@ -183,9 +162,9 @@ $(function() {
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGross, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totGst, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(totNet, numberFormat)));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
@@ -214,40 +193,104 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	onEditDataEntry = function(jqObj) {
+		var name = $(jqObj).attr("name");
+		if (name == "deGrossAsset" || name == "deGst") {
+			commonJs.ajaxSubmit({
+				url:"/rkm/0404/calculateDataEntry",
+				dataType:"json",
+				data:{
+					grossAsset:$("#deGrossAsset").val(),
+					gst:$("#deGst").val()
+				},
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						var ds = result.dataSet;
+						$("#deNetAsset").val(ds.getValue(0, "netAsset"));
+					} else {
+						commonJs.error(result.message);
+					}
+				}
+			});
+		}
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+	getEdit = function(assetId) {
+		$("input:checkbox[name=chkForDel]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == assetId) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
 
-		if (param.mode == "Detail") {
-			url = "/rkm/0404/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0404/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/rkm/0404/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+		commonJs.ajaxSubmit({
+			url:"/rkm/0404/getEdit",
+			dataType:"json",
+			data:{
+				assetId:assetId
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var ds = result.dataSet;
+
+					refreshDataEntry();
+					setDataEntryValues(ds);
+					$("#deGrossAsset").focus();
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
+
+	doSave = function() {
+		if (!commonJs.doValidate("fmDefault")) {
+			return;
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
+		commonJs.confirm({
+			contents:com.message.Q001,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0404/exeSave",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
-		popup = commonJs.openPopup(popParam);
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
 	};
 
 	doDelete = function() {

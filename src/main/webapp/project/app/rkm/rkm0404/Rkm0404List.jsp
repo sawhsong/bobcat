@@ -57,7 +57,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -88,7 +88,7 @@
 				</div>
 			</td>
 			<td class="tdSearch">
-				<label for="assetType" class="lblEn hor mandatory"><mc:msg key="rkm0404.search.assetType"/></label>
+				<label for="assetType" class="lblEn hor"><mc:msg key="rkm0404.search.assetType"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:deSelect name="assetType" codeType="AssetType" caption="==Select==" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedAssetType%>"/>
 				</div>
@@ -101,18 +101,16 @@
 		<caption><mc:msg key="page.com.dataEntry"/></caption>
 		<colgroup>
 			<col width="9%"/>
+			<col width="10%"/>
 			<col width="9%"/>
 			<col width="9%"/>
 			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="12%"/>
+			<col width="15%"/>
 			<col width="*"/>
-			<col width="4%"/>
+			<col width="3%"/>
 		</colgroup>
 		<tr>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0404.de.date"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0404.de.assetType"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0404.de.assetType"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0404.de.grossAsset"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0404.de.gst"/></th>
@@ -128,12 +126,11 @@
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry Ct"><ui:button id="btnDeAssetType" caption="rkm0404.de.assetType" iconClass="fa-caret-down"/></td>
 			<td class="tdDataEntry Ct"><ui:deSelect name="deAssetType" codeType="AssetType" caption="==Select==" orgCategory="<%=orgCategory%>" options="mandatory"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deGrossAsset" className="rt numeric" checkName="rkm0404.de.grossAsset" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deGst" className="rt numeric" checkName="rkm0404.de.gst" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deNetAsset" className="rt numeric" status="display"/></td>
-			<td class="tdDataEntry Ct"><ui:file name="deFile" style="width:200px"/></td>
+			<td class="tdDataEntry Ct"><ui:file name="deFile" style="width:240px"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deRemark"/></td>
 			<td class="tdDataEntry Ct"><ui:icon id="icnDataEntryAction" className="fa-tasks fa-lg" script="doDataEntryAction(this)"/></td>
 		</tr>
@@ -153,16 +150,16 @@
 		<colgroup>
 			<col width="2%"/>
 			<col width="5%"/>
-			<col width="14%"/>
-			<col width="4%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
+			<col width="12%"/>
+			<col width="5%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="11%"/>
 			<col width="*"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="3%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
@@ -176,7 +173,7 @@
 				<th class="thGrid"><mc:msg key="rkm0404.grid.fileCnt"/></th>
 				<th class="thGrid"><mc:msg key="rkm0404.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="rkm0404.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0404.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

@@ -1,5 +1,8 @@
-@@ 2019.08.04
-	# NEVER DELETE BasicData > IncomeType, ExpenditureType, AssetType, RepaymentType, BorrowingType, LendingType
+@ 2019.08.06
+	# type_id of USR_*** tables (especailly usr_finance table)
+
+@ 2019.08.04
+	# NEVER DELETE BasicData > IncomeType, ExpenditureType, AssetType, RepaymentType, BorrowingType, LendingType <- this has been fixed
 		* TypeId will be re-generated and lose relation to USR_*** table key
 
 @ 2018.12.05 - query backup for benchmarking menu

@@ -46,6 +46,8 @@
 		       nvl(uat.net_amt, 0) as net_amt,
 		       uat.is_completed,
 		       uat.description,
+		       (select file_id from usr_asset_file where asset_id = uat.asset_id) as asset_file_id,
+		       (select original_name from usr_asset_file where asset_id = uat.asset_id) as asset_file_name,
 		       (select count(*) from usr_asset_file where asset_id = uat.asset_id) as asset_file_cnt,
 		       uat.insert_user_id,
 		       to_char(uat.insert_date, '${dateFormat}') as insert_date,
