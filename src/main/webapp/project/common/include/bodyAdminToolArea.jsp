@@ -250,7 +250,6 @@ $(function() {
 						}
 						$("#repaymentType").selectpicker("refresh");
 						repaymentTypeMenu = [];
-						setDeRepaymentTypeContextMenu();
 					}
 				} else {
 					commonJs.error(result.message);

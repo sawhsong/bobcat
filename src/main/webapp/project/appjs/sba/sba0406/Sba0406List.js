@@ -61,39 +61,21 @@ $(function() {
 	 * process
 	 */
 	setCheckbox = function(obj) {
-		var $obj = obj, val = $obj.val(), delimiter = "/", isClickedObjChecked = $obj.prop("checked");
-		var clickedVals = val.split(delimiter), clickedNewVal = clickedVals[1]+delimiter+clickedVals[2];
-		var shouldParentChecked = false, $shouldBeChecked;
+		try {
+			var $obj = obj, val = $obj.val(), delimiter = "/", isClickedObjChecked = $obj.prop("checked");
+			var clickedVals = val.split(delimiter), clickedNewVal = clickedVals[1]+delimiter+clickedVals[2];
 
-		$("[name=chkForDel]").each(function(index) {
-			var thisVal = $(this).val();
-			var thisVals = thisVal.split(delimiter), thisNewVal = thisVals[1]+delimiter+thisVals[2];
+			if (clickedVals.length == 3) {
+				$("[name=chkForDel]").each(function(index) {
+					var thisVal = $(this).val();
+					var thisVals = thisVal.split(delimiter), thisNewVal = thisVals[1]+delimiter+thisVals[2];
 
-			if (clickedNewVal == thisNewVal) {
-				if (clickedVals.length == 3) {
-					$(this).prop("checked", isClickedObjChecked);
-				} else {
-					if (thisVals.length == 3) {
+					if (clickedNewVal == thisNewVal) {
 						$(this).prop("checked", isClickedObjChecked);
-					} else {
-						if ($(this).prop("checked")) {
-							shouldParentChecked = true;
-						}
 					}
-				}
+				});
 			}
-		});
-
-		if (!isClickedObjChecked && shouldParentChecked) {
-			$("[name=chkForDel]").each(function(index) {
-				var thisVal = $(this).val();
-				var thisVals = thisVal.split(delimiter), thisNewVal = thisVals[1]+delimiter+thisVals[2];
-
-				if ((clickedNewVal == thisNewVal) && (thisVals.length == 3)) {
-					shouldParentChecked = $(this).prop("checked", shouldParentChecked);
-					return false;
-				}
-			});
+		} catch(e) {
 		}
 	};
 
@@ -139,15 +121,22 @@ $(function() {
 				var space = "", style = "", paramValue = "";
 				var iLevel = parseInt(ds.getValue(i, "LEVEL"));
 				var isLeaf = parseInt(ds.getValue(i, "IS_LEAF"));
+				var usedCount = ds.getValue(i, "USED_COUNT");
 				var gridTr = new UiGridTr();
+				var checkString = "", className = "chkEn", disabledStr = "";
+
+				if (isLeaf == "0" || usedCount > 0) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(path);
+				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setOptions(disabledStr).setValue(path);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				if (isLeaf == 0) {
 					var uiAnc = new UiAnchor();
-					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getUpdate('"+path+"')");
+					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getUpdate('"+path+"', '"+disabledStr+"')");
 					gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(""));
@@ -155,7 +144,7 @@ $(function() {
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(""));
 
 					var uiAnc = new UiAnchor();
-					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getUpdate('"+path+"')");
+					uiAnc.setText(ds.getValue(i, "DESCRIPTION")).setScript("getUpdate('"+path+"', '"+disabledStr+"')");
 					gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 				}
 
@@ -167,7 +156,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("path:"+path).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("path:"+path).addAttribute("disabledStr:"+disabledStr).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -233,8 +222,8 @@ $(function() {
 		setPreviewContextMenu();
 	};
 
-	getUpdate = function(path) {
-		openPopup({mode:"Edit", path:path});
+	getUpdate = function(path, disabledStr) {
+		openPopup({mode:"Edit", path:path, disabledStr:disabledStr});
 	};
 
 	openPopup = function(param) {
@@ -258,6 +247,7 @@ $(function() {
 			paramData:{
 				mode:param.mode,
 				path:param.path,
+				disabledStr:param.disabledStr,
 				orgCategory:$("#orgCategory").val()
 			},
 			header:header,
@@ -316,7 +306,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var path = $(img).attr("path");
+		var path = $(img).attr("path"), disabledStr = $(img).attr("disabledStr");
 		var $checkbox;
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
@@ -328,9 +318,15 @@ $(function() {
 			}
 		});
 
+		if (disabledStr == "disabled") {
+			ctxMenu.commonSimpleAction[1].disable = true;
+		} else {
+			ctxMenu.commonSimpleAction[1].disable = false;
+		}
+
 		setCheckbox($checkbox);
 
-		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(path);};
+		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(path, disabledStr);};
 		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonSimpleAction, {

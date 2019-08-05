@@ -99,14 +99,19 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
-				var checkString = "";
+				var checkString = "", className = "chkEn", disabledStr = "";
 
 				if (!commonJs.isEmpty(ds.getValue(i, "LENDING_TYPE_ID"))) {
 					checkString = "checked";
 				}
 
+				if (ds.getValue(i, "USED_COUNT") > 0) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
+
 				var uiChk = new UiCheckbox();
-				uiChk.setName("chkToSave").setOptions(checkString).addAttribute(checkString).setValue(ds.getValue(i, "LENDING_TYPE_ID")+"_"+ds.getValue(i, "LENDING_TYPE_CODE"));
+				uiChk.setName("chkToSave").setClassName(className+" inTblGrid").setOptions(checkString+" "+disabledStr).setValue(ds.getValue(i, "LENDING_TYPE_ID")+"_"+ds.getValue(i, "LENDING_TYPE_CODE"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				if (!commonJs.isEmpty(ds.getValue(i, "LENDING_TYPE_ID"))) {

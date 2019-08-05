@@ -31,6 +31,7 @@ $(function() {
 	});
 
 	$("#btnDelete").click(function(event) {
+		if ($("#btnDelete").attr("disabled") == "disabled") {return;}
 		commonJs.confirm({
 			contents:com.message.Q001,
 			buttons:[{

@@ -18,7 +18,8 @@
 		       asset_type.gst_percentage as gst_percentage,
 		       asset_type.account_code as account_code,
 		       to_char(asset_type.insert_date, '${dateFormat}') as insert_date,
-		       to_char(asset_type.update_date, '${dateFormat}') as update_date
+		       to_char(asset_type.update_date, '${dateFormat}') as update_date,
+		       (select count(*) from usr_asset where asset_type_id = asset_type.asset_type_id) as used_count
 		  from sys_common_code com_code,
 		       sys_asset_type asset_type
 		 where com_code.code_type = 'ASSET_TYPE'

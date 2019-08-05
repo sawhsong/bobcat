@@ -22,7 +22,8 @@
 		        insert_user_id,
 		        to_char(insert_date, '${dateFormat}') as insert_date,
 		        update_user_id,
-		        to_char(update_date, '${dateFormat}') as update_date
+		        to_char(update_date, '${dateFormat}') as update_date,
+		        (select count(*) from usr_expense where expense_type_id = sys_expense_type.expense_type_id) as used_count
 		   from sys_expense_type
 		  where org_category = '${orgCategory}'
 		connect by prior expense_type = parent_expense_type

@@ -397,7 +397,7 @@ $(function() {
 	};
 
 	setDataEntryValues = function(dataSet) {
-		$("#definanceId").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_ID"), ""));
+		$("#deFinanceId").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_ID"), ""));
 		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_DATE"), ""));
 		$("#deRepaymentAmt").val(commonJs.getNumberMask(dataSet.getValue(0, "REPAYMENT_AMT"), numberFormat));
 		$("#deRepaymentType").val(commonJs.nvl(dataSet.getValue(0, "FINANCE_TYPE_CODE"), ""));

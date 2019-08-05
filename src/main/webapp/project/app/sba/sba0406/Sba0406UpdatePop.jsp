@@ -10,7 +10,7 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	SysExpenseType sysExpenseType = (SysExpenseType)paramEntity.getObject("sysExpenseType");
-	String level = "", gstFormat = "#,##0.00";
+	String level = "", gstFormat = "#,##0.00", disableFlag = requestDataSet.getValue("disabledStr");
 	if (CommonUtil.isBlank(sysExpenseType.getParentExpenseType())) {level = "1";}
 	else {level = "2";}
 %>
@@ -50,7 +50,7 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash" status="<%=disableFlag%>"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
