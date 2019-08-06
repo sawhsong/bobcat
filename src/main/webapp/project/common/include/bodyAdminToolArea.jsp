@@ -190,7 +190,6 @@ $(function() {
 						}
 						$("#assetType").selectpicker("refresh");
 						assetTypeMenu = [];
-						setDeAssetTypeContextMenu();
 					}
 				} else {
 					commonJs.error(result.message);

@@ -392,7 +392,6 @@ $(function() {
 				$(this).val("");
 			}
 		});
-		$("#repaymentType").selectpicker("refresh");
 		$("#deRepaymentType").selectpicker("refresh");
 	};
 

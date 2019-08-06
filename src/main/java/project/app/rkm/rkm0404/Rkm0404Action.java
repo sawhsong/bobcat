@@ -8,6 +8,7 @@ package project.app.rkm.rkm0404;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseAction;
+import zebra.util.CommonUtil;
 
 public class Rkm0404Action extends BaseAction {
 	@Autowired
@@ -26,7 +27,7 @@ public class Rkm0404Action extends BaseAction {
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
-/*
+
 	public String getEdit() throws Exception {
 		try {
 			biz.getEdit(paramEntity);
@@ -53,7 +54,7 @@ public class Rkm0404Action extends BaseAction {
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
-
+/*
 	public String exeComplete() throws Exception {
 		try {
 			biz.exeComplete(paramEntity);

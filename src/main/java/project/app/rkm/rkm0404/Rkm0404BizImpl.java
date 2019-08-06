@@ -20,15 +20,21 @@ import zebra.util.ExportUtil;
 
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeDao;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
 import project.conf.resource.ormapper.dao.UsrAsset.UsrAssetDao;
+import project.conf.resource.ormapper.dto.oracle.SysAssetType;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.SysRepaymentType;
+import project.conf.resource.ormapper.dto.oracle.UsrAsset;
 import project.conf.resource.ormapper.dto.oracle.UsrIncome;
 
 public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 	@Autowired
 	private UsrAssetDao usrAssetDao;
+	@Autowired
+	private SysAssetTypeDao sysAssetTypeDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -59,13 +65,13 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 		}
 		return paramEntity;
 	}
-/*
+
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String incomeId = requestDataSet.getValue("incomeId");
+		String assetId = requestDataSet.getValue("assetId");
 
 		try {
-			paramEntity.setAjaxResponseDataSet(usrAssetDao.getIncomeDataSetByIdOnlyForUpdate(incomeId));
+			paramEntity.setAjaxResponseDataSet(usrAssetDao.getAssetDataSetByAssetIdForUpdate(assetId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -75,17 +81,17 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 
 	public ParamEntity calculateDataEntry(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		DataSet result = new DataSet(new String[] {"netSales"});
-		double grossSales = CommonUtil.toDouble(requestDataSet.getValue("grossSales"));
+		DataSet result = new DataSet(new String[] {"netAsset"});
+		double grossAsset = CommonUtil.toDouble(requestDataSet.getValue("grossAsset"));
 		double gst = CommonUtil.toDouble(requestDataSet.getValue("gst"));
-		double netSales = 0;
+		double netAsset = 0;
 
 		try {
 			result.addRow();
 
-			netSales = (grossSales - gst);
+			netAsset = (grossAsset - gst);
 
-			result.setValue("netSales", CommonUtil.toString(netSales, "#,##0.00"));
+			result.setValue("netAsset", CommonUtil.toString(netAsset, "#,##0.00"));
 
 			paramEntity.setAjaxResponseDataSet(result);
 			paramEntity.setSuccess(true);
@@ -97,43 +103,47 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 
 	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception {
 		DataSet dsReq = paramEntity.getRequestDataSet();
+		DataSet dsFile = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
-		UsrIncome usrIncome = new UsrIncome();
-		String incomeId = CommonUtil.nvl(dsReq.getValue("deIncomeId"), "-1");
+		UsrAsset usrAsset = new UsrAsset();
+		SysAssetType sysAssetType = new SysAssetType();
+		String assetId = CommonUtil.nvl(dsReq.getValue("deAssetId"), "-1");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String userId = (String)session.getAttribute("UserId");
 		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
-		String saveType = (CommonUtil.equals(incomeId, "-1")) ? "I" : "U";
+		String orgCategory = CommonUtil.nvl((String)session.getAttribute("OrgCategoryForAdminTool"), (String)session.getAttribute("OrgCategory"));
+		String saveType = (CommonUtil.equals(assetId, "-1")) ? "I" : "U";
 		int result = -1;
 
 		try {
 			if (CommonUtil.equals(saveType, "I")) {
-				usrIncome.setIncomeId(CommonUtil.uid());
+				usrAsset.setAssetId(CommonUtil.uid());
 			} else {
-				usrIncome = usrAssetDao.getIncomeById(incomeId);
+				usrAsset = usrAssetDao.getAssetById(assetId);
 			}
 
-			usrIncome.setIncomeYear(dsReq.getValue("financialYear"));
-			usrIncome.setQuarterName(dsReq.getValue("quarterName"));
-			usrIncome.setOrgId(orgId);
-			usrIncome.setIncomeEntryType(CommonCodeManager.getCodeByConstants("INCOME_ENTRY_TYPE_OTHTA"));
-			usrIncome.setIncomeDate(CommonUtil.toDate(dsReq.getValue("deDate"), dateFormat));
-			usrIncome.setGrossAmt(CommonUtil.toDouble(dsReq.getValue("deGrossSales")));
-			usrIncome.setGstAmt(CommonUtil.toDouble(dsReq.getValue("deGst")));
-			usrIncome.setNetAmt(CommonUtil.toDouble(dsReq.getValue("deNetSales")));
-			usrIncome.setDescription(dsReq.getValue("deRemark"));
+			usrAsset.setAssetYear(dsReq.getValue("financialYear"));
+			usrAsset.setQuarterName(dsReq.getValue("quarterName"));
+			usrAsset.setOrgId(orgId);
+			sysAssetType = sysAssetTypeDao.getAssetTypeByOrgCategoryAssetType(orgCategory, dsReq.getValue("deAssetType"));
+			usrAsset.setAssetTypeId(sysAssetType.getAssetTypeId());
+			usrAsset.setAssetDate(CommonUtil.toDate(dsReq.getValue("deDate"), dateFormat));
+			usrAsset.setGrossAmt(CommonUtil.toDouble(dsReq.getValue("deGrossAsset")));
+			usrAsset.setGstAmt(CommonUtil.toDouble(dsReq.getValue("deGst")));
+			usrAsset.setNetAmt(CommonUtil.toDouble(dsReq.getValue("deNetAsset")));
+			usrAsset.setDescription(dsReq.getValue("deRemark"));
 
 			if (CommonUtil.equals(saveType, "I")) {
-				usrIncome.setIsCompleted("N");
-				usrIncome.setInsertUserId(userId);
-				usrIncome.setInsertDate(CommonUtil.getSysdateAsDate());
+				usrAsset.setIsCompleted("N");
+				usrAsset.setInsertUserId(userId);
+				usrAsset.setInsertDate(CommonUtil.getSysdateAsDate());
 
-				result = usrAssetDao.insert(usrIncome);
+				result = usrAssetDao.insert(usrAsset, dsFile);
 			} else {
-				usrIncome.setUpdateUserId(userId);
-				usrIncome.setUpdateDate(CommonUtil.getSysdateAsDate());
+				usrAsset.setUpdateUserId(userId);
+				usrAsset.setUpdateDate(CommonUtil.getSysdateAsDate());
 
-				result = usrAssetDao.update(incomeId, usrIncome);
+				result = usrAssetDao.update(assetId, usrAsset, dsFile);
 			}
 
 			if (result <= 0) {
@@ -147,7 +157,7 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 		}
 		return paramEntity;
 	}
-
+/*
 	public ParamEntity exeComplete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String chkForDel = requestDataSet.getValue("chkForDel");

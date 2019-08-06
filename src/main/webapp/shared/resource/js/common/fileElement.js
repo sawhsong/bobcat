@@ -47,7 +47,7 @@
 					var divFileElementHolder = $("<div id='divFileElementHolder"+id+"' class='divFileElementHolder'></div>");
 					var divStyledFileHolder = $("<div id='divStyledFileHolder"+id+"' class='divStyledFileHolder'></div>");
 					var txtStyledInput = $("<input type='text' id='txtStyledInput"+id+"' name='txtStyledInput"+name+"' class='txtEnForFileElement' style='float:left;width:"+width+"px' value='"+value+"' readonly='readonly'/>");
-					var btnStyledButton = $("<a type='button' id='btnStyledButton"+id+"' class='btn btn-default' style='float:left;margin-left:1px'><i class='fa fa-folder-open fa-lg'></i></a>");
+					var btnStyledButton = $("<a type='button' id='btnStyledButton"+id+"' class='btn btn-default' style='float:left;margin-left:1px;height:26px'><i class='fa fa-folder-open fa-lg'></i></a>");
 
 					$(fileElements[i]).attr("class", "fileCustomed");
 
@@ -123,7 +123,7 @@
 			$file.appendTo($divRow);
 
 			if (params.deleteButton) {
-				$btnDel = $("<a type='button' id='btnDel"+idAndName+"' class='btn btn-default' style='margin-top:1px;margin-left:1px' title='Delete file element'><i class='fa fa-times fa-lg'></i></a>");
+				$btnDel = $("<a type='button' id='btnDel"+idAndName+"' class='btn btn-default' style='margin-top:1px;margin-left:0px;height:26px;' title='Delete file element'><i class='fa fa-times fa-lg'></i></a>");
 				$btnDel.appendTo($divRow);
 
 				$btnDel.bind("click", function() {

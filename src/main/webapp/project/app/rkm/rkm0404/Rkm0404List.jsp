@@ -122,6 +122,7 @@
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deAssetId"/>
 					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0404.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
@@ -150,12 +151,12 @@
 		<colgroup>
 			<col width="2%"/>
 			<col width="5%"/>
-			<col width="12%"/>
+			<col width="11%"/>
 			<col width="5%"/>
 			<col width="7%"/>
 			<col width="7%"/>
 			<col width="7%"/>
-			<col width="11%"/>
+			<col width="12%"/>
 			<col width="*"/>
 			<col width="7%"/>
 			<col width="7%"/>

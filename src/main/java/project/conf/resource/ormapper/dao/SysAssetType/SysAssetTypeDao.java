@@ -17,4 +17,5 @@ public interface SysAssetTypeDao extends IDao {
 	public DataSet getAssetTypeDataSetByOrgCategory(String orgCategory) throws Exception;
 	public SysAssetType getAssetTypeByKeys(String assetTypeId, String assetTypeCode) throws Exception;
 	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception;
+	public SysAssetType getAssetTypeByOrgCategoryAssetType(String orgCategory, String assetTypeCode) throws Exception;
 }

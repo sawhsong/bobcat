@@ -253,13 +253,96 @@ $(function() {
 			return;
 		}
 
+		$("#fmDefault").attr("enctype", "multipart/form-data");
+		var formData = new FormData($("#fmDefault")[0]);
+
 		commonJs.confirm({
 			contents:com.message.Q001,
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
-					commonJs.ajaxSubmit({
+					$.ajax({
+						type:"POST",
 						url:"/rkm/0404/exeSave",
+						data:formData,
+						contentType:false,
+						processData:false,
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											doSearch();
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+
+//					commonJs.doSubmit({
+//						form:"fmDefault",
+//						action:"/rkm/0404/exeSave",
+//						data:{}
+//					});
+
+//					commonJs.ajaxSubmit({
+//						url:"/rkm/0404/exeSave",
+//						dataType:"json",
+//						formId:"fmDefault",
+//						success:function(data, textStatus) {
+//							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+//
+//							if (result.isSuccess == true || result.isSuccess == "true") {
+//								commonJs.openDialog({
+//									type:com.message.I000,
+//									contents:result.message,
+//									blind:true,
+//									width:300,
+//									buttons:[{
+//										caption:com.caption.ok,
+//										callback:function() {
+//											doSearch();
+//										}
+//									}]
+//								});
+//							} else {
+//								commonJs.error(result.message);
+//							}
+//						}
+//					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}],
+			blind:true
+		});
+	};
+
+	doComplete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0404/exeComplete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -305,7 +388,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0404/exeDelete.do",
+						url:"/rkm/0404/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -340,18 +423,19 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var assetId = $(img).attr("assetId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == assetId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.dataEntryListAction[0].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
+		ctxMenu.dataEntryListAction[0].fun = function() {getEdit(assetId);};
 		ctxMenu.dataEntryListAction[1].fun = function() {doDelete();};
+		ctxMenu.dataEntryListAction[2].fun = function() {doComplete();};
 
 		$(img).contextMenu(ctxMenu.dataEntryListAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
@@ -429,6 +513,42 @@ $(function() {
 		});
 	};
 
+	doDataEntryAction = function(img) {
+		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
+		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
+		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
+
+		$(img).contextMenu(ctxMenu.dataEntryAction, {
+			classPrefix:com.constants.ctxClassPrefixGrid,
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:0,
+			verAdjust:2
+		});
+	};
+
+	refreshDataEntry = function() {
+		$("#divInformArea").find(":input").each(function() {
+			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
+				$(this).attr("checked", false);
+			} else {
+				$(this).val("");
+			}
+		});
+		$("#deAssetType").selectpicker("refresh");
+	};
+
+	setDataEntryValues = function(dataSet) {
+		$("#deAssetId").val(commonJs.nvl(dataSet.getValue(0, "ASSET_ID"), ""));
+		$("#deDate").val(commonJs.nvl(dataSet.getValue(0, "ASSET_DATE"), ""));
+		$("#deAssetType").val(commonJs.nvl(dataSet.getValue(0, "ASSET_TYPE_CODE"), ""));
+		commonJs.refreshBootstrapSelectbox("deAssetType");
+		$("#deGrossAsset").val(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_AMT"), numberFormat));
+		$("#deGst").val(commonJs.getNumberMask(dataSet.getValue(0, "GST_AMT"), numberFormat));
+		$("#deNetAsset").val(commonJs.getNumberMask(dataSet.getValue(0, "NET_AMT"), numberFormat));
+		$("#deRemark").val(commonJs.nvl(dataSet.getValue(0, "DESCRIPTION"), ""));
+	};
+
 	exeExport = function(menuObject) {
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
@@ -443,19 +563,19 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0404/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						url:"/rkm/0404/exeExport",
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
@@ -466,17 +586,11 @@ $(function() {
 		});
 	};
 
-	setDeAssetTypeSelectbox = function(type) {
-		$("#deAssetType").val(type);
-		$("#deAssetType").selectpicker("val", type);
-	};
-
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		setDeAssetTypeContextMenu();
 		setDataEntryActionButtonContextMenu();
 		commonJs.setFieldDateMask("deDate");
 		$(".numeric").number(true, 2);

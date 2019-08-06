@@ -64,4 +64,11 @@ public class SysAssetTypeHDaoImpl extends BaseHDao implements SysAssetTypeDao {
 		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
 		return selectAsDataSet(queryAdvisor, "query.SysAssetType.getMaxSortOrderDataSetByOrgCategory");
 	}
+
+	public SysAssetType getAssetTypeByOrgCategoryAssetType(String orgCategory, String assetTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("asset_type = '"+assetTypeCode+"'");
+		return (SysAssetType)selectAllToDto(queryAdvisor, new SysAssetType());
+	}
 }
