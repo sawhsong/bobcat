@@ -32,6 +32,39 @@ public class UsrAssetHDaoImpl extends BaseHDao implements UsrAssetDao {
 		return 1;
 	}
 
+	public int exeCompleteByAssetIds(String assetIds[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		UsrAsset usrAsset;
+		int result = 0;
+
+		for (int i=0; i<assetIds.length; i++) {
+			usrAsset = new UsrAsset();
+			queryAdvisor = new QueryAdvisor();
+
+			usrAsset.addUpdateColumn("is_completed", "Y");
+			queryAdvisor.addWhereClause("asset_id = '"+assetIds[i]+"'");
+
+			result += updateColumns(queryAdvisor, usrAsset);
+		}
+
+		return result;
+	}
+
+	public int deleteByAssetIds(String assetIds[]) throws Exception {
+		QueryAdvisor queryAdvisor;
+		int result = 0;
+
+		for (int i=0; i<assetIds.length; i++) {
+			queryAdvisor = new QueryAdvisor();
+			queryAdvisor.addWhereClause("asset_id = '"+assetIds[i]+"'");
+
+			result += usrAssetFileDao.deleteByAssetId(assetIds[i]);
+			result += deleteWithSQLQuery(queryAdvisor, new UsrAsset());
+		}
+
+		return result;
+	}
+
 	public DataSet getAssetSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
 		return selectAsDataSet(queryAdvisor, "query.UsrAsset.getAssetSummaryDataSet");
 	}

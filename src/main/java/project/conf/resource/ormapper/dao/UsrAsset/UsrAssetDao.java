@@ -13,6 +13,8 @@ import zebra.data.QueryAdvisor;
 public interface UsrAssetDao extends IDao {
 	public int insert(Dto dto, DataSet fileDataSet) throws Exception;
 	public int update(String assetId, Dto dto, DataSet fileDataSet) throws Exception;
+	public int exeCompleteByAssetIds(String assetIds[]) throws Exception;
+	public int deleteByAssetIds(String assetIds[]) throws Exception;
 	public DataSet getAssetSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getAssetDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getAssetDataSetByAssetIdForUpdate(String assetId) throws Exception;

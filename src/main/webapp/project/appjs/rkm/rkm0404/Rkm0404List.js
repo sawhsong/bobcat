@@ -253,20 +253,15 @@ $(function() {
 			return;
 		}
 
-		$("#fmDefault").attr("enctype", "multipart/form-data");
-		var formData = new FormData($("#fmDefault")[0]);
-
 		commonJs.confirm({
 			contents:com.message.Q001,
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
-					$.ajax({
-						type:"POST",
+					commonJs.ajaxSubmitMultipart({
 						url:"/rkm/0404/exeSave",
-						data:formData,
-						contentType:false,
-						processData:false,
+						dataType:"json",
+						formId:"fmDefault",
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
@@ -288,45 +283,12 @@ $(function() {
 							}
 						}
 					});
-
-//					commonJs.doSubmit({
-//						form:"fmDefault",
-//						action:"/rkm/0404/exeSave",
-//						data:{}
-//					});
-
-//					commonJs.ajaxSubmit({
-//						url:"/rkm/0404/exeSave",
-//						dataType:"json",
-//						formId:"fmDefault",
-//						success:function(data, textStatus) {
-//							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-//
-//							if (result.isSuccess == true || result.isSuccess == "true") {
-//								commonJs.openDialog({
-//									type:com.message.I000,
-//									contents:result.message,
-//									blind:true,
-//									width:300,
-//									buttons:[{
-//										caption:com.caption.ok,
-//										callback:function() {
-//											doSearch();
-//										}
-//									}]
-//								});
-//							} else {
-//								commonJs.error(result.message);
-//							}
-//						}
-//					});
 				}
 			}, {
 				caption:com.caption.no,
 				callback:function() {
 				}
-			}],
-			blind:true
+			}]
 		});
 	};
 
@@ -446,69 +408,31 @@ $(function() {
 		});
 	};
 
-	getAttachedFile = function(img) {
+	downloadFile = function(assetFileId) {
 		commonJs.ajaxSubmit({
-			url:"/rkm/0404/getAttachedFile.do",
+			url:"/rkm/0404/getFile",
 			dataType:"json",
 			data:{
-				articleId:$(img).attr("articleId")
+				assetFileId:assetFileId
 			},
-			blind:false,
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
 				if (result.isSuccess == true || result.isSuccess == "true") {
-					var dataSet = result.dataSet;
-					attchedFileContextMenu = [];
+					var ds = result.dataSet;
 
-					for (var i=0; i<dataSet.getRowCnt(); i++) {
-						var repositoryPath = dataSet.getValue(i, "REPOSITORY_PATH");
-						var originalName = dataSet.getValue(i, "ORIGINAL_NAME");
-						var newName = dataSet.getValue(i, "NEW_NAME");
-						var fileIcon = dataSet.getValue(i, "FILE_ICON");
-						var fileSize = dataSet.getValue(i, "FILE_SIZE")/1024;
-
-						attchedFileContextMenu.push({
-							name:originalName+" ("+commonJs.getNumberMask(fileSize, "0,0")+") KB",
-							title:originalName,
-							img:fileIcon,
-							repositoryPath:repositoryPath,
-							originalName:originalName,
-							newName:newName,
-							fun:function() {
-								var index = $(this).index();
-
-								downloadFile({
-									repositoryPath:attchedFileContextMenu[index].repositoryPath,
-									originalName:attchedFileContextMenu[index].originalName,
-									newName:attchedFileContextMenu[index].newName
-								});
-							}
-						});
-					}
-
-					$(img).contextMenu(attchedFileContextMenu, {
-						classPrefix:com.constants.ctxClassPrefixGrid,
-						displayAround:"trigger",
-						position:"bottom",
-						horAdjust:0,
-						verAdjust:2
+					commonJs.doSubmit({
+						form:"fmDefault",
+						action:"/download",
+						data:{
+							repositoryPath:ds.getValue(0, "REPOSITORY_PATH"),
+							originalName:ds.getValue(0, "ORIGINAL_NAME"),
+							newName:ds.getValue(0, "NEW_NAME")
+						}
 					});
 				} else {
 					commonJs.error(result.message);
 				}
-			}
-		});
-	};
-
-	downloadFile = function(param) {
-		commonJs.doSubmit({
-			form:"fmDefault",
-			action:"/download.do",
-			data:{
-				repositoryPath:param.repositoryPath,
-				originalName:param.originalName,
-				newName:param.newName
 			}
 		});
 	};

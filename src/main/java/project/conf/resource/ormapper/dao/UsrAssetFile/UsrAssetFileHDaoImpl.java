@@ -44,7 +44,8 @@ public class UsrAssetFileHDaoImpl extends BaseHDao implements UsrAssetFileDao {
 		int result = 0;
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 
-		queryAdvisor.addWhereClause("asset_id = '"+usrAsset.getAssetId()+"'");
+		queryAdvisor.addWhereClause("asset_id = '"+assetId+"'");
+		deletePhysicalFileByAssetId(assetId);
 		result = deleteWithSQLQuery(queryAdvisor, new UsrAssetFile());
 
 		for (int i=0; i<fileDataSet.getRowCnt(); i++) {
@@ -69,5 +70,28 @@ public class UsrAssetFileHDaoImpl extends BaseHDao implements UsrAssetFileDao {
 		FileUtil.moveFile(fileDataSet);
 
 		return result;
+	}
+
+	public int deleteByAssetId(String assetId) throws Exception {
+		int result = 0;
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("asset_id = '"+assetId+"'");
+		deletePhysicalFileByAssetId(assetId);
+		result = deleteWithSQLQuery(queryAdvisor, new UsrAssetFile());
+
+		return result;
+	}
+
+	public DataSet getAssetFileDataSetByAssetFileId(String assetFileId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("file_id = '"+assetFileId+"'");
+		return selectAllAsDataSet(queryAdvisor, new UsrAssetFile());
+	}
+
+	private void deletePhysicalFileByAssetId(String assetId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("asset_id = '"+assetId+"'");
+		FileUtil.deleteFile(selectAllAsDataSet(queryAdvisor, new UsrAssetFile()));
 	}
 }

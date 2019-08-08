@@ -9,6 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeDao;
+import project.conf.resource.ormapper.dao.UsrAsset.UsrAssetDao;
+import project.conf.resource.ormapper.dao.UsrAssetFile.UsrAssetFileDao;
+import project.conf.resource.ormapper.dto.oracle.SysAssetType;
+import project.conf.resource.ormapper.dto.oracle.UsrAsset;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -18,21 +24,11 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeDao;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dao.UsrAsset.UsrAssetDao;
-import project.conf.resource.ormapper.dto.oracle.SysAssetType;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-import project.conf.resource.ormapper.dto.oracle.SysRepaymentType;
-import project.conf.resource.ormapper.dto.oracle.UsrAsset;
-import project.conf.resource.ormapper.dto.oracle.UsrIncome;
-
 public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 	@Autowired
 	private UsrAssetDao usrAssetDao;
+	@Autowired
+	private UsrAssetFileDao usrAssetFileDao;
 	@Autowired
 	private SysAssetTypeDao sysAssetTypeDao;
 
@@ -72,6 +68,19 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 
 		try {
 			paramEntity.setAjaxResponseDataSet(usrAssetDao.getAssetDataSetByAssetIdForUpdate(assetId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getFile(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String assetFileId = requestDataSet.getValue("assetFileId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrAssetFileDao.getAssetFileDataSetByAssetFileId(assetFileId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -157,15 +166,15 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 		}
 		return paramEntity;
 	}
-/*
+
 	public ParamEntity exeComplete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String incomeIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String assetIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			result = usrAssetDao.exeCompleteByIncomeIds(incomeIds);
+			result = usrAssetDao.exeCompleteByAssetIds(assetIds);
 
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -182,11 +191,11 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String incomeIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String assetIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			result = usrAssetDao.deleteByIncomeIds(incomeIds);
+			result = usrAssetDao.deleteByAssetIds(assetIds);
 
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -205,7 +214,6 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
 		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
-		String orgCategory = CommonUtil.nvl((String)session.getAttribute("OrgCategoryForAdminTool"), (String)session.getAttribute("OrgCategory"));
 		ExportHelper exportHelper;
 		String columnHeader[], fileHeader[];
 		String pageTitle, fileName;
@@ -215,8 +223,8 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 		try {
 			pageTitle = "Other Sales Income List";
 			fileName = "OtherSalesIncomeList";
-			columnHeader = new String[] {"INCOME_DATE", "GROSS_AMT", "GST_AMT", "NET_AMT", "IS_COMPLETED", "DESCRIPTION"};
-			fileHeader = new String[] {"Date", "Gross Sales", "GST", "Net Sales", "Is Completed", "Description"};
+			columnHeader = new String[] {"ASSET_DATE", "GROSS_AMT", "GST_AMT", "NET_AMT", "ASSET_FILE_NAME", "IS_COMPLETED", "DESCRIPTION"};
+			fileHeader = new String[] {"Date", "Gross Amount", "GST", "Net Amount", "Attached File Name", "Is Completed", "Description"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);
 			exportHelper.setPageTitle(pageTitle);
@@ -226,7 +234,6 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 			exportHelper.setPdfWidth(1000);
 
 			queryAdvisor.setObject("orgId", orgId);
-			queryAdvisor.setObject("orgCategory", orgCategory);
 			queryAdvisor.setObject("langCode", (String)session.getAttribute("langCode"));
 			queryAdvisor.setRequestDataSet(requestDataSet);
 			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
@@ -235,7 +242,7 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 				queryAdvisor.setPagination(true);
 			}
 
-			exportHelper.setSourceDataSet(usrAssetDao.getOtherIncomeDataSetByCriteria(queryAdvisor));
+			exportHelper.setSourceDataSet(usrAssetDao.getAssetDataSetByCriteria(queryAdvisor));
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());
@@ -245,5 +252,4 @@ public class Rkm0404BizImpl extends BaseBiz implements Rkm0404Biz {
 		}
 		return paramEntity;
 	}
-*/
 }

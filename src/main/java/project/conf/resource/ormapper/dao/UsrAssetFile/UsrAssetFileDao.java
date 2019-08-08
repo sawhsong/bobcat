@@ -11,4 +11,6 @@ import zebra.data.DataSet;
 public interface UsrAssetFileDao extends IDao {
 	public int insert(UsrAsset usrAsset, DataSet fileDataSet) throws Exception;
 	public int update(String assetId, UsrAsset usrAsset, DataSet fileDataSet) throws Exception;
+	public int deleteByAssetId(String assetId) throws Exception;
+	public DataSet getAssetFileDataSetByAssetFileId(String assetFileId) throws Exception;
 }
