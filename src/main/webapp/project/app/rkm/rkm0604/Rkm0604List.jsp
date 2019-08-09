@@ -101,7 +101,7 @@
 		<caption><mc:msg key="page.com.dataEntry"/></caption>
 		<colgroup>
 			<col width="9%"/>
-			<col width="9%"/>
+			<col width="11%"/>
 			<col width="8%"/>
 			<col width="8%"/>
 			<col width="9%"/>
