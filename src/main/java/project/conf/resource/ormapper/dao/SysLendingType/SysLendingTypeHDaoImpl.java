@@ -52,6 +52,15 @@ public class SysLendingTypeHDaoImpl extends BaseHDao implements SysLendingTypeDa
 		return selectAllAsDataSet(queryAdvisor, new SysLendingType());
 	}
 
+	public SysLendingType getLendingTypeByOrgCategoryLendingType(String orgCategory, String lendingTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("lending_type ='"+lendingTypeCode+"'");
+
+		return (SysLendingType)selectAllToDto(queryAdvisor, new SysLendingType());
+	}
+
 	public SysLendingType getLendingTypeByKeys(String lendingTypeId, String lendingTypeCode) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("lending_type_id = '"+lendingTypeId+"'");

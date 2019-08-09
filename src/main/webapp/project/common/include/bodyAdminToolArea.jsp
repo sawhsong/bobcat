@@ -349,7 +349,7 @@ $(function() {
 		$("#lendingType").selectpicker("refresh");
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getLendingTypeTypeForSelectbox.do",
+			url:"/common/entryTypeSupporter/getLendingTypeForSelectbox.do",
 			dataType:"json",
 			data:{},
 			success:function(data, textStatus) {
@@ -363,8 +363,6 @@ $(function() {
 							$("#lendingType").append("<option value=\""+ds.getValue(i, "LENDING_TYPE")+"\">"+ds.getValue(i, "DESCRIPTION")+"</option>");
 						}
 						$("#lendingType").selectpicker("refresh");
-						lendingTypeMenu = [];
-						setDeLendingTypeContextMenu();
 					}
 				} else {
 					commonJs.error(result.message);

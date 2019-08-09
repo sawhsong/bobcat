@@ -252,6 +252,8 @@
 		       to_char(ufn.end_date, '${dateFormat}') as end_date,
 		       ufn.is_completed,
 		       ufn.description,
+		       (select file_id from usr_finance_file where finance_id = ufn.finance_id) as finance_file_id,
+		       (select original_name from usr_finance_file where finance_id = ufn.finance_id) as finance_file_name,
 		       (select count(*) from usr_finance_file where finance_id = ufn.finance_id) as finance_file_cnt,
 		       ufn.insert_user_id,
 		       to_char(ufn.insert_date, '${dateFormat}') as insert_date,
