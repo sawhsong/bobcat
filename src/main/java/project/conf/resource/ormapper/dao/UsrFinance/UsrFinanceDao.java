@@ -12,15 +12,23 @@ import zebra.data.QueryAdvisor;
 
 public interface UsrFinanceDao extends IDao {
 	public int insert(Dto dto) throws Exception;
+	public int insert(Dto dto, DataSet fileDataSet) throws Exception;
 	public int update(String financeId, Dto dto) throws Exception;
+	public int update(String financeId, Dto dto, DataSet fileDataSet) throws Exception;
 	public int exeCompleteByFinanceIds(String financeIds[]) throws Exception;
 	public int deleteByFinanceIds(String financeIds[]) throws Exception;
+
 	public DataSet getRepaymentSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
-	public DataSet getBorrowingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
-	public DataSet getLendingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getRepaymentDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getRepaymentDataSetByFinanceIdForUpdate(String financeId) throws Exception;
+
+	public DataSet getBorrowingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getBorrowingDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getBorrowingDataSetByFinanceIdForUpdate(String financeId) throws Exception;
+
+	public DataSet getLendingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getLendingDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
-	public DataSet getFinanceDataSetByFinanceIdForUpdate(String financeId) throws Exception;
+	public DataSet getLendingDataSetByFinanceIdForUpdate(String financeId) throws Exception;
+
 	public UsrFinance getFinanceById(String financeId) throws Exception;
 }

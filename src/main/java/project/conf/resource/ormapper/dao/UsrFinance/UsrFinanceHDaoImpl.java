@@ -4,8 +4,11 @@
  *************************************************************************************************/
 package project.conf.resource.ormapper.dao.UsrFinance;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import project.common.extend.BaseHDao;
 import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.UsrFinanceFile.UsrFinanceFileDao;
 import project.conf.resource.ormapper.dto.oracle.UsrFinance;
 import zebra.base.Dto;
 import zebra.data.DataSet;
@@ -13,14 +16,31 @@ import zebra.data.QueryAdvisor;
 import zebra.util.ConfigUtil;
 
 public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
+	@Autowired
+	private UsrFinanceFileDao usrFinanceFileDao;
+
 	public int insert(Dto dto) throws Exception {
 		return insertWithSQLQuery(dto);
+	}
+
+	public int insert(Dto dto, DataSet fileDataSet) throws Exception {
+		insertWithSQLQuery(dto);
+		usrFinanceFileDao.insert((UsrFinance)dto, fileDataSet);
+		return 1;
 	}
 
 	public int update(String financeId, Dto dto) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("finance_id = '"+financeId+"'");
 		return updateWithSQLQuery(queryAdvisor, dto);
+	}
+
+	public int update(String financeId, Dto dto, DataSet fileDataSet) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("finance_id = '"+financeId+"'");
+		updateWithSQLQuery(queryAdvisor, dto);
+		usrFinanceFileDao.update(financeId, (UsrFinance)dto, fileDataSet);
+		return 1;
 	}
 
 	public int exeCompleteByFinanceIds(String financeIds[]) throws Exception {
@@ -49,6 +69,7 @@ public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
 			queryAdvisor = new QueryAdvisor();
 			queryAdvisor.addWhereClause("finance_id = '"+financeIds[i]+"'");
 
+			result += usrFinanceFileDao.deleteByFinanceId(financeIds[i]);
 			result += deleteWithSQLQuery(queryAdvisor, new UsrFinance());
 		}
 
@@ -57,14 +78,6 @@ public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
 
 	public DataSet getRepaymentSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
 		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getRepaymentSummaryDataSet");
-	}
-
-	public DataSet getBorrowingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
-		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getBorrowingSummaryDataSet");
-	}
-
-	public DataSet getLendingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
-		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getLendingSummaryDataSet");
 	}
 
 	public DataSet getRepaymentDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
@@ -88,6 +101,21 @@ public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
 		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getRepaymentDataSetByCriteria");
 	}
 
+	public DataSet getRepaymentDataSetByFinanceIdForUpdate(String financeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+
+		queryAdvisor.addVariable("dateFormat", dateFormat);
+		queryAdvisor.addWhereClause("ufn.finance_id = '"+financeId+"'");
+		queryAdvisor.addOrderByClause("ufn.finance_date desc, srt.sort_order");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getRepaymentDataSetByFinanceIdForUpdate");
+	}
+
+	public DataSet getBorrowingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getBorrowingSummaryDataSet");
+	}
+
 	public DataSet getBorrowingDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String orgId = (String)queryAdvisor.getObject("orgId");
@@ -107,6 +135,21 @@ public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
 		queryAdvisor.addOrderByClause("ufn.finance_date desc, sbt.sort_order");
 
 		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getBorrowingDataSetByCriteria");
+	}
+
+	public DataSet getBorrowingDataSetByFinanceIdForUpdate(String financeId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+
+		queryAdvisor.addVariable("dateFormat", dateFormat);
+		queryAdvisor.addWhereClause("ufn.finance_id = '"+financeId+"'");
+		queryAdvisor.addOrderByClause("ufn.finance_date desc, sbt.sort_order");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getBorrowingDataSetByFinanceIdForUpdate");
+	}
+
+	public DataSet getLendingSummaryDataSet(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getLendingSummaryDataSet");
 	}
 
 	public DataSet getLendingDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
@@ -130,15 +173,15 @@ public class UsrFinanceHDaoImpl extends BaseHDao implements UsrFinanceDao {
 		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getLendingDataSetByCriteria");
 	}
 
-	public DataSet getFinanceDataSetByFinanceIdForUpdate(String financeId) throws Exception {
+	public DataSet getLendingDataSetByFinanceIdForUpdate(String financeId) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addWhereClause("ufn.finance_id = '"+financeId+"'");
-		queryAdvisor.addOrderByClause("ufn.finance_date desc, srt.sort_order");
+		queryAdvisor.addOrderByClause("ufn.finance_date desc, slt.sort_order");
 
-		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getFinanceDataSetByFinanceIdForUpdate");
+		return selectAsDataSet(queryAdvisor, "query.UsrFinance.getLendingDataSetByFinanceIdForUpdate");
 	}
 
 	public UsrFinance getFinanceById(String financeId) throws Exception {

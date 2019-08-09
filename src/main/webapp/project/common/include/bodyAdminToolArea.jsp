@@ -189,7 +189,6 @@ $(function() {
 							$("#assetType").append("<option value=\""+ds.getValue(i, "ASSET_TYPE")+"\">"+ds.getValue(i, "DESCRIPTION")+"</option>");
 						}
 						$("#assetType").selectpicker("refresh");
-						assetTypeMenu = [];
 					}
 				} else {
 					commonJs.error(result.message);
@@ -248,7 +247,6 @@ $(function() {
 							$("#repaymentType").append("<option value=\""+ds.getValue(i, "REPAYMENT_TYPE")+"\">"+ds.getValue(i, "DESCRIPTION")+"</option>");
 						}
 						$("#repaymentType").selectpicker("refresh");
-						repaymentTypeMenu = [];
 					}
 				} else {
 					commonJs.error(result.message);
@@ -307,8 +305,6 @@ $(function() {
 							$("#borrowingType").append("<option value=\""+ds.getValue(i, "BORROWING_TYPE")+"\">"+ds.getValue(i, "DESCRIPTION")+"</option>");
 						}
 						$("#borrowingType").selectpicker("refresh");
-						borrowingTypeMenu = [];
-						setDeBorrowingTypeContextMenu();
 					}
 				} else {
 					commonJs.error(result.message);

@@ -65,7 +65,7 @@ public class Rkm0602BizImpl extends BaseBiz implements Rkm0602Biz {
 		String financeId = requestDataSet.getValue("financeId");
 
 		try {
-			paramEntity.setAjaxResponseDataSet(usrFinanceDao.getFinanceDataSetByFinanceIdForUpdate(financeId));
+			paramEntity.setAjaxResponseDataSet(usrFinanceDao.getRepaymentDataSetByFinanceIdForUpdate(financeId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

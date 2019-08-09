@@ -15,6 +15,7 @@ public interface SysBorrowingTypeDao extends IDao {
 	public int deleteByOrgCategory(String orgCategory) throws Exception;
 	public DataSet getBorrowingTypeDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getBorrowingTypeDataSetByOrgCategory(String orgCategory) throws Exception;
+	public SysBorrowingType getBorrowingTypeByOrgCategoryBorrowingType(String orgCategory, String borrowingTypeCode) throws Exception;
 	public SysBorrowingType getBorrowingTypeByKeys(String borrowingTypeId, String borrowingTypeCode) throws Exception;
 	public DataSet getMaxSortOrderDataSetByOrgCategory(String orgCategory) throws Exception;
 }

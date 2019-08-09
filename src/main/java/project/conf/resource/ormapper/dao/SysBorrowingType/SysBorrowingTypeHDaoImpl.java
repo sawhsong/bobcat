@@ -52,6 +52,15 @@ public class SysBorrowingTypeHDaoImpl extends BaseHDao implements SysBorrowingTy
 		return selectAllAsDataSet(queryAdvisor, new SysBorrowingType());
 	}
 
+	public SysBorrowingType getBorrowingTypeByOrgCategoryBorrowingType(String orgCategory, String borrowingTypeCode) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+
+		queryAdvisor.addWhereClause("org_category = '"+orgCategory+"'");
+		queryAdvisor.addWhereClause("borrowing_type ='"+borrowingTypeCode+"'");
+
+		return (SysBorrowingType)selectAllToDto(queryAdvisor, new SysBorrowingType());
+	}
+
 	public SysBorrowingType getBorrowingTypeByKeys(String borrowingTypeId, String borrowingTypeCode) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("borrowing_type_id = '"+borrowingTypeId+"'");

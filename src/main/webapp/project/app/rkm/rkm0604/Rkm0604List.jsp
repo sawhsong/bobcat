@@ -57,7 +57,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
+			<ui:button id="btnComplete" caption="button.com.complete" iconClass="fa-check-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -88,7 +88,7 @@
 				</div>
 			</td>
 			<td class="tdSearch">
-				<label for="borrowingType" class="lblEn hor mandatory"><mc:msg key="rkm0604.search.borrowingType"/></label>
+				<label for="borrowingType" class="lblEn hor"><mc:msg key="rkm0604.search.borrowingType"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:deSelect name="borrowingType" codeType="BorrowingType" caption="==Select==" orgCategory="<%=orgCategory%>" selectedValue="<%=selectedBorrowingType%>"/>
 				</div>
@@ -102,7 +102,6 @@
 		<colgroup>
 			<col width="9%"/>
 			<col width="9%"/>
-			<col width="9%"/>
 			<col width="8%"/>
 			<col width="8%"/>
 			<col width="9%"/>
@@ -113,7 +112,6 @@
 		</colgroup>
 		<tr>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0604.de.date"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0604.de.borrowingType"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0604.de.borrowingType"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0604.de.principalAmt"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0604.de.interestPercentage"/></th>
@@ -126,11 +124,11 @@
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
+					<ui:hidden name="deFinanceId"/>
 					<ui:text name="deDate" className="ct hor" style="width:100px" checkName="rkm0604.de.date" options="mandatory" option="date"/>
 					<ui:icon id="icnDataEntryDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry Ct"><ui:button id="btnDeBorrowingType" caption="rkm0604.de.borrowingType" iconClass="fa-caret-down"/></td>
 			<td class="tdDataEntry Ct"><ui:deSelect name="deBorrowingType" codeType="BorrowingType" caption="==Select==" orgCategory="<%=orgCategory%>" options="mandatory"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="dePrincipalAmt" className="rt numeric" checkName="rkm0604.de.principalAmt" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deInterestPercentage" className="rt numeric" checkName="rkm0604.de.interestPercentage" options="mandatory" option="numeric"/></td>
@@ -165,17 +163,17 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="6%"/>
+			<col width="12%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="5%"/>
 			<col width="5%"/>
 			<col width="12%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="5%"/>
-			<col width="5%"/>
-			<col width="5%"/>
 			<col width="*"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="3%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
@@ -189,7 +187,7 @@
 				<th class="thGrid"><mc:msg key="rkm0604.grid.fileCnt"/></th>
 				<th class="thGrid"><mc:msg key="rkm0604.grid.remark"/></th>
 				<th class="thGrid"><mc:msg key="rkm0604.grid.isCompleted"/></th>
-				<th class="thGrid"><mc:msg key="rkm0604.grid.updateDate"/></th>
+				<th class="thGrid"><mc:msg key="page.com.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
