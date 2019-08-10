@@ -136,9 +136,13 @@ public class Rkm0802BizImpl extends BaseBiz implements Rkm0802Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String chkForDel = requestDataSet.getValue("chkForDel");
 		String employeeIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String employeeId = requestDataSet.getValue("employeeId");
 		int result = 0;
 
 		try {
+			if (CommonUtil.isNotBlank(employeeId)) {
+				employeeIds = new String[] {employeeId};
+			}
 			result = usrEmployeeDao.delete(employeeIds);
 
 			if (result <= 0) {

@@ -6,7 +6,6 @@ package project.conf.resource.ormapper.dao.UsrEmployee;
 
 import project.common.extend.BaseHDao;
 import project.conf.resource.ormapper.dto.oracle.UsrEmployee;
-import project.conf.resource.ormapper.dto.oracle.UsrIncome;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;

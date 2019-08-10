@@ -48,10 +48,10 @@ $(function() {
 	doProcess = function(param) {
 		var confirmMessage = "", url = "";
 
-		if (param.mode = "Save") {
+		if (param.mode == "Save") {
 			confirmMessage = com.message.Q001;
 			url = "exeSave";
-		} else if (param.mode = "Delete") {
+		} else if (param.mode == "Delete") {
 			confirmMessage = com.message.Q002;
 			url = "exeDelete";
 		}
