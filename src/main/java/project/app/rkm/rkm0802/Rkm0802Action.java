@@ -27,11 +27,6 @@ public class Rkm0802Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
-	}
-
 	public String getInsert() throws Exception {
 		biz.getInsert(paramEntity);
 		return "insert";
@@ -42,18 +37,9 @@ public class Rkm0802Action extends BaseAction {
 		return "update";
 	}
 
-	public String exeInsert() throws Exception {
+	public String exeSave() throws Exception {
 		try {
-			biz.exeInsert(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String exeUpdate() throws Exception {
-		try {
-			biz.exeUpdate(paramEntity);
+			biz.exeSave(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

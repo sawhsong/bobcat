@@ -72,26 +72,12 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="16%"/>
-			<col width="16%"/>
 			<col width="20%"/>
 			<col width="20%"/>
-			<col width="14%"/>
+			<col width="16%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<td class="tdSearch">
-				<label for="financialYear" class="lblEn hor mandatory"><mc:msg key="rkm0802.search.financialYear"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:deSelect name="financialYear" codeType="FinancialYear" selectedValue="<%=selectedFinancialYear%>"/>
-				</div>
-			</td>
-			<td class="tdSearch">
-				<label for="quarterName" class="lblEn hor mandatory"><mc:msg key="rkm0802.search.quarter"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:ccselect name="quarterName" codeType="QUARTER_NAME" selectedValue="<%=selectedQuarterName%>"/>
-				</div>
-			</td>
 			<td class="tdSearch">
 				<label for="surname" class="lblEn hor"><mc:msg key="rkm0802.search.surname"/></label>
 				<ui:text name="surname" className="hor" style="width:200px;"/>
@@ -115,59 +101,7 @@
 		</tr>
 	</table>
 </div>
-<div id="divInformArea">
-	<table class="tblDataEntry">
-		<caption><mc:msg key="page.com.dataEntry"/></caption>
-		<colgroup>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="7%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="9%"/>
-			<col width="*"/>
-			<col width="3%"/>
-		</colgroup>
-		<tr>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0802.de.surname"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0802.de.givenName"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0802.de.tfn"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0802.de.dob"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0802.de.startDate"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0802.de.endDate"/></th>
-			<th class="thDataEntry"><mc:msg key="rkm0802.de.visaType"/></th>
-			<th class="thDataEntry"><mc:msg key="rkm0802.de.address"/></th>
-			<th class="thDataEntry"><mc:msg key="rkm0802.de.action"/></th>
-		</tr>
-		<tr>
-			<td class="tdDataEntry Ct"><ui:text name="deSurname" checkName="rkm0802.de.surname" options="mandatory"/></td>
-			<td class="tdDataEntry Ct"><ui:text name="deGivenName" checkName="rkm0802.de.givenName" options="mandatory"/></td>
-			<td class="tdDataEntry Ct"><ui:text name="deTfn" className="ct numeric" checkName="rkm0802.de.tfn" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry Ct">
-				<div style="display:inline-block;">
-					<ui:text name="deDateOfBirth" className="ct hor" style="width:100px" checkName="rkm0802.de.dob" option="date"/>
-					<ui:icon id="icnDeDateOfBirth" className="fa-calendar hor"/>
-				</div>
-			</td>
-			<td class="tdDataEntry Ct">
-				<div style="display:inline-block;">
-					<ui:text name="deStartDate" className="ct hor" style="width:100px" checkName="rkm0802.de.startDate" options="mandatory" option="date"/>
-					<ui:icon id="icnDeStartDate" className="fa-calendar hor"/>
-				</div>
-			</td>
-			<td class="tdDataEntry Ct">
-				<div style="display:inline-block;">
-					<ui:text name="deEndDate" className="ct hor" style="width:100px" checkName="rkm0802.de.endDate" options="mandatory" option="date"/>
-					<ui:icon id="icnDeEndDate" className="fa-calendar hor"/>
-				</div>
-			</td>
-			<td class="tdDataEntry Ct"><ui:ccselect name="deVisaType" codeType="VISA_TYPE" caption="==Select=="/></td>
-			<td class="tdDataEntry Ct"><ui:text name="deAddress"/></td>
-			<td class="tdDataEntry Ct"><ui:icon id="icnDataEntryAction" className="fa-tasks fa-lg" script="doDataEntryAction(this)"/></td>
-		</tr>
-	</table>
-</div>
+<div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -184,14 +118,14 @@
 			<col width="9%"/>
 			<col width="9%"/>
 			<col width="6%"/>
+			<col width="6%"/>
+			<col width="6%"/>
 			<col width="7%"/>
+			<col width="6%"/>
+			<col width="6%"/>
+			<col width="20%"/>
 			<col width="*"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="5%"/>
-			<col width="7%"/>
+			<col width="4%"/>
 			<col width="3%"/>
 		</colgroup>
 		<thead>
@@ -201,13 +135,13 @@
 				<th class="thGrid"><mc:msg key="rkm0802.grid.givenName"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.tfn"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.dob"/></th>
-				<th class="thGrid"><mc:msg key="rkm0802.grid.address"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.wageType"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.visaType"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.startDate"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.endDate"/></th>
+				<th class="thGrid"><mc:msg key="rkm0802.grid.address"/></th>
+				<th class="thGrid"><mc:msg key="rkm0802.grid.description"/></th>
 				<th class="thGrid"><mc:msg key="rkm0802.grid.isActive"/></th>
-				<th class="thGrid"><mc:msg key="rkm0802.grid.updateDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

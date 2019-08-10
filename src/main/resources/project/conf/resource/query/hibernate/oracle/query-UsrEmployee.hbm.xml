@@ -78,6 +78,33 @@
 	]]>
 	</sql-query>
 
+	<sql-query name="query.UsrEmployee.getEmployeeDataSetByEmployeeId">
+	<![CDATA[
+		select ump.employee_id,
+		       ump.org_id,
+		       ump.visa_type,
+		       ump.wage_type,
+		       nvl(ump.hourly_rate, 0) as hourly_rate,
+		       ump.surname,
+		       ump.given_name,
+		       ump.tfn,
+		       to_char(ump.date_of_birth, '${dateFormat}') as date_of_birth,
+		       ump.address,
+		       to_char(ump.start_date, '${dateFormat}') as start_date,
+		       to_char(ump.end_date, '${dateFormat}') as end_date,
+		       ump.description,
+		       ump.is_active,
+		       ump.insert_user_id,
+		       to_char(ump.insert_date, '${dateFormat}') as insert_date,
+		       ump.update_user_id,
+		       to_char(nvl(ump.update_date, ump.insert_date), '${dateFormat}') as update_date
+		  from usr_employee ump
+		${where_cluase}
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
 	<sql-query name="query.UsrEmployee.getEmployeeSurnameDataSetForAutoCompletion">
 	<![CDATA[
 		select distinct surname

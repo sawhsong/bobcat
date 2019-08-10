@@ -26,16 +26,8 @@ $(function() {
 		commonJs.clearSearchCriteria();
 	});
 
-	$("#icnDeDateOfBirth").click(function(event) {
-		commonJs.openCalendar(event, "deDateOfBirth");
-	});
-
-	$("#icnDeStartDate").click(function(event) {
-		commonJs.openCalendar(event, "deStartDate");
-	});
-
-	$("#icnDeEndDate").click(function(event) {
-		commonJs.openCalendar(event, "deEndDate");
+	$("#icnCheck").click(function(event) {
+		commonJs.toggleCheckboxes("chkForDel");
 	});
 
 	$("#financialYear").change(function() {
@@ -54,26 +46,11 @@ $(function() {
 		doSearch();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
+		var element = event.target;
 		if (event.which == 13) {
-			var element = event.target;
 		}
 	});
-
-	setDataEntryActionButtonContextMenu = function() {
-		ctxMenu.dataEntryAction[0].fun = function() {};
-		ctxMenu.dataEntryAction[1].fun = function() {};
-		ctxMenu.dataEntryAction[2].fun = function() {};
-
-		$("#icnDataEntryAction").contextMenu(ctxMenu.dataEntryAction, {
-			classPrefix:com.constants.ctxClassPrefixGrid,
-			effectDuration:300,
-			borderRadius:"bottom 4px",
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0
-		});
-	};
 
 	/*!
 	 * process
@@ -96,7 +73,7 @@ $(function() {
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -118,22 +95,22 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAncSurname = new UiAnchor();
-				uiAncSurname.setText(ds.getValue(i, "SURNAME")).setScript("getDetail('"+ds.getValue(i, "EMPLOYEE_ID")+"')");
+				uiAncSurname.setText(ds.getValue(i, "SURNAME")).setScript("getUpdate('"+ds.getValue(i, "EMPLOYEE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncSurname));
 
 				var uiAncGivenName = new UiAnchor();
-				uiAncGivenName.setText(ds.getValue(i, "GIVEN_NAME")).setScript("getDetail('"+ds.getValue(i, "EMPLOYEE_ID")+"')");
+				uiAncGivenName.setText(ds.getValue(i, "GIVEN_NAME")).setScript("getUpdate('"+ds.getValue(i, "EMPLOYEE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncGivenName));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "TFN"), "??? ??? ???")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "DATE_OF_BIRTH")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ADDRESS")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "WAGE_TYPE_DESC")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "VISA_TYPE_DESC")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "START_DATE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "END_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ADDRESS"), 50)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 40)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_ACTIVE")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "UPDATE_DATE")));
 
 				var iconAction = new UiIcon();
 				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("employeeId:"+ds.getValue(i, "EMPLOYEE_ID")).setScript("doAction(this)");
@@ -167,36 +144,30 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	getUpdate = function(employeeId) {
+		openPopup({mode:"Update", employeeId:employeeId});
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+		var url = "", header = com.header.popHeaderEdit;
+		var width = 800, height = 580;
 
-		if (param.mode == "Detail") {
-			url = "/rkm/0802/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0802/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/rkm/0802/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+		if (param.mode == "New") {
+			url = "/rkm/0802/getInsert";
+		} else if (param.mode == "Update") {
+			url = "/rkm/0802/getUpdate";
 		}
 
 		var popParam = {
-			popupId:"notice"+param.mode,
+			popupId:"employee"+param.mode,
 			url:url,
 			paramData:{
 				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
+				employeeId:param.employeeId
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:width,
 			height:height
 		};
 
@@ -215,7 +186,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0802/exeDelete.do",
+						url:"/rkm/0802/exeDelete",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -250,22 +221,20 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var employeeId = $(img).attr("employeeId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == employeeId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.commonSimpleAction[0].fun = function() {getUpdate(employeeId);};
+		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -288,26 +257,25 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0802/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						url:"/rkm/0802/exeExport",
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
 				callback:function() {
 				}
-			}],
-			blind:true
+			}]
 		});
 	};
 
@@ -315,12 +283,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setDataEntryActionButtonContextMenu();
-
-		commonJs.setFieldDateMask("deDateOfBirth");
-		commonJs.setFieldDateMask("deStartDate");
-		commonJs.setFieldDateMask("deEndDate");
-		$("#deTfn").mask("999 999 999", {placeholder:"_"});
+		commonJs.setExportButtonContextMenu($("#btnExport"));
 
 		commonJs.setAutoComplete($("#surname"), {
 			method:"getEmployeeSurname",
