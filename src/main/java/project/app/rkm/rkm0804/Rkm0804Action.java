@@ -36,33 +36,27 @@ public class Rkm0804Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
-	}
-
-	public String getInsert() throws Exception {
-		biz.getInsert(paramEntity);
-		return "insert";
-	}
-
-	public String getUpdate() throws Exception {
-		biz.getUpdate(paramEntity);
-		return "update";
-	}
-
-	public String exeInsert() throws Exception {
+	public String getEdit() throws Exception {
 		try {
-			biz.exeInsert(paramEntity);
+			biz.getEdit(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
 
-	public String exeUpdate() throws Exception {
+	public String calculateDataEntry() throws Exception {
 		try {
-			biz.exeUpdate(paramEntity);
+			biz.calculateDataEntry(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String exeSave() throws Exception {
+		try {
+			biz.exeSave(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

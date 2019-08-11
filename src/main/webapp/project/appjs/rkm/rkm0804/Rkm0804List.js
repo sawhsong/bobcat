@@ -3,17 +3,13 @@
  * - Rkm0804List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
-var popup = null;
+var numberFormat = "#,##0.00";
 var widthEmpListDiv, widthWageListDiv, empListWidthAdjust, wageListWidthAdjust;
 
 $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
-	});
-
 	$("#btnDelete").click(function(event) {
 		doDelete();
 	});
@@ -24,6 +20,11 @@ $(function() {
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
+		refreshDataEntry();
+	});
+
+	$("#icnCheck").click(function(event) {
+		commonJs.toggleCheckboxes("chkForDel");
 	});
 
 	$("#icnDeStartDate").click(function(event) {
@@ -46,9 +47,19 @@ $(function() {
 		doSearch();
 	});
 
-	$(document).keypress(function(event) {
+	$(document).keyup(function(event) {
+		var element = event.target;
 		if (event.which == 13) {
-			var element = event.target;
+			if ($(element).attr("name") == "deRemark") {
+				doSave();
+			}
+		}
+		onEditDataEntry($(element));
+	});
+
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
 		}
 	});
 
@@ -73,9 +84,11 @@ $(function() {
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("tblEmpList");
 
+		refreshDataEntry();
+
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0804/getEmployeeList.do",
+				url:"/rkm/0804/getEmployeeList",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -88,7 +101,7 @@ $(function() {
 					}
 				}
 			});
-		}, 500);
+		}, 400);
 
 		setSummaryDataForAdminTool();
 	};
@@ -111,6 +124,8 @@ $(function() {
 				netTotal += parseFloat(ds.getValue(i, "NET_WAGE"));
 				superTotal += parseFloat(ds.getValue(i, "SUPER_AMT"));
 
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(new UiRadio().setName("rdoEmployee").setValue(ds.getValue(i, "EMPLOYEE_ID")).setScript("getWageList('"+$("#financialYear").val()+"', '"+$("#quarterName").val()+"', '"+ds.getValue(i, "EMPLOYEE_ID")+"')")));
+
 				var uiAncSurname = new UiAnchor();
 				uiAncSurname.setText(ds.getValue(i, "SURNAME")).setScript("getWageList('"+$("#financialYear").val()+"', '"+$("#quarterName").val()+"', '"+ds.getValue(i, "EMPLOYEE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncSurname));
@@ -119,26 +134,27 @@ $(function() {
 				uiAncGivenName.setText(ds.getValue(i, "GIVEN_NAME")).setScript("getWageList('"+$("#financialYear").val()+"', '"+$("#quarterName").val()+"', '"+ds.getValue(i, "EMPLOYEE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncGivenName));
 
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_WAGE"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "TAX"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_WAGE"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "SUPER_AMT"), "#,###.##")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_WAGE"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "TAX"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_WAGE"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "SUPER_AMT"), numberFormat)));
 
 				html += gridTr.toHtmlString();
 			}
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:6").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(grossTotal, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(taxTotal, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(netTotal, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(superTotal, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(grossTotal, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(taxTotal, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(netTotal, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(superTotal, numberFormat)));
 
 		totHtml = totGridTr.toHtmlString();
 
@@ -162,9 +178,17 @@ $(function() {
 	getWageList = function(financialYear, quarterName, employeeId) {
 		commonJs.showProcMessageOnElement("tblWageList");
 
+		$("input[name=rdoEmployee]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == employeeId) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
+
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0804/getWageList.do",
+				url:"/rkm/0804/getWageList",
 				dataType:"json",
 				data:{
 					financialYear:financialYear,
@@ -202,17 +226,27 @@ $(function() {
 				netTotal += parseFloat(ds.getValue(i, "NET_WAGE"));
 				superTotal += parseFloat(ds.getValue(i, "SUPER_AMT"));
 
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "START_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "END_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "HOURLY_RATE"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "HOUR_WORKED"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_WAGE"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "TAX"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_WAGE"), "#,###.##")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "SUPER_AMT"), "#,###.##")));
+				var uiChk = new UiCheckbox();
+				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "WAGE_ID"));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
+
+				var uiAncStartDate = new UiAnchor();
+				uiAncStartDate.setText(ds.getValue(i, "START_DATE")).setScript("getEdit('"+ds.getValue(i, "WAGE_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncStartDate));
+
+				var uiAncEndDate = new UiAnchor();
+				uiAncEndDate.setText(ds.getValue(i, "END_DATE")).setScript("getEdit('"+ds.getValue(i, "WAGE_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAncEndDate));
+
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "HOURLY_RATE"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "HOUR_WORKED"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GROSS_WAGE"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "TAX"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_WAGE"), numberFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "SUPER_AMT"), numberFormat)));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("employeeId:"+ds.getValue(i, "EMPLOYEE_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("wageId:"+ds.getValue(i, "WAGE_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -220,18 +254,19 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
+		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct").setText(com.caption.total));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(hourWorked, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(hourWorked, numberFormat)));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(grossTotal, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(taxTotal, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(netTotal, "#,###.##")));
-		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(superTotal, "#,###.##")));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(grossTotal, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(taxTotal, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(netTotal, numberFormat)));
+		totGridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(superTotal, numberFormat)));
 		totGridTr.addChild(new UiGridTd().addClassName("Ct"));
 
 		totHtml = totGridTr.toHtmlString();
@@ -250,61 +285,98 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.dataEntryListAction);
+			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
 		commonJs.hideProcMessageOnElement("tblWageList");
 	};
 
-	getDetail = function(articleId) {
-		openPopup({mode:"Detail", articleId:articleId});
+	onEditDataEntry = function(jqObj) {
+		var name = $(jqObj).attr("name");
+
+		if (name == "deGrossWage" && $(jqObj).val() > 0) {
+			var selectedEmployeeId = commonJs.getCheckedValueFromRadio("rdoEmployee");
+
+			if (commonJs.isEmpty(selectedEmployeeId)) {
+				commonJs.error(rkm.rkm0804.message.noEmployeeSelected);
+				return;
+			}
+
+			commonJs.ajaxSubmit({
+				url:"/rkm/0804/calculateDataEntry",
+				dataType:"json",
+				data:{
+					financialYear:$("#financialYear").val(),
+					employeeId:commonJs.getCheckedValueFromRadio("rdoEmployee"),
+					hourlyRate:$("#deHourlyRate").val(),
+					hourlyWorked:$("#deHoursWorked").val(),
+					grossWage:$("#deGrossWage").val()
+				},
+				success:function(data, textStatus) {
+					var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+					if (result.isSuccess == true || result.isSuccess == "true") {
+						var ds = result.dataSet;
+						$("#deTax").val(ds.getValue(0, "tax"));
+						$("#deNetWage").val(ds.getValue(0, "netWage"));
+						$("#deSuper").val(ds.getValue(0, "super"));
+					} else {
+						commonJs.error(result.message);
+					}
+				}
+			});
+		}
 	};
 
-	openPopup = function(param) {
-		var url = "", header = "";
-		var height = 510;
+	getEdit = function(wageId) {
+		$("input:checkbox[name=chkForDel]").each(function(index) {
+			if (!$(this).is(":disabled") && $(this).val() == wageId) {
+				$(this).prop("checked", true);
+			} else {
+				$(this).prop("checked", false);
+			}
+		});
 
-		if (param.mode == "Detail") {
-			url = "/rkm/0804/getDetail.do";
-			header = com.header.popHeaderDetail;
-		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/rkm/0804/getInsert.do";
-			header = com.header.popHeaderEdit;
-		} else if (param.mode == "Edit") {
-			url = "/rkm/0804/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 634;
+		commonJs.ajaxSubmit({
+			url:"/rkm/0804/getEdit",
+			dataType:"json",
+			data:{
+				wageId:wageId
+			},
+			success:function(data, textStatus) {
+				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+				if (result.isSuccess == true || result.isSuccess == "true") {
+					var ds = result.dataSet;
+
+					refreshDataEntry();
+					setDataEntryValues(ds);
+					$("#deGrossWage").focus();
+				} else {
+					commonJs.error(result.message);
+				}
+			}
+		});
+	};
+
+	doSave = function() {
+		var selectedEmployeeId = commonJs.getCheckedValueFromRadio("rdoEmployee");
+		if (commonJs.isEmpty(selectedEmployeeId)) {
+			commonJs.error(rmk.rkm0804.message.noEmployeeSelected);
+			return;
 		}
 
-		var popParam = {
-			popupId:"notice"+param.mode,
-			url:url,
-			paramData:{
-				mode:param.mode,
-				articleId:commonJs.nvl(param.articleId, "")
-			},
-			header:header,
-			blind:true,
-			width:800,
-			height:height
-		};
-
-		popup = commonJs.openPopup(popParam);
-	};
-
-	doDelete = function() {
-		if (commonJs.getCountChecked("chkForDel") == 0) {
-			commonJs.warn(com.message.I902);
+		if (!commonJs.doValidate("fmDefault")) {
 			return;
 		}
 
 		commonJs.confirm({
-			contents:com.message.Q002,
+			contents:com.message.Q001,
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0804/exeDelete.do",
+						url:"/rkm/0804/exeSave",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -319,7 +391,52 @@ $(function() {
 									buttons:[{
 										caption:com.caption.ok,
 										callback:function() {
-											doSearch();
+											getWageList($("#financialYear").val(), $("#quarterName").val(), selectedEmployeeId);
+										}
+									}]
+								});
+							} else {
+								commonJs.error(result.message);
+							}
+						}
+					});
+				}
+			}, {
+				caption:com.caption.no,
+				callback:function() {
+				}
+			}]
+		});
+	};
+
+	doDelete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.confirm({
+			contents:com.message.Q002,
+			buttons:[{
+				caption:com.caption.yes,
+				callback:function() {
+					commonJs.ajaxSubmit({
+						url:"/rkm/0804/exeDelete",
+						dataType:"json",
+						formId:"fmDefault",
+						success:function(data, textStatus) {
+							var result = commonJs.parseAjaxResult(data, textStatus, "json");
+
+							if (result.isSuccess == true || result.isSuccess == "true") {
+								commonJs.openDialog({
+									type:com.message.I000,
+									contents:result.message,
+									blind:true,
+									width:300,
+									buttons:[{
+										caption:com.caption.ok,
+										callback:function() {
+											getWageList($("#financialYear").val(), $("#quarterName").val(), commonJs.getCheckedValueFromRadio("rdoEmployee"));
 										}
 									}]
 								});
@@ -339,28 +456,63 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var articleId = $(img).attr("articleId");
+		var wageId = $(img).attr("wageId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == articleId) {
+			if (!$(this).is(":disabled") && $(this).val() == wageId) {
 				$(this).prop("checked", true);
 			} else {
 				$(this).prop("checked", false);
 			}
 		});
 
-		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
-		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.commonSimpleAction[0].fun = function() {getEdit(wageId);};
+		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.boardAction, {
+		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
 			horAdjust:0,
 			verAdjust:2
 		});
+	};
+
+	doDataEntryAction = function(img) {
+		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
+		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
+		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
+
+		$(img).contextMenu(ctxMenu.dataEntryAction, {
+			classPrefix:com.constants.ctxClassPrefixGrid,
+			displayAround:"trigger",
+			position:"bottom",
+			horAdjust:0,
+			verAdjust:2
+		});
+	};
+
+	refreshDataEntry = function() {
+		$("#divInformArea").find(":input").each(function() {
+			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
+				$(this).attr("checked", false);
+			} else {
+				$(this).val("");
+			}
+		});
+	};
+
+	setDataEntryValues = function(dataSet) {
+		$("#deWageId").val(commonJs.nvl(dataSet.getValue(0, "WAGE_ID"), ""));
+		$("#deStartDate").val(commonJs.nvl(dataSet.getValue(0, "START_DATE"), ""));
+		$("#deEndDate").val(commonJs.nvl(dataSet.getValue(0, "END_DATE"), ""));
+		$("#deHourlyRate").val(commonJs.getNumberMask(dataSet.getValue(0, "HOURLY_RATE"), numberFormat));
+		$("#deHoursWorked").val(commonJs.getNumberMask(dataSet.getValue(0, "HOUR_WORKED"), numberFormat));
+		$("#deGrossWage").val(commonJs.getNumberMask(dataSet.getValue(0, "GROSS_WAGE"), numberFormat));
+		$("#deTax").val(commonJs.getNumberMask(dataSet.getValue(0, "TAX"), numberFormat));
+		$("#deNetWage").val(commonJs.getNumberMask(dataSet.getValue(0, "NET_WAGE"), numberFormat));
+		$("#deSuper").val(commonJs.getNumberMask(dataSet.getValue(0, "SUPER_AMT"), numberFormat));
+		$("#deRemark").val(dataSet.getValue(0, "DESCRIPTION"));
 	};
 
 	exeExport = function(menuObject) {
@@ -377,26 +529,25 @@ $(function() {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
+					param.fileType = menuObject.fileType;
+					param.dataRange = menuObject.dataRange;
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0804/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
+						url:"/rkm/0804/exeExport",
+						paramData:param,
 						header:"exportFile",
 						blind:false,
 						width:200,
 						height:100
 					});
-					setTimeout(function() {popup.close();}, 3000);
 				}
 			}, {
 				caption:com.caption.no,
 				callback:function() {
 				}
-			}],
-			blind:true
+			}]
 		});
 	};
 
@@ -421,6 +572,7 @@ $(function() {
 			},
 			select:function(event, ui) {
 				doSearch();
+				return false;
 			}
 		});
 
@@ -434,6 +586,7 @@ $(function() {
 			},
 			select:function(event, ui) {
 				doSearch();
+				return false;
 			}
 		});
 

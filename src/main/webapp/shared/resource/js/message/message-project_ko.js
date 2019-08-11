@@ -58,3 +58,18 @@ var sba = {
 		}
 	}
 };
+
+/*!
+ * Sub System - rkm
+ */
+var rkm = {
+	rkm0804:{
+		caption:{
+		},
+		header:{
+		},
+		message:{
+			noEmployeeSelected:"선택된 직원 정보가 없습니다."
+		}
+	}
+};

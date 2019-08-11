@@ -16,15 +16,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseHDao;
+import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.UsrEmployee.UsrEmployeeDao;
 import project.conf.resource.ormapper.dto.oracle.SysTaxMaster;
+import project.conf.resource.ormapper.dto.oracle.UsrEmployee;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
+	@Autowired
+	private UsrEmployeeDao usrEmployeeDao;
+
 	public int insert(SysTaxMaster sysTaxMaster) throws Exception {
 		return insertWithSQLQuery(sysTaxMaster);
 	}
@@ -58,7 +65,12 @@ public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
 			} else {
 				sysTaxMaster.setTaxYear(cell.getStringCellValue());	// cell0 : TaxYear
 			}
-			sysTaxMaster.setWageType(row.getCell(1).getStringCellValue());	// cell1 : WageType
+
+			if (CommonUtil.equalsIgnoreCase(row.getCell(1).getStringCellValue(), "Fortnightly") || CommonUtil.equalsIgnoreCase(row.getCell(1).getStringCellValue(), "WTFORTN")) {
+				sysTaxMaster.setWageType("WTFORTN");	// cell1 : WageType
+			} else {
+				sysTaxMaster.setWageType("WTWEEK");	// cell1 : WageType
+			}
 			sysTaxMaster.setGross(row.getCell(2).getNumericCellValue());	// cell2 : Gross
 			sysTaxMaster.setResident(row.getCell(3).getNumericCellValue());	// cell3 : Resident
 			sysTaxMaster.setNonResident(row.getCell(4).getNumericCellValue());	// cell4 : NonResident
@@ -116,6 +128,32 @@ public class SysTaxMasterHDaoImpl extends BaseHDao implements SysTaxMasterDao {
 		queryAdvisor.addOrderByClause("tax.tax_year desc, tax.gross desc, tax.wage_type desc");
 
 		return selectAsDataSet(queryAdvisor, "query.SysTaxMaster.getTaxMasterDataSetByCriteria");
+	}
+
+	public double getTaxAmtByTaxYearEmployeeIdIncome(String financialYear, String employeeId, double income) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		UsrEmployee usrEmployee = new UsrEmployee();
+		DataSet ds = new DataSet();
+		String wageType = "", visaType = "";
+		double result = 0;
+
+		usrEmployee = usrEmployeeDao.getEmployeeById(employeeId);
+		wageType = usrEmployee.getWageType();
+		visaType = usrEmployee.getVisaType();
+
+		queryAdvisor.addWhereClause("tax_year = '"+financialYear+"'");
+		queryAdvisor.addWhereClause("wage_type = '"+wageType+"'");
+		queryAdvisor.addWhereClause("gross between "+(income-1)+" and "+(income+1));
+		queryAdvisor.addOrderByClause("gross asc");
+		ds = selectAllAsDataSet(queryAdvisor, new SysTaxMaster());
+
+		if (CommonUtil.equals(visaType, CommonCodeManager.getCodeByConstants("VISA_TYPE_VTRES"))) {
+			result = CommonUtil.toDouble(ds.getValue("RESIDENT"));
+		} else if (CommonUtil.equals(visaType, CommonCodeManager.getCodeByConstants("VISA_TYPE_VTNRES"))) {
+			result = CommonUtil.toDouble(ds.getValue("NON_RESIDENT"));
+		}
+
+		return result;
 	}
 
 	public SysTaxMaster getTaxMasterById(String taxMasterId) throws Exception {

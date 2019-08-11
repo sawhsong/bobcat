@@ -11,11 +11,9 @@ public interface Rkm0804Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getEmployeeList(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getWageList(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception;
-	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception;
-	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
+	public ParamEntity calculateDataEntry(ParamEntity paramEntity) throws Exception;
+	public ParamEntity exeSave(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception;
 }

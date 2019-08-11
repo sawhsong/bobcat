@@ -16,5 +16,6 @@ public interface SysTaxMasterDao extends IDao {
 	public int delete(String[] taxMasterIds) throws Exception;
 	public int delete(String taxMasterId) throws Exception;
 	public DataSet getTaxMasterDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public double getTaxAmtByTaxYearEmployeeIdIncome(String financialYear, String employeeId, double income) throws Exception;
 	public SysTaxMaster getTaxMasterById(String taxMasterId) throws Exception;
 }

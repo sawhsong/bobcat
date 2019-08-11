@@ -58,7 +58,6 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
@@ -111,46 +110,50 @@
 	<table class="tblDataEntry">
 		<caption><mc:msg key="page.com.dataEntry"/></caption>
 		<colgroup>
-			<col width="10%"/>
-			<col width="10%"/>
-			<col width="13%"/>
-			<col width="13%"/>
-			<col width="13%"/>
-			<col width="12%"/>
-			<col width="12%"/>
-			<col width="12%"/>
+			<col width="9%"/>
+			<col width="9%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="8%"/>
 			<col width="*"/>
+			<col width="4%"/>
 		</colgroup>
 				<tr>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0804.de.startDate"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0804.de.endDate"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0804.de.hourlyRate"/></th>
-			<th class="thDataEntry mandatory"><mc:msg key="rkm0804.de.hoursWorked"/></th>
+			<th class="thDataEntry"><mc:msg key="rkm0804.de.startDate"/></th>
+			<th class="thDataEntry"><mc:msg key="rkm0804.de.endDate"/></th>
+			<th class="thDataEntry"><mc:msg key="rkm0804.de.hourlyRate"/></th>
+			<th class="thDataEntry"><mc:msg key="rkm0804.de.hoursWorked"/></th>
 			<th class="thDataEntry mandatory"><mc:msg key="rkm0804.de.grossWage"/></th>
 			<th class="thDataEntry"><mc:msg key="rkm0804.de.tax"/></th>
 			<th class="thDataEntry"><mc:msg key="rkm0804.de.netWage"/></th>
 			<th class="thDataEntry"><mc:msg key="rkm0804.de.super"/></th>
+			<th class="thDataEntry"><mc:msg key="rkm0804.de.remark"/></th>
 			<th class="thDataEntry"><mc:msg key="rkm0804.de.action"/></th>
 		</tr>
 		<tr>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
-					<ui:text name="deStartDate" className="ct hor" style="width:100px" checkName="rkm0804.de.startDate" options="mandatory" option="date"/>
+					<ui:hidden name="deWageId"/>
+					<ui:text name="deStartDate" className="ct hor" style="width:100px" checkName="rkm0804.de.startDate" option="date"/>
 					<ui:icon id="icnDeStartDate" className="fa-calendar hor"/>
 				</div>
 			</td>
 			<td class="tdDataEntry Ct">
 				<div style="display:inline-block;">
-					<ui:text name="deEndDate" className="ct hor" style="width:100px" checkName="rkm0804.de.endDate" options="mandatory" option="date"/>
+					<ui:text name="deEndDate" className="ct hor" style="width:100px" checkName="rkm0804.de.endDate" option="date"/>
 					<ui:icon id="icnDeEndDate" className="fa-calendar hor"/>
 				</div>
 			</td>
-			<td class="tdDataEntry Ct"><ui:text name="deHourlyRate" className="rt numeric" checkName="rkm0804.de.hourlyRate" options="mandatory" option="numeric"/></td>
-			<td class="tdDataEntry Ct"><ui:text name="deHoursWorked" className="rt numeric" checkName="rkm0804.de.hoursWorked" options="mandatory" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deHourlyRate" className="rt numeric" checkName="rkm0804.de.hourlyRate" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deHoursWorked" className="rt numeric" checkName="rkm0804.de.hoursWorked" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deGrossWage" className="rt numeric" checkName="rkm0804.de.grossWage" options="mandatory" option="numeric"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deTax" className="rt numeric" option="numeric" status="display"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deNetWage" className="rt numeric" option="numeric" status="display"/></td>
 			<td class="tdDataEntry Ct"><ui:text name="deSuper" className="rt numeric" option="numeric" status="display"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deRemark" className="lt"/></td>
 			<td class="tdDataEntry Ct"><ui:icon id="icnDataEntryAction" className="fa-tasks fa-lg" script="doDataEntryAction(this)"/></td>
 		</tr>
 	</table>
@@ -165,18 +168,20 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<div id="divEmpList" style="float:left;width:40%;">
+	<div id="divEmpList" style="float:left;width:42%;">
 		<table id="tblEmpList" class="tblGrid sort autosort">
 			<colgroup>
+				<col width="3%"/>
 				<col width="17%"/>
 				<col width="*"/>
 				<col width="16%"/>
-				<col width="15%"/>
+				<col width="14%"/>
 				<col width="15%"/>
 				<col width="15%"/>
 			</colgroup>
 			<thead>
 				<tr>
+					<th class="thGrid"><ui:icon id="icnRadio" className="fa-dot-circle-o fa-lg"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.surname"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.givenName"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.grossWage"/></th>
@@ -187,7 +192,7 @@
 			</thead>
 			<tbody id="tblEmpListBody">
 				<tr>
-					<td class="tdGridCt" colspan="6"><mc:msg key="I002"/></td>
+					<td class="tdGridCt" colspan="7"><mc:msg key="I002"/></td>
 				</tr>
 			</tbody>
 			<tfoot id="tblEmpListFoot" style="font-weight:bold;">
@@ -195,25 +200,27 @@
 		</table>
 		<div id="divEmpListPagingArea"></div>
 	</div>
-	<div id="divWageList" style="float:right;width:59%;">
+	<div id="divWageList" style="float:right;width:57%;">
 		<table id="tblWageList" class="tblGrid sort autosort">
 			<colgroup>
+				<col width="3%"/>
 				<col width="10%"/>
 				<col width="10%"/>
-				<col width="14%"/>
-				<col width="14%"/>
-				<col width="14%"/>
-				<col width="10%"/>
-				<col width="10%"/>
-				<col width="10%"/>
+				<col width="12%"/>
+				<col width="12%"/>
+				<col width="13%"/>
+				<col width="11%"/>
+				<col width="11%"/>
+				<col width="11%"/>
 				<col width="*"/>
 			</colgroup>
 			<thead>
 				<tr>
+					<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.startDate"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.endDate"/></th>
-					<th class="thGrid"><mc:msg key="rkm0804.grid.hoursWorked"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.hourlyRate"/></th>
+					<th class="thGrid"><mc:msg key="rkm0804.grid.hoursWorked"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.grossWage"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.tax"/></th>
 					<th class="thGrid"><mc:msg key="rkm0804.grid.netWage"/></th>
@@ -223,7 +230,7 @@
 			</thead>
 			<tbody id="tblWageListBody">
 				<tr>
-					<td class="tdGridCt" colspan="9"><mc:msg key="I002"/></td>
+					<td class="tdGridCt" colspan="10"><mc:msg key="I002"/></td>
 				</tr>
 			</tbody>
 			<tfoot id="tblWageListFoot" style="font-weight:bold;">
