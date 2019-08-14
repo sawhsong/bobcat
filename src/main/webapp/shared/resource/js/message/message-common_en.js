@@ -125,6 +125,7 @@ var com = {
 		Q001:"Are you sure to save the data?",
 		Q002:"Are you sure to delete the data?",
 		Q003:"Are you sure to export?",
+		Q004:"Are you sure to proceed?",
 
 		Q901:"Are you sure to create source code?",
 		Q902:"Are you sure to proceed data migration?",

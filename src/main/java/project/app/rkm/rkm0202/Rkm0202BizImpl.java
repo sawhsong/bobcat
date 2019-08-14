@@ -214,7 +214,7 @@ public class Rkm0202BizImpl extends BaseBiz implements Rkm0202Biz {
 		try {
 			pageTitle = "Sales Income List";
 			fileName = "SalesIncomeList";
-			columnHeader = new String[] {"INCOME_DATE", "NON_CASH_AMT", "CASH_AMT", "GROSS_AMT", "GST_FREE_AMT", "GST_AMT", "NET_AMT", "RECORD_KEEPING_TYPE_DESC", "IS_COMPLETED", "DESCRIPTION"};
+			columnHeader = new String[] {"QUARTER_DATE", "NON_CASH_AMT", "CASH_AMT", "GROSS_AMT", "GST_FREE_AMT", "GST_AMT", "NET_AMT", "RECORD_KEEPING_TYPE_DESC", "IS_COMPLETED", "DESCRIPTION"};
 			fileHeader = new String[] {"Date", "Non-Cash", "Cash", "Gross Sales", "GST Free", "GST", "Net Sales", "Record Keeping Type", "Is Completed", "Description"};
 
 			exportHelper = ExportUtil.getExportHelper(fileType);

@@ -88,22 +88,10 @@ $(function() {
 
 		refreshDataEntry();
 
-		setTimeout(function() {
-			commonJs.ajaxSubmit({
-				url:"/rkm/0202/getList",
-				dataType:"json",
-				formId:"fmDefault",
-				success:function(data, textStatus) {
-					var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-					if (result.isSuccess == true || result.isSuccess == "true") {
-						renderDataGridTable(result);
-					} else {
-						commonJs.error(result.message);
-					}
-				}
-			});
-		}, 400);
+		commonJs.doSearch({
+			url:"/rkm/0202/getList",
+			callback:renderDataGridTable
+		});
 
 		setSummaryDataForAdminTool();
 	};
@@ -203,28 +191,23 @@ $(function() {
 	onEditDataEntry = function(jqObj) {
 		var name = $(jqObj).attr("name");
 		if (name == "deNonCash" || name == "deCash" || name == "deGstFree") {
-			commonJs.ajaxSubmit({
+			commonJs.doSimpleProcessNoForm({
 				url:"/rkm/0202/calculateDataEntry",
-				dataType:"json",
 				data:{
 					nonCash:$("#deNonCash").val(),
 					cash:$("#deCash").val(),
 					gstFree:$("#deGstFree").val()
 				},
-				success:function(data, textStatus) {
-					var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-					if (result.isSuccess == true || result.isSuccess == "true") {
-						var ds = result.dataSet;
-						$("#deGrossSales").val(ds.getValue(0, "grossSales"));
-						$("#deGst").val(ds.getValue(0, "gst"));
-						$("#deNetSales").val(ds.getValue(0, "netSales"));
-					} else {
-						commonJs.error(result.message);
-					}
-				}
+				callback:editDataEntryCallback
 			});
 		}
+	};
+
+	editDataEntryCallback = function(result) {
+		var ds = result.dataSet;
+		$("#deGrossSales").val(ds.getValue(0, "grossSales"));
+		$("#deGst").val(ds.getValue(0, "gst"));
+		$("#deNetSales").val(ds.getValue(0, "netSales"));
 	};
 
 	getEdit = function(incomeIdDate) {
@@ -236,26 +219,19 @@ $(function() {
 			}
 		});
 
-		commonJs.ajaxSubmit({
+		commonJs.doSimpleProcess({
 			url:"/rkm/0202/getEdit",
-			dataType:"json",
-			data:{
-				incomeIdDate:incomeIdDate
-			},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					var ds = result.dataSet;
-
-					refreshDataEntry();
-					setDataEntryValues(ds);
-					$("#deNonCash").focus();
-				} else {
-					commonJs.error(result.message);
-				}
-			}
+			data:{incomeIdDate:incomeIdDate},
+			callback:editCallback
 		});
+	};
+
+	editCallback = function(result) {
+		var ds = result.dataSet;
+
+		refreshDataEntry();
+		setDataEntryValues(ds);
+		$("#deNonCash").focus();
 	};
 
 	doSave = function() {
@@ -263,43 +239,10 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q001,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeSave",
-						dataType:"json",
-						formId:"fmDefault",
-						success:function(data, textStatus) {
-							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-							if (result.isSuccess == true || result.isSuccess == "true") {
-								commonJs.openDialog({
-									type:com.message.I000,
-									contents:result.message,
-									blind:true,
-									width:300,
-									buttons:[{
-										caption:com.caption.ok,
-										callback:function() {
-											doSearch();
-										}
-									}]
-								});
-							} else {
-								commonJs.error(result.message);
-							}
-						}
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doSave({
+			url:"/rkm/0202/exeSave",
+			showPostMessage:true,
+			callback:doSearch
 		});
 	};
 
@@ -309,43 +252,11 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q002,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeComplete",
-						dataType:"json",
-						formId:"fmDefault",
-						success:function(data, textStatus) {
-							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-							if (result.isSuccess == true || result.isSuccess == "true") {
-								commonJs.openDialog({
-									type:com.message.I000,
-									contents:result.message,
-									blind:true,
-									width:300,
-									buttons:[{
-										caption:com.caption.ok,
-										callback:function() {
-											doSearch();
-										}
-									}]
-								});
-							} else {
-								commonJs.error(result.message);
-							}
-						}
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doProcess({
+			url:"/rkm/0202/exeComplete",
+			confirmMessage:com.message.Q004,
+			showPostMessage:true,
+			callback:doSearch
 		});
 	};
 
@@ -355,43 +266,10 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q002,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.ajaxSubmit({
-						url:"/rkm/0202/exeDelete",
-						dataType:"json",
-						formId:"fmDefault",
-						success:function(data, textStatus) {
-							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-							if (result.isSuccess == true || result.isSuccess == "true") {
-								commonJs.openDialog({
-									type:com.message.I000,
-									contents:result.message,
-									blind:true,
-									width:300,
-									buttons:[{
-										caption:com.caption.ok,
-										callback:function() {
-											doSearch();
-										}
-									}]
-								});
-							} else {
-								commonJs.error(result.message);
-							}
-						}
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doSave({
+			url:"/rkm/0202/exeDelete",
+			showPostMessage:true,
+			callback:doSearch
 		});
 	};
 
@@ -460,38 +338,15 @@ $(function() {
 	};
 
 	exeExport = function(menuObject) {
-		$("[name=fileType]").remove();
-		$("[name=dataRange]").remove();
-
 		if (searchResultDataCount <= 0) {
 			commonJs.warn(com.message.I001);
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q003,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					var param = commonJs.serialiseObject($("#divSearchCriteriaArea"));
-					param.fileType = menuObject.fileType;
-					param.dataRange = menuObject.dataRange;
-
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/rkm/0202/exeExport",
-						paramData:param,
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}]
+		commonJs.doExport({
+			url:"/rkm/0202/exeExport",
+			data:commonJs.serialiseObject($("#divSearchCriteriaArea")),
+			menuObject:menuObject
 		});
 	};
 	/*!
