@@ -266,7 +266,7 @@ $(function() {
 			return;
 		}
 
-		commonJs.doSave({
+		commonJs.doDelete({
 			url:"/rkm/0202/exeDelete",
 			showPostMessage:true,
 			callback:doSearch
