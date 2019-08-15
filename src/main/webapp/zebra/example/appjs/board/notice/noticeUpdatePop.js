@@ -16,6 +16,7 @@ $(function() {
 							url:"/zebra/board/notice/exeUpdate",
 							dataType:"json",
 							formId:"fmDefault",
+							data:{articleId:articleId},
 							success:function(data, textStatus) {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
 
