@@ -191,13 +191,14 @@ $(function() {
 	onEditDataEntry = function(jqObj) {
 		var name = $(jqObj).attr("name");
 		if (name == "deNonCash" || name == "deCash" || name == "deGstFree") {
-			commonJs.doSimpleProcessNoForm({
+			commonJs.doSimpleProcess({
 				url:"/rkm/0202/calculateDataEntry",
 				data:{
 					nonCash:$("#deNonCash").val(),
 					cash:$("#deCash").val(),
 					gstFree:$("#deGstFree").val()
 				},
+				noForm:true,
 				callback:editDataEntryCallback
 			});
 		}

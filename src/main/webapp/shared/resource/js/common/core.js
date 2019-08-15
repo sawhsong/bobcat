@@ -1233,7 +1233,7 @@ var nony = {
 			commonJs.ajaxSubmit({
 				url:params.url,
 				dataType:params.dataType || "json",
-				formId:params.formId || "fmDefault",
+				formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 				data:params.data || {},
 				success:function(data, textStatus) {
 					var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
@@ -1251,23 +1251,7 @@ var nony = {
 		commonJs.ajaxSubmit({
 			url:params.url,
 			dataType:params.dataType || "json",
-			formId:params.formId || "fmDefault",
-			data:params.data || {},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					params.callback(result);
-				} else {
-					commonJs.error(result.message);
-				}
-			}
-		});
-	},
-	doSimpleProcessNoForm : function(params) { // no confirm message, no post message (ex, getEdit, getInsert, getUpdate etc)
-		commonJs.ajaxSubmit({
-			url:params.url,
-			dataType:params.dataType || "json",
+			formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 			data:params.data || {},
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
@@ -1289,7 +1273,7 @@ var nony = {
 					commonJs.ajaxSubmit({
 						url:params.url,
 						dataType:params.dataType || "json",
-						formId:params.formId || "fmDefault",
+						formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
@@ -1337,7 +1321,7 @@ var nony = {
 					commonJs.ajaxSubmitMultipart({
 						url:params.url,
 						dataType:params.dataType || "json",
-						formId:params.formId || "fmDefault",
+						formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
@@ -1385,7 +1369,7 @@ var nony = {
 					commonJs.ajaxSubmit({
 						url:params.url,
 						dataType:params.dataType || "json",
-						formId:params.formId || "fmDefault",
+						formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
@@ -1433,7 +1417,7 @@ var nony = {
 					commonJs.ajaxSubmitMultipart({
 						url:params.url,
 						dataType:params.dataType || "json",
-						formId:params.formId || "fmDefault",
+						formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
@@ -1481,7 +1465,7 @@ var nony = {
 					commonJs.ajaxSubmit({
 						url:params.url,
 						dataType:params.dataType || "json",
-						formId:params.formId || "fmDefault",
+						formId:(params.noForm == true) ? "" : params.formId || "fmDefault",
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
