@@ -87,35 +87,48 @@ $(function() {
 	};
 
 	exeDelete = function(params) {
-		commonJs.ajaxSubmit({
-			url:"/zebra/board/notice/exeDelete.do",
-			dataType:"json",
-			formId:"fmDefault",
-			data:{
-				articleId:params.data.articleId
-			},
-			success:function(data, textStatus) {
-				var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-				if (result.isSuccess == true || result.isSuccess == "true") {
-					commonJs.openDialog({
-						type:com.message.I000,
-						contents:result.message,
-						blind:true,
-						width:300,
-						buttons:[{
-							caption:com.caption.ok,
-							callback:function() {
-								parent.popup.close();
-								parent.doSearch();
-							}
-						}]
-					});
-				} else {
-					commonJs.error(result.message);
-				}
+		commonJs.doDelete({
+			url:"/zebra/board/notice/exeDelete",
+			data:{articleId:params.data.articleId},
+			callback:function() {
+				setTimeout(function() {
+					parent.popup.close();
+				}, 300);
+				setTimeout(function() {
+					parent.doSearch();
+				}, 700);
 			}
 		});
+
+//		commonJs.ajaxSubmit({
+//			url:"/zebra/board/notice/exeDelete.do",
+//			dataType:"json",
+//			formId:"fmDefault",
+//			data:{
+//				articleId:params.data.articleId
+//			},
+//			success:function(data, textStatus) {
+//				var result = commonJs.parseAjaxResult(data, textStatus, "json");
+//
+//				if (result.isSuccess == true || result.isSuccess == "true") {
+//					commonJs.openDialog({
+//						type:com.message.I000,
+//						contents:result.message,
+//						blind:true,
+//						width:300,
+//						buttons:[{
+//							caption:com.caption.ok,
+//							callback:function() {
+//								parent.popup.close();
+//								parent.doSearch();
+//							}
+//						}]
+//					});
+//				} else {
+//					commonJs.error(result.message);
+//				}
+//			}
+//		});
 	};
 
 	/*!

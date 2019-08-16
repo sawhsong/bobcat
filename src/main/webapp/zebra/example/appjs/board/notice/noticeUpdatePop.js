@@ -13,10 +13,10 @@ $(function() {
 				callback:function() {
 					setTimeout(function() {
 						parent.popup.close();
-					}, 400);
+					}, 300);
 					setTimeout(function() {
 						parent.doSearch();
-					}, 600);
+					}, 700);
 				}
 			});
 		}
