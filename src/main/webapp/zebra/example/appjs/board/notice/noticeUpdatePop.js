@@ -7,44 +7,17 @@ $(function() {
 	 */
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
-			commonJs.confirm({
-				contents:com.message.Q001,
-				buttons:[{
-					caption:com.caption.yes,
-					callback:function() {
-						commonJs.ajaxSubmitMultipart({
-							url:"/zebra/board/notice/exeUpdate",
-							dataType:"json",
-							formId:"fmDefault",
-							data:{articleId:articleId},
-							success:function(data, textStatus) {
-								var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-								if (result.isSuccess == true || result.isSuccess == "true") {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												parent.popup.close();
-												parent.doSearch();
-											}
-										}]
-									});
-								} else {
-									commonJs.error(result.message);
-								}
-							}
-						});
-					}
-				}, {
-					caption:com.caption.no,
-					callback:function() {
-					}
-				}]
+			commonJs.doSaveWithFile({
+				url:"/zebra/board/notice/exeUpdate",
+				data:{articleId:articleId},
+				callback:function() {
+					setTimeout(function() {
+						parent.popup.close();
+					}, 400);
+					setTimeout(function() {
+						parent.doSearch();
+					}, 600);
+				}
 			});
 		}
 	});
