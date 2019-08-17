@@ -40,7 +40,7 @@ $(function() {
 			}
 
 			commonJs.ajaxSubmit({
-				url:"/login/login",
+				url:"/login/login.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
