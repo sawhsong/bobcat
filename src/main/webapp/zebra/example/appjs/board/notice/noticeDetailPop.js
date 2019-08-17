@@ -68,37 +68,21 @@ $(function() {
 		}
 
 		if (param.mode == "Delete") {
-			commonJs.confirm({
-				contents:com.message.Q002,
-				buttons:[{
-					caption:com.caption.yes,
-					callback:function() {
-						exeDelete(params);
-					}
-				}, {
-					caption:com.caption.no,
-					callback:function() {
-					}
-				}]
+			commonJs.doDelete({
+				url:"/zebra/board/notice/exeDelete",
+				data:{articleId:params.data.articleId},
+				callback:function() {
+					setTimeout(function() {
+						parent.popup.close();
+					}, 300);
+					setTimeout(function() {
+						parent.doSearch();
+					}, 700);
+				}
 			});
 		} else {
 			commonJs.doSubmit(params);
 		}
-	};
-
-	exeDelete = function(params) {
-		commonJs.doDelete({
-			url:"/zebra/board/notice/exeDelete",
-			data:{articleId:params.data.articleId},
-			callback:function() {
-				setTimeout(function() {
-					parent.popup.close();
-				}, 300);
-				setTimeout(function() {
-					parent.doSearch();
-				}, 700);
-			}
-		});
 	};
 
 	/*!
