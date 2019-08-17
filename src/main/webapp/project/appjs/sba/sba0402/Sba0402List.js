@@ -49,7 +49,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sba/0402/getList",
+					url:"/sba/0402/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -139,9 +139,9 @@ $(function() {
 		var url = "", header = com.header.popHeaderEdit;
 
 		if (param.mode == "New") {
-			url = "/sba/0402/getInsert";
+			url = "/sba/0402/getInsert.do";
 		} else if (param.mode == "Edit") {
-			url = "/sba/0402/getUpdate";
+			url = "/sba/0402/getUpdate.do";
 		}
 
 		var popParam = {
@@ -173,7 +173,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0402/exeDelete",
+						url:"/sba/0402/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -251,7 +251,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sba/0402/exeExport",
+						url:"/sba/0402/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

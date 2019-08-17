@@ -14,7 +14,7 @@ $(function() {
 					caption:com.caption.yes,
 					callback:function() {
 						commonJs.ajaxSubmit({
-							url:"/sba/0402/exeUpdate",
+							url:"/sba/0402/exeUpdate.do",
 							dataType:"json",
 							formId:"fmDefault",
 							data:{
@@ -77,7 +77,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0402/exeDelete",
+						url:"/sba/0402/exeDelete.do",
 						dataType:"json",
 //						formId:"fmDefault",
 						data:{

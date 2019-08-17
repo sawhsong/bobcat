@@ -88,7 +88,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0804/getEmployeeList",
+				url:"/rkm/0804/getEmployeeList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -188,7 +188,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0804/getWageList",
+				url:"/rkm/0804/getWageList.do",
 				dataType:"json",
 				data:{
 					financialYear:financialYear,
@@ -303,7 +303,7 @@ $(function() {
 			}
 
 			commonJs.ajaxSubmit({
-				url:"/rkm/0804/calculateDataEntry",
+				url:"/rkm/0804/calculateDataEntry.do",
 				dataType:"json",
 				data:{
 					financialYear:$("#financialYear").val(),
@@ -338,7 +338,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/rkm/0804/getEdit",
+			url:"/rkm/0804/getEdit.do",
 			dataType:"json",
 			data:{
 				wageId:wageId
@@ -376,7 +376,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0804/exeSave",
+						url:"/rkm/0804/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -421,7 +421,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0804/exeDelete",
+						url:"/rkm/0804/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -535,7 +535,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0804/exeExport",
+						url:"/rkm/0804/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

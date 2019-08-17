@@ -8,7 +8,7 @@ $(function() {
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
 			commonJs.doSaveWithFile({
-				url:"/zebra/board/notice/exeInsert",
+				url:"/zebra/board/notice/exeInsert.do",
 				callback:function() {
 					setTimeout(function() {
 						parent.popup.close();

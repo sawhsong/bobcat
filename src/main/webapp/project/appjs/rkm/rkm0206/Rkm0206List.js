@@ -90,7 +90,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0206/getList",
+				url:"/rkm/0206/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -192,7 +192,7 @@ $(function() {
 		var name = $(jqObj).attr("name");
 		if (name == "deGrossSales" || name == "deGst") {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0204/calculateDataEntry",
+				url:"/rkm/0204/calculateDataEntry.do",
 				dataType:"json",
 				data:{
 					grossSales:$("#deGrossSales").val(),
@@ -222,7 +222,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/rkm/0206/getEdit",
+			url:"/rkm/0206/getEdit.do",
 			dataType:"json",
 			data:{
 				incomeId:incomeId
@@ -254,7 +254,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0206/exeSave",
+						url:"/rkm/0206/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -300,7 +300,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0206/exeComplete",
+						url:"/rkm/0206/exeComplete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -346,7 +346,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0206/exeDelete",
+						url:"/rkm/0206/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -461,7 +461,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0206/exeExport",
+						url:"/rkm/0206/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

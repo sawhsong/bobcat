@@ -32,7 +32,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sba/0202/exeUpdate"
+							action:"/sba/0202/exeUpdate.do"
 						});
 					}
 				}, {

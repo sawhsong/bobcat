@@ -24,7 +24,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0412/exeSave",
+						url:"/sba/0412/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						data:{
@@ -155,7 +155,7 @@ $(function() {
 	getUpdate = function(borrowingTypeId, borrowingTypeCode) {
 		popup = commonJs.openPopup({
 			popupId:"BorrowingTypeUpdate",
-			url:"/sba/0412/getUpdate",
+			url:"/sba/0412/getUpdate.do",
 			paramData:{
 				mode:"Update",
 				borrowingTypeId:borrowingTypeId,

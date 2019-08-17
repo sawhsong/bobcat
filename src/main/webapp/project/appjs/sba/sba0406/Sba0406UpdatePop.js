@@ -88,7 +88,7 @@ $(function() {
 		changeObjectStatus("enable");
 
 		commonJs.ajaxSubmit({
-			url:"/sba/0406/exeUpdate",
+			url:"/sba/0406/exeUpdate.do",
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
@@ -122,7 +122,7 @@ $(function() {
 		changeObjectStatus("enable");
 
 		commonJs.ajaxSubmit({
-			url:"/sba/0406/exeDelete",
+			url:"/sba/0406/exeDelete.do",
 			dataType:"json",
 			data:{
 				orgCategory:$("#orgCategory").val(),

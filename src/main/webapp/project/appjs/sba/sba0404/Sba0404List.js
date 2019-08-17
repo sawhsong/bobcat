@@ -24,7 +24,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0404/exeSave",
+						url:"/sba/0404/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						data:{
@@ -155,7 +155,7 @@ $(function() {
 	getUpdate = function(incomeTypeId, incomeTypeCode) {
 		popup = commonJs.openPopup({
 			popupId:"IncomeTypeUpdate",
-			url:"/sba/0404/getUpdate",
+			url:"/sba/0404/getUpdate.do",
 			paramData:{
 				mode:"Update",
 				incomeTypeId:incomeTypeId,

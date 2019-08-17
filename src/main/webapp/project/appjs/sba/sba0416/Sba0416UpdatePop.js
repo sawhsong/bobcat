@@ -43,7 +43,7 @@ $(function() {
 	 */
 	doSave = function() {
 		commonJs.ajaxSubmit({
-			url:"/sba/0416/exeUpdate",
+			url:"/sba/0416/exeUpdate.do",
 			dataType:"json",
 			formId:"fmDefault",
 			data:{
@@ -79,7 +79,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0416/exeDelete",
+						url:"/sba/0416/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						data:{

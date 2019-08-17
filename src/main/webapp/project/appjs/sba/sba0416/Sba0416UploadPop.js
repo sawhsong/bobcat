@@ -17,7 +17,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sba/0416/exeFileUpload",
+							action:"/sba/0416/exeFileUpload.do",
 							data:{
 							}
 						});

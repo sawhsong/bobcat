@@ -153,9 +153,9 @@ $(function() {
 		var width = 800, height = 580;
 
 		if (param.mode == "New") {
-			url = "/rkm/0802/getInsert";
+			url = "/rkm/0802/getInsert.do";
 		} else if (param.mode == "Update") {
-			url = "/rkm/0802/getUpdate";
+			url = "/rkm/0802/getUpdate.do";
 		}
 
 		var popParam = {
@@ -186,7 +186,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0802/exeDelete",
+						url:"/rkm/0802/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -263,7 +263,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0802/exeExport",
+						url:"/rkm/0802/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

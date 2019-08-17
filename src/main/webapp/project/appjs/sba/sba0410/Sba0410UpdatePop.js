@@ -66,7 +66,7 @@ $(function() {
 		changeObjectStatus("enable");
 
 		commonJs.ajaxSubmit({
-			url:"/sba/0410/exeUpdate",
+			url:"/sba/0410/exeUpdate.do",
 			dataType:"json",
 			formId:"fmDefault",
 			data:{

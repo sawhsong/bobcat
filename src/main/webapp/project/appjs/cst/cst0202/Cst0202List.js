@@ -39,7 +39,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/cst/0202/getList",
+					url:"/cst/0202/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {

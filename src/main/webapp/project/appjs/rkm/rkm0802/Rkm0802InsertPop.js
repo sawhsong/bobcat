@@ -14,7 +14,7 @@ $(function() {
 					caption:com.caption.yes,
 					callback:function() {
 						commonJs.ajaxSubmit({
-							url:"/rkm/0802/exeSave",
+							url:"/rkm/0802/exeSave.do",
 							dataType:"json",
 							formId:"fmDefault",
 							data:{

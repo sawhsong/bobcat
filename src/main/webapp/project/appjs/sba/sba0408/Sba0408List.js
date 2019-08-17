@@ -24,7 +24,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0408/exeSave",
+						url:"/sba/0408/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						data:{
@@ -155,7 +155,7 @@ $(function() {
 	getUpdate = function(assetTypeId, assetTypeCode) {
 		popup = commonJs.openPopup({
 			popupId:"AssetTypeUpdate",
-			url:"/sba/0408/getUpdate",
+			url:"/sba/0408/getUpdate.do",
 			paramData:{
 				mode:"Update",
 				assetTypeId:assetTypeId,

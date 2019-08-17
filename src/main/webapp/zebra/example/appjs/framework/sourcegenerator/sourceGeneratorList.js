@@ -177,8 +177,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.getBootstrapSelectbox("searchMenu").focus();
-
 		exeSearch();
 	});
 });

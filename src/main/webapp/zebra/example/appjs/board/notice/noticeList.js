@@ -56,7 +56,7 @@ $(function() {
 
 		if (commonJs.doValidate($("#fmDefault"))) {
 			commonJs.doSearch({
-				url:"/zebra/board/notice/getList",
+				url:"/zebra/board/notice/getList.do",
 				callback:renderDataGridTable
 			});
 		}
@@ -189,7 +189,7 @@ $(function() {
 		}
 
 		commonJs.doDelete({
-			url:"/zebra/board/notice/exeDelete",
+			url:"/zebra/board/notice/exeDelete.do",
 			callback:doSearch
 		});
 	};
@@ -221,7 +221,7 @@ $(function() {
 
 	getAttachedFile = function(img) {
 		commonJs.doSimpleProcess({
-			url:"/zebra/board/notice/getAttachedFile",
+			url:"/zebra/board/notice/getAttachedFile.do",
 			data:{articleId:$(img).attr("articleId")},
 			callback:function(result) {
 				var dataSet = result.dataSet;
@@ -278,7 +278,7 @@ $(function() {
 
 	exeExport = function(menuObject) {
 		commonJs.doExport({
-			url:"/zebra/board/notice/exeExport",
+			url:"/zebra/board/notice/exeExport.do",
 			menuObject:menuObject,
 			data:commonJs.serialiseObject($("#divSearchCriteriaArea"))
 		});

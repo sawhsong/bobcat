@@ -39,7 +39,7 @@ $(function() {
 	 */
 	doSave = function() {
 		commonJs.ajaxSubmit({
-			url:"/sba/0416/exeInsert",
+			url:"/sba/0416/exeInsert.do",
 			dataType:"json",
 			formId:"fmDefault",
 			data:{

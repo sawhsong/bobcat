@@ -87,7 +87,7 @@ $(function() {
 		var subMenu = [];
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseTypesForContextMenu",
+			url:"/common/entryTypeSupporter/getExpenseTypesForContextMenu.do",
 			dataType:"json",
 			data:{},
 			success:function(data, textStatus) {
@@ -170,7 +170,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0402/getList",
+				url:"/rkm/0402/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -274,7 +274,7 @@ $(function() {
 		var name = $(jqObj).attr("name");
 		if (name == "deGrossExpense" || name == "deGst") {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0402/calculateDataEntry",
+				url:"/rkm/0402/calculateDataEntry.do",
 				dataType:"json",
 				data:{
 					grossExpense:$("#deGrossExpense").val(),
@@ -304,7 +304,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/rkm/0402/getEdit",
+			url:"/rkm/0402/getEdit.do",
 			dataType:"json",
 			data:{
 				expenseId:expenseId
@@ -336,7 +336,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0402/exeSave",
+						url:"/rkm/0402/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -382,7 +382,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0402/exeComplete",
+						url:"/rkm/0402/exeComplete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -428,7 +428,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0402/exeDelete",
+						url:"/rkm/0402/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -540,7 +540,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox",
+			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox.do",
 			dataType:"json",
 			data:{expenseMainType:$("#expenseMainType").val()},
 			success:function(data, textStatus) {
@@ -572,7 +572,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox",
+			url:"/common/entryTypeSupporter/getExpenseSubTypeForSelectbox.do",
 			dataType:"json",
 			data:{
 				expenseMainType:$("#deExpenseMainType").val()
@@ -629,7 +629,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0402/exeExport",
+						url:"/rkm/0402/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

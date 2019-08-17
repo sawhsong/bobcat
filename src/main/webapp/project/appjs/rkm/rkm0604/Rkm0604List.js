@@ -95,7 +95,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0604/getList",
+				url:"/rkm/0604/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -207,7 +207,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/rkm/0604/getEdit",
+			url:"/rkm/0604/getEdit.do",
 			dataType:"json",
 			data:{
 				financeId:financeId
@@ -239,7 +239,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmitMultipart({
-						url:"/rkm/0604/exeSave",
+						url:"/rkm/0604/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -284,7 +284,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0604/exeComplete",
+						url:"/rkm/0604/exeComplete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -330,7 +330,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0604/exeDelete",
+						url:"/rkm/0604/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -390,7 +390,7 @@ $(function() {
 
 	downloadFile = function(financeFileId) {
 		commonJs.ajaxSubmit({
-			url:"/rkm/0604/getFile",
+			url:"/rkm/0604/getFile.do",
 			dataType:"json",
 			data:{
 				financeFileId:financeFileId
@@ -403,7 +403,7 @@ $(function() {
 
 					commonJs.doSubmit({
 						form:"fmDefault",
-						action:"/download",
+						action:"/download.do",
 						data:{
 							repositoryPath:ds.getValue(0, "REPOSITORY_PATH"),
 							originalName:ds.getValue(0, "ORIGINAL_NAME"),
@@ -474,7 +474,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0604/exeExport",
+						url:"/rkm/0604/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

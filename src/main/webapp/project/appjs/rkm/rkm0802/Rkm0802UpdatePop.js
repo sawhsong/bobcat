@@ -50,10 +50,10 @@ $(function() {
 
 		if (param.mode == "Save") {
 			confirmMessage = com.message.Q001;
-			url = "exeSave";
+			url = "exeSave.do";
 		} else if (param.mode == "Delete") {
 			confirmMessage = com.message.Q002;
-			url = "exeDelete";
+			url = "exeDelete.do";
 		}
 
 		commonJs.confirm({

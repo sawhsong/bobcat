@@ -147,15 +147,15 @@ $(function() {
 		var url = "", header = "";
 
 		if (param.mode == "Detail") {
-			url = "/sba/0202/getDetail";
+			url = "/sba/0202/getDetail.do";
 			header = com.header.popHeaderDetail;
 			height = 386;
 		} else if (param.mode == "New") {
-			url = "/sba/0202/getInsert";
+			url = "/sba/0202/getInsert.do";
 			header = com.header.popHeaderEdit;
 			height = 540;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0202/getUpdate";
+			url = "/sba/0202/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 540;
 		}

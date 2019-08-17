@@ -89,7 +89,7 @@ $(function() {
 		refreshDataEntry();
 
 		commonJs.doSearch({
-			url:"/rkm/0202/getList",
+			url:"/rkm/0202/getList.do",
 			callback:renderDataGridTable
 		});
 
@@ -192,7 +192,7 @@ $(function() {
 		var name = $(jqObj).attr("name");
 		if (name == "deNonCash" || name == "deCash" || name == "deGstFree") {
 			commonJs.doSimpleProcess({
-				url:"/rkm/0202/calculateDataEntry",
+				url:"/rkm/0202/calculateDataEntry.do",
 				data:{
 					nonCash:$("#deNonCash").val(),
 					cash:$("#deCash").val(),
@@ -221,7 +221,7 @@ $(function() {
 		});
 
 		commonJs.doSimpleProcess({
-			url:"/rkm/0202/getEdit",
+			url:"/rkm/0202/getEdit.do",
 			data:{incomeIdDate:incomeIdDate},
 			callback:editCallback
 		});
@@ -241,7 +241,7 @@ $(function() {
 		}
 
 		commonJs.doSave({
-			url:"/rkm/0202/exeSave",
+			url:"/rkm/0202/exeSave.do",
 			showPostMessage:true,
 			callback:doSearch
 		});
@@ -254,7 +254,7 @@ $(function() {
 		}
 
 		commonJs.doProcess({
-			url:"/rkm/0202/exeComplete",
+			url:"/rkm/0202/exeComplete.do",
 			confirmMessage:com.message.Q004,
 			showPostMessage:true,
 			callback:doSearch
@@ -268,7 +268,7 @@ $(function() {
 		}
 
 		commonJs.doDelete({
-			url:"/rkm/0202/exeDelete",
+			url:"/rkm/0202/exeDelete.do",
 			showPostMessage:true,
 			callback:doSearch
 		});
@@ -345,7 +345,7 @@ $(function() {
 		}
 
 		commonJs.doExport({
-			url:"/rkm/0202/exeExport",
+			url:"/rkm/0202/exeExport.do",
 			data:commonJs.serialiseObject($("#divSearchCriteriaArea")),
 			menuObject:menuObject
 		});

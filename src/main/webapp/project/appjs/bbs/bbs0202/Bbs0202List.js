@@ -46,7 +46,7 @@ $(function() {
 
 		if (commonJs.doValidate($("#fmDefault"))) {
 			commonJs.doSearch({
-				url:"/bbs/0202/getList",
+				url:"/bbs/0202/getList.do",
 				callback:renderDataGridTable
 			});
 		}

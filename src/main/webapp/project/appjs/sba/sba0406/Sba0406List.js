@@ -85,7 +85,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sba/0406/getList",
+					url:"/sba/0406/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -231,12 +231,12 @@ $(function() {
 		var width = 900, height = 300;
 
 		if (param.mode == "New") {
-			url = "/sba/0406/getInsert";
+			url = "/sba/0406/getInsert.do";
 			height = 500;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0406/getUpdate";
+			url = "/sba/0406/getUpdate.do";
 		} else if (param.mode == "SetSort") {
-			url = "/sba/0406/getUpdateSortOrder";
+			url = "/sba/0406/getUpdateSortOrder.do";
 			header = sba.sba0406.header.popHeaderSort;
 			width = 850, height = 700;
 		}
@@ -271,7 +271,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0406/exeDelete",
+						url:"/sba/0406/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -358,7 +358,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sba/0406/exeExport",
+						url:"/sba/0406/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

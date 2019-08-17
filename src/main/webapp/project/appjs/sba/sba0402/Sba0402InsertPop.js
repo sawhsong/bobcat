@@ -14,7 +14,7 @@ $(function() {
 					caption:com.caption.yes,
 					callback:function() {
 						commonJs.ajaxSubmit({
-							url:"/sba/0402/exeInsert",
+							url:"/sba/0402/exeInsert.do",
 							dataType:"json",
 							formId:"fmDefault",
 							data:{

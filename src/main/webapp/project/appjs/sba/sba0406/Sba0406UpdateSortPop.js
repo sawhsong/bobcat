@@ -31,7 +31,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sba/0406/exeUpdateSortOrder",
+						url:"/sba/0406/exeUpdateSortOrder.do",
 						dataType:"json",
 						formId:"fmDefault",
 						data:{

@@ -139,14 +139,14 @@ $(function() {
 		var url = "", header = "", width = 800, height = 300;
 
 		if (param.mode == "Upload") {
-			url = "/sba/0416/getUpload";
+			url = "/sba/0416/getUpload.do";
 			header = "Upload Tax Master Excel File";
 			width = 500, height = 300;
 		} else if (param.mode == "New") {
-			url = "/sba/0416/getInsert";
+			url = "/sba/0416/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/sba/0416/getUpdate";
+			url = "/sba/0416/getUpdate.do";
 			header = com.header.popHeaderEdit;
 		}
 
@@ -255,7 +255,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sba/0416/exeExport",
+						url:"/sba/0416/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

@@ -89,7 +89,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0404/getList",
+				url:"/rkm/0404/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -197,7 +197,7 @@ $(function() {
 		var name = $(jqObj).attr("name");
 		if (name == "deGrossAsset" || name == "deGst") {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0404/calculateDataEntry",
+				url:"/rkm/0404/calculateDataEntry.do",
 				dataType:"json",
 				data:{
 					grossAsset:$("#deGrossAsset").val(),
@@ -227,7 +227,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/rkm/0404/getEdit",
+			url:"/rkm/0404/getEdit.do",
 			dataType:"json",
 			data:{
 				assetId:assetId
@@ -259,7 +259,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmitMultipart({
-						url:"/rkm/0404/exeSave",
+						url:"/rkm/0404/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -304,7 +304,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0404/exeComplete",
+						url:"/rkm/0404/exeComplete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -350,7 +350,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0404/exeDelete",
+						url:"/rkm/0404/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -410,7 +410,7 @@ $(function() {
 
 	downloadFile = function(assetFileId) {
 		commonJs.ajaxSubmit({
-			url:"/rkm/0404/getFile",
+			url:"/rkm/0404/getFile.do",
 			dataType:"json",
 			data:{
 				assetFileId:assetFileId
@@ -423,7 +423,7 @@ $(function() {
 
 					commonJs.doSubmit({
 						form:"fmDefault",
-						action:"/download",
+						action:"/download.do",
 						data:{
 							repositoryPath:ds.getValue(0, "REPOSITORY_PATH"),
 							originalName:ds.getValue(0, "ORIGINAL_NAME"),
@@ -493,7 +493,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0404/exeExport",
+						url:"/rkm/0404/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,

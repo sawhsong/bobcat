@@ -88,7 +88,7 @@ $(function() {
 
 		setTimeout(function() {
 			commonJs.ajaxSubmit({
-				url:"/rkm/0602/getList",
+				url:"/rkm/0602/getList.do",
 				dataType:"json",
 				formId:"fmDefault",
 				success:function(data, textStatus) {
@@ -188,7 +188,7 @@ $(function() {
 		});
 
 		commonJs.ajaxSubmit({
-			url:"/rkm/0602/getEdit",
+			url:"/rkm/0602/getEdit.do",
 			dataType:"json",
 			data:{
 				financeId:financeId
@@ -220,7 +220,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0602/exeSave",
+						url:"/rkm/0602/exeSave.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -266,7 +266,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0602/exeComplete",
+						url:"/rkm/0602/exeComplete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -312,7 +312,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/rkm/0602/exeDelete",
+						url:"/rkm/0602/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -424,7 +424,7 @@ $(function() {
 
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/rkm/0602/exeExport",
+						url:"/rkm/0602/exeExport.do",
 						paramData:param,
 						header:"exportFile",
 						blind:false,
