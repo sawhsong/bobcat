@@ -380,6 +380,28 @@ public class CommonUtil extends StringUtils {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		return format.format(cal.getTime());
 	}
+
+	public static String getCalcDate(String flag, String val, String dateFormat, int cal) throws Exception {
+		Calendar calendar = getCalendarFromString(val, dateFormat);
+
+		if (flag.equals("Y")) {calendar.add(Calendar.YEAR, cal);}
+		else if (flag.equals("M")) {calendar.add(Calendar.MONTH, cal);}
+		else if (flag.equals("D")) {calendar.add(Calendar.DATE, cal);}
+
+		return getStringFromCalendar(calendar, dateFormat);
+	}
+
+	public static Calendar getCalendarFromString(String value, String dateFormat) throws Exception {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+		cal.setTime(format.parse(value));
+		return cal;
+	}
+
+	public static String getStringFromCalendar(Calendar cal, String dateFormat) throws Exception {
+		SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+		return format.format(cal.getTime());
+	}
 	/**
 	 * getDateGap("20120101", "20121203") => 2
 	 */
