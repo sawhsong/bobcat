@@ -245,7 +245,7 @@ $(document).ready(function() {
  * 2
  */
 $(window).ready(function() {
-	if (!$.nony.isPopup()) {$.nony._doPageLayout(commonJs.getPageLayoutOptions());}
+	if (!($.nony.isPopup() || $.nony.isTabFrame())) {$.nony._doPageLayout(commonJs.getPageLayoutOptions());}
 });
 /*!
  * 3

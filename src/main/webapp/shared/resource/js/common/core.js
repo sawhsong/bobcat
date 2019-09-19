@@ -85,6 +85,9 @@ var nony = {
 	isPopup : function() {
 		return (jsconfig.get("noLayoutWindow") || jsconfig.get("isPopup") || $("#divPopupWindowHolder").length > 0);
 	},
+	isTabFrame : function() {
+		return ($("#divFrameWindowHolder").length > 0);
+	},
 	isNormalPage : function() {
 		return !$.nony.isPopup();
 	},
@@ -1365,6 +1368,7 @@ var nony = {
 	 */
 	_doResizeScrollablePanel : function() {
 		var isPopup = $.nony.isPopup();
+		var isTabFrame = $.nony.isTabFrame();
 		var bodyLayout = jsconfig.get("defaultOuterLayoutOption");
 		var heightWindow = $(window).innerHeight();
 		var mainDivId;
@@ -1372,12 +1376,16 @@ var nony = {
 
 		if (isPopup) {
 			if ($("#divScrollablePanelPopup").length <= 0) {return;}
+		} else if (isTabFrame) {
+			if ($("#divScrollablePanelFrame").length <= 0) {return;}
 		} else {
 			if ($("#divScrollablePanel").length <= 0) {return;}
 		}
 
 		if (isPopup) {
 			mainDivId = "divPopupWindowHolder";
+		} else if (isTabFrame) {
+			mainDivId = "divFrameWindowHolder";
 		} else {
 			mainDivId = "divBodyCenter";
 			heightHeader = $("#divHeaderHolder").outerHeight() || 0;
@@ -1387,6 +1395,10 @@ var nony = {
 		$("#"+mainDivId+" > div").each(function(index) {
 			if (isPopup) {
 				if (($(this).css("display") != "none") && ($(this).attr("id") != "divScrollablePanelPopup")) {
+					heightSum += $(this).outerHeight();
+				}
+			} else if (isTabFrame) {
+				if (($(this).css("display") != "none") && ($(this).attr("id") != "divScrollablePanelFrame")) {
 					heightSum += $(this).outerHeight();
 				}
 			} else {
@@ -1416,6 +1428,13 @@ var nony = {
 				heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 2;
 				$("#divScrollablePanelPopup").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 			}
+		} else if (isTabFrame) {
+			if (fixedScrollablePanelHeight > 0) {
+				$("#divScrollablePanelFrame").height(fixedScrollablePanelHeight);
+			} else {
+				heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 2;
+				$("#divScrollablePanelFrame").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
+			}
 		} else {
 			if (fixedScrollablePanelHeight > 0) {
 				$("#divScrollablePanel").height(fixedScrollablePanelHeight);
@@ -1437,6 +1456,9 @@ var nony = {
 		if (isPopup) {
 			jsconfig.put("divScrollablePanelPopupWidth", $("#divScrollablePanelPopup").width());
 			jsconfig.put("divScrollablePanelPopupHeight", $("#divScrollablePanelPopup").height());
+		} else if (isTabFrame) {
+			jsconfig.put("divScrollablePanelFrameWidth", $("#divScrollablePanelFrame").width());
+			jsconfig.put("divScrollablePanelFrameHeight", $("#divScrollablePanelFrame").height());
 		} else {
 			jsconfig.put("divScrollablePanelWidth", $("#divScrollablePanel").width());
 			jsconfig.put("divScrollablePanelHeight", $("#divScrollablePanel").height());

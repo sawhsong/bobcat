@@ -28,6 +28,23 @@ $(function() {
 		} else {
 			$("#fmDefault").attr("target", "_parent").submit();
 		}
+	} else if ($(parent.document).find(".frameContainer").length > 0) {
+		if (sessionCheckType == "SessionTimedOut") {
+			commonJs.openDialog({
+				contents:"<mc:msg key="W001"/>",
+				buttons:[{
+					caption:com.caption.ok,
+					callback:function() {
+						$("#fmDefault").attr("target", "_parent").submit();
+					}
+				}],
+				draggable:false,
+				width:330,
+				blind:true
+			});
+		} else {
+			$("#fmDefault").attr("target", "_parent").submit();
+		}
 	} else {
 		if (sessionCheckType == "SessionTimedOut") {
 			commonJs.openDialog({

@@ -33,7 +33,7 @@
 			}
 
 			var $scrollablePanel, attachToHeight = 0, isScrollbar = false, heightAdjustment = 0,
-				isPopup = $.nony.isPopup(), tableId = $(this).attr("id");
+				isPopup = $.nony.isPopup(), isTabFrame = $.nony.isTabFrame(), tableId = $(this).attr("id");
 			var systemGeneratedTableForFixedHeaderId = jsconfig.get("systemGeneratedTableForFixedHeaderId"+tableId) || "systemGeneratedTableForFixedHeader"+tableId;
 			var divSystemGeneratedFixedTableHeaderWrapperId = jsconfig.get("divSystemGeneratedFixedTableHeaderWrapperId");
 
@@ -91,6 +91,9 @@
 				html += "<tr>";
 				if ($.nony.isPopup()) {
 					html += "<td class=\"tdPaginationLeft\">";
+				} else if ($.nony.isTabFrame()) {
+					html += "<td class=\"tdPaginationLeft\"></td>";
+					html += "<td class=\"tdPaginationCenter\">";
 				} else {
 					html += "<td class=\"tdPaginationLeft\"></td>";
 					html += "<td class=\"tdPaginationCenter\">";
@@ -305,6 +308,8 @@
 
 			if (isPopup) {
 				$scrollablePanel = $("#divScrollablePanelPopup");
+			} else if (isTabFrame) {
+				$scrollablePanel = $("#divScrollablePanelFrame");
 			} else {
 				$scrollablePanel = $("#divScrollablePanel");
 			}
@@ -334,7 +339,7 @@
 			 * Fixed header
 			 */
 			var $table = $(this), visibleHeight = 0;
-			var $scrollablePanel = $.nony.isPopup() ? $("#divScrollablePanelPopup") : $("#divScrollablePanel");
+			var $scrollablePanel = $.nony.isPopup() ? $("#divScrollablePanelPopup") : ($.nony.isTabFrame() ? $("#divScrollablePanelFrame") : $("#divScrollablePanel"));
 			var $header = $table.find("thead").clone(true, true);
 			var $fixedTable = $("<table id=\""+systemGeneratedTableForFixedHeaderId+"\"/>").prop("class", $table.prop("class"))
 								.css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px", "z-index":500});
@@ -426,6 +431,10 @@
 				}
 
 				if (isPopup) {
+					if ($.nony.browser.Chrome) {leftPos = $fixedTable.offset().left+0;}
+					else if ($.nony.browser.FireFox) {leftPos = $fixedTable.offset().left+0;}
+					else {leftPos = $fixedTable.offset().left+0;}
+				} else if (isTabFrame) {
 					if ($.nony.browser.Chrome) {leftPos = $fixedTable.offset().left+0;}
 					else if ($.nony.browser.FireFox) {leftPos = $fixedTable.offset().left+0;}
 					else {leftPos = $fixedTable.offset().left+0;}
