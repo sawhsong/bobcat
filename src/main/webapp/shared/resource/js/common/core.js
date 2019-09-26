@@ -1432,6 +1432,7 @@ var nony = {
 			if (fixedScrollablePanelHeight > 0) {
 				$("#divScrollablePanelFrame").height(fixedScrollablePanelHeight);
 			} else {
+				heightWindow = $(parent.document).find(".frameContainer").height();
 				heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 2;
 				$("#divScrollablePanelFrame").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 			}
@@ -1447,7 +1448,9 @@ var nony = {
 		if (!jsconfig.get("isResizeScrollablePanelFuntionRegisteredInResizeEvent")) {
 			$(window).resize(function() {
 				setTimeout(function() {
-					$.nony._doResizeScrollablePanel();
+					if (!isTabFrame) {
+						$.nony._doResizeScrollablePanel();
+					}
 				}, 10);
 			});
 		}
