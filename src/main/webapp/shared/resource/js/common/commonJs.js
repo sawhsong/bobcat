@@ -109,6 +109,7 @@ var commonJs = {
 	expandAllAccordion : function(params) {$.nony.expandAllAccordion(params);},
 	getBootstrapSelectbox : function(id) {return $.nony.getBootstrapSelectbox(id);},
 	refreshBootstrapSelectbox : function(id) {return $.nony.refreshBootstrapSelectbox(id);},
+	setSelectpickerValue : function(elementId, selectedValue) {$.nony.setSelectpickerValue(elementId, selectedValue);},
 	setAutoComplete : function(jqObject, param) {$.nony.setAutoComplete(jqObject, param);},
 	/*!
 	 * controlling file elements
@@ -132,6 +133,7 @@ var commonJs = {
 	getCountChecked : function(checkboxName) {return $.nony.getCountChecked(checkboxName);},
 	setCheckboxValue : function(checkboxName, value) {$.nony.setCheckboxValue(checkboxName, value);},
 	getCheckedValueFromRadio : function(radioName) {return $.nony.getCheckedValueFromRadio(radioName);},
+	setRadioValue : function(radioName, value) {$.nony.setRadioValue(radioName, value);},
 	clearSearchCriteria : function() {$.nony.clearSearchCriteria();},
 	clearPaginationValue : function() {$.nony.clearPaginationValue();},
 	setExportButtonContextMenu : function(jqObjectButton) {$.nony.setExportButtonContextMenu(jqObjectButton);},
