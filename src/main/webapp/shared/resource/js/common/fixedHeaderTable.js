@@ -321,15 +321,26 @@
 			/*!
 			 * Return if the data table is smaller than attachTo height
 			 */
-			attachToHeight = options.attachToHeight || $(options.attachTo).height();
+//			attachToHeight = options.attachToHeight || $(options.attachTo).height();
 
 			if (($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment)) >= attachToHeight) {
 //				$(options.attachTo).height($(this).height() + heightAdjustment);
 			} else {
 //				$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
 			}
-			$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
-//commonJs.printLog({message:"$(options.attachTo).height() : "+$(options.attachTo).height()});
+//commonJs.printLog({message:"$(options.attachTo).height(1) : "+$(options.attachTo).height()});
+//commonJs.printLog({message:"$scrollablePanel.height() : "+$scrollablePanel.height()});
+//commonJs.printLog({message:"pagingAreaHeight : "+pagingAreaHeight});
+//commonJs.printLog({message:"options.attachToHeight : "+options.attachToHeight});
+			if (!$.nony.isEmpty(options.attachToHeight) || options.attachToHeight > 0) {
+				$(options.attachTo).height(options.attachToHeight);
+			} else {
+				$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
+			}
+//			$(options.attachTo).height($scrollablePanel.height() - (pagingAreaHeight + heightAdjustment));
+
+//commonJs.printLog({message:"attachToHeight : "+attachToHeight});
+//commonJs.printLog({message:"$(options.attachTo).height(2) : "+$(options.attachTo).height()});
 //commonJs.printLog({message:"$(this).height() : "+$(this).height()});
 			if ($(this).height() <= $(options.attachTo).height()) {
 				$(options.attachTo).height($(this).height() + (heightAdjustment - 4));
@@ -342,7 +353,7 @@
 			var $scrollablePanel = $.nony.isPopup() ? $("#divScrollablePanelPopup") : ($.nony.isTabFrame() ? $("#divScrollablePanelFrame") : $("#divScrollablePanel"));
 			var $header = $table.find("thead").clone(true, true);
 			var $fixedTable = $("<table id=\""+systemGeneratedTableForFixedHeaderId+"\"/>").prop("class", $table.prop("class"))
-								.css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px", "z-index":500});
+								.css({position:"fixed", "table-layout":"fixed", display:"none", "margin-top":"0px", "z-index":1000});
 
 			if ($.nony.browser.Chrome) {$fixedTable.width($table.width());}
 			else if ($.nony.browser.FireFox) {$fixedTable.width($table.width()+1);}
@@ -385,15 +396,36 @@
 
 			visibleHeight = $.nony.toNumber($(options.attachTo).offset().top - $scrollablePanel.offset().top);
 
-			$scrollablePanel.bind("scroll", function() {
-				$fixedTable.css("top", $(options.attachTo).offset().top);
+			/*!
+			 * Check page scroll for hiding/displaying header according to the wapper
+			 * 		options.scrollWrapper
+			 */
+			if (!$.nony.isEmpty(options.scrollWrapper)) {
+				$scrollablePanel = $(options.scrollWrapper);
 
-				if (visibleHeight < $scrollablePanel.scrollTop()) {
-					$fixedTable.hide();
-				} else {
-					$fixedTable.show();
-				}
-			});
+				$scrollablePanel.bind("scroll", function() {
+					var tableWrapperId = jsconfig.get("divSystemGeneratedFixedTableHeaderWrapperId");
+					var $tableWrapper = $("#"+tableWrapperId);
+
+					$tableWrapper.css("top", $(options.attachTo).offset().top);
+
+					if (visibleHeight < $scrollablePanel.scrollTop()) {
+						$fixedTable.hide();
+					} else {
+						$fixedTable.show();
+					}
+				});
+			} else {
+				$scrollablePanel.bind("scroll", function() {
+					$fixedTable.css("top", $(options.attachTo).offset().top);
+
+					if (visibleHeight < $scrollablePanel.scrollTop()) {
+						$fixedTable.hide();
+					} else {
+						$fixedTable.show();
+					}
+				});
+			}
 
 			/*!
 			 * If (table width != '100%' or table width > attachTo width)
@@ -414,12 +446,12 @@
 					scrollHeight = 19;
 				}
 
-				if ($("#"+divSystemGeneratedFixedTableHeaderWrapperId).length > 0) {
+//				if ($("#"+divSystemGeneratedFixedTableHeaderWrapperId).length > 0) {
 					$("#"+divSystemGeneratedFixedTableHeaderWrapperId).remove();
 					if ($(options.attachTo).height() > $table.height()) {
 						$(options.attachTo).height($(this).height() + (heightAdjustment - 4) + scrollHeight);
 					}
-				}
+//				}
 
 				$(options.attachTo).css({"border-left":"0px solid", "border-color":borderColor});
 

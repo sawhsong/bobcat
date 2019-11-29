@@ -693,4 +693,38 @@ public class DataSet {
 
 		return sb.toString();
 	}
+
+	public String getAsHtmlStringForSelectbox(String colNameForValue, String colNameForText, String selectedValue, String caption, String selectAttributs) throws Exception {
+		String html = "", attrStr = "";
+		String attrs[];
+
+		if (CommonUtil.isNotBlank(selectAttributs)) {
+			attrs = CommonUtil.split(selectAttributs, ";");
+			for (String attr : attrs) {
+				String name = CommonUtil.split(attr, ":")[0];
+				String value = CommonUtil.split(attr, ":")[1];
+				attrStr += " "+name+"=\""+value+"\"";
+			}
+		}
+
+		html += "<select"+attrStr+">";
+		if (CommonUtil.isNotBlank(caption)) {
+			html += "<option value=\"\">"+caption+"</option>";
+		}
+
+		for (int i=0; i<getRowCnt(); i++) {
+			if (CommonUtil.isNotBlank(selectedValue)) {
+				if (CommonUtil.equals(getValue(i, colNameForValue), selectedValue)) {
+					html += "<option value=\""+getValue(i, colNameForValue)+"\" selected>"+getValue(i, colNameForText)+"</option>";
+				} else {
+					html += "<option value=\""+getValue(i, colNameForValue)+"\">"+getValue(i, colNameForText)+"</option>";
+				}
+			} else {
+				html += "<option value=\""+getValue(i, colNameForValue)+"\">"+getValue(i, colNameForText)+"</option>";
+			}
+		}
+		html += "</select>";
+
+		return html;
+	}
 }
