@@ -35,7 +35,7 @@
 			var $scrollablePanel, attachToHeight = 0, isScrollbar = false, heightAdjustment = 0,
 				isPopup = $.nony.isPopup(), isTabFrame = $.nony.isTabFrame(), tableId = $(this).attr("id");
 			var systemGeneratedTableForFixedHeaderId = jsconfig.get("systemGeneratedTableForFixedHeaderId"+tableId) || "systemGeneratedTableForFixedHeader"+tableId;
-			var divSystemGeneratedFixedTableHeaderWrapperId = jsconfig.get("divSystemGeneratedFixedTableHeaderWrapperId");
+			var divSystemGeneratedFixedTableHeaderWrapperId = jsconfig.get("divSystemGeneratedFixedTableHeaderWrapperId")+tableId;
 
 			$(options.attachTo).css("overflow", "auto");
 
@@ -404,7 +404,7 @@
 				$scrollablePanel = $(options.scrollWrapper);
 
 				$scrollablePanel.bind("scroll", function() {
-					var tableWrapperId = jsconfig.get("divSystemGeneratedFixedTableHeaderWrapperId");
+					var tableWrapperId = jsconfig.get("divSystemGeneratedFixedTableHeaderWrapperId"+tableId);
 					var $tableWrapper = $("#"+tableWrapperId);
 
 					$tableWrapper.css("top", $(options.attachTo).offset().top);
@@ -491,7 +491,7 @@
 				$fixedTable.detach().appendTo($wrapper);
 				$table.before($wrapper);
 
-				jsconfig.put("divSystemGeneratedFixedTableHeaderWrapperId", "divSystemGeneratedFixedTableHeaderWrapper"+tableId);
+				jsconfig.put("divSystemGeneratedFixedTableHeaderWrapperId"+tableId, "divSystemGeneratedFixedTableHeaderWrapper"+tableId);
 
 				var left = $table.offset().left;
 				$(options.attachTo).bind("scroll", function() {
