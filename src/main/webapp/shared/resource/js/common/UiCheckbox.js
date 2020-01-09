@@ -45,7 +45,9 @@ UiCheckbox.prototype = {
 	toHtmlString : function() {
 		var str = "";
 
-		str += "<input type=\"checkbox\" id=\""+this.id+"\" name=\""+this.name+"\"";
+		str += "<input type=\"checkbox\"";
+		if (!$.nony.isEmpty(this.id)) {str += " id=\""+this.id+"\"";}
+		if (!$.nony.isEmpty(this.name)) {str += " name=\""+this.name+"\"";}
 		if (!$.nony.isEmpty(this.className)) {str += " class=\""+this.className+"\"";}
 		if (!$.nony.isEmpty(this.style)) {str += " style=\""+this.style+"\"";}
 		if (!$.nony.isEmpty(this.script)) {str += " onclick=\""+this.script+"\"";}
