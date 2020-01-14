@@ -539,6 +539,15 @@ public class DataSet {
 		}
 	}
 
+	public void merge(DataSet ds) throws Exception {
+		for (int i=0; i<ds.getRowCnt(); i++) {
+			this.addRow(this.getColumnCnt());
+			for (int j=0; j<this.getColumnCnt(); j++) {
+				this.setValue(this.getRowCnt()-1, j, ds.getValue(i, j));
+			}
+		}
+	}
+
 	private String getString(Object object) throws Exception {
 		StringBuilder strBuilder = new StringBuilder();
 
