@@ -48,22 +48,6 @@ public class CommonUtil extends StringUtils {
 		return StringUtils.defaultIfBlank(value, replaceValue);
 	}
 
-	public static boolean equals(String value, String... values) {
-		boolean isEquals = true;
-		for (String val : values) {
-			if (!equals(value, val)) {return isEquals = false;}
-		}
-		return isEquals;
-	}
-
-	public static boolean equalsIgnoreCase(String value, String... values) {
-		boolean isEquals = true;
-		for (String val : values) {
-			if (!equalsIgnoreCase(value, val)) {return isEquals = false;}
-		}
-		return isEquals;
-	}
-
 	public static String[] splitWithTrim(String value, String separator) {
 		String str[] = StringUtils.splitByWholeSeparator(value, separator);
 		if (isEmpty(str)) {
