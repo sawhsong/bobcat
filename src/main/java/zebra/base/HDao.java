@@ -198,11 +198,11 @@ public class HDao extends HibernateDaoSupport {
 	}
 
 	protected int updateWithSQLQuery(QueryAdvisor queryAdvisor, String queryName) throws Exception {
-		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
-
-		if (dsWhereClause == null || dsWhereClause.getRowCnt() <= 0) {
-			throw new FrameworkException("E906", getMessage("E906"));
-		}
+//		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
+//
+//		if (dsWhereClause == null || dsWhereClause.getRowCnt() <= 0) {
+//			throw new FrameworkException("E906", getMessage("E906"));
+//		}
 
 		setSessionFactoryForMultiDatasource();
 		setNamedSQLQuery(queryName);
@@ -273,11 +273,11 @@ public class HDao extends HibernateDaoSupport {
 	}
 
 	protected int deleteWithSQLQuery(QueryAdvisor queryAdvisor, String queryName) throws Exception {
-		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
-
-		if (dsWhereClause == null || dsWhereClause.getRowCnt() <= 0) {
-			throw new FrameworkException("E906", getMessage("E906"));
-		}
+//		DataSet dsWhereClause = queryAdvisor.getWhereClauseDataSet();
+//
+//		if (dsWhereClause == null || dsWhereClause.getRowCnt() <= 0) {
+//			throw new FrameworkException("E906", getMessage("E906"));
+//		}
 
 		setSessionFactoryForMultiDatasource();
 		setNamedSQLQuery(queryName);
