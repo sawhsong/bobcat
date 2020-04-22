@@ -71,6 +71,7 @@
 			params.data = paramData;
 			params.error = function(xhr, textStatus, errorThrown) {
 				var data, contentsString = "";
+				var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 				console.log("request.status : "+xhr.status);
 				console.log("request.responseText : "+xhr.responseText);
@@ -107,17 +108,26 @@
 //				contentsString += errorThrown + "</br>";
 //				contentsString += data.message + "</br>";
 
-				$.nony.openDialog({
-					type:"Error",
-					contents:data,
-					width:"400",
-					height:"400",
-					buttons:[{
-						caption:com.caption.ok,
-						callback:function() {
+				if (msgHandleType == "message") {
+					$.nony.printProcMessage({
+						type:"Error",
+						message:data,
+						onClose:function() {
 						}
-					}]
-				});
+					});
+				} else if (msgHandleType == "popup") {
+					$.nony.openDialog({
+						type:"Error",
+						contents:data,
+						width:"400",
+						height:"400",
+						buttons:[{
+							caption:com.caption.ok,
+							callback:function() {
+							}
+						}]
+					});
+				}
 			};
 
 			params.complete = function(xhr, textStatus) {
@@ -183,6 +193,7 @@
 			params.headers = {"ajaxDataTypeForFramework":params.dataType};
 			params.error = function(xhr, textStatus, errorThrown) {
 				var data, contentsString = "";
+				var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 				console.log("request.status : "+xhr.status);
 				console.log("request.responseText : "+xhr.responseText);
@@ -219,17 +230,26 @@
 //				contentsString += errorThrown + "</br>";
 //				contentsString += data.message + "</br>";
 
-				$.nony.openDialog({
-					type:"Error",
-					contents:data,
-					width:"400",
-					height:"400",
-					buttons:[{
-						caption:com.caption.ok,
-						callback:function() {
+				if (msgHandleType == "message") {
+					$.nony.printProcMessage({
+						type:"Error",
+						message:data,
+						onClose:function() {
 						}
-					}]
-				});
+					});
+				} else if (msgHandleType == "popup") {
+					$.nony.openDialog({
+						type:"Error",
+						contents:data,
+						width:"400",
+						height:"400",
+						buttons:[{
+							caption:com.caption.ok,
+							callback:function() {
+							}
+						}]
+					});
+				}
 			};
 
 			params.complete = function(xhr, textStatus) {

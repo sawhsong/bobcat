@@ -32,6 +32,7 @@ var jsconfig = {
 		}
 	}
 };
+
 var chartColor = {
 	background0:"rgba(255, 99, 132, 0.2)",
 	border0:"rgba(255, 99, 132, 1)",
@@ -224,11 +225,21 @@ var nony = {
 				data:params.data || {},
 				success:function(data, textStatus) {
 					var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+					var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						params.callback(result);
 					} else {
-						commonJs.error(result.message);
+						if (msgHandleType == "message") {
+							$.nony.printProcMessage({
+								type:"Error",
+								message:result.message,
+								onClose:function() {
+								}
+							});
+						} else if (msgHandleType == "popup") {
+							commonJs.error(result.message);
+						}
 					}
 				}
 			});
@@ -242,11 +253,21 @@ var nony = {
 			data:params.data || {},
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+				var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 				if (result.isSuccess == true || result.isSuccess == "true") {
 					params.callback(result);
 				} else {
-					commonJs.error(result.message);
+					if (msgHandleType == "message") {
+						$.nony.printProcMessage({
+							type:"Error",
+							message:result.message,
+							onClose:function() {
+							}
+						});
+					} else if (msgHandleType == "popup") {
+						commonJs.error(result.message);
+					}
 				}
 			}
 		});
@@ -264,6 +285,7 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								if (params.showPostMessage == false) {
@@ -271,23 +293,45 @@ var nony = {
 										params.callback(result);
 									}, 400);
 								} else {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												setTimeout(function() {
-													params.callback(result);
-												}, 400);
-											}
-										}]
-									});
+									if (msgHandleType == "message") {
+										setTimeout(function() {
+											$.nony.printProcMessage({
+												type:"Success",
+												message:result.message,
+												onClose:function() {
+												}
+											});
+
+											params.callback(result);
+										}, 400);
+									} else if (msgHandleType == "popup") {
+										commonJs.openDialog({
+											type:com.message.I000,
+											contents:result.message,
+											blind:true,
+											width:300,
+											buttons:[{
+												caption:com.caption.ok,
+												callback:function() {
+													setTimeout(function() {
+														params.callback(result);
+													}, 400);
+												}
+											}]
+										});
+									}
 								}
 							} else {
-								commonJs.error(result.message);
+								if (msgHandleType == "message") {
+									$.nony.printProcMessage({
+										type:"Error",
+										message:result.message,
+										onClose:function() {
+										}
+									});
+								} else if (msgHandleType == "popup") {
+									commonJs.error(result.message);
+								}
 							}
 						}
 					});
@@ -312,6 +356,7 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								if (params.showPostMessage == false) {
@@ -319,23 +364,45 @@ var nony = {
 										params.callback(result);
 									}, 400);
 								} else {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												setTimeout(function() {
-													params.callback(result);
-												}, 400);
-											}
-										}]
-									});
+									if (msgHandleType == "message") {
+										setTimeout(function() {
+											$.nony.printProcMessage({
+												type:"Success",
+												message:result.message,
+												onClose:function() {
+												}
+											});
+
+											params.callback(result);
+										}, 400);
+									} else if (msgHandleType == "popup") {
+										commonJs.openDialog({
+											type:com.message.I000,
+											contents:result.message,
+											blind:true,
+											width:300,
+											buttons:[{
+												caption:com.caption.ok,
+												callback:function() {
+													setTimeout(function() {
+														params.callback(result);
+													}, 400);
+												}
+											}]
+										});
+									}
 								}
 							} else {
-								commonJs.error(result.message);
+								if (msgHandleType == "message") {
+									$.nony.printProcMessage({
+										type:"Error",
+										message:result.message,
+										onClose:function() {
+										}
+									});
+								} else if (msgHandleType == "popup") {
+									commonJs.error(result.message);
+								}
 							}
 						}
 					});
@@ -360,6 +427,7 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								if (params.showPostMessage == false) {
@@ -367,23 +435,45 @@ var nony = {
 										params.callback(result);
 									}, 400);
 								} else {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												setTimeout(function() {
-													params.callback(result);
-												}, 400);
-											}
-										}]
-									});
+									if (msgHandleType == "message") {
+										setTimeout(function() {
+											$.nony.printProcMessage({
+												type:"Success",
+												message:result.message,
+												onClose:function() {
+												}
+											});
+
+											params.callback(result);
+										}, 400);
+									} else if (msgHandleType == "popup") {
+										commonJs.openDialog({
+											type:com.message.I000,
+											contents:result.message,
+											blind:true,
+											width:300,
+											buttons:[{
+												caption:com.caption.ok,
+												callback:function() {
+													setTimeout(function() {
+														params.callback(result);
+													}, 400);
+												}
+											}]
+										});
+									}
 								}
 							} else {
-								commonJs.error(result.message);
+								if (msgHandleType == "message") {
+									$.nony.printProcMessage({
+										type:"Error",
+										message:result.message,
+										onClose:function() {
+										}
+									});
+								} else if (msgHandleType == "popup") {
+									commonJs.error(result.message);
+								}
 							}
 						}
 					});
@@ -408,6 +498,7 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								if (params.showPostMessage == false) {
@@ -415,23 +506,45 @@ var nony = {
 										params.callback(result);
 									}, 400);
 								} else {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												setTimeout(function() {
-													params.callback(result);
-												}, 400);
-											}
-										}]
-									});
+									if (msgHandleType == "message") {
+										setTimeout(function() {
+											$.nony.printProcMessage({
+												type:"Success",
+												message:result.message,
+												onClose:function() {
+												}
+											});
+
+											params.callback(result);
+										}, 400);
+									} else if (msgHandleType == "popup") {
+										commonJs.openDialog({
+											type:com.message.I000,
+											contents:result.message,
+											blind:true,
+											width:300,
+											buttons:[{
+												caption:com.caption.ok,
+												callback:function() {
+													setTimeout(function() {
+														params.callback(result);
+													}, 400);
+												}
+											}]
+										});
+									}
 								}
 							} else {
-								commonJs.error(result.message);
+								if (msgHandleType == "message") {
+									$.nony.printProcMessage({
+										type:"Error",
+										message:result.message,
+										onClose:function() {
+										}
+									});
+								} else if (msgHandleType == "popup") {
+									commonJs.error(result.message);
+								}
 							}
 						}
 					});
@@ -456,6 +569,7 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
+							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								if (params.showPostMessage == false) {
@@ -463,23 +577,45 @@ var nony = {
 										params.callback(result);
 									}, 400);
 								} else {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												setTimeout(function() {
-													params.callback(result);
-												}, 400);
-											}
-										}]
-									});
+									if (msgHandleType == "message") {
+										setTimeout(function() {
+											$.nony.printProcMessage({
+												type:"Success",
+												message:result.message,
+												onClose:function() {
+												}
+											});
+
+											params.callback(result);
+										}, 400);
+									} else if (msgHandleType == "popup") {
+										commonJs.openDialog({
+											type:com.message.I000,
+											contents:result.message,
+											blind:true,
+											width:300,
+											buttons:[{
+												caption:com.caption.ok,
+												callback:function() {
+													setTimeout(function() {
+														params.callback(result);
+													}, 400);
+												}
+											}]
+										});
+									}
 								}
 							} else {
-								commonJs.error(result.message);
+								if (msgHandleType == "message") {
+									$.nony.printProcMessage({
+										type:"Error",
+										message:result.message,
+										onClose:function() {
+										}
+									});
+								} else if (msgHandleType == "popup") {
+									commonJs.error(result.message);
+								}
 							}
 						}
 					});
@@ -737,6 +873,24 @@ var nony = {
 			val = $.nony.replace(val, "&#39;", "'");
 //			val = $.nony.replace(val, "&nbsp;", " ");
 			val = $.nony.replace(val, "<br/>", "\n");
+			val = $.nony.replace(val, "<br>", "\n");
+		}
+		return val;
+	},
+	stringToHtml : function(val) {
+		if ($.nony.isEmpty(val)) {
+			val = "";
+		} else {
+			val = $.nony.replace(val, "&", "&amp;");
+//			val = $.nony.replace(val, "#", "&#35;");
+//			val = $.nony.replace(val, "<", "&lt;");
+//			val = $.nony.replace(val, ">", "&gt;");
+//			val = $.nony.replace(val, "%", "&#37;");
+			val = $.nony.replace(val, "\"", "&quot;");
+			val = $.nony.replace(val, "'", "&#39;");
+//			val = $.nony.replace(val, " ", "&nbsp;");
+			val = $.nony.replace(val, "\n", "<br/>");
+//			val = $.nony.replace(val, "<br>", "\n");
 		}
 		return val;
 	},
@@ -1403,7 +1557,8 @@ var nony = {
 		var heightWindow = $(window).innerHeight();
 		var mainDivId;
 		var heightSum = 0, heightHeader = 0, heightFooter = 0, heightCorrection = 0;
-
+//commonJs.printLog({message:"heightWindow in core.js : "+heightWindow});
+//commonJs.printLog({message:"divFrameWindowHolder in core.js : "+$("#divFrameWindowHolder").outerHeight(true)});
 		if (isPopup) {
 			if ($("#divScrollablePanelPopup").length <= 0) {return;}
 		} else if (isTabFrame) {
@@ -1465,6 +1620,7 @@ var nony = {
 				heightWindow = $(parent.document).find(".frameContainer").height();
 				heightCorrection = jsconfig.get("scrollablePanelHeightAdjust") || 2;
 				$("#divScrollablePanelFrame").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
+//commonJs.printLog({message:"heightWindow(core.js) : "+heightWindow});
 			}
 		} else {
 			if (fixedScrollablePanelHeight > 0) {
@@ -1474,7 +1630,8 @@ var nony = {
 				$("#divScrollablePanel").height((heightWindow - (heightHeader + heightFooter + heightSum + heightCorrection))+"px");
 			}
 		}
-
+//commonJs.printLog({message:"isTabFrame(core.js) : "+isTabFrame});
+//commonJs.printLog({message:"$(#divScrollablePanelFrame).height(core.js) : "+$("#divScrollablePanelFrame").height()});
 		if (!jsconfig.get("isResizeScrollablePanelFuntionRegisteredInResizeEvent")) {
 			$(window).resize(function() {
 				setTimeout(function() {
@@ -1598,6 +1755,10 @@ var nony = {
 	},
 	/*!
 	 * Logging on console
+	 * 		option
+	 * 			resetFlag : true / false
+	 * 			message : message to display
+	 * 			onClose : onclose function
 	 */
 	printLog : function(params) {
 		if ($("#textAreaForLog").length) {
@@ -1668,6 +1829,98 @@ var nony = {
 		}
 	},
 	/*!
+	 * Logging Process Message
+	 * 		option
+	 * 			resetFlag : true / false
+	 * 			type : Confirm / Confirmation / Error / Information(Default) / Question / Warning / Success
+	 * 			message : message to display
+	 * 			onClose : onclose function
+	 */
+	printProcMessage : function(params) {
+		if ($("#divMessageAreaForProcMessage").length) {
+			if (params.resetFlag) {$(this.procMessageArea).html("");}
+
+			var html = "", str = $(this.procMessageArea).html();
+			if (str == "") {
+				html += "<table><tr>";
+				html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+"_Small.png"+"'/></td>";
+				html += "<td style='padding:2px 4px;line-height:14px;white-space:nowrap;'>"+params.message+"</td>";
+				html += "</tr></table>";
+			} else {
+				html += "<div class='verGap2'></div>";
+				html += "<table><tr>";
+				html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+"_Small.png"+"'/></td>";
+				html += "<td style='padding:2px 4px;line-height:14px;white-space:nowrap;'>"+params.message+"</td>";
+				html += "</tr></table>";
+			}
+			str += html;
+
+			$(this.procMessageArea).html(str);
+
+			$(this.procMessageArea).animate({scrollTop:$(this.procMessageArea).prop("scrollHeight")}, 1000);
+		} else {
+			var divLogPanelHolder = $("<div id='divLogPanelHolder'></div>");
+			var divMessageAreaForProcMessage = $("<div id='divMessageAreaForProcMessage' style='float:left;width:98%'></div>");
+			var divLogPanelCloser = $("<div id='divLogPanelCloser' style='float:right;width:1%'></div>");
+			var imgFolder = $("<i id='imgLogPanelCloserFolder' class='fa fa-chevron-circle-down fa-lg icnEn' flag='Fold'></i>");
+			var imgClose = $("<i id='imgLogPanelColserClose' class='fa fa-times-circle fa-lg icnEn'></i>");
+			var holderTop = ($(window).innerHeight() + $(window).scrollTop());
+
+			$(divLogPanelHolder).append(divMessageAreaForProcMessage);
+			$(divLogPanelCloser).append(imgFolder);
+			$(divLogPanelCloser).append(imgClose);
+			$(divLogPanelHolder).append(divLogPanelCloser);
+			$("body").append(divLogPanelHolder);
+
+			$(divMessageAreaForProcMessage).css({
+				"width":($(window).outerWidth() - 34) + "px"
+			});
+
+			$("#divLogPanelHolder").css("top", holderTop + "px");
+			$("#divLogPanelHolder").animate({
+				marginTop:"-" + ($("#divLogPanelHolder").height() + 16) + "px"
+			}, 1000);
+
+			// be careful of order
+			this.procMessageArea = divMessageAreaForProcMessage;
+			this.printProcMessage(params);
+
+			$(window).scroll(this._reposProcMessage);
+			$(window).resize(this._reposProcMessage);
+
+			$(imgFolder).bind("click", function() {
+				if ("Fold" == $("#imgLogPanelCloserFolder").attr("flag")) {
+					$("#divLogPanelHolder").animate({
+						marginTop:"+=70px",
+						height:"34px"
+					}, 800, function() {
+						$("#imgLogPanelCloserFolder").removeClass("fa-chevron-circle-down").addClass("fa-chevron-circle-up").attr("flag", "Expand");
+					});
+				} else {
+					$("#divLogPanelHolder").animate({
+						marginTop:"-=70px",
+						height:"180px"
+					}, 800, function() {
+						$("#imgLogPanelCloserFolder").removeClass("fa-chevron-circle-up").addClass("fa-chevron-circle-down").attr("flag", "Fold");
+					});
+				}
+			});
+
+			$(imgClose).bind("click", function(event) {
+				$("#divLogPanelHolder").stop().animate({
+					marginTop:"200px"
+				}, 500, function() {
+					$("#divMessageAreaForProcMessage").remove();
+					$("#divLogPanelHolder").remove();
+				});
+
+				if (typeof params.onClose == "function") {
+					params.onClose();
+				}
+			});
+		}
+	},
+	/*!
 	 * private methods
 	 */
 	_reposLogPanel : function() {
@@ -1679,6 +1932,15 @@ var nony = {
 			$("#divLogPanelHolder").css("top", ($(window).innerHeight() - ($("#divLogPanelHolder").height() + 16)) + "px");
 		}
 	},
+	_reposProcMessage : function() {
+		if (nony.procMessageArea) {
+			$("#divMessageAreaForProcMessage").css("width", ($(window).width() - 34) + "px");
+			$("#divLogPanelHolder").css("top", ($(window).innerHeight() - ($("#divLogPanelHolder").height() + 16)) + "px");
+			$("#divLogPanelHolder").stop().animate({"margin-top":$(window).scrollTop() + "px"}, "slow", "swing");
+			$("#divMessageAreaForProcMessage").css("width", ($(window).width() - 34) + "px");
+			$("#divLogPanelHolder").css("top", ($(window).innerHeight() - ($("#divLogPanelHolder").height() + 16)) + "px");
+		}
+	}
 };
 
 /**

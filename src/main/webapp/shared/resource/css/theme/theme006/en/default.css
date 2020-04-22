@@ -96,6 +96,10 @@ label.hor, input[type=text].hor, input[type=file].hor, i.hor, img.hor {float:lef
 	border:0px solid #ADADAD;
 	background:#FFFFFF;
 }
+#divMessageAreaForProcMessage {overflow:auto;width:100%;height:80px;outline:0;
+	border:0px solid #ADADAD;
+	background:#FFFFFF;
+}
 #divLogPanelCloser {float:right;width:20px;text-align:right;}
 #imgLogPanelCloserFolder {margin:0px 2px 0px 1px;}
 #imgLogPanelColserClose {margin:5px 2px 0px 1px;}
