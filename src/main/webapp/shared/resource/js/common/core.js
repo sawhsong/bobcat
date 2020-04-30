@@ -235,10 +235,18 @@ var nony = {
 								type:"Error",
 								message:result.message,
 								onClose:function() {
+									try {
+										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+										$.nony.hideProcMessage();
+									} catch(e) {}
 								}
 							});
 						} else if (msgHandleType == "popup") {
 							commonJs.error(result.message);
+							try {
+								$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+								$.nony.hideProcMessage();
+							} catch(e) {}
 						}
 					}
 				}
@@ -263,10 +271,18 @@ var nony = {
 							type:"Error",
 							message:result.message,
 							onClose:function() {
+								try {
+									$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+									$.nony.hideProcMessage();
+								} catch(e) {}
 							}
 						});
 					} else if (msgHandleType == "popup") {
 						commonJs.error(result.message);
+						try {
+							$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+							$.nony.hideProcMessage();
+						} catch(e) {}
 					}
 				}
 			}
@@ -327,10 +343,18 @@ var nony = {
 										type:"Error",
 										message:result.message,
 										onClose:function() {
+											try {
+												$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+												$.nony.hideProcMessage();
+											} catch(e) {}
 										}
 									});
 								} else if (msgHandleType == "popup") {
 									commonJs.error(result.message);
+									try {
+										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+										$.nony.hideProcMessage();
+									} catch(e) {}
 								}
 							}
 						}
@@ -398,10 +422,18 @@ var nony = {
 										type:"Error",
 										message:result.message,
 										onClose:function() {
+											try {
+												$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+												$.nony.hideProcMessage();
+											} catch(e) {}
 										}
 									});
 								} else if (msgHandleType == "popup") {
 									commonJs.error(result.message);
+									try {
+										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+										$.nony.hideProcMessage();
+									} catch(e) {}
 								}
 							}
 						}
@@ -469,10 +501,18 @@ var nony = {
 										type:"Error",
 										message:result.message,
 										onClose:function() {
+											try {
+												$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+												$.nony.hideProcMessage();
+											} catch(e) {}
 										}
 									});
 								} else if (msgHandleType == "popup") {
 									commonJs.error(result.message);
+									try {
+										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+										$.nony.hideProcMessage();
+									} catch(e) {}
 								}
 							}
 						}
@@ -540,10 +580,18 @@ var nony = {
 										type:"Error",
 										message:result.message,
 										onClose:function() {
+											try {
+												$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+												$.nony.hideProcMessage();
+											} catch(e) {}
 										}
 									});
 								} else if (msgHandleType == "popup") {
 									commonJs.error(result.message);
+									try {
+										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+										$.nony.hideProcMessage();
+									} catch(e) {}
 								}
 							}
 						}
@@ -611,10 +659,18 @@ var nony = {
 										type:"Error",
 										message:result.message,
 										onClose:function() {
+											try {
+												$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+												$.nony.hideProcMessage();
+											} catch(e) {}
 										}
 									});
 								} else if (msgHandleType == "popup") {
 									commonJs.error(result.message);
+									try {
+										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+										$.nony.hideProcMessage();
+									} catch(e) {}
 								}
 							}
 						}
@@ -1440,9 +1496,11 @@ var nony = {
 				opacity:"0.1"
 			}
 		});
+		jsconfig.put("showProcMessageOnElement", blockElementId);
 	},
 	hideProcMessageOnElement : function(blockElementId) {
 		$("#"+blockElementId).unblock();
+		jsconfig.remove("showProcMessageOnElement");
 	},
 	/*!
 	 * controlling tab - relevant elements should be div which has the same index of the tab as an id
