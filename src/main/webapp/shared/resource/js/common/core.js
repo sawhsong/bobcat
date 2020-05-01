@@ -214,7 +214,7 @@ var nony = {
 		return paramData;
 	},
 	/*!
-	 * process wrappers
+	 * Ajax process wrappers
 	 */
 	doSearch : function(params) {
 		setTimeout(function() {
@@ -234,28 +234,8 @@ var nony = {
 							params.onSuccess(result);
 						}
 					} else {
-						if (typeof params.onError == "function") {
-							params.onError(result);
-						} else {
-							if (msgHandleType == "message") {
-								$.nony.printProcMessage({
-									type:"Error",
-									message:result.message,
-									onClose:function() {
-										try {
-											$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-											$.nony.hideProcMessage();
-										} catch(e) {}
-									}
-								});
-							} else if (msgHandleType == "popup") {
-								commonJs.error(result.message);
-								try {
-									$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-									$.nony.hideProcMessage();
-								} catch(e) {}
-							}
-						}
+						$.nony._doAjaxSessionTimeoutProc(data);
+						$.nony._doAjaxErrorProc(params, result);
 					}
 				}
 			});
@@ -278,28 +258,8 @@ var nony = {
 						params.onSuccess(result);
 					}
 				} else {
-					if (typeof params.onError == "function") {
-						params.onError(result);
-					} else {
-						if (msgHandleType == "message") {
-							$.nony.printProcMessage({
-								type:"Error",
-								message:result.message,
-								onClose:function() {
-									try {
-										$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-										$.nony.hideProcMessage();
-									} catch(e) {}
-								}
-							});
-						} else if (msgHandleType == "popup") {
-							commonJs.error(result.message);
-							try {
-								$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-								$.nony.hideProcMessage();
-							} catch(e) {}
-						}
-					}
+					$.nony._doAjaxSessionTimeoutProc(data);
+					$.nony._doAjaxErrorProc(params, result);
 				}
 			}
 		});
@@ -320,74 +280,10 @@ var nony = {
 							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
-								if (params.showPostMessage == false) {
-									setTimeout(function() {
-										if (typeof params.callback == "function") {
-											params.callback(result);
-										} else if (typeof params.onSuccess == "function") {
-											params.onSuccess(result);
-										}
-									}, 400);
-								} else {
-									if (msgHandleType == "message") {
-										setTimeout(function() {
-											$.nony.printProcMessage({
-												type:"Success",
-												message:result.message,
-												onClose:function() {
-												}
-											});
-
-											if (typeof params.callback == "function") {
-												params.callback(result);
-											} else if (typeof params.onSuccess == "function") {
-												params.onSuccess(result);
-											}
-										}, 400);
-									} else if (msgHandleType == "popup") {
-										commonJs.openDialog({
-											type:com.message.I000,
-											contents:result.message,
-											blind:true,
-											width:300,
-											buttons:[{
-												caption:com.caption.ok,
-												callback:function() {
-													setTimeout(function() {
-														if (typeof params.callback == "function") {
-															params.callback(result);
-														} else if (typeof params.onSuccess == "function") {
-															params.onSuccess(result);
-														}
-													}, 400);
-												}
-											}]
-										});
-									}
-								}
+								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								if (typeof params.onError == "function") {
-									params.onError(result);
-								} else {
-									if (msgHandleType == "message") {
-										$.nony.printProcMessage({
-											type:"Error",
-											message:result.message,
-											onClose:function() {
-												try {
-													$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-													$.nony.hideProcMessage();
-												} catch(e) {}
-											}
-										});
-									} else if (msgHandleType == "popup") {
-										commonJs.error(result.message);
-										try {
-											$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-											$.nony.hideProcMessage();
-										} catch(e) {}
-									}
-								}
+								$.nony._doAjaxSessionTimeoutProc(data);
+								$.nony._doAjaxErrorProc(params, result);
 							}
 						}
 					});
@@ -415,74 +311,10 @@ var nony = {
 							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
-								if (params.showPostMessage == false) {
-									setTimeout(function() {
-										if (typeof params.callback == "function") {
-											params.callback(result);
-										} else if (typeof params.onSuccess == "function") {
-											params.onSuccess(result);
-										}
-									}, 400);
-								} else {
-									if (msgHandleType == "message") {
-										setTimeout(function() {
-											$.nony.printProcMessage({
-												type:"Success",
-												message:result.message,
-												onClose:function() {
-												}
-											});
-
-											if (typeof params.callback == "function") {
-												params.callback(result);
-											} else if (typeof params.onSuccess == "function") {
-												params.onSuccess(result);
-											}
-										}, 400);
-									} else if (msgHandleType == "popup") {
-										commonJs.openDialog({
-											type:com.message.I000,
-											contents:result.message,
-											blind:true,
-											width:300,
-											buttons:[{
-												caption:com.caption.ok,
-												callback:function() {
-													setTimeout(function() {
-														if (typeof params.callback == "function") {
-															params.callback(result);
-														} else if (typeof params.onSuccess == "function") {
-															params.onSuccess(result);
-														}
-													}, 400);
-												}
-											}]
-										});
-									}
-								}
+								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								if (typeof params.onError == "function") {
-									params.onError(result);
-								} else {
-									if (msgHandleType == "message") {
-										$.nony.printProcMessage({
-											type:"Error",
-											message:result.message,
-											onClose:function() {
-												try {
-													$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-													$.nony.hideProcMessage();
-												} catch(e) {}
-											}
-										});
-									} else if (msgHandleType == "popup") {
-										commonJs.error(result.message);
-										try {
-											$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-											$.nony.hideProcMessage();
-										} catch(e) {}
-									}
-								}
+								$.nony._doAjaxSessionTimeoutProc(data);
+								$.nony._doAjaxErrorProc(params, result);
 							}
 						}
 					});
@@ -510,74 +342,10 @@ var nony = {
 							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
-								if (params.showPostMessage == false) {
-									setTimeout(function() {
-										if (typeof params.callback == "function") {
-											params.callback(result);
-										} else if (typeof params.onSuccess == "function") {
-											params.onSuccess(result);
-										}
-									}, 400);
-								} else {
-									if (msgHandleType == "message") {
-										setTimeout(function() {
-											$.nony.printProcMessage({
-												type:"Success",
-												message:result.message,
-												onClose:function() {
-												}
-											});
-
-											if (typeof params.callback == "function") {
-												params.callback(result);
-											} else if (typeof params.onSuccess == "function") {
-												params.onSuccess(result);
-											}
-										}, 400);
-									} else if (msgHandleType == "popup") {
-										commonJs.openDialog({
-											type:com.message.I000,
-											contents:result.message,
-											blind:true,
-											width:300,
-											buttons:[{
-												caption:com.caption.ok,
-												callback:function() {
-													setTimeout(function() {
-														if (typeof params.callback == "function") {
-															params.callback(result);
-														} else if (typeof params.onSuccess == "function") {
-															params.onSuccess(result);
-														}
-													}, 400);
-												}
-											}]
-										});
-									}
-								}
+								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								if (typeof params.onError == "function") {
-									params.onError(result);
-								} else {
-									if (msgHandleType == "message") {
-										$.nony.printProcMessage({
-											type:"Error",
-											message:result.message,
-											onClose:function() {
-												try {
-													$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-													$.nony.hideProcMessage();
-												} catch(e) {}
-											}
-										});
-									} else if (msgHandleType == "popup") {
-										commonJs.error(result.message);
-										try {
-											$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-											$.nony.hideProcMessage();
-										} catch(e) {}
-									}
-								}
+								$.nony._doAjaxSessionTimeoutProc(data);
+								$.nony._doAjaxErrorProc(params, result);
 							}
 						}
 					});
@@ -605,74 +373,10 @@ var nony = {
 							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
-								if (params.showPostMessage == false) {
-									setTimeout(function() {
-										if (typeof params.callback == "function") {
-											params.callback(result);
-										} else if (typeof params.onSuccess == "function") {
-											params.onSuccess(result);
-										}
-									}, 400);
-								} else {
-									if (msgHandleType == "message") {
-										setTimeout(function() {
-											$.nony.printProcMessage({
-												type:"Success",
-												message:result.message,
-												onClose:function() {
-												}
-											});
-
-											if (typeof params.callback == "function") {
-												params.callback(result);
-											} else if (typeof params.onSuccess == "function") {
-												params.onSuccess(result);
-											}
-										}, 400);
-									} else if (msgHandleType == "popup") {
-										commonJs.openDialog({
-											type:com.message.I000,
-											contents:result.message,
-											blind:true,
-											width:300,
-											buttons:[{
-												caption:com.caption.ok,
-												callback:function() {
-													setTimeout(function() {
-														if (typeof params.callback == "function") {
-															params.callback(result);
-														} else if (typeof params.onSuccess == "function") {
-															params.onSuccess(result);
-														}
-													}, 400);
-												}
-											}]
-										});
-									}
-								}
+								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								if (typeof params.onError == "function") {
-									params.onError(result);
-								} else {
-									if (msgHandleType == "message") {
-										$.nony.printProcMessage({
-											type:"Error",
-											message:result.message,
-											onClose:function() {
-												try {
-													$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-													$.nony.hideProcMessage();
-												} catch(e) {}
-											}
-										});
-									} else if (msgHandleType == "popup") {
-										commonJs.error(result.message);
-										try {
-											$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-											$.nony.hideProcMessage();
-										} catch(e) {}
-									}
-								}
+								$.nony._doAjaxSessionTimeoutProc(data);
+								$.nony._doAjaxErrorProc(params, result);
 							}
 						}
 					});
@@ -700,74 +404,10 @@ var nony = {
 							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
-								if (params.showPostMessage == false) {
-									setTimeout(function() {
-										if (typeof params.callback == "function") {
-											params.callback(result);
-										} else if (typeof params.onSuccess == "function") {
-											params.onSuccess(result);
-										}
-									}, 400);
-								} else {
-									if (msgHandleType == "message") {
-										setTimeout(function() {
-											$.nony.printProcMessage({
-												type:"Success",
-												message:result.message,
-												onClose:function() {
-												}
-											});
-
-											if (typeof params.callback == "function") {
-												params.callback(result);
-											} else if (typeof params.onSuccess == "function") {
-												params.onSuccess(result);
-											}
-										}, 400);
-									} else if (msgHandleType == "popup") {
-										commonJs.openDialog({
-											type:com.message.I000,
-											contents:result.message,
-											blind:true,
-											width:300,
-											buttons:[{
-												caption:com.caption.ok,
-												callback:function() {
-													setTimeout(function() {
-														if (typeof params.callback == "function") {
-															params.callback(result);
-														} else if (typeof params.onSuccess == "function") {
-															params.onSuccess(result);
-														}
-													}, 400);
-												}
-											}]
-										});
-									}
-								}
+								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								if (typeof params.onError == "function") {
-									params.onError(result);
-								} else {
-									if (msgHandleType == "message") {
-										$.nony.printProcMessage({
-											type:"Error",
-											message:result.message,
-											onClose:function() {
-												try {
-													$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-													$.nony.hideProcMessage();
-												} catch(e) {}
-											}
-										});
-									} else if (msgHandleType == "popup") {
-										commonJs.error(result.message);
-										try {
-											$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-											$.nony.hideProcMessage();
-										} catch(e) {}
-									}
-								}
+								$.nony._doAjaxSessionTimeoutProc(data);
+								$.nony._doAjaxErrorProc(params, result);
 							}
 						}
 					});
@@ -1904,6 +1544,110 @@ var nony = {
 						$("[name = '"+elemName+"']").val(dataSet.getValue(0, name));
 					}
 				}
+			}
+		}
+	},
+	_doAjaxSuccessProc : function(params, result) {
+		var msgHandleType = jsconfig.get("pagehandlerActionType");
+
+		if (params.showPostMessage == false) {
+			setTimeout(function() {
+				if (typeof params.callback == "function") {
+					params.callback(result);
+				} else if (typeof params.onSuccess == "function") {
+					params.onSuccess(result);
+				}
+			}, 400);
+		} else {
+			if (msgHandleType == "message") {
+				setTimeout(function() {
+					$.nony.printProcMessage({
+						type:"Success",
+						message:result.message,
+						onClose:function() {
+						}
+					});
+
+					if (typeof params.callback == "function") {
+						params.callback(result);
+					} else if (typeof params.onSuccess == "function") {
+						params.onSuccess(result);
+					}
+				}, 400);
+			} else if (msgHandleType == "popup") {
+				commonJs.openDialog({
+					type:com.message.I000,
+					contents:result.message,
+					blind:true,
+					width:300,
+					buttons:[{
+						caption:com.caption.ok,
+						callback:function() {
+							setTimeout(function() {
+								if (typeof params.callback == "function") {
+									params.callback(result);
+								} else if (typeof params.onSuccess == "function") {
+									params.onSuccess(result);
+								}
+							}, 400);
+						}
+					}]
+				});
+			}
+		}
+	},
+	_doAjaxErrorProc : function(params, result) {
+		var msgHandleType = jsconfig.get("pagehandlerActionType");
+
+		if (typeof params.onError == "function") {
+			params.onError(result);
+		} else {
+			if (msgHandleType == "message") {
+				$.nony.printProcMessage({
+					type:"Error",
+					message:result.message,
+					onClose:function() {
+						try {
+							$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+							$.nony.hideProcMessage();
+						} catch(e) {}
+					}
+				});
+			} else if (msgHandleType == "popup") {
+				commonJs.error(result.message);
+				try {
+					$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+					$.nony.hideProcMessage();
+				} catch(e) {}
+			}
+		}
+	},
+	_doAjaxSessionTimeoutProc : function(data) {
+		var msgHandleType = jsconfig.get("pagehandlerActionType");
+
+		if ("SessionTimedOut" == data) {
+			if (msgHandleType == "message") {
+				$.nony.printProcMessage({
+					type:"Error",
+					message:com.message.sessionTimeOut,
+					onClose:function() {
+						try {
+							location.replace("/index/index.do");
+						} catch(e) {}
+					}
+				});
+			} else if (msgHandleType == "popup") {
+				commonJs.openDialog({
+					contents:com.message.sessionTimeOut,
+					buttons:[{
+						caption:com.caption.ok,
+						callback:function() {
+							location.replace("/index/index.do");
+						}
+					}],
+					width:330,
+					blind:true
+				});
 			}
 		}
 	},
