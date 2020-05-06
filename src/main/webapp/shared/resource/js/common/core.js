@@ -225,14 +225,9 @@ var nony = {
 				data:params.data || {},
 				success:function(data, textStatus) {
 					var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-					var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 					if (result.isSuccess == true || result.isSuccess == "true") {
-						if (typeof params.callback == "function") {
-							params.callback(result);
-						} else if (typeof params.onSuccess == "function") {
-							params.onSuccess(result);
-						}
+						$.nony._doAjaxSimpleSuccessProc(params, result);
 					} else {
 						$.nony._doAjaxSessionTimeoutProc(data);
 						$.nony._doAjaxErrorProc(params, result);
@@ -249,14 +244,9 @@ var nony = {
 			data:params.data || {},
 			success:function(data, textStatus) {
 				var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-				var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 				if (result.isSuccess == true || result.isSuccess == "true") {
-					if (typeof params.callback == "function") {
-						params.callback(result);
-					} else if (typeof params.onSuccess == "function") {
-						params.onSuccess(result);
-					}
+					$.nony._doAjaxSimpleSuccessProc(params, result);
 				} else {
 					$.nony._doAjaxSessionTimeoutProc(data);
 					$.nony._doAjaxErrorProc(params, result);
@@ -1547,6 +1537,13 @@ var nony = {
 			}
 		}
 	},
+	_doAjaxSimpleSuccessProc : function(params, result) {
+		if (typeof params.callback == "function") {
+			params.callback(result);
+		} else if (typeof params.onSuccess == "function") {
+			params.onSuccess(result);
+		}
+	},
 	_doAjaxSuccessProc : function(params, result) {
 		var msgHandleType = jsconfig.get("pagehandlerActionType");
 
@@ -1649,6 +1646,8 @@ var nony = {
 					blind:true
 				});
 			}
+
+			return;
 		}
 	},
 	/*!
