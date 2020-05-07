@@ -229,8 +229,7 @@ var nony = {
 					if (result.isSuccess == true || result.isSuccess == "true") {
 						$.nony._doAjaxSimpleSuccessProc(params, result);
 					} else {
-						$.nony._doAjaxSessionTimeoutProc(data);
-						$.nony._doAjaxErrorProc(params, result);
+						$.nony._doAjaxErrorProc(params, data, result);
 					}
 				}
 			});
@@ -248,8 +247,7 @@ var nony = {
 				if (result.isSuccess == true || result.isSuccess == "true") {
 					$.nony._doAjaxSimpleSuccessProc(params, result);
 				} else {
-					$.nony._doAjaxSessionTimeoutProc(data);
-					$.nony._doAjaxErrorProc(params, result);
+					$.nony._doAjaxErrorProc(params, data, result);
 				}
 			}
 		});
@@ -267,13 +265,11 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								$.nony._doAjaxSessionTimeoutProc(data);
-								$.nony._doAjaxErrorProc(params, result);
+								$.nony._doAjaxErrorProc(params, data, result);
 							}
 						}
 					});
@@ -298,13 +294,11 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								$.nony._doAjaxSessionTimeoutProc(data);
-								$.nony._doAjaxErrorProc(params, result);
+								$.nony._doAjaxErrorProc(params, data, result);
 							}
 						}
 					});
@@ -329,13 +323,11 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								$.nony._doAjaxSessionTimeoutProc(data);
-								$.nony._doAjaxErrorProc(params, result);
+								$.nony._doAjaxErrorProc(params, data, result);
 							}
 						}
 					});
@@ -360,13 +352,11 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								$.nony._doAjaxSessionTimeoutProc(data);
-								$.nony._doAjaxErrorProc(params, result);
+								$.nony._doAjaxErrorProc(params, data, result);
 							}
 						}
 					});
@@ -391,13 +381,11 @@ var nony = {
 						data:params.data || {},
 						success:function(data, textStatus) {
 							var result = commonJs.parseAjaxResult(data, textStatus, params.dataType||"json");
-							var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 							if (result.isSuccess == true || result.isSuccess == "true") {
 								$.nony._doAjaxSuccessProc(params, result);
 							} else {
-								$.nony._doAjaxSessionTimeoutProc(data);
-								$.nony._doAjaxErrorProc(params, result);
+								$.nony._doAjaxErrorProc(params, data, result);
 							}
 						}
 					});
@@ -1593,33 +1581,7 @@ var nony = {
 			}
 		}
 	},
-	_doAjaxErrorProc : function(params, result) {
-		var msgHandleType = jsconfig.get("pagehandlerActionType");
-
-		if (typeof params.onError == "function") {
-			params.onError(result);
-		} else {
-			if (msgHandleType == "message") {
-				$.nony.printProcMessage({
-					type:"Error",
-					message:result.message,
-					onClose:function() {
-						try {
-							$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-							$.nony.hideProcMessage();
-						} catch(e) {}
-					}
-				});
-			} else if (msgHandleType == "popup") {
-				commonJs.error(result.message);
-				try {
-					$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
-					$.nony.hideProcMessage();
-				} catch(e) {}
-			}
-		}
-	},
-	_doAjaxSessionTimeoutProc : function(data) {
+	_doAjaxErrorProc : function(params, data, result) {
 		var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 		if ("SessionTimedOut" == data) {
@@ -1646,8 +1608,29 @@ var nony = {
 					blind:true
 				});
 			}
-
-			return;
+		} else {
+			if (typeof params.onError == "function") {
+				params.onError(result);
+			} else {
+				if (msgHandleType == "message") {
+					$.nony.printProcMessage({
+						type:"Error",
+						message:result.message,
+						onClose:function() {
+							try {
+								$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+								$.nony.hideProcMessage();
+							} catch(e) {}
+						}
+					});
+				} else if (msgHandleType == "popup") {
+					commonJs.error(result.message);
+					try {
+						$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
+						$.nony.hideProcMessage();
+					} catch(e) {}
+				}
+			}
 		}
 	},
 	/*!
