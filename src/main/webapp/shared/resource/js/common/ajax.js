@@ -19,7 +19,7 @@
 		ajaxSubmit : function(params) {
 			params.url = params.url;
 			params.async = (params.async == true) ? true : false;
-			params.dataType = params.dataType || "json";
+			params.dataType = params.dataType || "html";
 			params.type = params.type || "POST";
 			params.formId = params.formId;
 			params.data = params.data || {};
@@ -67,7 +67,7 @@
 			$(document).ajaxStop(function() {
 			});
 
-			params.headers = {"ajaxDataTypeForFramework":params.dataType};
+			params.headers = {"ajaxDataTypeForFramework":params.dataType, "isAjaxCallForFramework":"true"};
 			params.data = paramData;
 			params.error = function(xhr, textStatus, errorThrown) {
 				var data, contentsString = "";
@@ -75,24 +75,36 @@
 
 				console.log("request.status : "+xhr.status);
 				console.log("request.responseText : "+xhr.responseText);
+				console.log("request.responseXML : "+xhr.responseXML);
 				console.log("textStatus : "+textStatus);
 				console.log("errorThrown : "+errorThrown);
 
 				try {
 					if (xhr.responseText == "SessionTimedOut" || xhr.responseXML == "SessionTimedOut") {
-						commonJs.openDialog({
-							contents:com.message.sessionTimeOut,
-							buttons:[{
-								caption:com.caption.ok,
-								callback:function() {
+						if (msgHandleType == "message") {
+							$.nony.printProcMessage({
+								type:"Error",
+								message:com.message.sessionTimeOut,
+								onClose:function() {
 									location.replace("/index/index.do");
 								}
-							}],
-							width:330,
-							blind:true
-						});
+							});
+						} else if (msgHandleType == "popup") {
+							commonJs.openDialog({
+								type:"Error",
+								contents:com.message.sessionTimeOut,
+								buttons:[{
+									caption:com.caption.ok,
+									callback:function() {
+										location.replace("/index/index.do");
+									}
+								}],
+								width:330,
+								blind:true
+							});
+						}
 
-						return;
+						return false;
 					}
 				} catch(e) {}
 
@@ -103,10 +115,6 @@
 				} else {
 					data = xhr.responseText;
 				}
-
-//				contentsString += textStatus + "</br>";
-//				contentsString += errorThrown + "</br>";
-//				contentsString += data.message + "</br>";
 
 				if (msgHandleType == "message") {
 					$.nony.printProcMessage({
@@ -170,7 +178,7 @@
 				}
 			}
 
-			params.dataType = params.dataType || "json";
+			params.dataType = params.dataType || "html";
 			params.type = "POST";
 			params.data = formData;
 			params.contentType = false,
@@ -190,31 +198,43 @@
 			$(document).ajaxStop(function() {
 			});
 
-			params.headers = {"ajaxDataTypeForFramework":params.dataType};
+			params.headers = {"ajaxDataTypeForFramework":params.dataType, "isAjaxCallForFramework":"true"};
 			params.error = function(xhr, textStatus, errorThrown) {
 				var data, contentsString = "";
 				var msgHandleType = jsconfig.get("pagehandlerActionType");
 
 				console.log("request.status : "+xhr.status);
 				console.log("request.responseText : "+xhr.responseText);
+				console.log("request.responseXML : "+xhr.responseXML);
 				console.log("textStatus : "+textStatus);
 				console.log("errorThrown : "+errorThrown);
 
 				try {
 					if (xhr.responseText == "SessionTimedOut" || xhr.responseXML == "SessionTimedOut") {
-						commonJs.openDialog({
-							contents:com.message.sessionTimeOut,
-							buttons:[{
-								caption:com.caption.ok,
-								callback:function() {
-									location.replace("/index/index");
+						if (msgHandleType == "message") {
+							$.nony.printProcMessage({
+								type:"Error",
+								message:com.message.sessionTimeOut,
+								onClose:function() {
+									location.replace("/index/index.do");
 								}
-							}],
-							width:330,
-							blind:true
-						});
+							});
+						} else if (msgHandleType == "popup") {
+							commonJs.openDialog({
+								type:"Error",
+								contents:com.message.sessionTimeOut,
+								buttons:[{
+									caption:com.caption.ok,
+									callback:function() {
+										location.replace("/index/index.do");
+									}
+								}],
+								width:330,
+								blind:true
+							});
+						}
 
-						return;
+						return false;
 					}
 				} catch(e) {}
 
@@ -225,10 +245,6 @@
 				} else {
 					data = xhr.responseText;
 				}
-
-//				contentsString += textStatus + "</br>";
-//				contentsString += errorThrown + "</br>";
-//				contentsString += data.message + "</br>";
 
 				if (msgHandleType == "message") {
 					$.nony.printProcMessage({

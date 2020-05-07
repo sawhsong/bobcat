@@ -97,7 +97,7 @@ public class LoginInterceptor implements Interceptor {
 	}
 
 	private boolean isAjaxCall(HttpServletRequest request) {
-		if (CommonUtil.isNotBlank(request.getHeader("ajaxdatatypeforframework"))) {
+		if (CommonUtil.toBoolean(request.getHeader("isAjaxCallForFramework"))) {
 			return true;
 		} else {
 			return false;
