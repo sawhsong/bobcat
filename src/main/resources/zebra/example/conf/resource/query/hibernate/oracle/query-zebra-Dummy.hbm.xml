@@ -57,7 +57,7 @@
 		       a.column_name,
 		       a.data_type,
 		       a.data_default,
-		       decode(a.data_type, 'NUMBER', decode(a.data_precision || ',' || a.data_scale, ',', '', a.data_precision || ',' || a.data_scale), a.data_length) data_length,
+		       decode(a.data_type, 'NUMBER', decode(a.data_precision || ',' || a.data_scale, ',', '', nvl(a.data_precision, 12) || ',' || a.data_scale), a.data_length) data_length,
 		       a.nullable,
 		       c.constraint_type,
 		       d.comments,
