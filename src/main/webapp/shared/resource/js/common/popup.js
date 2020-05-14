@@ -405,7 +405,7 @@
 				params.dialogContentsWidth = (params.width);
 			}
 
-			params.dialogContentsHeight = $(table).outerHeight();
+			params.dialogContentsHeight = $(table).outerHeight()+6;
 
 			$(table).remove();
 		},
