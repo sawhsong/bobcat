@@ -343,7 +343,7 @@
 //commonJs.printLog({message:"$(options.attachTo).height(2) : "+$(options.attachTo).height()});
 //commonJs.printLog({message:"$(this).height() : "+$(this).height()});
 			if ($(this).height() <= $(options.attachTo).height()) {
-				$(options.attachTo).height($(this).height() + (heightAdjustment - 4));
+				$(options.attachTo).height($(this).height() + (pagingAreaHeight + heightAdjustment - 4));
 			}
 
 			/*!
