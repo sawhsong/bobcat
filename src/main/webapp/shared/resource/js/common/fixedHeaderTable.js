@@ -346,7 +346,11 @@
 				if (options.isPageable) {
 					$(options.attachTo).height($(this).height() + (heightAdjustment - 4));
 				} else {
-					$(options.attachTo).height($(this).height() + (pagingAreaHeight + heightAdjustment - 4));
+					if (options.displayRowCount) {
+						$(options.attachTo).height($(this).height() + (pagingAreaHeight + heightAdjustment - 4));
+					} else {
+						$(options.attachTo).height($(this).height() + (heightAdjustment - 4));
+					}
 				}
 			}
 
