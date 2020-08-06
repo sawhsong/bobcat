@@ -55,6 +55,7 @@ var commonJs = {
 	abbreviate : function(val, length) {return $.nony.abbreviate(val, length);},
 	toBoolean : function(val) {return $.nony.toBoolean(val);},
 	htmlToString : function(val) {return $.nony.htmlToString(val);},
+	stringToHtml : function(val) {return $.nony.stringToHtml(val);},
 	/*!
 	 * date utilities(use moment.js)
 	 */
@@ -135,10 +136,11 @@ var commonJs = {
 	getCheckedValueFromRadio : function(radioName) {return $.nony.getCheckedValueFromRadio(radioName);},
 	setRadioValue : function(radioName, value) {$.nony.setRadioValue(radioName, value);},
 	clearSearchCriteria : function() {$.nony.clearSearchCriteria();},
+	isSearchCriteriaSelected : function() {return $.nony.isSearchCriteriaSelected();},
 	clearPaginationValue : function() {$.nony.clearPaginationValue();},
 	setExportButtonContextMenu : function(jqObjectButton) {$.nony.setExportButtonContextMenu(jqObjectButton);},
 	/*!
-	 * process wrappers
+	 * process wrappers - for ajax
 	 */
 	doSearch : function(params) {$.nony.doSearch(params);},
 	doSimpleProcess : function(params) {$.nony.doSimpleProcess(params);},
@@ -148,6 +150,15 @@ var commonJs = {
 	doSaveWithFile : function(params) {$.nony.doSaveWithFile(params);},
 	doDelete : function(params) {$.nony.doDelete(params);},
 	doExport : function(params) {$.nony.doExport(params);},
+	/*!
+	 * process wrappers - for page submit
+	 */
+	doSimpleProcessForPage : function(params) {$.nony.doSimpleProcessForPage(params);},
+	doProcessForPage : function(params) {$.nony.doProcessForPage(params);},
+	doProcessWithFileForPage : function(params) {$.nony.doProcessWithFileForPage(params);},
+	doSaveForPage : function(params) {$.nony.doSaveForPage(params);},
+	doSaveWithFileForPage : function(params) {$.nony.doSaveWithFileForPage(params);},
+	doDeleteForPage : function(params) {$.nony.doDeleteForPage(params);},
 	/*!
 	 * controlling page load operations
 	 */
