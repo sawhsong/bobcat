@@ -16,7 +16,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconHKAccount.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconPerci.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -80,20 +80,11 @@ $(function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
 		if (commonJs.doValidate($("#fmDefault"))) {
-			setTimeout(function() {
-				commonJs.ajaxSubmit({
-					url:"/#MENU_URL#/getList.do",
-					dataType:"json",
-					formId:"fmDefault",
-					success:function(data, textStatus) {
-						var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-						if (result.isSuccess == true || result.isSuccess == "true") {
-							renderDataGridTable(result);
-						}
-					}
-				});
-			}, 200);
+			commonJs.doSearch({
+				url:"/#MENU_URL#/getList.do",
+				data:{},
+				callback:renderDataGridTable
+			});
 		}
 	};
 
@@ -110,7 +101,7 @@ $(function() {
 				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
 
-				gridTr.setClassName("noBorderHor noStripe");
+				gridTr.setClassName("noBorderHor");
 
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
@@ -128,7 +119,7 @@ $(function() {
 
 				var uiAnc = new UiAnchor();
 				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc).addAttribute("title:"+commonJs.htmlToString(dataSet.getValue(i, "ARTICLE_SUBJECT"))));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc));
 
 				var gridTd = new UiGridTd();
 				gridTd.addClassName("Ct");
@@ -163,8 +154,6 @@ $(function() {
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
-			isFilter:false,
-			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -203,7 +192,7 @@ $(function() {
 		var popParam = {
 			popupId:"notice"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				articleId:commonJs.nvl(param.articleId, "")
 			},
@@ -222,43 +211,9 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q002,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.ajaxSubmit({
-						url:"/#MENU_URL#/exeDelete.do",
-						dataType:"json",
-						formId:"fmDefault",
-						success:function(data, textStatus) {
-							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-							if (result.isSuccess == true || result.isSuccess == "true") {
-								commonJs.openDialog({
-									type:com.message.I000,
-									contents:result.message,
-									blind:true,
-									width:300,
-									buttons:[{
-										caption:com.caption.ok,
-										callback:function() {
-											doSearch();
-										}
-									}]
-								});
-							} else {
-								commonJs.error(result.message);
-							}
-						}
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doDelete({
+			url:"/#MENU_URL#/exeDelete.do",
+			callback:doSearch
 		});
 	};
 
@@ -296,31 +251,12 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q003,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/#MENU_URL#/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-					setTimeout(function() {popup.close();}, 3000);
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doExport({
+			url:"/#MENU_URL#/exeExport.do",
+			data:{
+				fileType:menuObject.fileType,
+				dataRange:menuObject.dataRange
+			}
 		});
 	};
 
@@ -331,7 +267,6 @@ $(function() {
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#searchWord").focus();
 		doSearch();
 	});
 });

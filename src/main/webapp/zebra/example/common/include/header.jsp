@@ -130,7 +130,7 @@ $(function() {
 		popupUserProfile = commonJs.openPopup({
 			popupId:"UserProfile",
 			url:"/login/getUserProfile.do",
-			paramData:{
+			data:{
 				userId:userId
 			},
 			header:"User Profile Detail",

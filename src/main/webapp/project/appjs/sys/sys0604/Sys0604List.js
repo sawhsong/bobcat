@@ -344,7 +344,7 @@ $(function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/sys/0604/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

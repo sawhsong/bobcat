@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconHKAccount.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconPerci.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -85,46 +85,13 @@ $(function() {
 		}
 
 		if (param.mode == "Delete") {
-			commonJs.confirm({
-				contents:com.message.Q002,
-				buttons:[{
-					caption:com.caption.yes,
-					callback:function() {
-						commonJs.ajaxSubmit({
-							url:actionString,
-							dataType:"json",
-							formId:"fmDefault",
-							data:{
-								articleId:articleId
-							},
-							success:function(data, textStatus) {
-								var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-								if (result.isSuccess == true || result.isSuccess == "true") {
-									commonJs.openDialog({
-										type:com.message.I000,
-										contents:result.message,
-										blind:true,
-										width:300,
-										buttons:[{
-											caption:com.caption.ok,
-											callback:function() {
-												parent.popup.close();
-												parent.doSearch();
-											}
-										}]
-									});
-								} else {
-									commonJs.error(result.message);
-								}
-							}
-						});
-					}
-				}, {
-					caption:com.caption.no,
-					callback:function() {
-					}
-				}]
+			commonJs.doDelete({
+				url:actionString,
+				data:{articleId:params.data.articleId},
+				callback:function() {
+					parent.popup.close();
+					parent.doSearch();
+				}
 			});
 		} else {
 			commonJs.doSubmit(params);
@@ -200,7 +167,7 @@ $(function() {
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa  style="height:214px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
+				<ui:txa style="height:214px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
 			</td>
 		</tr>
 		<tr>

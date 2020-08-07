@@ -153,7 +153,7 @@ $(function() {
 		var popParam = {
 			popupId:"TaxTable"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				taxMasterId:param.taxMasterId
 			},

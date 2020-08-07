@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconHKAccount.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconPerci.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -35,26 +35,13 @@ $(function() {
 	 */
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
-			$("#fmDefault").attr("enctype", "multipart/form-data");
-
-			commonJs.confirm({
-				contents:com.message.Q001,
-				buttons:[{
-					caption:com.caption.yes,
-					callback:function() {
-						commonJs.doSubmit({
-							form:"fmDefault",
-							action:"/#MENU_URL#/exeUpdate.do",
-							data:{
-								articleId:"<%=sysBoard.getArticleId()%>"
-							}
-						});
-					}
-				}, {
-					caption:com.caption.no,
-					callback:function() {
-					}
-				}]
+			commonJs.doSaveWithFile({
+				url:"/#MENU_URL#/exeUpdate.do",
+				data:{articleId:articleId},
+				callback:function() {
+					parent.popup.close();
+					parent.doSearch();
+				}
 			});
 		}
 	});

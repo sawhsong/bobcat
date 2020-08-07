@@ -180,7 +180,7 @@ $(function() {
 		var popParam = {
 			popupId:"notice"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				articleId:commonJs.nvl(param.articleId, "")
 			},
@@ -351,7 +351,7 @@ $(function() {
 					popupNotice = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/zebra/sample/multidatasource/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

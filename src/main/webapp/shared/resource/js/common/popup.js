@@ -22,7 +22,7 @@
 			params.blind = (params.blind == true) ? true : false;
 			params.shadow = (params.shadow == false) ? false : true;
 			params.url = params.url || jsconfig.get("shareRoot")+"/page/"+"blankForPopup.jsp";
-			params.paramData = params.paramData || {};
+			params.paramData = params.paramData || params.data || {};
 			params.iframeName = params.iframeName || "popupDialogIframe_"+$.nony.getTimeStamp();
 
 			if ($.nony.isEmpty(params.buttons)) {
@@ -144,7 +144,7 @@
 			params.blind = (params.blind == false) ? false : true;
 			params.shadow = (params.shadow == false) ? false : true;
 			params.url = params.url || jsconfig.get("shareRoot")+"/page/"+"blankForPopup.jsp";
-			params.paramData = params.paramData || {};
+			params.paramData = params.paramData || params.data || {};
 			params.iframeName = params.iframeName || "popupIframe_"+$.nony.getTimeStamp();
 
 			this._setOptions(params);

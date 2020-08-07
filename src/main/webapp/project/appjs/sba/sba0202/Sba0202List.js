@@ -163,7 +163,7 @@ $(function() {
 		var popParam = {
 			popupId:"orgInfo"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				orgId:commonJs.nvl(param.orgId, "")
 			},

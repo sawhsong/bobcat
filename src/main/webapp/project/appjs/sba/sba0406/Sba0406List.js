@@ -244,7 +244,7 @@ $(function() {
 		var popParam = {
 			popupId:"expenseType"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				path:param.path,
 				disabledStr:param.disabledStr,

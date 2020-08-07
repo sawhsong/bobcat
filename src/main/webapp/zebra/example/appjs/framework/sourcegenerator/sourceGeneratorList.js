@@ -24,7 +24,7 @@ $(function() {
 			popupId:"SourceGeneratorInfo",
 			url:"/zebra/framework/sourcegenerator/getGeneratorInfo.do",
 			header:framework.header.popHeaderGenerator,
-			paramData:{},
+			data:{},
 			blind:false,
 			width:760,
 			height:584

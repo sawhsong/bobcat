@@ -187,7 +187,7 @@ $(function() {
 		var popParam = {
 			popupId:"menu"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				menuId:param.menuId,
 				paramValue:param.paramValue
@@ -296,7 +296,7 @@ $(function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/sys/0402/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

@@ -169,7 +169,7 @@ $(function() {
 		var popParam = {
 			popupId:"notice"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				articleId:commonJs.nvl(param.articleId, "")
 			},

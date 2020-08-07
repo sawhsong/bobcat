@@ -34,7 +34,7 @@ $(function() {
 		var popup = commonJs.openPopup({
 			popupId:"downloadFile",
 			url:"/restServiceDownload.do",
-			paramData:{
+			data:{
 				repositoryPath:repositoryPath,
 				originalName:originalName,
 				newName:newName,

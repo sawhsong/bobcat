@@ -180,7 +180,7 @@ $(function() {
 		var popParam = {
 			popupId:"notice"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				articleId:commonJs.nvl(param.articleId, "")
 			},
@@ -326,7 +326,7 @@ $(function() {
 		popupNotice = commonJs.openPopup({
 			popupId:"downloadFile",
 			url:"/zebra/sample/soapwebservice/exeDownload.do",
-			paramData:{
+			data:{
 				repositoryPath:param.repositoryPath,
 				originalName:param.originalName,
 				newName:param.newName
@@ -356,7 +356,7 @@ $(function() {
 					popupNotice = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/zebra/sample/soapwebservice/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

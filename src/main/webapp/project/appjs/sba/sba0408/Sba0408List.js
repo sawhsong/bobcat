@@ -156,7 +156,7 @@ $(function() {
 		popup = commonJs.openPopup({
 			popupId:"AssetTypeUpdate",
 			url:"/sba/0408/getUpdate.do",
-			paramData:{
+			data:{
 				mode:"Update",
 				assetTypeId:assetTypeId,
 				assetTypeCode:assetTypeCode

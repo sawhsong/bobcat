@@ -168,7 +168,7 @@ $(function() {
 		popup = commonJs.openPopup({
 			popupId:"TableDetail",
 			url:"/zebra/framework/datamigration/getDetail.do",
-			paramData:{
+			data:{
 				tableName:tableName,
 				dataSource:dbFlag
 			},

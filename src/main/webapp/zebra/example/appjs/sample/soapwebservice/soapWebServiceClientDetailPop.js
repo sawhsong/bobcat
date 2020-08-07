@@ -34,7 +34,7 @@ $(function() {
 		var popup = commonJs.openPopup({
 			popupId:"downloadFile",
 			url:"/zebra/sample/soapwebservice/exeDownload.do",
-			paramData:{
+			data:{
 				repositoryPath:repositoryPath,
 				originalName:originalName,
 				newName:newName

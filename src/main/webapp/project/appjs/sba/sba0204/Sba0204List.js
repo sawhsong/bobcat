@@ -215,7 +215,7 @@ $(function() {
 		var popParam = {
 			popupId:"user"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				userId:commonJs.nvl(param.userId, "")
 			},

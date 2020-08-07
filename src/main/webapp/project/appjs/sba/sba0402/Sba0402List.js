@@ -147,7 +147,7 @@ $(function() {
 		var popParam = {
 			popupId:"financialPeriod"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				periodYear:param.periodYear,
 				quarterCode:param.quarterCode

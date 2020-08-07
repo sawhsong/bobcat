@@ -145,7 +145,7 @@ $(function() {
 		var popParam = {
 			popupId:"domainDictionary"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				domainId:commonJs.nvl(param.domainId, "")
 			},
@@ -249,7 +249,7 @@ $(function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/zebra/framework/domaindictionary/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

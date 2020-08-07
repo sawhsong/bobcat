@@ -16,7 +16,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconHKAccount.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconPerci.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -80,20 +80,11 @@ $(function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
 		if (commonJs.doValidate($("#fmDefault"))) {
-			setTimeout(function() {
-				commonJs.ajaxSubmit({
-					url:"/#MENU_URL#/getList.do",
-					dataType:"json",
-					formId:"fmDefault",
-					success:function(data, textStatus) {
-						var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-						if (result.isSuccess == true || result.isSuccess == "true") {
-							renderDataGridTable(result);
-						}
-					}
-				});
-			}, 200);
+			commonJs.doSearch({
+				url:"/#MENU_URL#/getList.do",
+				data:{},
+				callback:renderDataGridTable
+			});
 		}
 	};
 
@@ -110,7 +101,7 @@ $(function() {
 				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
 				var gridTr = new UiGridTr();
 
-				gridTr.setClassName("noBorderHor noStripe");
+				gridTr.setClassName("noBorderHor");
 
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "ARTICLE_ID"));
@@ -163,8 +154,6 @@ $(function() {
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
-			isFilter:false,
-			filterColumn:[],
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -180,33 +169,14 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(articleId) {
-		doProcess({mode:"Detail", articleId:articleId});
-	};
-
-	doProcess = function(param) {
-		var action = "";
-
-		if (param.mode == "New" || param.mode == "Reply") {
-			action = "/#MENU_URL#/getInsert.do";
-		} else if (param.mode == "Edit") {
-			action = "/#MENU_URL#/getUpdate.do";
-		} else if (param.mode == "Detail") {
-			action = "/#MENU_URL#/getDetail.do";
-		}
-
-		commonJs.doSubmit({
-			action:action,
-			data:param
+	getInsert = function() {
+		commonJs.doSimpleProcessForPage({
+			action:"/#MENU_URL#/getInsert.do"
 		});
 	};
 
-	getInsert = function() {
-		commonJs.doSubmit({action:"/#MENU_URL#/getInsert.do"});
-	};
-
 	getDetail = function(articleId) {
-		commonJs.doSubmit({
+		commonJs.doSimpleProcessForPage({
 			action:"/#MENU_URL#/getDetail.do",
 			data:{
 				articleId:articleId
@@ -223,8 +193,7 @@ $(function() {
 			action = "/#MENU_URL#/getInsert.do";
 		}
 
-		commonJs.doSubmit({
-			form:"fmDefault",
+		commonJs.doSimpleProcessForPage({
 			action:action,
 			data:{
 				mode:param.mode,
@@ -239,43 +208,9 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q002,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.ajaxSubmit({
-						url:"/#MENU_URL#/exeDelete.do",
-						dataType:"json",
-						formId:"fmDefault",
-						success:function(data, textStatus) {
-							var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-							if (result.isSuccess == true || result.isSuccess == "true") {
-								commonJs.openDialog({
-									type:com.message.I000,
-									contents:result.message,
-									blind:true,
-									width:300,
-									buttons:[{
-										caption:com.caption.ok,
-										callback:function() {
-											doSearch();
-										}
-									}]
-								});
-							} else {
-								commonJs.warn(result.message);
-							}
-						}
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doDelete({
+			url:"/#MENU_URL#/exeDelete.do",
+			callback:doSearch
 		});
 	};
 
@@ -313,31 +248,12 @@ $(function() {
 			return;
 		}
 
-		commonJs.confirm({
-			contents:com.message.Q003,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					popup = commonJs.openPopup({
-						popupId:"exportFile",
-						url:"/#MENU_URL#/exeExport.do",
-						paramData:{
-							fileType:menuObject.fileType,
-							dataRange:menuObject.dataRange
-						},
-						header:"exportFile",
-						blind:false,
-						width:200,
-						height:100
-					});
-					setTimeout(function() {popup.close();}, 3000);
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}],
-			blind:true
+		commonJs.doExport({
+			url:"/#MENU_URL#/exeExport.do",
+			data:{
+				fileType:menuObject.fileType,
+				dataRange:menuObject.dataRange
+			}
 		});
 	};
 
@@ -348,7 +264,6 @@ $(function() {
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
 		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#searchWord").focus();
 		doSearch();
 	});
 });

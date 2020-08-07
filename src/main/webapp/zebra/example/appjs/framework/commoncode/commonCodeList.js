@@ -156,7 +156,7 @@ $(function() {
 		var popParam = {
 			popupId:"commonCode"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				codeType:commonJs.nvl(param.codeType, "")
 			},
@@ -268,7 +268,7 @@ $(function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/zebra/framework/commoncode/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

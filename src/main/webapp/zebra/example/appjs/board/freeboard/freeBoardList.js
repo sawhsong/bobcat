@@ -351,7 +351,7 @@ $(function() {
 					popupFreeBoard = commonJs.openPopup({
 						popupId:"exportFile",
 						url:"/zebra/board/freeboard/exeExport.do",
-						paramData:{
+						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange
 						},

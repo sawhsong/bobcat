@@ -161,7 +161,7 @@ $(function() {
 		var popParam = {
 			popupId:"employee"+param.mode,
 			url:url,
-			paramData:{
+			data:{
 				mode:param.mode,
 				employeeId:param.employeeId
 			},

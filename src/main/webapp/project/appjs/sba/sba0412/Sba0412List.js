@@ -156,7 +156,7 @@ $(function() {
 		popup = commonJs.openPopup({
 			popupId:"BorrowingTypeUpdate",
 			url:"/sba/0412/getUpdate.do",
-			paramData:{
+			data:{
 				mode:"Update",
 				borrowingTypeId:borrowingTypeId,
 				borrowingTypeCode:borrowingTypeCode
