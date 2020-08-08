@@ -593,6 +593,11 @@ var nony = {
 		$("[name=fileType]").remove();
 		$("[name=dataRange]").remove();
 
+		if (!$.nony.isEmpty(params.menuObject)) {
+			params.data.fileType = params.menuObject.fileType;
+			params.data.dataRange = params.menuObject.dataRange;
+		}
+
 		commonJs.confirm({
 			contents:com.message.Q003,
 			buttons:[{
