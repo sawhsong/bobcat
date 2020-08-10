@@ -6,6 +6,7 @@
  * 				attachTo:$("divDataArea"),				// [mandatory : parent jquery object which holds this table - usually this would be 'divDataArea']
  * 				pagingArea:$("#divPagingArea")			// [optional : pagination area jquery object]
  * 				isPageable:true/false					// [optional : true : displays paging area component, false : displays nothing]
+ * 				pagingAlign:left						// [optional : left/center]
  * 				displayRowCount:true					// [optional : true : displays total row count even if isPageable is false, false : displays nothing]
  * 				attachToHeight:750,						// [optional : height of parent jquery object which holds this table]
  * 				isFilter:false,							// [optional : true : displays filter row]
@@ -89,15 +90,36 @@
 				html += "<div id=\"divPagination\">";
 				html += "<table id=\"tblPagination\">";
 				html += "<tr>";
-				if ($.nony.isPopup()) {
-					html += "<td class=\"tdPaginationLeft\">";
-				} else if ($.nony.isTabFrame()) {
-					html += "<td class=\"tdPaginationLeft\"></td>";
-					html += "<td class=\"tdPaginationCenter\">";
+
+				if (!$.nony.isEmpty(options.pagingAlign)) {
+					if ("left" == $.nony.lowerCase(options.pagingAlign)) {
+						html += "<td class=\"tdPaginationLeft\">";
+					} else if ("center" == $.nony.lowerCase(options.pagingAlign)) {
+						html += "<td class=\"tdPaginationLeft\"></td>";
+						html += "<td class=\"tdPaginationCenter\">";
+					} else {
+						if ($.nony.isPopup()) {
+							html += "<td class=\"tdPaginationLeft\">";
+						} else if ($.nony.isTabFrame()) {
+							html += "<td class=\"tdPaginationLeft\"></td>";
+							html += "<td class=\"tdPaginationCenter\">";
+						} else {
+							html += "<td class=\"tdPaginationLeft\"></td>";
+							html += "<td class=\"tdPaginationCenter\">";
+						}
+					}
 				} else {
-					html += "<td class=\"tdPaginationLeft\"></td>";
-					html += "<td class=\"tdPaginationCenter\">";
+					if ($.nony.isPopup()) {
+						html += "<td class=\"tdPaginationLeft\">";
+					} else if ($.nony.isTabFrame()) {
+						html += "<td class=\"tdPaginationLeft\"></td>";
+						html += "<td class=\"tdPaginationCenter\">";
+					} else {
+						html += "<td class=\"tdPaginationLeft\"></td>";
+						html += "<td class=\"tdPaginationCenter\">";
+					}
 				}
+
 				html += "<ul id=\"ulPagination\">";
 				if (currentPage > 1) {
 					html += "<li class=\"liPaginationButton\">";
