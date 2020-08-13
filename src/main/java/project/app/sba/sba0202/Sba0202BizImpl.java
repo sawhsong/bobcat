@@ -76,7 +76,7 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 	}
 
 	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
-		String logoPath = ConfigUtil.getProperty("path.image.orglogo")+"/"+"DefaultLogo.png";
+		String logoPath = ConfigUtil.getProperty("path.image.orgLogo")+"/"+"DefaultLogo.png";
 
 		try {
 			paramEntity.setObject("logoPath", logoPath);
@@ -107,7 +107,7 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String defaultFileName = "DefaultLogo.png";
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String pathToSave = ConfigUtil.getProperty("path.image.orglogo");
+		String pathToSave = ConfigUtil.getProperty("path.image.orgLogo");
 		int result = -1;
 
 		try {
@@ -163,7 +163,7 @@ public class Sba0202BizImpl extends BaseBiz implements Sba0202Biz {
 		SysOrg sysOrg = new SysOrg();
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String pathToSave = ConfigUtil.getProperty("path.image.orglogo");
+		String pathToSave = ConfigUtil.getProperty("path.image.orgLogo");
 		int result = 0;
 
 		try {
