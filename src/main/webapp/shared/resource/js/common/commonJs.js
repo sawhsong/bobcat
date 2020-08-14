@@ -110,6 +110,7 @@ var commonJs = {
 	expandAllAccordion : function(params) {$.nony.expandAllAccordion(params);},
 	getBootstrapSelectbox : function(id) {return $.nony.getBootstrapSelectbox(id);},
 	refreshBootstrapSelectbox : function(id) {return $.nony.refreshBootstrapSelectbox(id);},
+	setSelectboxWithCommonCode : function(params) {return $.nony.setSelectboxWithCommonCode(params);},
 	setSelectpickerValue : function(elementId, selectedValue) {$.nony.setSelectpickerValue(elementId, selectedValue);},
 	setAutoComplete : function(jqObject, param) {$.nony.setAutoComplete(jqObject, param);},
 	/*!

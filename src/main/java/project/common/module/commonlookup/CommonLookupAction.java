@@ -25,6 +25,16 @@ public class CommonLookupAction extends BaseAction {
 		return returnString;
 	}
 
+	public String getCommonCodeForSelectbox() throws Exception {
+		try {
+			biz.getCommonCodeForSelectbox(paramEntity);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String getOrganisationLookup() throws Exception {
 		try {
 			biz.getOrganisationLookup(paramEntity);

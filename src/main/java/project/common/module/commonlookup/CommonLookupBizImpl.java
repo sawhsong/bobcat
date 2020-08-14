@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
@@ -17,6 +18,22 @@ public class CommonLookupBizImpl extends BaseBiz implements CommonLookupBiz {
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getCommonCodeForSelectbox(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String codeType = requestDataSet.getValue("codeType");
+		DataSet ds;
+
+		try {
+			ds = CommonCodeManager.getCodeDataSetByCodeType(codeType);
+			paramEntity.setAjaxResponseDataSet(ds);
+			paramEntity.setTotalResultRows(ds.getRowCnt());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
