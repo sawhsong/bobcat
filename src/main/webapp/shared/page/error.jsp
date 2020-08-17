@@ -5,6 +5,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isErrorPage="true"%>
 <%@ page import="java.util.*, java.io.*, zebra.util.WebUtil, zebra.util.CommonUtil"%>
+<%
+if (CommonUtil.toBoolean(request.getHeader("isAjaxCallForFramework"))) {
+	out.println((String)request.getAttribute("javax.servlet.error.message"));
+} else {
+%>
 <%/************************************************************************************************
 * HTML
 ************************************************************************************************/%>
@@ -16,7 +21,6 @@
 * Stylesheet & Javascript
 ************************************************************************************************/%>
 <script type="text/javascript" src="/shared/resource/js/jquery/jquery-2.1.4.js"></script>
-<script type="text/javascript" src="/shared/resource/js/angularjs/angular.js"></script>
 <style type="text/css">
 body {
 	padding:10px 10px;
@@ -195,3 +199,6 @@ $(function() {
 ************************************************************************************************/%>
 </body>
 </html>
+<%
+}
+%>

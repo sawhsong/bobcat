@@ -124,6 +124,8 @@
 						}
 					});
 				} else if (msgHandleType == "popup") {
+					data = "[Error Code : "+xhr.status+"]<br/>"+$.nony.removeString($.nony.stringToHtml(data), "<br/>");
+
 					$.nony.openDialog({
 						type:"Error",
 						contents:data,
@@ -254,6 +256,8 @@
 						}
 					});
 				} else if (msgHandleType == "popup") {
+					data = "[Error Code : "+xhr.status+"]<br/>"+$.nony.removeString($.nony.stringToHtml(data), "<br/>");
+
 					$.nony.openDialog({
 						type:"Error",
 						contents:data,
