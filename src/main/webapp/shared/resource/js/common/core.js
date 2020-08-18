@@ -1330,6 +1330,9 @@ var nony = {
 		option = $.extend({}, opt, param);
 		$(jqObject).autocomplete(option);
 	},
+	getSelectOptionObject : function(value, text) {
+		return "<option value=\""+value+"\">"+text+"</option>";
+	},
 	/*!
 	 * popup / dialog / calendar
 	 */

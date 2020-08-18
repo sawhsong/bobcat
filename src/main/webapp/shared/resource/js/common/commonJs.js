@@ -110,9 +110,10 @@ var commonJs = {
 	expandAllAccordion : function(params) {$.nony.expandAllAccordion(params);},
 	getBootstrapSelectbox : function(id) {return $.nony.getBootstrapSelectbox(id);},
 	refreshBootstrapSelectbox : function(id) {return $.nony.refreshBootstrapSelectbox(id);},
-	setSelectboxWithCommonCode : function(params) {return $.nony.setSelectboxWithCommonCode(params);},
+	setSelectboxWithCommonCode : function(params) {$.nony.setSelectboxWithCommonCode(params);},
 	setSelectpickerValue : function(elementId, selectedValue) {$.nony.setSelectpickerValue(elementId, selectedValue);},
 	setAutoComplete : function(jqObject, param) {$.nony.setAutoComplete(jqObject, param);},
+	getSelectOptionObject : function(value, text) {return $.nony.getSelectOptionObject(value, text);},
 	/*!
 	 * controlling file elements
 	 */
