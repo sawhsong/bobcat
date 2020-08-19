@@ -14,73 +14,82 @@
 		</File>
 	</appenders>
 	<loggers>
-		<logger name="org.springframework" level="warn">
+		<logger name="org.springframework" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.apache.commons.configuration" level="warn">
+		<logger name="org.apache.commons.configuration" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.apache.struts2" level="warn" additivity="false">
+		<logger name="org.apache.struts2" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="com.opensymphony" level="warn" additivity="false">
+		<logger name="com.opensymphony" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.apache.ibatis" level="warn">
+		<logger name="org.apache.ibatis" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.hibernate" level="warn">
+		<logger name="org.hibernate" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.hibernate.SQL" level="warn">
+		<logger name="org.hibernate.SQL" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.hibernate.type" level="warn">
+		<logger name="org.hibernate.type" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.quartz" level="warn">
+		<logger name="org.hibernate.type.descriptor.sql" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="java.sql.Connection" level="warn">
+		<logger name="org.hibernate.engine.jdbc.spi" level="fatal">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="java.sql.Statement" level="warn">
+		<logger name="org.quartz" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="java.sql.PreparedStatement" level="warn">
+		<logger name="java.sql.Connection" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="java.sql.ResultSet" level="warn">
+		<logger name="java.sql.Statement" level="error">
+			<appender-ref ref="Console"/>
+		</logger>
+		<logger name="java.sql.PreparedStatement" level="error">
+			<appender-ref ref="Console"/>
+		</logger>
+		<logger name="java.sql.ResultSet" level="error">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- log4jdbc begin -->
 		<!-- log SQL (pre-execution) plus exceptions caused by SQL -->
-		<logger name="jdbc.sqlonly" level="warn" additivity="false">
+		<logger name="jdbc.sqlonly" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- log SQL with timing information, post execution -->
-		<logger name="jdbc.sqltiming" level="warn" additivity="false">
+		<logger name="jdbc.sqltiming" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- only use the two logs below to trace ALL JDBC information, NOTE: This can be very voluminous! -->
 		<!-- log all jdbc calls except ResultSet calls -->
-		<logger name="jdbc.audit" level="warn" additivity="false">
+		<logger name="jdbc.audit" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- log the jdbc ResultSet calls -->
-		<logger name="jdbc.resultset" level="warn" additivity="false">
+		<logger name="jdbc.resultset" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- log connection open/close events and dump of all open connection numbers -->
-		<logger name="jdbc.connection" level="warn" additivity="false">
+		<logger name="jdbc.connection" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- debug logging for log4jdbc itself -->
-		<logger name="log4jdbc.debug" level="warn" additivity="false">
+		<logger name="log4jdbc.debug" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<!-- log4jdbc end -->
-		<logger name="hkaccounting" level="debug">
+		<logger name="zebra" level="debug">
+			<appender-ref ref="Console"/>
+		</logger>
+		<logger name="project" level="debug">
 			<appender-ref ref="Console"/>
 		</logger>
 

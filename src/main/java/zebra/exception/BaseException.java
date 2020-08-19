@@ -8,15 +8,23 @@ import org.apache.logging.log4j.Logger;
 
 import zebra.data.ParamEntity;
 import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class BaseException extends Exception {
 	protected Logger logger = LogManager.getLogger(this.getClass());
 	protected String code;
 	protected String message;
 
-	public BaseException(Exception ex) {
-		logger.error(ex);
+	@Override
+	public Throwable fillInStackTrace() {
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.exception.stackTrace"))) {
+			return super.fillInStackTrace();
+		} else {
+			return null;
+		}
+	}
 
+	public BaseException(Exception ex) {
 		if (ex instanceof SQLException) {
 			this.code = CommonUtil.toString(((SQLException)ex).getErrorCode());
 			this.message = CommonUtil.replace(CommonUtil.replace(CommonUtil.replace(ex.getMessage(), "\n", ""), "\"", ""),"\'","");
@@ -27,8 +35,6 @@ public class BaseException extends Exception {
 	}
 
 	public BaseException(ParamEntity paramEntity, Exception ex) {
-		logger.error(ex);
-
 		if (ex instanceof UndeclaredThrowableException) {
 			if (((UndeclaredThrowableException)ex).getUndeclaredThrowable().getCause() instanceof SQLException) {
 				this.code = "ORA-"+CommonUtil.toString(((SQLException)((UndeclaredThrowableException)ex).getUndeclaredThrowable().getCause()).getErrorCode());

@@ -11,7 +11,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">${log.hibernate.showSql}</prop>
 				<prop key="format_sql">true</prop>
 				<prop key="use_sql_comments">true</prop>
 				<prop key="generate_statistics">true</prop>
