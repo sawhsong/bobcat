@@ -681,6 +681,14 @@ var nony = {
 		if (null == val || "" == val || "undefined" == val || undefined == val) {return true;}
 		else {return false;}
 	},
+	isNotEmpty : function(val) {
+		if (null == val || "" == val || "undefined" == val || undefined == val) {return false;}
+		else {return true;}
+	},
+	isNotBlank : function(val) {
+		if (null == val || "" == val || "undefined" == val || undefined == val) {return false;}
+		else {return true;}
+	},
 	isIn : function(val, vals) {
 		for (var i=0; i<vals.length; i++) {
 			if (val == vals[i]) {return true;}

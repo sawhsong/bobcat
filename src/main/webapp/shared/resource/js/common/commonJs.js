@@ -119,6 +119,10 @@ var commonJs = {
 	setAutoComplete : function(jqObject, param) {$.nony.setAutoComplete(jqObject, param);},
 	getSelectOptionObject : function(value, text) {return $.nony.getSelectOptionObject(value, text);},
 	/*!
+	 * UI Elements
+	 */
+	getUiRadio : function(params) {return uiElements.getUiRadio(params);},
+	/*!
 	 * controlling file elements
 	 */
 	modifyFileSelectObject : function(objects) {$.nony.fileElement.modifyFileSelectObject(objects);},

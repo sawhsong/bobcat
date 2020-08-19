@@ -8,7 +8,6 @@
 <script type="text/javascript" src="<mc:cp key="jsJq"/>/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsJq"/>/jquery-ui.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsJq"/>/bootstrap.js"></script>
-<script type="text/javascript" src="<mc:cp key="jsNg"/>/angular.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="jsMessage"/>/message-framework_${sessionScope.langCode}.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsMessage"/>/message-common_${sessionScope.langCode}.js"></script>
@@ -52,6 +51,8 @@
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/UiGridTr.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/UiIcon.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/UiRadio.js"></script>
+
+<script type="text/javascript" src="<mc:cp key="jsCommon"/>/UIElements.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/contextMenu.js"></script>
 <script type="text/javascript" src="<mc:cp key="jsCommon"/>/commonJs.js"></script>
