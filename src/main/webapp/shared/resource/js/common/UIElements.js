@@ -129,5 +129,61 @@ var uiElements = {
 		}
 
 		return html;
+	},
+	getUiSelectOption : function(params) {
+		/*
+		 * value
+		 * text
+		 * isSelected
+		 * isDisabled
+		 * attribute
+		 */
+
+		var html = "", attrString = "", attrs = new Array(), attr = new Array();
+
+		if ($.nony.isNotBlank(params.attribute)) {
+			attrs = params.attribute.split(";");
+			for (var i=0; i<attrs.length; i++) {
+				attr = attrs[i].split(":");
+				attrString += " "+attr[0]+"=\""+attr[1]+"\"";
+			}
+		}
+
+		html += "<option value=\""+params.value+"\"";
+
+		if ($.nony.isNotBlank(attrString)) {html += " "+attrString+"";}
+		if ($.nony.toBoolean(params.isSelected)) {html += " selected";}
+		if ($.nony.toBoolean(params.isDisabled)) {html += " disabled";}
+
+		html += ">"+params.text+"";
+		html += "</option>\n";
+
+		return html;
+	},
+	getUiSelectOptionWithCommonCode : function(params) {
+		/*
+		 * selectboxId
+		 * codeType
+		 */
+
+		var id = params.selectboxId;
+
+		$.nony.doSearch({
+			url:"/common/lookup/getCommonCodeForSelectbox.do",
+			noForm:true,
+			data:params,
+			onSuccess:function(result) {
+				var ds = result.dataSet;
+				for (var i=0; i<ds.getRowCnt(); i++) {
+					$("#"+id).append(uiElements.getUiSelectOption({
+						value:ds.getValue(i, "COMMON_CODE"),
+						text:ds.getValue(i, "CODE_MEANING")
+					}));
+				}
+
+				$("#"+id).selectpicker("refresh");
+				$("#"+id).selectpicker("render");
+			}
+		});
 	}
 };

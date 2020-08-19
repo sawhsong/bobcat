@@ -1250,24 +1250,6 @@ var nony = {
 			$("#"+id).selectpicker("render");
 		}
 	},
-	setSelectboxWithCommonCode : function(params) {
-		var id = params.id;
-
-		$.nony.doSearch({
-			url:"/common/lookup/getCommonCodeForSelectbox.do",
-			noForm:true,
-			data:params,
-			onSuccess:function(result) {
-				var ds = result.dataSet;
-				for (var i=0; i<ds.getRowCnt(); i++) {
-					$("#"+id).append("<option value=\""+ds.getValue(i, "COMMON_CODE")+"\">"+ds.getValue(i, "CODE_MEANING")+"</option>");
-				}
-
-				$("#"+id).selectpicker("refresh");
-				$("#"+id).selectpicker("render");
-			}
-		});
-	},
 	setSelectpickerValue : function(elementId, selectedValue) {
 		$("#"+elementId).selectpicker("val", selectedValue);
 		$("#"+elementId).selectpicker("refresh");
@@ -1352,9 +1334,6 @@ var nony = {
 
 		option = $.extend({}, opt, param);
 		$(jqObject).autocomplete(option);
-	},
-	getSelectOptionObject : function(value, text) {
-		return "<option value=\""+value+"\">"+text+"</option>";
 	},
 	/*!
 	 * popup / dialog / calendar
