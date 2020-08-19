@@ -39,6 +39,9 @@ var commonJs = {
 	 * string utilities
 	 */
 	isEmpty : function(val) {return $.nony.isEmpty(val);},
+	isBlank : function(val) {return $.nony.isBlank(val);},
+	isIn : function(val, vals) {return $.nony.isIn(val, vals);},
+	isInIgnoreCase : function(val, vals) {return $.nony.isInIgnoreCase(val, vals);},
 	nvl : function(val, defaultVal) {return $.nony.nvl(val, defaultVal);},
 	trim : function(val) {return $.nony.trim(val);},
 	upperCase : function(val) {return $.nony.upperCase(val);},
@@ -71,6 +74,7 @@ var commonJs = {
 	getElementsToCheckValidation : function(formId, elementArray, selectOption) {return $.nony.validator.getElementsToCheckValidation(formId, elementArray, selectOption);},
 	doErrorMessage : function(msgType) {return $.nony.validator.doErrorMessage(msgType);},
 	doValidatorMessage : function(jQueryElement, msgType) {return $.nony.validator.doValidatorMessage(jQueryElement, msgType);},
+	isUploadableImageFile : function(jQueryElement, elementValue) {return $.nony.validator.isUploadableImageFile(jQueryElement, elementValue);},
 	/*!
 	 * utilities etc
 	 */

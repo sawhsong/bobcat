@@ -324,6 +324,15 @@
 			if (pattern.test(value)) {return this._execError($(element), this._messages["notUploadable_"+jsconfig.get("langCode")], "select");}
 			else {return true;}
 		},
+		isUploadableImageFile : function(element, val) {
+			var value = val ? val : $(element).val();
+			var checkString = ["png", "jpg", "gif", "jpeg"];
+
+			value = value.substring(value.lastIndexOf(".")+1);
+
+			if ($.nony.isInIgnoreCase(value, checkString)) {return true;}
+			else {return this._execError($(element), this._messages["notUploadable_"+jsconfig.get("langCode")], "select");}
+		},
 		isValidSpecialCharAll : function(element, val) {
 			var value = val ? val : $(element).val();
 			var pattern = /[$]|[%]|[&]|[`]|[=]|[?]|[\]|[_]|[|]|[\']|[\"]/;

@@ -651,8 +651,7 @@ var nony = {
 	getCssAttributeNumber : function(jqObject, cssAttributeName) {
 		if ($.nony.isEmpty(cssAttributeName)) {
 			return 0;
-		} else if (cssAttributeName.indexOf("margin") != -1 || cssAttributeName.indexOf("padding") != -1 ||
-				   cssAttributeName.indexOf("left") != -1 || cssAttributeName.indexOf("top") != -1) {
+		} else if (cssAttributeName.indexOf("margin") != -1 || cssAttributeName.indexOf("padding") != -1 || cssAttributeName.indexOf("left") != -1 || cssAttributeName.indexOf("top") != -1) {
 			return $.nony.toNumber($.nony.replace($(jqObject).css(cssAttributeName), "px", ""));
 		} else if (cssAttributeName.indexOf("border") != -1) {
 			var temp = $(jqObject).css(cssAttributeName);
@@ -677,6 +676,22 @@ var nony = {
 	isEmpty : function(val) {
 		if (null == val || "" == val || "undefined" == val || undefined == val) {return true;}
 		else {return false;}
+	},
+	isBlank : function(val) {
+		if (null == val || "" == val || "undefined" == val || undefined == val) {return true;}
+		else {return false;}
+	},
+	isIn : function(val, vals) {
+		for (var i=0; i<vals.length; i++) {
+			if (val == vals[i]) {return true;}
+		}
+		return false;
+	},
+	isInIgnoreCase : function(val, vals) {
+		for (var i=0; i<vals.length; i++) {
+			if ($.nony.lowerCase(val) == $.nony.lowerCase(vals[i])) {return true;}
+		}
+		return false;
 	},
 	nvl : function(val, defaultVal) {
 		if ($.nony.isEmpty(val)) {
