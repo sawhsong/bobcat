@@ -1855,7 +1855,12 @@ var nony = {
 						}
 					});
 				} else if (msgHandleType == "popup") {
-					commonJs.error(result.message);
+					commonJs.openDialog({
+						type:com.message.E000,
+						contents:result.message,
+						width:450
+					});
+
 					try {
 						$.nony.hideProcMessageOnElement(jsconfig.get("showProcMessageOnElement"));
 						$.nony.hideProcMessage();

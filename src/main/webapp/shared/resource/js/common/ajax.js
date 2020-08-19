@@ -129,8 +129,8 @@
 					$.nony.openDialog({
 						type:"Error",
 						contents:data,
-						width:"400",
-						height:"400",
+						width:460,
+						height:400,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
@@ -261,8 +261,8 @@
 					$.nony.openDialog({
 						type:"Error",
 						contents:data,
-						width:"400",
-						height:"400",
+						width:460,
+						height:400,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
