@@ -124,13 +124,24 @@
 						}
 					});
 				} else if (msgHandleType == "popup") {
-					data = "[Error Code : "+xhr.status+"]<br/>"+$.nony.removeString($.nony.stringToHtml(data), "<br/>");
+					var width = 0;
+					if ($.nony.startsWith(""+xhr.status, "2")) {
+						var result = $.nony.ajax.parseAjaxResult(JSON.parse($.nony.replace(data, "\t", "    ")), "success", params.dataType||"json");
+
+						data = "";
+						data += "[Error Code : "+xhr.status+"]<br/>";
+						data += "[Message Code : "+result.messageCode+"]<br/>";
+						data += "[Message]<br/>"+$.nony.stringToHtml(result.message);
+						width = 500;
+					} else {
+						data = "[Error Code : "+xhr.status+"]<br/>"+$.nony.removeString($.nony.stringToHtml(data), "<br/>");
+						width = 480
+					}
 
 					$.nony.openDialog({
 						type:"Error",
 						contents:data,
-						width:460,
-						height:400,
+						width:width,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
@@ -256,13 +267,24 @@
 						}
 					});
 				} else if (msgHandleType == "popup") {
-					data = "[Error Code : "+xhr.status+"]<br/>"+$.nony.removeString($.nony.stringToHtml(data), "<br/>");
+					var width = 0;
+					if ($.nony.startsWith(""+xhr.status, "2")) {
+						var result = $.nony.ajax.parseAjaxResult(JSON.parse($.nony.replace(data, "\t", "    ")), "success", params.dataType||"json");
+
+						data = "";
+						data += "[Error Code : "+xhr.status+"]<br/>";
+						data += "[Message Code : "+result.messageCode+"]<br/>";
+						data += "[Message]<br/>"+$.nony.stringToHtml(result.message);
+						width = 500;
+					} else {
+						data = "[Error Code : "+xhr.status+"]<br/>"+$.nony.removeString($.nony.stringToHtml(data), "<br/>");
+						width = 480
+					}
 
 					$.nony.openDialog({
 						type:"Error",
 						contents:data,
-						width:460,
-						height:400,
+						width:width,
 						buttons:[{
 							caption:com.caption.ok,
 							callback:function() {
