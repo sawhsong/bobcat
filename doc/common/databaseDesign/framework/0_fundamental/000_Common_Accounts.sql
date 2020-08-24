@@ -8,13 +8,6 @@ create user hkaccount identified by hkaccount20170523;
 grant connect, resource to hkaccount;
 grant create synonym, create view, create database link, create public synonym, drop public synonym to hkaccount;
 
--- alpaca
---drop user alpaca cascade;
-
---create user alpaca identified by alpaca;
---grant connect, resource to alpaca;
---grant create synonym, create view, create database link, create public synonym, drop public synonym to alpaca;
-
 /**
  * Create DB Link
  * 	Login as alpaca
@@ -29,31 +22,15 @@ grant create synonym, create view, create database link, create public synonym, 
 /**
  * Table space(Index, Data)
  */
+-- system
+alter database datafile 'C:\oraclexe\app\oracle\oradata\xe\system.DBF' autoextend on next 1M maxsize unlimited;
+
 -- hkaccount
-create tablespace hkaccount_idx
-datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' size 1m extent management local segment space management auto;
+create tablespace hkaccount_idx datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' size 1m extent management local segment space management auto;
+create tablespace hkaccount_data datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_DATA.DBF' size 1m extent management local segment space management auto;
 
-create tablespace hkaccount_data
-datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_DATA.DBF' size 1m extent management local segment space management auto;
-
-alter database datafile
-'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' autoextend on;
-
-alter database datafile
-'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_DATA.DBF' autoextend on;
-
--- alpaca
---create tablespace alpaca_idx
---datafile 'C:\oraclexe\app\oracle\oradata\Alpaca\Alpaca_IDX.DBF' size 1m extent management local segment space management auto;
-
---create tablespace alpaca_data
---datafile 'C:\oraclexe\app\oracle\oradata\Alpaca\Alpaca_DATA.DBF' size 1m extent management local segment space management auto;
-
---alter database datafile
---'C:\oraclexe\app\oracle\oradata\Alpaca\Alpaca_IDX.DBF' autoextend on;
-
---alter database datafile
---'C:\oraclexe\app\oracle\oradata\Alpaca\Alpaca_DATA.DBF' autoextend on;
+alter database datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' autoextend on;
+alter database datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_DATA.DBF' autoextend on;
 
 /**
  * To turn off oracle password expiration
