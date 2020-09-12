@@ -1001,10 +1001,27 @@ var nony = {
 		$("input:checkbox[name="+elementName+"]").each(function(index) {
 			if (!$(this).is(":disabled")) {
 				$(this).prop("checked", !checkFlag);
+
+				if ($(this).is(":checked")) {
+					$(this).parents("tr").addClass("checkedTr");
+				} else {
+					$(this).parents("tr").removeClass("checkedTr");
+				}
 			}
 		});
 
 		jsconfig.put("toggleCheckboxes", !checkFlag);
+	},
+	bindToggleTrBackgoundWithCheckbox : function(jqObject) {
+		$(jqObject).each(function(index) {
+			$(this).bind("click", function() {
+				if ($(this).is(":checked")) {
+					$(this).parents("tr").addClass("checkedTr");
+				} else {
+					$(this).parents("tr").removeClass("checkedTr");
+				}
+			});
+		});
 	},
 	getCountChecked : function (checkboxName) {
 		var cnt = 0;
