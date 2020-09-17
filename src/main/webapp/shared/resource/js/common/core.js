@@ -1023,6 +1023,19 @@ var nony = {
 			});
 		});
 	},
+	bindToggleTrBackgoundWithRadiobox : function(jqObject) {
+		$(jqObject).each(function(index) {
+			$(this).bind("click", function() {
+				$(this).parents("tbody").find("tr").each(function(rowIdx) {
+					if (index == rowIdx) {
+						$(this).addClass("checkedTr");
+					} else {
+						$(this).removeClass("checkedTr");
+					}
+				});
+			});
+		});
+	},
 	getCountChecked : function (checkboxName) {
 		var cnt = 0;
 
@@ -1086,6 +1099,15 @@ var nony = {
 			}
 		});
 		return checkValue;
+	},
+	getCheckedValueFromCheckbox : function(jqObject) {
+		var delimiter = jsconfig.get("recordDelimiter"), values = "";
+		$(jqObject).each(function(index) {
+			if ($(this).is(":checked")) {
+				values += commonJs.isBlank(values) ? $(this).val() : delimiter+$(this).val();
+			}
+		});
+		return values;
 	},
 	setRadioValue : function(radioName, value) {
 		$("[name="+radioName+"]").filter("[value="+value+"]").attr("checked", true);
