@@ -4,7 +4,7 @@
 	<artifactId>HKAccounting</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>HKAccounting Webapp</name>
+	<name>HKAccounting Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -15,7 +15,7 @@
 		<webapp.lib>${basedir}/src/main/webapp/WEB-INF/lib</webapp.lib>
 		<version.userdefined>1.0</version.userdefined>
 		<version.poi>3.17</version.poi>
-		<version.springframework>5.0.8.RELEASE</version.springframework>
+		<version.springframework>5.2.9.RELEASE</version.springframework>
 		<version.struts2>2.5.16</version.struts2>
 		<versoin.cxf>3.2.6</versoin.cxf>
 	</properties>
@@ -36,6 +36,7 @@
 			<scope>system</scope>
 			<systemPath>${webapp.lib}/bcprov-ext-jdk15on-160.jar</systemPath>
 		</dependency>
+<!--
 		<dependency>
 			<groupId>ds</groupId>
 			<artifactId>ojdbc</artifactId>
@@ -43,6 +44,44 @@
 			<scope>system</scope>
 			<systemPath>${webapp.lib}/ojdbc7.jar</systemPath>
 		</dependency>
+-->
+		<!-- Oracle ATD - Begin -->
+		<dependency>
+			<groupId>ds</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>${version.userdefined}</version>
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/ojdbc8.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>ds</groupId>
+			<artifactId>ucp</artifactId>
+			<version>${version.userdefined}</version>
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/ucp.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>ds</groupId>
+			<artifactId>oraclepki</artifactId>
+			<version>${version.userdefined}</version>
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/oraclepki.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>ds</groupId>
+			<artifactId>osdt_core</artifactId>
+			<version>${version.userdefined}</version>
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/osdt_core.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>ds</groupId>
+			<artifactId>osdt_cert</artifactId>
+			<version>${version.userdefined}</version>
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/osdt_cert.jar</systemPath>
+		</dependency>
+		<!-- Oracle ATD - End -->
 		<dependency>
 			<groupId>ds</groupId>
 			<artifactId>ss_css2</artifactId>
@@ -69,7 +108,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -153,18 +192,18 @@
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.3</version>
+			<version>1.9.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.11.1</version>
+			<version>2.13.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.11.1</version>
+			<version>2.13.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -522,22 +561,22 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.3.5.Final</version>
+			<version>5.4.22.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.common</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>5.0.4.Final</version>
+			<version>5.1.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.3.5.Final</version>
+			<version>5.4.22.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.12.Final</version>
+			<version>6.1.6.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -597,14 +636,14 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 <!-- Downgraded because of this error - (CLIENT_PLUGIN_AUTH is required) - hkaccounting db is old version -->
-<!-- 			<version>8.0.12</version> -->
+<!-- 			<version>8.0.16</version> -->
 			<version>5.1.47</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>2.3.0</version>
+			<version>2.3.2</version>
 		</dependency>
 
 		<dependency>
@@ -637,12 +676,12 @@
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-broker</artifactId>
-			<version>5.14.5</version>
+			<version>5.16.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-client</artifactId>
-			<version>5.15.5</version>
+			<version>5.16.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
@@ -694,6 +733,11 @@
 			<artifactId>jaxws-api</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.ws.xmlschema</groupId>
+			<artifactId>xmlschema-core</artifactId>
+			<version>2.2.5</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
@@ -710,9 +754,28 @@
 			<artifactId>serializer</artifactId>
 			<version>2.7.2</version>
 		</dependency>
+
+		<!-- Google 2FA Begin -->
+		<dependency>
+			<groupId>de.taimos</groupId>
+			<artifactId>totp</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<!-- Google 2FA End -->
+
+		<dependency>
+			<groupId>rome</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 	<build>
-		<finalName>hkaccounting</finalName>
+		<finalName>HKAccounting</finalName>
 
 		<pluginManagement>
 			<plugins>
