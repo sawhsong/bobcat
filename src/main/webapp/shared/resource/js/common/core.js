@@ -1339,8 +1339,9 @@ var nony = {
 
 							$(jqObject).autocomplete("option", "source", dataSource);
 						} else {
-							throw new Error(com.message.error);
-							return;
+							$.nony._doAjaxErrorProc(param, data, result);
+//							throw new Error(com.message.error);
+//							return;
 						}
 					}
 				});
@@ -1372,6 +1373,7 @@ var nony = {
 //		});
 
 		option = $.extend({}, opt, param);
+		$(jqObject).attr("placeholder", "Auto Complete");
 		$(jqObject).autocomplete(option);
 	},
 	/*!
