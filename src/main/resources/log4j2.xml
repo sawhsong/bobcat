@@ -17,7 +17,7 @@
 		<logger name="org.springframework" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<logger name="org.apache.commons.configuration" level="error" additivity="false">
+		<logger name="org.apache" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
 		<logger name="org.apache.struts2" level="error" additivity="false">
