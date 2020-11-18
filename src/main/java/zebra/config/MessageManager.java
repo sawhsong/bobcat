@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import zebra.data.DataSet;
+import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class MessageManager {
@@ -67,7 +68,10 @@ public class MessageManager {
 						MemoryBean.set("messageBundle"+langCode, messageBundle);
 
 						fileName = (fileName.substring(fileName.indexOf("/WEB-INF/classes/"), fileName.length())).replaceAll("/WEB-INF/classes/", "");
-						logger.debug("Message bundle loaded to MemoryBean : " + fileName);
+
+						if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+							logger.debug("Message bundle loaded to MemoryBean : " + fileName);
+						}
 					}
 				}
 			}

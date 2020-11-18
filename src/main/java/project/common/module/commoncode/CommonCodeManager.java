@@ -24,7 +24,10 @@ public class CommonCodeManager extends BaseBiz implements CommonCodeManagerBiz {
 
 	public static void loadCommonCode() throws Exception {
 		MemoryBean.set("commonCodeDataSet", sysCommonCodeDao.getAllActiveCommonCode());
-		logger.info("[MemoryBean] - Project Common Code has been loaded.");
+
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+			logger.info("[MemoryBean] - Project Common Code has been loaded.");
+		}
 	}
 
 	public static void reload() throws Exception {

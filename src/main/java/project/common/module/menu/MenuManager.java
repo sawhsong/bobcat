@@ -35,7 +35,10 @@ public class MenuManager extends BaseBiz {
 	public static void loadMenu() throws Exception {
 		MemoryBean.set("menuDataSet", MenuManager.getMenuDataSet());
 		MemoryBean.set("quickMenuDataSet", MenuManager.getQuickMenuDataSet());
-		logger.info("[MemoryBean] - Project Menu has been loaded.");
+
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+			logger.debug("[MemoryBean] - Project Menu has been loaded.");
+		}
 	}
 
 	public static void reload() throws Exception {

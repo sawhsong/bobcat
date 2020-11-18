@@ -13,53 +13,21 @@
 
 	<!-- /*Default Datasource*/ -->
 	<!-- DriverManager -->
+<!--
 	<bean id="driverManager" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<!-- log4sql (운영시점에는 Oracle로 변경할것 - log4sql seems not to support dbcp2, use log4jdbc instead)-->
 		<property name="driverClassName" value="${jdbc.driver.driverClassName}"/>
-<!-- 		<property name="driverClassName" value="${jdbc.log4sql.driverClassName}"/> -->
-<!-- 		<property name="driverClassName" value="${jdbc.log4jdbc.driverClassName}"/> -->
 		<property name="url" value="${jdbc.driver.url}"/>
-<!-- 		<property name="url" value="${jdbc.log4jdbc.url}"/> -->
 		<property name="username" value="${jdbc.user.name}"/>
 		<property name="password" value="${jdbc.user.pass}"/>
 	</bean>
-	<!-- JNDI(both are OK) -->
-<!--	<jee:jndi-lookup id="jndiFactory" jndi-name="jdbc/${jdbc.jndi.name}" resource-ref="true"/>-->
-	<bean id="jndiFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/${jdbc.jndi.name}"/>
-		<property name="resourceRef" value="true"/>
-	</bean>
+-->
 	<!-- ConnectionPool -->
 	<bean id="connectionPool" class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource" destroy-method="close">
-		<!-- log4sql (운영시점에는 Oracle로 변경할것 - this seems not to support dbcp2)-->
 		<property name="driverClassName" value="${jdbc.driver.driverClassName}"/>
-<!-- 		<property name="driverClassName" value="${jdbc.log4sql.driverClassName}"/> -->
-<!-- 		<property name="driverClassName" value="${jdbc.log4jdbc.driverClassName}"/> -->
 		<property name="url" value="${jdbc.driver.url}"/>
-<!-- 		<property name="url" value="${jdbc.log4jdbc.url}"/> -->
 		<property name="username" value="${jdbc.user.name}"/>
 		<property name="password" value="${jdbc.user.pass}"/>
 	</bean>
-
-
-	<!-- /*Additional Datasource*/ -->
-<!-- 	<bean id="driverManager_hkmysql" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
-<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
-<!-- 		<property name="url" value="${jdbc.driver.url_hkmysql}"/> -->
-<!-- 		<property name="username" value="${jdbc.user.name_hkmysql}"/> -->
-<!-- 		<property name="password" value="${jdbc.user.pass_hkmysql}"/> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="jndiFactory_hkmysql" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!-- 		<property name="jndiName" value="java:comp/env/jdbc/${jdbc.jndi.name_hkmysql}"/> -->
-<!-- 		<property name="resourceRef" value="true"/> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="connectionPool_hkmysql" class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource" destroy-method="close"> -->
-<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
-<!-- 		<property name="url" value="${jdbc.driver.url_hkmysql}"/> -->
-<!-- 		<property name="username" value="${jdbc.user.name_hkmysql}"/> -->
-<!-- 		<property name="password" value="${jdbc.user.pass_hkmysql}"/> -->
-<!-- 	</bean> -->
-
 
 	<!-- Spring JDBC & MyBatis 둘 다 가능 (JdbcDaoSupport, NamedParameterJdbcDaoSupport) & Message Source Accessor -->
 	<bean id="jdbcDao" abstract="true" class="${name.package.framework}.base.JdbcDao">

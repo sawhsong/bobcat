@@ -1,5 +1,7 @@
 package project.app.login;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -141,6 +143,8 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
 		String loginId = requestDataSet.getValue("loginId");
 		String password = requestDataSet.getValue("password");
+		String loginAuthEmailKey = ConfigUtil.getProperty("login.auth.emailKey");
+		String email = "", authKey = "";
 
 		try {
 			// Check with LoginID
@@ -153,6 +157,15 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			sysUser = sysUserDao.getUserByLoginIdAndPassword(loginId, password);
 			if (sysUser == null || CommonUtil.isBlank(sysUser.getUserId())) {
 				throw new FrameworkException("E908", getMessage("E908", paramEntity));
+			}
+
+			if (CommonUtil.toBoolean(loginAuthEmailKey)) {
+				Random random = new Random();
+
+				email = sysUser.getEmail();
+				authKey = CommonUtil.leftPad(CommonUtil.toString(random.nextInt(999999)), 6, "0");
+				paramEntity.setObject("authenticationKey", authKey);
+				loginMessageSender.sendAuthKey(sysUser, email, authKey);
 			}
 
 			sysFinancialPeriod = sysFinancialPeriodDao.getCurrentFinancialPeriod();

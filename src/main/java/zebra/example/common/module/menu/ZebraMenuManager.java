@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import zebra.config.MemoryBean;
+import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class ZebraMenuManager {
@@ -18,7 +19,10 @@ public class ZebraMenuManager {
 	public static void loadMenu() throws Exception {
 		String menuJson = IOUtils.toString(new BufferedInputStream(new FileInputStream((String)MemoryBean.get("applicationRealPath") + ConfigUtil.getProperty("path.file.fwkMenu"))), "utf-8");
 		MemoryBean.set("zebraMenuAll", (JSONObject)JSONSerializer.toJSON(menuJson));
-		logger.debug("[MemoryBean] - Framework Menu has been loaded.");
+
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+			logger.debug("[MemoryBean] - Framework Menu has been loaded.");
+		}
 	}
 
 	public static void reloadMenu() throws Exception {

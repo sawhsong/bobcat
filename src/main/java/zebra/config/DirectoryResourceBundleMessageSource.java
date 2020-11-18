@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class DirectoryResourceBundleMessageSource extends ResourceBundleMessageSource {
 	private Logger logger = LogManager.getLogger(this.getClass());
@@ -48,7 +49,10 @@ public class DirectoryResourceBundleMessageSource extends ResourceBundleMessageS
 					String fileName = file.getAbsolutePath().replaceAll("\\\\", "/").replaceAll(".properties$", "");
 					fileName = (fileName.substring(fileName.indexOf("/WEB-INF/classes/"), fileName.length())).replaceAll("/WEB-INF/classes/", "");
 					baseNames.add(fileName);
-					logger.debug("Registered to Spring messageSource : " + fileName);
+
+					if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+						logger.debug("Registered to Spring messageSource : " + fileName);
+					}
 				}
 			}
 		}

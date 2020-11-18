@@ -24,7 +24,10 @@ public class ZebraCommonCodeManager extends BaseBiz implements ZebraCommonCodeMa
 
 	public static void loadCommonCode() throws Exception {
 		MemoryBean.set("zebraCommonCodeDataSet", zebraCommonCodeDao.getAllActiveCommonCode());
-		logger.info("[MemoryBean] - Framework Common Code has been loaded.");
+
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+			logger.debug("[MemoryBean] - Framework Common Code has been loaded.");
+		}
 	}
 
 	public static void reload() throws Exception {
