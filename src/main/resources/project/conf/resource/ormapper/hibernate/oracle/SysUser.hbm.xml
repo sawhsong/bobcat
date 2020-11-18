@@ -22,11 +22,12 @@
 		<property name="userName" column="USER_NAME" not-null="true" type="java.lang.String" length="50"/>
 		<property name="userStatus" column="USER_STATUS" not-null="true" type="java.lang.String" length="30"/>
 		<property name="userType" column="USER_TYPE" not-null="true" type="java.lang.String" length="30"/>
+		<property name="authenticationSecretKey" column="AUTHENTICATION_SECRET_KEY" type="java.lang.String" length="50"/>
+		<property name="defaultStartUrl" column="DEFAULT_START_URL" type="java.lang.String" length="100"/>
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="2000"/>
-		<property name="startUrl" column="START_URL" type="java.lang.String" length="100"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 	</class>
@@ -46,11 +47,12 @@
 		       USER_NAME,
 		       USER_STATUS,
 		       USER_TYPE,
+		       AUTHENTICATION_SECRET_KEY,
+		       DEFAULT_START_URL,
 		       EMAIL,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
 		       PHOTO_PATH,
-		       START_URL,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
 		  FROM SYS_USER
@@ -78,11 +80,12 @@
 		       USER_NAME,
 		       USER_STATUS,
 		       USER_TYPE,
+		       AUTHENTICATION_SECRET_KEY,
+		       DEFAULT_START_URL,
 		       EMAIL,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
 		       PHOTO_PATH,
-		       START_URL,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
 		       )
@@ -100,11 +103,12 @@
 		       ${USER_NAME},
 		       ${USER_STATUS},
 		       ${USER_TYPE},
+		       ${AUTHENTICATION_SECRET_KEY},
+		       ${DEFAULT_START_URL},
 		       ${EMAIL},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
 		       ${PHOTO_PATH},
-		       ${START_URL},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
 		       )
@@ -126,11 +130,12 @@
 		       USER_NAME = ${USER_NAME},
 		       USER_STATUS = ${USER_STATUS},
 		       USER_TYPE = ${USER_TYPE},
+		       AUTHENTICATION_SECRET_KEY = ${AUTHENTICATION_SECRET_KEY},
+		       DEFAULT_START_URL = ${DEFAULT_START_URL},
 		       EMAIL = ${EMAIL},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
 		       PHOTO_PATH = ${PHOTO_PATH},
-		       START_URL = ${START_URL},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}
 		 WHERE 1 = 1

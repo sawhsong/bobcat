@@ -20,8 +20,9 @@ create table sys_user (
     page_num_per_page               number(5)                                    not null,      -- Number of pages to display on a page (config.properties - view.data.pageNumsPerPage)
     user_status                     varchar2(30)                                 not null,      -- User status ([sys_common_code.user_status])
     photo_path                      varchar2(2000),                                             -- User photo path
-    start_url                       varchar2(100),                                              -- Start up URL when logging in
+    default_start_url               varchar2(100),                                              -- Start up URL when logging in
     is_active                       varchar2(1)                                  not null,      -- Is active ?
+    authentication_secret_key       varchar2(50),                                               -- Secreet key for google authentication
     insert_user_id                  varchar2(30),                                               -- Insert User UID
     insert_date                     date                default sysdate,                        -- Insert Date
     update_user_id                  varchar2(30),                                               -- Update User UID
@@ -48,8 +49,9 @@ comment on column sys_user.max_row_per_page                                     
 comment on column sys_user.page_num_per_page                                     is 'Number of pages to display on a page (config.properties - view.data.pageNumsPerPage)';
 comment on column sys_user.user_status                                           is 'User status ([sys_common_code.user_status])';
 comment on column sys_user.photo_path                                            is 'User photo path';
-comment on column sys_user.start_url                                             is 'Start up URL when logging in';
+comment on column sys_user.default_start_url                                     is 'Default startup page URL for each user';
 comment on column sys_user.is_active                                             is 'Is active ?';
+comment on column sys_user.authentication_secret_key                             is 'Secreet key for google authentication';
 comment on column sys_user.insert_user_id                                        is 'Insert User UID';
 comment on column sys_user.insert_date                                           is 'Insert Date';
 comment on column sys_user.update_user_id                                        is 'Update User UID';
@@ -75,8 +77,9 @@ select '0' as user_id,
        5 as page_num_per_page,
        'NU' as user_status,
        '/shared/resource/image/photo/DefaultUser_128_Black.png' as photo_path,
-       '/index/dashboard.do' as start_url,
+       '/index/dashboard.do' as default_start_url,
        'Y' as is_active,
+       '' as authentication_secret_key,
        '0' as insert_user_id,
        sysdate as insert_date,
        null as update_user_id,
@@ -97,8 +100,9 @@ select '1' as user_id,
        5 as page_num_per_page,
        'NU' as user_status,
        '/shared/resource/image/photo/DefaultUser_128_Black.png' as photo_path,
-       '/index/dashboard.do' as start_url,
+       '/index/dashboard.do' as default_start_url,
        'Y' as is_active,
+       '' as authentication_secret_key,
        '0' as insert_user_id,
        sysdate as insert_date,
        null as update_user_id,

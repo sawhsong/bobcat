@@ -95,15 +95,6 @@ public class LoginAction extends BaseAction {
 	}
 
 	public String exeUpdate() throws Exception {
-//		try {
-//			biz.exeUpdate(paramEntity);
-//		} catch (Exception ex) {
-//			return "ajaxResponse";
-//		} finally {
-//			setRequestAttribute("paramEntity", paramEntity);
-//		}
-//		return "ajaxResponse";
-
 		try {
 			biz.exeUpdate(paramEntity);
 
@@ -171,6 +162,25 @@ public class LoginAction extends BaseAction {
 			session.removeAttribute("OrgCategoryForAdminTool");
 			session.removeAttribute("OrgCategoryDescForAdminTool");
 			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getAuthentication() throws Exception {
+		biz.index(paramEntity);
+		return "authenticate";
+	}
+
+	public String doAuthentication() throws Exception {
+		try {
+			biz.doAuthentication(paramEntity);
+
+			if (paramEntity.isSuccess()) {
+				session.setAttribute("AuthenticationKey", (String)paramEntity.getObject("authenticationKey"));
+				session.setAttribute("IsAuthenticated", (String)paramEntity.getObject("isAuthenticated"));
+			}
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

@@ -5,8 +5,11 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base32;
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import de.taimos.totp.TOTP;
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
@@ -291,5 +294,49 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			throw new FrameworkException(paramEntity, ex);
 		}
 		return paramEntity;
+	}
+
+	public ParamEntity doAuthentication(ParamEntity paramEntity) throws Exception {
+		String secretKey = "";
+		HttpSession session = paramEntity.getSession();
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet resultDataSet = new DataSet();
+		Base32 base32 = new Base32();
+		byte[] bytes;
+		String mode = requestDataSet.getValue("mode");
+		String inputCode = requestDataSet.getValue("inputCode");
+		String isAuthenticated = "", hexKey = "", authCode = "";
+
+		try {
+			if (CommonUtil.equalsIgnoreCase(mode, "google2fa")) {
+				SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+//				secretKey = sysUser.getAuthenticationSecretKey();
+
+				if (CommonUtil.isBlank(secretKey)) {
+					throw new FrameworkException("E913", getMessage("E913", paramEntity));
+				}
+
+				bytes = base32.decode(secretKey);
+				hexKey = Hex.encodeHexString(bytes);
+				authCode = TOTP.getOTP(hexKey);
+				isAuthenticated = CommonUtil.equals(inputCode, authCode) ? "true" : "false";
+				paramEntity.setObject("authenticationKey", authCode);
+			} else if (CommonUtil.equalsIgnoreCase(mode, "emailKey")) {
+				authCode = (String)session.getAttribute("AuthenticationKey");
+				isAuthenticated = CommonUtil.equals(inputCode, authCode) ? "true" : "false";
+			} else {
+				isAuthenticated = "true";
+			}
+
+			resultDataSet.addColumn("isAuthenticated", isAuthenticated);
+
+			paramEntity.setObject("isAuthenticated", isAuthenticated);
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
+			paramEntity.setSuccess(true);
+
+			return paramEntity;
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
 	}
 }

@@ -6,6 +6,7 @@
 		<default-interceptor-ref name="ZebraDefaultStack"/>
 		<action name="login/*" class="project.app.login.LoginAction" method="{1}">
 			<result name="loginPage" type="debugDispatcherResult">/project/app/login/login.jsp</result>
+			<result name="authenticate" type="debugDispatcherResult">/project/app/login/authenticatePop.jsp</result>
 			<result name="resetPassword" type="debugDispatcherResult">/project/app/login/resetPasswordPop.jsp</result>
 			<result name="requestRegister" type="debugDispatcherResult">/project/app/login/requestRegisterPop.jsp</result>
 			<result name="userProfile" type="debugDispatcherResult">/project/app/login/userProfilePop.jsp</result>

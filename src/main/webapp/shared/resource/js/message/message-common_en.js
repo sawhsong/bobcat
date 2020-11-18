@@ -148,6 +148,7 @@ var com = {
 		E909:"Login failed.",
 		E910:"Data already exists.",
 		E911:"User ID is not valid.",
-		E912:"Login ID already exists."
+		E912:"Login ID already exists.",
+		E913:"Authentication Key does not exist.<br/>Please contact administrator."
 	}
 };

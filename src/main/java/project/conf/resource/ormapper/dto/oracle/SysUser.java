@@ -43,6 +43,10 @@ public class SysUser extends BaseDto implements Serializable {
 	private String USER_STATUS;
 	private String userType;
 	private String USER_TYPE;
+	private String authenticationSecretKey;
+	private String AUTHENTICATION_SECRET_KEY;
+	private String defaultStartUrl;
+	private String DEFAULT_START_URL;
 	private String email;
 	private String EMAIL;
 	private Date insertDate;
@@ -51,8 +55,6 @@ public class SysUser extends BaseDto implements Serializable {
 	private String INSERT_USER_ID;
 	private String photoPath;
 	private String PHOTO_PATH;
-	private String startUrl;
-	private String START_URL;
 	private Date updateDate;
 	private String UPDATE_DATE;
 	private String updateUserId;
@@ -213,6 +215,24 @@ public class SysUser extends BaseDto implements Serializable {
 		setValueFromAccessor("USER_TYPE", userType);
 	}
 
+	public String getAuthenticationSecretKey() {
+		return authenticationSecretKey;
+	}
+
+	public void setAuthenticationSecretKey(String authenticationSecretKey) throws Exception {
+		this.authenticationSecretKey = authenticationSecretKey;
+		setValueFromAccessor("AUTHENTICATION_SECRET_KEY", authenticationSecretKey);
+	}
+
+	public String getDefaultStartUrl() {
+		return defaultStartUrl;
+	}
+
+	public void setDefaultStartUrl(String defaultStartUrl) throws Exception {
+		this.defaultStartUrl = defaultStartUrl;
+		setValueFromAccessor("DEFAULT_START_URL", defaultStartUrl);
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -247,15 +267,6 @@ public class SysUser extends BaseDto implements Serializable {
 	public void setPhotoPath(String photoPath) throws Exception {
 		this.photoPath = photoPath;
 		setValueFromAccessor("PHOTO_PATH", photoPath);
-	}
-
-	public String getStartUrl() {
-		return startUrl;
-	}
-
-	public void setStartUrl(String startUrl) throws Exception {
-		this.startUrl = startUrl;
-		setValueFromAccessor("START_URL", startUrl);
 	}
 
 	public Date getUpdateDate() {
@@ -320,10 +331,10 @@ public class SysUser extends BaseDto implements Serializable {
 		dataSet.setValue(dataSet.getRowCnt()-1, columnName, value);
 		for (int i=0; i<field.length; i++) {
 			if (field[i].getName().equals(CommonUtil.toCamelCaseStartLowerCase(columnName))) {
-				if (CommonUtil.containsIgnoreCase(getFrwVarNumberColumn(), columnName)) {
+				if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarNumberColumn(), ","))) {
 					field[i].set(this, CommonUtil.toDouble(value));
-				} else if (CommonUtil.containsIgnoreCase(getFrwVarDateColumn(), columnName)) {
-					if (CommonUtil.equalsIgnoreCase(value, "SYSDATE")) {
+				} else if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarDateColumn(), ","))) {
+					if (CommonUtil.equalsIgnoreCase(value, "SYSDATE") || CommonUtil.containsIgnoreCase(value, "SYSDATE")) {
 						field[i].set(this, CommonUtil.toDate(CommonUtil.getSysdate()));
 					} else {
 						field[i].set(this, CommonUtil.toDate(value));
@@ -373,9 +384,9 @@ public class SysUser extends BaseDto implements Serializable {
 	public void addUpdateColumn(String columnName, String columnValue) throws Exception {
 		String dataType = "";
 
-		if (CommonUtil.containsIgnoreCase(getFrwVarNumberColumn(), columnName)) {
+		if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarNumberColumn(), ","))) {
 			dataType = "Number";
-		} else if (CommonUtil.containsIgnoreCase(getFrwVarDateColumn(), columnName)) {
+		} else if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarDateColumn(), ","))) {
 			dataType = "Date";
 		} else {
 			dataType = "String";
@@ -424,11 +435,12 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "userName : "+userName+"\n";
 		str += "userStatus : "+userStatus+"\n";
 		str += "userType : "+userType+"\n";
+		str += "authenticationSecretKey : "+authenticationSecretKey+"\n";
+		str += "defaultStartUrl : "+defaultStartUrl+"\n";
 		str += "email : "+email+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "photoPath : "+photoPath+"\n";
-		str += "startUrl : "+startUrl+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
 		str += "insertUserName : "+insertUserName+"\n";
@@ -456,11 +468,12 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "<column name=\"userName\" value=\""+userName+"\">";
 		str += "<column name=\"userStatus\" value=\""+userStatus+"\">";
 		str += "<column name=\"userType\" value=\""+userType+"\">";
+		str += "<column name=\"authenticationSecretKey\" value=\""+authenticationSecretKey+"\">";
+		str += "<column name=\"defaultStartUrl\" value=\""+defaultStartUrl+"\">";
 		str += "<column name=\"email\" value=\""+email+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"photoPath\" value=\""+photoPath+"\">";
-		str += "<column name=\"startUrl\" value=\""+startUrl+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
 		str += "<column name=\"insertUserName\" value=\""+insertUserName+"\">";
@@ -488,11 +501,12 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "\"userName\":\""+userName+"\", ";
 		str += "\"userStatus\":\""+userStatus+"\", ";
 		str += "\"userType\":\""+userType+"\", ";
+		str += "\"authenticationSecretKey\":\""+authenticationSecretKey+"\", ";
+		str += "\"defaultStartUrl\":\""+defaultStartUrl+"\", ";
 		str += "\"email\":\""+email+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"photoPath\":\""+photoPath+"\", ";
-		str += "\"startUrl\":\""+startUrl+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";
 		str += "\"insertUserName\":\""+insertUserName+"\", ";

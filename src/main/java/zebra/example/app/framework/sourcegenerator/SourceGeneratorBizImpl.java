@@ -70,7 +70,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 	}
 
 	public ParamEntity getGeneratorInfo(ParamEntity paramEntity) throws Exception {
-		String compilePath = "/target/hkaccounting";
+		String compilePath = "/target/HKAccounting";
 		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), compilePath);
 		String javaPath = ConfigUtil.getProperty("path.java.app");
 		String jspPath = ConfigUtil.getProperty("path.web.app");

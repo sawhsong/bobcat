@@ -152,6 +152,7 @@ var com = {
 		E909:"로그인에 실패하였습니다.",
 		E910:"중복 데이터 입니다.",
 		E911:"유효한 사용자 ID가 아닙니다.",
-		E912:"이미 존재하는 로그인 ID 입니다."
+		E912:"이미 존재하는 로그인 ID 입니다.",
+		E913:"Authentication Key does not exist.<br/>Please contact administrator."
 	}
 };
