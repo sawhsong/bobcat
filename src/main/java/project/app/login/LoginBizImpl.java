@@ -1,5 +1,6 @@
 package project.app.login;
 
+import java.io.File;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -222,10 +223,12 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 		DataSet dsFile = paramEntity.getRequestFileDataSet();
 		String userId = requestDataSet.getValue("userId");
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
 		String pathToSave = ConfigUtil.getProperty("path.image.photo");
 		SysUser sysUser = new SysUser();
 		HttpSession session = paramEntity.getSession();
 		int result = -1;
+		File files[], tempFile;
 
 		try {
 			sysUser = sysUserDao.getUserByUserId(userId);
@@ -238,15 +241,40 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			sysUser.setMaxRowPerPage(CommonUtil.toDouble(requestDataSet.getValue("maxRowsPerPage")));
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));
 			sysUser.setEmail(requestDataSet.getValue("email"));
+			sysUser.setAuthenticationSecretKey(requestDataSet.getValue("authenticationSecretKey"));
 			sysUser.setUpdateUserId((String)session.getAttribute("UserId"));
 			sysUser.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
 			if (dsFile.getRowCnt() > 0) {
-				String fileName = dsFile.getValue("NEW_NAME"), fullPath = "";
+				String fileName = dsFile.getValue("NEW_NAME"), fullPath = "", copyToPath = "";
 
 				fileName = userId+"_"+fileName;
 				fullPath = rootPath+pathToSave+"/"+fileName;
+				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+
+				files = new File(rootPath+pathToSave).listFiles();
+				for (File file : files) {
+					if (CommonUtil.startsWith(file.getName(), userId+"_")) {
+						FileUtil.forceDelete(file);
+						break;
+					}
+				}
 				FileUtil.moveFile(dsFile, fullPath);
+
+				try {
+					tempFile = new File(appSrcRootPath+pathToSave);
+					if (tempFile != null && tempFile.isDirectory()) {
+						files = new File(appSrcRootPath+pathToSave).listFiles();
+						for (File file : files) {
+							if (CommonUtil.startsWith(file.getName(), userId+"_")) {
+								FileUtil.forceDelete(file);
+								break;
+							}
+						}
+						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
+					}
+				} catch (Exception e) {
+				}
 
 				sysUser.setPhotoPath(pathToSave+"/"+fileName);
 			}
@@ -301,6 +329,39 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			throw new FrameworkException(paramEntity, ex);
 		}
 		return paramEntity;
+	}
+
+	public ParamEntity hasAuthKey(ParamEntity paramEntity) throws Exception {
+		HttpSession session = paramEntity.getSession();
+		DataSet resultDataSet = new DataSet();
+
+		try {
+			SysUser sysUser = (SysUser)session.getAttribute("SysUser");
+
+			resultDataSet.addColumn("hasAuthKey", CommonUtil.isNotBlank(sysUser.getAuthenticationSecretKey()) ? "true" : "false");
+
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
+			paramEntity.setSuccess(true);
+
+			return paramEntity;
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+	}
+
+	public ParamEntity getAuthenticationSecretKey(ParamEntity paramEntity) throws Exception {
+		DataSet resultDataSet = new DataSet();
+
+		try {
+			resultDataSet.addColumn("authenticationSecretKey", CommonUtil.getAuthenticationSecretKey());
+
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
+			paramEntity.setSuccess(true);
+
+			return paramEntity;
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
 	}
 
 	public ParamEntity doAuthentication(ParamEntity paramEntity) throws Exception {

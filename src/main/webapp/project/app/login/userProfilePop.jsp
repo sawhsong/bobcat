@@ -108,6 +108,10 @@ var userId = "<%=sysUser.getUserId()%>";
 			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getPageNumPerPage(), "#,###")%></td>
 		</tr>
 		<tr>
+			<th class="thEdit">Authentication Key</th>
+			<td class="tdEdit" colspan="3"><%=sysUser.getAuthenticationSecretKey()%></td>
+		</tr>
+		<tr>
 			<th class="thEdit"><mc:msg key="login.header.email"/></th>
 			<td class="tdEdit" colspan="3"><%=sysUser.getEmail()%></td>
 		</tr>

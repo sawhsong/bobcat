@@ -8,40 +8,21 @@ $(function() {
 	$("#btnSave").click(function(event) {
 		var fileValue = $("#filePhotoPath").val();
 
-		if (!commonJs.doValidate("fmDefault")) {
-			return;
-		}
-
-		if (!commonJs.isEmpty(fileValue)) {
-			fileValue = fileValue.substring(fileValue.lastIndexOf(".")+1);
-			if (!(fileValue.toLowerCase() == "png" || fileValue.toLowerCase() == "jpg" || fileValue.toLowerCase() == "gif" || fileValue.toLowerCase() == "jpeg")) {
-				commonJs.doValidatorMessage($("#filePhotoPath"), "notUploadable");
-				return;
+		if (commonJs.doValidate("fmDefault")) {
+			if (!commonJs.isEmpty(fileValue)) {
+				if (!commonJs.isUploadableImageFile($("#filePhotoPath"), fileValue)) {
+					return;
+				}
 			}
+
+			commonJs.doSaveWithFileForPage({
+				action:"/login/exeUpdate.do"
+			});
 		}
-
-		$("#fmDefault").attr("enctype", "multipart/form-data");
-
-		commonJs.confirm({
-			contents:com.message.Q001,
-			buttons:[{
-				caption:com.caption.yes,
-				callback:function() {
-					commonJs.doSubmit({
-						form:"fmDefault",
-						action:"/login/exeUpdate.do"
-					});
-				}
-			}, {
-				caption:com.caption.no,
-				callback:function() {
-				}
-			}]
-		});
 	});
 
 	$("#btnBack").click(function(event) {
-		parent.popupUserProfile.resizeTo(0, -110);
+		parent.popupUserProfile.resizeTo(0, -124);
 		history.go(-1);
 	});
 
@@ -49,15 +30,43 @@ $(function() {
 		parent.popupUserProfile.close();
 	});
 
+	$("#btnGetAuthenticationSecretKey").click(function(event) {
+		if ("disabled" != $(this).attr("disabled")) {
+			commonJs.doSearch({
+				url:"/login/getAuthenticationSecretKey.do",
+				noForm:true,
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					$("#authenticationSecretKey").val(ds.getValue(0, "authenticationSecretKey"));
+				}
+			});
+		}
+	});
+
 	/*!
 	 * process
 	 */
+	setButtonStatus = function() {
+		commonJs.doSearch({
+			url:"/login/hasAuthKey.do",
+			noForm:true,
+			onSuccess:function(result) {
+				var ds = result.dataSet;
+				var hasAuthKey = commonJs.toBoolean(ds.getValue(0, "hasAuthKey"));
+
+				if (hasAuthKey) {
+					$("#authenticationSecretKey").removeClass("txtEn").addClass("txtDis").attr("readonly", true);
+					$("#btnGetAuthenticationSecretKey").attr("disabled", true);
+				}
+			}
+		});
+	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
 		$("#maxRowsPerPage").selectpicker({width:"90px"}).selectpicker("refresh");
-		$("#userName").focus();
+		setButtonStatus();
 	});
 });

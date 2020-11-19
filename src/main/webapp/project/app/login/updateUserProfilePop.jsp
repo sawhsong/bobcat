@@ -150,6 +150,13 @@
 			</td>
 		</tr>
 		<tr>
+			<th class="thEdit">Authentication Key</th>
+			<td class="tdEdit" colspan="3">
+				<ui:text name="authenticationSecretKey" value="<%=sysUser.getAuthenticationSecretKey()%>" checkName="Authentication Key" className="hor" style="width:77%;"/>
+				<ui:button id="btnGetAuthenticationSecretKey" caption="Generate Key" iconClass="fa-key"/>
+			</td>
+		</tr>
+		<tr>
 			<th class="thEdit"><mc:msg key="login.header.email"/></th>
 			<td class="tdEdit" colspan="3">
 				<input type="text" id="email" name="email" value="<%=sysUser.getEmail()%>" class="txtEn" checkName="<mc:msg key="login.header.email"/>" mandatory option="email"/>

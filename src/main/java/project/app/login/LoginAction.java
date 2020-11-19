@@ -188,6 +188,24 @@ public class LoginAction extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String hasAuthKey() throws Exception {
+		try {
+			biz.hasAuthKey(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getAuthenticationSecretKey() throws Exception {
+		try {
+			biz.getAuthenticationSecretKey(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String logout() throws Exception {
 		MemoryBean.remove(session.getId());
 		session.invalidate();

@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
 import zebra.example.common.module.menu.ZebraMenuManager;
 import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class AppLoader extends HttpServlet {
 	private Logger logger = LogManager.getLogger(this.getClass());
@@ -33,22 +34,24 @@ public class AppLoader extends HttpServlet {
 	 * MemonyBean
 	 */
 	private void executeWorks() throws Exception {
-//		for (Enumeration attr = System.getProperties().propertyNames(); attr.hasMoreElements();) {
-//			String key = (String)attr.nextElement();
-//			logger.debug("System.PropertyName [" + key + "] : " + System.getProperty(key));
-//		}
-
 		MemoryBean.set("applicationRealPath", CommonUtil.replace(context.getRealPath(""), File.separator, "/"));
 		MemoryBean.set("applicationSrcPathRoot", CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca/"));
 		MemoryBean.set("applicationSrcPathSrc", MemoryBean.get("applicationSrcPathRoot")+"/src");
 		MemoryBean.set("applicationSrcPathJava", MemoryBean.get("applicationSrcPathSrc")+"/main/java");
 		MemoryBean.set("applicationSrcPathWeb", MemoryBean.get("applicationSrcPathSrc")+"/main/webapp");
 
-//		logger.debug("MemoryBean.applicationRealPath : "+MemoryBean.get("applicationRealPath"));
-//		logger.debug("MemoryBean.applicationSrcPathRoot : "+MemoryBean.get("applicationSrcPathRoot"));
-//		logger.debug("MemoryBean.applicationSrcPathSrc : "+MemoryBean.get("applicationSrcPathSrc"));
-//		logger.debug("MemoryBean.applicationSrcPathJava : "+MemoryBean.get("applicationSrcPathJava"));
-//		logger.debug("MemoryBean.applicationSrcPathWeb : "+MemoryBean.get("applicationSrcPathWeb"));
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.debug.config"))) {
+//			for (Enumeration attr = System.getProperties().propertyNames(); attr.hasMoreElements();) {
+//				String key = (String) attr.nextElement();
+//				logger.debug("System.PropertyName [" + key + "] : " + System.getProperty(key));
+//			}
+
+//			logger.debug("MemoryBean.applicationRealPath : "+MemoryBean.get("applicationRealPath"));
+//			logger.debug("MemoryBean.applicationSrcPathRoot : "+MemoryBean.get("applicationSrcPathRoot"));
+//			logger.debug("MemoryBean.applicationSrcPathSrc : "+MemoryBean.get("applicationSrcPathSrc"));
+//			logger.debug("MemoryBean.applicationSrcPathJava : "+MemoryBean.get("applicationSrcPathJava"));
+//			logger.debug("MemoryBean.applicationSrcPathWeb : "+MemoryBean.get("applicationSrcPathWeb"));
+		}
 
 		// Framework Menu & CommonCode
 		ZebraMenuManager.loadMenu();

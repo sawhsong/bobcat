@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.stream.DoubleStream;
 
+import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -545,6 +547,15 @@ public class CommonUtil extends StringUtils {
 		} else {
 			return ConfigUtil.getProperty("path.image.icon")+"/"+"icnDocument.png";
 		}
+	}
+
+	public static String getAuthenticationSecretKey() {
+		SecureRandom random = new SecureRandom();
+		Base32 base32 = new Base32();
+		byte[] bytes = new byte[20];
+
+		random.nextBytes(bytes);
+		return base32.encodeToString(bytes);
 	}
 
 	public static String stackTraceToString(Throwable ex) {
