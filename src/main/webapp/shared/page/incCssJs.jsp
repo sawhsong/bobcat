@@ -62,6 +62,11 @@ jsconfig.put("themeId", "${sessionScope.themeId}");
 jsconfig.put("maxRowsPerPage", "${sessionScope.maxRowsPerPage}");
 jsconfig.put("pageNumsPerPage", "${sessionScope.pageNumsPerPage}");
 /*!
+ * loggin authentication
+ */
+jsconfig.put("google2fa", "<mc:cp key="google2fa"/>");
+jsconfig.put("emailKey", "<mc:cp key="emailKey"/>");
+/*!
  * paths
  */
 jsconfig.put("shareRoot", "<mc:cp key="sharedRoot"/>");
@@ -73,6 +78,7 @@ jsconfig.put("cssJqUi", "<mc:cp key="cssJqUi"/>");
 jsconfig.put("imgIcon", "<mc:cp key="imgIcon"/>");
 jsconfig.put("imgPhoto", "<mc:cp key="path.image.photo"/>");
 jsconfig.put("imgSortableTable", "<mc:cp key="imgSortableTable"/>");
+jsconfig.put("imgOrgLogo", "<mc:cp key="imgOrgLogo"/>");
 jsconfig.put("jsCommon", "<mc:cp key="jsCommon"/>");
 jsconfig.put("jsJq", "<mc:cp key="jsJq"/>");
 jsconfig.put("jsNg", "<mc:cp key="jsNg"/>");
@@ -106,7 +112,7 @@ jsconfig.put("customFileObject", "<mc:cp key="customFileObject"/>");
 jsconfig.put("recordDelimiter", "<mc:cp key="recordDelimiter"/>");
 jsconfig.put("dataDelimiter", "<mc:cp key="dataDelimiter"/>");
 jsconfig.put("dataSetHeaderDelimiter", "<mc:cp key="dataSetHeaderDelimiter"/>");
-jsconfig.put("effectDuration", 400);
+jsconfig.put("effectDuration", 100);
 jsconfig.put("pagehandlerActionType", "<mc:cp key="pagehandlerActionType"/>");
 jsconfig.put("webServiceProviderUrl", "<mc:cp key="webService.provider.url"/>");
 jsconfig.put("maxRowsPerPageArray", "<mc:cp key="view.data.maxRowsPerPage"/>");

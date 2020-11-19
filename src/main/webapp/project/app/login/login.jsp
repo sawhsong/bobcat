@@ -36,15 +36,10 @@ body {background:#FFFFFF;}
 .input-group {padding-bottom:4px;}
 .buttonDiv {padding-top:16px;padding-bottom:0px;}
 .additionalLink {padding-top:20px;font-size:13px;}
-.passwordLink {float:left;width:50%;text-align:left;}
-.registerLink {float:right;width:50%;text-align:right;}
+.passwordLink {float:left;width:100%;text-align:center;}
+/* .registerLink {float:right;width:50%;text-align:right;} */
 
-.loginDescriptionArea {margin:0px auto;width:700px;text-align:center;color:#555555;font-size:12px;
-/* 	border-radius:6px;box-shadow:0px 10px 20px rgba(0, 0, 0, .2); */
-/* 	background:url(<tag:cp key="imgIcon"/>/loginBack.png) no-repeat 50% 0%; */
-/* 	background-size:700px 500px; */
-/* 	background-blend-mode:overlay; */
-}
+.loginDescriptionArea {margin:0px auto;width:700px;text-align:center;color:#555555;font-size:12px;}
 .loginDescriptionArea .panel-heading {background-color:#ffffff;}
 .loginDescriptionTitle {padding-top:4px;padding-left:4px;text-align:left;font-size:14px;height:26px;font-weight:bold;}
 .loginDescription {margin:30px 10px 30px 10px;display:inline-block;width:560px;border:1px solid #D1D1D1;border-radius:10px;box-shadow:0px 0px 20px rgba(0, 0, 0, .2);}
@@ -84,9 +79,9 @@ body {background:#FFFFFF;}
 				<div class="passwordLink">
 					<ui:anchor id="aResetPassword" caption="login.button.resetPassword"/>
 				</div>
-				<div class="registerLink">
-					<ui:anchor id="aRequestRegister" caption="login.button.requestRegister"/>
-				</div>
+<!-- 				<div class="registerLink"> -->
+<%-- 					<ui:anchor id="aRequestRegister" caption="login.button.requestRegister"/> --%>
+<!-- 				</div> -->
 			</div>
 		</div>
 	</div>

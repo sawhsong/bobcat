@@ -57,6 +57,7 @@ public class LoginAction extends BaseAction {
 				session.setAttribute("DefaultFinancialYear", paramEntity.getObject("defaultFinancialYear"));
 				session.setAttribute("DefaultQuarterCode", paramEntity.getObject("defaultQuarterCode"));
 				session.setAttribute("DefaultQuarterName", paramEntity.getObject("defaultQuarterName"));
+				session.setAttribute("AuthenticationKey", (String)paramEntity.getObject("authenticationKey"));
 
 				paramEntity.setAjaxResponseDataSet(sysUser.getDataSet());
 			}

@@ -40,7 +40,9 @@ public class ConfigUtil {
 
 		// Web Resource Paths
 		if (CommonUtil.isBlank(rtnString)) {
-			if (CommonUtil.equalsIgnoreCase(key, "sharedRoot")) {rtnString = ConfigUtil.getProperty("path.shared.root");}
+			if (CommonUtil.equalsIgnoreCase(key, "google2fa")) {rtnString = ConfigUtil.getProperty("login.auth.google2fa");}
+			else if (CommonUtil.equalsIgnoreCase(key, "emailKey")) {rtnString = ConfigUtil.getProperty("login.auth.emailKey");}
+			else if (CommonUtil.equalsIgnoreCase(key, "sharedRoot")) {rtnString = ConfigUtil.getProperty("path.shared.root");}
 			else if (CommonUtil.equalsIgnoreCase(key, "sharedPage")) {rtnString = ConfigUtil.getProperty("path.shared.page");}
 			else if (CommonUtil.equalsIgnoreCase(key, "sharedCss")) {rtnString = ConfigUtil.getProperty("path.shared.css");}
 			else if (CommonUtil.equalsIgnoreCase(key, "sharedImg")) {rtnString = ConfigUtil.getProperty("path.shared.img");}
@@ -51,12 +53,12 @@ public class ConfigUtil {
 
 			else if (CommonUtil.equalsIgnoreCase(key, "imgIcon")) {rtnString = ConfigUtil.getProperty("path.image.icon");}
 			else if (CommonUtil.equalsIgnoreCase(key, "imgSortableTable")) {rtnString = ConfigUtil.getProperty("path.image.sortableTable");}
+			else if (CommonUtil.equalsIgnoreCase(key, "imgOrgLogo")) {rtnString = ConfigUtil.getProperty("path.image.orgLogo");}
 
 			else if (CommonUtil.equalsIgnoreCase(key, "jsApp")) {rtnString = ConfigUtil.getProperty("path.web.appJs");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsAppFwk")) {rtnString = ConfigUtil.getProperty("path.web.fwkAppJs");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsCommon")) {rtnString = ConfigUtil.getProperty("path.js.common");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsJq")) {rtnString = ConfigUtil.getProperty("path.js.jquery");}
-			else if (CommonUtil.equalsIgnoreCase(key, "jsNg")) {rtnString = ConfigUtil.getProperty("path.js.angular");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsJqPlugin")) {rtnString = ConfigUtil.getProperty("path.js.jquery.plugin");}
 			else if (CommonUtil.equalsIgnoreCase(key, "jsMessage")) {rtnString = ConfigUtil.getProperty("path.js.message");}
 

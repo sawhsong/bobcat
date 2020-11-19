@@ -13,7 +13,7 @@ import zebra.util.ConfigUtil;
 
 @SuppressWarnings("rawtypes")
 public class LoginMessageSender extends AbstractMessageSender implements ApplicationListener {
-	public void sendResetPasswordMessage(SysUser sysUser) {
+	public void sendResetPasswordMessage(SysUser sysUser) throws Exception {
 		String defaultEncoding = ConfigUtil.getProperty("mail.default.encoding");
 		String subject = "Password Reset Notice";
 		String userName = sysUser.getUserName();
@@ -39,10 +39,11 @@ public class LoginMessageSender extends AbstractMessageSender implements Applica
 			javaMailSender.send(mimeMessage);
 		} catch (Exception ex) {
 			logger.error(ex);
+			throw ex;
 		}
 	}
 
-	public void sendRequestRegisterMessage(SysUser sysUser, String toEmail) {
+	public void sendRequestRegisterMessage(SysUser sysUser, String toEmail) throws Exception {
 		String defaultEncoding = ConfigUtil.getProperty("mail.default.encoding");
 		String subject = "Request for Register";
 		String userName = sysUser.getUserName();
@@ -70,6 +71,7 @@ public class LoginMessageSender extends AbstractMessageSender implements Applica
 			javaMailSender.send(mimeMessage);
 		} catch (Exception ex) {
 			logger.error(ex);
+			throw ex;
 		}
 	}
 
