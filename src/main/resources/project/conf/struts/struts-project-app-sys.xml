@@ -36,19 +36,19 @@
         <action class="project.app.sys.sys0406.Sys0406Action" method="{1}" name="0406/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0406/Sys0406List.jsp</result>
         </action>
-        <!--Sys0602 - Annoucement-->
-        <action class="project.app.sys.sys0602.Sys0602Action" method="{1}" name="0602/*">
-            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602UpdatePop.jsp</result>
+        <!--Sys9902 - Annoucement-->
+        <action class="project.app.sys.sys9902.Sys0602Action" method="{1}" name="9902/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902UpdatePop.jsp</result>
         </action>
-        <!--Sys0604 - Free Board-->
-        <action class="project.app.sys.sys0604.Sys0604Action" method="{1}" name="0604/*">
-            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604UpdatePop.jsp</result>
+        <!--Sys9904 - Free Board-->
+        <action class="project.app.sys.sys9904.Sys0604Action" method="{1}" name="9904/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904UpdatePop.jsp</result>
         </action>
     </package>
 </struts>

@@ -1703,21 +1703,21 @@ var nony = {
 	_doPageLayout : function(options) {
 		if ($.nony.isEmpty(options)) {return;}
 
-		if ($("#hdnHeaderMenuId").val() == "RPT") {
+//		if ($("#hdnHeaderMenuId").val() == "RPT") {
 			options[1].togglerLength_open = 40;
 			options[1].togglerLength_closed = 40;
 			options[1].spacing_open = 4,
 			options[1].spacing_closed = 4,
 			options[1].west__size = 250;
-		} else {
-			options[1].togglerLength_open = 0;
-			options[1].togglerLength_closed = 0;
-			options[1].spacing_open = 0,
-			options[1].spacing_closed = 0,
-			options[1].west__size = 0;
-
-			$("#divBodyCenter").css("border-left", "0px solid #D1D1D1");
-		}
+//		} else {
+//			options[1].togglerLength_open = 0;
+//			options[1].togglerLength_closed = 0;
+//			options[1].spacing_open = 0,
+//			options[1].spacing_closed = 0,
+//			options[1].west__size = 0;
+//
+//			$("#divBodyCenter").css("border-left", "0px solid #D1D1D1");
+//		}
 
 		var defaultOuterLayoutOption = $("body").layout(options[0]);
 		var defaultInnerLayoutOption = $("#divBodyHolder").layout(options[1]);

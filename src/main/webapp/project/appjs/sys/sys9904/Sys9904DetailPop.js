@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0604DetailPop.js
+ * - Sys9904DetailPop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -56,11 +56,11 @@ $(function() {
 		var params = {};
 
 		if (param.mode == "Update") {
-			actionString = "/sys/0604/getUpdate.do";
+			actionString = "/sys/9904/getUpdate.do";
 		} else if (param.mode == "Reply") {
-			actionString = "/sys/0604/getInsert.do";
+			actionString = "/sys/9904/getInsert.do";
 		} else if (param.mode == "Delete") {
-			actionString = "/sys/0604/exeDelete.do";
+			actionString = "/sys/9904/exeDelete.do";
 		}
 
 		params = {
@@ -97,7 +97,7 @@ $(function() {
 										buttons:[{
 											caption:com.caption.ok,
 											callback:function() {
-												commonJs.doSubmit({action:"/sys/0604/getDefault.do"});
+												commonJs.doSubmit({action:"/sys/9904/getDefault.do"});
 											}
 										}]
 									});

@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0602UpdatePop.js
+ * - Sys9902UpdatePop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -17,7 +17,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sys/0602/exeUpdate.do",
+							action:"/sys/9902/exeUpdate.do",
 							data:{
 								articleId:articleId
 							}

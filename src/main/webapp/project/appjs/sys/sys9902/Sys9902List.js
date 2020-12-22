@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0602List.js
+ * - Sys9902List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 
@@ -59,7 +59,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sys/0602/getList.do",
+					url:"/sys/9902/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -168,13 +168,13 @@ $(function() {
 		var height = 510;
 
 		if (param.mode == "Detail") {
-			url = "/sys/0602/getDetail.do";
+			url = "/sys/9902/getDetail.do";
 			header = com.header.popHeaderDetail;
 		} else if (param.mode == "New" || param.mode == "Reply") {
-			url = "/sys/0602/getInsert.do";
+			url = "/sys/9902/getInsert.do";
 			header = com.header.popHeaderEdit;
 		} else if (param.mode == "Edit") {
-			url = "/sys/0602/getUpdate.do";
+			url = "/sys/9902/getUpdate.do";
 			header = com.header.popHeaderEdit;
 			height = 634;
 		}
@@ -207,7 +207,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sys/0602/exeDelete.do",
+						url:"/sys/9902/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -268,7 +268,7 @@ $(function() {
 
 	getAttachedFile = function(img) {
 		commonJs.ajaxSubmit({
-			url:"/sys/0602/getAttachedFile.do",
+			url:"/sys/9902/getAttachedFile.do",
 			dataType:"json",
 			data:{
 				articleId:$(img).attr("articleId")
@@ -349,7 +349,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sys/0602/exeExport.do",
+						url:"/sys/9902/exeExport.do",
 						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange

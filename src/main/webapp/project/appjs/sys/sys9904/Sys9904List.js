@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0604List.js
+ * - Sys9904List.js
  *************************************************************************************************/
 jsconfig.put("useJqTooltip", false);
 var popup = null;
@@ -58,7 +58,7 @@ $(function() {
 		if (commonJs.doValidate($("#fmDefault"))) {
 			setTimeout(function() {
 				commonJs.ajaxSubmit({
-					url:"/sys/0604/getList.do",
+					url:"/sys/9904/getList.do",
 					dataType:"json",
 					formId:"fmDefault",
 					success:function(data, textStatus) {
@@ -159,12 +159,12 @@ $(function() {
 	};
 
 	getInsert = function() {
-		commonJs.doSubmit({action:"/sys/0604/getInsert.do"});
+		commonJs.doSubmit({action:"/sys/9904/getInsert.do"});
 	};
 
 	getDetail = function(articleId) {
 		commonJs.doSubmit({
-			action:"/sys/0604/getDetail.do",
+			action:"/sys/9904/getDetail.do",
 			data:{
 				articleId:articleId
 			}
@@ -175,11 +175,11 @@ $(function() {
 		var action = "";
 
 		if (param.mode == "New" || param.mode == "Reply") {
-			action = "/sys/0604/getInsert.do";
+			action = "/sys/9904/getInsert.do";
 		} else if (param.mode == "Edit") {
-			action = "/sys/0604/getUpdate.do";
+			action = "/sys/9904/getUpdate.do";
 		} else if (param.mode == "Detail") {
-			action = "/sys/0604/getDetail.do";
+			action = "/sys/9904/getDetail.do";
 		}
 
 		commonJs.doSubmit({
@@ -200,7 +200,7 @@ $(function() {
 				caption:com.caption.yes,
 				callback:function() {
 					commonJs.ajaxSubmit({
-						url:"/sys/0604/exeDelete.do",
+						url:"/sys/9904/exeDelete.do",
 						dataType:"json",
 						formId:"fmDefault",
 						success:function(data, textStatus) {
@@ -261,7 +261,7 @@ $(function() {
 
 	getAttachedFile = function(img) {
 		commonJs.ajaxSubmit({
-			url:"/sys/0604/getAttachedFile.do",
+			url:"/sys/9904/getAttachedFile.do",
 			dataType:"json",
 			data:{
 				articleId:$(img).attr("articleId")
@@ -343,7 +343,7 @@ $(function() {
 				callback:function() {
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
-						url:"/sys/0604/exeExport.do",
+						url:"/sys/9904/exeExport.do",
 						data:{
 							fileType:menuObject.fileType,
 							dataRange:menuObject.dataRange

@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0604InsertPop.js
+ * - Sys9904InsertPop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -17,7 +17,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sys/0604/exeInsert.do",
+							action:"/sys/9904/exeInsert.do",
 							data:{
 								articleId:articleId
 							}

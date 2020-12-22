@@ -14,10 +14,10 @@
     <!--Sys0406 - Menu - Authority Group-->
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406Action" id="sys0406Action" name="sys0406Action"/>
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406BizImpl" id="sys0406Biz" name="sys0406Biz" parent="baseBiz"/>
-    <!--Sys0602 - Annoucement-->
-    <bean class="${name.package.project}.app.sys.sys0602.Sys0602Action" id="sys0602Action" name="sys0602Action"/>
-    <bean class="${name.package.project}.app.sys.sys0602.Sys0602BizImpl" id="sys0602Biz" name="sys0602Biz" parent="baseBiz"/>
-    <!--Sys0604 - Free Board-->
-    <bean class="${name.package.project}.app.sys.sys0604.Sys0604Action" id="sys0604Action" name="sys0604Action"/>
-    <bean class="${name.package.project}.app.sys.sys0604.Sys0604BizImpl" id="sys0604Biz" name="sys0604Biz" parent="baseBiz"/>
+    <!--Sys9902 - Annoucement-->
+    <bean class="${name.package.project}.app.sys.sys9902.Sys9902Action" id="sys9902Action" name="sys9902Action"/>
+    <bean class="${name.package.project}.app.sys.sys9902.Sys9902BizImpl" id="sys9902Biz" name="sys9902Biz" parent="baseBiz"/>
+    <!--Sys9904 - Free Board-->
+    <bean class="${name.package.project}.app.sys.sys9904.Sys9904Action" id="sys9904Action" name="sys9904Action"/>
+    <bean class="${name.package.project}.app.sys.sys9904.Sys9904BizImpl" id="sys9904Biz" name="sys9904Biz" parent="baseBiz"/>
 </beans>
