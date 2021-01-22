@@ -37,14 +37,14 @@
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0406/Sys0406List.jsp</result>
         </action>
         <!--Sys9902 - Annoucement-->
-        <action class="project.app.sys.sys9902.Sys0602Action" method="{1}" name="9902/*">
+        <action class="project.app.sys.sys9902.Sys9902Action" method="{1}" name="9902/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902List.jsp</result>
             <result name="detail" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902DetailPop.jsp</result>
             <result name="insert" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902UpdatePop.jsp</result>
         </action>
         <!--Sys9904 - Free Board-->
-        <action class="project.app.sys.sys9904.Sys0604Action" method="{1}" name="9904/*">
+        <action class="project.app.sys.sys9904.Sys9904Action" method="{1}" name="9904/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904List.jsp</result>
             <result name="detail" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904DetailPop.jsp</result>
             <result name="insert" type="debugDispatcherResult">/project/app/sys/sys9904/Sys9904InsertPop.jsp</result>
