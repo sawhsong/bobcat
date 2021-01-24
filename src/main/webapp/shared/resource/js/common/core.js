@@ -1719,7 +1719,6 @@ var nony = {
 //			$("#divBodyCenter").css("border-left", "0px solid #D1D1D1");
 //		}
 
-
 		var defaultOuterLayoutOption = $("body").layout(options[0]);
 		var defaultInnerLayoutOption = $("#divBodyHolder").layout(options[1]);
 
