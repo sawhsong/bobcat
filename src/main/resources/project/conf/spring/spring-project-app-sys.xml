@@ -14,6 +14,36 @@
     <!--Sys0406 - Menu - Authority Group-->
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406Action" id="sys0406Action" name="sys0406Action"/>
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406BizImpl" id="sys0406Biz" name="sys0406Biz" parent="baseBiz"/>
+    <!--Sys0602 - Organisation Management-->
+    <bean class="${name.package.project}.app.sba.sys0602.Sys0602Action" id="sys0602Action" name="sys0602Action"/>
+    <bean class="${name.package.project}.app.sba.sys0602.Sys0602BizImpl" id="sys0602Biz" name="sys0602Biz" parent="baseBiz"/>
+    <!--Sys0604 - User Management-->
+    <bean class="${name.package.project}.app.sba.sys0604.Sys0604Action" id="sys0604Action" name="sys0604Action"/>
+    <bean class="${name.package.project}.app.sba.sys0604.Sys0604BizImpl" id="sys0604Biz" name="sys0604Biz" parent="baseBiz"/>
+    <!--Sys0802 - Financial Period Type-->
+    <bean class="${name.package.project}.app.sba.sys0802.Sys0802Action" id="sys0802Action" name="sys0802Action"/>
+    <bean class="${name.package.project}.app.sba.sys0802.Sys0802BizImpl" id="sys0802Biz" name="sys0802Biz" parent="baseBiz"/>
+    <!--Sys0804 - Income Type-->
+    <bean class="${name.package.project}.app.sba.sys0804.Sys0808Action" id="sys0804Action" name="sys0804Action"/>
+    <bean class="${name.package.project}.app.sba.sys0804.Sys0808BizImpl" id="sys0804Biz" name="sys0804Biz" parent="baseBiz"/>
+    <!--Sys0806 - Expenditure Type-->
+    <bean class="${name.package.project}.app.sba.sys0806.Sys0806Action" id="sys0806Action" name="sys0806Action"/>
+    <bean class="${name.package.project}.app.sba.sys0806.Sys0806BizImpl" id="sys0806Biz" name="sys0806Biz" parent="baseBiz"/>
+    <!--Sys0808 - Asset Type-->
+    <bean class="${name.package.project}.app.sba.sys0808.Sys0808Action" id="sys0808Action" name="sys0808Action"/>
+    <bean class="${name.package.project}.app.sba.sys0808.Sys0808BizImpl" id="sys0808Biz" name="sys0808Biz" parent="baseBiz"/>
+    <!--Sys0810 - Repayment Type-->
+    <bean class="${name.package.project}.app.sba.sys0810.Sys0810Action" id="sys0810Action" name="sys0810Action"/>
+    <bean class="${name.package.project}.app.sba.sys0810.Sys0810BizImpl" id="sys0810Biz" name="sys0810Biz" parent="baseBiz"/>
+    <!--Sys0812 - Borrowing Type-->
+    <bean class="${name.package.project}.app.sba.sys0812.Sys0812Action" id="sys0812Action" name="sys0812Action"/>
+    <bean class="${name.package.project}.app.sba.sys0812.Sys0812BizImpl" id="sys0812Biz" name="sys0812Biz" parent="baseBiz"/>
+    <!--Sys0814 - Lending Type-->
+    <bean class="${name.package.project}.app.sba.sys0814.Sys0814Action" id="sys0814Action" name="sys0814Action"/>
+    <bean class="${name.package.project}.app.sba.sys0814.Sys0814BizImpl" id="sys0814Biz" name="sys0814Biz" parent="baseBiz"/>
+    <!--Sys0816 - Tax Table Mgmt.-->
+    <bean class="${name.package.project}.app.sba.sys0816.Sys0816Action" id="sys0816Action" name="sys0816Action"/>
+    <bean class="${name.package.project}.app.sba.sys0816.Sys0816BizImpl" id="sys0816Biz" name="sys0816Biz" parent="baseBiz"/>
     <!--Sys9902 - Annoucement-->
     <bean class="${name.package.project}.app.sys.sys9902.Sys9902Action" id="sys9902Action" name="sys9902Action"/>
     <bean class="${name.package.project}.app.sys.sys9902.Sys9902BizImpl" id="sys9902Biz" name="sys9902Biz" parent="baseBiz"/>

@@ -36,6 +36,79 @@
         <action class="project.app.sys.sys0406.Sys0406Action" method="{1}" name="0406/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0406/Sys0406List.jsp</result>
         </action>
+        <!--Sys0602 - Organisation Management-->
+        <action class="project.app.sba.sys0602.Sys0602Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0602/Sys0602List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0602/Sys0602DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0602/Sys0602InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0602/Sys0602UpdatePop.jsp</result>
+        </action>
+        <!--Sys0604 - User Management-->
+        <action class="project.app.sba.sys0604.Sys0604Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0604/Sys0604List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0604/Sys0604DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0604/Sys0604InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0604/Sys0604UpdatePop.jsp</result>
+            <result name="actionContextMenu" type="debugDispatcherResult">/project/app/sba/sys0604/Sys0604ActionContextMenuPop.jsp</result>
+        </action>
+        <!--Sys0802 - Financial Period Type-->
+        <action class="project.app.sba.sys0802.Sys0802Action" method="{1}" name="0402/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0802/Sys0802List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0802/Sys0802DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0802/Sys0802InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0802/Sys0802UpdatePop.jsp</result>
+        </action>
+        <!--Sys0804 - Income Type-->
+        <action class="project.app.sba.sys0804.Sys0804Action" method="{1}" name="0404/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0804/Sys0804List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0804/Sys0804DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0804/Sys0804InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0804/Sys0804UpdatePop.jsp</result>
+        </action>
+        <!--Sys0806 - Expenditure Type-->
+        <action class="project.app.sba.sys0806.Sys0806Action" method="{1}" name="0406/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0806/Sys0806List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0806/Sys0806DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0806/Sys0806InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0806/Sys0806UpdatePop.jsp</result>
+            <result name="updateSort" type="debugDispatcherResult">/project/app/sba/sys0806/Sys0806UpdateSortPop.jsp</result>
+        </action>
+        <!--Sys0808 - Asset Type-->
+        <action class="project.app.sba.sys0808.Sys0808Action" method="{1}" name="0408/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0808/Sys0808List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0808/Sys0808DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0808/Sys0808InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0808/Sys0808UpdatePop.jsp</result>
+        </action>
+        <!--Sys0810 - Repayment Type-->
+        <action class="project.app.sba.sys0810.Sys0810Action" method="{1}" name="0410/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0810/Sys0810List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0810/Sys0810DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0810/Sys0810InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0810/Sys0810UpdatePop.jsp</result>
+        </action>
+        <!--Sys0812 - Borrowing Type-->
+        <action class="project.app.sba.sys0812.Sys0812Action" method="{1}" name="0412/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0812/Sys0812List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0812/Sys0812DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0812/Sys0812InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0812/Sys0812UpdatePop.jsp</result>
+        </action>
+        <!--Sys0814 - Lending Type-->
+        <action class="project.app.sba.sys0814.Sys0814Action" method="{1}" name="0414/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0814/Sys0814List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0814/Sys0814DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0814/Sys0814InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0814/Sys0814UpdatePop.jsp</result>
+        </action>
+        <!--Sys0816 - Tax Table Mgmt.-->
+        <action class="project.app.sba.sys0816.Sys0816Action" method="{1}" name="0416/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sba/sys0816/Sys0816List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sba/sys0816/Sys0816DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sba/sys0816/Sys0816InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sba/sys0816/Sys0816UpdatePop.jsp</result>
+            <result name="upload" type="debugDispatcherResult">/project/app/sba/sys0816/Sys0816UploadPop.jsp</result>
+        </action>
         <!--Sys9902 - Annoucement-->
         <action class="project.app.sys.sys9902.Sys9902Action" method="{1}" name="9902/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys9902/Sys9902List.jsp</result>
