@@ -44,35 +44,36 @@ $(function() {
 
 	setActive = function() {
 		var activeMenuIndex = -1;
-		var headerMenuId = $("#hdnHeaderMenuId").val();
 
-		if (commonJs.isIn(headerMenuId, ["BST"]) {
-			$(".leftMenuAccordionContents").find("li").each(function(index) {
-				if (index == 0) {
-					$(this).trigger("click");
-					return false;
+		if (commonJs.isIn($("#hdnHeaderMenuId").val(), ["SYS"])) {
+			$(".leftMenuAccordionGroup").each(function(i) {
+				$(this).find("li").each(function(j) {
+					if ($(this).hasClass("leftMenusSelected")) {
+						activeMenuIndex = i;
+						return false;
+					}
+				});
+			});
+
+			$(".leftMenuAccordionGroup").each(function(i) {
+				if (i == activeMenuIndex) {
+					var header = $(this).find("h3");
+
+					if (!$(header).hasClass("ui-state-active")) {
+						$(header).trigger("click");
+					}
 				}
 			});
-		}
-
-		$(".leftMenuAccordionGroup").each(function(i) {
-			$(this).find("li").each(function(j) {
-				if ($(this).hasClass("leftMenusSelected")) {
-					activeMenuIndex = i;
-					return false;
-				}
-			});
-		});
-
-		$(".leftMenuAccordionGroup").each(function(i) {
-			if (i == activeMenuIndex) {
-				var header = $(this).find("h3");
-
-				if (!$(header).hasClass("ui-state-active")) {
-					$(header).trigger("click");
-				}
+		} else {
+			if (commonJs.isBlank($("#hdnLeftMenuId").val())) {
+				$(".leftMenuAccordionContents").find("li").each(function(index) {
+					if (index == 0) {
+						$(this).trigger("click");
+						return false;
+					}
+				});
 			}
-		});
+		}
 	};
 
 	$(window).load(function() {
