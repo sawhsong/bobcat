@@ -56,19 +56,19 @@ $(function() {
 
 	setActionButtonContextMenu = function() {
 		var ctxMenu = [{
-			name:sba.sys0604.caption.auth,
+			name:sys.sys0604.caption.auth,
 			img:"fa-sitemap",
 			fun:function() {openPopup({mode:"UpdateAuthGroup"});}
 		}, {
-			name:sba.sys0604.caption.type,
+			name:sys.sys0604.caption.type,
 			img:"fa-users",
 			fun:function() {openPopup({mode:"UpdateUserType"});}
 		}, {
-			name:sba.sys0604.caption.status,
+			name:sys.sys0604.caption.status,
 			img:"fa-sliders",
 			fun:function() {openPopup({mode:"UpdateUserStatus"});}
 		}, {
-			name:sba.sys0604.caption.active,
+			name:sys.sys0604.caption.active,
 			img:"fa-adjust",
 			fun:function() {openPopup({mode:"UpdateActiveStatus"});}
 		}];
@@ -189,19 +189,19 @@ $(function() {
 			height = 620;
 		} else if (param.mode == "UpdateAuthGroup") {
 			url = "/sys/0604/getActionContextMenu.do";
-			header = sba.sys0604.caption.auth;
+			header = sys.sys0604.caption.auth;
 			width = 340; height = 366;
 		} else if (param.mode == "UpdateUserType") {
 			url = "/sys/0604/getActionContextMenu.do";
-			header = sba.sys0604.caption.type;
+			header = sys.sys0604.caption.type;
 			width = 320; height = 180;
 		} else if (param.mode == "UpdateUserStatus") {
 			url = "/sys/0604/getActionContextMenu.do";
-			header = sba.sys0604.caption.status;
+			header = sys.sys0604.caption.status;
 			width = 320; height = 220;
 		} else if (param.mode == "UpdateActiveStatus") {
 			url = "/sys/0604/getActionContextMenu.do";
-			header = sba.sys0604.caption.active;
+			header = sys.sys0604.caption.active;
 			width = 320; height = 180;
 		}
 

@@ -24,8 +24,8 @@
     <bean class="${name.package.project}.app.sys.sys0802.Sys0802Action" id="sys0802Action" name="sys0802Action"/>
     <bean class="${name.package.project}.app.sys.sys0802.Sys0802BizImpl" id="sys0802Biz" name="sys0802Biz" parent="baseBiz"/>
     <!--Sys0804 - Income Type-->
-    <bean class="${name.package.project}.app.sys.sys0804.Sys0808Action" id="sys0804Action" name="sys0804Action"/>
-    <bean class="${name.package.project}.app.sys.sys0804.Sys0808BizImpl" id="sys0804Biz" name="sys0804Biz" parent="baseBiz"/>
+    <bean class="${name.package.project}.app.sys.sys0804.Sys0804Action" id="sys0804Action" name="sys0804Action"/>
+    <bean class="${name.package.project}.app.sys.sys0804.Sys0804BizImpl" id="sys0804Biz" name="sys0804Biz" parent="baseBiz"/>
     <!--Sys0806 - Expenditure Type-->
     <bean class="${name.package.project}.app.sys.sys0806.Sys0806Action" id="sys0806Action" name="sys0806Action"/>
     <bean class="${name.package.project}.app.sys.sys0806.Sys0806BizImpl" id="sys0806Biz" name="sys0806Biz" parent="baseBiz"/>

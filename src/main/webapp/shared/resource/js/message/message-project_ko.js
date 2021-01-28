@@ -28,14 +28,8 @@ var sys = {
 		},
 		message:{
 		}
-	}
-};
-
-/*!
- * Sub System - sba
- */
-var sba = {
-	sba0204:{
+	},
+	sys0604:{
 		caption:{
 			auth:"권한그룹 변경",
 			type:"사용자 유형 변경",
@@ -48,7 +42,7 @@ var sba = {
 		message:{
 		}
 	},
-	sba0406:{
+	sys0806:{
 		caption:{
 		},
 		header:{
