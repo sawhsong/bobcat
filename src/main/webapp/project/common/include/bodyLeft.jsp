@@ -44,6 +44,16 @@ $(function() {
 
 	setActive = function() {
 		var activeMenuIndex = -1;
+		var headerMenuId = $("#hdnHeaderMenuId").val();
+
+		if (commonJs.isIn(headerMenuId, ["BST"]) {
+			$(".leftMenuAccordionContents").find("li").each(function(index) {
+				if (index == 0) {
+					$(this).trigger("click");
+					return false;
+				}
+			});
+		}
 
 		$(".leftMenuAccordionGroup").each(function(i) {
 			$(this).find("li").each(function(j) {
