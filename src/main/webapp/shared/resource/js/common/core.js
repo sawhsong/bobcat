@@ -1703,11 +1703,11 @@ var nony = {
 	_doPageLayout : function(options) {
 		if ($.nony.isEmpty(options)) {return;}
 
-		if ($.nony.isIn($("#hdnHeaderMenuId").val(), ["SYS"])) {
+		if ($.nony.isIn($("#hdnHeaderMenuId").val(), ["SYS", "M100", "M200", "M300"])) {
 			options[1].togglerLength_open = 40;
 			options[1].togglerLength_closed = 40;
-			options[1].spacing_open = 4,
-			options[1].spacing_closed = 4,
+			options[1].spacing_open = 0,
+			options[1].spacing_closed = 0,
 			options[1].west__size = 250;
 		} else {
 			options[1].togglerLength_open = 0;

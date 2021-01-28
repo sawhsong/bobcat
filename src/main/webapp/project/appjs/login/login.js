@@ -132,7 +132,7 @@ $(function() {
 					blind:false,
 					draggable:false,
 					width:400,
-					height:406
+					height:410
 				};
 			}
 
