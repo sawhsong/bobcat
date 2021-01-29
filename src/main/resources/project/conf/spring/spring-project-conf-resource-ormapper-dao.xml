@@ -13,8 +13,6 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysUser.SysUserHDaoImpl" id="sysUserDao" init-method="init" name="sysUserDao" parent="baseHDao" scope="prototype"/>
     <!--/* SysAuthGroup DAO */-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysAuthGroup.SysAuthGroupHDaoImpl" id="sysAuthGroupDao" init-method="init" name="sysAuthGroupDao" parent="baseHDao" scope="prototype"/>
-    <!--/* SysCountryCurrency DAO */-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysCountryCurrency.SysCountryCurrencyHDaoImpl" id="sysCountryCurrencyDao" init-method="init" name="sysCountryCurrencyDao" parent="baseHDao" scope="prototype"/>
     <!--SysAssetType DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeHDaoImpl" id="sysAssetTypeDao" init-method="init" name="sysAssetTypeDao" parent="baseHDao" scope="prototype"/>
     <!--SysBorrowingType DAO-->

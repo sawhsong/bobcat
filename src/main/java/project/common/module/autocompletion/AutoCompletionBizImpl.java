@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
-import project.conf.resource.ormapper.dao.SysCountryCurrency.SysCountryCurrencyDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
 import project.conf.resource.ormapper.dao.UsrEmployee.UsrEmployeeDao;
@@ -18,8 +17,6 @@ import zebra.util.CommonUtil;
 public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz {
 	@Autowired
 	private SysUserDao sysUserDao;
-	@Autowired
-	private SysCountryCurrencyDao sysCountryCurrencyDao;
 	@Autowired
 	private SysOrgDao sysOrgDao;
 	@Autowired
@@ -40,6 +37,7 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 		}
 		return paramEntity;
 	}
+
 
 	public ParamEntity getLoginId(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
@@ -70,34 +68,6 @@ public class AutoCompletionBizImpl extends BaseBiz implements AutoCompletionBiz 
 			queryAdvisor.addAutoFillCriteria(orgCategory, "org_id in (select org_id from sys_org where org_category = '"+CommonUtil.upperCase(orgCategory)+"')");
 			queryAdvisor.addOrderByClause("user_name");
 			paramEntity.setAjaxResponseDataSet(sysUserDao.getUserNameDataSetForAutoCompletion(queryAdvisor));
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getCurrencyCode(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-
-		try {
-			queryAdvisor.setRequestDataSet(requestDataSet);
-			paramEntity.setAjaxResponseDataSet(sysCountryCurrencyDao.getCurrencyCodeDataSetForAutoCompletion(queryAdvisor));
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getCountryName(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-
-		try {
-			queryAdvisor.setRequestDataSet(requestDataSet);
-			paramEntity.setAjaxResponseDataSet(sysCountryCurrencyDao.getCountryNameDataSetForAutoCompletion(queryAdvisor));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

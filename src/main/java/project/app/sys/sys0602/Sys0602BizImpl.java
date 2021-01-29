@@ -5,6 +5,8 @@
  *************************************************************************************************/
 package project.app.sys.sys0602;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,8 +109,10 @@ public class Sys0602BizImpl extends BaseBiz implements Sys0602Biz {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String defaultFileName = "DefaultLogo.png";
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
 		String pathToSave = ConfigUtil.getProperty("path.image.orgLogo");
 		int result = -1;
+		File files[], tempFile;
 
 		try {
 			sysOrg.setOrgId(uid);
@@ -130,11 +134,36 @@ public class Sys0602BizImpl extends BaseBiz implements Sys0602Biz {
 			sysOrg.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
 			if (fileDataSet.getRowCnt() > 0) {
-				String fileName = fileDataSet.getValue("NEW_NAME"), fullPath = "";
+				String fileName = fileDataSet.getValue("NEW_NAME");
+				String fullPath = "", copyToPath = "";
 
 				fileName = uid+"_"+fileName;
 				fullPath = rootPath + pathToSave + "/" + fileName;
+				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+
+				files = new File(rootPath+pathToSave).listFiles();
+				for (File file : files) {
+					if (CommonUtil.startsWith(file.getName(), uid+"_")) {
+						FileUtil.forceDelete(file);
+						break;
+					}
+				}
 				FileUtil.moveFile(fileDataSet, fullPath);
+
+				try {
+					tempFile = new File(appSrcRootPath+pathToSave);
+					if (tempFile != null && tempFile.isDirectory()) {
+						files = new File(appSrcRootPath+pathToSave).listFiles();
+						for (File file : files) {
+							if (CommonUtil.startsWith(file.getName(), uid+"_")) {
+								FileUtil.forceDelete(file);
+								break;
+							}
+						}
+						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
+					}
+				} catch (Exception e) {
+				}
 
 				sysOrg.setLogoPath(pathToSave + "/" + fileName);
 			} else {
@@ -163,8 +192,10 @@ public class Sys0602BizImpl extends BaseBiz implements Sys0602Biz {
 		SysOrg sysOrg = new SysOrg();
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
 		String pathToSave = ConfigUtil.getProperty("path.image.orgLogo");
 		int result = 0;
+		File files[], tempFile;
 
 		try {
 			sysOrg = sysOrgDao.getOrgByOrgId(orgId);
@@ -187,11 +218,36 @@ public class Sys0602BizImpl extends BaseBiz implements Sys0602Biz {
 			sysOrg.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
 			if (fileDataSet.getRowCnt() > 0) {
-				String fileName = fileDataSet.getValue("NEW_NAME"), fullPath = "";
+				String fileName = fileDataSet.getValue("NEW_NAME");
+				String fullPath = "", copyToPath = "";
 
 				fileName = orgId+"_"+fileName;
 				fullPath = rootPath + pathToSave + "/" + fileName;
+				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+
+				files = new File(rootPath + pathToSave).listFiles();
+				for (File file : files) {
+					if (CommonUtil.startsWith(file.getName(), orgId+"_")) {
+						FileUtil.forceDelete(file);
+						break;
+					}
+				}
 				FileUtil.moveFile(fileDataSet, fullPath);
+
+				try {
+					tempFile = new File(appSrcRootPath+pathToSave);
+					if (tempFile != null && tempFile.isDirectory()) {
+						files = new File(appSrcRootPath+pathToSave).listFiles();
+						for (File file : files) {
+							if (CommonUtil.startsWith(file.getName(), orgId+"_")) {
+								FileUtil.forceDelete(file);
+								break;
+							}
+						}
+						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
+					}
+				} catch (Exception e) {
+				}
 
 				sysOrg.setLogoPath(pathToSave + "/" + fileName);
 			}

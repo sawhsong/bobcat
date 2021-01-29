@@ -10,13 +10,6 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0202/Sys0202InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sys/sys0202/Sys0202UpdatePop.jsp</result>
         </action>
-        <!--Sys0204 - Country / Currency Code-->
-        <action class="project.app.sys.sys0204.Sys0204Action" method="{1}" name="0204/*">
-            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204UpdatePop.jsp</result>
-        </action>
         <!--Sys0402 - Menu-->
         <action class="project.app.sys.sys0402.Sys0402Action" method="{1}" name="0402/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402List.jsp</result>

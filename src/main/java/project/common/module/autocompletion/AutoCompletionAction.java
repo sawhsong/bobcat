@@ -35,24 +35,6 @@ public class AutoCompletionAction extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getCurrencyCode() throws Exception {
-		try {
-			biz.getCurrencyCode(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String getCountryName() throws Exception {
-		try {
-			biz.getCountryName(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
 	public String getOrgName() throws Exception {
 		try {
 			biz.getOrgName(paramEntity);

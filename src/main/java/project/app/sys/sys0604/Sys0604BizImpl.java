@@ -5,6 +5,8 @@
  *************************************************************************************************/
 package project.app.sys.sys0604;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,9 +141,11 @@ public class Sys0604BizImpl extends BaseBiz implements Sys0604Biz {
 		String defaultFileName = "DefaultUser_128_Black.png";
 		String userId = CommonUtil.uid();
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
 		String pathToSave = ConfigUtil.getProperty("path.image.photo");
 		SysUser sysUser = new SysUser();
 		int result = -1;
+		File files[], tempFile;
 
 		try {
 			sysUser.setUserId(userId);
@@ -163,11 +167,35 @@ public class Sys0604BizImpl extends BaseBiz implements Sys0604Biz {
 
 			if (fileDataSet.getRowCnt() > 0) {
 				String fileName = fileDataSet.getValue("NEW_NAME");
-				String fullPath = "";
+				String fullPath = "", copyToPath = "";
 
 				fileName = userId + "_" + fileName;
 				fullPath = rootPath + pathToSave + "/" + fileName;
+				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+
+				files = new File(rootPath+pathToSave).listFiles();
+				for (File file : files) {
+					if (CommonUtil.startsWith(file.getName(), userId+"_")) {
+						FileUtil.forceDelete(file);
+						break;
+					}
+				}
 				FileUtil.moveFile(fileDataSet, fullPath);
+
+				try {
+					tempFile = new File(appSrcRootPath+pathToSave);
+					if (tempFile != null && tempFile.isDirectory()) {
+						files = new File(appSrcRootPath+pathToSave).listFiles();
+						for (File file : files) {
+							if (CommonUtil.startsWith(file.getName(), userId+"_")) {
+								FileUtil.forceDelete(file);
+								break;
+							}
+						}
+						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
+					}
+				} catch (Exception e) {
+				}
 
 				sysUser.setPhotoPath(pathToSave + "/" + fileName);
 			} else {
@@ -193,9 +221,11 @@ public class Sys0604BizImpl extends BaseBiz implements Sys0604Biz {
 		HttpSession session = paramEntity.getSession();
 		String userId = requestDataSet.getValue("userId");
 		String rootPath = (String)MemoryBean.get("applicationRealPath");
+		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
 		String pathToSave = ConfigUtil.getProperty("path.image.photo");
 		SysUser sysUser = new SysUser();
 		int result = -1;
+		File files[], tempFile;
 
 		try {
 			sysUser = sysUserDao.getUserByUserId(userId);
@@ -217,11 +247,35 @@ public class Sys0604BizImpl extends BaseBiz implements Sys0604Biz {
 
 			if (fileDataSet.getRowCnt() > 0) {
 				String fileName = fileDataSet.getValue("NEW_NAME");
-				String fullPath = "";
+				String fullPath = "", copyToPath = "";
 
 				fileName = userId + "_" + fileName;
 				fullPath = rootPath + pathToSave + "/" + fileName;
+				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+
+				files = new File(rootPath + pathToSave).listFiles();
+				for (File file : files) {
+					if (CommonUtil.startsWith(file.getName(), userId+"_")) {
+						FileUtil.forceDelete(file);
+						break;
+					}
+				}
 				FileUtil.moveFile(fileDataSet, fullPath);
+
+				try {
+					tempFile = new File(appSrcRootPath+pathToSave);
+					if (tempFile != null && tempFile.isDirectory()) {
+						files = new File(appSrcRootPath+pathToSave).listFiles();
+						for (File file : files) {
+							if (CommonUtil.startsWith(file.getName(), userId+"_")) {
+								FileUtil.forceDelete(file);
+								break;
+							}
+						}
+						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
+					}
+				} catch (Exception e) {
+				}
 
 				sysUser.setPhotoPath(pathToSave + "/" + fileName);
 			}
