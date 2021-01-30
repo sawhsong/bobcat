@@ -5,6 +5,12 @@
     <!--Sys0204 - Annoucement-->
     <bean class="${name.package.project}.app.sys.sys0204.Sys0204Action" id="sys0204Action" name="sys0204Action"/>
     <bean class="${name.package.project}.app.sys.sys0204.Sys0204BizImpl" id="sys0204Biz" name="sys0204Biz" parent="baseBiz"/>
+    <!--Sys0206 - Organisation Management-->
+    <bean class="${name.package.project}.app.sys.sys0206.Sys0206Action" id="sys0206Action" name="sys0206Action"/>
+    <bean class="${name.package.project}.app.sys.sys0206.Sys0206BizImpl" id="sys0206Biz" name="sys0206Biz" parent="baseBiz"/>
+    <!--Sys0208 - User Management-->
+    <bean class="${name.package.project}.app.sys.sys0208.Sys0208Action" id="sys0208Action" name="sys0208Action"/>
+    <bean class="${name.package.project}.app.sys.sys0208.Sys0208BizImpl" id="sys0208Biz" name="sys0208Biz" parent="baseBiz"/>
     <!--Sys0402 - Menu-->
     <bean class="${name.package.project}.app.sys.sys0402.Sys0402Action" id="sys0402Action" name="sys0402Action"/>
     <bean class="${name.package.project}.app.sys.sys0402.Sys0402BizImpl" id="sys0402Biz" name="sys0402Biz" parent="baseBiz"/>
@@ -14,12 +20,6 @@
     <!--Sys0406 - Menu - Authority Group-->
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406Action" id="sys0406Action" name="sys0406Action"/>
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406BizImpl" id="sys0406Biz" name="sys0406Biz" parent="baseBiz"/>
-    <!--Sys0602 - Organisation Management-->
-    <bean class="${name.package.project}.app.sys.sys0602.Sys0602Action" id="sys0602Action" name="sys0602Action"/>
-    <bean class="${name.package.project}.app.sys.sys0602.Sys0602BizImpl" id="sys0602Biz" name="sys0602Biz" parent="baseBiz"/>
-    <!--Sys0604 - User Management-->
-    <bean class="${name.package.project}.app.sys.sys0604.Sys0604Action" id="sys0604Action" name="sys0604Action"/>
-    <bean class="${name.package.project}.app.sys.sys0604.Sys0604BizImpl" id="sys0604Biz" name="sys0604Biz" parent="baseBiz"/>
     <!--Sys0802 - Financial Period Type-->
     <bean class="${name.package.project}.app.sys.sys0802.Sys0802Action" id="sys0802Action" name="sys0802Action"/>
     <bean class="${name.package.project}.app.sys.sys0802.Sys0802BizImpl" id="sys0802Biz" name="sys0802Biz" parent="baseBiz"/>

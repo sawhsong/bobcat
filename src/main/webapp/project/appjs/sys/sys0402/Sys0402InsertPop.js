@@ -202,9 +202,11 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#level1").selectpicker({width:"80px"}).selectpicker("refresh");
-		$("#level2").selectpicker({width:"90px"}).selectpicker("refresh");
-		setLevel2Selectbox();
-		setFieldValue();
+		setTimeout(function() {
+			$("#level1").selectpicker({width:"80px"}).selectpicker("refresh");
+			$("#level2").selectpicker({width:"90px"}).selectpicker("refresh");
+			setLevel2Selectbox();
+			setFieldValue();
+		}, 100);
 	});
 });

@@ -17,6 +17,21 @@
             <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204InsertPop.jsp</result>
             <result name="update" type="debugDispatcherResult">/project/app/sys/sys0204/Sys0204UpdatePop.jsp</result>
         </action>
+        <!--Sys0206 - Organisation Management-->
+        <action class="project.app.sys.sys0206.Sys0206Action" method="{1}" name="0206/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206UpdatePop.jsp</result>
+        </action>
+        <!--Sys0208 - User Management-->
+        <action class="project.app.sys.sys0208.Sys0208Action" method="{1}" name="0208/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208UpdatePop.jsp</result>
+            <result name="actionContextMenu" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208ActionContextMenuPop.jsp</result>
+        </action>
         <!--Sys0402 - Menu-->
         <action class="project.app.sys.sys0402.Sys0402Action" method="{1}" name="0402/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0402/Sys0402List.jsp</result>
@@ -35,21 +50,6 @@
         <!--Sys0406 - Menu - Authority Group-->
         <action class="project.app.sys.sys0406.Sys0406Action" method="{1}" name="0406/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0406/Sys0406List.jsp</result>
-        </action>
-        <!--Sys0602 - Organisation Management-->
-        <action class="project.app.sys.sys0602.Sys0602Action" method="{1}" name="0602/*">
-            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0602/Sys0602UpdatePop.jsp</result>
-        </action>
-        <!--Sys0604 - User Management-->
-        <action class="project.app.sys.sys0604.Sys0604Action" method="{1}" name="0604/*">
-            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604UpdatePop.jsp</result>
-            <result name="actionContextMenu" type="debugDispatcherResult">/project/app/sys/sys0604/Sys0604ActionContextMenuPop.jsp</result>
         </action>
         <!--Sys0802 - Financial Period Type-->
         <action class="project.app.sys.sys0802.Sys0802Action" method="{1}" name="0802/*">
