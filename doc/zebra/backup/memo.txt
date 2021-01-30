@@ -1,15 +1,16 @@
 /**
- * 2018.10.29
+ * 2021.01.28
  */
-@ Re-implement source code generator function
-	# javascript files
-@ Re-consider popup header(title) text
-	# framework
-
+@ Reorganising source, data
 
 /**
- * 2018.09.03
+ * 2021.01.29
  */
-@ Local Oracle XE
-	# user
-		* sys as sysdba / Password_10 (Office)
+@ Reorganising source, data
+@ DB, Screen design
+
+/**
+ * 2021.01.30
+ */
+@ Reorganising source, data
+@ DB, Screen design

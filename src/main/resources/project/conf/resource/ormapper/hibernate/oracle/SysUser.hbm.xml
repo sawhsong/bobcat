@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!--/*
  * Framework Generated Hibernate Config hbm Source
- * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
+ * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER.xlsx)
  */-->
 <hibernate-mapping>
 	<class name="project.conf.resource.ormapper.dto.oracle.SysUser" table="SYS_USER" lazy="false">
-		<meta attribute="class-description" inherit="false">User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)</meta>
+		<meta attribute="class-description" inherit="false">User Info - Use Excel file to initialise data (SYS_USER.xlsx)</meta>
 
 		<id name="userId" column="USER_ID" type="java.lang.String" length="30"></id>
 
@@ -21,7 +21,6 @@
 		<property name="themeType" column="THEME_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="userName" column="USER_NAME" not-null="true" type="java.lang.String" length="50"/>
 		<property name="userStatus" column="USER_STATUS" not-null="true" type="java.lang.String" length="30"/>
-		<property name="userType" column="USER_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="authenticationSecretKey" column="AUTHENTICATION_SECRET_KEY" type="java.lang.String" length="50"/>
 		<property name="defaultStartUrl" column="DEFAULT_START_URL" type="java.lang.String" length="100"/>
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
@@ -46,7 +45,6 @@
 		       THEME_TYPE,
 		       USER_NAME,
 		       USER_STATUS,
-		       USER_TYPE,
 		       AUTHENTICATION_SECRET_KEY,
 		       DEFAULT_START_URL,
 		       EMAIL,
@@ -79,7 +77,6 @@
 		       THEME_TYPE,
 		       USER_NAME,
 		       USER_STATUS,
-		       USER_TYPE,
 		       AUTHENTICATION_SECRET_KEY,
 		       DEFAULT_START_URL,
 		       EMAIL,
@@ -102,7 +99,6 @@
 		       ${THEME_TYPE},
 		       ${USER_NAME},
 		       ${USER_STATUS},
-		       ${USER_TYPE},
 		       ${AUTHENTICATION_SECRET_KEY},
 		       ${DEFAULT_START_URL},
 		       ${EMAIL},
@@ -129,7 +125,6 @@
 		       THEME_TYPE = ${THEME_TYPE},
 		       USER_NAME = ${USER_NAME},
 		       USER_STATUS = ${USER_STATUS},
-		       USER_TYPE = ${USER_TYPE},
 		       AUTHENTICATION_SECRET_KEY = ${AUTHENTICATION_SECRET_KEY},
 		       DEFAULT_START_URL = ${DEFAULT_START_URL},
 		       EMAIL = ${EMAIL},

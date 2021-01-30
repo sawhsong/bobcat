@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated DTO Source
- * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER_1.xlsx, SYS_USER_2.xlsx)
+ * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER.xlsx)
  *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
@@ -41,8 +41,6 @@ public class SysUser extends BaseDto implements Serializable {
 	private String USER_NAME;
 	private String userStatus;
 	private String USER_STATUS;
-	private String userType;
-	private String USER_TYPE;
 	private String authenticationSecretKey;
 	private String AUTHENTICATION_SECRET_KEY;
 	private String defaultStartUrl;
@@ -204,15 +202,6 @@ public class SysUser extends BaseDto implements Serializable {
 	public void setUserStatus(String userStatus) throws Exception {
 		this.userStatus = userStatus;
 		setValueFromAccessor("USER_STATUS", userStatus);
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) throws Exception {
-		this.userType = userType;
-		setValueFromAccessor("USER_TYPE", userType);
 	}
 
 	public String getAuthenticationSecretKey() {
@@ -434,7 +423,6 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "themeType : "+themeType+"\n";
 		str += "userName : "+userName+"\n";
 		str += "userStatus : "+userStatus+"\n";
-		str += "userType : "+userType+"\n";
 		str += "authenticationSecretKey : "+authenticationSecretKey+"\n";
 		str += "defaultStartUrl : "+defaultStartUrl+"\n";
 		str += "email : "+email+"\n";
@@ -467,7 +455,6 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "<column name=\"themeType\" value=\""+themeType+"\">";
 		str += "<column name=\"userName\" value=\""+userName+"\">";
 		str += "<column name=\"userStatus\" value=\""+userStatus+"\">";
-		str += "<column name=\"userType\" value=\""+userType+"\">";
 		str += "<column name=\"authenticationSecretKey\" value=\""+authenticationSecretKey+"\">";
 		str += "<column name=\"defaultStartUrl\" value=\""+defaultStartUrl+"\">";
 		str += "<column name=\"email\" value=\""+email+"\">";
@@ -500,7 +487,6 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "\"themeType\":\""+themeType+"\", ";
 		str += "\"userName\":\""+userName+"\", ";
 		str += "\"userStatus\":\""+userStatus+"\", ";
-		str += "\"userType\":\""+userType+"\", ";
 		str += "\"authenticationSecretKey\":\""+authenticationSecretKey+"\", ";
 		str += "\"defaultStartUrl\":\""+defaultStartUrl+"\", ";
 		str += "\"email\":\""+email+"\", ";

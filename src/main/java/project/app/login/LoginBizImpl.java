@@ -123,7 +123,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			sysUser.setThemeType(CommonUtil.lowerCase(ConfigUtil.getProperty("view.theme.default")));
 			sysUser.setMaxRowPerPage(CommonUtil.toDouble(CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"))[2]));
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"))[0]));
-			sysUser.setUserType(CommonCodeManager.getCodeByConstants("USER_TYPE_INTERNAL"));
 			sysUser.setEmail(email);
 			sysUser.setUserStatus(CommonCodeManager.getCodeByConstants("USER_STATUS_RR"));
 			sysUser.setPhotoPath(photoPathName);

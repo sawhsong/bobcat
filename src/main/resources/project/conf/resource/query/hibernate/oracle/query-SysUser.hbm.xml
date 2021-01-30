@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!--/*
  * Framework Generated Hibernate Query hbm Source
- * - SYS_USER - User Info
+ * - SYS_USER - User Info - Use Excel file to initialise data (SYS_USER.xlsx)
  */-->
 <hibernate-mapping>
 	<sql-query name="query.SysUser.getUserDataSetBySearchCriteria">
@@ -19,8 +19,6 @@
 		       (select description_${langCode} from sys_common_code where code_type = 'LANGUAGE_TYPE' and common_code = usr.language) as language_name,
 		       usr.theme_type,
 		       (select description_${langCode} from sys_common_code where code_type = 'USER_THEME_TYPE' and common_code = usr.theme_type) as theme_type_name,
-		       usr.user_type,
-		       (select description_${langCode} from sys_common_code where code_type = 'USER_TYPE' and common_code = usr.user_type) as user_type_name,
 		       usr.email,
 		       usr.user_status,
 		       (select description_${langCode} from sys_common_code where code_type = 'USER_STATUS' and common_code = usr.user_status) as user_status_name,

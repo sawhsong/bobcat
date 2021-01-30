@@ -156,7 +156,6 @@ public class Sys0604BizImpl extends BaseBiz implements Sys0604Biz {
 			sysUser.setAuthGroupId(requestDataSet.getValue("authGroup"));
 			sysUser.setLanguage(requestDataSet.getValue("language"));
 			sysUser.setThemeType(requestDataSet.getValue("themeType"));
-			sysUser.setUserType(requestDataSet.getValue("userType"));
 			sysUser.setEmail(requestDataSet.getValue("email"));
 			sysUser.setMaxRowPerPage(CommonUtil.toDouble(requestDataSet.getValue("maxRowsPerPage")));
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));
@@ -236,7 +235,6 @@ public class Sys0604BizImpl extends BaseBiz implements Sys0604Biz {
 			sysUser.setAuthGroupId(requestDataSet.getValue("authGroup"));
 			sysUser.setLanguage(requestDataSet.getValue("language"));
 			sysUser.setThemeType(requestDataSet.getValue("themeType"));
-			sysUser.setUserType(requestDataSet.getValue("userType"));
 			sysUser.setEmail(requestDataSet.getValue("email"));
 			sysUser.setMaxRowPerPage(CommonUtil.toDouble(requestDataSet.getValue("maxRowsPerPage")));
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));
