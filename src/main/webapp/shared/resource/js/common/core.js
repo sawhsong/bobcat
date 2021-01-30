@@ -878,6 +878,7 @@ var nony = {
 			val = $.nony.replace(val, "'", "&#39;");
 //			val = $.nony.replace(val, " ", "&nbsp;");
 			val = $.nony.replace(val, "\n", "<br/>");
+			val = $.nony.replace(val, "\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 //			val = $.nony.replace(val, "<br>", "\n");
 		}
 		return val;
@@ -912,6 +913,25 @@ var nony = {
 	},
 	getTimeStamp : function() {
 		return moment.unix(moment());
+	},
+	/*!
+	 * Bind event and function
+	 */
+	setEvent : function(eventName, objArr, callback) {
+		if ($.nony.isBlank(eventName) || objArr == null) {return;}
+
+		for (var index in objArr) {
+			$(objArr[index]).bind(eventName, function() {
+				callback($(this));
+			});
+		}
+	},
+	clearValueOnBlur : function(jqObj) {
+		if (jqObj == null) {return;}
+
+		if ($.nony.isEmpty($(jqObj).val())) {
+			$(jqObj).val("");
+		}
 	},
 	/*!
 	 * utilities etc
@@ -1263,7 +1283,7 @@ var nony = {
 		var options = {};
 
 		$("select.bootstrapSelect").each(function(index) {
-			options.width = "auto";
+//			options.width = "auto";
 			options.container = "body";
 			options.style = $(this).attr("class");
 			$(this).selectpicker(options);
@@ -1652,6 +1672,7 @@ var nony = {
 		}
 
 		var fixedScrollablePanelHeight = $.nony.nvl(jsconfig.get("fixedScrollablePanelHeight"), 0);
+		var hFix = ($.nony.isInIgnoreCase(jsconfig.get("themeId"), ["theme000", "theme008"])) ? 0 : 6;
 		if (isPopup) {
 			if (fixedScrollablePanelHeight > 0) {
 				$("#divScrollablePanelPopup").height(fixedScrollablePanelHeight);
@@ -1854,7 +1875,6 @@ var nony = {
 					type:com.message.I000,
 					contents:result.message,
 					blind:true,
-					width:300,
 					buttons:[{
 						caption:com.caption.ok,
 						callback:function() {
@@ -1894,7 +1914,7 @@ var nony = {
 							location.replace("/index/index.do");
 						}
 					}],
-					width:330,
+					width:340,
 					blind:true
 				});
 			}
@@ -1916,8 +1936,7 @@ var nony = {
 				} else if (msgHandleType == "popup") {
 					commonJs.openDialog({
 						type:com.message.E000,
-						contents:result.message,
-						width:450
+						contents:result.message
 					});
 
 					try {
@@ -1974,14 +1993,14 @@ var nony = {
 			$(imgFolder).bind("click", function() {
 				if ("Fold" == $("#imgLogPanelCloserFolder").attr("flag")) {
 					$("#divLogPanelHolder").animate({
-						marginTop:"+=144px",
-						height:"30px"
+						marginTop:"+=142px",
+						height:"36px"
 					}, 1000, function() {
 						$("#imgLogPanelCloserFolder").removeClass("fa-chevron-circle-down").addClass("fa-chevron-circle-up").attr("flag", "Expand");
 					});
 				} else {
 					$("#divLogPanelHolder").animate({
-						marginTop:"-=144px",
+						marginTop:"-=142px",
 						height:"180px"
 					}, 1000, function() {
 						$("#imgLogPanelCloserFolder").removeClass("fa-chevron-circle-up").addClass("fa-chevron-circle-down").attr("flag", "Fold");

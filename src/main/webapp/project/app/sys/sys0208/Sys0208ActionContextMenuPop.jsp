@@ -87,16 +87,6 @@ var mode = "<%=mode%>";
 			</tr>
 		</table>
 	</div>
-	<div id="divUpdateUserType">
-		<table class="tblEdit">
-			<caption class="captionEdit"><mc:msg key="sys0208.msg.selectType"/></caption>
-			<tr>
-				<td class="tdEdit">
-					<ui:ccradio name="userType" codeType="USER_TYPE" selectedValue="<%=defaultUserType%>" displayType="block"/>
-				</td>
-			</tr>
-		</table>
-	</div>
 	<div id="divUpdateUserStatus">
 		<table class="tblEdit">
 			<caption class="captionEdit"><mc:msg key="sys0208.msg.selectStatus"/></caption>

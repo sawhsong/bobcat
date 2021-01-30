@@ -53,7 +53,7 @@
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
+<%-- 			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/> --%>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -63,14 +63,14 @@
 		<colgroup>
 			<col width="10%"/>
 			<col width="23%"/>
-			<col width="10%"/>
+			<col width="8%"/>
 			<col width="23%"/>
 			<col width="10%"/>
 			<col width="24%"/>
 		</colgroup>
 		<tr>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.name"/></th>
-			<td class="tdSearch"><ui:text name="userName"/></td>
+			<td class="tdSearch"><ui:text name="userName" style="width:300px"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.id"/></th>
 			<td class="tdSearch"><ui:text name="loginId" style="width:200px"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.auth"/></th>
@@ -88,12 +88,12 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="thSearch rt"><mc:msg key="sys0208.search.type"/></th>
-			<td class="tdSearch"><ui:ccselect name="userType" codeType="USER_TYPE" caption="==Select=="/></td>
-			<th class="thSearch rt"><mc:msg key="sys0208.search.status"/></th>
-			<td class="tdSearch"><ui:ccselect name="userStatus" codeType="USER_STATUS" caption="==Select=="/></td>
+			<th class="thSearch rt">Organisation</th>
+			<td class="tdSearch"><ui:text name="org" style="width:300px"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.active"/></th>
 			<td class="tdSearch"><ui:ccselect name="isActive" codeType="IS_ACTIVE" caption="==Select=="/></td>
+			<th class="thSearch rt"><mc:msg key="sys0208.search.status"/></th>
+			<td class="tdSearch"><ui:ccselect name="userStatus" codeType="USER_STATUS" caption="==Select=="/></td>
 		</tr>
 	</table>
 </div>
@@ -112,28 +112,28 @@
 		<colgroup>
 			<col width="2%"/>
 			<col width="*"/>
-			<col width="8%"/>
+			<col width="7%"/>
+			<col width="18%"/>
 			<col width="17%"/>
-			<col width="11%"/>
 			<col width="7%"/>
-			<col width="7%"/>
-			<col width="16%"/>
+			<col width="9%"/>
+			<col width="6%"/>
 			<col width="5%"/>
 			<col width="6%"/>
-			<col width="3%"/>
+			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.userName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.loginId"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.orgName"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.authGroup"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.type"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.status"/></th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.email"/></th>
+				<th class="thGrid">Bank Account</th>
+				<th class="thGrid"><mc:msg key="sys0208.grid.authGroup"/></th>
+				<th class="thGrid"><mc:msg key="sys0208.grid.status"/></th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.active"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sys0208.grid.date"/></th>
+				<th class="thGrid"><mc:msg key="sys0208.grid.date"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>

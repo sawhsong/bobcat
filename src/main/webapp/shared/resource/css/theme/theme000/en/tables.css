@@ -13,6 +13,9 @@ table caption {padding:8px 8px;font-size:1.0em;font-weight:bold;border-top-left-
 	border-bottom:0px;
 	background-color:#F5F5F5;
 }
+table caption.captionSearch {}
+table caption.captionInform {}
+table caption.captionAdminTool {}
 table caption.captionGrid {}
 table caption.captionDefault {}
 table caption.captionEdit {}
@@ -53,6 +56,10 @@ table > tbody > tr.danger, table > tbody > tr > td.danger {
 table > tbody > tr.danger:hover, table > tbody > tr > td.danger:hover {
 	background-color:#ebcccc;
 }
+
+/* Highlight / Fill-in Color in field */
+.highlight {background:#fef87a !important;}
+.caution {color:#f81a01;background:#fef87a !important;}
 
 /* Table in Panel */
 div.panel > table {border-bottom:0px;}
@@ -181,6 +188,7 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 .tblGrid td {padding:6px 4px;
 	border:1px solid #DDDDDD;
 }
+.tblGrid td:not(.noEllipsis) {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tblGrid tbody tr:last-child td {}
 .tblGrid tfoot td {padding:6px 4px;
 	border:1px solid #DDDDDD;
@@ -188,13 +196,13 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 }
 .tblGrid tfoot tr:first-child td {}
 .tblGrid tfoot tr:last-child td {}
-.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {transition:background .2s;
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):not(.noStripe):hover td {transition:background .2s;
 	background:#FEFAE5;
 }
 .tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):not(.noStripe):nth-child(even) {
 	background:#F9F9F9;
 }
-.tblGrid tfoot tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {
+.tblGrid tfoot tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):not(.noStripe):hover td {
 	background:#F5F5F5;
 }
 
@@ -237,3 +245,8 @@ table.tblAdminTool caption {padding:8px 8px;font-size:1.0em;font-weight:bold;bor
 }
 
 table.withPadding th, table.withPadding td {padding:4px 4px;}
+
+/**
+ * Change tr background color when check boxes in the tr>td are checked (for grid table)
+ */
+.checkedTr {background:#FEFAE5 !important;}

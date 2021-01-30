@@ -47,7 +47,12 @@
 <%/************************************************************************************************
 * Real Contents - fixed panel(tab, button, search, information)
 ************************************************************************************************/%>
-<div id="divTabArea"></div>
+<div id="divTabArea" class="areaContainerPopup">
+	<ui:tab id="tabCategory">
+		<ui:tabList caption="User Detail" isActive="true" iconClass="fa-user" iconPosition="left"/>
+		<ui:tabList caption="Bank Account" iconClass="fa-university" iconPosition="left"/>
+	</ui:tab>
+</div>
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
@@ -69,118 +74,117 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<div class="panel panel-default" style="width:120px;height:110px;">
-		<div class="panel-body">
-			<table class="tblDefault">
-				<tr>
-					<td class="tdDefault Ct">
-						<img id="imgUserPhoto" src="<%=photoPath%>" class="imgDis" style="width:90px;height:90px;"/>
-					</td>
-				</tr>
-			</table>
-		</div>
+	<div id="div0" style="">
+		<table class="tblEdit">
+			<colgroup>
+				<col width="*"/>
+				<col width="13%"/>
+				<col width="30%"/>
+				<col width="15%"/>
+				<col width="30%"/>
+			</colgroup>
+			<tr>
+				<td class="tdEdit Ct" rowspan="3">
+					<img id="imgUserPhoto" src="<%=photoPath%>" class="imgDis" style="width:90px;height:90px;"/>
+				</td>
+				<th class="thEdit rt"><mc:msg key="sys0208.header.changePhoto"/></th>
+				<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:500px;" checkName="sys0208.header.changePhoto"/></td>
+			</tr>
+			<tr>
+				<th class="thEdit rt"><mc:msg key="sys0208.header.userId"/></th>
+				<td class="tdEdit"><ui:text name="userId" status="display"/></td>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.userName"/></th>
+				<td class="tdEdit"><ui:text name="userName" checkName="sys0208.header.userName" options="mandatory"/></td>
+			</tr>
+			<tr>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.loginId"/></th>
+				<td class="tdEdit"><ui:text name="loginId" checkName="sys0208.header.loginId" options="mandatory"/></td>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.password"/></th>
+				<td class="tdEdit"><ui:text name="password" checkName="sys0208.header.password" options="mandatory"/></td>
+			</tr>
+		</table>
+		<div class="verGap4"></div>
+		<table class="tblEdit">
+			<colgroup>
+				<col width="17%"/>
+				<col width="33%"/>
+				<col width="17%"/>
+				<col width="33%"/>
+			</colgroup>
+			<tr>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.org"/></th>
+				<td class="tdEdit">
+					<ui:hidden name="orgId" checkName="sys0208.header.org"/>
+					<ui:text name="orgName" className="hor" style="width:250px" checkName="sys0208.header.org" options="mandatory"/>
+					<ui:icon id="icnOrgSearch" className="fa-search hor"/>
+				</td>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.authGroup"/></th>
+				<td class="tdEdit">
+					<%=authGroupDataSet.getAsHtmlStringForSelectbox("GROUP_ID", "GROUP_NAME", defaultAuthGroup, "", "id:authGroup;name:authGroup;class:bootstrapSelect;options:mandatory")%>
+				</td>
+			</tr>
+			<tr>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.language"/></th>
+				<td class="tdEdit"><ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory"/></td>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.themeType"/></th>
+				<td class="tdEdit"><ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory"/></td>
+			</tr>
+			<tr>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.email"/></th>
+				<td class="tdEdit"><ui:text name="email" checkName="sys0208.header.email" options="mandatory" option="email"/></td>
+				<th class="thEdit rt mandatory">Default Start URL</th>
+				<td class="tdEdit"><ui:text name="defaultStartUrl" checkName="Default Start URL" options="mandatory"/></td>
+			</tr>
+			<tr>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.maxRowsPerPage"/></th>
+				<td class="tdEdit">
+					<ui:select name="maxRowsPerPage" checkName="sys0208.header.maxRowsPerPage" options="mandatory">
+<%
+					for (int i=0; i<maxRowPerPage.length; i++) {
+%>
+						<option value="<%=maxRowPerPage[i]%>"><%=maxRowPerPage[i]%></option>
+<%
+					}
+%>
+					</ui:select>
+				</td>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.pageNumsPerPage"/></th>
+				<td class="tdEdit">
+					<ui:select name="pageNumsPerPage" checkName="sys0208.header.pageNumsPerPage" options="mandatory">
+<%
+					for (int i=0; i<pageNumPerPage.length; i++) {
+%>
+						<option value="<%=pageNumPerPage[i]%>"><%=pageNumPerPage[i]%></option>
+<%
+					}
+%>
+					</ui:select>
+				</td>
+			</tr>
+			<tr>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.status"/></th>
+				<td class="tdEdit"><ui:ccselect name="userStatus" codeType="USER_STATUS" selectedValue="<%=defaultUserStatus%>" options="mandatory"/></td>
+				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.active"/></th>
+				<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory"/></td>
+			</tr>
+			<tr>
+				<th class="thEdit">Authentication Key</th>
+				<td class="tdEdit" colspan="3">
+					<ui:text name="authenticationSecretKey" value="" checkName="Authentication Key" className="hor" style="width:50%;"/>
+					<ui:button id="btnGetAuthenticationSecretKey" caption="Generate Key" iconClass="fa-key"/>
+				</td>
+			</tr>
+			<tr>
+				<th class="thEdit rt">Last Updated By</th>
+				<td class="tdEdit"><ui:text name="lastUpdatedBy" status="display"/></td>
+				<th class="thEdit rt">Last Updated Date</th>
+				<td class="tdEdit"><ui:text name="lastUpdatedDate" status="display"/></td>
+			</tr>
+		</table>
 	</div>
-	<table class="tblEdit">
-		<colgroup>
-			<col width="18%"/>
-			<col width="32%"/>
-			<col width="18%"/>
-			<col width="32%"/>
-		</colgroup>
-		<tr>
-			<th class="thEdit rt"><mc:msg key="sys0208.header.changePhoto"/></th>
-			<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:540px;" checkName="sys0208.header.changePhoto"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt"><mc:msg key="sys0208.header.userId"/></th>
-			<td class="tdEdit"><ui:text name="userId" status="display"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.userName"/></th>
-			<td class="tdEdit"><ui:text name="userName" checkName="sys0208.header.userName" options="mandatory"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.loginId"/></th>
-			<td class="tdEdit"><ui:text name="loginId" checkName="sys0208.header.loginId" options="mandatory"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.password"/></th>
-			<td class="tdEdit"><ui:text name="password" checkName="sys0208.header.password" options="mandatory"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.org"/></th>
-			<td class="tdEdit">
-				<ui:hidden name="orgId" checkName="sys0208.header.org"/>
-				<ui:text name="orgName" className="hor" style="width:250px" checkName="sys0208.header.org" options="mandatory"/>
-				<ui:icon id="icnOrgSearch" className="fa-search hor"/>
-			</td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.authGroup"/></th>
-			<td class="tdEdit">
-				<ui:select name="authGroup" checkName="sys0208.header.authGroup" options="mandatory">
-<%
-				for (int i=0; i<authGroupDataSet.getRowCnt(); i++) {
-					String selected = (CommonUtil.equals(authGroupDataSet.getValue(i, "GROUP_ID"), defaultAuthGroup)) ? "selected" : "";
-%>
-					<option value="<%=authGroupDataSet.getValue(i, "GROUP_ID")%>" <%=selected%>><%=authGroupDataSet.getValue(i, "GROUP_NAME")%></option>
-<%
-				}
-%>
-				</ui:select>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.language"/></th>
-			<td class="tdEdit"><ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.themeType"/></th>
-			<td class="tdEdit"><ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.type"/></th>
-			<td class="tdEdit"><ui:ccselect name="userType" codeType="USER_TYPE" options="mandatory"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.email"/></th>
-			<td class="tdEdit"><ui:text name="email" checkName="sys0208.header.email" options="mandatory" option="email"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.maxRowsPerPage"/></th>
-			<td class="tdEdit">
-				<ui:select name="maxRowsPerPage" checkName="sys0208.header.maxRowsPerPage" options="mandatory">
-<%
-				for (int i=0; i<maxRowPerPage.length; i++) {
-%>
-					<option value="<%=maxRowPerPage[i]%>"><%=maxRowPerPage[i]%></option>
-<%
-				}
-%>
-				</ui:select>
-			</td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.pageNumsPerPage"/></th>
-			<td class="tdEdit">
-				<ui:select name="pageNumsPerPage" checkName="sys0208.header.pageNumsPerPage" options="mandatory">
-<%
-				for (int i=0; i<pageNumPerPage.length; i++) {
-%>
-					<option value="<%=pageNumPerPage[i]%>"><%=pageNumPerPage[i]%></option>
-<%
-				}
-%>
-				</ui:select>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.status"/></th>
-			<td class="tdEdit"><ui:ccselect name="userStatus" codeType="USER_STATUS" selectedValue="<%=defaultUserStatus%>" options="mandatory"/></td>
-			<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.active"/></th>
-			<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt"><mc:msg key="sys0208.header.insertUser"/></th>
-			<td class="tdEdit"><ui:text name="insertUser" status="display"/></td>
-			<th class="thEdit rt"><mc:msg key="sys0208.header.insertDate"/></th>
-			<td class="tdEdit"><ui:text name="insertDate" status="display"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt"><mc:msg key="sys0208.header.updateUser"/></th>
-			<td class="tdEdit"><ui:text name="updateUser" status="display"/></td>
-			<th class="thEdit rt"><mc:msg key="sys0208.header.updateDate"/></th>
-			<td class="tdEdit"><ui:text name="updateDate" status="display"/></td>
-		</tr>
-	</table>
+	<div id="div1" style="display:none">
+		Bank Account
+	</div>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

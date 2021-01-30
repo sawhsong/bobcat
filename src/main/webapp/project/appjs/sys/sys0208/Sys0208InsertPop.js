@@ -7,36 +7,44 @@ $(function() {
 	 * event
 	 */
 	$("#btnSave").click(function(event) {
-		var fileValue = $("#photoPath").val();
+		var selectedTabIndex = commonJs.getSelectedTabIndex($("#tabCategory"));
 
-		if (commonJs.doValidate("fmDefault")) {
-			if (!commonJs.isEmpty(fileValue)) {
-				fileValue = fileValue.substring(fileValue.lastIndexOf(".")+1);
-				if (!(fileValue.toLowerCase() == "png" || fileValue.toLowerCase() == "jpg" || fileValue.toLowerCase() == "gif" || fileValue.toLowerCase() == "jpeg")) {
-					commonJs.doValidatorMessage($("#photoPath"), "notUploadable");
-					return;
-				}
-			}
-
-			$("#fmDefault").attr("enctype", "multipart/form-data");
-
-			commonJs.confirm({
-				contents:com.message.Q001,
-				buttons:[{
-					caption:com.caption.yes,
-					callback:function() {
-						commonJs.doSubmit({
-							form:"fmDefault",
-							action:"/sys/0208/exeInsert.do"
-						});
-					}
-				}, {
-					caption:com.caption.no,
-					callback:function() {
-					}
-				}]
-			});
+		if (selectedTabIndex == 0) {
+			saveUserDetail();
+		} else if (selectedTabIndex == 1) {
+			saveBankAccount();
 		}
+
+//		var fileValue = $("#photoPath").val();
+
+//		if (commonJs.doValidate("fmDefault")) {
+//			if (!commonJs.isEmpty(fileValue)) {
+//				fileValue = fileValue.substring(fileValue.lastIndexOf(".")+1);
+//				if (!(fileValue.toLowerCase() == "png" || fileValue.toLowerCase() == "jpg" || fileValue.toLowerCase() == "gif" || fileValue.toLowerCase() == "jpeg")) {
+//					commonJs.doValidatorMessage($("#photoPath"), "notUploadable");
+//					return;
+//				}
+//			}
+//
+//			$("#fmDefault").attr("enctype", "multipart/form-data");
+//
+//			commonJs.confirm({
+//				contents:com.message.Q001,
+//				buttons:[{
+//					caption:com.caption.yes,
+//					callback:function() {
+//						commonJs.doSubmit({
+//							form:"fmDefault",
+//							action:"/sys/0208/exeInsert.do"
+//						});
+//					}
+//				}, {
+//					caption:com.caption.no,
+//					callback:function() {
+//					}
+//				}]
+//			});
+//		}
 	});
 
 	$("#btnClose").click(function(event) {
@@ -55,15 +63,19 @@ $(function() {
 				popupName:"parent.popupLookup",
 				lookupValue:$("#orgName").val()
 			},
-			header:sba.sys0208.header.popOrgLookup,
+			header:sys.sys0208.header.popOrgLookup,
 			width:880,
 			height:680
 		});
 	});
 
-	$(document).keypress(function(event) {
-		if (event.which == 13) {
-			var element = event.target;
+	$(document).keydown(function(event) {
+		var code = event.keyCode || event.which, element = event.target;
+
+		if (code == 13) {
+		}
+
+		if (code == 9) {
 		}
 	});
 

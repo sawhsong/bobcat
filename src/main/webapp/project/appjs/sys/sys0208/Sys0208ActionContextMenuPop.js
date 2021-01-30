@@ -17,7 +17,6 @@ $(function() {
 						parent.exeActionContextMenu({
 							mode:mode,
 							authGroup:commonJs.getCheckedValueFromRadio("authGroup"),
-							userType:commonJs.getCheckedValueFromRadio("userType"),
 							userStatus:commonJs.getCheckedValueFromRadio("userStatus"),
 							activeStatus:commonJs.getCheckedValueFromRadio("activeStatus")
 						});

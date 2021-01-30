@@ -24,6 +24,7 @@
 		       (select description_${langCode} from sys_common_code where code_type = 'USER_STATUS' and common_code = usr.user_status) as user_status_name,
 		       usr.photo_path,
 		       usr.is_active,
+		       (select count(*) from usr_bank_accnt where user_id = usr.user_id) as bank_accnt_cnt,
 		       usr.insert_user_id,
 		       (select user_name from sys_user where user_id = usr.insert_user_id) as insert_user_name,
 		       usr.update_user_id,

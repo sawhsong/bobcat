@@ -331,8 +331,6 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		try {
 			if (CommonUtil.equals(mode, "UpdateAuthGroup")) {
 				sysUser.addUpdateColumn("auth_group_id", requestDataSet.getValue("authGroup"));
-			} else if (CommonUtil.equals(mode, "UpdateUserType")) {
-				sysUser.addUpdateColumn("user_type", requestDataSet.getValue("userType"));
 			} else if (CommonUtil.equals(mode, "UpdateUserStatus")) {
 				sysUser.addUpdateColumn("user_status", requestDataSet.getValue("userStatus"));
 			} else if (CommonUtil.equals(mode, "UpdateActiveStatus")) {
