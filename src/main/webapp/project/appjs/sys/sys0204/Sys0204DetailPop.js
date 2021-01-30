@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys9904DetailPop.js
+ * - Sys0204DetailPop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -18,8 +18,8 @@ $(function() {
 		doProcessByButton({mode:"Delete"});
 	});
 
-	$("#btnBack").click(function(event) {
-		history.go(-1);
+	$("#btnClose").click(function(event) {
+		parent.popup.close();
 	});
 
 	$(document).keypress(function(event) {
@@ -31,14 +31,6 @@ $(function() {
 	/*!
 	 * process
 	 */
-	setEditor = function() {
-		$("#articleContents").ckeditor({
-			height:500,
-			toolbar:com.constants.toolbarDefault,
-			readOnly:true
-		});
-	};
-
 	exeDownload = function(repositoryPath, originalName, newName) {
 		commonJs.doSubmit({
 			form:"fmDefault",
@@ -56,11 +48,11 @@ $(function() {
 		var params = {};
 
 		if (param.mode == "Update") {
-			actionString = "/sys/9904/getUpdate.do";
+			actionString = "/sys/0204/getUpdate.do";
 		} else if (param.mode == "Reply") {
-			actionString = "/sys/9904/getInsert.do";
+			actionString = "/sys/0204/getInsert.do";
 		} else if (param.mode == "Delete") {
-			actionString = "/sys/9904/exeDelete.do";
+			actionString = "/sys/0204/exeDelete.do";
 		}
 
 		params = {
@@ -71,6 +63,10 @@ $(function() {
 				articleId:articleId
 			}
 		};
+
+		if (param.mode == "Update") {
+			parent.popup.resizeTo(0, 124);
+		}
 
 		if (param.mode == "Delete") {
 			commonJs.confirm({
@@ -83,7 +79,7 @@ $(function() {
 							dataType:"json",
 							formId:"fmDefault",
 							data:{
-								articleId:params.data.articleId
+								articleId:articleId
 							},
 							success:function(data, textStatus) {
 								var result = commonJs.parseAjaxResult(data, textStatus, "json");
@@ -97,7 +93,8 @@ $(function() {
 										buttons:[{
 											caption:com.caption.ok,
 											callback:function() {
-												commonJs.doSubmit({action:"/sys/9904/getDefault.do"});
+												parent.popup.close();
+												parent.doSearch();
 											}
 										}]
 									});
@@ -122,6 +119,5 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setEditor();
 	});
 });

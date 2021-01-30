@@ -2,6 +2,9 @@
     <!--Sys0202 - Common Code-->
     <bean class="${name.package.project}.app.sys.sys0202.Sys0202Action" id="sys0202Action" name="sys0202Action"/>
     <bean class="${name.package.project}.app.sys.sys0202.Sys0202BizImpl" id="sys0202Biz" name="sys0202Biz" parent="baseBiz"/>
+    <!--Sys0204 - Annoucement-->
+    <bean class="${name.package.project}.app.sys.sys0204.Sys0204Action" id="sys0204Action" name="sys0204Action"/>
+    <bean class="${name.package.project}.app.sys.sys0204.Sys0204BizImpl" id="sys0204Biz" name="sys0204Biz" parent="baseBiz"/>
     <!--Sys0402 - Menu-->
     <bean class="${name.package.project}.app.sys.sys0402.Sys0402Action" id="sys0402Action" name="sys0402Action"/>
     <bean class="${name.package.project}.app.sys.sys0402.Sys0402BizImpl" id="sys0402Biz" name="sys0402Biz" parent="baseBiz"/>
@@ -41,10 +44,4 @@
     <!--Sys0816 - Tax Table Mgmt.-->
     <bean class="${name.package.project}.app.sys.sys0816.Sys0816Action" id="sys0816Action" name="sys0816Action"/>
     <bean class="${name.package.project}.app.sys.sys0816.Sys0816BizImpl" id="sys0816Biz" name="sys0816Biz" parent="baseBiz"/>
-    <!--Sys9902 - Annoucement-->
-    <bean class="${name.package.project}.app.sys.sys9902.Sys9902Action" id="sys9902Action" name="sys9902Action"/>
-    <bean class="${name.package.project}.app.sys.sys9902.Sys9902BizImpl" id="sys9902Biz" name="sys9902Biz" parent="baseBiz"/>
-    <!--Sys9904 - Free Board-->
-    <bean class="${name.package.project}.app.sys.sys9904.Sys9904Action" id="sys9904Action" name="sys9904Action"/>
-    <bean class="${name.package.project}.app.sys.sys9904.Sys9904BizImpl" id="sys9904Biz" name="sys9904Biz" parent="baseBiz"/>
 </beans>

@@ -16,6 +16,7 @@
 	String selectedHeaderMenuHeaderPage = (String)session.getAttribute("headerMenuId");
 	DataSet dsMenuHeaderPage = MenuManager.getMenu(authGroupIdHeaderPage, "", "1", "1");
 	String userIdForAdminToolHeaderPage = (String)session.getAttribute("UserIdForAdminTool");
+	String defaultStartUrlHeaderPage = sysUserHeaderPage.getDefaultStartUrl();
 %>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -34,7 +35,7 @@ $(function() {
 		$("#hdnLeftMenuName").val("");
 		$("#hdnLeftMenuUrl").val("");
 
-		commonJs.doSubmit({form:$("form:eq(0)"), action:"/index.do"});
+		commonJs.doSubmit({form:$("form:eq(0)"), action:"<%=defaultStartUrlHeaderPage%>"});
 	});
 
 	$("#aFrameworkMenu").click(function() {

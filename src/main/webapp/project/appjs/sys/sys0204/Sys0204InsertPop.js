@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys9904UpdatePop.js
+ * - Sys0204InsertPop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -17,7 +17,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sys/9904/exeUpdate.do",
+							action:"/sys/0204/exeInsert.do",
 							data:{
 								articleId:articleId
 							}
@@ -32,8 +32,8 @@ $(function() {
 		}
 	});
 
-	$("#btnBack").click(function(event) {
-		history.go(-1);
+	$("#btnClose").click(function(event) {
+		parent.popup.close();
 	});
 
 	$("#btnAddFile").click(function(event) {
@@ -43,20 +43,20 @@ $(function() {
 		});
 	});
 
+	$(document).keypress(function(event) {
+		if (event.which == 13) {
+			var element = event.target;
+		}
+	});
+
 	/*!
 	 * process
 	 */
-	setEditor = function() {
-		$("#articleContents").ckeditor({
-			height:360,
-			toolbar:com.constants.toolbarDefault
-		});
-	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setEditor();
+		$("#writerName").focus();
 	});
 });

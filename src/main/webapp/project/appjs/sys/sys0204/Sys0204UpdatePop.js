@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys9902InsertPop.js
+ * - Sys0204UpdatePop.js
  *************************************************************************************************/
 $(function() {
 	/*!
@@ -17,7 +17,7 @@ $(function() {
 					callback:function() {
 						commonJs.doSubmit({
 							form:"fmDefault",
-							action:"/sys/9902/exeInsert.do",
+							action:"/sys/0204/exeUpdate.do",
 							data:{
 								articleId:articleId
 							}
@@ -57,6 +57,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#writerName").focus();
+		parent.popup.setHeader(com.header.popHeaderEdit);
 	});
 });
