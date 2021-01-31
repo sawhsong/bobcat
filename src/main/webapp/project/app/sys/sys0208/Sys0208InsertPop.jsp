@@ -31,6 +31,12 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.thGrid {border-bottom:0px;}
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {background:#FFFFFF;}
+#liDummy {display:none;}
+#divDataArea.areaContainerPopup {padding-top:0px;}
+.dummyDetail {list-style:none;}
+.deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -56,10 +62,6 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
-		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
@@ -75,6 +77,15 @@
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
 	<div id="div0" style="">
+		<div class="divButtonArea">
+			<div class="divButtonAreaRight">
+				<ui:buttonGroup id="subButtonGroup">
+				<ui:button id="btnSaveUserDetail" caption="button.com.save" iconClass="fa-save"/>
+				<ui:button id="btnCloseUserDetail" caption="button.com.close" iconClass="fa-times"/>
+				</ui:buttonGroup>
+			</div>
+		</div>
+		<div class="verGap4"></div>
 		<table class="tblEdit">
 			<colgroup>
 				<col width="*"/>
@@ -92,7 +103,7 @@
 			</tr>
 			<tr>
 				<th class="thEdit rt"><mc:msg key="sys0208.header.userId"/></th>
-				<td class="tdEdit"><ui:text name="userId" status="display"/></td>
+				<td class="tdEdit"><ui:text name="userId" status="display" value="1"/></td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.userName"/></th>
 				<td class="tdEdit"><ui:text name="userName" checkName="sys0208.header.userName" options="mandatory"/></td>
 			</tr>
@@ -103,7 +114,7 @@
 				<td class="tdEdit"><ui:text name="password" checkName="sys0208.header.password" options="mandatory"/></td>
 			</tr>
 		</table>
-		<div class="verGap4"></div>
+		<div class="verGap6"></div>
 		<table class="tblEdit">
 			<colgroup>
 				<col width="17%"/>
@@ -168,7 +179,7 @@
 				<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory"/></td>
 			</tr>
 			<tr>
-				<th class="thEdit">Authentication Key</th>
+				<th class="thEdit rt">Authentication Key</th>
 				<td class="tdEdit" colspan="3">
 					<ui:text name="authenticationSecretKey" value="" checkName="Authentication Key" className="hor" style="width:50%;"/>
 					<ui:button id="btnGetAuthenticationSecretKey" caption="Generate Key" iconClass="fa-key"/>
@@ -183,7 +194,43 @@
 		</table>
 	</div>
 	<div id="div1" style="display:none">
-		Bank Account
+		<div class="divButtonArea">
+			<div class="divButtonAreaRight">
+				<ui:buttonGroup id="subButtonGroup">
+				<ui:button id="btnAddBankAccnt" caption="Add Bank Account" iconClass="fa-plus"/>
+				<ui:button id="btnSaveBankAccnt" caption="button.com.save" iconClass="fa-save"/>
+				<ui:button id="btnCloseBankAccnt" caption="button.com.close" iconClass="fa-times"/>
+				</ui:buttonGroup>
+			</div>
+		</div>
+		<div class="verGap4"></div>
+		<table id="tblGrid" class="tblGrid">
+			<colgroup>
+				<col width="2%"/>
+				<col width="24%"/>
+				<col width="7%"/>
+				<col width="13%"/>
+				<col width="17%"/>
+				<col width="10%"/>
+				<col width="*"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="thGrid"></th>
+					<th class="thGrid mandatory">Bank</th>
+					<th class="thGrid mandatory">BSB</th>
+					<th class="thGrid mandatory">Account Number</th>
+					<th class="thGrid mandatory">Account Name</th>
+					<th class="thGrid">Balance</th>
+					<th class="thGrid">Description</th>
+				</tr>
+			</thead>
+			<tbody id="tblGridBody">
+				<tr class="noStripe">
+					<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 <div id="divPagingArea"></div>
@@ -195,6 +242,28 @@
 <%/************************************************************************************************
 * Additional Elements
 ************************************************************************************************/%>
+<li id="liDummy" class="dummyDetail">
+	<table class="tblGrid" style="border:0px">
+		<colgroup>
+			<col width="2%"/>
+			<col width="24%"/>
+			<col width="7%"/>
+			<col width="13%"/>
+			<col width="17%"/>
+			<col width="10%"/>
+			<col width="*"/>
+		</colgroup>
+		<tr class="noBorderAll">
+			<th id="thDeleteButton" class="thGrid deleteButton"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
+			<td class="tdGrid Ct"><ui:ccselect name="bankCode" checkName="Bank" codeType="BANK_TYPE" options="mandatory"/></td>
+			<td class="tdGrid Ct"><ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory"/></td>
+			<td class="tdGrid Ct"><ui:text name="accntNumber" className="Ct" checkName="Account Number" options="mandatory"/></td>
+			<td class="tdGrid Ct"><ui:text name="accntName" className="Lt" checkName="Account Name" options="mandatory"/></td>
+			<td class="tdGrid Ct"><ui:text name="balance" className="Rt"/></td>
+			<td class="tdGrid Ct"><ui:text name="description" className="Lt"/></td>
+		</tr>
+	</table>
+</li>
 </form>
 <%/************************************************************************************************
 * Additional Form

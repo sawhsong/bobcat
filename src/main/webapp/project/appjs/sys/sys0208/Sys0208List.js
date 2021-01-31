@@ -25,10 +25,19 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
+	$("#orgName").blur(function() {
+		if (commonJs.isEmpty($(this).val())) {
+			$("#orgId").val("");
+		}
+	});
+
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
 
 		if (code == 13) {
+			if ($(element).is("[name=userName]") || $(element).is("[name=loginId]") || $(element).is("[name=orgName]")) {
+				doSearch();
+			}
 		}
 
 		if (code == 9) {
@@ -138,7 +147,7 @@ $(function() {
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "", width = 940, height = 516;
+		var url = "", header = "", width = 1100, height = 516;
 
 		if (param.mode == "Detail") {
 			url = "/sys/0208/getDetail.do";
@@ -284,6 +293,30 @@ $(function() {
 			},
 			select:function(event, ui) {
 				doSearch();
+			}
+		});
+
+		commonJs.setAutoComplete($("#orgName"), {
+			method:"getOrgByIdOrName",
+			label:"legal_name_abn",
+			value:"org_id",
+			minLength:2,
+			focus: function(event, ui) {
+				$("#orgId").val(ui.item.value);
+				$("#orgName").val(ui.item.label);
+				return false;
+			},
+			change:function(event, ui) {
+				if (commonJs.isEmpty($("#orgName").val())) {
+					$("#orgId").val("");
+					$("#orgName").val("");
+				}
+			},
+			select:function(event, ui) {
+				$("#orgId").val(ui.item.value);
+				$("#orgName").val(ui.item.label);
+				doSearch();
+				return false;
 			}
 		});
 

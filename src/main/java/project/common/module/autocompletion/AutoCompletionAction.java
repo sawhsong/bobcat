@@ -44,18 +44,27 @@ public class AutoCompletionAction extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getAbn() throws Exception {
+	public String getOrgId() throws Exception {
 		try {
-			biz.getAbn(paramEntity);
+			biz.getOrgId(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
 
-	public String getOrgId() throws Exception {
+	public String getOrgByIdOrName() throws Exception {
 		try {
-			biz.getOrgId(paramEntity);
+			biz.getOrgByIdOrName(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getAbn() throws Exception {
+		try {
+			biz.getAbn(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

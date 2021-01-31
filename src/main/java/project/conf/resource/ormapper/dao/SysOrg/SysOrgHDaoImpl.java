@@ -56,6 +56,10 @@ public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 		return selectAsDataSet(queryAdvisor, "query.SysOrg.getOrgIdDataSetForAutoCompletion");
 	}
 
+	public DataSet getOrgInfoDataSetForAutoCompletion(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAsDataSet(queryAdvisor, "query.SysOrg.getOrgInfoDataSetForAutoCompletion");
+	}
+
 	public DataSet getOrgDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String langCode = (String)queryAdvisor.getObject("langCode");

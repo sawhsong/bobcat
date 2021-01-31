@@ -89,7 +89,7 @@
 		</tr>
 		<tr>
 			<th class="thSearch rt">Organisation</th>
-			<td class="tdSearch"><ui:text name="org" style="width:300px"/></td>
+			<td class="tdSearch"><ui:hidden name="orgId"/><ui:text name="orgName" style="width:300px"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.active"/></th>
 			<td class="tdSearch"><ui:ccselect name="isActive" codeType="IS_ACTIVE" caption="==Select=="/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.status"/></th>

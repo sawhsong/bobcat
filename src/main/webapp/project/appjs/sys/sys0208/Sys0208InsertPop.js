@@ -2,6 +2,9 @@
  * Framework Generated Javascript Source
  * - Sys0208InsertPop.js
  *************************************************************************************************/
+var delimiter = jsconfig.get("dataDelimiter");
+jsconfig.put("useJqSelectmenu", false);
+
 $(function() {
 	/*!
 	 * event
@@ -47,10 +50,6 @@ $(function() {
 //		}
 	});
 
-	$("#btnClose").click(function(event) {
-		parent.popup.close();
-	});
-
 	$("#icnOrgSearch").click(function(event) {
 		parent.popupLookup = parent.commonJs.openPopup({
 			popupId:"OrganisationLookup",
@@ -69,6 +68,42 @@ $(function() {
 		});
 	});
 
+	$("#btnAddBankAccnt").click(function(event) {
+		var elem = $("#liDummy").clone(), elemId = $(elem).attr("id");
+
+		$(elem).css("display", "block").appendTo($("#ulDetailHolder"));
+
+		$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+			$(this).attr("index", groupIndex).attr("id", elemId+delimiter+groupIndex);
+
+			$(this).find("i").each(function(index) {
+				var id = $(this).attr("id"), id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;
+				$(this).attr("index", groupIndex).attr("id", id+delimiter+groupIndex);
+			});
+
+			$(this).find(".deleteButton").each(function(index) {
+				var id = $(this).attr("id"), id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;
+				$(this).attr("index", groupIndex).attr("id", id+delimiter+groupIndex);
+			});
+
+			$(this).find("input, select").each(function(index) {
+				var id = $(this).attr("id"), name = $(this).attr("name");
+
+				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
+				else {id = "";}
+
+				if (!commonJs.isEmpty(name)) {name = (name.indexOf(delimiter) != -1) ? name.substring(0, name.indexOf(delimiter)) : name;}
+				else {name = "";}
+
+				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+				if ($(this).is("select")) {
+					setSelectBoxes($(this));
+				}
+			});
+		});
+	});
+
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
 
@@ -82,11 +117,63 @@ $(function() {
 	/*!
 	 * process
 	 */
+	closeWindow = function() {
+		parent.popup.close();
+	};
+
+	toggleTabStatus = function() {
+		if (commonJs.isBlank($("#userId").val())) {
+			$("#tabCategory li").each(function(index) {
+				if (index == 1) {
+					$(this).removeClass("active").addClass("disabled").find("a").unbind("click");
+				}
+			});
+		} else {
+			$("#tabCategory li").each(function(index) {
+				if (index == 1) {
+					$(this).removeClass("disabled").find("a").bind("click");
+				}
+			});
+		}
+	};
+
+	setSelectboxForUserDetailTab = function() {
+		var options = {};
+		$("#div0 select.bootstrapSelect").each(function(index) {
+			options.container = "body";
+			options.style = $(this).attr("class");
+			$(this).selectpicker(options);
+		});
+	};
+
+	setSelectBoxes = function(jqObj) {
+		$(jqObj).selectpicker({
+			width:"auto",
+			container:"body",
+			style:$(jqObj).attr("class")
+		});
+	};
 
 	/*!
 	 * load event (document / window)
 	 */
+	$(document).click(function(event) {
+		var obj = event.target;
+
+		if ($(obj).hasClass("deleteButton") || ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton"))) {
+			$("#ulDetailHolder").find(".dummyDetail").each(function(index) {
+				if ($(this).attr("index") == $(obj).attr("index")) {
+					$(this).remove();
+				}
+			});
+		}
+	});
+
 	$(window).load(function() {
+		commonJs.setEvent("click", [$("#btnCloseUserDetail"), $("#btnCloseBankAccnt")], closeWindow);
+		toggleTabStatus();
+		setSelectboxForUserDetailTab();
+
 		commonJs.setAutoComplete($("#orgName"), {
 			method:"getOrgId",
 			label:"legal_name",
@@ -101,10 +188,5 @@ $(function() {
 				return false;
 			}
 		});
-
-		setTimeout(function() {
-			commonJs.refreshBootstrapSelectbox();
-			$("#photoPath").focus();
-		}, 100);
 	});
 });

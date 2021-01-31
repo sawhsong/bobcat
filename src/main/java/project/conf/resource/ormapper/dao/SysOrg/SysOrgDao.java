@@ -61,6 +61,8 @@ public interface SysOrgDao extends IDao {
 	 * @throws Exception
 	 */
 	public DataSet getOrgIdDataSetForAutoCompletion(QueryAdvisor queryAdvisor) throws Exception;
+
+	public DataSet getOrgInfoDataSetForAutoCompletion(QueryAdvisor queryAdvisor) throws Exception;
 	/**
 	 * Organisation Search
 	 * @param queryAdvisor

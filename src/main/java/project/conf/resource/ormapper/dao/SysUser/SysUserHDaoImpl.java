@@ -113,6 +113,7 @@ public class SysUserHDaoImpl extends BaseHDao implements SysUserDao {
 		String loginId = requestDataSet.getValue("loginId");
 		String userName = requestDataSet.getValue("userName");
 		String authGroup = requestDataSet.getValue("authGroup");
+		String orgId = requestDataSet.getValue("orgId");
 		String userStatus = requestDataSet.getValue("userStatus");
 		String isActive = requestDataSet.getValue("isActive");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
@@ -121,6 +122,7 @@ public class SysUserHDaoImpl extends BaseHDao implements SysUserDao {
 		queryAdvisor.addAutoFillCriteria(loginId, "lower(login_id) like lower('"+loginId+"%')");
 		queryAdvisor.addAutoFillCriteria(userName, "lower(user_name) like lower('"+userName+"%')");
 		queryAdvisor.addAutoFillCriteria(authGroup, "auth_group_id = '"+authGroup+"'");
+		queryAdvisor.addAutoFillCriteria(orgId, "org_id = '"+orgId+"'");
 		queryAdvisor.addAutoFillCriteria(userStatus, "user_status = '"+userStatus+"'");
 		queryAdvisor.addAutoFillCriteria(isActive, "is_active = '"+isActive+"'");
 		queryAdvisor.addVariable("dateFormat", dateFormat);
