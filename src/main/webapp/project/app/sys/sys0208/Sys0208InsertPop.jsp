@@ -96,14 +96,14 @@
 			</colgroup>
 			<tr>
 				<td class="tdEdit Ct" rowspan="3">
-					<img id="imgUserPhoto" src="<%=photoPath%>" class="imgDis" style="width:90px;height:90px;"/>
+					<img id="imgUserPhoto" src="<%=photoPath%>" class="imgDis" style="width:90px;height:100px;"/>
 				</td>
 				<th class="thEdit rt"><mc:msg key="sys0208.header.changePhoto"/></th>
-				<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:500px;" checkName="sys0208.header.changePhoto"/></td>
+				<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:400px;" checkName="sys0208.header.changePhoto"/></td>
 			</tr>
 			<tr>
 				<th class="thEdit rt"><mc:msg key="sys0208.header.userId"/></th>
-				<td class="tdEdit"><ui:text name="userId" status="display" value="1"/></td>
+				<td class="tdEdit"><ui:text name="userId" status="display"/></td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.userName"/></th>
 				<td class="tdEdit"><ui:text name="userName" checkName="sys0208.header.userName" options="mandatory"/></td>
 			</tr>
@@ -111,7 +111,7 @@
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.loginId"/></th>
 				<td class="tdEdit"><ui:text name="loginId" checkName="sys0208.header.loginId" options="mandatory"/></td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.password"/></th>
-				<td class="tdEdit"><ui:text name="password" checkName="sys0208.header.password" options="mandatory"/></td>
+				<td class="tdEdit"><ui:password name="password" checkName="sys0208.header.password" options="mandatory"/></td>
 			</tr>
 		</table>
 		<div class="verGap6"></div>
@@ -136,20 +136,20 @@
 			</tr>
 			<tr>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.language"/></th>
-				<td class="tdEdit"><ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory"/></td>
+				<td class="tdEdit"><ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory" status="disabled"/></td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.themeType"/></th>
-				<td class="tdEdit"><ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory"/></td>
+				<td class="tdEdit"><ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory" status="disabled"/></td>
 			</tr>
 			<tr>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.email"/></th>
 				<td class="tdEdit"><ui:text name="email" checkName="sys0208.header.email" options="mandatory" option="email"/></td>
 				<th class="thEdit rt mandatory">Default Start URL</th>
-				<td class="tdEdit"><ui:text name="defaultStartUrl" checkName="Default Start URL" options="mandatory"/></td>
+				<td class="tdEdit"><ui:text name="defaultStartUrl" value="/index/dashboard.do" checkName="Default Start URL" options="mandatory" status="disabled"/></td>
 			</tr>
 			<tr>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.maxRowsPerPage"/></th>
 				<td class="tdEdit">
-					<ui:select name="maxRowsPerPage" checkName="sys0208.header.maxRowsPerPage" options="mandatory">
+					<ui:select name="maxRowsPerPage" checkName="sys0208.header.maxRowsPerPage" options="mandatory" status="disabled">
 <%
 					for (int i=0; i<maxRowPerPage.length; i++) {
 %>
@@ -161,7 +161,7 @@
 				</td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.pageNumsPerPage"/></th>
 				<td class="tdEdit">
-					<ui:select name="pageNumsPerPage" checkName="sys0208.header.pageNumsPerPage" options="mandatory">
+					<ui:select name="pageNumsPerPage" checkName="sys0208.header.pageNumsPerPage" options="mandatory" status="disabled">
 <%
 					for (int i=0; i<pageNumPerPage.length; i++) {
 %>
@@ -174,14 +174,14 @@
 			</tr>
 			<tr>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.status"/></th>
-				<td class="tdEdit"><ui:ccselect name="userStatus" codeType="USER_STATUS" selectedValue="<%=defaultUserStatus%>" options="mandatory"/></td>
+				<td class="tdEdit"><ui:ccselect name="userStatus" codeType="USER_STATUS" selectedValue="<%=defaultUserStatus%>" options="mandatory" status="disabled"/></td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.active"/></th>
 				<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory"/></td>
 			</tr>
 			<tr>
 				<th class="thEdit rt">Authentication Key</th>
 				<td class="tdEdit" colspan="3">
-					<ui:text name="authenticationSecretKey" value="" checkName="Authentication Key" className="hor" style="width:50%;"/>
+					<ui:text name="authenticationSecretKey" value="" checkName="Authentication Key" className="hor" status="disabled" style="width:40%;"/>
 					<ui:button id="btnGetAuthenticationSecretKey" caption="Generate Key" iconClass="fa-key"/>
 				</td>
 			</tr>
@@ -204,6 +204,7 @@
 			</div>
 		</div>
 		<div class="verGap4"></div>
+		<div id="divGridWrapper">
 		<table id="tblGrid" class="tblGrid">
 			<colgroup>
 				<col width="2%"/>
@@ -231,6 +232,7 @@
 				</tr>
 			</tbody>
 		</table>
+		</div>
 	</div>
 </div>
 <div id="divPagingArea"></div>
@@ -256,10 +258,10 @@
 		<tr class="noBorderAll">
 			<th id="thDeleteButton" class="thGrid deleteButton"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
 			<td class="tdGrid Ct"><ui:ccselect name="bankCode" checkName="Bank" codeType="BANK_TYPE" options="mandatory"/></td>
-			<td class="tdGrid Ct"><ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory"/></td>
-			<td class="tdGrid Ct"><ui:text name="accntNumber" className="Ct" checkName="Account Number" options="mandatory"/></td>
+			<td class="tdGrid Ct"><ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory" option="numeric"/></td>
+			<td class="tdGrid Ct"><ui:text name="accntNumber" className="Ct" checkName="Account Number" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="accntName" className="Lt" checkName="Account Name" options="mandatory"/></td>
-			<td class="tdGrid Ct"><ui:text name="balance" className="Rt"/></td>
+			<td class="tdGrid Ct"><ui:text name="balance" className="Rt numeric" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="description" className="Lt"/></td>
 		</tr>
 	</table>

@@ -33,6 +33,13 @@ public class FileUtil extends FileUtils {
 		}
 	}
 
+	public static void copyFile(DataSet dsFile, String path) throws Exception {
+		for (int i=0; i<dsFile.getRowCnt(); i++) {
+			String tempPath = dsFile.getValue(i, "TEMP_PATH")+"/"+dsFile.getValue(i, "NEW_NAME");
+			copyFile(new File(tempPath), new File(path));
+		}
+	}
+
 	public static void moveFile(DataSet dsFile, String path) throws Exception {
 		for (int i=0; i<dsFile.getRowCnt(); i++) {
 			String tempPath = dsFile.getValue(i, "TEMP_PATH")+"/"+dsFile.getValue(i, "NEW_NAME");

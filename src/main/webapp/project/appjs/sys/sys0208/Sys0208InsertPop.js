@@ -9,45 +9,51 @@ $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnSave").click(function(event) {
-		var selectedTabIndex = commonJs.getSelectedTabIndex($("#tabCategory"));
-
-		if (selectedTabIndex == 0) {
-			saveUserDetail();
-		} else if (selectedTabIndex == 1) {
-			saveBankAccount();
+	$("#btnSaveUserDetail").click(function(event) {
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
 		}
 
-//		var fileValue = $("#photoPath").val();
+		var fileValue = $("#photoPath").val();
+		var elementsToCheck = [];
 
-//		if (commonJs.doValidate("fmDefault")) {
-//			if (!commonJs.isEmpty(fileValue)) {
-//				fileValue = fileValue.substring(fileValue.lastIndexOf(".")+1);
-//				if (!(fileValue.toLowerCase() == "png" || fileValue.toLowerCase() == "jpg" || fileValue.toLowerCase() == "gif" || fileValue.toLowerCase() == "jpeg")) {
-//					commonJs.doValidatorMessage($("#photoPath"), "notUploadable");
-//					return;
-//				}
-//			}
-//
-//			$("#fmDefault").attr("enctype", "multipart/form-data");
-//
-//			commonJs.confirm({
-//				contents:com.message.Q001,
-//				buttons:[{
-//					caption:com.caption.yes,
-//					callback:function() {
-//						commonJs.doSubmit({
-//							form:"fmDefault",
-//							action:"/sys/0208/exeInsert.do"
-//						});
-//					}
-//				}, {
-//					caption:com.caption.no,
-//					callback:function() {
-//					}
-//				}]
-//			});
-//		}
+		elementsToCheck.push("userName");
+		elementsToCheck.push("loginId");
+		elementsToCheck.push("password");
+		elementsToCheck.push("orgId");
+		elementsToCheck.push("orgName");
+		elementsToCheck.push("email");
+
+		if (commonJs.doValidate(elementsToCheck)) {
+			if (!commonJs.isEmpty(fileValue)) {
+				if (!commonJs.isUploadableImageFile($("#filePhotoPath"), fileValue)) {
+					return;
+				}
+			}
+
+			enableUserDetailFields();
+
+			commonJs.doSaveWithFile({
+				url:"/sys/0208/saveUserDetail.do",
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					commonJs.confirm({
+						contents:"Would you like to create bank accounts for the user?",
+						buttons:[{
+							caption:com.caption.yes,
+							callback:function() {
+								setUserDetailInfo(ds);
+							}
+						}, {
+							caption:com.caption.no,
+							callback:function() {
+								parent.popup.close();
+							}
+						}]
+					});
+				}
+			});
+		}
 	});
 
 	$("#icnOrgSearch").click(function(event) {
@@ -66,6 +72,19 @@ $(function() {
 			width:880,
 			height:680
 		});
+	});
+
+	$("#btnGetAuthenticationSecretKey").click(function(event) {
+		if ("disabled" != $(this).attr("disabled")) {
+			commonJs.doSearch({
+				url:"/login/getAuthenticationSecretKey.do",
+				noForm:true,
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					$("#authenticationSecretKey").val(ds.getValue(0, "authenticationSecretKey"));
+				}
+			});
+		}
 	});
 
 	$("#btnAddBankAccnt").click(function(event) {
@@ -98,10 +117,29 @@ $(function() {
 				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
 				if ($(this).is("select")) {
-					setSelectBoxes($(this));
+					setSelectboxForBankAccountTab($(this));
+				}
+
+				if (commonJs.contains(id, "bsb")) {
+					commonJs.setFieldNumberMask(id+delimiter+groupIndex, "999 999");
+				}
+
+				if (commonJs.contains(id, "balance")) {
+					$(".numeric").number(true, 2);
 				}
 			});
 		});
+
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divGridWrapper"),
+			attachToHeight:446
+		});
+	});
+
+	$("input:text").focus(function() {
+		if ($(this).hasClass("txtEn")) {
+			$(this).select();
+		}
 	});
 
 	$(document).keydown(function(event) {
@@ -146,12 +184,75 @@ $(function() {
 		});
 	};
 
-	setSelectBoxes = function(jqObj) {
+	setSelectboxForBankAccountTab = function(jqObj) {
 		$(jqObj).selectpicker({
 			width:"auto",
 			container:"body",
 			style:$(jqObj).attr("class")
 		});
+	};
+
+	enableUserDetailFields = function() {
+		$("#language").attr("disabled", false);
+		commonJs.refreshBootstrapSelectbox("language");
+		$("#themeType").attr("disabled", false);
+		commonJs.refreshBootstrapSelectbox("themeType");
+		$("#maxRowsPerPage").attr("disabled", false);
+		commonJs.refreshBootstrapSelectbox("maxRowsPerPage");
+		$("#pageNumsPerPage").attr("disabled", false);
+		commonJs.refreshBootstrapSelectbox("pageNumsPerPage");
+		$("#userStatus").attr("disabled", false);
+		commonJs.refreshBootstrapSelectbox("userStatus");
+	};
+
+	disableUserDetailFields = function() {
+		$("#language").attr("disabled", true);
+		commonJs.refreshBootstrapSelectbox("language");
+		$("#themeType").attr("disabled", true);
+		commonJs.refreshBootstrapSelectbox("themeType");
+		$("#maxRowsPerPage").attr("disabled", true);
+		commonJs.refreshBootstrapSelectbox("maxRowsPerPage");
+		$("#pageNumsPerPage").attr("disabled", true);
+		commonJs.refreshBootstrapSelectbox("pageNumsPerPage");
+		$("#userStatus").attr("disabled", true);
+		commonJs.refreshBootstrapSelectbox("userStatus");
+	};
+
+	setUserDetailInfo = function(ds) {
+		$("#imgUserPhoto").attr("src", ds.getValue(0, "PHOTO_PATH"));
+		$("#photoPath").val("");
+		$("#userId").val(ds.getValue(0, "USER_ID"));
+		$("#userName").val(ds.getValue(0, "USER_NAME"));
+		$("#loginId").val(ds.getValue(0, "LOGIN_ID"));
+		$("#password").val(ds.getValue(0, "LOGIN_PASSWORD"));
+		$("#orgId").val(ds.getValue(0, "ORG_ID"));
+		$("#orgName").val(ds.getValue(0, "ORG_NAME"));
+		$("#authGroup").val(ds.getValue(0, "AUTH_GROUP_ID"));
+		commonJs.refreshBootstrapSelectbox("authGroup");
+		$("#language").val(ds.getValue(0, "LANGUAGE"));
+		commonJs.refreshBootstrapSelectbox("language");
+		$("#themeType").val(ds.getValue(0, "THEME_TYPE"));
+		commonJs.refreshBootstrapSelectbox("themeType");
+		$("#email").val(ds.getValue(0, "EMAIL"));
+		$("#defaultStartUrl").val(ds.getValue(0, "DEFAULT_START_URL"));
+		$("#maxRowsPerPage").val(ds.getValue(0, "MAX_ROW_PER_PAGE"));
+		commonJs.refreshBootstrapSelectbox("maxRowsPerPage");
+		$("#pageNumsPerPage").val(ds.getValue(0, "PAGE_NUM_PER_PAGE"));
+		commonJs.refreshBootstrapSelectbox("pageNumsPerPage");
+		$("#userStatus").val(ds.getValue(0, "USER_STATUS"));
+		commonJs.refreshBootstrapSelectbox("userStatus");
+		$("#isActive").val(ds.getValue(0, "IS_ACTIVE"));
+		commonJs.refreshBootstrapSelectbox("isActive");
+		$("#authenticationSecretKey").val(ds.getValue(0, "AUTHENTICATION_SECRET_KEY"));
+		$("#lastUpdatedBy").val(commonJs.nvl(ds.getValue(0, "UPDATE_USER_NAME"), ds.getValue(0, "INSERT_USER_NAME")));
+		$("#lastUpdatedDate").val(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(0, "UPDATE_DATE"), ds.getValue(0, "INSERT_DATE")), jsconfig.get("dateTimeFormatJs")));
+
+		if (!commonJs.isBlank($("#authenticationSecretKey").val())) {
+			$("#btnGetAuthenticationSecretKey").attr("disabled", true);
+		}
+
+		disableUserDetailFields();
+		toggleTabStatus();
 	};
 
 	/*!
@@ -165,6 +266,11 @@ $(function() {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();
 				}
+
+				$("#tblGrid").fixedHeaderTable({
+					attachTo:$("#divGridWrapper"),
+					attachToHeight:446
+				});
 			});
 		}
 	});

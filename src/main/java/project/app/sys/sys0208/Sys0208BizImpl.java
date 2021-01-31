@@ -134,20 +134,40 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
+	public ParamEntity saveUserDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
+		String userId = "", saveType = "";
 		String defaultFileName = "DefaultUser_128_Black.png";
-		String userId = CommonUtil.uid();
-		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
-		String pathToSave = ConfigUtil.getProperty("path.image.photo");
+		String defaultPhotoPath = ConfigUtil.getProperty("path.image.photo");
+		String uploadPhotoPath = ConfigUtil.getProperty("path.dir.uploadedPhoto");
+		String webRootPath = (String)MemoryBean.get("applicationRealPath");
+		String pathToCopy = "";
 		SysUser sysUser = new SysUser();
+		DataSet userDataSet;
 		int result = -1;
-		File files[], tempFile;
 
 		try {
+			userId = requestDataSet.getValue("userId");
+
+			if (CommonUtil.isBlank(userId)) {
+				saveType = "Insert";
+				userId = CommonUtil.uid();
+			}
+
+			if (CommonUtil.equals(saveType, "Insert")) {
+				sysUser.setInsertUserId((String)session.getAttribute("UserId"));
+				sysUser.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+				if (fileDataSet.getRowCnt() <= 0) {
+					sysUser.setPhotoPath(defaultPhotoPath + "/" + defaultFileName);
+				}
+			} else {
+				sysUser.setUpdateUserId((String)session.getAttribute("UserId"));
+				sysUser.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			}
+
 			sysUser.setUserId(userId);
 			sysUser.setUserName(requestDataSet.getValue("userName"));
 			sysUser.setLoginId(requestDataSet.getValue("loginId"));
@@ -161,51 +181,43 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));
 			sysUser.setUserStatus(requestDataSet.getValue("userStatus"));
 			sysUser.setIsActive(requestDataSet.getValue("isActive"));
-			sysUser.setInsertUserId((String)session.getAttribute("UserId"));
-			sysUser.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			sysUser.setDefaultStartUrl(requestDataSet.getValue("defaultStartUrl"));
+			sysUser.setAuthenticationSecretKey(requestDataSet.getValue("authenticationSecretKey"));
 
 			if (fileDataSet.getRowCnt() > 0) {
 				String fileName = fileDataSet.getValue("NEW_NAME");
-				String fullPath = "", copyToPath = "";
+				String userFileName = userId + "_" + fileName;
 
-				fileName = userId + "_" + fileName;
-				fullPath = rootPath + pathToSave + "/" + fileName;
-				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+				// Copy the file to web source
+				pathToCopy = webRootPath + defaultPhotoPath + "/" + userFileName;
+				FileUtil.copyFile(fileDataSet, pathToCopy);
 
-				files = new File(rootPath+pathToSave).listFiles();
-				for (File file : files) {
-					if (CommonUtil.startsWith(file.getName(), userId+"_")) {
-						FileUtil.forceDelete(file);
-						break;
-					}
-				}
-				FileUtil.moveFile(fileDataSet, fullPath);
+				// Move the file to repository
+				pathToCopy = uploadPhotoPath + "/" + userFileName;
+				FileUtil.moveFile(fileDataSet, pathToCopy);
 
-				try {
-					tempFile = new File(appSrcRootPath+pathToSave);
-					if (tempFile != null && tempFile.isDirectory()) {
-						files = new File(appSrcRootPath+pathToSave).listFiles();
-						for (File file : files) {
-							if (CommonUtil.startsWith(file.getName(), userId+"_")) {
-								FileUtil.forceDelete(file);
-								break;
-							}
-						}
-						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
-					}
-				} catch (Exception e) {
-				}
-
-				sysUser.setPhotoPath(pathToSave + "/" + fileName);
-			} else {
-				sysUser.setPhotoPath(pathToSave + "/" + defaultFileName);
+				sysUser.setPhotoPath(defaultPhotoPath + "/" + userFileName);
 			}
 
-			result = sysUserDao.insert(sysUser);
+			if (CommonUtil.equals(saveType, "Insert")) {
+				result = sysUserDao.insert(sysUser);
+			} else {
+				sysUser.addUpdateColumnFromField();
+				result = sysUserDao.update(userId, sysUser);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			sysUser = sysUserDao.getUserByUserId(userId);
+			sysUser.setInsertUserName(DataHelper.getUserNameById(sysUser.getInsertUserId()));
+			sysUser.setUpdateUserName(DataHelper.getUserNameById(sysUser.getUpdateUserId()));
+
+			userDataSet = sysUser.getDataSet();
+			userDataSet.addColumn("ORG_NAME", DataHelper.getOrgNameById(sysUser.getOrgId()));
+
+			paramEntity.setAjaxResponseDataSet(userDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {

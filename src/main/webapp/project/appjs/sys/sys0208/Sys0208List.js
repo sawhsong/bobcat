@@ -156,7 +156,7 @@ $(function() {
 		} else if (param.mode == "New") {
 			url = "/sys/0208/getInsert.do";
 			header = com.header.popHeaderEdit;
-			height = 620;
+			height = 590;
 		} else if (param.mode == "Edit") {
 			url = "/sys/0208/getUpdate.do";
 			header = com.header.popHeaderEdit;

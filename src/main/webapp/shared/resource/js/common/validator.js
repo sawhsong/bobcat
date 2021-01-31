@@ -169,7 +169,7 @@
 			var tail = (RegExp.$2) ? this._checkKor(eval(RegExp.$1), RegExp.$2) : "";
 
 			params.type = "Warning";
-			params.width = 330;
+//			params.width = 330;
 //			params.height = 200;
 			params.contents = msg.replace(pattern, eval(RegExp.$1) + tail);
 			$.nony.popup.openDialog(params);
@@ -246,7 +246,7 @@
 		},
 		isValidNumeric : function(element, val) {
 			var value = val ? val : $(element).val();
-			var pattern = /^[-+0-9,.]+$/;
+			var pattern = /^[-+0-9,. ]+$/;
 
 			return (pattern.test(value)) ? true : this._execError($(element), this._messages["numeric_"+jsconfig.get("langCode")], "select");
 		},

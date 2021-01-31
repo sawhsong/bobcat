@@ -16,7 +16,7 @@ import zebra.util.ConfigUtil;
 
 public class SysUserHDaoImpl extends BaseHDao implements SysUserDao {
 	public int insert(Dto dto) throws Exception {
-		return insertWithDto(dto);
+		return insertWithSQLQuery(dto);
 	}
 
 	public int update(String userId, Dto dto) throws Exception {
