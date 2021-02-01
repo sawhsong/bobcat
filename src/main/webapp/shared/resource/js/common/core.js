@@ -246,6 +246,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.doSubmit({
 						formId:formId,
 						action:params.action,
@@ -279,6 +283,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.doSubmit({
 						formId:formId,
 						action:params.action,
@@ -310,6 +318,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.doSubmit({
 						formId:formId,
 						action:params.action,
@@ -343,6 +355,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.doSubmit({
 						formId:formId,
 						action:params.action,
@@ -374,6 +390,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.doSubmit({
 						formId:formId,
 						action:params.action,
@@ -435,6 +455,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.ajaxSubmit({
 						url:params.url,
 						dataType:params.dataType || "json",
@@ -467,6 +491,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.ajaxSubmitMultipart({
 						url:params.url,
 						dataType:params.dataType || "json",
@@ -499,6 +527,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.ajaxSubmit({
 						url:params.url,
 						dataType:params.dataType || "json",
@@ -531,6 +563,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.ajaxSubmitMultipart({
 						url:params.url,
 						dataType:params.dataType || "json",
@@ -563,6 +599,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					commonJs.ajaxSubmit({
 						url:params.url,
 						dataType:params.dataType || "json",
@@ -603,6 +643,10 @@ var nony = {
 			buttons:[{
 				caption:com.caption.yes,
 				callback:function() {
+					if (!$.nony.isEmpty(params.preProcess)) {
+						params.preProcess();
+					}
+
 					popup = commonJs.openPopup({
 						popupId:"exportFile",
 						url:params.url,

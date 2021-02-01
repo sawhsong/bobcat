@@ -31,10 +31,11 @@ $(function() {
 				}
 			}
 
-			enableUserDetailFields();
-
 			commonJs.doSaveWithFile({
 				url:"/sys/0208/saveUserDetail.do",
+				preProcess:function() {
+					enableUserDetailFields();
+				},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 					commonJs.confirm({
@@ -51,6 +52,9 @@ $(function() {
 							}
 						}]
 					});
+				},
+				onCancel:function() {
+					disableUserDetailFields();
 				}
 			});
 		}
