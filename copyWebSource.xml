@@ -11,7 +11,8 @@
 				 6.zebra appjs,
 				 7.zebra common,
 				 8.project conf,
-				 9.zebra conf"
+				 9.zebra conf,
+				 10.images"
 		description="Run All Targets"
 	/>
 
@@ -66,6 +67,15 @@
 	<target name="9.zebra conf" description="Copy zebra conf">
 		<copy todir="${target.zebra.conf}">
 			<fileset dir="${src.zebra.conf}"/>
+		</copy>
+	</target>
+
+	<target name="10.images" description="Copy user photos and org logos from repository">
+		<copy todir="${target.image.photo}">
+			<fileset dir="${src.image.photo}"/>
+		</copy>
+		<copy todir="${target.image.orgLogo}">
+			<fileset dir="${src.image.orgLogo}"/>
 		</copy>
 	</target>
 </project>

@@ -10,7 +10,7 @@ $(function() {
 	 * event
 	 */
 	$("#btnNew").click(function(event) {
-		openPopup({mode:"New"});
+		openPopup({mode:"Insert"});
 	});
 
 	$("#btnDelete").click(function(event) {
@@ -40,8 +40,7 @@ $(function() {
 			}
 		}
 
-		if (code == 9) {
-		}
+		if (code == 9) {}
 	});
 
 	setActionButtonContextMenu = function() {
@@ -98,7 +97,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "USER_NAME"), 60)).setScript("getDetail('"+ds.getValue(i, "USER_ID")+"')");
+				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "USER_NAME"), 60)).setScript("getEdit('"+ds.getValue(i, "USER_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "LOGIN_ID")));
@@ -142,25 +141,20 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
-	getDetail = function(userId) {
-		openPopup({mode:"Detail", userId:userId});
+	getEdit = function(userId) {
+		openPopup({
+			mode:"Update",
+			userId:userId
+		});
 	};
 
 	openPopup = function(param) {
-		var url = "", header = "", width = 1100, height = 516;
+		var url = "", header = "", width = 0, height = 0;
 
-		if (param.mode == "Detail") {
-			url = "/sys/0208/getDetail.do";
-			header = com.header.popHeaderDetail;
-			height = 446;
-		} else if (param.mode == "New") {
-			url = "/sys/0208/getInsert.do";
+		if (param.mode == "Insert" || param.mode == "Update") {
+			url = "/sys/0208/getEdit.do";
 			header = com.header.popHeaderEdit;
-			height = 590;
-		} else if (param.mode == "Edit") {
-			url = "/sys/0208/getUpdate.do";
-			header = com.header.popHeaderEdit;
-			height = 620;
+			width = 1100, height = 590;
 		} else if (param.mode == "UpdateAuthGroup") {
 			url = "/sys/0208/getActionContextMenu.do";
 			header = sys.sys0208.caption.auth;
@@ -185,10 +179,7 @@ $(function() {
 		var popParam = {
 			popupId:"user"+param.mode,
 			url:url,
-			data:{
-				mode:param.mode,
-				userId:commonJs.nvl(param.userId, "")
-			},
+			data:param,
 			header:header,
 			blind:true,
 			width:width,
@@ -223,11 +214,10 @@ $(function() {
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {getDetail(userId);};
-		ctxMenu.commonAction[1].fun = function() {openPopup({mode:"Edit", userId:userId});};
-		ctxMenu.commonAction[2].fun = function() {doDelete();};
+		ctxMenu.commonAction[0].fun = function() {openPopup({mode:"Update", userId:userId});};
+		ctxMenu.commonAction[1].fun = function() {doDelete();};
 
-		$(img).contextMenu(ctxMenu.commonAction, {
+		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -319,8 +309,6 @@ $(function() {
 				return false;
 			}
 		});
-
-		$("#userName").focus();
 
 		doSearch();
 	});

@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_BANK_ACCNT - Bank account info by user
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrBankAccnt" table="USR_BANK_ACCNT" lazy="false">
+		<meta attribute="class-description" inherit="false">Bank account info by user</meta>
+
+		<id name="bankAccntId" column="BANK_ACCNT_ID" type="java.lang.String" length="30"></id>
+
+		<property name="accntNumber" column="ACCNT_NUMBER" not-null="true" type="java.lang.String" length="30"/>
+		<property name="bankCode" column="BANK_CODE" not-null="true" type="java.lang.String" length="30"/>
+		<property name="bsb" column="BSB" not-null="true" type="java.lang.String" length="10"/>
+		<property name="userId" column="USER_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="accntName" column="ACCNT_NAME" type="java.lang.String" length="50"/>
+		<property name="balance" column="BALANCE" type="java.lang.Double"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="100"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrBankAccnt.selectAll">
+	<![CDATA[
+		SELECT BANK_ACCNT_ID,
+		       ACCNT_NUMBER,
+		       BANK_CODE,
+		       BSB,
+		       USER_ID,
+		       ACCNT_NAME,
+		       BALANCE,
+		       DESCRIPTION,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_BANK_ACCNT
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrBankAccnt.insert">
+	<![CDATA[
+		INSERT INTO USR_BANK_ACCNT (
+		       BANK_ACCNT_ID,
+		       ACCNT_NUMBER,
+		       BANK_CODE,
+		       BSB,
+		       USER_ID,
+		       ACCNT_NAME,
+		       BALANCE,
+		       DESCRIPTION,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${BANK_ACCNT_ID},
+		       ${ACCNT_NUMBER},
+		       ${BANK_CODE},
+		       ${BSB},
+		       ${USER_ID},
+		       ${ACCNT_NAME},
+		       ${BALANCE},
+		       ${DESCRIPTION},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrBankAccnt.update">
+	<![CDATA[
+		UPDATE USR_BANK_ACCNT
+		   SET ACCNT_NUMBER = ${ACCNT_NUMBER},
+		       BANK_CODE = ${BANK_CODE},
+		       BSB = ${BSB},
+		       USER_ID = ${USER_ID},
+		       ACCNT_NAME = ${ACCNT_NAME},
+		       BALANCE = ${BALANCE},
+		       DESCRIPTION = ${DESCRIPTION},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrBankAccnt.updateColumns">
+	<![CDATA[
+		UPDATE USR_BANK_ACCNT
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrBankAccnt.delete">
+	<![CDATA[
+		DELETE USR_BANK_ACCNT
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

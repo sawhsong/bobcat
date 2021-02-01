@@ -1,8 +1,9 @@
 /**************************************************************************************************
  * Framework Generated Javascript Source
- * - Sys0208InsertPop.js
+ * - Sys0208EditPop.js
  *************************************************************************************************/
 var delimiter = jsconfig.get("dataDelimiter");
+var isBankAccntLoaded = false;
 jsconfig.put("useJqSelectmenu", false);
 
 $(function() {
@@ -38,23 +39,72 @@ $(function() {
 				},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
-					commonJs.confirm({
-						contents:"Would you like to create bank accounts for the user?",
-						buttons:[{
-							caption:com.caption.yes,
-							callback:function() {
-								setUserDetailInfo(ds);
-							}
-						}, {
-							caption:com.caption.no,
-							callback:function() {
-								parent.popup.close();
-							}
-						}]
-					});
+					setUserDetailInfo(ds);
+//					commonJs.confirm({
+//						contents:"Would you like to create bank accounts for the user?",
+//						buttons:[{
+//							caption:com.caption.yes,
+//							callback:function() {
+//								setUserDetailInfo(ds);
+//							}
+//						}, {
+//							caption:com.caption.no,
+//							callback:function() {
+//							}
+//						}]
+//					});
 				},
 				onCancel:function() {
 					disableUserDetailFields();
+				}
+			});
+		}
+	});
+
+	$("#btnSaveBankAccnt").click(function(event) {
+		var isValid = true;
+		var elementsToCheck = [];
+		var detailLength = $("#ulDetailHolder .dummyDetail").length;
+
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
+		}
+
+		if (detailLength <= 0) {
+			commonJs.alert("There is no data to save.");
+			return;
+		}
+
+		$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+			$(this).find(":input").each(function(index) {
+				var id = $(this).attr("id"), name = $(this).attr("name");
+
+				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
+				else {id = "";}
+
+				if (!commonJs.isEmpty(name)) {name = (name.indexOf(delimiter) != -1) ? name.substring(0, name.indexOf(delimiter)) : name;}
+				else {name = "";}
+
+				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+				elementsToCheck.push($(this).attr("id"));
+			});
+		});
+
+		if (!commonJs.doValidate(elementsToCheck)) {
+			isValid = false;
+			return;
+		}
+
+		if (isValid) {
+			var detailLength = $("#ulDetailHolder .dummyDetail").length;
+
+			commonJs.doSave({
+				url:"/sys/0208/saveBankAccnts.do",
+				data:{detailLength:detailLength},
+				onSuccess:function(result) {
+					parent.popup.close();
+					parent.doSearch();
 				}
 			});
 		}
@@ -79,16 +129,18 @@ $(function() {
 	});
 
 	$("#btnGetAuthenticationSecretKey").click(function(event) {
-		if ("disabled" != $(this).attr("disabled")) {
-			commonJs.doSearch({
-				url:"/login/getAuthenticationSecretKey.do",
-				noForm:true,
-				onSuccess:function(result) {
-					var ds = result.dataSet;
-					$("#authenticationSecretKey").val(ds.getValue(0, "authenticationSecretKey"));
-				}
-			});
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
 		}
+
+		commonJs.doSearch({
+			url:"/login/getAuthenticationSecretKey.do",
+			noForm:true,
+			onSuccess:function(result) {
+				var ds = result.dataSet;
+				$("#authenticationSecretKey").val(ds.getValue(0, "authenticationSecretKey"));
+			}
+		});
 	});
 
 	$("#btnAddBankAccnt").click(function(event) {
@@ -134,26 +186,14 @@ $(function() {
 			});
 		});
 
-		$("#tblGrid").fixedHeaderTable({
-			attachTo:$("#divGridWrapper"),
-			attachToHeight:446
-		});
-	});
-
-	$("input:text").focus(function() {
-		if ($(this).hasClass("txtEn")) {
-			$(this).select();
-		}
+		setGridHeader();
 	});
 
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
 
-		if (code == 13) {
-		}
-
-		if (code == 9) {
-		}
+		if (code == 13) {}
+		if (code == 9) {}
 	});
 
 	/*!
@@ -161,6 +201,14 @@ $(function() {
 	 */
 	closeWindow = function() {
 		parent.popup.close();
+		parent.doSearch();
+	};
+
+	setGridHeader = function() {
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divGridWrapper"),
+			attachToHeight:446
+		});
 	};
 
 	toggleTabStatus = function() {
@@ -194,6 +242,35 @@ $(function() {
 			container:"body",
 			style:$(jqObj).attr("class")
 		});
+	};
+
+	loadUserDetail = function() {
+		if (!commonJs.isBlank(userId)) {
+			commonJs.doSimpleProcess({
+				url:"/sys/0208/getUserDetail.do",
+				noForm:true,
+				data:{userId:userId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					setUserDetailInfo(ds);
+				}
+			});
+		}
+	};
+
+	loadBankAccounts = function() {
+		if (!commonJs.isBlank(userId) && !isBankAccntLoaded) {
+			commonJs.doSimpleProcess({
+				url:"/sys/0208/getBankAccounts.do",
+				noForm:true,
+				data:{userId:userId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					setBankAccountsInfo(ds);
+					isBankAccntLoaded = true;
+				}
+			});
+		}
 	};
 
 	enableUserDetailFields = function() {
@@ -259,6 +336,22 @@ $(function() {
 		toggleTabStatus();
 	};
 
+	setBankAccountsInfo = function(ds) {
+		for (var i=0; i<ds.getRowCnt(); i++) {
+			var rowIdx = delimiter+i;
+
+			$("#btnAddBankAccnt").trigger("click");
+
+			$("[name=bankAccntId"+rowIdx+"]").val(ds.getValue(i, "BANK_ACCNT_ID"));
+			$("[name=bankCode"+rowIdx+"]").selectpicker("val", ds.getValue(i, "BANK_CODE"));
+			$("[name=bsb"+rowIdx+"]").val(ds.getValue(i, "BSB"));
+			$("[name=accntNumber"+rowIdx+"]").val(ds.getValue(i, "ACCNT_NUMBER"));
+			$("[name=accntName"+rowIdx+"]").val(ds.getValue(i, "ACCNT_NAME"));
+			$("[name=balance"+rowIdx+"]").val(ds.getValue(i, "BALANCE"));
+			$("[name=description"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION"));
+		}
+	};
+
 	/*!
 	 * load event (document / window)
 	 */
@@ -271,18 +364,23 @@ $(function() {
 					$(this).remove();
 				}
 
-				$("#tblGrid").fixedHeaderTable({
-					attachTo:$("#divGridWrapper"),
-					attachToHeight:446
-				});
+				setGridHeader();
 			});
+		}
+
+		if ($(obj).is($("#tabCategory li:eq(1) a"))) {
+			setTimeout(function() {
+				loadBankAccounts();
+			}, 400);
+		}
+
+		if ($(obj).is($("input:text")) && $(obj).hasClass("txtEn")) {
+			$(obj).select();
 		}
 	});
 
 	$(window).load(function() {
 		commonJs.setEvent("click", [$("#btnCloseUserDetail"), $("#btnCloseBankAccnt")], closeWindow);
-		toggleTabStatus();
-		setSelectboxForUserDetailTab();
 
 		commonJs.setAutoComplete($("#orgName"), {
 			method:"getOrgId",
@@ -298,5 +396,9 @@ $(function() {
 				return false;
 			}
 		});
+
+		toggleTabStatus();
+		setSelectboxForUserDetailTab();
+		loadUserDetail();
 	});
 });

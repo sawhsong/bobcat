@@ -79,6 +79,8 @@ public interface SysUserDao extends IDao {
 	 * @throws Exception
 	 */
 	public DataSet getUserInfoDataSetByLoginIdAndEmail(String loginId, String email) throws Exception;
+
+	public DataSet getUserInfoDataSetByUserId(String userId) throws Exception;
 	/**
 	 * Get SysUser list DataSet by Search Criteria in QueryAdvisor
 	 * @param queryAdvisor

@@ -108,6 +108,12 @@ public class SysUserHDaoImpl extends BaseHDao implements SysUserDao {
 		return selectAllAsDataSet(queryAdvisor, new SysUser());
 	}
 
+	public DataSet getUserInfoDataSetByUserId(String userId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("user_id = '"+userId+"'");
+		return selectAllAsDataSet(queryAdvisor, new SysUser());
+	}
+
 	public DataSet getUserDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String loginId = requestDataSet.getValue("loginId");

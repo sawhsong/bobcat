@@ -49,4 +49,10 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrFinanceFile.UsrFinanceFileHDaoImpl" id="usrFinanceFileDao" init-method="init" name="usrFinanceFileDao" parent="baseHDao" scope="prototype"/>
     <!--UsrIncome DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrIncome.UsrIncomeHDaoImpl" id="usrIncomeDao" init-method="init" name="usrIncomeDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrBankAccnt DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntHDaoImpl" id="usrBankAccntDao" init-method="init" name="usrBankAccntDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrBankStatement DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementHDaoImpl" id="usrBankStatementDao" init-method="init" name="usrBankStatementDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrBankStatementD DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBankStatementD.UsrBankStatementDHDaoImpl" id="usrBankStatementDDao" init-method="init" name="usrBankStatementDDao" parent="baseHDao" scope="prototype"/>
 </beans>

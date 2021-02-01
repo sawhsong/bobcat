@@ -37,7 +37,7 @@
 						return this._execError($(elem), this._messages["mandatory_"+jsconfig.get("langCode")], "select");
 					}
 
-					if (!$.nony.isEmpty(option) && (option == "Numeric" || option == "numeric") && $.nony.toNumber($(elem).val()) == 0) {
+					if (!$.nony.isEmpty(option) && (option == "Numeric" || option == "numeric") && $.nony.toNumber($.nony.trim($(elem).val())) == 0) {
 						return this._execError($(elem), this._messages["numeric_"+jsconfig.get("langCode")], "select");
 					}
 				}
@@ -246,7 +246,7 @@
 		},
 		isValidNumeric : function(element, val) {
 			var value = val ? val : $(element).val();
-			var pattern = /^[-+0-9,. ]+$/;
+			var pattern = /^[-+0-9,.\s]+$/;
 
 			return (pattern.test(value)) ? true : this._execError($(element), this._messages["numeric_"+jsconfig.get("langCode")], "select");
 		},

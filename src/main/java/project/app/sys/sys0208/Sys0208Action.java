@@ -27,24 +27,41 @@ public class Sys0208Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
-	}
-
-	public String getInsert() throws Exception {
-		biz.getInsert(paramEntity);
-		return "insert";
-	}
-
-	public String getUpdate() throws Exception {
-		biz.getUpdate(paramEntity);
-		return "update";
-	}
-
 	public String getActionContextMenu() throws Exception {
 		biz.getActionContextMenu(paramEntity);
 		return "actionContextMenu";
+	}
+
+	public String getEdit() throws Exception {
+		biz.getEdit(paramEntity);
+		return "edit";
+	}
+
+	public String getUserDetail() throws Exception {
+		try {
+			biz.getUserDetail(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getBankAccounts() throws Exception {
+		try {
+			biz.getBankAccounts(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String exeActionContextMenu() throws Exception {
+		try {
+			biz.exeActionContextMenu(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String saveUserDetail() throws Exception {
@@ -56,36 +73,18 @@ public class Sys0208Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String exeUpdate() throws Exception {
+	public String saveBankAccnts() throws Exception {
 		try {
-			biz.exeUpdate(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("script", "parent.popup.close();parent.doSearch();");
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
-		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
-		}
-		return "pageHandler";
-	}
-
-	public String exeDelete() throws Exception {
-		try {
-			biz.exeDelete(paramEntity);
+			biz.saveBankAccnts(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
 
-	public String exeActionContextMenu() throws Exception {
+	public String exeDelete() throws Exception {
 		try {
-			biz.exeActionContextMenu(paramEntity);
+			biz.exeDelete(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

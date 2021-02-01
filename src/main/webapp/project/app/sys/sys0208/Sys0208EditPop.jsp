@@ -9,13 +9,15 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String mode = requestDataSet.getValue("mode");
+	String userId = requestDataSet.getValue("userId");
 	DataSet authGroupDataSet = (DataSet)paramEntity.getObject("authGroupDataSet");
-	String dateFormat = ConfigUtil.getProperty("format.date.java");
 	String maxRowPerPage[] = (String[])paramEntity.getObject("maxRowPerPage");
 	String pageNumPerPage[] = (String[])paramEntity.getObject("pageNumPerPage");
-	String photoPath = (String)paramEntity.getObject("photoPath");
+	String defaultPhotoPath = (String)paramEntity.getObject("defaultPhotoPath");
 	String defaultAuthGroup = (String)paramEntity.getObject("defaultAuthGroup");
-	String defaultUserStatus = CommonCodeManager.getCodeByConstants("USER_STATUS_NU");
+	String defaultUserStatus = (String)paramEntity.getObject("defaultUserStatus");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -40,6 +42,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var userId = "<%=userId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -96,7 +99,7 @@
 			</colgroup>
 			<tr>
 				<td class="tdEdit Ct" rowspan="3">
-					<img id="imgUserPhoto" src="<%=photoPath%>" class="imgDis" style="width:90px;height:100px;"/>
+					<img id="imgUserPhoto" src="<%=defaultPhotoPath%>" class="imgDis" style="width:100%;height:110px;"/>
 				</td>
 				<th class="thEdit rt"><mc:msg key="sys0208.header.changePhoto"/></th>
 				<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:400px;" checkName="sys0208.header.changePhoto"/></td>
@@ -258,7 +261,10 @@
 		<tr class="noBorderAll">
 			<th id="thDeleteButton" class="thGrid deleteButton"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
 			<td class="tdGrid Ct"><ui:ccselect name="bankCode" checkName="Bank" codeType="BANK_TYPE" options="mandatory"/></td>
-			<td class="tdGrid Ct"><ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory" option="numeric"/></td>
+			<td class="tdGrid Ct">
+				<ui:hidden name="bankAccntId"/>
+				<ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory" option="numeric"/>
+			</td>
 			<td class="tdGrid Ct"><ui:text name="accntNumber" className="Ct" checkName="Account Number" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="accntName" className="Lt" checkName="Account Name" options="mandatory"/></td>
 			<td class="tdGrid Ct"><ui:text name="balance" className="Rt numeric" option="numeric"/></td>

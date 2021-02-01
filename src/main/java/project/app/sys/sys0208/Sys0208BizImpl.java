@@ -5,16 +5,16 @@
  *************************************************************************************************/
 package project.app.sys.sys0208;
 
-import java.io.File;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
 import project.common.module.datahelper.DataHelper;
 import project.conf.resource.ormapper.dao.SysAuthGroup.SysAuthGroupDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
@@ -32,6 +32,8 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 	private SysUserDao sysUserDao;
 	@Autowired
 	private SysAuthGroupDao sysAuthGroupDao;
+	@Autowired
+	private UsrBankAccntDao usrBankAccntDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -65,69 +67,93 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String userId = requestDataSet.getValue("userId");
-		SysUser sysUser = new SysUser();
-
-		try {
-			sysUser = sysUserDao.getUserByUserId(userId);
-			sysUser.setInsertUserName(DataHelper.getUserNameById(sysUser.getInsertUserId()));
-			sysUser.setUpdateUserName(DataHelper.getUserNameById(sysUser.getUpdateUserId()));
-
-			paramEntity.setObject("sysUser", sysUser);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
-		String[] maxRowPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"));
-		String[] pageNumPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"));
-		String photoPath = ConfigUtil.getProperty("path.image.photo")+"/"+"DefaultUser_128_Black.png";
-		String defaultAuthGroup = "Z";
-
-		try {
-			setAuthorityGroup(paramEntity);
-
-			paramEntity.setObject("maxRowPerPage", maxRowPerPage);
-			paramEntity.setObject("pageNumPerPage", pageNumPerPage);
-			paramEntity.setObject("photoPath", photoPath);
-			paramEntity.setObject("defaultAuthGroup", defaultAuthGroup);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		String[] maxRowPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"));
-		String[] pageNumPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"));
-		String photoPath = ConfigUtil.getProperty("path.image.photo")+"/"+"DefaultUser_128_Black.png";
-		String defaultAuthGroup = "Z";
-
-		try {
-			setAuthorityGroup(paramEntity);
-
-			paramEntity = getDetail(paramEntity);
-			paramEntity.setObject("maxRowPerPage", maxRowPerPage);
-			paramEntity.setObject("pageNumPerPage", pageNumPerPage);
-			paramEntity.setObject("photoPath", photoPath);
-			paramEntity.setObject("defaultAuthGroup", defaultAuthGroup);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
 	public ParamEntity getActionContextMenu(ParamEntity paramEntity) throws Exception {
 		try {
 			setAuthorityGroup(paramEntity);
 			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
+		try {
+			setAuthorityGroup(paramEntity);
+
+			paramEntity.setObject("maxRowPerPage", CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data")));
+			paramEntity.setObject("pageNumPerPage", CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data")));
+			paramEntity.setObject("defaultPhotoPath", ConfigUtil.getProperty("path.image.photo")+"/"+"DefaultUser_128_Black.png");
+			paramEntity.setObject("defaultAuthGroup", "Z");
+			paramEntity.setObject("defaultUserStatus", CommonCodeManager.getCodeByConstants("USER_STATUS_NU"));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getUserDetail(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String userId = requestDataSet.getValue("userId");
+		DataSet userDataSet = new DataSet();
+
+		try {
+			userDataSet = sysUserDao.getUserInfoDataSetByUserId(userId);
+			userDataSet.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(userDataSet.getValue("INSERT_USER_ID")));
+			userDataSet.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(userDataSet.getValue("UPDATE_USER_ID")));
+			userDataSet.addColumn("ORG_NAME", DataHelper.getOrgNameById(userDataSet.getValue("ORG_ID")));
+
+			paramEntity.setAjaxResponseDataSet(userDataSet);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getBankAccounts(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String userId = requestDataSet.getValue("userId");
+		DataSet bankAccntDataSet = new DataSet();
+
+		try {
+			bankAccntDataSet = usrBankAccntDao.getDataSetByUserId(userId);
+
+			paramEntity.setAjaxResponseDataSet(bankAccntDataSet);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity exeActionContextMenu(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String mode = requestDataSet.getValue("mode");
+		String chkForDel = requestDataSet.getValue("chkForDel");
+		String userIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		SysUser sysUser = new SysUser();
+		int result = 0;
+
+		try {
+			if (CommonUtil.equals(mode, "UpdateAuthGroup")) {
+				sysUser.addUpdateColumn("auth_group_id", requestDataSet.getValue("authGroup"));
+			} else if (CommonUtil.equals(mode, "UpdateUserStatus")) {
+				sysUser.addUpdateColumn("user_status", requestDataSet.getValue("userStatus"));
+			} else if (CommonUtil.equals(mode, "UpdateActiveStatus")) {
+				sysUser.addUpdateColumn("is_active", requestDataSet.getValue("activeStatus"));
+			}
+
+			sysUser.addUpdateColumn("update_date", CommonUtil.getSysdate(), "date");
+
+			result = sysUserDao.updateByUserIds(userIds, sysUser);
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -226,73 +252,73 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
+	public ParamEntity saveBankAccnts(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
 		String userId = requestDataSet.getValue("userId");
-		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
-		String pathToSave = ConfigUtil.getProperty("path.image.photo");
-		SysUser sysUser = new SysUser();
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
+		String loggedinUserId = (String)session.getAttribute("UserId");
+		DataSet existingBankAccnt = new DataSet();
+		DataSet bankAccntFromReq = new DataSet();
+		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
+		String header[] = new String[] {"BANK_ACCNT_ID", "USER_ID", "BANK_CODE", "BSB", "ACCNT_NUMBER", "ACCNT_NAME", "BALANCE", "DESCRIPTION"};
 		int result = -1;
-		File files[], tempFile;
 
 		try {
-			sysUser = sysUserDao.getUserByUserId(userId);
+			existingBankAccnt = usrBankAccntDao.getDataSetByUserId(userId);
 
-			sysUser.setUserName(requestDataSet.getValue("userName"));
-			sysUser.setLoginId(requestDataSet.getValue("loginId"));
-			sysUser.setOrgId(requestDataSet.getValue("orgId"));
-			sysUser.setAuthGroupId(requestDataSet.getValue("authGroup"));
-			sysUser.setLanguage(requestDataSet.getValue("language"));
-			sysUser.setThemeType(requestDataSet.getValue("themeType"));
-			sysUser.setEmail(requestDataSet.getValue("email"));
-			sysUser.setMaxRowPerPage(CommonUtil.toDouble(requestDataSet.getValue("maxRowsPerPage")));
-			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));
-			sysUser.setUserStatus(requestDataSet.getValue("userStatus"));
-			sysUser.setIsActive(requestDataSet.getValue("isActive"));
-			sysUser.setUpdateUserId((String)session.getAttribute("UserId"));
-			sysUser.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-
-			if (fileDataSet.getRowCnt() > 0) {
-				String fileName = fileDataSet.getValue("NEW_NAME");
-				String fullPath = "", copyToPath = "";
-
-				fileName = userId + "_" + fileName;
-				fullPath = rootPath + pathToSave + "/" + fileName;
-				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
-
-				files = new File(rootPath + pathToSave).listFiles();
-				for (File file : files) {
-					if (CommonUtil.startsWith(file.getName(), userId+"_")) {
-						FileUtil.forceDelete(file);
-						break;
-					}
-				}
-				FileUtil.moveFile(fileDataSet, fullPath);
-
-				try {
-					tempFile = new File(appSrcRootPath+pathToSave);
-					if (tempFile != null && tempFile.isDirectory()) {
-						files = new File(appSrcRootPath+pathToSave).listFiles();
-						for (File file : files) {
-							if (CommonUtil.startsWith(file.getName(), userId+"_")) {
-								FileUtil.forceDelete(file);
-								break;
-							}
-						}
-						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
-					}
-				} catch (Exception e) {
-				}
-
-				sysUser.setPhotoPath(pathToSave + "/" + fileName);
+			bankAccntFromReq.addName(header);
+			for (int i=0; i<detailLength; i++) {
+				bankAccntFromReq.addRow();
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_ACCNT_ID", requestDataSet.getValue("bankAccntId"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "USER_ID", requestDataSet.getValue("userId"));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_CODE", requestDataSet.getValue("bankCode"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BSB", requestDataSet.getValue("bsb"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NUMBER", requestDataSet.getValue("accntNumber"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NAME", requestDataSet.getValue("accntName"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BALANCE", requestDataSet.getValue("balance"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "DESCRIPTION", requestDataSet.getValue("description"+delimiter+i));
 			}
 
-			sysUser.addUpdateColumnFromField();
+			if (existingBankAccnt.getRowCnt() <= 0) {
+				result = usrBankAccntDao.insert(bankAccntFromReq, loggedinUserId);
+			} else {
+				for (int i=0; i<existingBankAccnt.getRowCnt(); i++) {
+					String bankAccntId = existingBankAccnt.getValue(i, "BANK_ACCNT_ID");
+					int idx = bankAccntFromReq.getRowIndex("BANK_ACCNT_ID", bankAccntId);
 
-			result = sysUserDao.update(userId, sysUser);
+					if (idx < 0) {
+						existingBankAccnt.deleteRow(i);
+					} else {
+						existingBankAccnt.setValue(i, "BANK_CODE", bankAccntFromReq.getValue(idx, "BANK_CODE"));
+						existingBankAccnt.setValue(i, "BSB", bankAccntFromReq.getValue(idx, "BSB"));
+						existingBankAccnt.setValue(i, "ACCNT_NUMBER", bankAccntFromReq.getValue(idx, "ACCNT_NUMBER"));
+						existingBankAccnt.setValue(i, "ACCNT_NAME", bankAccntFromReq.getValue(idx, "ACCNT_NAME"));
+						existingBankAccnt.setValue(i, "BALANCE", bankAccntFromReq.getValue(idx, "BALANCE"));
+						existingBankAccnt.setValue(i, "DESCRIPTION", bankAccntFromReq.getValue(idx, "DESCRIPTION"));
+					}
+				}
+
+				for (int i=0; i<bankAccntFromReq.getRowCnt(); i++) {
+					String bankAccntId = bankAccntFromReq.getValue(i, "BANK_ACCNT_ID");
+
+					if (CommonUtil.isBlank(bankAccntId)) {
+						existingBankAccnt.addRow();
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "USER_ID", bankAccntFromReq.getValue(i, "USER_ID"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "BANK_CODE", bankAccntFromReq.getValue(i, "BANK_CODE"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "BSB", bankAccntFromReq.getValue(i, "BSB"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "ACCNT_NUMBER", bankAccntFromReq.getValue(i, "ACCNT_NUMBER"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "ACCNT_NAME", bankAccntFromReq.getValue(i, "ACCNT_NAME"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "BALANCE", bankAccntFromReq.getValue(i, "BALANCE"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "DESCRIPTION", bankAccntFromReq.getValue(i, "DESCRIPTION"));
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "INSERT_USER_ID", loggedinUserId);
+						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "INSERT_DATE", CommonUtil.getSysdate());
+					}
+				}
+
+				result = usrBankAccntDao.update(existingBankAccnt, loggedinUserId);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -329,38 +355,6 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 			throw new FrameworkException(paramEntity, ex);
 		}
 
-		return paramEntity;
-	}
-
-	public ParamEntity exeActionContextMenu(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String mode = requestDataSet.getValue("mode");
-		String chkForDel = requestDataSet.getValue("chkForDel");
-		String userIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
-		SysUser sysUser = new SysUser();
-		int result = 0;
-
-		try {
-			if (CommonUtil.equals(mode, "UpdateAuthGroup")) {
-				sysUser.addUpdateColumn("auth_group_id", requestDataSet.getValue("authGroup"));
-			} else if (CommonUtil.equals(mode, "UpdateUserStatus")) {
-				sysUser.addUpdateColumn("user_status", requestDataSet.getValue("userStatus"));
-			} else if (CommonUtil.equals(mode, "UpdateActiveStatus")) {
-				sysUser.addUpdateColumn("is_active", requestDataSet.getValue("activeStatus"));
-			}
-
-			sysUser.addUpdateColumn("update_date", CommonUtil.getSysdate(), "date");
-
-			result = sysUserDao.updateByUserIds(userIds, sysUser);
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
 		return paramEntity;
 	}
 

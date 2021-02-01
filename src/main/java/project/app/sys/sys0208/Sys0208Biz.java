@@ -10,13 +10,14 @@ import zebra.data.ParamEntity;
 public interface Sys0208Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getActionContextMenu(ParamEntity paramEntity) throws Exception;
-	public ParamEntity saveUserDetail(ParamEntity paramEntity) throws Exception;
-	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception;
-	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getUserDetail(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getBankAccounts(ParamEntity paramEntity) throws Exception;
+
 	public ParamEntity exeActionContextMenu(ParamEntity paramEntity) throws Exception;
+	public ParamEntity saveUserDetail(ParamEntity paramEntity) throws Exception;
+	public ParamEntity saveBankAccnts(ParamEntity paramEntity) throws Exception;
+	public ParamEntity exeDelete(ParamEntity paramEntity) throws Exception;
 	public ParamEntity exeExport(ParamEntity paramEntity) throws Exception;
 }

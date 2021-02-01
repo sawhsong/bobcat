@@ -27,9 +27,7 @@
         <!--Sys0208 - User Management-->
         <action class="project.app.sys.sys0208.Sys0208Action" method="{1}" name="0208/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208UpdatePop.jsp</result>
+            <result name="edit" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208EditPop.jsp</result>
             <result name="actionContextMenu" type="debugDispatcherResult">/project/app/sys/sys0208/Sys0208ActionContextMenuPop.jsp</result>
         </action>
         <!--Sys0402 - Menu-->
