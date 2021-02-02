@@ -51,7 +51,7 @@
 			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
-			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/>
+<%-- 			<ui:button id="btnExport" caption="button.com.export" iconClass="fa-download"/> --%>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -106,9 +106,8 @@
 			<col width="9%"/>
 			<col width="7%"/>
 			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
-			<col width="7%"/>
+			<col width="14%"/>
+			<col width="5%"/>
 			<col width="3%"/>
 		</colgroup>
 		<thead>
@@ -122,15 +121,14 @@
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.bizType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.orgCategory"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.wageType"/></th>
-				<th class="thGrid"><mc:msg key="sys0206.grid.revRangeFrom"/></th>
-				<th class="thGrid"><mc:msg key="sys0206.grid.revRangeTo"/></th>
+				<th class="thGrid">Email</th>
 				<th class="thGrid sortable:date"><mc:msg key="sys0206.grid.regDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="13"><mc:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="12"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

@@ -5,8 +5,6 @@
  *************************************************************************************************/
 package project.app.sys.sys0206;
 
-import java.io.File;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,18 +56,29 @@ public class Sys0206BizImpl extends BaseBiz implements Sys0206Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
+		String defaultLogoPath = ConfigUtil.getProperty("path.image.orgLogo")+"/"+"DefaultLogo.png";
+
+		try {
+			paramEntity.setObject("defaultLogoPath", defaultLogoPath);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getOrgDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String orgId = requestDataSet.getValue("orgId");
-		SysOrg sysOrg = new SysOrg();
+		DataSet orgDataSet = new DataSet();
 
 		try {
-			sysOrg = sysOrgDao.getOrgByOrgId(orgId);
+			orgDataSet = sysOrgDao.getDataSetByOrgId(orgId);
+			orgDataSet.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(orgDataSet.getValue("INSERT_USER_ID")));
+			orgDataSet.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(orgDataSet.getValue("UPDATE_USER_ID")));
 
-			sysOrg.setInsertUserName(DataHelper.getUserNameById(sysOrg.getInsertUserId()));
-			sysOrg.setUpdateUserName(DataHelper.getUserNameById(sysOrg.getUpdateUserId()));
-
-			paramEntity.setObject("sysOrg", sysOrg);
+			paramEntity.setAjaxResponseDataSet(orgDataSet);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -77,132 +86,46 @@ public class Sys0206BizImpl extends BaseBiz implements Sys0206Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getInsert(ParamEntity paramEntity) throws Exception {
-		String logoPath = ConfigUtil.getProperty("path.image.orgLogo")+"/"+"DefaultLogo.png";
-
-		try {
-			paramEntity.setObject("logoPath", logoPath);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getUpdate(ParamEntity paramEntity) throws Exception {
-		try {
-			paramEntity = getDetail(paramEntity);
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity exeInsert(ParamEntity paramEntity) throws Exception {
+	public ParamEntity saveOrgDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
-		SysOrg sysOrg = new SysOrg();
-		String uid = CommonUtil.uid();
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String orgId = "", saveType = "";
 		String defaultFileName = "DefaultLogo.png";
-		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
-		String pathToSave = ConfigUtil.getProperty("path.image.orgLogo");
-		int result = -1;
-		File files[], tempFile;
-
-		try {
-			sysOrg.setOrgId(uid);
-			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
-			sysOrg.setLegalName(CommonUtil.replace(requestDataSet.getValue("legalName"), "||", "&"));
-			sysOrg.setTradingName(requestDataSet.getValue("tradingName"));
-			sysOrg.setEmail(requestDataSet.getValue("email"));
-			sysOrg.setPostalAddress(requestDataSet.getValue("postalAddress"));
-			sysOrg.setRegisteredDate(CommonUtil.toDate(requestDataSet.getValue("registeredDate"), dateFormat));
-			sysOrg.setIsActive(requestDataSet.getValue("isActive"));
-			sysOrg.setOrgCategory(requestDataSet.getValue("orgCategory"));
-			sysOrg.setEntityType(requestDataSet.getValue("entityType"));
-			sysOrg.setBusinessType(requestDataSet.getValue("businessType"));
-			sysOrg.setBaseType(requestDataSet.getValue("baseType"));
-			sysOrg.setWageType(requestDataSet.getValue("wageType"));
-			sysOrg.setRevenueRangeFrom(CommonUtil.toDouble(requestDataSet.getValue("rRangeFrom")));
-			sysOrg.setRevenueRangeTo(CommonUtil.toDouble(requestDataSet.getValue("rRangeTo")));
-			sysOrg.setInsertUserId(loggedInUserId);
-			sysOrg.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
-
-			if (fileDataSet.getRowCnt() > 0) {
-				String fileName = fileDataSet.getValue("NEW_NAME");
-				String fullPath = "", copyToPath = "";
-
-				fileName = uid+"_"+fileName;
-				fullPath = rootPath + pathToSave + "/" + fileName;
-				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
-
-				files = new File(rootPath+pathToSave).listFiles();
-				for (File file : files) {
-					if (CommonUtil.startsWith(file.getName(), uid+"_")) {
-						FileUtil.forceDelete(file);
-						break;
-					}
-				}
-				FileUtil.moveFile(fileDataSet, fullPath);
-
-				try {
-					tempFile = new File(appSrcRootPath+pathToSave);
-					if (tempFile != null && tempFile.isDirectory()) {
-						files = new File(appSrcRootPath+pathToSave).listFiles();
-						for (File file : files) {
-							if (CommonUtil.startsWith(file.getName(), uid+"_")) {
-								FileUtil.forceDelete(file);
-								break;
-							}
-						}
-						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
-					}
-				} catch (Exception e) {
-				}
-
-				sysOrg.setLogoPath(pathToSave + "/" + fileName);
-			} else {
-				sysOrg.setLogoPath(pathToSave + "/" + defaultFileName);
-			}
-
-			result = sysOrgDao.insert(sysOrg);
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
-		HttpSession session = paramEntity.getSession();
-		String loggedInUserId = (String)session.getAttribute("UserId");
-		String orgId = requestDataSet.getValue("orgId");
-		SysOrg sysOrg = new SysOrg();
+		String defaultLogoPath = ConfigUtil.getProperty("path.image.orgLogo");
+		String uploadLogoPath = ConfigUtil.getProperty("path.dir.uploadedOrgLogo");
+		String webRootPath = (String)MemoryBean.get("applicationRealPath");
+		String pathToCopy = "";
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
-		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
-		String pathToSave = ConfigUtil.getProperty("path.image.orgLogo");
-		int result = 0;
-		File files[], tempFile;
+		SysOrg sysOrg = new SysOrg();
+		DataSet orgDataSet;
+		int result = -1;
 
 		try {
-			sysOrg = sysOrgDao.getOrgByOrgId(orgId);
+			orgId = requestDataSet.getValue("orgId");
 
-			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
+			if (CommonUtil.isBlank(orgId)) {
+				saveType = "Insert";
+				orgId = CommonUtil.uid();
+			}
+
+			if (CommonUtil.equals(saveType, "Insert")) {
+				sysOrg.setInsertUserId((String)session.getAttribute("UserId"));
+				sysOrg.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+
+				if (fileDataSet.getRowCnt() <= 0) {
+					sysOrg.setLogoPath(defaultLogoPath + "/" + defaultFileName);
+				}
+			} else {
+				sysOrg.setUpdateUserId((String)session.getAttribute("UserId"));
+				sysOrg.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			}
+
+
+			sysOrg.setOrgId(orgId);
 			sysOrg.setLegalName(CommonUtil.replace(requestDataSet.getValue("legalName"), "||", "&"));
-			sysOrg.setTradingName(requestDataSet.getValue("tradingName"));
+			sysOrg.setTradingName(CommonUtil.replace(requestDataSet.getValue("tradingName"), "||", "&"));
+			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
 			sysOrg.setEmail(requestDataSet.getValue("email"));
 			sysOrg.setPostalAddress(requestDataSet.getValue("postalAddress"));
 			sysOrg.setRegisteredDate(CommonUtil.toDate(requestDataSet.getValue("registeredDate"), dateFormat));
@@ -214,51 +137,38 @@ public class Sys0206BizImpl extends BaseBiz implements Sys0206Biz {
 			sysOrg.setWageType(requestDataSet.getValue("wageType"));
 			sysOrg.setRevenueRangeFrom(CommonUtil.toDouble(requestDataSet.getValue("rRangeFrom")));
 			sysOrg.setRevenueRangeTo(CommonUtil.toDouble(requestDataSet.getValue("rRangeTo")));
-			sysOrg.setUpdateUserId(loggedInUserId);
-			sysOrg.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
 			if (fileDataSet.getRowCnt() > 0) {
 				String fileName = fileDataSet.getValue("NEW_NAME");
-				String fullPath = "", copyToPath = "";
+				String orgFileName = orgId + "_" + fileName;
 
-				fileName = orgId+"_"+fileName;
-				fullPath = rootPath + pathToSave + "/" + fileName;
-				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+				// Copy the file to web source
+				pathToCopy = webRootPath + defaultLogoPath + "/" + orgFileName;
+				FileUtil.copyFile(fileDataSet, pathToCopy);
 
-				files = new File(rootPath + pathToSave).listFiles();
-				for (File file : files) {
-					if (CommonUtil.startsWith(file.getName(), orgId+"_")) {
-						FileUtil.forceDelete(file);
-						break;
-					}
-				}
-				FileUtil.moveFile(fileDataSet, fullPath);
+				// Move the file to repository
+				pathToCopy = uploadLogoPath + "/" + orgFileName;
+				FileUtil.moveFile(fileDataSet, pathToCopy);
 
-				try {
-					tempFile = new File(appSrcRootPath+pathToSave);
-					if (tempFile != null && tempFile.isDirectory()) {
-						files = new File(appSrcRootPath+pathToSave).listFiles();
-						for (File file : files) {
-							if (CommonUtil.startsWith(file.getName(), orgId+"_")) {
-								FileUtil.forceDelete(file);
-								break;
-							}
-						}
-						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
-					}
-				} catch (Exception e) {
-				}
-
-				sysOrg.setLogoPath(pathToSave + "/" + fileName);
+				sysOrg.setLogoPath(defaultLogoPath + "/" + orgFileName);
 			}
 
-			sysOrg.addUpdateColumnFromField();
+			if (CommonUtil.equals(saveType, "Insert")) {
+				result = sysOrgDao.insert(sysOrg);
+			} else {
+				sysOrg.addUpdateColumnFromField();
+				result = sysOrgDao.update(orgId, sysOrg);
+			}
 
-			result = sysOrgDao.update(orgId, sysOrg);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			orgDataSet = sysOrgDao.getDataSetByOrgId(orgId);
+			orgDataSet.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(orgDataSet.getValue("INSERT_USER_ID")));
+			orgDataSet.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(orgDataSet.getValue("UPDATE_USER_ID")));
+
+			paramEntity.setAjaxResponseDataSet(orgDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {

@@ -14,7 +14,7 @@ import zebra.util.ConfigUtil;
 
 public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 	public int insert(Dto dto) throws Exception {
-		return insertWithDto(dto);
+		return insertWithSQLQuery(dto);
 	}
 
 	public int update(String orgId, Dto dto) throws Exception {
@@ -88,5 +88,11 @@ public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("org_id = '"+orgId+"'");
 		return (SysOrg)selectAllToDto(queryAdvisor, new SysOrg());
+	}
+
+	public DataSet getDataSetByOrgId(String orgId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("org_id = '"+orgId+"'");
+		return selectAllAsDataSet(queryAdvisor, new SysOrg());
 	}
 }

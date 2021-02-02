@@ -9,9 +9,10 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	SysOrg sysOrg = (SysOrg)paramEntity.getObject("sysOrg");
+	String mode = requestDataSet.getValue("mode");
+	String orgId = requestDataSet.getValue("orgId");
+	String defaultLogoPath = (String)paramEntity.getObject("defaultLogoPath");
 	String dateFormat = ConfigUtil.getProperty("format.date.java");
-	String intFormat = ConfigUtil.getProperty("format.default.integer");
 %>
 <%/************************************************************************************************
 * HTML
@@ -30,7 +31,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var orgId = "<%=sysOrg.getOrgId()%>";
+var orgId = "<%=orgId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -49,8 +50,7 @@ var orgId = "<%=sysOrg.getOrgId()%>";
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-save"/>
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -69,8 +69,8 @@ var orgId = "<%=sysOrg.getOrgId()%>";
 <div id="divDataArea" class="areaContainerPopup">
 	<table class="tblDefault">
 		<tr>
-			<td class="tdDefault Lt" style="width:250px;height:80px;vertical-align:bottom">
-				<img id="img<%=sysOrg.getOrgId()%>" src="<%=sysOrg.getLogoPath()%>" class="imgDis" title="<%=sysOrg.getLegalName()%>"/>
+			<td class="tdDefault Lt" style="vertical-align:bottom;">
+				<img id="imgOrgLogo" src="<%=defaultLogoPath%>" class="imgDis" style="width:250px;height:80px;"/>
 			</td>
 		</tr>
 	</table>
@@ -83,50 +83,63 @@ var orgId = "<%=sysOrg.getOrgId()%>";
 			<col width="36%"/>
 		</colgroup>
 		<tr>
+			<th class="thEdit rt"><mc:msg key="sys0206.header.changeLogo"/></th>
+			<td class="tdEdit" colspan="3"><ui:file name="logoPath" style="width:540px;" checkName="sys0206.header.changeLogo"/></td>
+		</tr>
+		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.orgId"/></th>
-			<td class="tdEdit"><%=sysOrg.getOrgId()%></td>
+			<td class="tdEdit"><ui:text name="orgId" status="display"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.abn"/></th>
-			<td class="tdEdit"><%=CommonUtil.getFormatString(sysOrg.getAbn(), "?? ??? ???")%></td>
+			<td class="tdEdit"><ui:text name="abn" checkName="sys0206.header.abn"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.legalName"/></th>
-			<td class="tdEdit"><%=sysOrg.getLegalName()%></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.legalName"/></th>
+			<td class="tdEdit"><ui:text name="legalName" checkName="sys0206.header.legalName" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.tradingName"/></th>
-			<td class="tdEdit"><%=sysOrg.getTradingName()%></td>
+			<td class="tdEdit"><ui:text name="tradingName" checkName="sys0206.header.tradingName"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.registeredDate"/></th>
-			<td class="tdEdit"><%=CommonUtil.toString(sysOrg.getRegisteredDate(), dateFormat)%></td>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.isActive"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("IS_ACTIVE", sysOrg.getIsActive())%></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.orgCategory"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("ORG_CATEGORY", sysOrg.getOrgCategory())%></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.email"/></th>
-			<td class="tdEdit"><%=sysOrg.getEmail()%></td>
+			<td class="tdEdit"><ui:text name="email" checkName="sys0206.header.email" option="email"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.businessType"/></th>
+			<td class="tdEdit"><ui:ccselect name="businessType" codeType="BUSINESS_TYPE" checkName="sys0206.header.businessType" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.entityType"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("ENTITY_TYPE", sysOrg.getEntityType())%></td>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.businessType"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("BUSINESS_TYPE", sysOrg.getBusinessType())%></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.entityType"/></th>
+			<td class="tdEdit"><ui:ccselect name="entityType" codeType="ENTITY_TYPE" checkName="sys0206.header.entityType" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.orgCategory"/></th>
+			<td class="tdEdit"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" checkName="sys0206.header.orgCategory" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.baseType"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("BASE_TYPE", sysOrg.getBaseType())%></td>
+			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BASE_TYPE" checkName="sys0206.header.baseType" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.wageType"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("WAGE_TYPE", sysOrg.getWageType())%></td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.rRangeFrom"/></th>
-			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysOrg.getRevenueRangeFrom(), intFormat)%></td>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.rRangeTo"/></th>
-			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysOrg.getRevenueRangeTo(), intFormat)%></td>
+			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" checkName="sys0206.header.wageType" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.postalAddress"/></th>
-			<td class="tdEdit" colspan="3"><%=sysOrg.getPostalAddress()%></td>
+			<td class="tdEdit" colspan="3"><ui:text name="postalAddress" checkName="sys0206.header.postalAddress"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sys0206.header.registeredDate"/></th>
+			<td class="tdEdit">
+				<ui:text name="registeredDate" className="Ct hor" style="width:100px" value="<%=CommonUtil.getSysdate(dateFormat)%>" checkName="sys0206.header.registeredDate" option="date"/>
+				<ui:icon id="icnRegisteredDate" className="fa-calendar hor" title="sys0206.header.registeredDate"/>
+			</td>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.isActive"/></th>
+			<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt"><mc:msg key="sys0206.header.rRangeFrom"/></th>
+			<td class="tdEdit"><ui:text name="rRangeFrom" className="rt numeric" checkName="sys0206.header.rRangeFrom" option="numeric"/></td>
+			<th class="thEdit Rt"><mc:msg key="sys0206.header.rRangeTo"/></th>
+			<td class="tdEdit"><ui:text name="rRangeTo" className="rt numeric" checkName="sys0206.header.rRangeTo" option="numeric"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Last Updated By</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedBy" status="display"/></td>
+			<th class="thEdit rt">Last Updated Date</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedDate" status="display"/></td>
 		</tr>
 	</table>
 </div>

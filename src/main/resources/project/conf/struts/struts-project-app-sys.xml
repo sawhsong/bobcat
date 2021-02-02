@@ -20,9 +20,7 @@
         <!--Sys0206 - Organisation Management-->
         <action class="project.app.sys.sys0206.Sys0206Action" method="{1}" name="0206/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206List.jsp</result>
-            <result name="detail" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206DetailPop.jsp</result>
-            <result name="insert" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206InsertPop.jsp</result>
-            <result name="update" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206UpdatePop.jsp</result>
+            <result name="edit" type="debugDispatcherResult">/project/app/sys/sys0206/Sys0206EditPop.jsp</result>
         </action>
         <!--Sys0208 - User Management-->
         <action class="project.app.sys.sys0208.Sys0208Action" method="{1}" name="0208/*">

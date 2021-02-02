@@ -40,19 +40,6 @@ $(function() {
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 					setUserDetailInfo(ds);
-//					commonJs.confirm({
-//						contents:"Would you like to create bank accounts for the user?",
-//						buttons:[{
-//							caption:com.caption.yes,
-//							callback:function() {
-//								setUserDetailInfo(ds);
-//							}
-//						}, {
-//							caption:com.caption.no,
-//							callback:function() {
-//							}
-//						}]
-//					});
 				},
 				onCancel:function() {
 					disableUserDetailFields();

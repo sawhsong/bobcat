@@ -27,55 +27,27 @@ public class Sys0206Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getDetail() throws Exception {
-		biz.getDetail(paramEntity);
-		return "detail";
+	public String getEdit() throws Exception {
+		biz.getEdit(paramEntity);
+		return "edit";
 	}
 
-	public String getInsert() throws Exception {
-		biz.getInsert(paramEntity);
-		return "insert";
-	}
-
-	public String getUpdate() throws Exception {
-		biz.getUpdate(paramEntity);
-		return "update";
-	}
-
-	public String exeInsert() throws Exception {
+	public String getOrgDetail() throws Exception {
 		try {
-			biz.exeInsert(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("script", "parent.popup.close();parent.doSearch();");
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
+			biz.getOrgDetail(paramEntity);
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
-	public String exeUpdate() throws Exception {
+	public String saveOrgDetail() throws Exception {
 		try {
-			biz.exeUpdate(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("script", "parent.popup.close();parent.doSearch();");
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
+			biz.saveOrgDetail(paramEntity);
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String exeDelete() throws Exception {

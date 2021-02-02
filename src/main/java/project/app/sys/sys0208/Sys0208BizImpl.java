@@ -236,12 +236,10 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
-			sysUser = sysUserDao.getUserByUserId(userId);
-			sysUser.setInsertUserName(DataHelper.getUserNameById(sysUser.getInsertUserId()));
-			sysUser.setUpdateUserName(DataHelper.getUserNameById(sysUser.getUpdateUserId()));
-
-			userDataSet = sysUser.getDataSet();
-			userDataSet.addColumn("ORG_NAME", DataHelper.getOrgNameById(sysUser.getOrgId()));
+			userDataSet = sysUserDao.getUserInfoDataSetByUserId(userId);
+			userDataSet.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(userDataSet.getValue("INSERT_USER_ID")));
+			userDataSet.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(userDataSet.getValue("UPDATE_USER_ID")));
+			userDataSet.addColumn("ORG_NAME", DataHelper.getOrgNameById(userDataSet.getValue("ORG_ID")));
 
 			paramEntity.setAjaxResponseDataSet(userDataSet);
 			paramEntity.setSuccess(true);
