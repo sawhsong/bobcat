@@ -288,7 +288,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		commonJs.setExportButtonContextMenu($("#btnExport"));
+//		commonJs.setExportButtonContextMenu($("#btnExport"));
 		doSearch();
 	});
 });

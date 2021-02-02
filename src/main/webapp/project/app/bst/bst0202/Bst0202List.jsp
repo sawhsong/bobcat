@@ -55,7 +55,7 @@
 <div id="divAdminToolArea"><%@ include file="/project/common/include/bodyAdminToolArea.jsp"%></div>
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<table class="tblSearch">
-		<caption>Search Bank Statement History Uploaded</caption>
+		<caption>Search Bank Statement Upload History</caption>
 		<colgroup>
 			<col width="1%"/>
 			<col width="18%"/>

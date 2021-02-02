@@ -214,8 +214,8 @@ $(function() {
 			}
 		});
 
-		ctxMenu.commonAction[0].fun = function() {openPopup({mode:"Update", userId:userId});};
-		ctxMenu.commonAction[1].fun = function() {doDelete();};
+		ctxMenu.commonSimpleAction[0].fun = function() {openPopup({mode:"Update", userId:userId});};
+		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.commonSimpleAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,

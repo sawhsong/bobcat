@@ -376,8 +376,7 @@ $(function() {
 	$(window).load(function() {
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
-		commonJs.setExportButtonContextMenu($("#btnExport"));
-		$("#searchWord").focus();
+//		commonJs.setExportButtonContextMenu($("#btnExport"));
 		doSearch();
 	});
 });
