@@ -90,28 +90,22 @@ public class LoginAction extends BaseAction {
 		return "userProfile";
 	}
 
-	public String getUpdateUserProfile() throws Exception {
-		biz.getUserProfile(paramEntity);
-		return "updateUserProfile";
+	public String getUserDetail() throws Exception {
+		try {
+			biz.getUserDetail(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
-	public String exeUpdate() throws Exception {
+	public String saveUserDetail() throws Exception {
 		try {
-			biz.exeUpdate(paramEntity);
-
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("action", "/login/logout.do");
-				paramEntity.setObject("message", paramEntity.getMessage()+"<br/>"+getMessage("login.message.restart", paramEntity));
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
+			biz.saveUserDetail(paramEntity);
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
 		}
-
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String controlAdminTool() throws Exception {

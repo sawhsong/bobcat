@@ -10,7 +10,6 @@
 			<result name="resetPassword" type="debugDispatcherResult">/project/app/login/resetPasswordPop.jsp</result>
 			<result name="requestRegister" type="debugDispatcherResult">/project/app/login/requestRegisterPop.jsp</result>
 			<result name="userProfile" type="debugDispatcherResult">/project/app/login/userProfilePop.jsp</result>
-			<result name="updateUserProfile" type="debugDispatcherResult">/project/app/login/updateUserProfilePop.jsp</result>
 		</action>
 	</package>
 </struts>

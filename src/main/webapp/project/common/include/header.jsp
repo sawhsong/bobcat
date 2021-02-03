@@ -89,13 +89,11 @@ $(function() {
 		popupUserProfile = commonJs.openPopup({
 			popupId:"UserProfile",
 			url:"/login/getUserProfile.do",
-			data:{
-				userId:userId
-			},
+			data:{userId:userId},
 			header:"User Profile Detail",
 			blind:true,
-			width:720,
-			height:340
+			width:800,
+			height:310
 		});
 	};
 

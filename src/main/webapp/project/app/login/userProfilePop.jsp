@@ -9,7 +9,8 @@
 <%
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
-	SysUser sysUser = (SysUser)pe.getObject("sysUser");
+	String defaultPhotoPath = (String)pe.getObject("defaultPhotoPath");
+	String userId = dsRequest.getValue("userId");
 %>
 <%/************************************************************************************************
 * HTML
@@ -28,7 +29,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var userId = "<%=sysUser.getUserId()%>";
+var userId = "<%=userId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -47,7 +48,7 @@ var userId = "<%=sysUser.getUserId()%>";
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
@@ -65,55 +66,57 @@ var userId = "<%=sysUser.getUserId()%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<div class="panel panel-default" style="width:120px;height:110px;">
-		<div class="panel-body">
-			<table class="tblDefault">
-				<tr>
-					<td class="tdDefaultCt">
-						<img id="img<%=sysUser.getUserId()%>" src="<%=sysUser.getPhotoPath()%>" class="imgDis" style="width:90px;height:90px;" title="<%=sysUser.getUserName()%>"/>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
 	<table class="tblEdit">
 		<colgroup>
-			<col width="22%"/>
-			<col width="28%"/>
-			<col width="22%"/>
-			<col width="28%"/>
+			<col width="*"/>
+			<col width="16%"/>
+			<col width="25%"/>
+			<col width="16%"/>
+			<col width="25%"/>
 		</colgroup>
 		<tr>
-			<th class="thEdit"><mc:msg key="login.header.userId"/></th>
-			<td class="tdEdit"><%=sysUser.getUserId()%></td>
-			<th class="thEdit"><mc:msg key="login.header.loginId"/></th>
-			<td class="tdEdit"><%=sysUser.getLoginId()%></td>
+			<td class="tdEdit Ct" rowspan="3">
+				<img id="imgUserPhoto" src="<%=defaultPhotoPath%>" class="imgDis" style="width:100%;height:110px;"/>
+			</td>
+			<th class="thEdit rt">Change Photo</th>
+			<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:400px;" checkName="Photo"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="login.header.userName"/></th>
-			<td class="tdEdit"><%=sysUser.getUserName()%></td>
-			<th class="thEdit"><mc:msg key="login.header.password"/></th>
-			<td class="tdEdit"><%=sysUser.getLoginPassword()%></td>
+			<th class="thEdit rt">User ID</th>
+			<td class="tdEdit"><ui:text name="userId" status="display"/></td>
+			<th class="thEdit rt mandatory">User Name</th>
+			<td class="tdEdit"><ui:text name="userName" checkName="User Name" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="login.header.language"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("LANGUAGE_TYPE", sysUser.getLanguage())%></td>
-			<th class="thEdit"><mc:msg key="login.header.themeType"/></th>
-			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("USER_THEME_TYPE", sysUser.getThemeType())%></td>
+			<th class="thEdit rt mandatory">Login ID</th>
+			<td class="tdEdit"><ui:text name="loginId" checkName="Login ID" options="mandatory"/></td>
+			<th class="thEdit rt mandatory">Password</th>
+			<td class="tdEdit"><ui:password name="password" checkName="Password" options="mandatory"/></td>
+		</tr>
+	</table>
+	<div class="verGap6"></div>
+	<table class="tblEdit">
+		<colgroup>
+			<col width="20%"/>
+			<col width="30%"/>
+			<col width="20%"/>
+			<col width="30%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit rt mandatory">Organisation</th>
+			<td class="tdEdit">
+				<ui:hidden name="orgId" checkName="Organisation"/>
+				<ui:text name="orgName" className="hor" style="width:250px" checkName="Organisation" options="mandatory" status="disabled"/>
+			</td>
+			<th class="thEdit rt mandatory">Email</th>
+			<td class="tdEdit"><ui:text name="email" checkName="Email" options="mandatory" option="email"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit"><mc:msg key="login.header.maxRowsPerPage"/></th>
-			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getMaxRowPerPage(), "#,###")%></td>
-			<th class="thEdit"><mc:msg key="login.header.pageNumsPerPage"/></th>
-			<td class="tdEdit"><%=CommonUtil.toString(sysUser.getPageNumPerPage(), "#,###")%></td>
-		</tr>
-		<tr>
-			<th class="thEdit">Authentication Key</th>
-			<td class="tdEdit" colspan="3"><%=sysUser.getAuthenticationSecretKey()%></td>
-		</tr>
-		<tr>
-			<th class="thEdit"><mc:msg key="login.header.email"/></th>
-			<td class="tdEdit" colspan="3"><%=sysUser.getEmail()%></td>
+			<th class="thEdit rt">Authentication Key</th>
+			<td class="tdEdit" colspan="3">
+				<ui:text name="authenticationSecretKey" value="" checkName="Authentication Key" className="hor" status="disabled" style="width:60%;"/>
+				<ui:button id="btnGetAuthenticationSecretKey" caption="Generate Key" iconClass="fa-key"/>
+			</td>
 		</tr>
 	</table>
 </div>

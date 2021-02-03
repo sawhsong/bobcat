@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconPerci.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/JspInsertPage.src.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -31,47 +31,22 @@ $(function() {
 	/*!
 	 * event
 	 */
-	$("#btnSave").click(function(event) {
-		if (commonJs.doValidate("fmDefault")) {
-			commonJs.doSaveWithFileForPage({
-				action:"/#MENU_URL#/exeInsert.do",
-				data:{articleId:articleId}
-			});
-		}
-	});
+	$(document).keydown(function(event) {
+		var code = event.keyCode || event.which, element = event.target;
 
-	$("#btnBack").click(function(event) {
-		history.go(-1);
-	});
+		if (code == 13) {}
 
-	$("#btnAddFile").click(function(event) {
-		commonJs.addFileSelectObject({
-			appendToId:"divAttachedFile",
-			rowBreak:false
-		});
-	});
-
-	$(document).keypress(function(event) {
-		if (event.which == 13) {
-			var element = event.target;
-		}
+		if (code == 9) {}
 	});
 
 	/*!
 	 * process
 	 */
-	setEditor = function() {
-		$("#articleContents").ckeditor({
-			height:450,
-			toolbar:com.constants.toolbarDefault
-		});
-	};
 
 	/*!
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		setEditor();
 	});
 });
 </script>
@@ -94,10 +69,6 @@ $(function() {
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
-		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
-			<ui:button id="btnBack" caption="button.com.back" iconClass="fa-arrow-left"/>
-		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
@@ -112,48 +83,6 @@ $(function() {
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<table class="tblEdit">
-		<colgroup>
-			<col width="12%"/>
-			<col width="37%"/>
-			<col width="12%"/>
-			<col width="37%"/>
-		</colgroup>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerName"/></th>
-			<td class="tdEdit">
-				<ui:text name="writerName" value="<%=sysUser.getUserName()%>" checkName="#THIS_MENU_ID#.header.writerName" options="mandatory"/>
-			</td>
-			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.writerEmail"/></th>
-			<td class="tdEdit">
-				<ui:text name="writerEmail" value="<%=sysUser.getEmail()%>" checkName="#THIS_MENU_ID#.header.writerEmail" option="email" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="#THIS_MENU_ID#.header.articleSubject"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:text name="articleSubject" checkName="#THIS_MENU_ID#.header.articleSubject" options="mandatory"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt"><mc:msg key="#THIS_MENU_ID#.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents"/>
-			</td>
-		</tr>
-		<tr>
-			<th class="thEdit Rt">
-				<mc:msg key="#THIS_MENU_ID#.header.attachedFile"/><br/>
-				<div id="divButtonAreaRight">
-					<ui:button id="btnAddFile" caption="button.com.add" iconClass="fa-plus"/>
-				</div>
-			</th>
-			<td class="tdEdit" colspan="3">
-				<div id="divAttachedFile" style="width:100%;height:100px;overflow-y:auto;">
-				</div>
-			</td>
-		</tr>
-	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

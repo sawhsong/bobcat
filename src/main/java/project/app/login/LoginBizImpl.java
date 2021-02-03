@@ -1,6 +1,5 @@
 package project.app.login;
 
-import java.io.File;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import de.taimos.totp.TOTP;
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
@@ -196,20 +196,8 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	}
 
 	public ParamEntity getUserProfile(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		SysUser sysUser = new SysUser();
-		String userId = requestDataSet.getValue("userId");
-		String maxRowPerPage[], pageNumPerPage[];
-
 		try {
-			sysUser = sysUserDao.getUserByUserId(userId);
-
-			maxRowPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.maxRowsPerPage"), ConfigUtil.getProperty("delimiter.data"));
-			pageNumPerPage = CommonUtil.split(ConfigUtil.getProperty("view.data.pageNumsPerPage"), ConfigUtil.getProperty("delimiter.data"));
-
-			paramEntity.setObject("sysUser", sysUser);
-			paramEntity.setObject("maxRowPerPage", maxRowPerPage);
-			paramEntity.setObject("pageNumPerPage", pageNumPerPage);
+			paramEntity.setObject("defaultPhotoPath", ConfigUtil.getProperty("path.image.photo")+"/"+"DefaultUser_128_Black.png");
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -217,73 +205,84 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 		return paramEntity;
 	}
 
-	public ParamEntity exeUpdate(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getUserDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		DataSet dsFile = paramEntity.getRequestFileDataSet();
 		String userId = requestDataSet.getValue("userId");
-		String rootPath = (String)MemoryBean.get("applicationRealPath");
-		String appSrcRootPath = (String)MemoryBean.get("applicationSrcPathWeb");
-		String pathToSave = ConfigUtil.getProperty("path.image.photo");
-		SysUser sysUser = new SysUser();
-		HttpSession session = paramEntity.getSession();
-		int result = -1;
-		File files[], tempFile;
+		DataSet userDataSet = new DataSet();
 
 		try {
+			userDataSet = sysUserDao.getUserInfoDataSetByUserId(userId);
+			userDataSet.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(userDataSet.getValue("INSERT_USER_ID")));
+			userDataSet.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(userDataSet.getValue("UPDATE_USER_ID")));
+			userDataSet.addColumn("ORG_NAME", DataHelper.getOrgNameById(userDataSet.getValue("ORG_ID")));
+
+			paramEntity.setAjaxResponseDataSet(userDataSet);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity saveUserDetail(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
+		HttpSession session = paramEntity.getSession();
+		String userId = "", isLoginIdPasswordChanged = "";
+		String defaultPhotoPath = ConfigUtil.getProperty("path.image.photo");
+		String uploadPhotoPath = ConfigUtil.getProperty("path.dir.uploadedPhoto");
+		String webRootPath = (String)MemoryBean.get("applicationRealPath");
+		String pathToCopy = "";
+		SysUser sysUser = new SysUser(), sysUserToCompare = new SysUser();
+		DataSet userDataSet;
+		int result = -1;
+
+		try {
+			userId = requestDataSet.getValue("userId");
+
 			sysUser = sysUserDao.getUserByUserId(userId);
+			sysUserToCompare = sysUserDao.getUserByUserId(userId);
 
 			sysUser.setUserName(requestDataSet.getValue("userName"));
 			sysUser.setLoginId(requestDataSet.getValue("loginId"));
-			sysUser.setLoginPassword(requestDataSet.getValue("loginPassword"));
-			sysUser.setLanguage(requestDataSet.getValue("language"));
-			sysUser.setThemeType(requestDataSet.getValue("themeType"));
-			sysUser.setMaxRowPerPage(CommonUtil.toDouble(requestDataSet.getValue("maxRowsPerPage")));
-			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));
+			sysUser.setLoginPassword(requestDataSet.getValue("password"));
+			sysUser.setOrgId(requestDataSet.getValue("orgId"));
 			sysUser.setEmail(requestDataSet.getValue("email"));
 			sysUser.setAuthenticationSecretKey(requestDataSet.getValue("authenticationSecretKey"));
 			sysUser.setUpdateUserId((String)session.getAttribute("UserId"));
 			sysUser.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-			if (dsFile.getRowCnt() > 0) {
-				String fileName = dsFile.getValue("NEW_NAME"), fullPath = "", copyToPath = "";
+			if (fileDataSet.getRowCnt() > 0) {
+				String fileName = fileDataSet.getValue("NEW_NAME");
+				String userFileName = userId + "_" + fileName;
 
-				fileName = userId+"_"+fileName;
-				fullPath = rootPath+pathToSave+"/"+fileName;
-				copyToPath = appSrcRootPath+pathToSave+"/"+fileName;
+				// Copy the file to web source
+				pathToCopy = webRootPath + defaultPhotoPath + "/" + userFileName;
+				FileUtil.copyFile(fileDataSet, pathToCopy);
 
-				files = new File(rootPath+pathToSave).listFiles();
-				for (File file : files) {
-					if (CommonUtil.startsWith(file.getName(), userId+"_")) {
-						FileUtil.forceDelete(file);
-						break;
-					}
-				}
-				FileUtil.moveFile(dsFile, fullPath);
+				// Move the file to repository
+				pathToCopy = uploadPhotoPath + "/" + userFileName;
+				FileUtil.moveFile(fileDataSet, pathToCopy);
 
-				try {
-					tempFile = new File(appSrcRootPath+pathToSave);
-					if (tempFile != null && tempFile.isDirectory()) {
-						files = new File(appSrcRootPath+pathToSave).listFiles();
-						for (File file : files) {
-							if (CommonUtil.startsWith(file.getName(), userId+"_")) {
-								FileUtil.forceDelete(file);
-								break;
-							}
-						}
-						FileUtil.copyFile(new File(fullPath), new File(copyToPath));
-					}
-				} catch (Exception e) {
-				}
+				sysUser.setPhotoPath(defaultPhotoPath + "/" + userFileName);
+			}
 
-				sysUser.setPhotoPath(pathToSave+"/"+fileName);
+			if (!CommonUtil.equals(sysUserToCompare.getLoginId(), sysUser.getLoginId()) || !CommonUtil.equals(sysUserToCompare.getLoginPassword(), sysUser.getLoginPassword())) {
+				isLoginIdPasswordChanged = "Y";
 			}
 
 			sysUser.addUpdateColumnFromField();
 			result = sysUserDao.update(userId, sysUser);
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			userDataSet = sysUserDao.getUserInfoDataSetByUserId(userId);
+			userDataSet.addColumn("ORG_NAME", DataHelper.getOrgNameById(userDataSet.getValue("ORG_ID")));
+			userDataSet.addColumn("isLoginIdPasswordChanged", isLoginIdPasswordChanged);
+
+			paramEntity.setAjaxResponseDataSet(userDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
