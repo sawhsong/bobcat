@@ -1768,7 +1768,7 @@ var nony = {
 	_doPageLayout : function(options) {
 		if ($.nony.isEmpty(options)) {return;}
 
-		if ($.nony.isIn($("#hdnHeaderMenuId").val(), ["SYS", "M100", "M200", "M300"])) {
+		if ($.nony.isIn($("#hdnHeaderMenuId").val(), ["SYS", "BAU", "M100", "M200", "M300"])) {
 			options[1].togglerLength_open = 40;
 			options[1].togglerLength_closed = 40;
 			options[1].spacing_open = 0,

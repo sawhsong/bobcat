@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-    <!--Mba0202 - My Bank Accounts-->
-    <bean class="${name.package.project}.app.mba.mba0202.Mba0202Action" id="mba0202Action" name="mba0202Action"/>
-    <bean class="${name.package.project}.app.mba.mba0202.Mba0202BizImpl" id="mba0202Biz" name="mba0202Biz" parent="baseBiz"/>
+    <!--Bau0202 - My Bank Accounts-->
+    <bean class="${name.package.project}.app.bau.bau0202.Bau0202Action" id="bau0202Action" name="bau0202Action"/>
+    <bean class="${name.package.project}.app.bau.bau0202.Bau0202BizImpl" id="bau0202Biz" name="bau0202Biz" parent="baseBiz"/>
 </beans>
