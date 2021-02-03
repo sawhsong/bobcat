@@ -107,7 +107,7 @@ $(function() {
 		});
 
 		$("[name=icnAction]").each(function(index) {
-			$(this).contextMenu(ctxMenu.commonAction);
+			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
 		commonJs.hideProcMessageOnElement("divScrollablePanel");

@@ -271,7 +271,7 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_ACCNT_ID", requestDataSet.getValue("bankAccntId"+delimiter+i));
 				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "USER_ID", requestDataSet.getValue("userId"));
 				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_CODE", requestDataSet.getValue("bankCode"+delimiter+i));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BSB", requestDataSet.getValue("bsb"+delimiter+i));
+				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BSB", CommonUtil.remove(requestDataSet.getValue("bsb"+delimiter+i), " "));
 				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NUMBER", requestDataSet.getValue("accntNumber"+delimiter+i));
 				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NAME", requestDataSet.getValue("accntName"+delimiter+i));
 				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BALANCE", requestDataSet.getValue("balance"+delimiter+i));

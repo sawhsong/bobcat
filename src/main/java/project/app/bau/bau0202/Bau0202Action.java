@@ -32,6 +32,15 @@ public class Bau0202Action extends BaseAction {
 		return "edit";
 	}
 
+	public String getBankAccountInfo() throws Exception {
+		try {
+			biz.getBankAccountInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String doSave() throws Exception {
 		try {
 			biz.doSave(paramEntity);

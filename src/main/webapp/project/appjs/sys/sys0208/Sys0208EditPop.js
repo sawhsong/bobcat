@@ -265,8 +265,6 @@ $(function() {
 		commonJs.refreshBootstrapSelectbox("language");
 		$("#themeType").attr("disabled", false);
 		commonJs.refreshBootstrapSelectbox("themeType");
-		$("#maxRowsPerPage").attr("disabled", false);
-		commonJs.refreshBootstrapSelectbox("maxRowsPerPage");
 		$("#pageNumsPerPage").attr("disabled", false);
 		commonJs.refreshBootstrapSelectbox("pageNumsPerPage");
 		$("#userStatus").attr("disabled", false);
@@ -278,8 +276,6 @@ $(function() {
 		commonJs.refreshBootstrapSelectbox("language");
 		$("#themeType").attr("disabled", true);
 		commonJs.refreshBootstrapSelectbox("themeType");
-		$("#maxRowsPerPage").attr("disabled", true);
-		commonJs.refreshBootstrapSelectbox("maxRowsPerPage");
 		$("#pageNumsPerPage").attr("disabled", true);
 		commonJs.refreshBootstrapSelectbox("pageNumsPerPage");
 		$("#userStatus").attr("disabled", true);
@@ -332,6 +328,7 @@ $(function() {
 			$("[name=bankAccntId"+rowIdx+"]").val(ds.getValue(i, "BANK_ACCNT_ID"));
 			$("[name=bankCode"+rowIdx+"]").selectpicker("val", ds.getValue(i, "BANK_CODE"));
 			$("[name=bsb"+rowIdx+"]").val(ds.getValue(i, "BSB"));
+			commonJs.setFieldNumberMask("bsb"+rowIdx, "999 999");
 			$("[name=accntNumber"+rowIdx+"]").val(ds.getValue(i, "ACCNT_NUMBER"));
 			$("[name=accntName"+rowIdx+"]").val(ds.getValue(i, "ACCNT_NAME"));
 			$("[name=balance"+rowIdx+"]").val(ds.getValue(i, "BALANCE"));

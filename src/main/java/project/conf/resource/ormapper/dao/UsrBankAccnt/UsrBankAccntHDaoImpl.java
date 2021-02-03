@@ -38,6 +38,10 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 		}
 	}
 
+	public int insert(UsrBankAccnt usrBankAccnt) throws Exception {
+		return insertWithSQLQuery(usrBankAccnt);
+	}
+
 	public int update(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception {
 		int result = 0;
 		String userId = bankAccntsDataSetToSave.getValue(0, "USER_ID");
@@ -70,6 +74,33 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 		}
 	}
 
+	public int update(String bankAccntId, UsrBankAccnt usrBankAccnt) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("bank_accnt_id = '"+bankAccntId+"'");
+		return updateColumns(queryAdvisor, usrBankAccnt);
+	}
+
+	public int delete(String bankAccntIds[]) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		int result = 0;
+		String idsForDel = "";
+
+		if (!(bankAccntIds == null || bankAccntIds.length == 0)) {
+			for (String id : bankAccntIds) {
+				idsForDel += CommonUtil.isBlank(idsForDel) ? "'"+id+"'" : ",'"+id+"'";
+			}
+			queryAdvisor.addWhereClause("bank_accnt_id in ("+idsForDel+")");
+			result = deleteWithSQLQuery(queryAdvisor, new UsrBankAccnt());
+		}
+		return result;
+	}
+
+	public int delete(String bankAccntId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("bank_accnt_id = '"+bankAccntId+"'");
+		return deleteWithSQLQuery(queryAdvisor, new UsrBankAccnt());
+	}
+
 	public int deleteByUserId(String userId) throws Exception {
 		try {
 			QueryAdvisor queryAdvisor = new QueryAdvisor();
@@ -78,6 +109,25 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 		} catch (Exception ex) {
 			return -1;
 		}
+	}
+
+	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
+		String langCode = (String)queryAdvisor.getObject("langCode");
+		String userId = (String)queryAdvisor.getObject("userId");
+		String bankCode = (String)queryAdvisor.getObject("bankCode");
+
+		queryAdvisor.addVariable("langCode", langCode);
+		queryAdvisor.addAutoFillCriteria(bankCode, "bank_code = '"+bankCode+"'");
+		queryAdvisor.addAutoFillCriteria(userId, "user_id = '"+userId+"'");
+		queryAdvisor.addOrderByClause("bank_name");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getDataSetBySearchCriteria");
+	}
+
+	public DataSet getDataSetByBankAccntId(String bankAccntId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("bank_accnt_id = '"+bankAccntId+"'");
+		return selectAllAsDataSet(queryAdvisor, new UsrBankAccnt());
 	}
 
 	public DataSet getDataSetByUserId(String userId) throws Exception {

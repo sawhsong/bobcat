@@ -83,8 +83,8 @@ var userId = "<%=userId%>";
 		<div class="divButtonArea">
 			<div class="divButtonAreaRight">
 				<ui:buttonGroup id="subButtonGroup">
-				<ui:button id="btnSaveUserDetail" caption="button.com.save" iconClass="fa-save"/>
-				<ui:button id="btnCloseUserDetail" caption="button.com.close" iconClass="fa-times"/>
+					<ui:button id="btnSaveUserDetail" caption="button.com.save" iconClass="fa-save"/>
+					<ui:button id="btnCloseUserDetail" caption="button.com.close" iconClass="fa-times"/>
 				</ui:buttonGroup>
 			</div>
 		</div>
@@ -152,7 +152,7 @@ var userId = "<%=userId%>";
 			<tr>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.maxRowsPerPage"/></th>
 				<td class="tdEdit">
-					<ui:select name="maxRowsPerPage" checkName="sys0208.header.maxRowsPerPage" options="mandatory" status="disabled">
+					<ui:select name="maxRowsPerPage" checkName="sys0208.header.maxRowsPerPage" options="mandatory">
 <%
 					for (int i=0; i<maxRowPerPage.length; i++) {
 %>
@@ -265,7 +265,7 @@ var userId = "<%=userId%>";
 				<ui:hidden name="bankAccntId"/>
 				<ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory" option="numeric"/>
 			</td>
-			<td class="tdGrid Ct"><ui:text name="accntNumber" className="Ct" checkName="Account Number" options="mandatory" option="numeric"/></td>
+			<td class="tdGrid Ct"><ui:text name="accntNumber" className="Lt" checkName="Account Number" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="accntName" className="Lt" checkName="Account Name" options="mandatory"/></td>
 			<td class="tdGrid Ct"><ui:text name="balance" className="Rt numeric" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="description" className="Lt"/></td>

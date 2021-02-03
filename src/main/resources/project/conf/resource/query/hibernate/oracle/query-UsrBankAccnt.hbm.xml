@@ -5,4 +5,14 @@
  * - USR_BANK_ACCNT - Bank account info by user
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrBankAccnt.getDataSetBySearchCriteria">
+	<![CDATA[
+		select uba.*,
+		       (select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = uba.bank_code) as bank_name
+		  from usr_bank_accnt uba
+		 where 1 = 1
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

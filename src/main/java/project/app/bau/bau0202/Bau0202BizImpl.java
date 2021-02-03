@@ -20,11 +20,17 @@ import zebra.util.ExportUtil;
 
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.UsrBankAccnt;
 
 public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
+	@Autowired
+	private UsrBankAccntDao usrBankAccntDao;
+
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -37,11 +43,20 @@ public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String langCode = (String)session.getAttribute("langCode");
+		String userId = (String)session.getAttribute("UserId");
+		DataSet userBankAccnts = new DataSet();
 
 		try {
-			queryAdvisor.setPagination(true);
+			queryAdvisor.setObject("langCode", langCode);
+			queryAdvisor.setObject("userId", userId);
+			queryAdvisor.setObject("bankCode", requestDataSet.getValue("bankCode"));
+			queryAdvisor.setPagination(false);
 
-			paramEntity.setAjaxResponseDataSet(new DataSet());
+			userBankAccnts= usrBankAccntDao.getDataSetBySearchCriteria(queryAdvisor);
+
+			paramEntity.setAjaxResponseDataSet(userBankAccnts);
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -51,9 +66,25 @@ public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
 	}
 
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getBankAccountInfo(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+		DataSet bankAccountInfo = new DataSet();
 
 		try {
+			bankAccountInfo= usrBankAccntDao.getDataSetByBankAccntId(bankAccntId);
+			bankAccountInfo.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(bankAccountInfo.getValue("INSERT_USER_ID")));
+			bankAccountInfo.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(bankAccountInfo.getValue("UPDATE_USER_ID")));
+
+			paramEntity.setAjaxResponseDataSet(bankAccountInfo);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -63,13 +94,50 @@ public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
 
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		String bankAccntId = "";
+		UsrBankAccnt usrBankAccnt = new UsrBankAccnt();
+		DataSet bankAccntDataSet = new DataSet();
 		int result = -1;
 
 		try {
+			bankAccntId = requestDataSet.getValue("bankAccntId");
+
+			if (CommonUtil.isBlank(bankAccntId)) {
+				usrBankAccnt.setBankAccntId(CommonUtil.uid());
+				usrBankAccnt.setInsertUserId(userId);
+				usrBankAccnt.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			} else {
+				usrBankAccnt.setBankAccntId(bankAccntId);
+				usrBankAccnt.setUpdateUserId(userId);
+				usrBankAccnt.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			}
+
+			usrBankAccnt.setUserId(userId);
+			usrBankAccnt.setBankCode(requestDataSet.getValue("bankCode"));
+			usrBankAccnt.setBsb(CommonUtil.remove(requestDataSet.getValue("bsb"), " "));
+			usrBankAccnt.setAccntNumber(requestDataSet.getValue("accntNumber"));
+			usrBankAccnt.setAccntName(requestDataSet.getValue("accntName"));
+			usrBankAccnt.setBalance(CommonUtil.toDouble(requestDataSet.getValue("balance")));
+			usrBankAccnt.setDescription(requestDataSet.getValue("description"));
+
+			if (CommonUtil.isBlank(bankAccntId)) {
+				result = usrBankAccntDao.insert(usrBankAccnt);
+			} else {
+				usrBankAccnt.addUpdateColumnFromField();
+				result = usrBankAccntDao.update(bankAccntId, usrBankAccnt);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			bankAccntDataSet = usrBankAccntDao.getDataSetByBankAccntId(usrBankAccnt.getBankAccntId());
+			bankAccntDataSet.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(bankAccntDataSet.getValue("INSERT_USER_ID")));
+			bankAccntDataSet.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(bankAccntDataSet.getValue("UPDATE_USER_ID")));
+
+			paramEntity.setAjaxResponseDataSet(bankAccntDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
@@ -80,9 +148,18 @@ public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String chkForDel = requestDataSet.getValue("chkForDel");
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+		String bankAccntIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
+			if (CommonUtil.isBlank(bankAccntId)) {
+				result = usrBankAccntDao.delete(bankAccntIds);
+			} else {
+				result = usrBankAccntDao.delete(bankAccntId);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}

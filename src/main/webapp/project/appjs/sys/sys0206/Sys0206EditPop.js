@@ -59,6 +59,7 @@ $(function() {
 	 */
 	loadData = function() {
 		if (!commonJs.isBlank(orgId)) {
+
 			commonJs.doSimpleProcess({
 				url:"/sys/0206/getOrgDetail.do",
 				noForm:true,

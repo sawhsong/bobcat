@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String bankAccntId = requestDataSet.getValue("bankAccntId");
 %>
 <%/************************************************************************************************
 * HTML
@@ -27,6 +28,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var bankAccntId = "<%=bankAccntId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -44,6 +46,10 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
@@ -58,6 +64,43 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+	<table class="tblEdit">
+		<colgroup>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit rt mandatory">Bank</th>
+			<td class="tdEdit" colspan="3">
+				<ui:hidden name="bankAccntId"/>
+				<ui:ccselect name="bankCode" checkName="Bank" codeType="BANK_TYPE" options="mandatory"/>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory">BSB</th>
+			<td class="tdEdit"><ui:text name="bsb" className="Ct" style="width:50%" checkName="BSB" options="mandatory" option="numeric"/></td>
+			<th class="thEdit rt mandatory">Account Number</th>
+			<td class="tdEdit"><ui:text name="accntNumber" className="Lt" checkName="Account Number" options="mandatory" option="numeric"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt mandatory">Account Name</th>
+			<td class="tdEdit"><ui:text name="accntName" className="Lt" checkName="Account Name" options="mandatory"/></td>
+			<th class="thEdit rt">Balance</th>
+			<td class="tdEdit"><ui:text name="balance" className="Rt numeric" option="numeric"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Description</th>
+			<td class="tdEdit" colspan="3"><ui:text name="description" className="Lt"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Last Updated By</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedBy" status="display"/></td>
+			<th class="thEdit rt">Last Updated Date</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedDate" status="display"/></td>
+		</tr>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
