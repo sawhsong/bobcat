@@ -120,21 +120,27 @@
 			<td class="tdEdit">
 				<ui:check name="jspCreateDetail" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
-			<th class="thEdit Rt" rowspan="3"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
-			<td class="tdEdit" rowspan="3">
+			<th class="thEdit Rt" rowspan="4"><mc:msg key="fwk.sourcegenerator.header.pageType"/></th>
+			<td class="tdEdit" rowspan="4">
 				<ui:radio name="jspSubPageType" value="Popup" text="fwk.sourcegenerator.header.pop" isSelected="true"/>
 				<ui:radio name="jspSubPageType" value="Page" text="fwk.sourcegenerator.header.page"/>
 			</td>
 		</tr>
 		<tr>
+			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.edit"/></th>
+			<td class="tdEdit">
+				<ui:check name="jspCreateEdit" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
+			</td>
+		</tr>
+		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.insert"/></th>
-			<td class="tdEdit" colspan="3">
+			<td class="tdEdit">
 				<ui:check name="jspCreateInsert" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="fwk.sourcegenerator.header.update"/></th>
-			<td class="tdEdit" colspan="3">
+			<td class="tdEdit">
 				<ui:check name="jspCreateUpdate" value="Y" text="fwk.sourcegenerator.header.generate" isChecked="true"/>
 			</td>
 		</tr>

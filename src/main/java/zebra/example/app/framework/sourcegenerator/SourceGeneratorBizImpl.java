@@ -127,6 +127,7 @@ public class SourceGeneratorBizImpl extends BaseBiz implements SourceGeneratorBi
 
 			zebraFramworkBizService.createJspList(requestDataSet);
 			zebraFramworkBizService.createJspDetail(requestDataSet);
+			zebraFramworkBizService.createJspEdit(requestDataSet);
 			zebraFramworkBizService.createJspInsert(requestDataSet);
 			zebraFramworkBizService.createJspUpdate(requestDataSet);
 

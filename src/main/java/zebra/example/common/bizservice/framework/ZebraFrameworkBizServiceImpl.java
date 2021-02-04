@@ -1409,6 +1409,81 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		}
 	}
 
+	public boolean createJspEdit(DataSet requestDataSet) throws Exception {
+		String compilePath = "/target/HKAccounting";
+		String isCreate = CommonUtil.nvl(requestDataSet.getValue("jspCreateEdit"));
+		String pageType = requestDataSet.getValue("jspSubPageType");
+		String jspPath = requestDataSet.getValue("jspSourcePath");
+		String menuPathStr = CommonUtil.lowerCase(CommonUtil.replace(requestDataSet.getValue("menuId"), ConfigUtil.getProperty("delimiter.data"), "/"));
+		String menuId[] = CommonUtil.split(menuPathStr, "/");
+		String rootMenuId = CommonUtil.lowerCase(menuId[0]);
+		String thisMenuId = CommonUtil.lowerCase(menuId[1]);
+		String menuName = requestDataSet.getValue("menuName");
+		String rootPath = CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), compilePath);
+		String srcPath = rootPath + ConfigUtil.getProperty("path.sourceFile");
+		String thisMenuIdUpperCamelCase = CommonUtil.toCamelCaseStartUpperCase(thisMenuId);
+		String jspTargetpath = jspPath + "/" + rootMenuId + "/" + thisMenuId;
+		String jsSectionStringStart = "<script type=\"text/javascript\">", jsSectionStringEnd = "</script>", jsString = "";
+		boolean isJsSection = false;
+		String srcJspFileName, targetFileSuffix, sourceString, menuUrl;
+		File targetFile;
+
+		try {
+			if (CommonUtil.equalsIgnoreCase(isCreate, "Y")) {
+				if (CommonUtil.equalsIgnoreCase(pageType, "Page")) {
+					targetFileSuffix = "";
+					srcJspFileName = ConfigUtil.getProperty("name.source.jspEditPage");
+				} else {
+					targetFileSuffix = "Pop";
+					srcJspFileName = ConfigUtil.getProperty("name.source.jspEditPop");
+				}
+
+				targetFile = new File(jspTargetpath + "/" + thisMenuIdUpperCamelCase + "Edit" + targetFileSuffix + ".jsp");
+				createEmptyFile(targetFile);
+
+				BufferedReader bufferedReader = new BufferedReader(new FileReader(srcPath + "/" + srcJspFileName));
+				StringBuffer stringBuffer = new StringBuffer();
+				String tempString;
+				while ((tempString = bufferedReader.readLine()) != null) {
+					if (CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
+						isJsSection = true;
+					}
+
+					if (CommonUtil.equalsIgnoreCase(tempString, jsSectionStringEnd)) {
+						isJsSection = false;
+					}
+
+					if (isJsSection && !CommonUtil.equalsIgnoreCase(tempString, jsSectionStringStart)) {
+						jsString += "\n"+tempString;
+						continue;
+					}
+
+					stringBuffer.append(tempString + "\n");
+				}
+				OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(targetFile, true), "utf-8");
+				sourceString = CommonUtil.removeEnd(stringBuffer.toString(), "\n");
+
+				menuUrl = rootMenuId + "/" + CommonUtil.remove(thisMenuId, rootMenuId);
+
+				sourceString = CommonUtil.replace(sourceString, "#MENU_ID_START_UPPER#", thisMenuIdUpperCamelCase);
+				sourceString = CommonUtil.replace(sourceString, "#MENU_NAME#", menuName);
+				sourceString = CommonUtil.replace(sourceString, "#MENU_URL#", menuUrl);
+				sourceString = CommonUtil.replace(sourceString, "#THIS_MENU_ID#", thisMenuId);
+
+				osWriter.write(sourceString);
+				osWriter.flush();
+				osWriter.close();
+				bufferedReader.close();
+
+				createJsSource(requestDataSet, thisMenuIdUpperCamelCase + "Edit" + targetFileSuffix + ".js", jsString);
+			}
+
+			return true;
+		} catch (Exception ex) {
+			throw new FrameworkException(ex);
+		}
+	}
+
 	public boolean createJspInsert(DataSet requestDataSet) throws Exception {
 		String compilePath = "/target/HKAccounting";
 		String isCreate = CommonUtil.nvl(requestDataSet.getValue("jspCreateInsert"));
@@ -1668,6 +1743,10 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 		String jspRelPath = CommonUtil.substringAfter(jspPath, "webapp");
 		String javaTargetpath = javaPath + "/" + rootMenuId + "/" + thisMenuId;
 		String sourceString, pageNameSuffix = "";
+		String isCreateDetail = CommonUtil.nvl(dsRequest.getValue("jspCreateDetail"));
+		String isCreateEdit = CommonUtil.nvl(dsRequest.getValue("jspCreateEdit"));
+		String isCreateInsert = CommonUtil.nvl(dsRequest.getValue("jspCreateInsert"));
+		String isCreateUpdate = CommonUtil.nvl(dsRequest.getValue("jspCreateUpdate"));
 
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -1746,26 +1825,45 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						resultElement.setAttribute("type", "debugDispatcherResult");
 						resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "List.jsp");
 						actionElement.appendChild(resultElement);
-
-						pageNameSuffix = (CommonUtil.equalsIgnoreCase(pageType, "Page")) ? ".jsp" : "Pop.jsp";
-						resultElement = document.createElement("result");
-						resultElement.setAttribute("name", "detail");
-						resultElement.setAttribute("type", "debugDispatcherResult");
-						resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Detail"+pageNameSuffix);
-						actionElement.appendChild(resultElement);
-
-						resultElement = document.createElement("result");
-						resultElement.setAttribute("name", "insert");
-						resultElement.setAttribute("type", "debugDispatcherResult");
-						resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Insert"+pageNameSuffix);
-						actionElement.appendChild(resultElement);
-
-						resultElement = document.createElement("result");
-						resultElement.setAttribute("name", "update");
-						resultElement.setAttribute("type", "debugDispatcherResult");
-						resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Update"+pageNameSuffix);
-						actionElement.appendChild(resultElement);
 						packageElement.appendChild(actionElement);
+
+						if (CommonUtil.toBoolean(isCreateDetail)) {
+							pageNameSuffix = (CommonUtil.equalsIgnoreCase(pageType, "Page")) ? ".jsp" : "Pop.jsp";
+							resultElement = document.createElement("result");
+							resultElement.setAttribute("name", "detail");
+							resultElement.setAttribute("type", "debugDispatcherResult");
+							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Detail"+pageNameSuffix);
+							actionElement.appendChild(resultElement);
+							packageElement.appendChild(actionElement);
+						}
+
+						if (CommonUtil.toBoolean(isCreateEdit)) {
+							pageNameSuffix = (CommonUtil.equalsIgnoreCase(pageType, "Page")) ? ".jsp" : "Pop.jsp";
+							resultElement = document.createElement("result");
+							resultElement.setAttribute("name", "edit");
+							resultElement.setAttribute("type", "debugDispatcherResult");
+							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Edit"+pageNameSuffix);
+							actionElement.appendChild(resultElement);
+							packageElement.appendChild(actionElement);
+						}
+
+						if (CommonUtil.toBoolean(isCreateInsert)) {
+							resultElement = document.createElement("result");
+							resultElement.setAttribute("name", "insert");
+							resultElement.setAttribute("type", "debugDispatcherResult");
+							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Insert"+pageNameSuffix);
+							actionElement.appendChild(resultElement);
+							packageElement.appendChild(actionElement);
+						}
+
+						if (CommonUtil.toBoolean(isCreateUpdate)) {
+							resultElement = document.createElement("result");
+							resultElement.setAttribute("name", "update");
+							resultElement.setAttribute("type", "debugDispatcherResult");
+							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Update"+pageNameSuffix);
+							actionElement.appendChild(resultElement);
+							packageElement.appendChild(actionElement);
+						}
 
 						Comment commentElement = document.createComment(thisMenuIdUpperCamelCase + " - " + menuName);
 						actionElement.getParentNode().insertBefore(commentElement, actionElement);

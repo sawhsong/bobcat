@@ -26,8 +26,8 @@ $(function() {
 			header:framework.header.popHeaderGenerator,
 			data:{},
 			blind:false,
-			width:760,
-			height:584
+			width:800,
+			height:610
 		});
 	});
 

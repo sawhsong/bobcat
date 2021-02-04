@@ -26,6 +26,7 @@ public interface ZebraFrameworkBizService {
 	public boolean createJavaBizImpl(DataSet requestDataSet) throws Exception;
 	public boolean createJspList(DataSet requestDataSet) throws Exception;
 	public boolean createJspDetail(DataSet requestDataSet) throws Exception;
+	public boolean createJspEdit(DataSet requestDataSet) throws Exception;
 	public boolean createJspInsert(DataSet requestDataSet) throws Exception;
 	public boolean createJspUpdate(DataSet requestDataSet) throws Exception;
 	public boolean createConfSpring(DataSet requestDataSet) throws Exception;
