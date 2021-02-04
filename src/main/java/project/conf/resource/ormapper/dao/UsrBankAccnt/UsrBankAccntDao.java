@@ -21,4 +21,5 @@ public interface UsrBankAccntDao extends IDao {
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByBankAccntId(String bankAccntId) throws Exception;
 	public DataSet getDataSetByUserId(String userId) throws Exception;
+	public DataSet getDataSetForSearchCriteriaByUserId(String userId) throws Exception;
 }

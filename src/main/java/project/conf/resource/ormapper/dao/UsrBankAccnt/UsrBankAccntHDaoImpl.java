@@ -9,6 +9,7 @@ import project.conf.resource.ormapper.dto.oracle.UsrBankAccnt;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 
 public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 	public int insert(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception {
@@ -135,5 +136,16 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 		queryAdvisor.addWhereClause("user_id = '"+userId+"'");
 		queryAdvisor.addOrderByClause("bank_code");
 		return selectAllAsDataSet(queryAdvisor, new UsrBankAccnt());
+	}
+
+	public DataSet getDataSetForSearchCriteriaByUserId(String userId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
+
+		queryAdvisor.addVariable("langCode", langCode);
+		queryAdvisor.addAutoFillCriteria(userId, "user_id = '"+userId+"'");
+		queryAdvisor.addOrderByClause("description");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getDataSetSearchCriteriaByUserId");
 	}
 }

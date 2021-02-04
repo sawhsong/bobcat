@@ -5,6 +5,9 @@
 package project.conf.resource.ormapper.dao.UsrBankStatement;
 
 import zebra.base.IDao;
+import zebra.data.DataSet;
+import zebra.data.QueryAdvisor;
 
 public interface UsrBankStatementDao extends IDao {
+	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 }

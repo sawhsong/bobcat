@@ -70,7 +70,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "LEGAL_NAME"), 60)).setScript("getEdit('"+ds.getValue(i, "ORG_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "LEGAL_NAME")).setScript("getEdit('"+ds.getValue(i, "ORG_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "TRADING_NAME")));

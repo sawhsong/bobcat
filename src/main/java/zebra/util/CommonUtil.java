@@ -42,6 +42,22 @@ public class CommonUtil extends StringUtils {
 		return result;
 	}
 
+	public static boolean isBlank(String value[]) {
+		boolean rtn = true;
+
+		if (value == null || value.length == 0) {
+			rtn = true;
+		} else {
+			String str = "";
+
+			for (String s : value) {str += s;}
+
+			if (isBlank(str)) {rtn = true;}
+			else {rtn = false;}
+		}
+		return rtn;
+	}
+
 	public static String nvl(String value) {
 		return nvl(value, "");
 	}

@@ -5,4 +5,55 @@
  * - USR_BANK_STATEMENT - Bank statement master info which is uploaded by user
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrBankStatement.getDataSetBySearchCriteria">
+	<![CDATA[
+		select bsm.bank_statement_id,
+		       bsm.bank_accnt_id,
+		       bsm.original_file_name,
+		       bsm.new_name,
+		       bsm.file_type,
+		       bsm.file_icon,
+		       bsm.file_size,
+		       bsm.repository_path,
+		       bsm.description as statement_file_description,
+		       nvl(bsm.update_date, bsm.insert_date) as last_update_date,
+		       bsd.detail_cnt,
+		       bsd.min_proc_date,
+		       bsd.max_proc_date,
+		       bsd.total_proc_amt,
+		       bsd.last_balance_amt,
+		       bat.bank_code,
+		       bat.bank_name,
+		       bat.bsb,
+		       bat.accnt_number,
+		       bat.accnt_name,
+		       bat.balance,
+		       bat.description as bank_accnt_description
+		  from usr_bank_statement bsm,
+		       (select bank_statement_id,
+		               detail_cnt,
+		               min_proc_date,
+		               max_proc_date,
+		               total_proc_amt,
+		               (select nvl(balance, 0) from usr_bank_statement_d where bank_statement_id = a.bank_statement_id and row_index = a.max_row_index) as last_balance_amt
+		          from (select bank_statement_id,
+		                       count(*) as detail_cnt,
+		                       trunc(min(proc_date)) as min_proc_date,
+		                       trunc(max(proc_date)) as max_proc_date,
+		                       nvl(sum(proc_amt), 0) as total_proc_amt,
+		                       max(row_index) as max_row_index
+		                  from usr_bank_statement_d
+		                 group by bank_statement_id
+		               ) a
+		       ) bsd,
+		       (select a.*, (select description_en from sys_common_code where code_type = 'BANK_TYPE' and common_code = a.bank_code) as bank_name
+		          from usr_bank_accnt a
+		       ) bat
+		 where 1 = 1
+		   and bsm.bank_statement_id = bsd.bank_statement_id(+)
+		   and bsm.bank_accnt_id = bat.bank_accnt_id
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

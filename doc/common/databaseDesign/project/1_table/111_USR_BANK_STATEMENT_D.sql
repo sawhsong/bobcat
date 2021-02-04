@@ -8,6 +8,7 @@ purge recyclebin;
 create table usr_bank_statement_d (
     bank_statement_d_id             varchar2(30)                                 not null,      -- Bank statement detail UID (PK)
     bank_statement_id               varchar2(30)                                 not null,      -- Bank statement master ID
+    row_index                       number                                       not null,      -- Row number of the file (For checking proc order)
     proc_date                       date                                         not null,      -- Date processed
     proc_amt                        number                                       not null,      -- Amount processed
     proc_description                varchar2(1000),                                             -- Process description
@@ -18,7 +19,7 @@ create table usr_bank_statement_d (
     update_user_id                  varchar2(30),                                               -- Update User UID
     update_date                     date,                                                       -- Update Date
 
-    constraint fk_14470542150000 foreign key(bank_statement_id) references usr_bank_statement(bank_statement_id),
+    constraint fk_34330454163900 foreign key(bank_statement_id) references usr_bank_statement(bank_statement_id),
     constraint pk_usr_bank_statement_d primary key(bank_statement_d_id)
     using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )
@@ -27,6 +28,7 @@ pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k m
 comment on table  usr_bank_statement_d                                           is 'Bank statement details';
 comment on column usr_bank_statement_d.bank_statement_d_id                       is 'Bank statement detail UID (PK)';
 comment on column usr_bank_statement_d.bank_statement_id                         is 'Bank statement master ID';
+comment on column usr_bank_statement_d.row_index                                 is 'Row number of the file (For checking proc order)';
 comment on column usr_bank_statement_d.proc_date                                 is 'Date processed';
 comment on column usr_bank_statement_d.proc_amt                                  is 'Amount processed';
 comment on column usr_bank_statement_d.proc_description                          is 'Process description';

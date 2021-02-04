@@ -77,7 +77,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "BANK_NAME"), 60)).setScript("getEdit('"+ds.getValue(i, "BANK_ACCNT_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "BANK_NAME")).setScript("getEdit('"+ds.getValue(i, "BANK_ACCNT_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "BSB"), "??? ???")));

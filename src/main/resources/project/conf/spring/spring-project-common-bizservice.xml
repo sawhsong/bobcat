@@ -7,4 +7,7 @@
 
 	<!--/* Performance Biz Service Module */-->
 	<bean id="performanceBS" name="performanceBS" class="${name.package.project}.common.module.bizservice.performance.PerformanceBizServiceImpl" parent="baseBiz"/>
+
+	<!--/* Bank Statement File Upload Biz Service Module */-->
+	<bean id="bankStatementBS" name="bankStatementBS" class="${name.package.project}.common.module.bizservice.bankstatement.BankStatementBizServiceImpl" parent="baseBiz"/>
 </beans>

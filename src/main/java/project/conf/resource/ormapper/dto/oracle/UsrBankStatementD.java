@@ -25,6 +25,8 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 	private String PROC_AMT;
 	private Date procDate;
 	private String PROC_DATE;
+	private double rowIndex;
+	private String ROW_INDEX;
 	private double balance;
 	private String BALANCE;
 	private Date insertDate;
@@ -68,7 +70,7 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		updateColumnsDataSet.addName(updateColumnsDataSetHeader);
 		setFrwVarPrimaryKey("BANK_STATEMENT_D_ID");
 		setFrwVarDateColumn("PROC_DATE,INSERT_DATE,UPDATE_DATE");
-		setFrwVarNumberColumn("PROC_AMT,BALANCE");
+		setFrwVarNumberColumn("PROC_AMT,ROW_INDEX,BALANCE");
 		setFrwVarClobColumn("");
 		setFrwVarDefaultColumn("INSERT_DATE");
 		setFrwVarDefaultValue("sysdate");
@@ -112,6 +114,15 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 	public void setProcDate(Date procDate) throws Exception {
 		this.procDate = procDate;
 		setValueFromAccessor("PROC_DATE", CommonUtil.toString(procDate));
+	}
+
+	public double getRowIndex() {
+		return rowIndex;
+	}
+
+	public void setRowIndex(double rowIndex) throws Exception {
+		this.rowIndex = rowIndex;
+		setValueFromAccessor("ROW_INDEX", CommonUtil.toString(rowIndex));
 	}
 
 	public double getBalance() {
@@ -316,6 +327,7 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "bankStatementDId : "+bankStatementDId+"\n";
 		str += "procAmt : "+procAmt+"\n";
 		str += "procDate : "+procDate+"\n";
+		str += "rowIndex : "+rowIndex+"\n";
 		str += "balance : "+balance+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
@@ -339,6 +351,7 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "<column name=\"bankStatementDId\" value=\""+bankStatementDId+"\">";
 		str += "<column name=\"procAmt\" value=\""+procAmt+"\">";
 		str += "<column name=\"procDate\" value=\""+procDate+"\">";
+		str += "<column name=\"rowIndex\" value=\""+rowIndex+"\">";
 		str += "<column name=\"balance\" value=\""+balance+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
@@ -362,6 +375,7 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "\"bankStatementDId\":\""+bankStatementDId+"\", ";
 		str += "\"procAmt\":\""+procAmt+"\", ";
 		str += "\"procDate\":\""+procDate+"\", ";
+		str += "\"rowIndex\":\""+rowIndex+"\", ";
 		str += "\"balance\":\""+balance+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";

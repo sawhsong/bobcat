@@ -97,7 +97,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "USER_NAME"), 60)).setScript("getEdit('"+ds.getValue(i, "USER_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "USER_NAME")).setScript("getEdit('"+ds.getValue(i, "USER_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "LOGIN_ID")));

@@ -13,6 +13,7 @@
 		<property name="bankStatementId" column="BANK_STATEMENT_ID" not-null="true" type="java.lang.String" length="30"/>
 		<property name="procAmt" column="PROC_AMT" not-null="true" type="java.lang.Double"/>
 		<property name="procDate" column="PROC_DATE" not-null="true" type="java.util.Date"/>
+		<property name="rowIndex" column="ROW_INDEX" not-null="true" type="java.lang.Double"/>
 		<property name="balance" column="BALANCE" type="java.lang.Double"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
@@ -28,6 +29,7 @@
 		       BANK_STATEMENT_D_ID,
 		       PROC_AMT,
 		       TO_CHAR(PROC_DATE, 'yyyymmddhh24miss') AS PROC_DATE,
+		       ROW_INDEX,
 		       BALANCE,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
@@ -51,6 +53,7 @@
 		       BANK_STATEMENT_D_ID,
 		       PROC_AMT,
 		       PROC_DATE,
+		       ROW_INDEX,
 		       BALANCE,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
@@ -64,6 +67,7 @@
 		       ${BANK_STATEMENT_D_ID},
 		       ${PROC_AMT},
 		       ${PROC_DATE},
+		       ${ROW_INDEX},
 		       ${BALANCE},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
@@ -81,6 +85,7 @@
 		   SET BANK_STATEMENT_ID = ${BANK_STATEMENT_ID},
 		       PROC_AMT = ${PROC_AMT},
 		       PROC_DATE = ${PROC_DATE},
+		       ROW_INDEX = ${ROW_INDEX},
 		       BALANCE = ${BALANCE},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},

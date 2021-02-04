@@ -15,4 +15,21 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.UsrBankAccnt.getDataSetSearchCriteriaByUserId">
+	<![CDATA[
+		select bank_accnt_id,
+		       bank_code,
+		       (select description_en from sys_common_code where code_type = 'BANK_TYPE' and common_code = bank_code)
+		       ||' [BSB: '||
+		       regexp_replace(bsb, '(.{3})(.{3})', '\1 \2')||' | '
+		       ||'ACC: '||
+		       accnt_number
+		       ||']' as description
+		  from usr_bank_accnt
+		 where 1 = 1
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>
