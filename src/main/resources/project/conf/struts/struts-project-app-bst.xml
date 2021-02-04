@@ -6,6 +6,9 @@
         <!--Bst0202 - Bank Transaction-->
         <action class="project.app.bst.bst0202.Bst0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202DetailPop.jsp</result>
+            <result name="insert" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202InsertPop.jsp</result>
+            <result name="update" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202UpdatePop.jsp</result>
         </action>
     </package>
 </struts>
