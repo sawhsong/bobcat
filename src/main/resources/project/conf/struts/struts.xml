@@ -10,5 +10,4 @@
     <include file="project/conf/struts/struts-project-app-sba.xml"/>
     <include file="project/conf/struts/struts-project-app-cst.xml"/>
     <include file="project/conf/struts/struts-project-app-bau.xml"/>
-    <include file="project/conf/struts/struts-project-app-bst.xml"/>
 </struts>
