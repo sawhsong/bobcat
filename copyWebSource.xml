@@ -12,7 +12,7 @@
 				 7.zebra common,
 				 8.project conf,
 				 9.zebra conf,
-				 10.images"
+				 10.repository"
 		description="Run All Targets"
 	/>
 
@@ -70,12 +70,15 @@
 		</copy>
 	</target>
 
-	<target name="10.images" description="Copy user photos and org logos from repository">
+	<target name="10.repository" description="Copy files from repository">
 		<copy todir="${target.image.photo}">
-			<fileset dir="${src.image.photo}"/>
+			<fileset dir="${src.repository.photo}"/>
 		</copy>
 		<copy todir="${target.image.orgLogo}">
-			<fileset dir="${src.image.orgLogo}"/>
+			<fileset dir="${src.repository.orgLogo}"/>
+		</copy>
+		<copy todir="${target.repository.bankStatement}">
+			<fileset dir="${src.repository.bankStatement}"/>
 		</copy>
 	</target>
 </project>

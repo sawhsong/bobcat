@@ -208,33 +208,33 @@ var userId = "<%=userId%>";
 		</div>
 		<div class="verGap4"></div>
 		<div id="divGridWrapper">
-		<table id="tblGrid" class="tblGrid">
-			<colgroup>
-				<col width="2%"/>
-				<col width="24%"/>
-				<col width="7%"/>
-				<col width="13%"/>
-				<col width="17%"/>
-				<col width="10%"/>
-				<col width="*"/>
-			</colgroup>
-			<thead>
-				<tr>
-					<th class="thGrid"></th>
-					<th class="thGrid mandatory">Bank</th>
-					<th class="thGrid mandatory">BSB</th>
-					<th class="thGrid mandatory">Account Number</th>
-					<th class="thGrid mandatory">Account Name</th>
-					<th class="thGrid">Balance</th>
-					<th class="thGrid">Description</th>
-				</tr>
-			</thead>
-			<tbody id="tblGridBody">
-				<tr class="noStripe">
-					<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
-				</tr>
-			</tbody>
-		</table>
+			<table id="tblGrid" class="tblGrid">
+				<colgroup>
+					<col width="2%"/>
+					<col width="24%"/>
+					<col width="7%"/>
+					<col width="13%"/>
+					<col width="17%"/>
+					<col width="10%"/>
+					<col width="*"/>
+				</colgroup>
+				<thead>
+					<tr>
+						<th class="thGrid"></th>
+						<th class="thGrid mandatory">Bank</th>
+						<th class="thGrid mandatory">BSB</th>
+						<th class="thGrid mandatory">Account Number</th>
+						<th class="thGrid mandatory">Account Name</th>
+						<th class="thGrid">Balance</th>
+						<th class="thGrid">Description</th>
+					</tr>
+				</thead>
+				<tbody id="tblGridBody">
+					<tr class="noStripe">
+						<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

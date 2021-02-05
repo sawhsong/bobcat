@@ -47,6 +47,7 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnUpload" caption="button.com.upload" iconClass="fa-upload"/>
+			<ui:button id="btnDiscard" caption="Discard" iconClass="fa-trash"/>
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
@@ -64,7 +65,7 @@
 		<tr>
 			<th class="thSearch rt mandatory">Bank Account</th>
 			<td class="tdSearch">
-				<ui:select name="bankAccntId" hasCaption="true" options="mandatory">
+				<ui:select name="bankAccntId" checkName="Bank Account" options="mandatory">
 <%
 				for (int i=0; i<bankAccnt.getRowCnt(); i++) {
 %>
@@ -90,14 +91,39 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<table id="tblGrid" class="tblGrid sort autosort">
-		<colgroup id="tblGridColGroup">
-		</colgroup>
-		<thead id="tblGridHead">
-		</thead>
-		<tbody id="tblGridBody">
-		</tbody>
-	</table>
+	<div id="div_CBA_ANZ" style="display:none">
+		<table id="tblGrid_CBA_ANZ" class="tblGrid sort autosort">
+			<colgroup>
+				<col width="*"/>
+				<col width="6%"/>
+				<col width="9%"/>
+				<col width="9%"/>
+				<col width="6%"/>
+				<col width="7%"/>
+				<col width="7%"/>
+				<col width="9%"/>
+				<col width="15%"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="thGrid">Bank</th>
+					<th class="thGrid">BSB</th>
+					<th class="thGrid">Account Number</th>
+					<th class="thGrid">Account Name</th>
+					<th class="thGrid">Row No.</th>
+					<th class="thGrid">Date</th>
+					<th class="thGrid">Amount</th>
+					<th class="thGrid">Balance</th>
+					<th class="thGrid">Description</th>
+				</tr>
+			</thead>
+			<tbody id="tblGridBody_CBA_ANZ">
+				<tr>
+					<td class="tdGrid Ct" colspan="9">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

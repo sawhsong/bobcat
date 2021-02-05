@@ -25,8 +25,8 @@ $(function() {
 			url:"/bst/0202/getUpload.do",
 			data:{},
 			header:"Upload Bank Statement",
-			width:1250,
-			height:850
+			width:1500,
+			height:800
 		});
 	});
 

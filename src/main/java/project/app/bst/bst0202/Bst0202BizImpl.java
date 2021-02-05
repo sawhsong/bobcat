@@ -110,36 +110,33 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
 		String bankAccntId = requestDataSet.getValue("bankAccntId");
 		String bankCode = requestDataSet.getValue("bankCode");
 		String webPath = ConfigUtil.getProperty("path.dir.bankStatement");
 		String uploadPath = ConfigUtil.getProperty("path.dir.uploadedBankStatement");
 		String webRootPath = (String)MemoryBean.get("applicationRealPath");
 		String pathToCopy = "";
-		File file;
 		DataSet fileData = new DataSet();
-		int result = -1;
 
 		try {
 			String fileName = fileDataSet.getValue("NEW_NAME");
 
 			// Copy the file to web source
-			pathToCopy = webRootPath + webPath + "/" + fileName;
+			pathToCopy = webRootPath + webPath + "/" + bankAccntId + "_" + fileName;
 			FileUtil.copyFile(fileDataSet, pathToCopy);
 
 			// Move the file to repository
-			pathToCopy = uploadPath + "/" + fileName;
+			pathToCopy = uploadPath + "/" + bankAccntId + "_" + fileName;
 			FileUtil.moveFile(fileDataSet, pathToCopy);
 
-			file = new File(pathToCopy);
+			fileData = bankStatementBS.getBankStatementDataSetFromFileByBank(bankAccntId, bankCode, new File(pathToCopy));
 
-			fileData = bankStatementBS.getBankStatementDataSetFromFileByBank(bankCode, file);
+			// Save to session before saving
+			session.setAttribute("UploadBankStatementData", fileData);
+			session.setAttribute("UploadBankStatementFileRepositoryPath", uploadPath + "/" + bankAccntId + "_" + fileName);
+			session.setAttribute("UploadBankStatementFileWebPath", webRootPath + webPath + "/" + bankAccntId + "_" + fileName);
 
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
+			paramEntity.setAjaxResponseDataSet(fileData);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
