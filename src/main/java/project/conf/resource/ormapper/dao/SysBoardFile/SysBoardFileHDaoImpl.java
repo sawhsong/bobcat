@@ -12,6 +12,7 @@ import project.conf.resource.ormapper.dto.oracle.SysBoardFile;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
+import zebra.util.ConfigUtil;
 import zebra.util.FileUtil;
 
 public class SysBoardFileHDaoImpl extends BaseHDao implements SysBoardFileDao {
@@ -19,16 +20,20 @@ public class SysBoardFileHDaoImpl extends BaseHDao implements SysBoardFileDao {
 		int result = 0;
 
 		for (int i=0; i<fileDataSet.getRowCnt(); i++) {
+			String uploadPath = ConfigUtil.getProperty("path.dir.sysBoard");
+			String newFileName = fileDataSet.getValue(i, "NEW_NAME");
 			SysBoardFile sysBoardFile = new SysBoardFile();
+
+			fileDataSet.setValue(i, "REPOSITORY_PATH", uploadPath);
 
 			sysBoardFile.setFileId(CommonUtil.uid());
 			sysBoardFile.setArticleId(sysBoard.getArticleId());
 			sysBoardFile.setOriginalName(fileDataSet.getValue(i, "ORIGINAL_NAME"));
-			sysBoardFile.setNewName(fileDataSet.getValue(i, "NEW_NAME"));
+			sysBoardFile.setNewName(newFileName);
 			sysBoardFile.setFileType(fileDataSet.getValue(i, "TYPE"));
 			sysBoardFile.setFileIcon(fileDataSet.getValue(i, "ICON"));
 			sysBoardFile.setFileSize(CommonUtil.toDouble(fileDataSet.getValue(i, "SIZE")));
-			sysBoardFile.setRepositoryPath(fileDataSet.getValue(i, "REPOSITORY_PATH"));
+			sysBoardFile.setRepositoryPath(uploadPath);
 			sysBoardFile.setInsertUserId(sysBoard.getInsertUserId());
 			sysBoardFile.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			sysBoardFile.setUpdateUserId(sysBoard.getInsertUserId());

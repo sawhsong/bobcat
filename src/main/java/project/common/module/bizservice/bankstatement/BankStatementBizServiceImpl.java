@@ -8,15 +8,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
+import project.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementDao;
+import project.conf.resource.ormapper.dto.oracle.UsrBankStatement;
 import zebra.data.DataSet;
 import zebra.example.common.extend.BaseBiz;
 import zebra.exception.FrameworkException;
 import zebra.util.CommonUtil;
-import zebra.util.ConfigUtil;
 
 public class BankStatementBizServiceImpl extends BaseBiz implements BankStatementBizService {
 	@Autowired
 	private UsrBankAccntDao usrBankAccntDao;
+	@Autowired
+	private UsrBankStatementDao usrBankStatementDao;
+
+	public int doSave(DataSet fileDataSet, DataSet bankFileData) throws Exception {
+		UsrBankStatement usrBankStatement = new UsrBankStatement();
+		int result = -1;
+
+		try {
+			usrBankStatement.setBankStatementId(CommonUtil.uid());
+			usrBankStatement.setBankAccntId(bankFileData.getValue("BANK_ACCNT_ID"));
+			usrBankStatement.setOriginalFileName(fileDataSet.getValue("ORIGINAL_NAME"));
+			usrBankStatement.setNewName(fileDataSet.getValue("NEW_NAME"));
+			usrBankStatement.setFileType(fileDataSet.getValue("TYPE"));
+			usrBankStatement.setFileIcon(fileDataSet.getValue("ICON"));
+			usrBankStatement.setFileSize(CommonUtil.toDouble(fileDataSet.getValue("SIZE")));
+			usrBankStatement.setRepositoryPath(fileDataSet.getValue("REPOSITORY_PATH"));
+			usrBankStatement.setInsertUserId(bankFileData.getValue("USER_ID"));
+			usrBankStatement.setInsertDate(CommonUtil.getSysdateAsDate());
+
+			result = usrBankStatementDao.insert(usrBankStatement, bankFileData);
+		} catch (Exception ex) {
+			throw new FrameworkException(ex);
+		}
+		return result;
+	}
 
 	public DataSet getBankStatementDataSetFromFileByBank(String bankAccntId, String bankCode, File bankStatementFile) throws Exception {
 		DataSet result = new DataSet();
@@ -40,7 +66,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 		DataSet usrBankAccnt = new DataSet();
 		String header[] = new String[] {"BANK_ACCNT_ID", "BANK_CODE", "ROW_INDEX", "PROC_DATE", "PROC_AMOUNT", "DESCRIPTION", "BALANCE"};
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		String textLine, dateFormat = ConfigUtil.getProperty("format.date.java");
+		String textLine;
 		String dataArr[];
 		int index = 0;
 
@@ -61,7 +87,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 				result.setValue(result.getRowCnt()-1, "BANK_ACCNT_ID", bankAccntId);
 				result.setValue(result.getRowCnt()-1, "BANK_CODE", bankCode);
 				result.setValue(result.getRowCnt()-1, "ROW_INDEX", CommonUtil.toString(index));
-				result.setValue(result.getRowCnt()-1, "PROC_DATE", CommonUtil.getDateMask(getValidDateStringForType1(CommonUtil.trim(dataArr[0])), dateFormat)); // Date : dd/MM/yyyy
+				result.setValue(result.getRowCnt()-1, "PROC_DATE", getValidDateStringForType1(CommonUtil.trim(dataArr[0]))); // Date : dd/MM/yyyy
 				result.setValue(result.getRowCnt()-1, "PROC_AMOUNT", CommonUtil.trim(dataArr[1])); // Amount : no format(2 decimal)
 				result.setValue(result.getRowCnt()-1, "DESCRIPTION", dataArr[2]); // Desc
 				result.setValue(result.getRowCnt()-1, "BALANCE", CommonUtil.trim(dataArr[3])); // Balance : no format(2 decimal)

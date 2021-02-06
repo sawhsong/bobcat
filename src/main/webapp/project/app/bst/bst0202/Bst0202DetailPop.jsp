@@ -9,6 +9,8 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String bankCode = requestDataSet.getValue("bankCode");
+	String bankStatementId = requestDataSet.getValue("bankStatementId");
 %>
 <%/************************************************************************************************
 * HTML
@@ -27,6 +29,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var bankCode = "<%=bankCode%>";
+var bankStatementId = "<%=bankStatementId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -44,10 +48,69 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainerPopup">
+	<table class="tblInform">
+		<caption>Bank Account Information</caption>
+		<colgroup>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+		</colgroup>
+		<tr>
+			<th class="thInform rt">Bank</th>
+			<td class="tdInform" id="tdBank"></td>
+			<th class="thInform rt">BSB</th>
+			<td class="tdInform" id="tdBsb"></td>
+		</tr>
+		<tr>
+			<th class="thInform rt">Account Number</th>
+			<td class="tdInform" id="tdAccntNumber"></td>
+			<th class="thInform rt">Account Name</th>
+			<td class="tdInform" id="tdAccntName"></td>
+		</tr>
+		<tr>
+			<th class="thInform rt">Balance</th>
+			<td class="tdInform" id="tdBalance"></td>
+			<th class="thInform rt">Description</th>
+			<td class="tdInform" id="tdDescription"></td>
+		</tr>
+	</table>
+	<div class="verGap4"></div>
+	<table class="tblInform">
+		<caption>Bank Statement File Information</caption>
+		<colgroup>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+		</colgroup>
+		<tr>
+			<th class="thInform rt">File Name</th>
+			<td class="tdInform" id="tdFileName"></td>
+			<th class="thInform rt">File Rows</th>
+			<td class="tdInform" id="tdFileRows"></td>
+		</tr>
+		<tr>
+			<th class="thInform rt">Date From</th>
+			<td class="tdInform" id="tdDateFrom"></td>
+			<th class="thInform rt">Date To</th>
+			<td class="tdInform" id="tdDateTo"></td>
+		</tr>
+		<tr>
+			<th class="thInform rt">Last Balance</th>
+			<td class="tdInform" id="tdLastBalance"></td>
+			<th class="thInform rt">Last Update Date</th>
+			<td class="tdInform" id="tdLastUpdateDate"></td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -58,6 +121,28 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+	<div id="div_CBA_ANZ" style="display:none">
+		<table id="tblGrid_CBA_ANZ" class="tblGrid sort autosort">
+			<colgroup>
+				<col width="7%"/>
+				<col width="9%"/>
+				<col width="10%"/>
+				<col width="12%"/>
+				<col width="*"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="thGrid">Row No.</th>
+					<th class="thGrid">Date</th>
+					<th class="thGrid">Amount</th>
+					<th class="thGrid">Balance</th>
+					<th class="thGrid">Description</th>
+				</tr>
+			</thead>
+			<tbody id="tblGridBody_CBA_ANZ">
+			</tbody>
+		</table>
+	</div>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

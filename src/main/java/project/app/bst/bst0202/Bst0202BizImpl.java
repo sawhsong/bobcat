@@ -11,30 +11,28 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import zebra.config.MemoryBean;
+import project.common.extend.BaseBiz;
+import project.common.module.bizservice.bankstatement.BankStatementBizService;
+import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
+import project.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementDao;
+import project.conf.resource.ormapper.dao.UsrBankStatementD.UsrBankStatementDDao;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
 import zebra.util.FileUtil;
-import project.common.extend.BaseBiz;
-import project.common.module.bizservice.bankstatement.BankStatementBizService;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
-import project.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 	@Autowired
 	private UsrBankAccntDao usrBankAccntDao;
 	@Autowired
 	private UsrBankStatementDao usrBankStatementDao;
+	@Autowired
+	private UsrBankStatementDDao usrBankStatementDDao;
 	@Autowired
 	private BankStatementBizService bankStatementBS;
 
@@ -95,10 +93,69 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getBankAccountInfo(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+		DataSet bankAccountInfo = new DataSet();
 
 		try {
+			bankAccountInfo= usrBankAccntDao.getDataSetByBankAccntId(bankAccntId);
+			bankAccountInfo.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(bankAccountInfo.getValue("INSERT_USER_ID")));
+			bankAccountInfo.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(bankAccountInfo.getValue("UPDATE_USER_ID")));
+			bankAccountInfo.addColumn("BANK_NAME", CommonCodeManager.getCodeDescription("BANK_TYPE", bankAccountInfo.getValue("BANK_CODE")));
+
+			paramEntity.setAjaxResponseDataSet(bankAccountInfo);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getFile(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bankStatementId = requestDataSet.getValue("bankStatementId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrBankStatementDao.getDataSetByBankStatementId(bankStatementId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getInfoDataForDetail(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String bankStatementId = requestDataSet.getValue("bankStatementId");
+
+		try {
+			queryAdvisor.setObject("bankStatementId", bankStatementId);
+
+			paramEntity.setAjaxResponseDataSet(usrBankStatementDao.getDataSetBySearchCriteria(queryAdvisor));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getBankStatementDetail(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bankStatementId = requestDataSet.getValue("bankStatementId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrBankStatementDDao.getDataSetByBankStatementId(bankStatementId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -112,29 +169,19 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 		HttpSession session = paramEntity.getSession();
 		String bankAccntId = requestDataSet.getValue("bankAccntId");
 		String bankCode = requestDataSet.getValue("bankCode");
-		String webPath = ConfigUtil.getProperty("path.dir.bankStatement");
-		String uploadPath = ConfigUtil.getProperty("path.dir.uploadedBankStatement");
-		String webRootPath = (String)MemoryBean.get("applicationRealPath");
-		String pathToCopy = "";
+		String fileName = "";
 		DataSet fileData = new DataSet();
 
 		try {
-			String fileName = fileDataSet.getValue("NEW_NAME");
+			discardBankStatement(paramEntity);
 
-			// Copy the file to web source
-			pathToCopy = webRootPath + webPath + "/" + bankAccntId + "_" + fileName;
-			FileUtil.copyFile(fileDataSet, pathToCopy);
+			fileName = fileDataSet.getValue("NEW_NAME");
 
-			// Move the file to repository
-			pathToCopy = uploadPath + "/" + bankAccntId + "_" + fileName;
-			FileUtil.moveFile(fileDataSet, pathToCopy);
-
-			fileData = bankStatementBS.getBankStatementDataSetFromFileByBank(bankAccntId, bankCode, new File(pathToCopy));
+			fileData = bankStatementBS.getBankStatementDataSetFromFileByBank(bankAccntId, bankCode, new File(fileDataSet.getValue("TEMP_PATH")+"/"+fileName));
 
 			// Save to session before saving
+			session.setAttribute("UploadBankStatementDataFile", fileDataSet);
 			session.setAttribute("UploadBankStatementData", fileData);
-			session.setAttribute("UploadBankStatementFileRepositoryPath", uploadPath + "/" + bankAccntId + "_" + fileName);
-			session.setAttribute("UploadBankStatementFileWebPath", webRootPath + webPath + "/" + bankAccntId + "_" + fileName);
 
 			paramEntity.setAjaxResponseDataSet(fileData);
 			paramEntity.setSuccess(true);
@@ -145,14 +192,58 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity discardBankStatement(ParamEntity paramEntity) throws Exception {
+		HttpSession session = paramEntity.getSession();
+		File file;
+		DataSet fileDataSet;
+		String filePathName = "";
+
+		try {
+			fileDataSet = (DataSet)session.getAttribute("UploadBankStatementDataFile");
+
+			filePathName = fileDataSet.getValue("TEMP_PATH")+"/"+fileDataSet.getValue("NEW_NAME");
+
+			file = new File(filePathName);
+			file.delete();
+
+			// Remove session attribute
+			session.removeAttribute("UploadBankStatementDataFile");
+			session.removeAttribute("UploadBankStatementData");
+
+			paramEntity.setAjaxResponseDataSet(new DataSet());
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		HttpSession session = paramEntity.getSession();
+		String loggedInUserId = (String)session.getAttribute("UserId");
+		DataSet fileDataSet, bankFileData;
+		String filePathNameTemp = "", filePathNameRepos = "", fileName = "";
+		String pathToSave = ConfigUtil.getProperty("path.dir.uploadedBankStatement");
 		int result = -1;
 
 		try {
+			fileDataSet = (DataSet)session.getAttribute("UploadBankStatementDataFile");
+			bankFileData = (DataSet)session.getAttribute("UploadBankStatementData");
+			fileName = fileDataSet.getValue("NEW_NAME");
+			filePathNameTemp = fileDataSet.getValue("TEMP_PATH")+"/"+fileName;
+			filePathNameRepos = pathToSave+"/"+fileName;
+			FileUtil.copyFile(new File(filePathNameTemp), new File(filePathNameRepos));
+
+			fileDataSet.addColumn("USER_ID", loggedInUserId);
+			bankFileData.addColumn("USER_ID", loggedInUserId);
+			fileDataSet.setValue("REPOSITORY_PATH", pathToSave);
+
+			result = bankStatementBS.doSave(fileDataSet, bankFileData);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
+
+			discardBankStatement(paramEntity);
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
@@ -164,48 +255,24 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String chkForDel = requestDataSet.getValue("chkForDel");
+		String bankStatementId = requestDataSet.getValue("bankStatementId");
+		String bankStatementIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
+			if (CommonUtil.isBlank(bankStatementId)) {
+				result = usrBankStatementDao.delete(bankStatementIds);
+			} else {
+				result = usrBankStatementDao.delete(bankStatementId);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[] = new String[] {};
-		String pageTitle = "", fileName = "";
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
-
-		try {
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
-
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
-			}
-
-			exportHelper.setSourceDataSet(new DataSet());
-
-			paramEntity.setSuccess(true);
-			paramEntity.setFileToExport(exportHelper.createFile());
-			paramEntity.setFileNameToExport(exportHelper.getFileName());
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

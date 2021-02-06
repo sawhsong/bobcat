@@ -32,14 +32,59 @@ public class Bst0202Action extends BaseAction {
 		return "upload";
 	}
 
-	public String getEdit() throws Exception {
-		biz.getEdit(paramEntity);
-		return "edit";
+	public String getBankAccountInfo() throws Exception {
+		try {
+			biz.getBankAccountInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getFile() throws Exception {
+		try {
+			biz.getFile(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getDetail() throws Exception {
+		biz.getDetail(paramEntity);
+		return "detail";
+	}
+
+	public String getInfoDataForDetail() throws Exception {
+		try {
+			biz.getInfoDataForDetail(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getBankStatementDetail() throws Exception {
+		try {
+			biz.getBankStatementDetail(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String doUpload() throws Exception {
 		try {
 			biz.doUpload(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String discardBankStatement() throws Exception {
+		try {
+			biz.discardBankStatement(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -62,11 +107,5 @@ public class Bst0202Action extends BaseAction {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String doExport() throws Exception {
-		biz.doExport(paramEntity);
-		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
 	}
 }

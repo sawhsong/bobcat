@@ -4,7 +4,13 @@
  *************************************************************************************************/
 package project.conf.resource.ormapper.dao.UsrBankStatementD;
 
+import project.conf.resource.ormapper.dto.oracle.UsrBankStatement;
 import zebra.base.IDao;
+import zebra.data.DataSet;
 
 public interface UsrBankStatementDDao extends IDao {
+	public int insert(UsrBankStatement usrBankStatement, DataSet bankFileData) throws Exception;
+	public int deleteByBankStatementId(String bankStatementId) throws Exception;
+
+	public DataSet getDataSetByBankStatementId(String bankStatementId) throws Exception;
 }

@@ -77,8 +77,5 @@
 		<copy todir="${target.image.orgLogo}">
 			<fileset dir="${src.repository.orgLogo}"/>
 		</copy>
-		<copy todir="${target.repository.bankStatement}">
-			<fileset dir="${src.repository.bankStatement}"/>
-		</copy>
 	</target>
 </project>

@@ -2,10 +2,17 @@
  * Framework Generated Javascript Source
  * - Bst0202EditPop.js
  *************************************************************************************************/
+jsconfig.put("scrollablePanelHeightAdjust", 2);
+var discardable = false;
+
 $(function() {
 	/*!
 	 * event
 	 */
+	$("#bankAccntId").change(function() {
+		loadBankInfo();
+	});
+
 	$("#btnUpload").click(function(event) {
 		if ("disabled" == $(this).attr("disabled")) {
 			return;
@@ -18,6 +25,7 @@ $(function() {
 				url:"/bst/0202/doUpload.do",
 				confirmMessage:"Are you sure to upload the file?",
 				data:{bankCode:bankCode},
+				showPostMessage:false,
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 
@@ -27,20 +35,42 @@ $(function() {
 					setTimeout(function() {
 						renderDataGrid(ds, bankCode);
 					}, 400);
+
+					discardable = true;
 				}
 			});
 		}
 	});
 
-	/*
-	 * ToDo
-	 */
 	$("#btnDiscard").click(function() {
+		if (!discardable) {
+			commonJs.warn("There is no data to discard.");
+			return;
+		}
+
 		commonJs.doProcess({
 			url:"/bst/0202/discardBankStatement.do",
+			confirmMessage:"Are you sure to discard data uploaded?",
 			noForm:true,
 			onSuccess:function(result) {
 				var ds = result.dataSet;
+				setTableDisplay("");
+				toggleUploadButton(0);
+				discardable = false;
+			}
+		});
+	});
+
+	$("#btnSave").click(function() {
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
+		}
+
+		commonJs.doSave({
+			url:"/bst/0202/doSave.do",
+			onSuccess:function(result) {
+				var ds = result.dataSet;
+				$("#btnClose").trigger("click");
 			}
 		});
 	});
@@ -61,15 +91,54 @@ $(function() {
 	/*!
 	 * process
 	 */
-	setTableDisplay = function(bankCode) {
-		$("#divDataArea").find("div").each(function() {
-			var id = $(this).attr("id");
-			if (commonJs.contains(id, bankCode)) {
-				$(this).show();
-			} else {
-				$(this).hide();
-			}
+	loadBankInfo = function() {
+		var bankAccntId = $("#bankAccntId").val();
+
+		commonJs.showProcMessageOnElement("divInformArea");
+		commonJs.doSearch({
+			url:"/bst/0202/getBankAccountInfo.do",
+			noForm:true,
+			data:{bankAccntId:bankAccntId},
+			onSuccess:setBankAccountInfo
 		});
+	};
+
+	setBankAccountInfo = function(result) {
+		var ds = result.dataSet;
+
+		$("#tdBank").html(ds.getValue(0, "BANK_NAME"));
+		$("#tdBsb").html(commonJs.getFormatString(ds.getValue(0, "BSB"), "??? ???"));
+		$("#tdAccntNumber").html(ds.getValue(0, "ACCNT_NUMBER"));
+		$("#tdAccntName").html(ds.getValue(0, "ACCNT_NAME"));
+		$("#tdBalance").html(commonJs.getNumberMask(ds.getValue(0, "BALANCE"), "#,##0.00"));
+		$("#tdDescription").html(ds.getValue(0, "DESCRIPTION"));
+
+		commonJs.hideProcMessageOnElement("divInformArea");
+	};
+
+	setTableDisplay = function(bankCode) {
+		if (commonJs.isBlank(bankCode)) {
+			$("#divDataArea").find("div").each(function() {
+				$(this).hide();
+			});
+		} else {
+			$("#divDataArea").find("div").each(function() {
+				var id = $(this).attr("id");
+				if (commonJs.contains(id, bankCode)) {
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			});
+		}
+	};
+
+	toggleUploadButton = function(numberOfRows) {
+		if (numberOfRows > 0) {
+			$("#btnUpload").attr("disabled", true);
+		} else {
+			$("#btnUpload").attr("disabled", false);
+		}
 	};
 
 	getTableByBankCode = function(bankCode) {
@@ -100,6 +169,7 @@ $(function() {
 		var html = "";
 		var table = getTableByBankCode(bankCode);
 		var tbody = getTBodyByBankCode(bankCode);
+		var rowCnt = ds.getRowCnt();
 
 		$(tbody).html("");
 
@@ -107,22 +177,23 @@ $(function() {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BANK_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "BSB")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NUMBER")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ROW_INDEX")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "PROC_DATE")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "PROC_AMOUNT"), "#,##0.00")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
+				if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
+					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ROW_INDEX")));
+					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "PROC_DATE")));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "PROC_AMOUNT"), "#,##0.00")));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
+				}
 
 				html += gridTr.toHtmlString();
 			}
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
+			if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:5").setText(com.message.I001));
+			}
+
 			html += gridTr.toHtmlString();
 		}
 
@@ -135,24 +206,17 @@ $(function() {
 			totalResultRows:ds.getRowCnt()
 		});
 
+		toggleUploadButton(rowCnt);
+
 		commonJs.hideProcMessageOnElement("divScrollablePanelPopup");
 	};
 
 	/*!
 	 * load event (document / window)
 	 */
-	/*
-	 * ToDo
-	 */
-	$(window).unload(function() {
-		commonJs.doSimpleProcess({
-			url:"/bst/0202/discardBankStatement.do",
-			noForm:true,
-			onSuccess:function(result) {
-			}
-		});
-	});
-
 	$(window).load(function() {
+		setTimeout(function() {
+			loadBankInfo();
+		}, 200);
 	});
 });

@@ -57,15 +57,15 @@
 	<table class="tblSearch">
 		<caption>Please select bank account and a file to upload</caption>
 		<colgroup>
-			<col width="10%"/>
-			<col width="40%"/>
-			<col width="10%"/>
+			<col width="11%"/>
 			<col width="*"/>
+			<col width="9%"/>
+			<col width="33%"/>
 		</colgroup>
 		<tr>
 			<th class="thSearch rt mandatory">Bank Account</th>
 			<td class="tdSearch">
-				<ui:select name="bankAccntId" checkName="Bank Account" options="mandatory">
+				<ui:select name="bankAccntId" checkName="Bank Account" options="mandatory" attribute="data-width:450px">
 <%
 				for (int i=0; i<bankAccnt.getRowCnt(); i++) {
 %>
@@ -76,11 +76,38 @@
 				</ui:select>
 			</td>
 			<th class="thSearch rt mandatory">Select File</th>
-			<td class="tdSearch"><ui:file name="bankStatementFile" style="width:420px;" checkName="Bank Statement File" options="mandatory"/></td>
+			<td class="tdSearch"><ui:file name="bankStatementFile" style="width:330px;" checkName="Bank Statement File" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainerPopup">
+	<table class="tblInform">
+		<colgroup>
+			<col width="17%"/>
+			<col width="33%"/>
+			<col width="17%"/>
+			<col width="33%"/>
+		</colgroup>
+		<tr>
+			<th class="thInform rt">Bank</th>
+			<td class="tdInform" id="tdBank"></td>
+			<th class="thInform rt">BSB</th>
+			<td class="tdInform" id="tdBsb"></td>
+		</tr>
+		<tr>
+			<th class="thInform rt">Account Number</th>
+			<td class="tdInform" id="tdAccntNumber"></td>
+			<th class="thInform rt">Account Name</th>
+			<td class="tdInform" id="tdAccntName"></td>
+		</tr>
+		<tr>
+			<th class="thInform rt">Balance</th>
+			<td class="tdInform" id="tdBalance"></td>
+			<th class="thInform rt">Description</th>
+			<td class="tdInform" colspan="3" id="tdDescription"></td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -94,22 +121,14 @@
 	<div id="div_CBA_ANZ" style="display:none">
 		<table id="tblGrid_CBA_ANZ" class="tblGrid sort autosort">
 			<colgroup>
+				<col width="7%"/>
+				<col width="9%"/>
+				<col width="10%"/>
+				<col width="12%"/>
 				<col width="*"/>
-				<col width="6%"/>
-				<col width="9%"/>
-				<col width="9%"/>
-				<col width="6%"/>
-				<col width="7%"/>
-				<col width="7%"/>
-				<col width="9%"/>
-				<col width="15%"/>
 			</colgroup>
 			<thead>
 				<tr>
-					<th class="thGrid">Bank</th>
-					<th class="thGrid">BSB</th>
-					<th class="thGrid">Account Number</th>
-					<th class="thGrid">Account Name</th>
 					<th class="thGrid">Row No.</th>
 					<th class="thGrid">Date</th>
 					<th class="thGrid">Amount</th>
@@ -118,9 +137,6 @@
 				</tr>
 			</thead>
 			<tbody id="tblGridBody_CBA_ANZ">
-				<tr>
-					<td class="tdGrid Ct" colspan="9">&nbsp;</td>
-				</tr>
 			</tbody>
 		</table>
 	</div>

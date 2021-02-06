@@ -6,6 +6,7 @@ var popup;
 var dateTimeFormat = jsconfig.get("dateTimeFormatJs");
 var dateFormat = jsconfig.get("dateFormatJs");
 var searchResultDataCount = 0;
+var fileContextMenu = [];
 
 $(function() {
 	/*!
@@ -25,9 +26,13 @@ $(function() {
 			url:"/bst/0202/getUpload.do",
 			data:{},
 			header:"Upload Bank Statement",
-			width:1500,
-			height:800
+			width:1100,
+			height:810
 		});
+	});
+
+	$("#btnDelete").click(function(event) {
+		doDelete();
 	});
 
 	$("#icnFromDate").click(function(event) {
@@ -36,6 +41,10 @@ $(function() {
 
 	$("#icnToDate").click(function(event) {
 		commonJs.openCalendar(event, "toDate");
+	});
+
+	$("#icnCheck").click(function(event) {
+		commonJs.toggleCheckboxes("chkForDel");
 	});
 
 	$("#bankAccntId").change(function(event) {
@@ -87,7 +96,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NAME")));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "ORIGINAL_FILE_NAME")).setScript("getDetail('"+ds.getValue(i, "BANK_STATEMENT_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "ORIGINAL_FILE_NAME")).setScript("getDetail('"+ds.getValue(i, "BANK_CODE")+"', '"+ds.getValue(i, "BANK_STATEMENT_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "DETAIL_CNT"), "#,##0")));
@@ -123,8 +132,95 @@ $(function() {
 			script:"doSearch"
 		});
 
+		$("[name=iconFile]").each(function(index) {
+			$(this).contextMenu(fileContextMenu);
+		});
+
 		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
+	};
+
+	doDelete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.doDelete({
+			url:"/bst/0202/doDelete.do",
+			callback:doSearch
+		});
+	};
+
+	getDetail = function(bankCode, bankStatementId) {
+		popup = commonJs.openPopup({
+			popupId:"BankStatementDetail",
+			url:"/bst/0202/getDetail.do",
+			noForm:true,
+			data:{
+				bankCode:bankCode,
+				bankStatementId:bankStatementId
+			},
+			header:"Bank Statement Detail",
+			width:1100,
+			height:810
+		});
+	};
+
+	getFile = function(img) {
+		commonJs.doSimpleProcess({
+			url:"/bst/0202/getFile.do",
+			data:{bankStatementId:$(img).attr("bankStatementId")},
+			onSuccess:function(result) {
+				var dataSet = result.dataSet;
+				fileContextMenu = [];
+
+				for (var i=0; i<dataSet.getRowCnt(); i++) {
+					var repositoryPath = dataSet.getValue(i, "REPOSITORY_PATH");
+					var originalName = dataSet.getValue(i, "ORIGINAL_FILE_NAME");
+					var newName = dataSet.getValue(i, "NEW_NAME");
+					var fileIcon = dataSet.getValue(i, "FILE_ICON");
+					var fileSize = (dataSet.getValue(i, "FILE_SIZE")/1024)+1;
+
+					fileContextMenu.push({
+						name:originalName+" ("+commonJs.getNumberMask(fileSize, "0,0")+") KB",
+						title:originalName,
+						img:fileIcon,
+						repositoryPath:repositoryPath,
+						originalName:originalName,
+						newName:newName,
+						fun:function() {
+							var index = $(this).index();
+
+							downloadFile({
+								repositoryPath:fileContextMenu[index].repositoryPath,
+								originalName:fileContextMenu[index].originalName,
+								newName:fileContextMenu[index].newName
+							});
+						}
+					});
+				}
+
+				$(img).contextMenu(fileContextMenu, {
+					classPrefix:com.constants.ctxClassPrefixGrid,
+					displayAround:"trigger",
+					position:"bottom",
+					horAdjust:0,
+					verAdjust:2
+				});
+			}
+		});
+	};
+
+	downloadFile = function(param) {
+		commonJs.doSimpleProcessForPage({
+			action:"/download.do",
+			data:{
+				repositoryPath:param.repositoryPath,
+				originalName:param.originalName,
+				newName:param.newName
+			}
+		});
 	};
 
 	/*!
@@ -133,5 +229,7 @@ $(function() {
 	$(window).load(function() {
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
+
+		doSearch();
 	});
 });

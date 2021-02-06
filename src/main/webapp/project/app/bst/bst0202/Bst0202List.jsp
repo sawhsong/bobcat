@@ -106,13 +106,13 @@
 			<col width="*"/>
 			<col width="4%"/>
 			<col width="7%"/>
+			<col width="12%"/>
+			<col width="22%"/>
+			<col width="4%"/>
+			<col width="4%"/>
+			<col width="5%"/>
+			<col width="5%"/>
 			<col width="7%"/>
-			<col width="20%"/>
-			<col width="5%"/>
-			<col width="5%"/>
-			<col width="6%"/>
-			<col width="6%"/>
-			<col width="6%"/>
 			<col width="8%"/>
 		</colgroup>
 		<thead>

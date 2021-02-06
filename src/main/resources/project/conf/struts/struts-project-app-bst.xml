@@ -7,7 +7,7 @@
         <action class="project.app.bst.bst0202.Bst0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202List.jsp</result>
             <result name="upload" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202UploadPop.jsp</result>
-            <result name="edit" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202EditPop.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/bst/bst0202/Bst0202DetailPop.jsp</result>
         </action>
     </package>
 </struts>
