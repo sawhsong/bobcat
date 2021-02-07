@@ -26,7 +26,7 @@
 body {background:#FFFFFF;}
 .form-control {padding:6px 12px;}
 .logoImage {margin:0px auto;width:100%;text-align:center;}
-.logoImage img {margin-top:5%;}
+.logoImage img {margin-top:10%;}
 .loginPanel {margin:0px auto;width:100%;text-align:center;}
 .panelLogin {margin-top:10px;display:inline-block;width:360px;border:1px solid #D1D1D1;box-shadow:0px 0px 10px rgba(0, 0, 0, .2);}
 .panel-title {padding-top:4px;padding-left:36px;text-align:left;font-size:14px;height:23px;}
@@ -86,6 +86,7 @@ body {background:#FFFFFF;}
 		</div>
 	</div>
 </div>
+<!--
 <div id="divDescriptionArea" class="loginDescriptionArea">
 	<div class="panel panel-default loginDescription">
 		<div class="panel-heading">
@@ -135,6 +136,7 @@ body {background:#FFFFFF;}
 		</div>
 	</div>
 </div>
+-->
 </form>
 </body>
 </html>

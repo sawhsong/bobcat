@@ -256,8 +256,7 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		String userId = requestDataSet.getValue("userId");
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
 		String loggedinUserId = (String)session.getAttribute("UserId");
-		DataSet existingBankAccnt = new DataSet();
-		DataSet bankAccntFromReq = new DataSet();
+		DataSet existingBankAccnt = new DataSet(), bankAccntFromReq = new DataSet();
 		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
 		String header[] = new String[] {"BANK_ACCNT_ID", "USER_ID", "BANK_CODE", "BSB", "ACCNT_NUMBER", "ACCNT_NAME", "BALANCE", "DESCRIPTION"};
 		int result = -1;
@@ -265,56 +264,29 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		try {
 			existingBankAccnt = usrBankAccntDao.getDataSetByUserId(userId);
 
-			bankAccntFromReq.addName(header);
-			for (int i=0; i<detailLength; i++) {
-				bankAccntFromReq.addRow();
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_ACCNT_ID", requestDataSet.getValue("bankAccntId"+delimiter+i));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "USER_ID", requestDataSet.getValue("userId"));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_CODE", requestDataSet.getValue("bankCode"+delimiter+i));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BSB", CommonUtil.remove(requestDataSet.getValue("bsb"+delimiter+i), " "));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NUMBER", requestDataSet.getValue("accntNumber"+delimiter+i));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NAME", requestDataSet.getValue("accntName"+delimiter+i));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BALANCE", requestDataSet.getValue("balance"+delimiter+i));
-				bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "DESCRIPTION", requestDataSet.getValue("description"+delimiter+i));
+			if (detailLength > 0) {
+				bankAccntFromReq.addName(header);
+				for (int i=0; i<detailLength; i++) {
+					bankAccntFromReq.addRow();
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_ACCNT_ID", requestDataSet.getValue("bankAccntId"+delimiter+i));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "USER_ID", requestDataSet.getValue("userId"));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BANK_CODE", requestDataSet.getValue("bankCode"+delimiter+i));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BSB", CommonUtil.remove(requestDataSet.getValue("bsb"+delimiter+i), " "));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NUMBER", requestDataSet.getValue("accntNumber"+delimiter+i));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "ACCNT_NAME", requestDataSet.getValue("accntName"+delimiter+i));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "BALANCE", requestDataSet.getValue("balance"+delimiter+i));
+					bankAccntFromReq.setValue(bankAccntFromReq.getRowCnt()-1, "DESCRIPTION", requestDataSet.getValue("description"+delimiter+i));
+				}
+				result = usrBankAccntDao.insertOrUpdate(bankAccntFromReq, loggedinUserId);
 			}
 
-			if (existingBankAccnt.getRowCnt() <= 0) {
-				result = usrBankAccntDao.insert(bankAccntFromReq, loggedinUserId);
-			} else {
-				for (int i=0; i<existingBankAccnt.getRowCnt(); i++) {
-					String bankAccntId = existingBankAccnt.getValue(i, "BANK_ACCNT_ID");
-					int idx = bankAccntFromReq.getRowIndex("BANK_ACCNT_ID", bankAccntId);
+			for (int i=0; i<existingBankAccnt.getRowCnt(); i++) {
+				String bankAccntId = existingBankAccnt.getValue(i, "BANK_ACCNT_ID");
+				int idx = bankAccntFromReq.getRowIndex("BANK_ACCNT_ID", bankAccntId);
 
-					if (idx < 0) {
-						existingBankAccnt.deleteRow(i);
-					} else {
-						existingBankAccnt.setValue(i, "BANK_CODE", bankAccntFromReq.getValue(idx, "BANK_CODE"));
-						existingBankAccnt.setValue(i, "BSB", bankAccntFromReq.getValue(idx, "BSB"));
-						existingBankAccnt.setValue(i, "ACCNT_NUMBER", bankAccntFromReq.getValue(idx, "ACCNT_NUMBER"));
-						existingBankAccnt.setValue(i, "ACCNT_NAME", bankAccntFromReq.getValue(idx, "ACCNT_NAME"));
-						existingBankAccnt.setValue(i, "BALANCE", bankAccntFromReq.getValue(idx, "BALANCE"));
-						existingBankAccnt.setValue(i, "DESCRIPTION", bankAccntFromReq.getValue(idx, "DESCRIPTION"));
-					}
+				if (idx < 0) {
+					result += usrBankAccntDao.delete(bankAccntId);
 				}
-
-				for (int i=0; i<bankAccntFromReq.getRowCnt(); i++) {
-					String bankAccntId = bankAccntFromReq.getValue(i, "BANK_ACCNT_ID");
-
-					if (CommonUtil.isBlank(bankAccntId)) {
-						existingBankAccnt.addRow();
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "USER_ID", bankAccntFromReq.getValue(i, "USER_ID"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "BANK_CODE", bankAccntFromReq.getValue(i, "BANK_CODE"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "BSB", bankAccntFromReq.getValue(i, "BSB"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "ACCNT_NUMBER", bankAccntFromReq.getValue(i, "ACCNT_NUMBER"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "ACCNT_NAME", bankAccntFromReq.getValue(i, "ACCNT_NAME"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "BALANCE", bankAccntFromReq.getValue(i, "BALANCE"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "DESCRIPTION", bankAccntFromReq.getValue(i, "DESCRIPTION"));
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "INSERT_USER_ID", loggedinUserId);
-						existingBankAccnt.setValue(existingBankAccnt.getRowCnt()-1, "INSERT_DATE", CommonUtil.getSysdate());
-					}
-				}
-
-				result = usrBankAccntDao.update(existingBankAccnt, loggedinUserId);
 			}
 
 			if (result <= 0) {

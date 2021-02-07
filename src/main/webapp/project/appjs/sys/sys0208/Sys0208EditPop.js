@@ -4,7 +4,7 @@
  *************************************************************************************************/
 var delimiter = jsconfig.get("dataDelimiter");
 var isBankAccntLoaded = false;
-jsconfig.put("useJqSelectmenu", false);
+var bankAccntCount = 0;
 
 $(function() {
 	/*!
@@ -58,42 +58,53 @@ $(function() {
 		}
 
 		if (detailLength <= 0) {
-			commonJs.alert("There is no data to save.");
-			return;
-		}
+			if (bankAccntCount <= 0) {
+				commonJs.alert("There is no data to save.");
+				return;
+			} else {
+				commonJs.doSave({
+					url:"/sys/0208/saveBankAccnts.do",
+					data:{detailLength:detailLength},
+					onSuccess:function(result) {
+						parent.popup.close();
+						parent.doSearch();
+					}
+				});
+			}
+		} else {
+			$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+				$(this).find(":input").each(function(index) {
+					var id = $(this).attr("id"), name = $(this).attr("name");
 
-		$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
-			$(this).find(":input").each(function(index) {
-				var id = $(this).attr("id"), name = $(this).attr("name");
+					if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
+					else {id = "";}
 
-				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
-				else {id = "";}
+					if (!commonJs.isEmpty(name)) {name = (name.indexOf(delimiter) != -1) ? name.substring(0, name.indexOf(delimiter)) : name;}
+					else {name = "";}
 
-				if (!commonJs.isEmpty(name)) {name = (name.indexOf(delimiter) != -1) ? name.substring(0, name.indexOf(delimiter)) : name;}
-				else {name = "";}
+					$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
 
-				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
-
-				elementsToCheck.push($(this).attr("id"));
+					elementsToCheck.push($(this).attr("id"));
+				});
 			});
-		});
 
-		if (!commonJs.doValidate(elementsToCheck)) {
-			isValid = false;
-			return;
-		}
+			if (!commonJs.doValidate(elementsToCheck)) {
+				isValid = false;
+				return;
+			}
 
-		if (isValid) {
-			var detailLength = $("#ulDetailHolder .dummyDetail").length;
+			if (isValid) {
+				var detailLength = $("#ulDetailHolder .dummyDetail").length;
 
-			commonJs.doSave({
-				url:"/sys/0208/saveBankAccnts.do",
-				data:{detailLength:detailLength},
-				onSuccess:function(result) {
-					parent.popup.close();
-					parent.doSearch();
-				}
-			});
+				commonJs.doSave({
+					url:"/sys/0208/saveBankAccnts.do",
+					data:{detailLength:detailLength},
+					onSuccess:function(result) {
+						parent.popup.close();
+						parent.doSearch();
+					}
+				});
+			}
 		}
 	});
 
@@ -320,8 +331,11 @@ $(function() {
 	};
 
 	setBankAccountsInfo = function(ds) {
+		bankAccntCount = ds.getRowCnt();
+
 		for (var i=0; i<ds.getRowCnt(); i++) {
 			var rowIdx = delimiter+i;
+			var childBankStatementDataCnt = ds.getValue(i, "BANK_STATEMENT_CNT");
 
 			$("#btnAddBankAccnt").trigger("click");
 
@@ -333,6 +347,15 @@ $(function() {
 			$("[name=accntName"+rowIdx+"]").val(ds.getValue(i, "ACCNT_NAME"));
 			$("[name=balance"+rowIdx+"]").val(ds.getValue(i, "BALANCE"));
 			$("[name=description"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION"));
+
+			if (childBankStatementDataCnt > 0) {
+				$("#ulDetailHolder").find(".deleteButton").each(function(index) {
+					if ($(this).attr("index") == i) {
+						$(this).css("cursor", "default");
+						$(this).find("i").remove();
+					}
+				});
+			}
 		}
 	};
 
@@ -342,7 +365,7 @@ $(function() {
 	$(document).click(function(event) {
 		var obj = event.target;
 
-		if ($(obj).hasClass("deleteButton") || ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton"))) {
+		if ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton")) {
 			$("#ulDetailHolder").find(".dummyDetail").each(function(index) {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();

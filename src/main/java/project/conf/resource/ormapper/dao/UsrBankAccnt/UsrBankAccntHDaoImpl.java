@@ -12,25 +12,37 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
-	public int insert(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception {
+	public int insertOrUpdate(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		int result = 0;
 
 		try {
 			for (int i=0; i<bankAccntsDataSetToSave.getRowCnt(); i++) {
 				UsrBankAccnt usrBankAccnt = new UsrBankAccnt();
+				String bankAccntId = bankAccntsDataSetToSave.getValue(i, "BANK_ACCNT_ID");
 
-				usrBankAccnt.setBankAccntId(CommonUtil.uid());
-				usrBankAccnt.setUserId(bankAccntsDataSetToSave.getValue(i, "USER_ID"));
-				usrBankAccnt.setBankCode(bankAccntsDataSetToSave.getValue(i, "BANK_CODE"));
 				usrBankAccnt.setBsb(bankAccntsDataSetToSave.getValue(i, "BSB"));
 				usrBankAccnt.setAccntNumber(bankAccntsDataSetToSave.getValue(i, "ACCNT_NUMBER"));
 				usrBankAccnt.setAccntName(bankAccntsDataSetToSave.getValue(i, "ACCNT_NAME"));
 				usrBankAccnt.setBalance(CommonUtil.toDouble(bankAccntsDataSetToSave.getValue(i, "BALANCE")));
 				usrBankAccnt.setDescription(bankAccntsDataSetToSave.getValue(i, "DESCRIPTION"));
-				usrBankAccnt.setInsertUserId(loggedinUserId);
-				usrBankAccnt.setInsertDate(CommonUtil.getSysdateAsDate());
 
-				result += insertWithSQLQuery(usrBankAccnt);
+				if (CommonUtil.isBlank(bankAccntId)) {
+					usrBankAccnt.setBankAccntId(CommonUtil.uid());
+					usrBankAccnt.setUserId(bankAccntsDataSetToSave.getValue(i, "USER_ID"));
+					usrBankAccnt.setBankCode(bankAccntsDataSetToSave.getValue(i, "BANK_CODE"));
+					usrBankAccnt.setInsertUserId(loggedinUserId);
+					usrBankAccnt.setInsertDate(CommonUtil.getSysdateAsDate());
+
+					result += insertWithSQLQuery(usrBankAccnt);
+				} else {
+					usrBankAccnt.setUpdateUserId(loggedinUserId);
+					usrBankAccnt.setUpdateDate(CommonUtil.getSysdateAsDate());
+
+					usrBankAccnt.addUpdateColumnFromField();
+					queryAdvisor.addWhereClause("bank_accnt_id = '"+bankAccntId+"'");
+					result += updateColumns(queryAdvisor, usrBankAccnt);
+				}
 			}
 
 			return result;
@@ -41,38 +53,6 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 
 	public int insert(UsrBankAccnt usrBankAccnt) throws Exception {
 		return insertWithSQLQuery(usrBankAccnt);
-	}
-
-	public int update(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception {
-		int result = 0;
-		String userId = bankAccntsDataSetToSave.getValue(0, "USER_ID");
-
-		try {
-			deleteByUserId(userId);
-
-			for (int i=0; i<bankAccntsDataSetToSave.getRowCnt(); i++) {
-				UsrBankAccnt usrBankAccnt = new UsrBankAccnt();
-
-				usrBankAccnt.setBankAccntId(CommonUtil.uid());
-				usrBankAccnt.setUserId(bankAccntsDataSetToSave.getValue(i, "USER_ID"));
-				usrBankAccnt.setBankCode(bankAccntsDataSetToSave.getValue(i, "BANK_CODE"));
-				usrBankAccnt.setBsb(bankAccntsDataSetToSave.getValue(i, "BSB"));
-				usrBankAccnt.setAccntNumber(bankAccntsDataSetToSave.getValue(i, "ACCNT_NUMBER"));
-				usrBankAccnt.setAccntName(bankAccntsDataSetToSave.getValue(i, "ACCNT_NAME"));
-				usrBankAccnt.setBalance(CommonUtil.toDouble(bankAccntsDataSetToSave.getValue(i, "BALANCE")));
-				usrBankAccnt.setDescription(bankAccntsDataSetToSave.getValue(i, "DESCRIPTION"));
-				usrBankAccnt.setInsertUserId(bankAccntsDataSetToSave.getValue(i, "INSERT_USER_ID"));
-				usrBankAccnt.setInsertDate(CommonUtil.toDate(bankAccntsDataSetToSave.getValue(i, "INSERT_DATE")));
-				usrBankAccnt.setUpdateUserId(loggedinUserId);
-				usrBankAccnt.setUpdateDate(CommonUtil.getSysdateAsDate());
-
-				result += insertWithSQLQuery(usrBankAccnt);
-			}
-
-			return result;
-		} catch (Exception ex) {
-			return -1;
-		}
 	}
 
 	public int update(String bankAccntId, UsrBankAccnt usrBankAccnt) throws Exception {
@@ -133,9 +113,12 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 
 	public DataSet getDataSetByUserId(String userId) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
-		queryAdvisor.addWhereClause("user_id = '"+userId+"'");
-		queryAdvisor.addOrderByClause("bank_code");
-		return selectAllAsDataSet(queryAdvisor, new UsrBankAccnt());
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
+
+		queryAdvisor.addVariable("langCode", langCode);
+		queryAdvisor.addAutoFillCriteria(userId, "user_id = '"+userId+"'");
+		queryAdvisor.addOrderByClause("bank_name");
+		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getDataSetBySearchCriteria");
 	}
 
 	public DataSet getDataSetForSearchCriteriaByUserId(String userId) throws Exception {

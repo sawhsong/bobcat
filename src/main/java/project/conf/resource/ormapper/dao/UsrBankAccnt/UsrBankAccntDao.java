@@ -10,9 +10,8 @@ import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 
 public interface UsrBankAccntDao extends IDao {
-	public int insert(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception;
+	public int insertOrUpdate(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception;
 	public int insert(UsrBankAccnt usrBankAccnt) throws Exception;
-	public int update(DataSet bankAccntsDataSetToSave, String loggedinUserId) throws Exception;
 	public int update(String bankAccntId, UsrBankAccnt usrBankAccnt) throws Exception;
 	public int delete(String bankAccntIds[]) throws Exception;
 	public int delete(String bankAccntId) throws Exception;
