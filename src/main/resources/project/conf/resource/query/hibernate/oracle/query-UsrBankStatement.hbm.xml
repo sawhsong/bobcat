@@ -35,13 +35,13 @@
 		               min_proc_date,
 		               max_proc_date,
 		               total_proc_amt,
-		               (select nvl(balance, 0) from usr_bank_statement_d where bank_statement_id = a.bank_statement_id and row_index = a.max_row_index) as last_balance_amt
+		               (select nvl(balance, 0) from usr_bank_statement_d where bank_statement_id = a.bank_statement_id and row_index = a.min_row_index) as last_balance_amt
 		          from (select bank_statement_id,
 		                       count(*) as detail_cnt,
 		                       trunc(min(proc_date)) as min_proc_date,
 		                       trunc(max(proc_date)) as max_proc_date,
 		                       nvl(sum(proc_amt), 0) as total_proc_amt,
-		                       max(row_index) as max_row_index
+		                       min(row_index) as min_row_index
 		                  from usr_bank_statement_d
 		                 group by bank_statement_id
 		               ) a

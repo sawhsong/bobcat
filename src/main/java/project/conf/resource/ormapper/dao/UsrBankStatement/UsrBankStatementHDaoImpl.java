@@ -32,7 +32,7 @@ public class UsrBankStatementHDaoImpl extends BaseHDao implements UsrBankStateme
 		result = insertWithSQLQuery(usrBankStatement);
 		result += usrBankStatementDDao.insert(usrBankStatement, bankFileData);
 
-		usrBankAccnt.setBalance(CommonUtil.toDouble(bankFileData.getValue(bankFileData.getRowCnt()-1, "BALANCE")));
+		usrBankAccnt.setBalance(CommonUtil.toDouble(bankFileData.getValue(0, "BALANCE")));
 		usrBankAccnt.setUpdateUserId(usrBankStatement.getInsertUserId());
 		usrBankAccnt.setUpdateDate(CommonUtil.getSysdateAsDate());
 		usrBankAccnt.addUpdateColumnFromField();
