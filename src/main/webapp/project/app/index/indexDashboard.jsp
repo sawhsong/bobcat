@@ -40,14 +40,14 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-#hNotice.ui-state-default {background-color:#DFF0D8;padding-top:10px;padding-bottom:10px;}
-#hNotice.ui-accordion-header.ui-state-active {background:#DFF0D8;padding-top:10px;padding-bottom:10px;}
-#hFreeBoard.ui-state-default {background-color:#DFF0D8;padding-top:10px;padding-bottom:10px;}
-#hFreeBoard.ui-accordion-header.ui-state-active {background:#DFF0D8;padding-top:10px;padding-bottom:10px;}
-#hIncome.ui-state-default {background-color:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;}
-#hIncome.ui-accordion-header.ui-state-active {background:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;}
-#hExpense.ui-state-default {background-color:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;}
-#hExpense.ui-accordion-header.ui-state-active {background:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;}
+/* #hNotice.ui-state-default {background-color:#DFF0D8;padding-top:10px;padding-bottom:10px;} */
+/* #hNotice.ui-accordion-header.ui-state-active {background:#DFF0D8;padding-top:10px;padding-bottom:10px;} */
+/* #hFreeBoard.ui-state-default {background-color:#DFF0D8;padding-top:10px;padding-bottom:10px;} */
+/* #hFreeBoard.ui-accordion-header.ui-state-active {background:#DFF0D8;padding-top:10px;padding-bottom:10px;} */
+/* #hIncome.ui-state-default {background-color:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;} */
+/* #hIncome.ui-accordion-header.ui-state-active {background:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;} */
+/* #hExpense.ui-state-default {background-color:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;} */
+/* #hExpense.ui-accordion-header.ui-state-active {background:#5BC0DE;padding-top:10px;padding-bottom:10px;color:#ffffff;} */
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -84,7 +84,7 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<div style="margin-top:20px;">
+	<div id="divWrapper" style="margin-top:20px;">
 		<div id="divLeft" class="accordion" style="padding-left:20px;width:49%;float:left">
 			<div class="accordionGroup">
 				<h3 id="hNotice">Notice</h3>
@@ -95,7 +95,7 @@
 							<col width="15%"/>
 							<col width="10%"/>
 						</colgroup>
-						<tbody>
+						<tbody id="tbodyGridNotice">
 							<tr class="noBorderAll noStripe">
 								<td class="tdGrid"><a class="aEn">The system has been upgraded. Please check your data entered in the past.</a></td>
 								<td class="tdGridCt">Administrator</td>

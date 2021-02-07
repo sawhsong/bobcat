@@ -76,7 +76,7 @@ var articleId = "<%=sysBoard.getArticleId()%>";
 		</colgroup>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.writerName"/></th>
-			<td class="tdEdit"><%=sysBoard.getWriterName()%>(<%=sysBoard.getWriterId()%>)</td>
+			<td class="tdEdit"><%=sysBoard.getWriterName()%></td>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.writerEmail"/></th>
 			<td class="tdEdit"><%=sysBoard.getWriterEmail()%></td>
 		</tr>

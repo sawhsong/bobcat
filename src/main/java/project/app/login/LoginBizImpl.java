@@ -159,13 +159,13 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 		try {
 			// Check with LoginID
 			sysUser = sysUserDao.getUserByLoginId(loginId);
-			if (sysUser == null || CommonUtil.isBlank(sysUser.getUserId())) {
+			if (sysUser == null || CommonUtil.isBlank(sysUser.getUserId()) || !CommonUtil.toBoolean(sysUser.getIsActive())) {
 				throw new FrameworkException("E907", getMessage("E907", paramEntity));
 			}
 
 			// Check with LoginID and Password
 			sysUser = sysUserDao.getUserByLoginIdAndPassword(loginId, password);
-			if (sysUser == null || CommonUtil.isBlank(sysUser.getUserId())) {
+			if (sysUser == null || CommonUtil.isBlank(sysUser.getUserId()) || !CommonUtil.toBoolean(sysUser.getIsActive())) {
 				throw new FrameworkException("E908", getMessage("E908", paramEntity));
 			}
 
