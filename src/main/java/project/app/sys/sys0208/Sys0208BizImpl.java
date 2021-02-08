@@ -259,7 +259,7 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 		DataSet existingBankAccnt = new DataSet(), bankAccntFromReq = new DataSet();
 		int detailLength = CommonUtil.toInt(requestDataSet.getValue("detailLength"));
 		String header[] = new String[] {"BANK_ACCNT_ID", "USER_ID", "BANK_CODE", "BSB", "ACCNT_NUMBER", "ACCNT_NAME", "BALANCE", "DESCRIPTION"};
-		int result = -1;
+		int result = 0;
 
 		try {
 			existingBankAccnt = usrBankAccntDao.getDataSetByUserId(userId);
@@ -293,6 +293,8 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			existingBankAccnt = usrBankAccntDao.getDataSetByUserId(userId);
+			paramEntity.setAjaxResponseDataSet(existingBankAccnt);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {

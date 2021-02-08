@@ -134,7 +134,7 @@ public class Sys0206BizImpl extends BaseBiz implements Sys0206Biz {
 			sysOrg.setEntityType(requestDataSet.getValue("entityType"));
 			sysOrg.setBusinessType(requestDataSet.getValue("businessType"));
 			sysOrg.setBaseType(requestDataSet.getValue("baseType"));
-			sysOrg.setWageType(requestDataSet.getValue("wageType"));
+			sysOrg.setWageType("WTWEEK");
 			sysOrg.setRevenueRangeFrom(CommonUtil.toDouble(requestDataSet.getValue("rRangeFrom")));
 			sysOrg.setRevenueRangeTo(CommonUtil.toDouble(requestDataSet.getValue("rRangeTo")));
 

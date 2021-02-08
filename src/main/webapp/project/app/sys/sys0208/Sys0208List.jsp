@@ -117,9 +117,8 @@
 			<col width="17%"/>
 			<col width="7%"/>
 			<col width="9%"/>
-			<col width="6%"/>
 			<col width="5%"/>
-			<col width="6%"/>
+			<col width="8%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
@@ -131,15 +130,14 @@
 				<th class="thGrid"><mc:msg key="sys0208.grid.email"/></th>
 				<th class="thGrid">Bank Account</th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.authGroup"/></th>
-				<th class="thGrid"><mc:msg key="sys0208.grid.status"/></th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.active"/></th>
-				<th class="thGrid"><mc:msg key="sys0208.grid.date"/></th>
+				<th class="thGrid">Last Updated Date</th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="11"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="10"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

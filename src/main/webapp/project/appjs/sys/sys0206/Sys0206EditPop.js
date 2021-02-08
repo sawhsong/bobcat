@@ -30,9 +30,8 @@ $(function() {
 				url:"/sys/0206/saveOrgDetail.do",
 				onSuccess:function(result) {
 					var ds = result.dataSet;
-					commonJs.showProcMessage(com.message.loading);
 					setTimeout(function() {
-						setOrgDetailInfo(ds);
+						loadData();
 					}, 400);
 				}
 			});

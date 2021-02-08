@@ -4,7 +4,6 @@
  *************************************************************************************************/
 jsconfig.put("useJqSelectmenu", false);
 var delimiter = jsconfig.get("dataDelimiter");
-var isBankAccntLoaded = false;
 var bankAccntCount = 0;
 
 $(function() {
@@ -40,7 +39,10 @@ $(function() {
 				},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
-					setUserDetailInfo(ds);
+					commonJs.showProcMessage(com.message.loading);
+					setTimeout(function() {
+						setUserDetailInfo(ds);
+					}, 400);
 				},
 				onCancel:function() {
 					disableUserDetailFields();
@@ -67,8 +69,11 @@ $(function() {
 					url:"/sys/0208/saveBankAccnts.do",
 					data:{detailLength:detailLength},
 					onSuccess:function(result) {
-						parent.popup.close();
-						parent.doSearch();
+						var ds = result.dataSet;
+						commonJs.showProcMessageOnElement("divGridWrapper");
+						setTimeout(function() {
+							setBankAccountsInfo(ds);
+						}, 400);
 					}
 				});
 			}
@@ -95,14 +100,15 @@ $(function() {
 			}
 
 			if (isValid) {
-				var detailLength = $("#ulDetailHolder .dummyDetail").length;
-
 				commonJs.doSave({
 					url:"/sys/0208/saveBankAccnts.do",
 					data:{detailLength:detailLength},
 					onSuccess:function(result) {
-						parent.popup.close();
-						parent.doSearch();
+						var ds = result.dataSet;
+						commonJs.showProcMessageOnElement("divGridWrapper");
+						setTimeout(function() {
+							setBankAccountsInfo(ds);
+						}, 400);
 					}
 				});
 			}
@@ -245,38 +251,35 @@ $(function() {
 
 	loadUserDetail = function() {
 		if (!commonJs.isBlank(userId)) {
-			commonJs.showProcMessage(com.message.loading);
-
-			setTimeout(function() {
-				commonJs.doSimpleProcess({
-					url:"/sys/0208/getUserDetail.do",
-					noForm:true,
-					data:{userId:userId},
-					onSuccess:function(result) {
-						var ds = result.dataSet;
+			commonJs.doSimpleProcess({
+				url:"/sys/0208/getUserDetail.do",
+				noForm:true,
+				data:{userId:userId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					commonJs.showProcMessage(com.message.loading);
+					setTimeout(function() {
 						setUserDetailInfo(ds);
-					}
-				});
-			}, 400);
+					}, 400);
+				}
+			});
 		}
 	};
 
 	loadBankAccounts = function() {
-		if (!commonJs.isBlank(userId) && !isBankAccntLoaded) {
-			commonJs.showProcMessage(com.message.loading);
-
-			setTimeout(function() {
-				commonJs.doSimpleProcess({
-					url:"/sys/0208/getBankAccounts.do",
-					noForm:true,
-					data:{userId:userId},
-					onSuccess:function(result) {
-						var ds = result.dataSet;
+		if (!commonJs.isBlank(userId)) {
+			commonJs.doSimpleProcess({
+				url:"/sys/0208/getBankAccounts.do",
+				noForm:true,
+				data:{userId:userId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					commonJs.showProcMessageOnElement("divGridWrapper");
+					setTimeout(function() {
 						setBankAccountsInfo(ds);
-						isBankAccntLoaded = true;
-					}
-				});
-			}, 400);
+					}, 400);
+				}
+			});
 		}
 	};
 
@@ -303,6 +306,8 @@ $(function() {
 	};
 
 	setUserDetailInfo = function(ds) {
+		userId = ds.getValue(0, "USER_ID");
+
 		$("#imgUserPhoto").attr("src", ds.getValue(0, "PHOTO_PATH"));
 		$("#photoPath").val("");
 		$("#userId").val(ds.getValue(0, "USER_ID"));
@@ -337,11 +342,12 @@ $(function() {
 
 		disableUserDetailFields();
 		toggleTabStatus();
-
 		commonJs.hideProcMessage();
 	};
 
 	setBankAccountsInfo = function(ds) {
+		$("#ulDetailHolder").html("");
+
 		bankAccntCount = ds.getRowCnt();
 
 		for (var i=0; i<ds.getRowCnt(); i++) {
@@ -364,12 +370,17 @@ $(function() {
 					if ($(this).attr("index") == i) {
 						$(this).css("cursor", "default");
 						$(this).find("i").remove();
+
+						return true;
 					}
 				});
+
+				$("[name=bankCode"+rowIdx+"]").attr("disabled", true);
+				commonJs.refreshBootstrapSelectbox("bankCode"+rowIdx);
 			}
 		}
 
-		commonJs.hideProcMessage();
+		commonJs.hideProcMessageOnElement("divGridWrapper");
 	};
 
 	/*!
@@ -386,6 +397,13 @@ $(function() {
 
 				setGridHeader();
 			});
+		}
+
+		if ($(obj).is($("#tabCategory li:eq(0) a"))) {
+			setTimeout(function() {
+				$("#ulDetailHolder").html("");
+				loadUserDetail();
+			}, 400);
 		}
 
 		if ($(obj).is($("#tabCategory li:eq(1) a"))) {
