@@ -91,9 +91,16 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
+				var bankAccntCnt = ds.getValue(i, "BANK_ACCNT_CNT");
+				var className = "chkEn", disabledStr = "";
+
+				if (bankAccntCnt > 0) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "USER_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(ds.getValue(i, "USER_ID")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
@@ -109,7 +116,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE"))));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("userId:"+ds.getValue(i, "USER_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("bankAccntCnt:"+bankAccntCnt).addAttribute("userId:"+ds.getValue(i, "USER_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -201,7 +208,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var userId = $(img).attr("userId");
+		var userId = $(img).attr("userId"), bankAccntCnt = $(img).attr("bankAccntCnt");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == userId) {
@@ -212,6 +219,12 @@ $(function() {
 				$(this).parents("tr").removeClass("checkedTr");
 			}
 		});
+
+		if (bankAccntCnt > 0) {
+			ctxMenu.commonSimpleAction[1].disable = true;
+		} else {
+			ctxMenu.commonSimpleAction[1].disable = false;
+		}
 
 		ctxMenu.commonSimpleAction[0].fun = function() {openPopup({mode:"Update", userId:userId});};
 		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
