@@ -59,7 +59,6 @@ $(function() {
 	 */
 	loadData = function() {
 		if (!commonJs.isBlank(orgId)) {
-
 			commonJs.doSimpleProcess({
 				url:"/sys/0206/getOrgDetail.do",
 				noForm:true,
@@ -75,7 +74,12 @@ $(function() {
 	};
 
 	setOrgDetailInfo = function(ds) {
-		$("#imgOrgLogo").attr("src", ds.getValue(0, "LOGO_PATH"));
+		var logoPath = ds.getValue(0, "LOGO_PATH");
+
+		if (!commonJs.contains(logoPath, "DefaultLogo.png")) {
+			$("#tdOrgLogo").append("<img id=\"imgOrgLogo\" src=\""+ds.getValue(0, "LOGO_PATH")+"\" class=\"imgDis\" style=\"width:250px;height:80px;\"/>");
+		}
+
 		$("#logoPath").val("");
 		$("#orgId").val(ds.getValue(0, "ORG_ID"));
 		$("#abn").val(ds.getValue(0, "ABN"));

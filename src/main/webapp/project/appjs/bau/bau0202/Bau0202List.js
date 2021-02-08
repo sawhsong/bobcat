@@ -71,9 +71,16 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
+				var bankStatementCnt = ds.getValue(i, "BANK_STATEMENT_CNT");
+				var className = "chkEn", disabledStr = "";
+
+				if (bankStatementCnt > 0) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "BANK_ACCNT_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(ds.getValue(i, "BANK_ACCNT_ID")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
@@ -84,11 +91,12 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NUMBER")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE")), dateTimeFormat)));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BANK_STATEMENT_CNT"), "#,##0")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE")), dateTimeFormat)));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("bankAccntId:"+ds.getValue(i, "BANK_ACCNT_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("bankStatementCnt:"+bankStatementCnt).addAttribute("bankAccntId:"+ds.getValue(i, "BANK_ACCNT_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -96,7 +104,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -142,7 +150,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var bankAccntId = $(img).attr("bankAccntId");
+		var bankAccntId = $(img).attr("bankAccntId"), bankStatementCnt = $(img).attr("bankStatementCnt");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == bankAccntId) {
@@ -153,6 +161,12 @@ $(function() {
 				$(this).parents("tr").removeClass("checkedTr");
 			}
 		});
+
+		if (bankStatementCnt > 0) {
+			ctxMenu.commonSimpleAction[1].disable = true;
+		} else {
+			ctxMenu.commonSimpleAction[1].disable = false;
+		}
 
 		ctxMenu.commonSimpleAction[0].fun = function() {getEdit(bankAccntId);};
 		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};

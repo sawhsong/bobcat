@@ -64,9 +64,16 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
+				var userCnt = ds.getValue(i, "USER_CNT");
+				var className = "chkEn", disabledStr = "";
+
+				if (userCnt > 0) {
+					className = "chkDis";
+					disabledStr = "disabled";
+				}
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "ORG_ID"));
+				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(ds.getValue(i, "ORG_ID")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
@@ -84,7 +91,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "REGISTERED_DATE")));
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("orgId:"+ds.getValue(i, "ORG_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("userCnt:"+userCnt).addAttribute("orgId:"+ds.getValue(i, "ORG_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
@@ -155,7 +162,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var orgId = $(img).attr("orgId");
+		var orgId = $(img).attr("orgId"), userCnt = $(img).attr("userCnt");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == orgId) {
@@ -166,6 +173,12 @@ $(function() {
 				$(this).parents("tr").removeClass("checkedTr");
 			}
 		});
+
+		if (userCnt > 0) {
+			ctxMenu.commonSimpleAction[1].disable = true;
+		} else {
+			ctxMenu.commonSimpleAction[1].disable = false;
+		}
 
 		ctxMenu.commonSimpleAction[0].fun = function() {openPopup({mode:"Update", orgId:orgId});};
 		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};

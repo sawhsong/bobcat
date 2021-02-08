@@ -87,10 +87,11 @@
 			<col width="18%"/>
 			<col width="5%"/>
 			<col width="10%"/>
-			<col width="16%"/>
-			<col width="9%"/>
-			<col width="9%"/>
+			<col width="15%"/>
+			<col width="8%"/>
 			<col width="*"/>
+			<col width="7%"/>
+			<col width="9%"/>
 			<col width="4%"/>
 		</colgroup>
 		<thead>
@@ -101,14 +102,15 @@
 				<th class="thGrid">Account Number</th>
 				<th class="thGrid">Account Name</th>
 				<th class="thGrid">Balance</th>
-				<th class="thGrid">Last Updated Date</th>
 				<th class="thGrid">Description</th>
+				<th class="thGrid">Bank Statement</th>
+				<th class="thGrid">Last Updated Date</th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="10"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

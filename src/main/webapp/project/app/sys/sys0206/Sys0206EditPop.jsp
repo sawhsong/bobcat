@@ -67,14 +67,6 @@ var orgId = "<%=orgId%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<table class="tblDefault">
-		<tr>
-			<td class="tdDefault Lt" style="vertical-align:bottom;">
-				<img id="imgOrgLogo" src="<%=defaultLogoPath%>" class="imgDis" style="width:250px;height:80px;"/>
-			</td>
-		</tr>
-	</table>
-	<div class="verGap4"></div>
 	<table class="tblEdit">
 		<colgroup>
 			<col width="14%"/>
@@ -82,6 +74,10 @@ var orgId = "<%=orgId%>";
 			<col width="14%"/>
 			<col width="36%"/>
 		</colgroup>
+		<tr>
+			<th class="thEdit rt">Org Logo</th>
+			<td class="tdEdit Lt" id="tdOrgLogo" colspan="3" style="height:94px;"></td>
+		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sys0206.header.changeLogo"/></th>
 			<td class="tdEdit" colspan="3"><ui:file name="logoPath" style="width:540px;" checkName="sys0206.header.changeLogo"/></td>

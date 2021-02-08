@@ -129,6 +129,6 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 		queryAdvisor.addAutoFillCriteria(userId, "user_id = '"+userId+"'");
 		queryAdvisor.addOrderByClause("description");
 
-		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getDataSetSearchCriteriaByUserId");
+		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getDataSetForSearchCriteriaByUserId");
 	}
 }

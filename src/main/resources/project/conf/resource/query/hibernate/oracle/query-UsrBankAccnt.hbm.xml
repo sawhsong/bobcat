@@ -17,7 +17,7 @@
 	]]>
 	</sql-query>
 
-	<sql-query name="query.UsrBankAccnt.getDataSetSearchCriteriaByUserId">
+	<sql-query name="query.UsrBankAccnt.getDataSetForSearchCriteriaByUserId">
 	<![CDATA[
 		select bank_accnt_id,
 		       bank_code,
