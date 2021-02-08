@@ -2,6 +2,8 @@
  * Framework Generated Javascript Source
  * - Sys0402InsertPop.js
  *************************************************************************************************/
+//jsconfig.put("scrollablePanelHeightAdjust", 20);
+
 $(function() {
 	/*!
 	 * event

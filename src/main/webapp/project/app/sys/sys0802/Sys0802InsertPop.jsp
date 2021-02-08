@@ -117,9 +117,9 @@
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0802.header.dateFrom"/></th>
-			<td class="tdEdit"><ui:text name="dateFrom" style="width:80px" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="dateFrom" className="Ct" style="width:90px" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0802.header.dateTo"/></th>
-			<td class="tdEdit"><ui:text name="dateTo" style="width:80px" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="dateTo" className="Ct" style="width:90px" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>

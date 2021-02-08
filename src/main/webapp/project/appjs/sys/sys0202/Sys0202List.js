@@ -7,8 +7,6 @@ var searchResultDataCount = 0;
 var langCode = commonJs.upperCase(jsconfig.get("langCode"));
 var dateFormat = jsconfig.get("dateFormatJs");
 
-jsconfig.put("scrollablePanelHeightAdjust", -3);
-
 $(function() {
 	/*!
 	 * event

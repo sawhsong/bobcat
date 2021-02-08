@@ -126,9 +126,9 @@ var quarterCodeParam = "<%=requestDataSet.getValue("quarterCode")%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0802.header.dateFrom"/></th>
-			<td class="tdEdit"><ui:text name="dateFrom" value="<%=CommonUtil.toString(sysFinancialPeriod.getDateFrom(), dateFormat)%>" style="width:80px" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="dateFrom" value="<%=CommonUtil.toString(sysFinancialPeriod.getDateFrom(), dateFormat)%>" className="Ct" style="width:90px" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0802.header.dateTo"/></th>
-			<td class="tdEdit"><ui:text name="dateTo" value="<%=CommonUtil.toString(sysFinancialPeriod.getDateTo(), dateFormat)%>" style="width:80px" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="dateTo" value="<%=CommonUtil.toString(sysFinancialPeriod.getDateTo(), dateFormat)%>" className="Ct" style="width:90px" options="mandatory"/></td>
 		</tr>
 	</table>
 </div>
