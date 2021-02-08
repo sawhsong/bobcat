@@ -94,8 +94,8 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt mandatory"><mc:msg key="rkm0802.header.wageType"/></th>
-			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" options="mandatory" selectedValue="<%=usrEmployee.getWageType()%>"/></td>
+			<th class="thEdit Rt mandatory"></th>
+			<td class="tdEdit"></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="rkm0802.header.visaType"/></th>
 			<td class="tdEdit"><ui:ccselect name="visaType" codeType="VISA_TYPE" options="mandatory" selectedValue="<%=usrEmployee.getVisaType()%>"/></td>
 		</tr>

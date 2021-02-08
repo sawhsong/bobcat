@@ -86,7 +86,6 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ENTITY_TYPE_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BUSINESS_TYPE_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ORG_CATEGORY_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "WAGE_TYPE_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "EMAIL")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "REGISTERED_DATE")));
 
@@ -99,7 +98,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:12").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:11").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -213,7 +212,7 @@ $(function() {
 	 */
 	$(window).load(function() {
 //		commonJs.setExportButtonContextMenu($("#btnExport"));
-		commonJs.setEvent("change", [$("#entityType"), $("#businessType"), $("#orgCategory"), $("#wageType")], doSearch);
+		commonJs.setEvent("change", [$("#entityType"), $("#businessType"), $("#orgCategory")], doSearch);
 
 		commonJs.setAutoComplete($("#orgName"), {
 			method:"getOrgName",

@@ -87,10 +87,6 @@
 				<ui:text name="givenName" className="hor" style="width:200px;"/>
 			</td>
 			<td class="tdSearch">
-				<label for="wageType" class="lblEn hor"><mc:msg key="rkm0802.search.wageType"/></label>
-				<div style="float:left;padding-right:4px;">
-					<ui:ccselect name="wageType" codeType="WAGE_TYPE" caption="==Select=="/>
-				</div>
 			</td>
 			<td class="tdSearch">
 				<label for="visaType" class="lblEn hor"><mc:msg key="rkm0802.search.visaType"/></label>

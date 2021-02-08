@@ -29,10 +29,10 @@ public class SysOrg extends BaseDto implements Serializable {
 	private String LEGAL_NAME;
 	private String orgCategory;
 	private String ORG_CATEGORY;
-	private String wageType;
-	private String WAGE_TYPE;
 	private String abn;
 	private String ABN;
+	private String address;
+	private String ADDRESS;
 	private String email;
 	private String EMAIL;
 	private Date insertDate;
@@ -43,8 +43,6 @@ public class SysOrg extends BaseDto implements Serializable {
 	private String IS_ACTIVE;
 	private String logoPath;
 	private String LOGO_PATH;
-	private String postalAddress;
-	private String POSTAL_ADDRESS;
 	private Date registeredDate;
 	private String REGISTERED_DATE;
 	private double revenueRangeFrom;
@@ -150,15 +148,6 @@ public class SysOrg extends BaseDto implements Serializable {
 		setValueFromAccessor("ORG_CATEGORY", orgCategory);
 	}
 
-	public String getWageType() {
-		return wageType;
-	}
-
-	public void setWageType(String wageType) throws Exception {
-		this.wageType = wageType;
-		setValueFromAccessor("WAGE_TYPE", wageType);
-	}
-
 	public String getAbn() {
 		return abn;
 	}
@@ -166,6 +155,15 @@ public class SysOrg extends BaseDto implements Serializable {
 	public void setAbn(String abn) throws Exception {
 		this.abn = abn;
 		setValueFromAccessor("ABN", abn);
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) throws Exception {
+		this.address = address;
+		setValueFromAccessor("ADDRESS", address);
 	}
 
 	public String getEmail() {
@@ -211,15 +209,6 @@ public class SysOrg extends BaseDto implements Serializable {
 	public void setLogoPath(String logoPath) throws Exception {
 		this.logoPath = logoPath;
 		setValueFromAccessor("LOGO_PATH", logoPath);
-	}
-
-	public String getPostalAddress() {
-		return postalAddress;
-	}
-
-	public void setPostalAddress(String postalAddress) throws Exception {
-		this.postalAddress = postalAddress;
-		setValueFromAccessor("POSTAL_ADDRESS", postalAddress);
 	}
 
 	public Date getRegisteredDate() {
@@ -417,14 +406,13 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "entityType : "+entityType+"\n";
 		str += "legalName : "+legalName+"\n";
 		str += "orgCategory : "+orgCategory+"\n";
-		str += "wageType : "+wageType+"\n";
 		str += "abn : "+abn+"\n";
+		str += "address : "+address+"\n";
 		str += "email : "+email+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "isActive : "+isActive+"\n";
 		str += "logoPath : "+logoPath+"\n";
-		str += "postalAddress : "+postalAddress+"\n";
 		str += "registeredDate : "+registeredDate+"\n";
 		str += "revenueRangeFrom : "+revenueRangeFrom+"\n";
 		str += "revenueRangeTo : "+revenueRangeTo+"\n";
@@ -449,14 +437,13 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "<column name=\"entityType\" value=\""+entityType+"\">";
 		str += "<column name=\"legalName\" value=\""+legalName+"\">";
 		str += "<column name=\"orgCategory\" value=\""+orgCategory+"\">";
-		str += "<column name=\"wageType\" value=\""+wageType+"\">";
 		str += "<column name=\"abn\" value=\""+abn+"\">";
+		str += "<column name=\"address\" value=\""+address+"\">";
 		str += "<column name=\"email\" value=\""+email+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"isActive\" value=\""+isActive+"\">";
 		str += "<column name=\"logoPath\" value=\""+logoPath+"\">";
-		str += "<column name=\"postalAddress\" value=\""+postalAddress+"\">";
 		str += "<column name=\"registeredDate\" value=\""+registeredDate+"\">";
 		str += "<column name=\"revenueRangeFrom\" value=\""+revenueRangeFrom+"\">";
 		str += "<column name=\"revenueRangeTo\" value=\""+revenueRangeTo+"\">";
@@ -481,14 +468,13 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "\"entityType\":\""+entityType+"\", ";
 		str += "\"legalName\":\""+legalName+"\", ";
 		str += "\"orgCategory\":\""+orgCategory+"\", ";
-		str += "\"wageType\":\""+wageType+"\", ";
 		str += "\"abn\":\""+abn+"\", ";
+		str += "\"address\":\""+address+"\", ";
 		str += "\"email\":\""+email+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"isActive\":\""+isActive+"\", ";
 		str += "\"logoPath\":\""+logoPath+"\", ";
-		str += "\"postalAddress\":\""+postalAddress+"\", ";
 		str += "\"registeredDate\":\""+registeredDate+"\", ";
 		str += "\"revenueRangeFrom\":\""+revenueRangeFrom+"\", ";
 		str += "\"revenueRangeTo\":\""+revenueRangeTo+"\", ";

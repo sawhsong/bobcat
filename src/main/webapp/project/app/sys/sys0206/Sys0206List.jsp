@@ -79,8 +79,8 @@
 			<td class="tdSearch"><ui:ccselect name="businessType" codeType="BUSINESS_TYPE" caption="==Select=="/></td>
 			<th class="thSearch rt"><mc:msg key="sys0206.search.orgCategory"/></th>
 			<td class="tdSearch"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" caption="==Select=="/></td>
-			<th class="thSearch rt"><mc:msg key="sys0206.search.wageType"/></th>
-			<td class="tdSearch"><ui:ccselect name="wageType" codeType="WAGE_TYPE" caption="==Select=="/></td>
+			<th class="thSearch rt"></th>
+			<td class="tdSearch"></td>
 		</tr>
 	</table>
 </div>
@@ -105,7 +105,6 @@
 			<col width="9%"/>
 			<col width="9%"/>
 			<col width="7%"/>
-			<col width="7%"/>
 			<col width="14%"/>
 			<col width="5%"/>
 			<col width="3%"/>
@@ -120,7 +119,6 @@
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.entityType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.bizType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.orgCategory"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.wageType"/></th>
 				<th class="thGrid">Email</th>
 				<th class="thGrid sortable:date"><mc:msg key="sys0206.grid.regDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
@@ -128,7 +126,7 @@
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="12"><mc:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="11"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

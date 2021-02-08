@@ -59,7 +59,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "POSTAL_ADDRESS"), 60)));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ADDRESS"), 60)));
 
 				html += gridTr.toHtmlString();
 			}

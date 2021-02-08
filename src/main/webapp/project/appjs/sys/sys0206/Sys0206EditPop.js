@@ -102,9 +102,7 @@ $(function() {
 		commonJs.refreshBootstrapSelectbox("orgCategory");
 		$("#baseType").val(ds.getValue(0, "BASE_TYPE"));
 		commonJs.refreshBootstrapSelectbox("baseType");
-		$("#wageType").val(ds.getValue(0, "WAGE_TYPE"));
-		commonJs.refreshBootstrapSelectbox("wageType");
-		$("#postalAddress").val(ds.getValue(0, "POSTAL_ADDRESS"));
+		$("#address").val(ds.getValue(0, "ADDRESS"));
 		$("#registeredDate").val(commonJs.getDateTimeMask(ds.getValue(0, "REGISTERED_DATE"), jsconfig.get("dateFormatJs")));
 		$("#isActive").val(ds.getValue(0, "IS_ACTIVE"));
 		commonJs.refreshBootstrapSelectbox("isActive");

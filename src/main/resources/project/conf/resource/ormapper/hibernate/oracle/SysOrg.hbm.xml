@@ -15,14 +15,13 @@
 		<property name="entityType" column="ENTITY_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="legalName" column="LEGAL_NAME" not-null="true" type="java.lang.String" length="300"/>
 		<property name="orgCategory" column="ORG_CATEGORY" not-null="true" type="java.lang.String" length="30"/>
-		<property name="wageType" column="WAGE_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="abn" column="ABN" type="java.lang.String" length="30"/>
+		<property name="address" column="ADDRESS" type="java.lang.String" length="500"/>
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="isActive" column="IS_ACTIVE" type="java.lang.String" length="1"/>
 		<property name="logoPath" column="LOGO_PATH" type="java.lang.String" length="2000"/>
-		<property name="postalAddress" column="POSTAL_ADDRESS" type="java.lang.String" length="500"/>
 		<property name="registeredDate" column="REGISTERED_DATE" type="java.util.Date"/>
 		<property name="revenueRangeFrom" column="REVENUE_RANGE_FROM" type="java.lang.Double"/>
 		<property name="revenueRangeTo" column="REVENUE_RANGE_TO" type="java.lang.Double"/>
@@ -39,14 +38,13 @@
 		       ENTITY_TYPE,
 		       LEGAL_NAME,
 		       ORG_CATEGORY,
-		       WAGE_TYPE,
 		       ABN,
+		       ADDRESS,
 		       EMAIL,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
 		       IS_ACTIVE,
 		       LOGO_PATH,
-		       POSTAL_ADDRESS,
 		       TO_CHAR(REGISTERED_DATE, 'yyyymmddhh24miss') AS REGISTERED_DATE,
 		       REVENUE_RANGE_FROM,
 		       REVENUE_RANGE_TO,
@@ -71,14 +69,13 @@
 		       ENTITY_TYPE,
 		       LEGAL_NAME,
 		       ORG_CATEGORY,
-		       WAGE_TYPE,
 		       ABN,
+		       ADDRESS,
 		       EMAIL,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
 		       IS_ACTIVE,
 		       LOGO_PATH,
-		       POSTAL_ADDRESS,
 		       REGISTERED_DATE,
 		       REVENUE_RANGE_FROM,
 		       REVENUE_RANGE_TO,
@@ -93,14 +90,13 @@
 		       ${ENTITY_TYPE},
 		       ${LEGAL_NAME},
 		       ${ORG_CATEGORY},
-		       ${WAGE_TYPE},
 		       ${ABN},
+		       ${ADDRESS},
 		       ${EMAIL},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
 		       ${IS_ACTIVE},
 		       ${LOGO_PATH},
-		       ${POSTAL_ADDRESS},
 		       ${REGISTERED_DATE},
 		       ${REVENUE_RANGE_FROM},
 		       ${REVENUE_RANGE_TO},
@@ -119,14 +115,13 @@
 		       ENTITY_TYPE = ${ENTITY_TYPE},
 		       LEGAL_NAME = ${LEGAL_NAME},
 		       ORG_CATEGORY = ${ORG_CATEGORY},
-		       WAGE_TYPE = ${WAGE_TYPE},
 		       ABN = ${ABN},
+		       ADDRESS = ${ADDRESS},
 		       EMAIL = ${EMAIL},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
 		       IS_ACTIVE = ${IS_ACTIVE},
 		       LOGO_PATH = ${LOGO_PATH},
-		       POSTAL_ADDRESS = ${POSTAL_ADDRESS},
 		       REGISTERED_DATE = ${REGISTERED_DATE},
 		       REVENUE_RANGE_FROM = ${REVENUE_RANGE_FROM},
 		       REVENUE_RANGE_TO = ${REVENUE_RANGE_TO},

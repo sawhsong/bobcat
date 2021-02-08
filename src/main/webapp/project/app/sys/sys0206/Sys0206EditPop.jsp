@@ -114,7 +114,7 @@ var orgId = "<%=orgId%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt">Business Address</th>
-			<td class="tdEdit" colspan="3"><ui:text name="postalAddress" checkName="sys0206.header.postalAddress"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="address" checkName="sys0206.header.address"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.registeredDate"/></th>
