@@ -26,7 +26,6 @@ $(function() {
 	 * process
 	 */
 	setTableDisplay = function() {
-console.log("bankCode : "+bankCode);
 		if (commonJs.isBlank(bankCode)) {
 			$("#divDataArea").find("div").each(function() {
 				$(this).hide();

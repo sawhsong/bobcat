@@ -30,7 +30,10 @@ $(function() {
 				url:"/sys/0206/saveOrgDetail.do",
 				onSuccess:function(result) {
 					var ds = result.dataSet;
-					setOrgDetailInfo(ds);
+					commonJs.showProcMessage(com.message.loading);
+					setTimeout(function() {
+						setOrgDetailInfo(ds);
+					}, 400);
 				}
 			});
 		}
@@ -59,6 +62,8 @@ $(function() {
 	 */
 	loadData = function() {
 		if (!commonJs.isBlank(orgId)) {
+			commonJs.showProcMessage(com.message.loading);
+
 			commonJs.doSimpleProcess({
 				url:"/sys/0206/getOrgDetail.do",
 				noForm:true,
@@ -77,6 +82,9 @@ $(function() {
 		var logoPath = ds.getValue(0, "LOGO_PATH");
 
 		if (!commonJs.contains(logoPath, "DefaultLogo.png")) {
+			if ($("#imgOrgLogo").length > 0) {
+				$("#imgOrgLogo").remove();
+			}
 			$("#tdOrgLogo").append("<img id=\"imgOrgLogo\" src=\""+ds.getValue(0, "LOGO_PATH")+"\" class=\"imgDis\" style=\"width:250px;height:80px;\"/>");
 		}
 
@@ -105,6 +113,8 @@ $(function() {
 		$("#rRangeTo").val(ds.getValue(0, "REVENUE_RANGE_TO"));
 		$("#lastUpdatedBy").val(commonJs.nvl(ds.getValue(0, "UPDATE_USER_NAME"), ds.getValue(0, "INSERT_USER_NAME")));
 		$("#lastUpdatedDate").val(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(0, "UPDATE_DATE"), ds.getValue(0, "INSERT_DATE")), jsconfig.get("dateTimeFormatJs")));
+
+		commonJs.hideProcMessage();
 	};
 
 	/*!

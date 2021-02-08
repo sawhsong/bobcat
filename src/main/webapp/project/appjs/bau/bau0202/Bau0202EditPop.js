@@ -77,7 +77,7 @@ $(function() {
 			$("#lastUpdatedDate").val(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(0, "UPDATE_DATE"), ds.getValue(0, "INSERT_DATE")), dateTimeFormat));
 		}
 
-		commonJs.hideProcMessage(com.message.loading);
+		commonJs.hideProcMessage();
 	};
 
 	/*!

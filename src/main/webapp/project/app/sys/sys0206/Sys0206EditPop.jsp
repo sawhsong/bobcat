@@ -107,13 +107,13 @@ var orgId = "<%=orgId%>";
 			<td class="tdEdit"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" checkName="sys0206.header.orgCategory" options="mandatory"/></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.baseType"/></th>
+			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.baseType"/></th>
 			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BASE_TYPE" checkName="sys0206.header.baseType" options="mandatory"/></td>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.wageType"/></th>
-			<td class="tdEdit"><ui:ccselect name="wageType" codeType="WAGE_TYPE" checkName="sys0206.header.wageType" options="mandatory"/></td>
+			<th class="thEdit Rt"></th>
+			<td class="tdEdit"></td>
 		</tr>
 		<tr>
-			<th class="thEdit Rt"><mc:msg key="sys0206.header.postalAddress"/></th>
+			<th class="thEdit Rt">Business Address</th>
 			<td class="tdEdit" colspan="3"><ui:text name="postalAddress" checkName="sys0206.header.postalAddress"/></td>
 		</tr>
 		<tr>

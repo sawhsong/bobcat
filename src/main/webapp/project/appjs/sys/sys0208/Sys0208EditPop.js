@@ -245,30 +245,38 @@ $(function() {
 
 	loadUserDetail = function() {
 		if (!commonJs.isBlank(userId)) {
-			commonJs.doSimpleProcess({
-				url:"/sys/0208/getUserDetail.do",
-				noForm:true,
-				data:{userId:userId},
-				onSuccess:function(result) {
-					var ds = result.dataSet;
-					setUserDetailInfo(ds);
-				}
-			});
+			commonJs.showProcMessage(com.message.loading);
+
+			setTimeout(function() {
+				commonJs.doSimpleProcess({
+					url:"/sys/0208/getUserDetail.do",
+					noForm:true,
+					data:{userId:userId},
+					onSuccess:function(result) {
+						var ds = result.dataSet;
+						setUserDetailInfo(ds);
+					}
+				});
+			}, 400);
 		}
 	};
 
 	loadBankAccounts = function() {
 		if (!commonJs.isBlank(userId) && !isBankAccntLoaded) {
-			commonJs.doSimpleProcess({
-				url:"/sys/0208/getBankAccounts.do",
-				noForm:true,
-				data:{userId:userId},
-				onSuccess:function(result) {
-					var ds = result.dataSet;
-					setBankAccountsInfo(ds);
-					isBankAccntLoaded = true;
-				}
-			});
+			commonJs.showProcMessage(com.message.loading);
+
+			setTimeout(function() {
+				commonJs.doSimpleProcess({
+					url:"/sys/0208/getBankAccounts.do",
+					noForm:true,
+					data:{userId:userId},
+					onSuccess:function(result) {
+						var ds = result.dataSet;
+						setBankAccountsInfo(ds);
+						isBankAccntLoaded = true;
+					}
+				});
+			}, 400);
 		}
 	};
 
@@ -329,6 +337,8 @@ $(function() {
 
 		disableUserDetailFields();
 		toggleTabStatus();
+
+		commonJs.hideProcMessage();
 	};
 
 	setBankAccountsInfo = function(ds) {
@@ -358,6 +368,8 @@ $(function() {
 				});
 			}
 		}
+
+		commonJs.hideProcMessage();
 	};
 
 	/*!
