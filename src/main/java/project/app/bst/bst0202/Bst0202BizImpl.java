@@ -171,6 +171,7 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 		String bankCode = requestDataSet.getValue("bankCode");
 		String fileName = "";
 		DataSet fileData = new DataSet();
+		DataSet dupData = new DataSet();
 
 		try {
 			discardBankStatement(paramEntity);
@@ -178,6 +179,31 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 			fileName = fileDataSet.getValue("NEW_NAME");
 
 			fileData = bankStatementBS.getBankStatementDataSetFromFileByBank(bankAccntId, bankCode, new File(fileDataSet.getValue("TEMP_PATH")+"/"+fileName));
+			dupData = bankStatementBS.getDuplicatedDataSet(fileData);
+
+			if (dupData.getRowCnt() > 0) {
+				String msg = "";
+
+				FileUtil.deleteTempFile(fileDataSet);
+
+				paramEntity.setAjaxResponseDataSet(dupData);
+				paramEntity.setSuccess(true);
+				msg += "There are some duplicated data already uploaded exist.\n";
+				msg += "Please check the file and try again.\n\n";
+				msg += "Ex.\n";
+				for (int i=0; i<dupData.getRowCnt(); i++) {
+					String dateTimeFormat = ConfigUtil.getProperty("format.default.dateTime");
+					String dateFormat = ConfigUtil.getProperty("format.date.java");
+
+					msg += "Date : "+CommonUtil.changeDateFormat(dupData.getValue(i, "PROC_DATE"), dateTimeFormat, dateFormat)+"\n";
+					msg += "Amount : "+CommonUtil.getNumberMask(dupData.getValue(i, "PROC_AMT"), "#,##0.00")+"\n";
+					msg += "Balance : "+CommonUtil.getNumberMask(dupData.getValue(i, "BALANCE"), "#,##0.00")+"\n";
+					msg += "Description : "+dupData.getValue(i, "PROC_DESCRIPTION")+"]\n\n";
+				}
+				paramEntity.setMessage("E999", msg);
+
+				return paramEntity;
+			}
 
 			// Save to session before saving
 			session.setAttribute("UploadBankStatementDataFile", fileDataSet);

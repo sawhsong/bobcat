@@ -28,15 +28,21 @@ $(function() {
 				showPostMessage:false,
 				onSuccess:function(result) {
 					var ds = result.dataSet;
+					var msgCode = result.messageCode;
+					var msg = result.message;
 
-					commonJs.showProcMessageOnElement("divScrollablePanelPopup");
+					if (msgCode == "E999") {
+						commonJs.error(msg);
+					} else {
+						commonJs.showProcMessageOnElement("divScrollablePanelPopup");
 
-					setTableDisplay(bankCode);
-					setTimeout(function() {
-						renderDataGrid(ds, bankCode);
-					}, 400);
+						setTableDisplay(bankCode);
+						setTimeout(function() {
+							renderDataGrid(ds, bankCode);
+						}, 400);
 
-					discardable = true;
+						discardable = true;
+					}
 				}
 			});
 		}
@@ -70,7 +76,20 @@ $(function() {
 			url:"/bst/0202/doSave.do",
 			onSuccess:function(result) {
 				var ds = result.dataSet;
-				$("#btnClose").trigger("click");
+				commonJs.confirm({
+					contents:"Would you like to go to Bank Statement Allocation screen?",
+					buttons:[{
+						caption:com.caption.yes,
+						callback:function() {
+							parent.$("#divBAU").trigger("click");
+						}
+					}, {
+						caption:com.caption.no,
+						callback:function() {
+							$("#btnClose").trigger("click");
+						}
+					}]
+				});
 			}
 		});
 	});

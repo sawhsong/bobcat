@@ -332,6 +332,11 @@ public class CommonUtil extends StringUtils {
 		}
 	}
 
+	public static String changeDateFormat(String src, String fromFormat, String toFormat) throws Exception {
+		Date date = toDate(src, fromFormat);
+		return toString(date, toFormat);
+	}
+
 	public static boolean isValidDateString(String value) {
 		boolean rtn = false;
 		String dateString = "";

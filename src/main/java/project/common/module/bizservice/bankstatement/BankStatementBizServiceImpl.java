@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
 import project.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementDao;
+import project.conf.resource.ormapper.dao.UsrBankStatementD.UsrBankStatementDDao;
 import project.conf.resource.ormapper.dto.oracle.UsrBankStatement;
 import zebra.data.DataSet;
+import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseBiz;
 import zebra.exception.FrameworkException;
 import zebra.util.CommonUtil;
@@ -20,6 +22,8 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 	private UsrBankAccntDao usrBankAccntDao;
 	@Autowired
 	private UsrBankStatementDao usrBankStatementDao;
+	@Autowired
+	private UsrBankStatementDDao usrBankStatementDDao;
 
 	public int doSave(DataSet fileDataSet, DataSet bankFileData) throws Exception {
 		UsrBankStatement usrBankStatement = new UsrBankStatement();
@@ -55,6 +59,32 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 		} catch (Exception ex) {
 			throw new FrameworkException(ex);
 		}
+		return result;
+	}
+
+	public DataSet getDuplicatedDataSet(DataSet fileData) throws Exception {
+		DataSet result = new DataSet(), temp = new DataSet();
+		QueryAdvisor qa = new QueryAdvisor();
+
+		if (fileData.getRowCnt() > 0) {
+			// Check the first row and the last row
+			qa.addWhereClause("to_char(proc_date, 'dd-mm-yyyy') = '"+fileData.getValue(0, "PROC_DATE")+"'");
+			qa.addWhereClause("proc_amt = "+fileData.getValue(0, "PROC_AMOUNT")+"");
+			qa.addWhereClause("proc_description = '"+fileData.getValue(0, "DESCRIPTION")+"'");
+			qa.addWhereClause("balance = "+fileData.getValue(0, "BALANCE")+"");
+			result = usrBankStatementDDao.getDataSetByFileDataForDupCheck(qa);
+
+			qa.resetAll();
+
+			qa.addWhereClause("to_char(proc_date, 'dd-mm-yyyy') = '"+fileData.getValue(fileData.getRowCnt()-1, "PROC_DATE")+"'");
+			qa.addWhereClause("proc_amt = "+fileData.getValue(fileData.getRowCnt()-1, "PROC_AMOUNT")+"");
+			qa.addWhereClause("proc_description = '"+fileData.getValue(fileData.getRowCnt()-1, "DESCRIPTION")+"'");
+			qa.addWhereClause("balance = "+fileData.getValue(fileData.getRowCnt()-1, "BALANCE")+"");
+			temp = usrBankStatementDDao.getDataSetByFileDataForDupCheck(qa);
+
+			result.merge(temp);
+		}
+
 		return result;
 	}
 
