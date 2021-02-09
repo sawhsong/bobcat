@@ -29,7 +29,6 @@ public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatem
 			usrBankStatementD.setProcDescription(bankFileData.getValue(i, "DESCRIPTION"));
 			usrBankStatementD.setBalance(CommonUtil.toDouble(bankFileData.getValue(i, "BALANCE")));
 			usrBankStatementD.setUserDescription("");
-			usrBankStatementD.setIsAllocated(CommonCodeManager.getCodeByConstants("SIMPLE_YN_N"));
 			usrBankStatementD.setInsertUserId(bankFileData.getValue(i, "USER_ID"));
 			usrBankStatementD.setInsertDate(CommonUtil.getSysdateAsDate());
 

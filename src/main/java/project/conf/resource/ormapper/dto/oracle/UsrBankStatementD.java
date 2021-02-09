@@ -33,8 +33,6 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 	private String INSERT_DATE;
 	private String insertUserId;
 	private String INSERT_USER_ID;
-	private String isAllocated;
-	private String IS_ALLOCATED;
 	private String procDescription;
 	private String PROC_DESCRIPTION;
 	private Date updateDate;
@@ -152,15 +150,6 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 	public void setInsertUserId(String insertUserId) throws Exception {
 		this.insertUserId = insertUserId;
 		setValueFromAccessor("INSERT_USER_ID", insertUserId);
-	}
-
-	public String getIsAllocated() {
-		return isAllocated;
-	}
-
-	public void setIsAllocated(String isAllocated) throws Exception {
-		this.isAllocated = isAllocated;
-		setValueFromAccessor("IS_ALLOCATED", isAllocated);
 	}
 
 	public String getProcDescription() {
@@ -342,7 +331,6 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "balance : "+balance+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
-		str += "isAllocated : "+isAllocated+"\n";
 		str += "procDescription : "+procDescription+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
@@ -367,7 +355,6 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "<column name=\"balance\" value=\""+balance+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
-		str += "<column name=\"isAllocated\" value=\""+isAllocated+"\">";
 		str += "<column name=\"procDescription\" value=\""+procDescription+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
@@ -392,7 +379,6 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "\"balance\":\""+balance+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
-		str += "\"isAllocated\":\""+isAllocated+"\", ";
 		str += "\"procDescription\":\""+procDescription+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";

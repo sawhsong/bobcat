@@ -17,7 +17,6 @@
 		<property name="balance" column="BALANCE" type="java.lang.Double"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
-		<property name="isAllocated" column="IS_ALLOCATED" type="java.lang.String" length="1"/>
 		<property name="procDescription" column="PROC_DESCRIPTION" type="java.lang.String" length="1000"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
@@ -34,7 +33,6 @@
 		       BALANCE,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
-		       IS_ALLOCATED,
 		       PROC_DESCRIPTION,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID,
@@ -59,7 +57,6 @@
 		       BALANCE,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
-		       IS_ALLOCATED,
 		       PROC_DESCRIPTION,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID,
@@ -74,7 +71,6 @@
 		       ${BALANCE},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
-		       ${IS_ALLOCATED},
 		       ${PROC_DESCRIPTION},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID},
@@ -93,7 +89,6 @@
 		       BALANCE = ${BALANCE},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
-		       IS_ALLOCATED = ${IS_ALLOCATED},
 		       PROC_DESCRIPTION = ${PROC_DESCRIPTION},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID},
