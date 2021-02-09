@@ -5,6 +5,7 @@
 package project.conf.resource.ormapper.dao.UsrBankStatementD;
 
 import project.common.extend.BaseHDao;
+import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dto.oracle.UsrBankStatement;
 import project.conf.resource.ormapper.dto.oracle.UsrBankStatementD;
 import zebra.data.DataSet;
@@ -27,7 +28,10 @@ public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatem
 			usrBankStatementD.setProcAmt(CommonUtil.toDouble(bankFileData.getValue(i, "PROC_AMOUNT")));
 			usrBankStatementD.setProcDescription(bankFileData.getValue(i, "DESCRIPTION"));
 			usrBankStatementD.setBalance(CommonUtil.toDouble(bankFileData.getValue(i, "BALANCE")));
+			usrBankStatementD.setUserDescription("");
+			usrBankStatementD.setIsAllocated(CommonCodeManager.getCodeByConstants("SIMPLE_YN_N"));
 			usrBankStatementD.setInsertUserId(bankFileData.getValue(i, "USER_ID"));
+			usrBankStatementD.setInsertDate(CommonUtil.getSysdateAsDate());
 
 			result += insertWithDto(usrBankStatementD);
 		}
