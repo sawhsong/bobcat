@@ -111,6 +111,7 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="2%"/>
 			<col width="*"/>
 			<col width="7%"/>
 			<col width="18%"/>
@@ -119,10 +120,10 @@
 			<col width="9%"/>
 			<col width="5%"/>
 			<col width="8%"/>
-			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.userName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.loginId"/></th>
@@ -132,7 +133,6 @@
 				<th class="thGrid"><mc:msg key="sys0208.grid.authGroup"/></th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.active"/></th>
 				<th class="thGrid">Last Updated Date</th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

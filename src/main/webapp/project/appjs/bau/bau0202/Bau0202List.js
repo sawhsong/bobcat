@@ -79,6 +79,10 @@ $(function() {
 					disabledStr = "disabled";
 				}
 
+				var iconAction = new UiIcon();
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("bankStatementCnt:"+bankStatementCnt).addAttribute("bankAccntId:"+ds.getValue(i, "BANK_ACCNT_ID")).setScript("doAction(this)");
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
+
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(ds.getValue(i, "BANK_ACCNT_ID")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
@@ -94,10 +98,6 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BANK_STATEMENT_CNT"), "#,##0")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE")), dateTimeFormat)));
-
-				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("bankStatementCnt:"+bankStatementCnt).addAttribute("bankAccntId:"+ds.getValue(i, "BANK_ACCNT_ID")).setScript("doAction(this)");
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
 			}

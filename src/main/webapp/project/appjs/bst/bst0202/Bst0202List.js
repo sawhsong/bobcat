@@ -87,7 +87,7 @@ $(function() {
 				var gridTr = new UiGridTr();
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setValue(ds.getValue(i, "BANK_STATEMENT_ID"));
+				uiChk.setName("chkForDel").setValue(ds.getValue(i, "BANK_STATEMENT_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BANK_NAME")));

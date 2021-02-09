@@ -68,6 +68,10 @@ $(function() {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
+				var iconAction = new UiIcon();
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("groupId:"+dataSet.getValue(i, "GROUP_ID")).setScript("doAction(this)");
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
+
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "GROUP_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
@@ -82,10 +86,6 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "INSERT_DATE")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "UPDATE_USER_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "UPDATE_DATE")));
-
-				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("groupId:"+dataSet.getValue(i, "GROUP_ID")).setScript("doAction(this)");
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				html += gridTr.toHtmlString();
 			}

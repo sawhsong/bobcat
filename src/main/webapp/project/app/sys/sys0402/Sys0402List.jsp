@@ -93,24 +93,24 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="2%"/>
 			<col width="9%"/>
 			<col width="20%"/>
 			<col width="15%"/>
 			<col width="7%"/>
 			<col width="*"/>
 			<col width="5%"/>
-			<col width="3%"/>
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuId"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuName"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuUrl"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.sortOrder"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.menuDesc"/></th>
 				<th class="thGrid"><mc:msg key="sys0402.grid.isActive"/></th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
