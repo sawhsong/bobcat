@@ -160,7 +160,7 @@ $(function() {
 		if (param.mode == "Insert" || param.mode == "Update") {
 			url = "/sys/0208/getEdit.do";
 			header = com.header.popHeaderEdit;
-			width = 1100, height = 590;
+			width = 1200, height = 590;
 		} else if (param.mode == "UpdateAuthGroup") {
 			url = "/sys/0208/getActionContextMenu.do";
 			header = sys.sys0208.caption.auth;

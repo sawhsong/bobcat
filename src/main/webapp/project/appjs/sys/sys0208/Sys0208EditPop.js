@@ -243,7 +243,7 @@ $(function() {
 
 	setSelectboxForBankAccountTab = function(jqObj) {
 		$(jqObj).selectpicker({
-			width:"auto",
+//			width:"auto",
 			container:"body",
 			style:$(jqObj).attr("class")
 		});

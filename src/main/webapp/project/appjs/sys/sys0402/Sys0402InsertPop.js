@@ -209,6 +209,6 @@ $(function() {
 			$("#level2").selectpicker({width:"90px"}).selectpicker("refresh");
 			setLevel2Selectbox();
 			setFieldValue();
-		}, 100);
+		}, 400);
 	});
 });

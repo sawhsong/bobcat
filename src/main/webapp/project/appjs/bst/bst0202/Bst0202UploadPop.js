@@ -81,7 +81,7 @@ $(function() {
 					buttons:[{
 						caption:com.caption.yes,
 						callback:function() {
-							parent.$("#divBAU").trigger("click");
+							parent.$("#divBSA").trigger("click");
 						}
 					}, {
 						caption:com.caption.no,

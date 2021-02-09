@@ -213,6 +213,10 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
+			try {
+				FileUtil.deleteTempFile(fileDataSet);
+			} catch (Exception e) {
+			}
 			throw new FrameworkException(paramEntity, ex);
 		}
 		return paramEntity;

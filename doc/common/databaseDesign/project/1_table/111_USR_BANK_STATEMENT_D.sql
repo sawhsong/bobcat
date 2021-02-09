@@ -14,12 +14,13 @@ create table usr_bank_statement_d (
     proc_description                varchar2(1000),                                             -- Process description
     balance                         number,                                                     -- Balance amount after processing
     user_description                varchar2(500),                                              -- Description for user
+    is_allocated                    varchar2(1),                                                -- Is allocated (Did user allocate the data and is this inserted to income/expense table?)
     insert_user_id                  varchar2(30),                                               -- Insert User UID
     insert_date                     date                default sysdate,                        -- Insert Date
     update_user_id                  varchar2(30),                                               -- Update User UID
     update_date                     date,                                                       -- Update Date
 
-    constraint fk_34330454163900 foreign key(bank_statement_id) references usr_bank_statement(bank_statement_id),
+    constraint fk_65207587911700 foreign key(bank_statement_id) references usr_bank_statement(bank_statement_id),
     constraint pk_usr_bank_statement_d primary key(bank_statement_d_id)
     using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )
@@ -34,6 +35,7 @@ comment on column usr_bank_statement_d.proc_amt                                 
 comment on column usr_bank_statement_d.proc_description                          is 'Process description';
 comment on column usr_bank_statement_d.balance                                   is 'Balance amount after processing';
 comment on column usr_bank_statement_d.user_description                          is 'Description for user';
+comment on column usr_bank_statement_d.is_allocated                              is 'Is allocated (Did user allocate the data and is this inserted to income/expense table?)';
 comment on column usr_bank_statement_d.insert_user_id                            is 'Insert User UID';
 comment on column usr_bank_statement_d.insert_date                               is 'Insert Date';
 comment on column usr_bank_statement_d.update_user_id                            is 'Update User UID';

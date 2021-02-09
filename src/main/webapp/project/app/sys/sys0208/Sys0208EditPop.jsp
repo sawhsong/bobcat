@@ -210,8 +210,8 @@ var userId = "<%=userId%>";
 		<div id="divGridWrapper">
 			<table id="tblGrid" class="tblGrid">
 				<colgroup>
-					<col width="2%"/>
-					<col width="24%"/>
+					<col width="3%"/>
+					<col width="23%"/>
 					<col width="7%"/>
 					<col width="13%"/>
 					<col width="17%"/>
@@ -250,8 +250,8 @@ var userId = "<%=userId%>";
 <li id="liDummy" class="dummyDetail">
 	<table class="tblGrid" style="border:0px">
 		<colgroup>
-			<col width="2%"/>
-			<col width="24%"/>
+			<col width="3%"/>
+			<col width="23%"/>
 			<col width="7%"/>
 			<col width="13%"/>
 			<col width="17%"/>
@@ -260,7 +260,7 @@ var userId = "<%=userId%>";
 		</colgroup>
 		<tr class="noBorderAll">
 			<th id="thDeleteButton" class="thGrid deleteButton"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<td class="tdGrid Ct"><ui:ccselect name="bankCode" checkName="Bank" codeType="BANK_TYPE" options="mandatory"/></td>
+			<td class="tdGrid Lt"><ui:ccselect name="bankCode" checkName="Bank" codeType="BANK_TYPE" attribute="data-width:100%;" options="mandatory"/></td>
 			<td class="tdGrid Ct">
 				<ui:hidden name="bankAccntId"/>
 				<ui:text name="bsb" className="Ct" checkName="BSB" options="mandatory" option="numeric"/>
