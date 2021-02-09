@@ -59,12 +59,14 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="10%"/>
+			<col width="9%"/>
 			<col width="23%"/>
-			<col width="10%"/>
-			<col width="23%"/>
-			<col width="10%"/>
-			<col width="24%"/>
+			<col width="5%"/>
+			<col width="15%"/>
+			<col width="8%"/>
+			<col width="12%"/>
+			<col width="7%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
 			<th class="thSearch rt"><mc:msg key="sys0206.search.orgName"/></th>
@@ -73,14 +75,8 @@
 			<td class="tdSearch"><ui:text name="abn"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0206.search.entityType"/></th>
 			<td class="tdSearch"><ui:ccselect name="entityType" codeType="ENTITY_TYPE" caption="==Select=="/></td>
-		</tr>
-		<tr>
 			<th class="thSearch rt"><mc:msg key="sys0206.search.bizType"/></th>
 			<td class="tdSearch"><ui:ccselect name="businessType" codeType="BUSINESS_TYPE" caption="==Select=="/></td>
-			<th class="thSearch rt"><mc:msg key="sys0206.search.orgCategory"/></th>
-			<td class="tdSearch"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" caption="==Select=="/></td>
-			<th class="thSearch rt"></th>
-			<td class="tdSearch"></td>
 		</tr>
 	</table>
 </div>
@@ -104,7 +100,6 @@
 			<col width="3%"/>
 			<col width="9%"/>
 			<col width="9%"/>
-			<col width="7%"/>
 			<col width="14%"/>
 			<col width="5%"/>
 			<col width="3%"/>
@@ -118,7 +113,6 @@
 				<th class="thGrid"><mc:msg key="sys0206.grid.users"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.entityType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.bizType"/></th>
-				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.orgCategory"/></th>
 				<th class="thGrid">Email</th>
 				<th class="thGrid sortable:date"><mc:msg key="sys0206.grid.regDate"/></th>
 				<th class="thGrid"><mc:msg key="page.com.action"/></th>
@@ -126,7 +120,7 @@
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="11"><mc:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="10"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

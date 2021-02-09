@@ -13,13 +13,5 @@
 		<action name="lookup/*" class="project.common.module.commonlookup.CommonLookupAction" method="{1}">
 			<result name="organisation" type="debugDispatcherResult">/project/common/module/commonlookup/OrganisationLookupPop.jsp</result>
 		</action>
-
-		<!--/* Data Entry Summary for Admin Tool */-->
-		<action name="entrySummary/*" class="project.common.module.admintoolentrysummary.EntrySummaryAction" method="{1}">
-		</action>
-
-		<!--/* Data Entry Types Supporter */-->
-		<action name="entryTypeSupporter/*" class="project.common.module.entrytypesupporter.EntryTypeSupporterAction" method="{1}">
-		</action>
 	</package>
 </struts>

@@ -13,11 +13,8 @@ import de.taimos.totp.TOTP;
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.common.module.datahelper.DataHelper;
-import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
-import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
-import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
@@ -32,8 +29,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	private SysUserDao sysUserDao;
 	@Autowired
 	private SysOrgDao sysOrgDao;
-	@Autowired
-	private SysFinancialPeriodDao sysFinancialPeriodDao;
 	@Autowired
 	private LoginMessageSender loginMessageSender;
 
@@ -150,7 +145,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	public ParamEntity exeLogin(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		SysUser sysUser = new SysUser();
-		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
 		String loginId = requestDataSet.getValue("loginId");
 		String password = requestDataSet.getValue("password");
 		String loginAuthEmailKey = ConfigUtil.getProperty("login.auth.emailKey");
@@ -178,12 +172,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 				loginMessageSender.sendAuthKey(sysUser, email, authKey);
 			}
 
-			sysFinancialPeriod = sysFinancialPeriodDao.getCurrentFinancialPeriod();
-
-			paramEntity.setObject("defaultPeriodYear", sysFinancialPeriod.getPeriodYear());
-			paramEntity.setObject("defaultFinancialYear", sysFinancialPeriod.getFinancialYear());
-			paramEntity.setObject("defaultQuarterCode", sysFinancialPeriod.getQuarterCode());
-			paramEntity.setObject("defaultQuarterName", sysFinancialPeriod.getQuarterName());
 			paramEntity.setObject("sysUser", sysUser);
 			paramEntity.setObject("sysOrg", sysOrgDao.getOrgByOrgId(sysUser.getOrgId()));
 
@@ -285,44 +273,6 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 			paramEntity.setAjaxResponseDataSet(userDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity setSessionValuesForAdminTool(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		SysUser sysUser = new SysUser();
-		SysOrg sysOrg = new SysOrg();
-		String userId = requestDataSet.getValue("userId");
-		String orgCategoryDesc = "";
-		DataSet resultDataSet = new DataSet();
-
-		try {
-			sysUser = sysUserDao.getUserByUserId(userId);
-			sysOrg = sysOrgDao.getOrgByOrgId(sysUser.getOrgId());
-
-			orgCategoryDesc = CommonCodeManager.getCodeDescription("ORG_CATEGORY", sysOrg.getOrgCategory());
-
-			paramEntity.setObject("sysUserForAdminTool", sysUser);
-			paramEntity.setObject("sysOrgForAdminTool", sysOrg);
-			paramEntity.setObject("orgLegalNameForAdminTool", sysOrg.getLegalName());
-			paramEntity.setObject("orgCategoryForAdminTool", sysOrg.getOrgCategory());
-			paramEntity.setObject("orgCategoryDescForAdminTool", orgCategoryDesc);
-
-			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "org_category", "org_category_desc"});
-			resultDataSet.addRow();
-			resultDataSet.setValue("user_id", sysUser.getUserId());
-			resultDataSet.setValue("user_name", sysUser.getUserName());
-			resultDataSet.setValue("login_id", sysUser.getLoginId());
-			resultDataSet.setValue("org_id", sysUser.getOrgId());
-			resultDataSet.setValue("org_name", sysOrg.getLegalName());
-			resultDataSet.setValue("org_category", sysOrg.getOrgCategory());
-			resultDataSet.setValue("org_category_desc", orgCategoryDesc);
-
-			paramEntity.setAjaxResponseDataSet(resultDataSet);
-			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

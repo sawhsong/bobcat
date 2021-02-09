@@ -10,6 +10,4 @@ public interface AutoCompletionBiz {
 	public ParamEntity getOrgId(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getOrgByIdOrName(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getAbn(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getEmployeeSurname(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getEmployeeGivenName(ParamEntity paramEntity) throws Exception;
 }

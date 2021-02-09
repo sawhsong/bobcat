@@ -42,18 +42,3 @@ var sys = {
 		}
 	}
 };
-
-/*!
- * Sub System - rkm
- */
-var rkm = {
-	rkm0804:{
-		caption:{
-		},
-		header:{
-		},
-		message:{
-			noEmployeeSelected:"No Employee Selected."
-		}
-	}
-};

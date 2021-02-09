@@ -15,7 +15,6 @@ create table sys_org (
     registered_date                 date,                                                       -- Registered Date
     entity_type                     varchar2(30)                                 not null,      -- Entity Type - sys_common_code.entity_type
     business_type                   varchar2(30)                                 not null,      -- Business Type - sys_common_code.business_type
-    org_category                    varchar2(30)                                 not null,      -- Organisation Catetory - sys_common_code.org_category
     base_type                       varchar2(30)                                 not null,      -- Base Type - sys_common_code.base_type
     revenue_range_from              number(12,2),                                               -- Revenue Range From
     revenue_range_to                number(12,2),                                               -- Revenue Range To
@@ -41,7 +40,6 @@ comment on column sys_org.address                                               
 comment on column sys_org.registered_date                                        is 'Registered Date';
 comment on column sys_org.entity_type                                            is 'Entity Type - sys_common_code.entity_type';
 comment on column sys_org.business_type                                          is 'Business Type - sys_common_code.business_type';
-comment on column sys_org.org_category                                           is 'Organisation Catetory - sys_common_code.org_category';
 comment on column sys_org.base_type                                              is 'Base Type - sys_common_code.base_type';
 comment on column sys_org.revenue_range_from                                     is 'Revenue Range From';
 comment on column sys_org.revenue_range_to                                       is 'Revenue Range To';

@@ -103,14 +103,8 @@ var orgId = "<%=orgId%>";
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.entityType"/></th>
 			<td class="tdEdit"><ui:ccselect name="entityType" codeType="ENTITY_TYPE" checkName="sys0206.header.entityType" options="mandatory"/></td>
-			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.orgCategory"/></th>
-			<td class="tdEdit"><ui:ccselect name="orgCategory" codeType="ORG_CATEGORY" checkName="sys0206.header.orgCategory" options="mandatory"/></td>
-		</tr>
-		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.baseType"/></th>
 			<td class="tdEdit"><ui:ccselect name="baseType" codeType="BASE_TYPE" checkName="sys0206.header.baseType" options="mandatory"/></td>
-			<th class="thEdit Rt"></th>
-			<td class="tdEdit"></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt">Business Address</th>

@@ -13,42 +13,8 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysUser.SysUserHDaoImpl" id="sysUserDao" init-method="init" name="sysUserDao" parent="baseHDao" scope="prototype"/>
     <!--/* SysAuthGroup DAO */-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysAuthGroup.SysAuthGroupHDaoImpl" id="sysAuthGroupDao" init-method="init" name="sysAuthGroupDao" parent="baseHDao" scope="prototype"/>
-    <!--SysAssetType DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysAssetType.SysAssetTypeHDaoImpl" id="sysAssetTypeDao" init-method="init" name="sysAssetTypeDao" parent="baseHDao" scope="prototype"/>
-    <!--SysBorrowingType DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysBorrowingType.SysBorrowingTypeHDaoImpl" id="sysBorrowingTypeDao" init-method="init" name="sysBorrowingTypeDao" parent="baseHDao" scope="prototype"/>
-    <!--SysExpenseType DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysExpenseType.SysExpenseTypeHDaoImpl" id="sysExpenseTypeDao" init-method="init" name="sysExpenseTypeDao" parent="baseHDao" scope="prototype"/>
-    <!--SysFinancialPeriod DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodHDaoImpl" id="sysFinancialPeriodDao" init-method="init" name="sysFinancialPeriodDao" parent="baseHDao" scope="prototype"/>
-    <!--SysIncomeType DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysIncomeType.SysIncomeTypeHDaoImpl" id="sysIncomeTypeDao" init-method="init" name="sysIncomeTypeDao" parent="baseHDao" scope="prototype"/>
-    <!--SysLendingType DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysLendingType.SysLendingTypeHDaoImpl" id="sysLendingTypeDao" init-method="init" name="sysLendingTypeDao" parent="baseHDao" scope="prototype"/>
     <!--SysOrg DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysOrg.SysOrgHDaoImpl" id="sysOrgDao" init-method="init" name="sysOrgDao" parent="baseHDao" scope="prototype"/>
-    <!--SysRepaymentType DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysRepaymentType.SysRepaymentTypeHDaoImpl" id="sysRepaymentTypeDao" init-method="init" name="sysRepaymentTypeDao" parent="baseHDao" scope="prototype"/>
-    <!--SysTaxMaster DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysTaxMaster.SysTaxMasterHDaoImpl" id="sysTaxMasterDao" init-method="init" name="sysTaxMasterDao" parent="baseHDao" scope="prototype"/>
-    <!--SysTaxMasterTemp DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysTaxMasterTemp.SysTaxMasterTempHDaoImpl" id="sysTaxMasterTempDao" init-method="init" name="sysTaxMasterTempDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrAsset DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrAsset.UsrAssetHDaoImpl" id="usrAssetDao" init-method="init" name="usrAssetDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrAssetFile DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrAssetFile.UsrAssetFileHDaoImpl" id="usrAssetFileDao" init-method="init" name="usrAssetFileDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrEmployee DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrEmployee.UsrEmployeeHDaoImpl" id="usrEmployeeDao" init-method="init" name="usrEmployeeDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrEmployeeWage DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrEmployeeWage.UsrEmployeeWageHDaoImpl" id="usrEmployeeWageDao" init-method="init" name="usrEmployeeWageDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrExpense DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrExpense.UsrExpenseHDaoImpl" id="usrExpenseDao" init-method="init" name="usrExpenseDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrFinance DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrFinance.UsrFinanceHDaoImpl" id="usrFinanceDao" init-method="init" name="usrFinanceDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrFinanceFile DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrFinanceFile.UsrFinanceFileHDaoImpl" id="usrFinanceFileDao" init-method="init" name="usrFinanceFileDao" parent="baseHDao" scope="prototype"/>
-    <!--UsrIncome DAO-->
-    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrIncome.UsrIncomeHDaoImpl" id="usrIncomeDao" init-method="init" name="usrIncomeDao" parent="baseHDao" scope="prototype"/>
     <!--UsrBankAccnt DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntHDaoImpl" id="usrBankAccntDao" init-method="init" name="usrBankAccntDao" parent="baseHDao" scope="prototype"/>
     <!--UsrBankStatement DAO-->

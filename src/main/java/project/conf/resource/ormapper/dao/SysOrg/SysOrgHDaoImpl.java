@@ -74,7 +74,6 @@ public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 		queryAdvisor.addAutoFillCriteria(abn, "abn like '%"+abn+"%'");
 		queryAdvisor.addAutoFillCriteria(entityType, "entity_type = '"+entityType+"'");
 		queryAdvisor.addAutoFillCriteria(businessType, "business_type = '"+businessType+"'");
-		queryAdvisor.addAutoFillCriteria(orgCategory, "org_category = '"+orgCategory+"'");
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addVariable("langCode", langCode);
 		queryAdvisor.addOrderByClause("legal_name asc");

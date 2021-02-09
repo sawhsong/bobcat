@@ -98,8 +98,6 @@ $(function() {
 		commonJs.refreshBootstrapSelectbox("businessType");
 		$("#entityType").val(ds.getValue(0, "ENTITY_TYPE"));
 		commonJs.refreshBootstrapSelectbox("entityType");
-		$("#orgCategory").val(ds.getValue(0, "ORG_CATEGORY"));
-		commonJs.refreshBootstrapSelectbox("orgCategory");
 		$("#baseType").val(ds.getValue(0, "BASE_TYPE"));
 		commonJs.refreshBootstrapSelectbox("baseType");
 		$("#address").val(ds.getValue(0, "ADDRESS"));

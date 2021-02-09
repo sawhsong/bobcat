@@ -2,7 +2,7 @@
  * Framework Generated Javascript Source
  * - Sys0206List.js
  *************************************************************************************************/
-jsconfig.put("scrollablePanelHeightAdjust", 8);
+jsconfig.put("scrollablePanelHeightAdjust", -2);
 var popup = null;
 var searchResultDataCount = 0;
 
@@ -85,7 +85,6 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "USER_CNT"), "#,###")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ENTITY_TYPE_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BUSINESS_TYPE_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ORG_CATEGORY_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "EMAIL")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "REGISTERED_DATE")));
 
@@ -98,7 +97,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:11").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -132,7 +131,7 @@ $(function() {
 		if (param.mode == "Insert" || param.mode == "Update") {
 			url = "/sys/0206/getEdit.do";
 			header = com.header.popHeaderEdit;
-			width = 1000; height = 590;
+			width = 1000; height = 560;
 		}
 
 		var popParam = {

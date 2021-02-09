@@ -14,7 +14,6 @@
 		<property name="businessType" column="BUSINESS_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="entityType" column="ENTITY_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="legalName" column="LEGAL_NAME" not-null="true" type="java.lang.String" length="300"/>
-		<property name="orgCategory" column="ORG_CATEGORY" not-null="true" type="java.lang.String" length="30"/>
 		<property name="abn" column="ABN" type="java.lang.String" length="30"/>
 		<property name="address" column="ADDRESS" type="java.lang.String" length="500"/>
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
@@ -37,7 +36,6 @@
 		       BUSINESS_TYPE,
 		       ENTITY_TYPE,
 		       LEGAL_NAME,
-		       ORG_CATEGORY,
 		       ABN,
 		       ADDRESS,
 		       EMAIL,
@@ -68,7 +66,6 @@
 		       BUSINESS_TYPE,
 		       ENTITY_TYPE,
 		       LEGAL_NAME,
-		       ORG_CATEGORY,
 		       ABN,
 		       ADDRESS,
 		       EMAIL,
@@ -89,7 +86,6 @@
 		       ${BUSINESS_TYPE},
 		       ${ENTITY_TYPE},
 		       ${LEGAL_NAME},
-		       ${ORG_CATEGORY},
 		       ${ABN},
 		       ${ADDRESS},
 		       ${EMAIL},
@@ -114,7 +110,6 @@
 		       BUSINESS_TYPE = ${BUSINESS_TYPE},
 		       ENTITY_TYPE = ${ENTITY_TYPE},
 		       LEGAL_NAME = ${LEGAL_NAME},
-		       ORG_CATEGORY = ${ORG_CATEGORY},
 		       ABN = ${ABN},
 		       ADDRESS = ${ADDRESS},
 		       EMAIL = ${EMAIL},

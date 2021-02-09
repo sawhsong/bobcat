@@ -70,22 +70,4 @@ public class AutoCompletionAction extends BaseAction {
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
-
-	public String getEmployeeSurname() throws Exception {
-		try {
-			biz.getEmployeeSurname(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String getEmployeeGivenName() throws Exception {
-		try {
-			biz.getEmployeeGivenName(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
 }

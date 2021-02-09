@@ -27,8 +27,6 @@ public class SysOrg extends BaseDto implements Serializable {
 	private String ENTITY_TYPE;
 	private String legalName;
 	private String LEGAL_NAME;
-	private String orgCategory;
-	private String ORG_CATEGORY;
 	private String abn;
 	private String ABN;
 	private String address;
@@ -137,15 +135,6 @@ public class SysOrg extends BaseDto implements Serializable {
 	public void setLegalName(String legalName) throws Exception {
 		this.legalName = legalName;
 		setValueFromAccessor("LEGAL_NAME", legalName);
-	}
-
-	public String getOrgCategory() {
-		return orgCategory;
-	}
-
-	public void setOrgCategory(String orgCategory) throws Exception {
-		this.orgCategory = orgCategory;
-		setValueFromAccessor("ORG_CATEGORY", orgCategory);
 	}
 
 	public String getAbn() {
@@ -405,7 +394,6 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "businessType : "+businessType+"\n";
 		str += "entityType : "+entityType+"\n";
 		str += "legalName : "+legalName+"\n";
-		str += "orgCategory : "+orgCategory+"\n";
 		str += "abn : "+abn+"\n";
 		str += "address : "+address+"\n";
 		str += "email : "+email+"\n";
@@ -436,7 +424,6 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "<column name=\"businessType\" value=\""+businessType+"\">";
 		str += "<column name=\"entityType\" value=\""+entityType+"\">";
 		str += "<column name=\"legalName\" value=\""+legalName+"\">";
-		str += "<column name=\"orgCategory\" value=\""+orgCategory+"\">";
 		str += "<column name=\"abn\" value=\""+abn+"\">";
 		str += "<column name=\"address\" value=\""+address+"\">";
 		str += "<column name=\"email\" value=\""+email+"\">";
@@ -467,7 +454,6 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "\"businessType\":\""+businessType+"\", ";
 		str += "\"entityType\":\""+entityType+"\", ";
 		str += "\"legalName\":\""+legalName+"\", ";
-		str += "\"orgCategory\":\""+orgCategory+"\", ";
 		str += "\"abn\":\""+abn+"\", ";
 		str += "\"address\":\""+address+"\", ";
 		str += "\"email\":\""+email+"\", ";

@@ -130,7 +130,6 @@ public class Sys0206BizImpl extends BaseBiz implements Sys0206Biz {
 			sysOrg.setAddress(requestDataSet.getValue("address"));
 			sysOrg.setRegisteredDate(CommonUtil.toDate(requestDataSet.getValue("registeredDate"), dateFormat));
 			sysOrg.setIsActive(requestDataSet.getValue("isActive"));
-			sysOrg.setOrgCategory(requestDataSet.getValue("orgCategory"));
 			sysOrg.setEntityType(requestDataSet.getValue("entityType"));
 			sysOrg.setBusinessType(requestDataSet.getValue("businessType"));
 			sysOrg.setBaseType(requestDataSet.getValue("baseType"));
