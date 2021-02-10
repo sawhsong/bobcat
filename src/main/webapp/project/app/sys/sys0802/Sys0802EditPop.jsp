@@ -8,7 +8,10 @@
 ************************************************************************************************/%>
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
-	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	DataSet req = (DataSet)paramEntity.getRequestDataSet();
+	int currentYear = CommonUtil.toInt(CommonUtil.getSysdate("YYYY"));
+	String periodYear = req.getValue("periodYear");
+	String quarterCode = req.getValue("quarterCode");
 %>
 <%/************************************************************************************************
 * HTML
@@ -27,6 +30,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var periodYear = "<%=periodYear%>";
+var quarterCode = "<%=quarterCode%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -44,6 +49,10 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		</ui:buttonGroup>
 	</div>
 </div>
 <div id="divSearchCriteriaArea"></div>
@@ -58,6 +67,71 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+	<table class="tblEdit">
+		<colgroup>
+			<col width="20%"/>
+			<col width="30%"/>
+			<col width="20%"/>
+			<col width="30%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit Rt mandatory">Period Year</th>
+			<td class="tdEdit">
+				<ui:select name="periodYear" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == currentYear) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
+			<th class="thEdit Rt mandatory">Quarter Code</th>
+			<td class="tdEdit"><ui:ccselect name="quarterCode" codeType="QUARTER_CODE" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory">Financial Year</th>
+			<td class="tdEdit">
+				<ui:select name="financialYearFrom" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == (currentYear - 1)) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
+				-
+				<ui:select name="financialYearTo" options="mandatory">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == currentYear) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
+			<th class="thEdit Rt mandatory">Quarter Name</th>
+			<td class="tdEdit"><ui:ccselect name="quarterName" codeType="QUARTER_NAME" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory">Date From</th>
+			<td class="tdEdit"><ui:text name="dateFrom" className="Ct" style="width:90px" options="mandatory"/></td>
+			<th class="thEdit Rt mandatory">Date To</th>
+			<td class="tdEdit"><ui:text name="dateTo" className="Ct" style="width:90px" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Last Updated By</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedBy" status="display"/></td>
+			<th class="thEdit rt">Last Updated Date</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedDate" status="display"/></td>
+		</tr>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

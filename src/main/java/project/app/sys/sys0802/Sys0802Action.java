@@ -32,6 +32,15 @@ public class Sys0802Action extends BaseAction {
 		return "edit";
 	}
 
+	public String getFinancialPeriod() throws Exception {
+		try {
+			biz.getFinancialPeriod(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String doSave() throws Exception {
 		try {
 			biz.doSave(paramEntity);
@@ -48,11 +57,5 @@ public class Sys0802Action extends BaseAction {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String doExport() throws Exception {
-		biz.doExport(paramEntity);
-		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
 	}
 }
