@@ -58,10 +58,14 @@
 <div id="divSearchCriteriaArea" class="areaContainer">
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
+		<colgroup>
+			<col width="6%"/>
+			<col width="*"/>
+		</colgroup>
 		<tr>
+			<th class="thSearch Rt">Period Year</th>
 			<td class="tdSearch">
-				<label for="periodYear" class="lblEn hor">Period Year</label>
-				<ui:select name="periodYear" className="hor">
+				<ui:select name="periodYear">
 					<option value="">==Select==</option>
 <%
 				for (int i=-5; i<6; i++) {
@@ -90,13 +94,13 @@
 		<colgroup>
 			<col width="2%"/>
 			<col width="2%"/>
-			<col width="10%"/>
 			<col width="12%"/>
 			<col width="12%"/>
+			<col width="14%"/>
 			<col width="*"/>
 			<col width="12%"/>
 			<col width="12%"/>
-			<col width="12%"/>
+			<col width="13%"/>
 		</colgroup>
 		<thead>
 			<tr>

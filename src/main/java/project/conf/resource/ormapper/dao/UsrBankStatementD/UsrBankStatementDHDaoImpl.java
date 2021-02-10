@@ -79,8 +79,4 @@ public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatem
 		queryAdvisor.addOrderByClause("row_index");
 		return selectAllAsDataSet(queryAdvisor, new UsrBankStatementD());
 	}
-
-	public DataSet getDataSetByFileDataForDupCheck(QueryAdvisor queryAdvisor) throws Exception {
-		return selectAllAsDataSet(queryAdvisor, new UsrBankStatementD());
-	}
 }

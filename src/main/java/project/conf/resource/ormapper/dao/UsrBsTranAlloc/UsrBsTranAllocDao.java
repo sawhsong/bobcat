@@ -13,4 +13,5 @@ public interface UsrBsTranAllocDao extends IDao {
 	public int insert(UsrBsTranAlloc usrBsTranAlloc) throws Exception;
 
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getDataSetByFileDataForDupCheck(QueryAdvisor queryAdvisor) throws Exception;
 }

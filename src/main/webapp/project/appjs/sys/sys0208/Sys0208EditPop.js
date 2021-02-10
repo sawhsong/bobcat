@@ -2,7 +2,6 @@
  * Framework Generated Javascript Source
  * - Sys0208EditPop.js
  *************************************************************************************************/
-jsconfig.put("useJqSelectmenu", false);
 var delimiter = jsconfig.get("dataDelimiter");
 var bankAccntCount = 0;
 

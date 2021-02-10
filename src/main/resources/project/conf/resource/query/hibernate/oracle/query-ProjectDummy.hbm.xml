@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<sql-query name="query.ProjectDummy.getFinacialQuarter">
+	<![CDATA[
+		select a.period_year,
+		       a.financial_year,
+		       to_char(a.financial_date_from, '${dateFormat}') as financial_date_from,
+		       to_char(a.financial_date_to, '${dateFormat}') as financial_date_to,
+		       to_char(add_months(a.financial_date_from, (my_level - 1) * 3), '${dateFormat}') as quarter_date_from,
+		       to_char(last_day(add_months(add_months(a.financial_date_from, (my_level - 1) * 3), 2)), '${dateFormat}') as quarter_date_to,
+		       'Q'||a.quarter_code as quarter_code,
+		       to_char(last_day(add_months(add_months(a.financial_date_from, (my_level - 1) * 3), 2)), 'MON') as quarter_name
+		  from ( select level as my_level,
+		                (base_year) as period_year,
+		                (base_year - 1)||'-'||(base_year) as financial_year,
+		                to_date((base_year - 1)||'0701', 'yyyymmdd') as financial_date_from,
+		                to_date((base_year)||'0630', 'yyyymmdd') as financial_date_to,
+		                (level) as quarter_code
+		           from (select (to_number('${year}')) base_year
+		                   from dual
+		                )
+		        connect by (level * 3) <= 12
+		       ) a
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getFinacialYear">
+	<![CDATA[
+		select *
+		  from ( select (base_year + level - 1)||'-'||(base_year + level) as financial_year,
+		                (base_year + level - 1)||'0701'||'-'||(base_year + level)||'0630' as financial_date,
+		                (base_year + level - 1)||'0701' as financial_date_from,
+		                (base_year + level)||'0630' as financial_date_to
+		           from (select (to_number(to_char(sysdate, 'yyyy')) - 20) base_year
+		                   from dual
+		                )
+		        connect by base_year + level - 1 <= to_number(to_char(sysdate, 'yyyy'))
+		       )
+		 where trunc(sysdate) between to_date(financial_date_from, 'yyyymmdd') and to_date(financial_date_to, 'yyyymmdd')
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getFinacialYearWithAsOfDate">
+	<![CDATA[
+		select *
+		  from ( select (base_year + level - 1)||'-'||(base_year + level) as financial_year,
+		                (base_year + level - 1)||'0701'||'-'||(base_year + level)||'0630' as financial_date,
+		                (base_year + level - 1)||'0701' as financial_date_from,
+		                (base_year + level)||'0630' as financial_date_to
+		           from (select (to_number(to_char(to_date('${asDate}', '${dateFormat}'), 'yyyy')) - 20) base_year
+		                   from dual
+		                )
+		        connect by base_year + level - 1 <= to_number(to_char(to_date('${asDate}', '${dateFormat}'), 'yyyy'))
+		       )
+		 where trunc(to_date('${asDate}', '${dateFormat}')) between to_date(financial_date_from, 'yyyymmdd') and to_date(financial_date_to, 'yyyymmdd')
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getDatabaseSessionList">
+	<![CDATA[
+		select vss.sid as sid,
+		       vss.serial# as serial_no,
+		       vss.username as user_name,
+		       vss.status,
+		       vss.schemaname as schema_name,
+		       vss.osuser as os_user,
+		       vss.machine,
+		       vss.terminal,
+		       vss.program,
+		       vss.type,
+		       vss.sql_address,
+		       vss.sql_hash_value,
+		       vss.sql_id,
+		       vss.module,
+		       vss.command,
+		       (select command_name from v$sqlcommand where command_type = vss.command) as command_name,
+		       to_char(vss.logon_time, '${dateTimeFormat}') as logon_time_format,
+		       vss.event,
+		       'alter system kill session '||''''||vss.sid||', '||vss.serial#||''''||'' as query_to_kill
+		  from v$session vss
+		 where vss.schemaname not in ('SYSTEM', 'SYS')
+		   and vss.osuser not in ('SYSTEM', 'SYS')
+		   and vss.username not in ('SYSTEM', 'SYS')
+		   and vss.status <> 'KILLED'
+		 ${where_clause}
+		 order by vss.osuser desc, vss.logon_time desc
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getSqlTextBySqlId">
+	<![CDATA[
+		select vsq.sql_text as sql_text,
+		       vsq.sql_fulltext as sql_full_text,
+		       vsq.sql_id,
+		       vsq.address,
+		       vsq.hash_value,
+		       to_char(to_date(replace(vsq.first_load_time, '/', ' '), 'yyyy-mm-dd hh24:mi:ss'), '${dateTimeFormat}') as first_load_time_format,
+		       to_char(vsq.last_active_time, '${dateTimeFormat}') as last_active_time_format,
+		       to_char(vsq.last_load_time, '${dateTimeFormat}') as last_load_time_format
+		  from v$sqlarea vsq
+		 where 1 = 1
+		 ${where_clause}
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getTableListDataSetByCriteria">
+	<![CDATA[
+		select table_name,
+		       comments
+		  from user_tab_comments
+		 where table_type = 'TABLE'
+		   ${auto_fill}
+		 order by table_name
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getTableListDataSetByCriteriaForAdditionalDataSource">
+	<![CDATA[
+		select table_name,
+		       comments
+		  from user_tab_comments
+		 where table_type = 'TABLE'
+		   ${auto_fill}
+		 order by table_name
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getTableDetailDataSetByTableName">
+	<![CDATA[
+		select a.table_name,
+		       a.column_name,
+		       a.data_type,
+		       a.data_default,
+		       decode(a.data_type, 'NUMBER', decode(a.data_precision || ',' || a.data_scale, ',', '', nvl(a.data_precision, 12) || ',' || a.data_scale), a.data_length) data_length,
+		       a.nullable,
+		       c.constraint_type,
+		       d.comments,
+		       (select comments
+		          from user_tab_comments
+		         where table_name = a.table_name
+		       ) table_description
+		  from user_tab_columns a,
+		       (select a.table_name,
+		               b.column_name,
+		               listagg(decode(a.constraint_type, 'P', 'PK', 'R', 'FK', 'U', 'UK'), ', ') within group(order by a.constraint_type) as constraint_type
+		          from user_constraints a,
+		               user_cons_columns b
+		         where a.constraint_type in ('P', 'R', 'U')
+		           and a.table_name = b.table_name
+		           and a.constraint_name = b.constraint_name
+		         group by a.table_name, b.column_name
+		       ) c,
+		       user_col_comments d
+		 where a.table_name = upper('${table_name}')
+		   and a.table_name = c.table_name (+)
+		   and a.column_name = c.column_name (+)
+		   and a.table_name = d.table_name (+)
+		   and a.column_name = d.column_name (+)
+		 order by a.table_name,
+		       a.nullable,
+		       c.constraint_type,
+		       a.column_name
+	]]>
+	</sql-query>
+
+	<sql-query name="query.ProjectDummy.getTableDetailDataSetByTableNameForAdditionalDataSource">
+	<![CDATA[
+		select a.table_name,
+		       a.column_name,
+		       a.data_type,
+		       a.data_default,
+		       decode(a.data_type, 'NUMBER', decode(a.data_precision || ',' || a.data_scale, ',', '', nvl(a.data_precision, 12) || ',' || a.data_scale), a.data_length) data_length,
+		       a.nullable,
+		       c.constraint_type,
+		       d.comments,
+		       (select comments
+		          from user_tab_comments
+		         where table_name = a.table_name
+		       ) table_description
+		  from user_tab_columns a,
+		       (select a.table_name,
+		               b.column_name,
+		               listagg(decode(a.constraint_type, 'P', 'PK', 'R', 'FK', 'U', 'UK'), ', ') within group(order by a.constraint_type) as constraint_type
+		          from user_constraints a,
+		               user_cons_columns b
+		         where a.constraint_type in ('P', 'R', 'U')
+		           and a.table_name = b.table_name
+		           and a.constraint_name = b.constraint_name
+		         group by a.table_name, b.column_name
+		       ) c,
+		       user_col_comments d
+		 where a.table_name = upper('${table_name}')
+		   and a.table_name = c.table_name (+)
+		   and a.column_name = c.column_name (+)
+		   and a.table_name = d.table_name (+)
+		   and a.column_name = d.column_name (+)
+		 order by a.table_name,
+		       a.nullable,
+		       c.constraint_type,
+		       a.column_name
+	]]>
+	</sql-query>
+</hibernate-mapping>

@@ -41,6 +41,15 @@ public class Sys0802Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String doAutoGenerate() throws Exception {
+		try {
+			biz.doAutoGenerate(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String doSave() throws Exception {
 		try {
 			biz.doSave(paramEntity);

@@ -5,11 +5,16 @@
  *************************************************************************************************/
 package project.app.sys.sys0802;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.ProjectDummy.ProjectDummyDao;
 import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
 import zebra.data.DataSet;
@@ -22,6 +27,8 @@ import zebra.util.ConfigUtil;
 public class Sys0802BizImpl extends BaseBiz implements Sys0802Biz {
 	@Autowired
 	private SysFinancialPeriodDao sysFinancialPeriodDao;
+	@Autowired
+	private ProjectDummyDao projectDummyDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -62,10 +69,70 @@ public class Sys0802BizImpl extends BaseBiz implements Sys0802Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		String periodYear = requestDataSet.getValue("periodYear");
 		String quarterCode = requestDataSet.getValue("quarterCode");
+		DataSet financialPeriod;
 
 		try {
-			paramEntity.setAjaxResponseDataSet(sysFinancialPeriodDao.getDataSetByPeriodYearAndCode(periodYear, quarterCode));
+			financialPeriod = sysFinancialPeriodDao.getDataSetByPeriodYearAndCode(periodYear, quarterCode);
+			financialPeriod.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(financialPeriod.getValue("INSERT_USER_ID")));
+			financialPeriod.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(financialPeriod.getValue("UPDATE_USER_ID")));
+
+			paramEntity.setAjaxResponseDataSet(financialPeriod);
 			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity doAutoGenerate(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String loggedInUserId = (String)session.getAttribute("UserId");
+		String periodYear = requestDataSet.getValue("periodYearForAutoGen");
+		String quarterCode = requestDataSet.getValue("quarterCodeForAutoGen");
+		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
+		DataSet financialPeriod = new DataSet();
+		int result = -1;
+
+		try {
+			queryAdvisor.setObject("year", periodYear);
+			queryAdvisor.setObject("quarterCode", quarterCode);
+			financialPeriod = projectDummyDao.getFinacialQuarter(queryAdvisor);
+
+			if (CommonUtil.isBlank(quarterCode)) {
+				for (int i=0; i<financialPeriod.getRowCnt(); i++) {
+					sysFinancialPeriod.setPeriodYear(periodYear);
+					sysFinancialPeriod.setQuarterCode(financialPeriod.getValue(i, "QUARTER_CODE"));
+					sysFinancialPeriod.setFinancialYear(financialPeriod.getValue(i, "FINANCIAL_YEAR"));
+					sysFinancialPeriod.setQuarterName(financialPeriod.getValue(i, "QUARTER_NAME"));
+					sysFinancialPeriod.setDateFrom(CommonUtil.toDate(financialPeriod.getValue(i, "QUARTER_DATE_FROM"), dateFormat));
+					sysFinancialPeriod.setDateTo(CommonUtil.toDate(financialPeriod.getValue(i, "QUARTER_DATE_TO"), dateFormat));
+					sysFinancialPeriod.setInsertUserId(loggedInUserId);
+					sysFinancialPeriod.setInsertDate(CommonUtil.getSysdateAsDate());
+
+					result = sysFinancialPeriodDao.insert(sysFinancialPeriod);
+				}
+			} else {
+				sysFinancialPeriod.setPeriodYear(periodYear);
+				sysFinancialPeriod.setQuarterCode(quarterCode);
+				sysFinancialPeriod.setFinancialYear(financialPeriod.getValue("FINANCIAL_YEAR"));
+				sysFinancialPeriod.setQuarterName(financialPeriod.getValue("QUARTER_NAME"));
+				sysFinancialPeriod.setDateFrom(CommonUtil.toDate(financialPeriod.getValue("QUARTER_DATE_FROM"), dateFormat));
+				sysFinancialPeriod.setDateTo(CommonUtil.toDate(financialPeriod.getValue("QUARTER_DATE_TO"), dateFormat));
+				sysFinancialPeriod.setInsertUserId(loggedInUserId);
+				sysFinancialPeriod.setInsertDate(CommonUtil.getSysdateAsDate());
+
+				result = sysFinancialPeriodDao.insert(sysFinancialPeriod);
+			}
+
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -80,6 +147,7 @@ public class Sys0802BizImpl extends BaseBiz implements Sys0802Biz {
 		String periodYear = requestDataSet.getValue("periodYear");
 		String quarterCode = requestDataSet.getValue("quarterCode");
 		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
+		DataSet financialPeriod;
 		int result = -1;
 
 		try {
@@ -111,8 +179,13 @@ public class Sys0802BizImpl extends BaseBiz implements Sys0802Biz {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
-			paramEntity.setAjaxResponseDataSet(sysFinancialPeriodDao.getDataSetByPeriodYearAndCode(periodYear, quarterCode));
+			financialPeriod = sysFinancialPeriodDao.getDataSetByPeriodYearAndCode(periodYear, quarterCode);
+			financialPeriod.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(financialPeriod.getValue("INSERT_USER_ID")));
+			financialPeriod.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(financialPeriod.getValue("UPDATE_USER_ID")));
+
+			paramEntity.setAjaxResponseDataSet(financialPeriod);
 			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

@@ -13,6 +13,7 @@ public interface Sys0802Biz {
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getFinancialPeriod(ParamEntity paramEntity) throws Exception;
 
+	public ParamEntity doAutoGenerate(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception;
 }

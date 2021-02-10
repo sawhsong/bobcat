@@ -34,4 +34,8 @@ public class UsrBsTranAllocHDaoImpl extends BaseHDao implements UsrBsTranAllocDa
 
 		return selectAsDataSet(queryAdvisor, "query.UsrBsTranAlloc.getDataSetBySearchCriteria");
 	}
+
+	public DataSet getDataSetByFileDataForDupCheck(QueryAdvisor queryAdvisor) throws Exception {
+		return selectAllAsDataSet(queryAdvisor, new UsrBsTranAlloc());
+	}
 }

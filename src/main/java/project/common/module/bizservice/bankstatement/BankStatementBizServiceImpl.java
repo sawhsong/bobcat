@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
 import project.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementDao;
-import project.conf.resource.ormapper.dao.UsrBankStatementD.UsrBankStatementDDao;
+import project.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocDao;
 import project.conf.resource.ormapper.dto.oracle.UsrBankStatement;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
@@ -23,7 +23,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 	@Autowired
 	private UsrBankStatementDao usrBankStatementDao;
 	@Autowired
-	private UsrBankStatementDDao usrBankStatementDDao;
+	private UsrBsTranAllocDao usrBsTranAllocDao;
 
 	public int doSave(DataSet fileDataSet, DataSet bankFileData) throws Exception {
 		UsrBankStatement usrBankStatement = new UsrBankStatement();
@@ -72,7 +72,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 			qa.addWhereClause("proc_amt = "+fileData.getValue(0, "PROC_AMOUNT")+"");
 			qa.addWhereClause("proc_description = '"+fileData.getValue(0, "DESCRIPTION")+"'");
 			qa.addWhereClause("balance = "+fileData.getValue(0, "BALANCE")+"");
-			result = usrBankStatementDDao.getDataSetByFileDataForDupCheck(qa);
+			result = usrBsTranAllocDao.getDataSetByFileDataForDupCheck(qa);
 
 			qa.resetAll();
 
@@ -80,7 +80,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 			qa.addWhereClause("proc_amt = "+fileData.getValue(fileData.getRowCnt()-1, "PROC_AMOUNT")+"");
 			qa.addWhereClause("proc_description = '"+fileData.getValue(fileData.getRowCnt()-1, "DESCRIPTION")+"'");
 			qa.addWhereClause("balance = "+fileData.getValue(fileData.getRowCnt()-1, "BALANCE")+"");
-			temp = usrBankStatementDDao.getDataSetByFileDataForDupCheck(qa);
+			temp = usrBsTranAllocDao.getDataSetByFileDataForDupCheck(qa);
 
 			result.merge(temp);
 		}

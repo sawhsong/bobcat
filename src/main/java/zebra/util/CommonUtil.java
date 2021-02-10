@@ -42,7 +42,7 @@ public class CommonUtil extends StringUtils {
 		return result;
 	}
 
-	public static boolean isBlank(String value[]) {
+	public static boolean isBlank(String... value) {
 		boolean rtn = true;
 
 		if (value == null || value.length == 0) {

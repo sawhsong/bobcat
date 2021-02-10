@@ -50,12 +50,40 @@ var quarterCode = "<%=quarterCode%>";
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnAutoGenerate" caption="Auto Generate" iconClass="fa-magic"/>
 			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea"></div>
+<div id="divSearchCriteriaArea" class="areaContainerPopup">
+	<table class="tblSearch">
+		<caption>Please select period year and quarter code for auto generate</caption>
+		<colgroup>
+			<col width="15%"/>
+			<col width="15%"/>
+			<col width="15%"/>
+			<col width="*"/>
+		</colgroup>
+		<tr>
+			<th class="thSearch Rt">Period Year</th>
+			<td class="tdSearch">
+				<ui:select name="periodYearForAutoGen">
+<%
+				for (int i=-5; i<6; i++) {
+					String seleted = ((currentYear - i) == currentYear) ? "selected" : "";
+%>
+					<option value="<%=currentYear - i%>" <%=seleted%>><%=currentYear - i%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
+			<th class="thSearch Rt">Quarter Code</th>
+			<td class="tdSearch"><ui:ccselect name="quarterCodeForAutoGen" codeType="QUARTER_CODE" caption="==All=="/></td>
+		</tr>
+	</table>
+</div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
@@ -121,9 +149,9 @@ var quarterCode = "<%=quarterCode%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory">Date From</th>
-			<td class="tdEdit"><ui:text name="dateFrom" className="Ct" style="width:90px" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="dateFrom" className="Ct" style="width:90px" checkName="Date From" options="mandatory"/></td>
 			<th class="thEdit Rt mandatory">Date To</th>
-			<td class="tdEdit"><ui:text name="dateTo" className="Ct" style="width:90px" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="dateTo" className="Ct" style="width:90px" checkName="Date To" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt">Last Updated By</th>
