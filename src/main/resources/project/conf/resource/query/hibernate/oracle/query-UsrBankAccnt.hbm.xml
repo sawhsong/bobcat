@@ -9,6 +9,7 @@
 	<![CDATA[
 		select uba.*,
 		       (select count(*) from usr_bank_statement where bank_accnt_id = uba.bank_accnt_id) as bank_statement_cnt,
+		       (select count(*) from usr_bs_tran_alloc where bank_accnt_id = uba.bank_accnt_id) as bs_tran_alloc_cnt,
 		       (select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = uba.bank_code) as bank_name
 		  from usr_bank_accnt uba
 		 where 1 = 1

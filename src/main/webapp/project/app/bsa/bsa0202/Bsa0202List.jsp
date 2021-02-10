@@ -9,6 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String dateFrom = CommonUtil.getCalcDate("D", CommonUtil.getSysdate(dateFormat), dateFormat, -1);
+	String dateTo = CommonUtil.getSysdate(dateFormat);
 %>
 <%/************************************************************************************************
 * HTML
@@ -48,9 +51,8 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -58,11 +60,23 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
+			<col width="7%"/>
 			<col width="10%"/>
+			<col width="7%"/>
+			<col width="15%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thSearch rt"></th>
+			<th class="thSearch rt">Allocation Status</th>
+			<td class="tdSearch"><ui:ccselect name="allocationStatus" codeType="BS_TRAN_ALLOC_STATUS" caption="==Select=="/></td>
+			<th class="thSearch rt">Date Range</th>
+			<td class="tdSearch">
+				<ui:text name="fromDate" value="<%=dateFrom%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="toDate" value="<%=dateTo%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnToDate" className="fa-calendar hor"/>
+			</td>
 			<td class="tdSearch"></td>
 		</tr>
 	</table>
@@ -78,20 +92,25 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<table id="tblGrid" class="tblGrid sort autosort">
+	<table id="tblGrid" class="tblGrid">
 		<colgroup>
-			<col width="2%"/>
+			<col width="7%"/>
+			<col width="9%"/>
+			<col width="10%"/>
+			<col width="12%"/>
 			<col width="*"/>
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
-				<th class="thGrid"></th>
+				<th class="thGrid">Date</th>
+				<th class="thGrid">Amount</th>
+				<th class="thGrid">Balance</th>
+				<th class="thGrid">Description</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr>
-				<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+			<tr class="noStripe">
+				<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
 			</tr>
 		</tbody>
 	</table>

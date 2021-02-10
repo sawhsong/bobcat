@@ -100,7 +100,7 @@
 						<td class="tdGrid Lt"><a class="aEn" onclick="" class="aNormal">NONY_BOARD_<%=i+1%></a></td>
 						<td class="tdGrid Lt"><%=i+1%>_Attached Files</td>
 						<td class="tdGrid Ct">
-							<i id="icnAction"class="fa fa-tasks fa-lg icnEn" tableName="NONY_BOARD" tableDesc="" onclick="" title="Action"></i>
+							<i id="icnAction"class="fa fa-ellipsis-h fa-lg icnEn" tableName="NONY_BOARD" tableDesc="" onclick="" title="Action"></i>
 						</td>
 					</tr>
 <%
@@ -140,7 +140,7 @@
 								<td class="tdGrid Ct"><%=i+1%></td>
 								<td class="tdGrid Lt"><a class="aEn" onclick="" class="aNormal"><%=i+1%>_Dustin</a></td>
 								<td class="tdGrid Lt"><%=CommonUtil.getSysdate("dd-MM-yyyy")%></td>
-								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-tasks fa-lg" title="Action"/></td>
+								<td class="tdGrid Ct"><ui:icon id="icnAction" className="fa-ellipsis-h fa-lg" title="Action"/></td>
 							</tr>
 <%
 						}

@@ -71,16 +71,16 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
-				var bankStatementCnt = ds.getValue(i, "BANK_STATEMENT_CNT");
+				var cntToCheck = ds.getValue(i, "BANK_STATEMENT_CNT")+ds.getValue(i, "BS_TRAN_ALLOC_CNT");
 				var className = "chkEn", disabledStr = "";
 
-				if (bankStatementCnt > 0) {
+				if (cntToCheck > 0) {
 					className = "chkDis";
 					disabledStr = "disabled";
 				}
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("bankStatementCnt:"+bankStatementCnt).addAttribute("bankAccntId:"+ds.getValue(i, "BANK_ACCNT_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("cntToCheck:"+cntToCheck).addAttribute("bankAccntId:"+ds.getValue(i, "BANK_ACCNT_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				var uiChk = new UiCheckbox();
@@ -150,7 +150,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var bankAccntId = $(img).attr("bankAccntId"), bankStatementCnt = $(img).attr("bankStatementCnt");
+		var bankAccntId = $(img).attr("bankAccntId"), cntToCheck = $(img).attr("cntToCheck");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == bankAccntId) {
@@ -162,7 +162,7 @@ $(function() {
 			}
 		});
 
-		if (bankStatementCnt > 0) {
+		if (cntToCheck > 0) {
 			ctxMenu.commonSimpleAction[1].disable = true;
 		} else {
 			ctxMenu.commonSimpleAction[1].disable = false;

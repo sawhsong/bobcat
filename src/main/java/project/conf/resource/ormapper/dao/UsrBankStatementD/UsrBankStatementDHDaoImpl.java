@@ -4,24 +4,33 @@
  *************************************************************************************************/
 package project.conf.resource.ormapper.dao.UsrBankStatementD;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import project.common.extend.BaseHDao;
 import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocDao;
 import project.conf.resource.ormapper.dto.oracle.UsrBankStatement;
 import project.conf.resource.ormapper.dto.oracle.UsrBankStatementD;
+import project.conf.resource.ormapper.dto.oracle.UsrBsTranAlloc;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatementDDao {
+	@Autowired
+	private UsrBsTranAllocDao usrBsTranAllocDao;
+
 	public int insert(UsrBankStatement usrBankStatement, DataSet bankFileData) throws Exception {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		int result = 0;
 
 		for (int i=0; i<bankFileData.getRowCnt(); i++) {
+			String uid = CommonUtil.uid();
 			UsrBankStatementD usrBankStatementD = new UsrBankStatementD();
+			UsrBsTranAlloc usrBsTranAlloc = new UsrBsTranAlloc();
 
-			usrBankStatementD.setBankStatementDId(CommonUtil.uid());
+			usrBankStatementD.setBankStatementDId(uid);
 			usrBankStatementD.setBankStatementId(usrBankStatement.getBankStatementId());
 			usrBankStatementD.setRowIndex(CommonUtil.toDouble(bankFileData.getValue(i, "ROW_INDEX")));
 			usrBankStatementD.setProcDate(CommonUtil.toDate(bankFileData.getValue(i, "PROC_DATE"), dateFormat));
@@ -32,7 +41,23 @@ public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatem
 			usrBankStatementD.setInsertUserId(bankFileData.getValue(i, "USER_ID"));
 			usrBankStatementD.setInsertDate(CommonUtil.getSysdateAsDate());
 
+			usrBsTranAlloc.setBsTranAllocId(CommonUtil.uid());
+			usrBsTranAlloc.setBankAccntId(usrBankStatement.getBankAccntId());
+			usrBsTranAlloc.setBankStatementDId(uid);
+			usrBsTranAlloc.setBankStatementId(usrBankStatement.getBankStatementId());
+			usrBsTranAlloc.setUserId(bankFileData.getValue(i, "USER_ID"));
+			usrBsTranAlloc.setRowIndex(CommonUtil.toDouble(bankFileData.getValue(i, "ROW_INDEX")));
+			usrBsTranAlloc.setProcDate(CommonUtil.toDate(bankFileData.getValue(i, "PROC_DATE"), dateFormat));
+			usrBsTranAlloc.setProcAmt(CommonUtil.toDouble(bankFileData.getValue(i, "PROC_AMOUNT")));
+			usrBsTranAlloc.setProcDescription(bankFileData.getValue(i, "DESCRIPTION"));
+			usrBsTranAlloc.setBalance(CommonUtil.toDouble(bankFileData.getValue(i, "BALANCE")));
+			usrBsTranAlloc.setUserDescription("");
+			usrBsTranAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_UP"));
+			usrBsTranAlloc.setInsertUserId(bankFileData.getValue(i, "USER_ID"));
+			usrBsTranAlloc.setInsertDate(CommonUtil.getSysdateAsDate());
+
 			result += insertWithDto(usrBankStatementD);
+			result += usrBsTranAllocDao.insert(usrBsTranAlloc);
 		}
 
 		return result;

@@ -60,8 +60,9 @@
 		<div class="panel-body">
 			<table class="tblDefault">
 				<colgroup>
-					<col width="50%"/>
-					<col width="50%"/>
+					<col width="15%"/>
+					<col width="30%"/>
+					<col width="*"/>
 				</colgroup>
 				<tr>
 					<td class="tdDefault">
@@ -81,6 +82,7 @@
 						<label for="tableName" class="lblEn hor"><mc:msg key="fwk.dtogenerator.tableName"/></label>
 						<ui:text name="tableName" className="hor" style="width:280px"/>
 					</td>
+					<td class="tdDefault"></td>
 				</tr>
 			</table>
 		</div>
@@ -99,17 +101,17 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="4%"/>
+			<col width="2%"/>
+			<col width="2%"/>
 			<col width="32%"/>
-			<col width="59%"/>
-			<col width="5%"/>
+			<col width="*"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="fwk.dtogenerator.title.selectToGenerate"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.gridHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.dtogenerator.gridHeader.tableDesc"/></th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

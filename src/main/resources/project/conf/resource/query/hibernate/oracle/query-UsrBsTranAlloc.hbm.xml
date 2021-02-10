@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Query hbm Source
+ * - USR_BS_TRAN_ALLOC - Bank statement transaction allocation - transaction reconcilisation
+ */-->
+<hibernate-mapping>
+	<sql-query name="query.UsrBsTranAlloc.getDataSetBySearchCriteria">
+	<![CDATA[
+		select bta.bs_tran_alloc_id,
+		       bta.bank_statement_id,
+		       bta.bank_statement_d_id,
+		       bta.bank_accnt_id,
+		       bta.user_id,
+		       bta.proc_date,
+		       bta.proc_amt,
+		       bta.proc_description,
+		       bta.balance,
+		       bta.user_description,
+		       bta.main_category,
+		       '' as main_category_desc,
+		       bta.sub_category,
+		       '' as sub_category_desc,
+		       bta.gst_amt,
+		       bta.net_amt,
+		       bta.status,
+		       (select description_${langCode} from sys_common_code where code_type = 'BS_TRAN_ALLOC_STATUS' and common_code = bta.status) as status_desc,
+		       bta.source_type,
+		       (select description_${langCode} from sys_common_code where code_type = 'BS_TRAN_SOURCE_TYPE' and common_code = bta.source_type) as source_type_desc,
+		       bta.source_id,
+		       uba.bank_code,
+		       (select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = uba.bank_code) as bank_code_desc,
+		       uba.bsb,
+		       uba.accnt_number,
+		       uba.accnt_name,
+		       uba.balance as bank_accnt_balance
+		  from usr_bs_tran_alloc bta,
+		       usr_bank_accnt uba
+		 where 1 = 1
+		   and bta.bank_accnt_id = uba.bank_accnt_id
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
+</hibernate-mapping>

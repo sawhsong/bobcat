@@ -98,23 +98,23 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="3%"/>
+			<col width="2%"/>
+			<col width="2%"/>
 			<col width="18%"/>
 			<col width="*"/>
 			<col width="22%"/>
 			<col width="7%"/>
 			<col width="10%"/>
-			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="page.com.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.tableDesc"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.tablescript.gridListHeader.fileName"/></th>
 				<th class="thGrid"><mc:msg key="fwk.tablescript.gridListHeader.fileSize"/></th>
 				<th class="thGrid"><mc:msg key="fwk.tablescript.gridListHeader.updateDateTime"/></th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

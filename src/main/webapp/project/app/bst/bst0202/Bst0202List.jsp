@@ -80,10 +80,10 @@
 			</td>
 			<th class="thSearch rt">Uploaded Date</th>
 			<td class="tdSearch">
-				<ui:text name="fromDate" className="Ct hor" style="width:100px" option="date"/>
+				<ui:text name="fromDate" className="Ct hor" style="width:90px" option="date"/>
 				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
 				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-				<ui:text name="toDate" className="Ct hor" style="width:100px" option="date"/>
+				<ui:text name="toDate" className="Ct hor" style="width:90px" option="date"/>
 				<ui:icon id="icnToDate" className="fa-calendar hor"/>
 			</td>
 		</tr>

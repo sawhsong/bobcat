@@ -47,5 +47,10 @@
         <action class="project.app.sys.sys0406.Sys0406Action" method="{1}" name="0406/*">
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0406/Sys0406List.jsp</result>
         </action>
+        <!--Sys0802 - Financial Period Type-->
+        <action class="project.app.sys.sys0802.Sys0802Action" method="{1}" name="0802/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0802/Sys0802List.jsp</result>
+            <result name="edit" type="debugDispatcherResult">/project/app/sys/sys0802/Sys0802EditPop.jsp</result>
+        </action>
     </package>
 </struts>

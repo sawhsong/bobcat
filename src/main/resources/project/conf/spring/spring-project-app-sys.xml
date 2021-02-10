@@ -20,4 +20,7 @@
     <!--Sys0406 - Menu - Authority Group-->
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406Action" id="sys0406Action" name="sys0406Action"/>
     <bean class="${name.package.project}.app.sys.sys0406.Sys0406BizImpl" id="sys0406Biz" name="sys0406Biz" parent="baseBiz"/>
+    <!--Sys0802 - Financial Period Type-->
+    <bean class="${name.package.project}.app.sys.sys0802.Sys0802Action" id="sys0802Action" name="sys0802Action"/>
+    <bean class="${name.package.project}.app.sys.sys0802.Sys0802BizImpl" id="sys0802Biz" name="sys0802Biz" parent="baseBiz"/>
 </beans>

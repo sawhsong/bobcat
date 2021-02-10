@@ -90,7 +90,7 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "LAST_UPDATE"), dateFormat)));
 
 				var uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
 					.addAttribute("title:"+com.header.action).setScript("doAction(this)");
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 

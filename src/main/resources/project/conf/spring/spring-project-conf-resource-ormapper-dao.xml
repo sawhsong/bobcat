@@ -21,4 +21,8 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBankStatement.UsrBankStatementHDaoImpl" id="usrBankStatementDao" init-method="init" name="usrBankStatementDao" parent="baseHDao" scope="prototype"/>
     <!--UsrBankStatementD DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBankStatementD.UsrBankStatementDHDaoImpl" id="usrBankStatementDDao" init-method="init" name="usrBankStatementDDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrBsTranAlloc DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocHDaoImpl" id="usrBsTranAllocDao" init-method="init" name="usrBsTranAllocDao" parent="baseHDao" scope="prototype"/>
+    <!--SysFinancialPeriod DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodHDaoImpl" id="sysFinancialPeriodDao" init-method="init" name="sysFinancialPeriodDao" parent="baseHDao" scope="prototype"/>
 </beans>

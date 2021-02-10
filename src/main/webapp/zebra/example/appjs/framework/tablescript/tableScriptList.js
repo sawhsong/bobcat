@@ -86,6 +86,10 @@ $(function() {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
 				var uiGridTr = new UiGridTr();
 
+				var uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("fileName:"+dataSet.getValue(i, "FILE_NAME")).setScript("doAction(this)");
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
+
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").setValue(dataSet.getValue(i, "FILE_NAME"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
@@ -98,11 +102,6 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "FILE_NAME")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(dataSet.getValue(i, "FILE_SIZE")+" KB"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(dataSet.getValue(i, "UPDATE_DATE_TIME")));
-
-				var uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-tasks fa-lg").addAttribute("fileName:"+dataSet.getValue(i, "FILE_NAME"))
-					.addAttribute("title:"+com.caption.action).setScript("doAction(this)");
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
 				html += uiGridTr.toHtmlString();
 			}
