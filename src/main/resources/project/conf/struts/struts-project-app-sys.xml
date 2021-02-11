@@ -52,5 +52,10 @@
             <result name="list" type="debugDispatcherResult">/project/app/sys/sys0802/Sys0802List.jsp</result>
             <result name="edit" type="debugDispatcherResult">/project/app/sys/sys0802/Sys0802EditPop.jsp</result>
         </action>
+        <!--Sys0804 - Reconciliation Category Mgmt.-->
+        <action class="project.app.sys.sys0804.Sys0804Action" method="{1}" name="0804/*">
+            <result name="list" type="debugDispatcherResult">/project/app/sys/sys0804/Sys0804List.jsp</result>
+            <result name="edit" type="debugDispatcherResult">/project/app/sys/sys0804/Sys0804EditPop.jsp</result>
+        </action>
     </package>
 </struts>
