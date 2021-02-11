@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	DataSet mainCategory = (DataSet)paramEntity.getObject("mainCategory");
 %>
 <%/************************************************************************************************
 * HTML

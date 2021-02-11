@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - SYS_RECON_CATEGORY - Bank transaction reconciliation category
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.SysReconCategory" table="SYS_RECON_CATEGORY" lazy="false">
+		<meta attribute="class-description" inherit="false">Bank transaction reconciliation category</meta>
+
+		<id name="categoryId" column="CATEGORY_ID" type="java.lang.String" length="30"></id>
+
+		<property name="categoryName" column="CATEGORY_NAME" not-null="true" type="java.lang.String" length="100"/>
+		<property name="accountCode" column="ACCOUNT_CODE" type="java.lang.String" length="30"/>
+		<property name="gstPercentage" column="GST_PERCENTAGE" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="isApplyGst" column="IS_APPLY_GST" type="java.lang.String" length="1"/>
+		<property name="parentCategoryId" column="PARENT_CATEGORY_ID" type="java.lang.String" length="30"/>
+		<property name="sortOrder" column="SORT_ORDER" type="java.lang.String" length="30"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="sysReconCategory.selectAll">
+	<![CDATA[
+		SELECT CATEGORY_ID,
+		       CATEGORY_NAME,
+		       ACCOUNT_CODE,
+		       GST_PERCENTAGE,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       IS_APPLY_GST,
+		       PARENT_CATEGORY_ID,
+		       SORT_ORDER,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM SYS_RECON_CATEGORY
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="sysReconCategory.insert">
+	<![CDATA[
+		INSERT INTO SYS_RECON_CATEGORY (
+		       CATEGORY_ID,
+		       CATEGORY_NAME,
+		       ACCOUNT_CODE,
+		       GST_PERCENTAGE,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       IS_APPLY_GST,
+		       PARENT_CATEGORY_ID,
+		       SORT_ORDER,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${CATEGORY_ID},
+		       ${CATEGORY_NAME},
+		       ${ACCOUNT_CODE},
+		       ${GST_PERCENTAGE},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${IS_APPLY_GST},
+		       ${PARENT_CATEGORY_ID},
+		       ${SORT_ORDER},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="sysReconCategory.update">
+	<![CDATA[
+		UPDATE SYS_RECON_CATEGORY
+		   SET CATEGORY_NAME = ${CATEGORY_NAME},
+		       ACCOUNT_CODE = ${ACCOUNT_CODE},
+		       GST_PERCENTAGE = ${GST_PERCENTAGE},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       IS_APPLY_GST = ${IS_APPLY_GST},
+		       PARENT_CATEGORY_ID = ${PARENT_CATEGORY_ID},
+		       SORT_ORDER = ${SORT_ORDER},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="sysReconCategory.updateColumns">
+	<![CDATA[
+		UPDATE SYS_RECON_CATEGORY
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="sysReconCategory.delete">
+	<![CDATA[
+		DELETE SYS_RECON_CATEGORY
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

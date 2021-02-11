@@ -27,4 +27,6 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocHDaoImpl" id="usrBsTranAllocDao" init-method="init" name="usrBsTranAllocDao" parent="baseHDao" scope="prototype"/>
     <!--SysFinancialPeriod DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodHDaoImpl" id="sysFinancialPeriodDao" init-method="init" name="sysFinancialPeriodDao" parent="baseHDao" scope="prototype"/>
+    <!--SysReconCategory DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryHDaoImpl" id="sysReconCategoryDao" init-method="init" name="sysReconCategoryDao" parent="baseHDao" scope="prototype"/>
 </beans>

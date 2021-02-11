@@ -42,3 +42,35 @@ comment on column sys_recon_category.update_date                                
  * Table Name  : SYS_RECON_CATEGORY
  * Data        : 
  */
+/*
+insert into sys_recon_category
+select '1111111' as category_id,
+       'Expense' as category_name,
+       '' as parent_category_id,
+       'N' as is_apply_gst,
+       0 as gst_percentage,
+       '' as account_code,
+       '110000' as sort_order,
+       '1' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from dual
+union
+select to_char(expense_type_id) as category_id,
+       description as category_name,
+       to_char('1111111') as parent_category_id,
+       'N' as is_apply_gst,
+       0 as gst_percentage,
+       to_char(account_code) as account_code,
+       '11'||substr(sort_order, 3) as sort_order,
+       '1' as insert_user_id,
+       sysdate as insert_date,
+       null as update_user_id,
+       null as update_date
+  from temp_expense_type
+ where org_category = 'A'
+   and parent_expense_type is not null
+ order by sort_order
+;
+*/

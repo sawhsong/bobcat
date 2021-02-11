@@ -22,11 +22,16 @@ import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
+import project.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Sys0804BizImpl extends BaseBiz implements Sys0804Biz {
+	@Autowired
+	private SysReconCategoryDao sysReconCategoryDao;
+
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
+			paramEntity.setObject("mainCategory", sysReconCategoryDao.getMainCategoryDataSet());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
