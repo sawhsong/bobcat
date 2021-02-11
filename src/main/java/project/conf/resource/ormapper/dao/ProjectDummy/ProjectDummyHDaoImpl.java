@@ -11,7 +11,7 @@ import zebra.util.ConfigUtil;
 public class ProjectDummyHDaoImpl extends BaseHDao implements ProjectDummyDao {
 	public DataSet getFinacialQuarter(QueryAdvisor queryAdvisor) throws Exception {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
-		String quarterCode = (String)queryAdvisor.getObject("quarterCode");
+		String quarterCode = CommonUtil.substring((String)queryAdvisor.getObject("quarterCode"), 1);
 
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addVariable("year", (String)queryAdvisor.getObject("year"));
