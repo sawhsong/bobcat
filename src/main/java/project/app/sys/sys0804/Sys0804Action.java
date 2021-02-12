@@ -18,6 +18,15 @@ public class Sys0804Action extends BaseAction {
 		return "list";
 	}
 
+	public String getMainCategory() throws Exception {
+		try {
+			biz.getMainCategory(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String getList() throws Exception {
 		try {
 			biz.getList(paramEntity);
@@ -30,6 +39,15 @@ public class Sys0804Action extends BaseAction {
 	public String getEdit() throws Exception {
 		biz.getEdit(paramEntity);
 		return "edit";
+	}
+
+	public String getCategory() throws Exception {
+		try {
+			biz.getCategory(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String doSave() throws Exception {
@@ -48,11 +66,5 @@ public class Sys0804Action extends BaseAction {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String doExport() throws Exception {
-		biz.doExport(paramEntity);
-		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
 	}
 }

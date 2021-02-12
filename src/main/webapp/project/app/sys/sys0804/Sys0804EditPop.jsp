@@ -9,6 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	DataSet mainCategory = (DataSet)paramEntity.getObject("mainCategory");
+	String mode = requestDataSet.getValue("mode");
+	String categoryId = requestDataSet.getValue("categoryId");
 %>
 <%/************************************************************************************************
 * HTML
@@ -27,6 +30,8 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var mode = "<%=mode%>";
+var categoryId = "<%=categoryId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -44,9 +49,14 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea"></div>
+<div id="divSearchCriteriaArea" class="areaContainerPopup">
+</div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
@@ -58,6 +68,45 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+	<table class="tblEdit">
+		<colgroup>
+			<col width="20%"/>
+			<col width="30%"/>
+			<col width="20%"/>
+			<col width="30%"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit Rt">Category ID</th>
+			<td class="tdEdit"><ui:text name="categoryId" status="display"/></td>
+			<th class="thEdit Rt">Parent Category</th>
+			<td class="tdEdit">
+				<ui:select name="parentCategoryId">
+				</ui:select>
+			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt mandatory">Category Name</th>
+			<td class="tdEdit" colspan="3"><ui:text name="categoryName" checkName="Category Name" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Account Code</th>
+			<td class="tdEdit"><ui:text name="accountCode" className="Ct"/></td>
+			<th class="thEdit rt">Sort Order</th>
+			<td class="tdEdit"><ui:text name="sortOrder" className="Ct"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Is GST Apply</th>
+			<td class="tdEdit"><ui:ccradio name="isApplyGst" codeType="SIMPLE_YN" selectedValue="N" isCustomised="Y" status="disabled"/></td>
+			<th class="thEdit rt">GST Percentage</th>
+			<td class="tdEdit"><ui:text name="gstPercentage" className="Rt" option="numeric" status="disabled"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Last Updated By</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedBy" status="display"/></td>
+			<th class="thEdit rt">Last Updated Date</th>
+			<td class="tdEdit"><ui:text name="lastUpdatedDate" status="display"/></td>
+		</tr>
+	</table>
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

@@ -156,6 +156,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.boardAction);
 		});
 
+		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
@@ -247,8 +248,10 @@ $(function() {
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == articleId) {
 				$(this).prop("checked", true);
+				$(this).parents("tr").addClass("checkedTr");
 			} else {
 				$(this).prop("checked", false);
+				$(this).parents("tr").removeClass("checkedTr");
 			}
 		});
 

@@ -112,7 +112,7 @@
 				<th class="thGrid">Quarter Name</th>
 				<th class="thGrid">Date From</th>
 				<th class="thGrid">Date To</th>
-				<th class="thGrid">Last Updated</th>
+				<th class="thGrid">Last Updated Date</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

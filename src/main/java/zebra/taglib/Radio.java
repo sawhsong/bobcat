@@ -22,6 +22,7 @@ public class Radio extends TaglibSupport {
 	private String inputStyle = "";
 	private String displayType = "";	// inline / block
 	private String isBootstrap = "";
+	private String isCustomised = "";
 	private String status = "";
 	private String options = "";	// for data validator
 	private String attribute = "";
@@ -32,9 +33,16 @@ public class Radio extends TaglibSupport {
 			HttpSession httpSession = pageContext.getSession();
 			String langCode = (String)httpSession.getAttribute("langCode");
 			StringBuffer html = new StringBuffer();
-			String disabledString = "", classSuffix = "", attrStr = "", attrs[], attr[];
+			String disabledString = "", classSuffix = "", attrStr = "", classNameCustomised = "", attrs[], attr[];
 
 			text = CommonUtil.containsIgnoreCase(text, ".") ? getMessage(text, langCode) : text;
+
+			if (CommonUtil.toBoolean(isCustomised)) {
+				isBootstrap = "true";
+				classNameCustomised = "-custom";
+				text = "<span>"+text+"</span>";
+				inputClassName = (CommonUtil.isBlank(inputClassName)) ? "custom" : "custom"+" "+inputClassName;
+			}
 
 			if (CommonUtil.isNotBlank(attribute)) {
 				attrs = CommonUtil.split(attribute, ";");
@@ -50,7 +58,7 @@ public class Radio extends TaglibSupport {
 				}
 
 				if (CommonUtil.equalsIgnoreCase(displayType, "block")) {
-					html.append("<div class=\"radio"+disabledString+"\"><label");
+					html.append("<div class=\"radio"+classNameCustomised+disabledString+"\"><label");
 
 					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" class=\""+labelClassName+"\"");}
 					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
@@ -66,7 +74,7 @@ public class Radio extends TaglibSupport {
 
 					html.append("/>"+text+"</label></div>");
 				} else {
-					html.append("<label class=\"radio-inline"+disabledString);
+					html.append("<label class=\"radio-inline"+classNameCustomised+disabledString);
 					if (CommonUtil.isNotBlank(labelClassName)) {html.append(" "+labelClassName+"");}
 					html.append("\"");
 					if (CommonUtil.isNotBlank(labelStyle)) {html.append(" style=\""+labelStyle+"\"");}
@@ -250,6 +258,14 @@ public class Radio extends TaglibSupport {
 
 	public void setIsBootstrap(String isBootstrap) {
 		this.isBootstrap = isBootstrap;
+	}
+
+	public String getIsCustomised() {
+		return isCustomised;
+	}
+
+	public void setIsCustomised(String isCustomised) {
+		this.isCustomised = isCustomised;
 	}
 
 	public String getStatus() {

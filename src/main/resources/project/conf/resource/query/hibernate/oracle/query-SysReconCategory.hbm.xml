@@ -5,4 +5,25 @@
  * - SYS_RECON_CATEGORY - Bank transaction reconciliation category
  */-->
 <hibernate-mapping>
+	<sql-query name="query.SysReconCategory.getDataSetBySearchCriteria">
+	<![CDATA[
+		with src as (
+		     select connect_by_root category_id as root,
+		            level as category_level,
+		            connect_by_isleaf as is_leaf,
+		            substr(sys_connect_by_path(category_id, '-'), 2) as path,
+		            sys_recon_category.*,
+		            (select count(*) from usr_bs_tran_alloc where sub_category = sys_recon_category.category_id) as used_cnt,
+		            nvl(update_date, insert_date) as last_updated_date
+		       from sys_recon_category
+		    connect by prior category_id = parent_category_id
+		      start with parent_category_id is null
+		      order siblings by sort_order
+		)
+		select *
+		  from src
+		 where 1 = 1
+		${auto_fill}
+	]]>
+	</sql-query>
 </hibernate-mapping>

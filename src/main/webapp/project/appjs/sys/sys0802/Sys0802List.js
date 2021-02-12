@@ -38,7 +38,6 @@ $(function() {
 		var code = event.keyCode || event.which, element = event.target;
 
 		if (code == 13) {}
-
 		if (code == 9) {}
 	});
 
@@ -109,6 +108,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
+		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
@@ -134,7 +134,7 @@ $(function() {
 
 		commonJs.doDelete({
 			url:"/sys/0802/doDelete.do",
-			callback:doSearch
+			onSuccess:doSearch
 		});
 	};
 
@@ -144,8 +144,10 @@ $(function() {
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == periodYear+"_"+quarterCode) {
 				$(this).prop("checked", true);
+				$(this).parents("tr").addClass("checkedTr");
 			} else {
 				$(this).prop("checked", false);
+				$(this).parents("tr").removeClass("checkedTr");
 			}
 		});
 

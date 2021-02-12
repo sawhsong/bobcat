@@ -22,7 +22,10 @@ $(function() {
 					var ds = result.dataSet;
 
 					commonJs.showProcMessage(com.message.loading);
-					setFinancialPeriod(ds);
+
+					setTimeout(function() {
+						setFinancialPeriod(ds);
+					}, 400);
 				}
 			});
 		}

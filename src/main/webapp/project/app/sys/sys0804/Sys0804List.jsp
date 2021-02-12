@@ -50,8 +50,9 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -59,12 +60,15 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="10%"/>
+			<col width="7%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thSearch rt"></th>
-			<td class="tdSearch"></td>
+			<th class="thSearch rt">Main Category</th>
+			<td class="tdSearch">
+				<ui:select name="mainCategory">
+				</ui:select>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -82,22 +86,36 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="2%"/>
+			<col width="10%"/>
 			<col width="*"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="12%"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
-				<th class="thGrid"></th>
+				<th class="thGrid">Main Category</th>
+				<th class="thGrid">Sub Category</th>
+				<th class="thGrid">Account Code</th>
+				<th class="thGrid">Is GST Apply</th>
+				<th class="thGrid">GST Percentage</th>
+				<th class="thGrid">Sort Order</th>
+				<th class="thGrid">Last Updated Date</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"></div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

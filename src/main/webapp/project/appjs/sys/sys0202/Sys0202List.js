@@ -91,7 +91,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(dataSet.getValue(i, "CODE_TYPE")).addOptions(disabledStr);
+				uiChk.setName("chkForDel").setClassName(className+" inTblGrid").setValue(dataSet.getValue(i, "CODE_TYPE")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();
@@ -130,6 +130,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.commonAction);
 		});
 
+		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
@@ -221,8 +222,10 @@ $(function() {
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == codeType) {
 				$(this).prop("checked", true);
+				$(this).parents("tr").addClass("checkedTr");
 			} else {
 				$(this).prop("checked", false);
+				$(this).parents("tr").removeClass("checkedTr");
 			}
 		});
 

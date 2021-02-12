@@ -43,34 +43,45 @@ comment on column sys_recon_category.update_date                                
  * Data        : 
  */
 /*
-insert into sys_recon_category
-select '1111111' as category_id,
+select '0200' as category_id,
        'Expense' as category_name,
        '' as parent_category_id,
        'N' as is_apply_gst,
        0 as gst_percentage,
        '' as account_code,
-       '110000' as sort_order,
+       '0200' as sort_order,
        '1' as insert_user_id,
        sysdate as insert_date,
        null as update_user_id,
        null as update_date
   from dual
 union
-select to_char(expense_type_id) as category_id,
-       description as category_name,
-       to_char('1111111') as parent_category_id,
-       'N' as is_apply_gst,
-       0 as gst_percentage,
-       to_char(account_code) as account_code,
-       '11'||substr(sort_order, 3) as sort_order,
-       '1' as insert_user_id,
-       sysdate as insert_date,
-       null as update_user_id,
-       null as update_date
-  from temp_expense_type
- where org_category = 'A'
-   and parent_expense_type is not null
- order by sort_order
+select '02'||lpad(to_char(rownum), 2, '0') as category_id,
+       category_name,
+       '0200' as parent_category_id,
+       is_apply_gst,
+       gst_percentage,
+       account_code,
+       '02'||lpad(to_char(rownum), 2, '0') as sort_order,
+       insert_user_id,
+       insert_date,
+       update_user_id,
+       update_date
+  from (select to_char(expense_type_id) as category_id,
+               description as category_name,
+               '02' as parent_category_id,
+               'N' as is_apply_gst,
+               0 as gst_percentage,
+               to_char(account_code) as account_code,
+               '02'||substr(sort_order, 3) as sort_order,
+               '1' as insert_user_id,
+               sysdate as insert_date,
+               null as update_user_id,
+               null as update_date
+          from temp_expense_type
+         where org_category = 'A'
+           and parent_expense_type is not null
+         order by category_name
+       )
 ;
 */
