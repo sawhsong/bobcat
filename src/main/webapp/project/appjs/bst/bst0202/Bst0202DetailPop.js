@@ -116,6 +116,7 @@ $(function() {
 		var table = getTableByBankCode(bankCode);
 		var tbody = getTBodyByBankCode(bankCode);
 		var rowCnt = ds.getRowCnt();
+		var attachTo;
 
 		$(tbody).html("");
 
@@ -129,6 +130,16 @@ $(function() {
 					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "PROC_AMT"), "#,##0.00")));
 					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "PROC_DESCRIPTION")));
+				} else if (commonJs.isIn(bankCode, ["WESTPAC"])) {
+					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ROW_INDEX")));
+					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "BANK_ACCOUNT")));
+					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "PROC_DATE"), dateFormat)));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "DEBIT_AMT"), "#,##0.00")));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "CREDIT_AMT"), "#,##0.00")));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "CATEGORY")));
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "SERIAL")));
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "PROC_DESCRIPTION"), 50)));
 				}
 
 				html += gridTr.toHtmlString();
@@ -138,6 +149,8 @@ $(function() {
 
 			if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:5").setText(com.message.I001));
+			} else if (commonJs.isIn(bankCode, ["WESTPAC"])) {
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
 			}
 
 			html += gridTr.toHtmlString();
@@ -145,8 +158,14 @@ $(function() {
 
 		$(tbody).append($(html));
 
+		if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
+			attachTo = $("#divDataArea");
+		} else if (commonJs.isIn(bankCode, ["WESTPAC"])) {
+			attachTo = $("#divGridWrapper_WESTPAC");
+		}
+
 		$(table).fixedHeaderTable({
-			attachTo:$("#divDataArea"),
+			attachTo:attachTo,
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,
 			totalResultRows:ds.getRowCnt()

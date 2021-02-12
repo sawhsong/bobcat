@@ -15,9 +15,14 @@
 		<property name="procDate" column="PROC_DATE" not-null="true" type="java.util.Date"/>
 		<property name="rowIndex" column="ROW_INDEX" not-null="true" type="java.lang.Double"/>
 		<property name="balance" column="BALANCE" type="java.lang.Double"/>
+		<property name="bankAccount" column="BANK_ACCOUNT" type="java.lang.String" length="30"/>
+		<property name="category" column="CATEGORY" type="java.lang.String" length="50"/>
+		<property name="creditAmt" column="CREDIT_AMT" type="java.lang.Double"/>
+		<property name="debitAmt" column="DEBIT_AMT" type="java.lang.Double"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="procDescription" column="PROC_DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="serial" column="SERIAL" type="java.lang.String" length="50"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 		<property name="userDescription" column="USER_DESCRIPTION" type="java.lang.String" length="500"/>
@@ -31,9 +36,14 @@
 		       TO_CHAR(PROC_DATE, 'yyyymmddhh24miss') AS PROC_DATE,
 		       ROW_INDEX,
 		       BALANCE,
+		       BANK_ACCOUNT,
+		       CATEGORY,
+		       CREDIT_AMT,
+		       DEBIT_AMT,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
 		       PROC_DESCRIPTION,
+		       SERIAL,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID,
 		       USER_DESCRIPTION
@@ -55,9 +65,14 @@
 		       PROC_DATE,
 		       ROW_INDEX,
 		       BALANCE,
+		       BANK_ACCOUNT,
+		       CATEGORY,
+		       CREDIT_AMT,
+		       DEBIT_AMT,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
 		       PROC_DESCRIPTION,
+		       SERIAL,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID,
 		       USER_DESCRIPTION
@@ -69,9 +84,14 @@
 		       ${PROC_DATE},
 		       ${ROW_INDEX},
 		       ${BALANCE},
+		       ${BANK_ACCOUNT},
+		       ${CATEGORY},
+		       ${CREDIT_AMT},
+		       ${DEBIT_AMT},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
 		       ${PROC_DESCRIPTION},
+		       ${SERIAL},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID},
 		       ${USER_DESCRIPTION}
@@ -87,9 +107,14 @@
 		       PROC_DATE = ${PROC_DATE},
 		       ROW_INDEX = ${ROW_INDEX},
 		       BALANCE = ${BALANCE},
+		       BANK_ACCOUNT = ${BANK_ACCOUNT},
+		       CATEGORY = ${CATEGORY},
+		       CREDIT_AMT = ${CREDIT_AMT},
+		       DEBIT_AMT = ${DEBIT_AMT},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
 		       PROC_DESCRIPTION = ${PROC_DESCRIPTION},
+		       SERIAL = ${SERIAL},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID},
 		       USER_DESCRIPTION = ${USER_DESCRIPTION}

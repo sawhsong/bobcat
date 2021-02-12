@@ -38,6 +38,11 @@ public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatem
 			usrBankStatementD.setProcDescription(bankFileData.getValue(i, "DESCRIPTION"));
 			usrBankStatementD.setBalance(CommonUtil.toDouble(bankFileData.getValue(i, "BALANCE")));
 			usrBankStatementD.setUserDescription("");
+			usrBankStatementD.setBankAccount(bankFileData.getValue(i, "BANK_ACCOUNT"));
+			usrBankStatementD.setDebitAmt(CommonUtil.toDouble(bankFileData.getValue(i, "DEBIT_AMOUNT")));
+			usrBankStatementD.setCreditAmt(CommonUtil.toDouble(bankFileData.getValue(i, "CREDIT_AMOUNT")));
+			usrBankStatementD.setCategory(bankFileData.getValue(i, "CATEGORIES"));
+			usrBankStatementD.setSerial(bankFileData.getValue(i, "SERIAL"));
 			usrBankStatementD.setInsertUserId(bankFileData.getValue(i, "USER_ID"));
 			usrBankStatementD.setInsertDate(CommonUtil.getSysdateAsDate());
 

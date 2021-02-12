@@ -29,12 +29,22 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 	private String ROW_INDEX;
 	private double balance;
 	private String BALANCE;
+	private String bankAccount;
+	private String BANK_ACCOUNT;
+	private String category;
+	private String CATEGORY;
+	private double creditAmt;
+	private String CREDIT_AMT;
+	private double debitAmt;
+	private String DEBIT_AMT;
 	private Date insertDate;
 	private String INSERT_DATE;
 	private String insertUserId;
 	private String INSERT_USER_ID;
 	private String procDescription;
 	private String PROC_DESCRIPTION;
+	private String serial;
+	private String SERIAL;
 	private Date updateDate;
 	private String UPDATE_DATE;
 	private String updateUserId;
@@ -70,7 +80,7 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		updateColumnsDataSet.addName(updateColumnsDataSetHeader);
 		setFrwVarPrimaryKey("BANK_STATEMENT_D_ID");
 		setFrwVarDateColumn("PROC_DATE,INSERT_DATE,UPDATE_DATE");
-		setFrwVarNumberColumn("PROC_AMT,ROW_INDEX,BALANCE");
+		setFrwVarNumberColumn("PROC_AMT,ROW_INDEX,BALANCE,CREDIT_AMT,DEBIT_AMT");
 		setFrwVarClobColumn("");
 		setFrwVarDefaultColumn("INSERT_DATE");
 		setFrwVarDefaultValue("sysdate");
@@ -134,6 +144,42 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		setValueFromAccessor("BALANCE", CommonUtil.toString(balance));
 	}
 
+	public String getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(String bankAccount) throws Exception {
+		this.bankAccount = bankAccount;
+		setValueFromAccessor("BANK_ACCOUNT", bankAccount);
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) throws Exception {
+		this.category = category;
+		setValueFromAccessor("CATEGORY", category);
+	}
+
+	public double getCreditAmt() {
+		return creditAmt;
+	}
+
+	public void setCreditAmt(double creditAmt) throws Exception {
+		this.creditAmt = creditAmt;
+		setValueFromAccessor("CREDIT_AMT", CommonUtil.toString(creditAmt));
+	}
+
+	public double getDebitAmt() {
+		return debitAmt;
+	}
+
+	public void setDebitAmt(double debitAmt) throws Exception {
+		this.debitAmt = debitAmt;
+		setValueFromAccessor("DEBIT_AMT", CommonUtil.toString(debitAmt));
+	}
+
 	public Date getInsertDate() {
 		return insertDate;
 	}
@@ -159,6 +205,15 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 	public void setProcDescription(String procDescription) throws Exception {
 		this.procDescription = procDescription;
 		setValueFromAccessor("PROC_DESCRIPTION", procDescription);
+	}
+
+	public String getSerial() {
+		return serial;
+	}
+
+	public void setSerial(String serial) throws Exception {
+		this.serial = serial;
+		setValueFromAccessor("SERIAL", serial);
 	}
 
 	public Date getUpdateDate() {
@@ -329,9 +384,14 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "procDate : "+procDate+"\n";
 		str += "rowIndex : "+rowIndex+"\n";
 		str += "balance : "+balance+"\n";
+		str += "bankAccount : "+bankAccount+"\n";
+		str += "category : "+category+"\n";
+		str += "creditAmt : "+creditAmt+"\n";
+		str += "debitAmt : "+debitAmt+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "procDescription : "+procDescription+"\n";
+		str += "serial : "+serial+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
 		str += "userDescription : "+userDescription+"\n";
@@ -353,9 +413,14 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "<column name=\"procDate\" value=\""+procDate+"\">";
 		str += "<column name=\"rowIndex\" value=\""+rowIndex+"\">";
 		str += "<column name=\"balance\" value=\""+balance+"\">";
+		str += "<column name=\"bankAccount\" value=\""+bankAccount+"\">";
+		str += "<column name=\"category\" value=\""+category+"\">";
+		str += "<column name=\"creditAmt\" value=\""+creditAmt+"\">";
+		str += "<column name=\"debitAmt\" value=\""+debitAmt+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"procDescription\" value=\""+procDescription+"\">";
+		str += "<column name=\"serial\" value=\""+serial+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
 		str += "<column name=\"userDescription\" value=\""+userDescription+"\">";
@@ -377,9 +442,14 @@ public class UsrBankStatementD extends BaseDto implements Serializable {
 		str += "\"procDate\":\""+procDate+"\", ";
 		str += "\"rowIndex\":\""+rowIndex+"\", ";
 		str += "\"balance\":\""+balance+"\", ";
+		str += "\"bankAccount\":\""+bankAccount+"\", ";
+		str += "\"category\":\""+category+"\", ";
+		str += "\"creditAmt\":\""+creditAmt+"\", ";
+		str += "\"debitAmt\":\""+debitAmt+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"procDescription\":\""+procDescription+"\", ";
+		str += "\"serial\":\""+serial+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";
 		str += "\"userDescription\":\""+userDescription+"\", ";

@@ -55,6 +55,9 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 			if (CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_ANZ")) || CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_CBA"))) {
 				// Type1 : Commonwealth / ANZ
 				result = getDataSetForType1(bankAccntId, bankCode, bankStatementFile);
+			} else if (CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_WESTPAC"))) {
+				// Type2 : Westpac
+				result = getDataSetForType2(bankAccntId, bankCode, bankStatementFile);
 			}
 		} catch (Exception ex) {
 			throw new FrameworkException(ex);
@@ -107,7 +110,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 
 			while ((textLine = br.readLine()) != null) {
 				if (CommonUtil.isBlank(textLine)) {continue;}
-				dataArr = CommonUtil.split(textLine, ",");
+				dataArr = CommonUtil.splitPreserveAllTokens(textLine, ",");
 				if (dataArr == null || dataArr.length != 4) {continue;}
 				if (CommonUtil.isBlank(dataArr)) {continue;}
 
@@ -121,6 +124,65 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 				result.setValue(result.getRowCnt()-1, "PROC_AMOUNT", CommonUtil.trim(dataArr[1])); // Amount : no format(2 decimal)
 				result.setValue(result.getRowCnt()-1, "DESCRIPTION", dataArr[2]); // Desc
 				result.setValue(result.getRowCnt()-1, "BALANCE", CommonUtil.trim(dataArr[3])); // Balance : no format(2 decimal)
+			}
+
+			if (result.getRowCnt() > 0) {
+				result.addColumn("BANK_NAME", CommonCodeManager.getCodeDescription("BANK_TYPE", bankCode));
+				result.addColumn("BSB", CommonUtil.getFormatString(usrBankAccnt.getValue("BSB"), "??? ???"));
+				result.addColumn("ACCNT_NUMBER", usrBankAccnt.getValue("ACCNT_NUMBER"));
+				result.addColumn("ACCNT_NAME", usrBankAccnt.getValue("ACCNT_NAME"));
+				result.addColumn("LAST_BALANCE", usrBankAccnt.getValue("BALANCE"));
+			}
+
+			br.close();
+		} catch (Exception ex) {
+			throw new FrameworkException(ex);
+		}
+		return result;
+	}
+
+	/**
+	 * Type2 : [Bank Account, Date, Narrative, Debit Amount, Credit Amount, Balance, Categories, Serial]
+	 */
+	private DataSet getDataSetForType2(String bankAccntId, String bankCode, File file) throws Exception {
+		DataSet result = new DataSet();
+		DataSet usrBankAccnt = new DataSet();
+		String header[] = new String[] {"BANK_ACCNT_ID", "BANK_CODE", "ROW_INDEX", "BANK_ACCOUNT", "PROC_DATE", "DEBIT_AMOUNT", "CREDIT_AMOUNT", "PROC_AMOUNT", "DESCRIPTION", "BALANCE", "CATEGORIES", "SERIAL"};
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String textLine, amtString = "";
+		String dataArr[];
+		int index = 0;
+
+		try {
+			result.addName(header);
+
+			usrBankAccnt = usrBankAccntDao.getDataSetByBankAccntId(bankAccntId);
+
+			while ((textLine = br.readLine()) != null) {
+				if (CommonUtil.isBlank(textLine)) {continue;}
+				if (CommonUtil.contains(textLine, "Date,Narrative")) {continue;}
+				dataArr = CommonUtil.splitPreserveAllTokens(textLine, ",");
+				if (dataArr == null || dataArr.length != 8) {continue;}
+				if (CommonUtil.isBlank(dataArr)) {continue;}
+
+				index++;
+
+				result.addRow();
+				result.setValue(result.getRowCnt()-1, "BANK_ACCNT_ID", bankAccntId);
+				result.setValue(result.getRowCnt()-1, "BANK_CODE", bankCode);
+				result.setValue(result.getRowCnt()-1, "ROW_INDEX", CommonUtil.toString(index));
+				result.setValue(result.getRowCnt()-1, "BANK_ACCOUNT", dataArr[0]);
+				result.setValue(result.getRowCnt()-1, "PROC_DATE", getValidDateStringForType1(CommonUtil.trim(dataArr[1]))); // Date : dd/MM/yyyy
+				result.setValue(result.getRowCnt()-1, "DESCRIPTION", dataArr[2]);
+				result.setValue(result.getRowCnt()-1, "DEBIT_AMOUNT", CommonUtil.trim(dataArr[3]));
+				result.setValue(result.getRowCnt()-1, "CREDIT_AMOUNT", CommonUtil.trim(dataArr[4]));
+
+				amtString = CommonUtil.isNotBlank(CommonUtil.trim(dataArr[3])) ? "-"+CommonUtil.trim(dataArr[3]) : "";
+
+				result.setValue(result.getRowCnt()-1, "PROC_AMOUNT", CommonUtil.nvl(amtString, CommonUtil.trim(dataArr[4])));
+				result.setValue(result.getRowCnt()-1, "BALANCE", CommonUtil.trim(dataArr[5]));
+				result.setValue(result.getRowCnt()-1, "CATEGORIES", CommonUtil.trim(dataArr[6]));
+				result.setValue(result.getRowCnt()-1, "SERIAL", CommonUtil.trim(dataArr[7]));
 			}
 
 			if (result.getRowCnt() > 0) {
