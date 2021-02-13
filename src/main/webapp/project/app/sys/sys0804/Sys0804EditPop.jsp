@@ -78,7 +78,7 @@ var categoryId = "<%=categoryId%>";
 		<tr>
 			<th class="thEdit Rt">Category ID</th>
 			<td class="tdEdit"><ui:text name="categoryId" status="display"/></td>
-			<th class="thEdit Rt">Parent Category</th>
+			<th class="thEdit Rt">Main Category</th>
 			<td class="tdEdit">
 				<ui:select name="parentCategoryId">
 				</ui:select>

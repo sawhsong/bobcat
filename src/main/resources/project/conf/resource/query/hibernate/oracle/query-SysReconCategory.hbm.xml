@@ -13,7 +13,10 @@
 		            connect_by_isleaf as is_leaf,
 		            substr(sys_connect_by_path(category_id, '-'), 2) as path,
 		            sys_recon_category.*,
-		            (select count(*) from usr_bs_tran_alloc where sub_category = sys_recon_category.category_id) as used_cnt,
+		            (
+		             (select count(*) from usr_bs_tran_alloc where sub_category = sys_recon_category.category_id) +
+		             (select count(*) from usr_bs_tran_alloc where main_category = sys_recon_category.category_id)
+		            ) as used_cnt,
 		            nvl(update_date, insert_date) as last_updated_date
 		       from sys_recon_category
 		    connect by prior category_id = parent_category_id

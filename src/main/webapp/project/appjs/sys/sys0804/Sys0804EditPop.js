@@ -18,12 +18,12 @@ $(function() {
 				url:"/sys/0804/doSave.do",
 				onSuccess:function(result) {
 					var ds = result.dataSet;
-
-					commonJs.showProcMessage(com.message.loading);
-
-					setTimeout(function() {
-						setCategoryInfo(ds);
-					}, 400);
+					$("#btnClose").trigger("click");
+//					commonJs.showProcMessage(com.message.loading);
+//
+//					setTimeout(function() {
+//						setCategoryInfo(ds);
+//					}, 400);
 				}
 			});
 		}

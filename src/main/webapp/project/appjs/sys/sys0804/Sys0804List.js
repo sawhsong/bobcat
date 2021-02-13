@@ -93,18 +93,18 @@ $(function() {
 				var usedCnt = ds.getValue(i, "USED_CNT");
 				var className = "chkEn", disabledStr = "";
 
-				if (categoryLevel == 1 || usedCnt > 0) {
+				if (usedCnt > 0) {
 					className = "chkDis";
 					disabledStr = "disabled";
 				}
 
 				var iconAction = new UiIcon();
 				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("categoryId:"+ds.getValue(i, "CATEGORY_ID"))
-				.addAttribute("usedCnt:"+usedCnt).addAttribute("categoryLevel:"+categoryLevel).setScript("doAction(this)");
+				.addAttribute("usedCnt:"+usedCnt).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setName("chkForDel").setClassName(className+" inTblGrid").addOptions(disabledStr).setValue(ds.getValue(i, "CATEGORY_ID"));
+				uiChk.setName("chkForDel").setClassName(className+" inTblGrid").addOptions(disabledStr).setValue(ds.getValue(i, "CATEGORY_ID")).addAttribute("parentCategoryId:"+ds.getValue(i, "PARENT_CATEGORY_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				if (categoryLevel == 1) {
@@ -151,11 +151,12 @@ $(function() {
 		});
 
 		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
+		bindEventCheckForDel();
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	doAction = function(img) {
-		var categoryId = $(img).attr("categoryId"), usedCnt = $(img).attr("usedCnt"), categoryLevel = $(img).attr("categoryLevel");
+		var categoryId = $(img).attr("categoryId"), usedCnt = $(img).attr("usedCnt");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == categoryId) {
@@ -167,7 +168,7 @@ $(function() {
 			}
 		});
 
-		if (categoryLevel == 1 || usedCnt > 0) {
+		if (usedCnt > 0) {
 			ctxMenu.commonSimpleAction[1].disable = true;
 		} else {
 			ctxMenu.commonSimpleAction[1].disable = false;
@@ -210,6 +211,29 @@ $(function() {
 		commonJs.doDelete({
 			url:"/sys/0804/doDelete.do",
 			onSuccess:doSearch
+		});
+	};
+
+	bindEventCheckForDel = function() {
+		$("[name=chkForDel]").each(function(index) {
+			$(this).bind("click", function() {
+				var amIChecked = $(this).prop("checked");
+				var myId = $(this).val();
+
+				$("[name=chkForDel]").each(function(index) {
+					var parentId = $(this).attr("parentCategoryId");
+
+					if (myId == parentId) {
+						if (amIChecked) {
+							$(this).prop("checked", false);
+							$(this).trigger("click");
+						} else {
+							$(this).prop("checked", true);
+							$(this).trigger("click");
+						}
+					}
+				});
+			});
 		});
 	};
 

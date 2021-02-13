@@ -31,7 +31,7 @@ public class SysReconCategoryHDaoImpl extends BaseHDao implements SysReconCatego
 			for (String id : categoryIds) {
 				idsForDel += CommonUtil.isBlank(idsForDel) ? "'"+id+"'" : ",'"+id+"'";
 			}
-			queryAdvisor.addWhereClause("category_id in ("+idsForDel+")");
+			queryAdvisor.addWhereClause("category_id in (select category_id from sys_recon_category connect by prior category_id = parent_category_id start with category_id in ("+idsForDel+"))");
 			result = deleteWithSQLQuery(queryAdvisor, new SysReconCategory());
 		}
 		return result;
@@ -39,7 +39,7 @@ public class SysReconCategoryHDaoImpl extends BaseHDao implements SysReconCatego
 
 	public int delete(String categoryId) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
-		queryAdvisor.addWhereClause("category_id = '"+categoryId+"'");
+		queryAdvisor.addWhereClause("category_id in (select category_id from sys_recon_category connect by prior category_id = parent_category_id start with category_id = '"+categoryId+"')");
 		return deleteWithSQLQuery(queryAdvisor, new SysReconCategory());
 	}
 
