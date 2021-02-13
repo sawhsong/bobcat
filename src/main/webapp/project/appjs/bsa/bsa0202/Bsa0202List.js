@@ -13,6 +13,7 @@ $(function() {
 	 * event
 	 */
 	$("#btnSearch").click(function(event) {
+		refreshDataEntry();
 		doSearch();
 	});
 
@@ -22,6 +23,7 @@ $(function() {
 	});
 
 	$("#bankAccntId").change(function(event) {
+		refreshDataEntry();
 		doSearch();
 	});
 
@@ -44,6 +46,12 @@ $(function() {
 
 	$("#deMainReconCategory").change(function() {
 		setSubReconCategory();
+	});
+
+	$("#deSubReconCategory").change(function() {
+		if (!commonJs.isBlank($("#deSubReconCategory").val())) {
+			doSave();
+		}
 	});
 
 	$("#btnBatch").click(function() {
@@ -198,19 +206,17 @@ $(function() {
 
 		commonJs.showProcMessageOnElement("divInformArea");
 
-		setTimeout(function() {
-			commonJs.doSearch({
-				url:"/bsa/0202/getEdit.do",
-				noForm:true,
-				data:{bsTranAllocId:bsTranAllocId},
-				onSuccess:function(result) {
-					var ds = result.dataSet;
+		commonJs.doSearch({
+			url:"/bsa/0202/getEdit.do",
+			noForm:true,
+			data:{bsTranAllocId:bsTranAllocId},
+			onSuccess:function(result) {
+				var ds = result.dataSet;
 
-					refreshDataEntry();
-					setDataEntryValues(ds);
-					$("#deGstAmount").select();
-				}
-			});
+				refreshDataEntry();
+				setDataEntryValues(ds);
+				$("#deGstAmount").select();
+			}
 		});
 	};
 
@@ -222,8 +228,6 @@ $(function() {
 		commonJs.refreshBootstrapSelectbox("deMainReconCategory");
 
 		setSubReconCategory();
-		$("#deSubReconCategory").val(ds.getValue(0, "SUB_CATEGORY"));
-		commonJs.refreshBootstrapSelectbox("deSubReconCategory");
 
 		$("#deAmount").val(commonJs.getNumberMask(ds.getValue(0, "PROC_AMT"), numberFormat));
 		$("#deGstAmount").val(commonJs.getNumberMask(ds.getValue(0, "GST_AMT"), numberFormat));
@@ -231,13 +235,16 @@ $(function() {
 		$("#deDescription").val(ds.getValue(0, "PROC_DESCRIPTION"));
 		$("#deBalance").val(commonJs.getNumberMask(ds.getValue(0, "BALANCE"), numberFormat));
 
+		setTimeout(function() {
+			$("#deSubReconCategory").val(ds.getValue(0, "SUB_CATEGORY"));
+			commonJs.refreshBootstrapSelectbox("deSubReconCategory");
+		}, 300);
+
 		commonJs.hideProcMessageOnElement("divInformArea");
 	};
 
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
-
-		refreshDataEntry();
 
 		commonJs.doSearch({
 			url:"/bsa/0202/getList.do",
@@ -388,6 +395,8 @@ $(function() {
 		setTimeout(function() {
 			$("#deSubReconCategory").val(subCategoryId);
 			commonJs.refreshBootstrapSelectbox("deSubReconCategory");
+
+			doSave();
 		}, 400);
 	};
 

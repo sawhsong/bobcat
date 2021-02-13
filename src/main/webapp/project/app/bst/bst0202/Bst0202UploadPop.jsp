@@ -145,14 +145,14 @@
 			<table id="tblGrid_WESTPAC" class="tblGrid sort autosort" style="width:1400px">
 				<colgroup>
 					<col width="5%"/>
-					<col width="10%"/>
+					<col width="9%"/>
 					<col width="7%"/>
-					<col width="10%"/>
-					<col width="10%"/>
-					<col width="10%"/>
-					<col width="11%"/>
+					<col width="9%"/>
+					<col width="9%"/>
 					<col width="10%"/>
 					<col width="*"/>
+					<col width="9%"/>
+					<col width="9%"/>
 				</colgroup>
 				<thead>
 					<tr>
@@ -162,9 +162,9 @@
 						<th class="thGrid">Debit Amount</th>
 						<th class="thGrid">Credit Amount</th>
 						<th class="thGrid">Balance</th>
+						<th class="thGrid">Narrative</th>
 						<th class="thGrid">Category</th>
 						<th class="thGrid">Serial</th>
-						<th class="thGrid">Narrative</th>
 					</tr>
 				</thead>
 				<tbody id="tblGridBody_WESTPAC">

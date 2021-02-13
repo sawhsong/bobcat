@@ -211,9 +211,9 @@ $(function() {
 					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "DEBIT_AMOUNT"), "#,##0.00")));
 					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "CREDIT_AMOUNT"), "#,##0.00")));
 					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 66)));
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "CATEGORIES")));
 					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "SERIAL")));
-					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "DESCRIPTION"), 50)));
 				}
 
 				html += gridTr.toHtmlString();
