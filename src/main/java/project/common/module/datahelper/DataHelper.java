@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import project.common.extend.BaseBiz;
 import project.conf.resource.ormapper.dao.SysAuthGroup.SysAuthGroupDao;
+import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
+import project.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
 import project.conf.resource.ormapper.dto.oracle.SysAuthGroup;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
@@ -20,6 +22,8 @@ public class DataHelper extends BaseBiz {
 	private static SysUserDao sysUserDao;
 	private static SysOrgDao sysOrgDao;
 	private static SysAuthGroupDao sysAuthGroupDao;
+	private static SysFinancialPeriodDao sysFinancialPeriodDao;
+	private static SysReconCategoryDao sysReconCategoryDao;
 
 	public static SysUserDao getSysUserDao() {
 		return sysUserDao;
@@ -43,6 +47,22 @@ public class DataHelper extends BaseBiz {
 
 	public static void setSysAuthGroupDao(SysAuthGroupDao sysAuthGroupDao) {
 		DataHelper.sysAuthGroupDao = sysAuthGroupDao;
+	}
+
+	public static SysFinancialPeriodDao getSysFinancialPeriodDao() {
+		return sysFinancialPeriodDao;
+	}
+
+	public static void setSysFinancialPeriodDao(SysFinancialPeriodDao sysFinancialPeriodDao) {
+		DataHelper.sysFinancialPeriodDao = sysFinancialPeriodDao;
+	}
+
+	public static SysReconCategoryDao getSysReconCategoryDao() {
+		return sysReconCategoryDao;
+	}
+
+	public static void setSysReconCategoryDao(SysReconCategoryDao sysReconCategoryDao) {
+		DataHelper.sysReconCategoryDao = sysReconCategoryDao;
 	}
 
 	/*!
@@ -96,5 +116,23 @@ public class DataHelper extends BaseBiz {
 
 		DataSet ds = getAuthGroupDataSetById(authGroupId);
 		return CommonUtil.nvl(ds.getValue("GROUP_NAME"));
+	}
+
+	/*!
+	 * SysFinancialPeriod - Used in Taglib
+	 */
+	public static DataSet getDistinctFinancialYearDataSet() throws Exception {
+		return sysFinancialPeriodDao.getDistinctFinancialYearDataSet();
+	}
+
+	/*!
+	 * SysExpenseType - Used in Taglib
+	 */
+	public static DataSet getMainReconCategoryDataSet() throws Exception {
+		return sysReconCategoryDao.getMainCategoryDataSet();
+	}
+
+	public static DataSet getSbuReconCategoryDataSet(String parentCategoryId) throws Exception {
+		return sysReconCategoryDao.getSubCategoryDataSet(parentCategoryId);
 	}
 }

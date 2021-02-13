@@ -198,7 +198,7 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 					msg += "Date : "+CommonUtil.changeDateFormat(dupData.getValue(i, "PROC_DATE"), dateTimeFormat, dateFormat)+"\n";
 					msg += "Amount : "+CommonUtil.getNumberMask(dupData.getValue(i, "PROC_AMT"), "#,##0.00")+"\n";
 					msg += "Balance : "+CommonUtil.getNumberMask(dupData.getValue(i, "BALANCE"), "#,##0.00")+"\n";
-					msg += "Description : "+dupData.getValue(i, "PROC_DESCRIPTION")+"]\n\n";
+					msg += "Description : "+dupData.getValue(i, "PROC_DESCRIPTION")+"\n\n";
 				}
 				paramEntity.setMessage("E999", msg);
 
@@ -272,6 +272,8 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
+
+			session.setAttribute("SelectedBankAccntIdInSession", bankFileData.getValue("BANK_ACCNT_ID"));
 
 			discardBankStatement(paramEntity);
 

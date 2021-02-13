@@ -74,6 +74,7 @@ $(function() {
 
 		commonJs.doSave({
 			url:"/bst/0202/doSave.do",
+			showPostMessage:false,
 			onSuccess:function(result) {
 				var ds = result.dataSet;
 				commonJs.confirm({

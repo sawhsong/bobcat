@@ -61,14 +61,14 @@
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
 			<col width="7%"/>
-			<col width="30%"/>
+			<col width="25%"/>
 			<col width="7%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
 			<th class="thSearch rt">Bank Account</th>
 			<td class="tdSearch">
-				<ui:select name="bankAccntId" hasCaption="true">
+				<ui:select name="bankAccntId" hasCaption="true" attribute="data-width:100%">
 <%
 				for (int i=0; i<bankAccnt.getRowCnt(); i++) {
 %>

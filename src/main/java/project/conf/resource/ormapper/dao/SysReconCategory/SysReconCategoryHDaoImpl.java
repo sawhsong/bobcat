@@ -50,6 +50,13 @@ public class SysReconCategoryHDaoImpl extends BaseHDao implements SysReconCatego
 		return selectAllAsDataSet(queryAdvisor, new SysReconCategory());
 	}
 
+	public DataSet getSubCategoryDataSet(String parentCategoryId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("parent_category_id = '"+parentCategoryId+"'");
+		queryAdvisor.addOrderByClause("sort_order, category_name");
+		return selectAllAsDataSet(queryAdvisor, new SysReconCategory());
+	}
+
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String mainCategory = requestDataSet.getValue("mainCategory");

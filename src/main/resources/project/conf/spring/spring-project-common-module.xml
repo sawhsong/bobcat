@@ -24,10 +24,16 @@
 	<bean id="commonLookupAction" name="commonLookupAction" class="${name.package.project}.common.module.commonlookup.CommonLookupAction"/>
 	<bean id="commonLookupBiz" name="commonLookupBiz" class="${name.package.project}.common.module.commonlookup.CommonLookupBizImpl" parent="baseBiz"/>
 
+	<!--/* Data Entry Types Supporter */-->
+	<bean id="entryTypeSupporterAction" name="entryTypeSupporterAction" class="${name.package.project}.common.module.entrytypesupporter.EntryTypeSupporterAction"/>
+	<bean id="entryTypeSupporterBiz" name="entryTypeSupporterBiz" class="${name.package.project}.common.module.entrytypesupporter.EntryTypeSupporterBizImpl" parent="baseBiz"/>
+
 	<!--/* DataHelper */-->
 	<bean id="dataHelper" name="dataHelper" class="${name.package.project}.common.module.datahelper.DataHelper" parent="baseBiz">
 		<property name="sysUserDao" ref="sysUserDao"/>
 		<property name="sysOrgDao" ref="sysOrgDao"/>
 		<property name="sysAuthGroupDao" ref="sysAuthGroupDao"/>
+		<property name="sysFinancialPeriodDao" ref="sysFinancialPeriodDao"/>
+		<property name="sysReconCategoryDao" ref="sysReconCategoryDao"/>
 	</bean>
 </beans>

@@ -11,7 +11,11 @@ import zebra.data.QueryAdvisor;
 
 public interface UsrBsTranAllocDao extends IDao {
 	public int insert(UsrBsTranAlloc usrBsTranAlloc) throws Exception;
+	public int update(String bsTranAllocId, UsrBsTranAlloc usrBsTranAlloc) throws Exception;
+	public int updateColumn(String bsTranAllocId, UsrBsTranAlloc usrBsTranAlloc) throws Exception;
 
+	public UsrBsTranAlloc getBsTranAllocByBsTranAllocId(String bsTranAllocId) throws Exception;
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByFileDataForDupCheck(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getDataSetByBsTranAllocId(String bsTranAllocId) throws Exception;
 }

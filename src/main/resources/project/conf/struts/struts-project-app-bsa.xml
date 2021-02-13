@@ -6,7 +6,7 @@
         <!--Bsa0202 - Bank Statement Allocation-->
         <action class="project.app.bsa.bsa0202.Bsa0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/bsa/bsa0202/Bsa0202List.jsp</result>
-            <result name="edit" type="debugDispatcherResult">/project/app/bsa/bsa0202/Bsa0202EditPop.jsp</result>
+            <result name="batch" type="debugDispatcherResult">/project/app/bsa/bsa0202/Bsa0202BatchApplicationPop.jsp</result>
         </action>
     </package>
 </struts>

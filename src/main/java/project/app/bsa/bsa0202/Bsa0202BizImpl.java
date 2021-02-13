@@ -9,29 +9,36 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryDao;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
+import project.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocDao;
+import project.conf.resource.ormapper.dto.oracle.UsrBsTranAlloc;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dao.UsrBankStatementD.UsrBankStatementDDao;
-import project.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 	@Autowired
+	private UsrBankAccntDao usrBankAccntDao;
+	@Autowired
 	private UsrBsTranAllocDao usrBsTranAllocDao;
+	@Autowired
+	private SysReconCategoryDao sysReconCategoryDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
+		DataSet bankAccnt = new DataSet();
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+
 		try {
+			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);
+
+			paramEntity.setObject("bankAccnt", bankAccnt);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -47,13 +54,20 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		String allocationStatus = requestDataSet.getValue("allocationStatus");
 		String fromDate = requestDataSet.getValue("fromDate");
 		String toDate = requestDataSet.getValue("toDate");
+		String selectedBankAccntIdInSession = (String)session.getAttribute("SelectedBankAccntIdInSession");
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
 
 		try {
 			queryAdvisor.setObject("userId", userId);
 			queryAdvisor.setObject("allocationStatus", allocationStatus);
 			queryAdvisor.setObject("fromDate", fromDate);
 			queryAdvisor.setObject("toDate", toDate);
+			queryAdvisor.setObject("bankAccntId", bankAccntId);
 			queryAdvisor.setPagination(true);
+
+			if (CommonUtil.isNotBlank(selectedBankAccntIdInSession)) {
+				session.removeAttribute("SelectedBankAccntIdInSession");
+			}
 
 			paramEntity.setAjaxResponseDataSet(usrBsTranAllocDao.getDataSetBySearchCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
@@ -64,10 +78,27 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getSubReconCategory(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String mainReconCategoryId = requestDataSet.getValue("mainReconCategoryId");
 
 		try {
+			paramEntity.setAjaxResponseDataSet(sysReconCategoryDao.getSubCategoryDataSet(mainReconCategoryId));
+			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bsTranAllocId = requestDataSet.getValue("bsTranAllocId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrBsTranAllocDao.getDataSetByBsTranAllocId(bsTranAllocId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -77,9 +108,24 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bsTranAllocId = requestDataSet.getValue("deBsTranAllocId");
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		UsrBsTranAlloc usrBsTranAlloc = new UsrBsTranAlloc();
 		int result = -1;
 
 		try {
+			usrBsTranAlloc.setMainCategory(requestDataSet.getValue("deMainReconCategory"));
+			usrBsTranAlloc.setSubCategory(requestDataSet.getValue("deSubReconCategory"));
+			usrBsTranAlloc.setGstAmt(CommonUtil.toDouble(requestDataSet.getValue("deGstAmount")));
+			usrBsTranAlloc.setNetAmt(CommonUtil.toDouble(requestDataSet.getValue("deNetAmount")));
+			usrBsTranAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_AL"));
+			usrBsTranAlloc.setUpdateUserId(userId);
+			usrBsTranAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+			usrBsTranAlloc.addUpdateColumnFromField();
+
+			result = usrBsTranAllocDao.updateColumn(bsTranAllocId, usrBsTranAlloc);
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -94,9 +140,24 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bsTranAllocId = requestDataSet.getValue("deBsTranAllocId");
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		UsrBsTranAlloc usrBsTranAlloc = new UsrBsTranAlloc();
 		int result = 0;
 
 		try {
+			usrBsTranAlloc = usrBsTranAllocDao.getBsTranAllocByBsTranAllocId(bsTranAllocId);
+			usrBsTranAlloc.setMainCategory(null);
+			usrBsTranAlloc.setSubCategory(null);
+			usrBsTranAlloc.setGstAmt(0);
+			usrBsTranAlloc.setNetAmt(0);
+			usrBsTranAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_UP"));
+			usrBsTranAlloc.setUpdateUserId(userId);
+			usrBsTranAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+
+			result = usrBsTranAllocDao.update(bsTranAllocId, usrBsTranAlloc);
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -109,33 +170,55 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getBatchApplication(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity doBatchApplication(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[] = new String[] {};
-		String pageTitle = "", fileName = "";
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
+		String chkForEdit = requestDataSet.getValue("chkForEdit");
+		String bsTranAllocIds[] = CommonUtil.splitWithTrim(chkForEdit, ConfigUtil.getProperty("delimiter.data"));
+		String mainCategory = requestDataSet.getValue("mainReconCategory");
+		String subCategory = requestDataSet.getValue("subReconCategory");
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		UsrBsTranAlloc usrBsTranAlloc = new UsrBsTranAlloc();
+		double gstPercentage = CommonUtil.toDouble(requestDataSet.getValue("gstPercentage")) / 100;
+		int result = -1;
 
 		try {
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
+			if (bsTranAllocIds != null && bsTranAllocIds.length > 0) {
+				for (String id : bsTranAllocIds) {
+					double amt = 0, gstAmt = 0, netAmt = 0;
+					usrBsTranAlloc = usrBsTranAllocDao.getBsTranAllocByBsTranAllocId(id);
 
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
+					amt = usrBsTranAlloc.getProcAmt();
+					gstAmt = amt * gstPercentage;
+					netAmt = amt - gstAmt;
+
+					usrBsTranAlloc.setMainCategory(mainCategory);
+					usrBsTranAlloc.setSubCategory(subCategory);
+					usrBsTranAlloc.setGstAmt(gstAmt);
+					usrBsTranAlloc.setNetAmt(netAmt);
+					usrBsTranAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_AL"));
+					usrBsTranAlloc.setUpdateUserId(userId);
+					usrBsTranAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+
+					result += usrBsTranAllocDao.update(id, usrBsTranAlloc);
+				}
+
+				if (result <= 0) {
+					throw new FrameworkException("E801", getMessage("E801", paramEntity));
+				}
+
+				paramEntity.setSuccess(true);
+				paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 			}
-
-			exportHelper.setSourceDataSet(new DataSet());
-
-			paramEntity.setSuccess(true);
-			paramEntity.setFileToExport(exportHelper.createFile());
-			paramEntity.setFileNameToExport(exportHelper.getFileName());
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

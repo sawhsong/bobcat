@@ -12,6 +12,8 @@
 	String dateFormat = ConfigUtil.getProperty("format.date.java");
 	String dateFrom = CommonUtil.getCalcDate("D", CommonUtil.getSysdate(dateFormat), dateFormat, -1);
 	String dateTo = CommonUtil.getSysdate(dateFormat);
+	DataSet bankAccnt = (DataSet)paramEntity.getObject("bankAccnt");
+	String sbaId = (String)session.getAttribute("SelectedBankAccntIdInSession");
 %>
 <%/************************************************************************************************
 * HTML
@@ -30,6 +32,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var sbaId = "<%=sbaId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -51,6 +54,7 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnBatch" caption="Batch Application" iconClass="fa-repeat"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</ui:buttonGroup>
@@ -60,16 +64,30 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="7%"/>
-			<col width="10%"/>
+			<col width="6%"/>
+			<col width="25%"/>
+			<col width="8%"/>
+			<col width="8%"/>
 			<col width="7%"/>
 			<col width="15%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
+			<th class="thSearch rt">Bank Account</th>
+			<td class="tdSearch">
+				<ui:select name="bankAccntId" hasCaption="true" attribute="data-width:100%">
+<%
+				for (int i=0; i<bankAccnt.getRowCnt(); i++) {
+%>
+					<option value="<%=bankAccnt.getValue(i, "BANK_ACCNT_ID")%>" bankCode="<%=bankAccnt.getValue(i, "BANK_CODE")%>"><%=bankAccnt.getValue(i, "DESCRIPTION")%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
 			<th class="thSearch rt">Allocation Status</th>
 			<td class="tdSearch"><ui:ccselect name="allocationStatus" codeType="BS_TRAN_ALLOC_STATUS" caption="==Select=="/></td>
-			<th class="thSearch rt">Upload Date</th>
+			<th class="thSearch rt">Uploaded Date</th>
 			<td class="tdSearch">
 				<ui:text name="fromDate" value="<%=dateFrom%>" className="Ct hor" style="width:90px" option="date"/>
 				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
@@ -81,7 +99,47 @@
 		</tr>
 	</table>
 </div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainer">
+	<table class="tblDataEntry">
+		<caption>Data Entry</caption>
+		<colgroup>
+			<col width="2%"/>
+			<col width="6%"/>
+			<col width="10%"/>
+			<col width="13%"/>
+			<col width="20%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="*"/>
+			<col width="7%"/>
+		</colgroup>
+		<tr>
+			<th class="thDataEntry"><ui:icon className="fa-magic fa-lg"/></th>
+			<th class="thDataEntry mandatory">Date</th>
+			<th class="thDataEntry mandatory">Reconciliation Categories</th>
+			<th class="thDataEntry mandatory">Main Category</th>
+			<th class="thDataEntry mandatory">Sub Category</th>
+			<th class="thDataEntry mandatory">Amount</th>
+			<th class="thDataEntry mandatory">GST Amount</th>
+			<th class="thDataEntry mandatory">Net Amount</th>
+			<th class="thDataEntry">Particular</th>
+			<th class="thDataEntry mandatory">Balance</th>
+		</tr>
+		<tr>
+			<td class="tdDataEntry Ct"><ui:icon id="icnDeAction" className="fa-ellipsis-h fa-lg" script="doDataEntryAction(this)"/></td>
+			<td class="tdDataEntry Ct"><ui:hidden name="deBsTranAllocId"/><ui:text name="deDate" className="Ct" style="width:100px" status="disabled"/></td>
+			<td class="tdDataEntry Ct"><ui:button id="btnDeCategories" caption="Reconciliation Categories" iconClass="fa-caret-down"/></td>
+			<td class="tdDataEntry Ct"><ui:deSelect name="deMainReconCategory" codeType="MainReconCategory" caption="==Select==" attribute="data-width:100%" checkName="Main Category" options="mandatory"/></td>
+			<td class="tdDataEntry Ct"><ui:deSelect name="deSubReconCategory" codeType="SubReconCategory" caption="==Select==" attribute="data-width:100%" checkName="Sub Category" options="mandatory"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deAmount" className="rt numeric" status="display" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deGstAmount" className="rt numeric" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deNetAmount" className="rt numeric" status="display" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deDescription" className="Lt" status="display"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deBalance" className="rt numeric" status="display" option="numeric"/></td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -94,23 +152,32 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid">
 		<colgroup>
+			<col width="2%"/>
+			<col width="6%"/>
+			<col width="13%"/>
+			<col width="20%"/>
 			<col width="7%"/>
-			<col width="9%"/>
-			<col width="10%"/>
-			<col width="12%"/>
+			<col width="7%"/>
+			<col width="7%"/>
 			<col width="*"/>
+			<col width="7%"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 				<th class="thGrid">Date</th>
+				<th class="thGrid">Main Category</th>
+				<th class="thGrid">Sub Category</th>
 				<th class="thGrid">Amount</th>
+				<th class="thGrid">GST Amount</th>
+				<th class="thGrid">Net Amount</th>
+				<th class="thGrid">Particular</th>
 				<th class="thGrid">Balance</th>
-				<th class="thGrid">Description</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noStripe">
-				<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
+			<tr>
+				<td class="tdGrid Ct" colspan="9"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

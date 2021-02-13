@@ -104,7 +104,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setId("chkForDel").setName("chkForDel").setClassName(className+" inTblGrid").setValue(ds.getValue(i, "USER_ID")).addOptions(disabledStr);
+				uiChk.setName("chkForDel").setClassName(className+" inTblGrid").setValue(ds.getValue(i, "USER_ID")).addOptions(disabledStr);
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				var uiAnc = new UiAnchor();

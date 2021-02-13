@@ -55,7 +55,7 @@ var categoryId = "<%=categoryId%>";
 		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea" class="areaContainerPopup">
+<div id="divSearchCriteriaArea">
 </div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
