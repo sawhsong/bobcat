@@ -80,25 +80,33 @@ var orgId = "<%=orgId%>";
 		</tr>
 		<tr>
 			<th class="thEdit rt"><mc:msg key="sys0206.header.changeLogo"/></th>
-			<td class="tdEdit" colspan="3"><ui:file name="logoPath" style="width:540px;" checkName="sys0206.header.changeLogo"/></td>
-		</tr>
-		<tr>
+			<td class="tdEdit"><ui:file name="logoPath" style="width:340px"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.orgId"/></th>
 			<td class="tdEdit"><ui:text name="orgId" status="display"/></td>
+		</tr>
+		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.abn"/></th>
-			<td class="tdEdit"><ui:text name="abn" checkName="sys0206.header.abn"/></td>
+			<td class="tdEdit"><ui:text name="abn"/></td>
+			<th class="thEdit Rt">ACN</th>
+			<td class="tdEdit"><ui:text name="acn"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.legalName"/></th>
 			<td class="tdEdit"><ui:text name="legalName" checkName="sys0206.header.legalName" options="mandatory"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.tradingName"/></th>
-			<td class="tdEdit"><ui:text name="tradingName" checkName="sys0206.header.tradingName"/></td>
+			<td class="tdEdit"><ui:text name="tradingName"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.email"/></th>
 			<td class="tdEdit"><ui:text name="email" checkName="sys0206.header.email" option="email"/></td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.businessType"/></th>
 			<td class="tdEdit"><ui:ccselect name="businessType" codeType="BUSINESS_TYPE" checkName="sys0206.header.businessType" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Telephone</th>
+			<td class="tdEdit"><ui:text name="telNumber" option="numeric"/></td>
+			<th class="thEdit Rt">Mobile</th>
+			<td class="tdEdit"><ui:text name="mobileNumber" option="numeric"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.entityType"/></th>
@@ -108,22 +116,22 @@ var orgId = "<%=orgId%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt">Business Address</th>
-			<td class="tdEdit" colspan="3"><ui:text name="address" checkName="sys0206.header.address"/></td>
+			<td class="tdEdit" colspan="3"><ui:text name="address"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.registeredDate"/></th>
 			<td class="tdEdit">
-				<ui:text name="registeredDate" className="Ct hor" style="width:100px" value="<%=CommonUtil.getSysdate(dateFormat)%>" checkName="sys0206.header.registeredDate" option="date"/>
-				<ui:icon id="icnRegisteredDate" className="fa-calendar hor" title="sys0206.header.registeredDate"/>
+				<ui:text name="registeredDate" className="Ct hor" style="width:90px" value="<%=CommonUtil.getSysdate(dateFormat)%>" option="date"/>
+				<ui:icon id="icnRegisteredDate" className="fa-calendar hor"/>
 			</td>
 			<th class="thEdit Rt mandatory"><mc:msg key="sys0206.header.isActive"/></th>
 			<td class="tdEdit"><ui:ccselect name="isActive" codeType="IS_ACTIVE" options="mandatory"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.rRangeFrom"/></th>
-			<td class="tdEdit"><ui:text name="rRangeFrom" className="rt numeric" checkName="sys0206.header.rRangeFrom" option="numeric"/></td>
+			<td class="tdEdit"><ui:text name="rRangeFrom" className="rt numeric" option="numeric"/></td>
 			<th class="thEdit Rt"><mc:msg key="sys0206.header.rRangeTo"/></th>
-			<td class="tdEdit"><ui:text name="rRangeTo" className="rt numeric" checkName="sys0206.header.rRangeTo" option="numeric"/></td>
+			<td class="tdEdit"><ui:text name="rRangeTo" className="rt numeric" option="numeric"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt">Last Updated By</th>

@@ -29,6 +29,8 @@ public class SysOrg extends BaseDto implements Serializable {
 	private String LEGAL_NAME;
 	private String abn;
 	private String ABN;
+	private String acn;
+	private String ACN;
 	private String address;
 	private String ADDRESS;
 	private String email;
@@ -41,12 +43,16 @@ public class SysOrg extends BaseDto implements Serializable {
 	private String IS_ACTIVE;
 	private String logoPath;
 	private String LOGO_PATH;
+	private String mobileNumber;
+	private String MOBILE_NUMBER;
 	private Date registeredDate;
 	private String REGISTERED_DATE;
 	private double revenueRangeFrom;
 	private String REVENUE_RANGE_FROM;
 	private double revenueRangeTo;
 	private String REVENUE_RANGE_TO;
+	private String telNumber;
+	private String TEL_NUMBER;
 	private String tradingName;
 	private String TRADING_NAME;
 	private Date updateDate;
@@ -146,6 +152,15 @@ public class SysOrg extends BaseDto implements Serializable {
 		setValueFromAccessor("ABN", abn);
 	}
 
+	public String getAcn() {
+		return acn;
+	}
+
+	public void setAcn(String acn) throws Exception {
+		this.acn = acn;
+		setValueFromAccessor("ACN", acn);
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -200,6 +215,15 @@ public class SysOrg extends BaseDto implements Serializable {
 		setValueFromAccessor("LOGO_PATH", logoPath);
 	}
 
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) throws Exception {
+		this.mobileNumber = mobileNumber;
+		setValueFromAccessor("MOBILE_NUMBER", mobileNumber);
+	}
+
 	public Date getRegisteredDate() {
 		return registeredDate;
 	}
@@ -225,6 +249,15 @@ public class SysOrg extends BaseDto implements Serializable {
 	public void setRevenueRangeTo(double revenueRangeTo) throws Exception {
 		this.revenueRangeTo = revenueRangeTo;
 		setValueFromAccessor("REVENUE_RANGE_TO", CommonUtil.toString(revenueRangeTo));
+	}
+
+	public String getTelNumber() {
+		return telNumber;
+	}
+
+	public void setTelNumber(String telNumber) throws Exception {
+		this.telNumber = telNumber;
+		setValueFromAccessor("TEL_NUMBER", telNumber);
 	}
 
 	public String getTradingName() {
@@ -395,15 +428,18 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "entityType : "+entityType+"\n";
 		str += "legalName : "+legalName+"\n";
 		str += "abn : "+abn+"\n";
+		str += "acn : "+acn+"\n";
 		str += "address : "+address+"\n";
 		str += "email : "+email+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "isActive : "+isActive+"\n";
 		str += "logoPath : "+logoPath+"\n";
+		str += "mobileNumber : "+mobileNumber+"\n";
 		str += "registeredDate : "+registeredDate+"\n";
 		str += "revenueRangeFrom : "+revenueRangeFrom+"\n";
 		str += "revenueRangeTo : "+revenueRangeTo+"\n";
+		str += "telNumber : "+telNumber+"\n";
 		str += "tradingName : "+tradingName+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
@@ -425,15 +461,18 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "<column name=\"entityType\" value=\""+entityType+"\">";
 		str += "<column name=\"legalName\" value=\""+legalName+"\">";
 		str += "<column name=\"abn\" value=\""+abn+"\">";
+		str += "<column name=\"acn\" value=\""+acn+"\">";
 		str += "<column name=\"address\" value=\""+address+"\">";
 		str += "<column name=\"email\" value=\""+email+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"isActive\" value=\""+isActive+"\">";
 		str += "<column name=\"logoPath\" value=\""+logoPath+"\">";
+		str += "<column name=\"mobileNumber\" value=\""+mobileNumber+"\">";
 		str += "<column name=\"registeredDate\" value=\""+registeredDate+"\">";
 		str += "<column name=\"revenueRangeFrom\" value=\""+revenueRangeFrom+"\">";
 		str += "<column name=\"revenueRangeTo\" value=\""+revenueRangeTo+"\">";
+		str += "<column name=\"telNumber\" value=\""+telNumber+"\">";
 		str += "<column name=\"tradingName\" value=\""+tradingName+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
@@ -455,15 +494,18 @@ public class SysOrg extends BaseDto implements Serializable {
 		str += "\"entityType\":\""+entityType+"\", ";
 		str += "\"legalName\":\""+legalName+"\", ";
 		str += "\"abn\":\""+abn+"\", ";
+		str += "\"acn\":\""+acn+"\", ";
 		str += "\"address\":\""+address+"\", ";
 		str += "\"email\":\""+email+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"isActive\":\""+isActive+"\", ";
 		str += "\"logoPath\":\""+logoPath+"\", ";
+		str += "\"mobileNumber\":\""+mobileNumber+"\", ";
 		str += "\"registeredDate\":\""+registeredDate+"\", ";
 		str += "\"revenueRangeFrom\":\""+revenueRangeFrom+"\", ";
 		str += "\"revenueRangeTo\":\""+revenueRangeTo+"\", ";
+		str += "\"telNumber\":\""+telNumber+"\", ";
 		str += "\"tradingName\":\""+tradingName+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";

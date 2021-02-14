@@ -121,6 +121,9 @@ public class SysUserHDaoImpl extends BaseHDao implements SysUserDao {
 		String authGroup = requestDataSet.getValue("authGroup");
 		String orgId = requestDataSet.getValue("orgId");
 		String userStatus = requestDataSet.getValue("userStatus");
+		String telNumber = requestDataSet.getValue("telNumber");
+		String mobileNumber = requestDataSet.getValue("mobileNumber");
+		String email = requestDataSet.getValue("email");
 		String isActive = requestDataSet.getValue("isActive");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String langCode = (String)queryAdvisor.getObject("langCode");
@@ -130,6 +133,9 @@ public class SysUserHDaoImpl extends BaseHDao implements SysUserDao {
 		queryAdvisor.addAutoFillCriteria(authGroup, "auth_group_id = '"+authGroup+"'");
 		queryAdvisor.addAutoFillCriteria(orgId, "org_id = '"+orgId+"'");
 		queryAdvisor.addAutoFillCriteria(userStatus, "user_status = '"+userStatus+"'");
+		queryAdvisor.addAutoFillCriteria(telNumber, "tel_number like '%"+telNumber+"%'");
+		queryAdvisor.addAutoFillCriteria(mobileNumber, "mobile_number like '%"+mobileNumber+"%'");
+		queryAdvisor.addAutoFillCriteria(email, "email like '%"+email+"%'");
 		queryAdvisor.addAutoFillCriteria(isActive, "is_active = '"+isActive+"'");
 		queryAdvisor.addVariable("dateFormat", dateFormat);
 		queryAdvisor.addVariable("langCode", langCode);

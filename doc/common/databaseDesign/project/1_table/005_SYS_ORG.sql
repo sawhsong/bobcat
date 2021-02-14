@@ -10,6 +10,9 @@ create table sys_org (
     legal_name                      varchar2(300)                                not null,      -- Org legal name
     trading_name                    varchar2(300),                                              -- Org trading name
     abn                             varchar2(30),                                               -- Org ABN
+    acn                             varchar2(30),                                               -- Org ACN
+    tel_number                      varchar2(15),                                               -- Land line number
+    mobile_number                   varchar2(15),                                               -- Mobile number
     email                           varchar2(100),                                              -- Org Email
     address                         varchar2(500),                                              -- Org Address
     registered_date                 date,                                                       -- Registered Date
@@ -35,6 +38,9 @@ comment on column sys_org.org_id                                                
 comment on column sys_org.legal_name                                             is 'Org legal name';
 comment on column sys_org.trading_name                                           is 'Org trading name';
 comment on column sys_org.abn                                                    is 'Org ABN';
+comment on column sys_org.acn                                                    is 'Org ACN';
+comment on column sys_org.tel_number                                             is 'Land line number';
+comment on column sys_org.mobile_number                                          is 'Mobile number';
 comment on column sys_org.email                                                  is 'Org Email';
 comment on column sys_org.address                                                is 'Org Address';
 comment on column sys_org.registered_date                                        is 'Registered Date';

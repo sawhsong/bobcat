@@ -68,7 +68,6 @@ public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 		String abn = requestDataSet.getValue("abn");
 		String entityType = requestDataSet.getValue("entityType");
 		String businessType = requestDataSet.getValue("businessType");
-		String orgCategory = requestDataSet.getValue("orgCategory");
 
 		queryAdvisor.addAutoFillCriteria(orgName, "lower(legal_name||' '||trading_name) like lower('%"+orgName+"%')");
 		queryAdvisor.addAutoFillCriteria(abn, "abn like '%"+abn+"%'");

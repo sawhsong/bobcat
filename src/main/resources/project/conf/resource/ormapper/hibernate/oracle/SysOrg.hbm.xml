@@ -15,15 +15,18 @@
 		<property name="entityType" column="ENTITY_TYPE" not-null="true" type="java.lang.String" length="30"/>
 		<property name="legalName" column="LEGAL_NAME" not-null="true" type="java.lang.String" length="300"/>
 		<property name="abn" column="ABN" type="java.lang.String" length="30"/>
+		<property name="acn" column="ACN" type="java.lang.String" length="30"/>
 		<property name="address" column="ADDRESS" type="java.lang.String" length="500"/>
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="isActive" column="IS_ACTIVE" type="java.lang.String" length="1"/>
 		<property name="logoPath" column="LOGO_PATH" type="java.lang.String" length="2000"/>
+		<property name="mobileNumber" column="MOBILE_NUMBER" type="java.lang.String" length="15"/>
 		<property name="registeredDate" column="REGISTERED_DATE" type="java.util.Date"/>
 		<property name="revenueRangeFrom" column="REVENUE_RANGE_FROM" type="java.lang.Double"/>
 		<property name="revenueRangeTo" column="REVENUE_RANGE_TO" type="java.lang.Double"/>
+		<property name="telNumber" column="TEL_NUMBER" type="java.lang.String" length="15"/>
 		<property name="tradingName" column="TRADING_NAME" type="java.lang.String" length="300"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
@@ -37,15 +40,18 @@
 		       ENTITY_TYPE,
 		       LEGAL_NAME,
 		       ABN,
+		       ACN,
 		       ADDRESS,
 		       EMAIL,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
 		       IS_ACTIVE,
 		       LOGO_PATH,
+		       MOBILE_NUMBER,
 		       TO_CHAR(REGISTERED_DATE, 'yyyymmddhh24miss') AS REGISTERED_DATE,
 		       REVENUE_RANGE_FROM,
 		       REVENUE_RANGE_TO,
+		       TEL_NUMBER,
 		       TRADING_NAME,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
@@ -67,15 +73,18 @@
 		       ENTITY_TYPE,
 		       LEGAL_NAME,
 		       ABN,
+		       ACN,
 		       ADDRESS,
 		       EMAIL,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
 		       IS_ACTIVE,
 		       LOGO_PATH,
+		       MOBILE_NUMBER,
 		       REGISTERED_DATE,
 		       REVENUE_RANGE_FROM,
 		       REVENUE_RANGE_TO,
+		       TEL_NUMBER,
 		       TRADING_NAME,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
@@ -87,15 +96,18 @@
 		       ${ENTITY_TYPE},
 		       ${LEGAL_NAME},
 		       ${ABN},
+		       ${ACN},
 		       ${ADDRESS},
 		       ${EMAIL},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
 		       ${IS_ACTIVE},
 		       ${LOGO_PATH},
+		       ${MOBILE_NUMBER},
 		       ${REGISTERED_DATE},
 		       ${REVENUE_RANGE_FROM},
 		       ${REVENUE_RANGE_TO},
+		       ${TEL_NUMBER},
 		       ${TRADING_NAME},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
@@ -111,15 +123,18 @@
 		       ENTITY_TYPE = ${ENTITY_TYPE},
 		       LEGAL_NAME = ${LEGAL_NAME},
 		       ABN = ${ABN},
+		       ACN = ${ACN},
 		       ADDRESS = ${ADDRESS},
 		       EMAIL = ${EMAIL},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
 		       IS_ACTIVE = ${IS_ACTIVE},
 		       LOGO_PATH = ${LOGO_PATH},
+		       MOBILE_NUMBER = ${MOBILE_NUMBER},
 		       REGISTERED_DATE = ${REGISTERED_DATE},
 		       REVENUE_RANGE_FROM = ${REVENUE_RANGE_FROM},
 		       REVENUE_RANGE_TO = ${REVENUE_RANGE_TO},
+		       TEL_NUMBER = ${TEL_NUMBER},
 		       TRADING_NAME = ${TRADING_NAME},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}

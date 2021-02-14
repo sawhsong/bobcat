@@ -102,7 +102,7 @@ var userId = "<%=userId%>";
 					<img id="imgUserPhoto" src="<%=defaultPhotoPath%>" class="imgDis" style="width:100%;height:110px;"/>
 				</td>
 				<th class="thEdit rt"><mc:msg key="sys0208.header.changePhoto"/></th>
-				<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:400px;" checkName="sys0208.header.changePhoto"/></td>
+				<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:380px;"/></td>
 			</tr>
 			<tr>
 				<th class="thEdit rt"><mc:msg key="sys0208.header.userId"/></th>
@@ -129,7 +129,7 @@ var userId = "<%=userId%>";
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.org"/></th>
 				<td class="tdEdit">
 					<ui:hidden name="orgId" checkName="sys0208.header.org"/>
-					<ui:text name="orgName" className="hor" style="width:250px" checkName="sys0208.header.org" options="mandatory"/>
+					<ui:text name="orgName" className="hor" style="width:300px" checkName="sys0208.header.org" options="mandatory"/>
 					<ui:icon id="icnOrgSearch" className="fa-search hor"/>
 				</td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.authGroup"/></th>
@@ -142,6 +142,12 @@ var userId = "<%=userId%>";
 				<td class="tdEdit"><ui:ccselect name="language" codeType="LANGUAGE_TYPE" options="mandatory" status="disabled"/></td>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.themeType"/></th>
 				<td class="tdEdit"><ui:ccselect name="themeType" codeType="USER_THEME_TYPE" options="mandatory" status="disabled"/></td>
+			</tr>
+			<tr>
+				<th class="thEdit rt">Telephone</th>
+				<td class="tdEdit"><ui:text name="telNumber" option="numeric"/></td>
+				<th class="thEdit rt">Mobile</th>
+				<td class="tdEdit"><ui:text name="mobileNumber" option="numeric"/></td>
 			</tr>
 			<tr>
 				<th class="thEdit rt mandatory"><mc:msg key="sys0208.header.email"/></th>

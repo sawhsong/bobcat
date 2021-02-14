@@ -112,6 +112,16 @@ $(function() {
 		commonJs.hideProcMessage();
 	};
 
+	setFieldFormat = function() {
+		commonJs.setFieldDateMask("registeredDate");
+		commonJs.setFieldNumberMask("abn", "99 999 999 999");
+		commonJs.setFieldNumberMask("acn", "999 999 999");
+		commonJs.setFieldNumberMask("telNumber", "99 9999 9999");
+		commonJs.setFieldNumberMask("mobileNumber", "9999 999 999");
+		$("#rRangeFrom").number(true, 0);
+		$("#rRangeTo").number(true, 0);
+	};
+
 	/*!
 	 * load event (document / window)
 	 */
@@ -124,10 +134,7 @@ $(function() {
 	});
 
 	$(window).load(function() {
-		commonJs.setFieldDateMask("registeredDate");
-		commonJs.setFieldNumberMask("abn", "99 999 999 999");
-		$(".numeric").number(true, 0);
-
+		setFieldFormat();
 		loadData();
 	});
 });

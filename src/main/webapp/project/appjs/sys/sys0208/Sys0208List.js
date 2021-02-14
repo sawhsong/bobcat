@@ -35,7 +35,8 @@ $(function() {
 		var code = event.keyCode || event.which, element = event.target;
 
 		if (code == 13) {
-			if ($(element).is("[name=userName]") || $(element).is("[name=loginId]") || $(element).is("[name=orgName]")) {
+			if ($(element).is("[name=userName]") || $(element).is("[name=loginId]") || $(element).is("[name=orgName]") ||
+					$(element).is("[name=telNumber]") || $(element).is("[name=mobileNumber]") || $(element).is("[name=email]")) {
 				doSearch();
 			}
 		}
@@ -91,16 +92,16 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
-				var bankAccntCnt = ds.getValue(i, "BANK_ACCNT_CNT");
+				var usedCnt = ds.getValue(i, "USED_CNT");
 				var className = "chkEn", disabledStr = "";
 
-				if (bankAccntCnt > 0) {
+				if (usedCnt > 0) {
 					className = "chkDis";
 					disabledStr = "disabled";
 				}
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("bankAccntCnt:"+bankAccntCnt).addAttribute("userId:"+ds.getValue(i, "USER_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("usedCnt:"+usedCnt).addAttribute("userId:"+ds.getValue(i, "USER_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				var uiChk = new UiCheckbox();
@@ -113,8 +114,9 @@ $(function() {
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "LOGIN_ID")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ORG_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "TEL_NUMBER"), "?? ???? ????")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "MOBILE_NUMBER"), "???? ??? ???")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "EMAIL")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(ds.getValue(i, "BANK_ACCNT_CNT")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "AUTH_GROUP_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_ACTIVE")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE"))));
@@ -124,7 +126,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:11").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -160,7 +162,7 @@ $(function() {
 		if (param.mode == "Insert" || param.mode == "Update") {
 			url = "/sys/0208/getEdit.do";
 			header = com.header.popHeaderEdit;
-			width = 1200, height = 590;
+			width = 1200, height = 630;
 		} else if (param.mode == "UpdateAuthGroup") {
 			url = "/sys/0208/getActionContextMenu.do";
 			header = sys.sys0208.caption.auth;
@@ -208,7 +210,7 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var userId = $(img).attr("userId"), bankAccntCnt = $(img).attr("bankAccntCnt");
+		var userId = $(img).attr("userId"), usedCnt = $(img).attr("usedCnt");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == userId) {
@@ -220,7 +222,7 @@ $(function() {
 			}
 		});
 
-		if (bankAccntCnt > 0) {
+		if (usedCnt > 0) {
 			ctxMenu.commonSimpleAction[1].disable = true;
 		} else {
 			ctxMenu.commonSimpleAction[1].disable = false;

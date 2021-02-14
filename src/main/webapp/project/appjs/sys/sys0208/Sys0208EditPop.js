@@ -4,6 +4,7 @@
  *************************************************************************************************/
 var delimiter = jsconfig.get("dataDelimiter");
 var bankAccntCount = 0;
+jsconfig.put("useJqSelectmenu", false);
 
 $(function() {
 	/*!
@@ -185,7 +186,7 @@ $(function() {
 				}
 
 				if (commonJs.contains(id, "balance")) {
-					$(".numeric").number(true, 2);
+					$(this).number(true, 2);
 				}
 			});
 		});
@@ -211,7 +212,7 @@ $(function() {
 	setGridHeader = function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divGridWrapper"),
-			attachToHeight:446
+			attachToHeight:486
 		});
 	};
 
@@ -322,6 +323,8 @@ $(function() {
 		$("#themeType").val(ds.getValue(0, "THEME_TYPE"));
 		commonJs.refreshBootstrapSelectbox("themeType");
 		$("#email").val(ds.getValue(0, "EMAIL"));
+		$("#telNumber").val(commonJs.getFormatString(ds.getValue(0, "TEL_NUMBER"), "?? ???? ????"));
+		$("#mobileNumber").val(commonJs.getFormatString(ds.getValue(0, "MOBILE_NUMBER"), "???? ??? ???"));
 		$("#defaultStartUrl").val(ds.getValue(0, "DEFAULT_START_URL"));
 		$("#maxRowsPerPage").val(ds.getValue(0, "MAX_ROW_PER_PAGE"));
 		commonJs.refreshBootstrapSelectbox("maxRowsPerPage");
@@ -416,8 +419,15 @@ $(function() {
 		}
 	});
 
+	setFieldFormat = function() {
+		commonJs.setFieldNumberMask("telNumber", "99 9999 9999");
+		commonJs.setFieldNumberMask("mobileNumber", "9999 999 999");
+	};
+
 	$(window).load(function() {
 		commonJs.setEvent("click", [$("#btnCloseUserDetail"), $("#btnCloseBankAccnt")], closeWindow);
+
+		setFieldFormat();
 
 		commonJs.setAutoComplete($("#orgName"), {
 			method:"getOrgId",
@@ -436,6 +446,7 @@ $(function() {
 
 		toggleTabStatus();
 		setSelectboxForUserDetailTab();
+
 		loadUserDetail();
 	});
 });

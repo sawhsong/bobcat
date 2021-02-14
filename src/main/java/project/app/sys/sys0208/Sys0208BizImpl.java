@@ -202,6 +202,8 @@ public class Sys0208BizImpl extends BaseBiz implements Sys0208Biz {
 			sysUser.setAuthGroupId(requestDataSet.getValue("authGroup"));
 			sysUser.setLanguage(requestDataSet.getValue("language"));
 			sysUser.setThemeType(requestDataSet.getValue("themeType"));
+			sysUser.setTelNumber(CommonUtil.remove(requestDataSet.getValue("telNumber"), " "));
+			sysUser.setMobileNumber(CommonUtil.remove(requestDataSet.getValue("mobileNumber"), " "));
 			sysUser.setEmail(requestDataSet.getValue("email"));
 			sysUser.setMaxRowPerPage(CommonUtil.toDouble(requestDataSet.getValue("maxRowsPerPage")));
 			sysUser.setPageNumPerPage(CommonUtil.toDouble(requestDataSet.getValue("pageNumsPerPage")));

@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String quotationId = requestDataSet.getValue("quotationId");
 %>
 <%/************************************************************************************************
 * HTML
@@ -27,6 +28,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
+var quotationId = "<%=quotationId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -44,9 +46,32 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea"></div>
+<div id="divSearchCriteriaArea" class="areaContainerPopup">
+	<table class="tblEdit">
+		<colgroup>
+			<col width="11%"/>
+			<col width="22%"/>
+			<col width="13%"/>
+			<col width="22%"/>
+			<col width="11%"/>
+			<col width="*"/>
+		</colgroup>
+		<tr>
+			<th class="thEdit rt">Quotation ID</th>
+			<td class="tdEdit"><ui:text name="quotationId" status="display"/></td>
+			<th class="thEdit rt mandatory">Quotation Number</th>
+			<td class="tdEdit"><ui:text name="quotationNumber" checkName="Quotation Number" options="mandatory"/></td>
+			<th class="thEdit rt mandatory">Issue Date</th>
+			<td class="tdEdit"><ui:text name="issueDate" className="Ct hor" style="width:90px" option="date"/><ui:icon id="icnIssueDate" className="fa-calendar hor"/></td>
+		</tr>
+	</table>
+</div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
@@ -58,6 +83,7 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
+
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************

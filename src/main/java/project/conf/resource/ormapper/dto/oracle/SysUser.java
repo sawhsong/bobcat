@@ -51,8 +51,12 @@ public class SysUser extends BaseDto implements Serializable {
 	private String INSERT_DATE;
 	private String insertUserId;
 	private String INSERT_USER_ID;
+	private String mobileNumber;
+	private String MOBILE_NUMBER;
 	private String photoPath;
 	private String PHOTO_PATH;
+	private String telNumber;
+	private String TEL_NUMBER;
 	private Date updateDate;
 	private String UPDATE_DATE;
 	private String updateUserId;
@@ -249,6 +253,15 @@ public class SysUser extends BaseDto implements Serializable {
 		setValueFromAccessor("INSERT_USER_ID", insertUserId);
 	}
 
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) throws Exception {
+		this.mobileNumber = mobileNumber;
+		setValueFromAccessor("MOBILE_NUMBER", mobileNumber);
+	}
+
 	public String getPhotoPath() {
 		return photoPath;
 	}
@@ -256,6 +269,15 @@ public class SysUser extends BaseDto implements Serializable {
 	public void setPhotoPath(String photoPath) throws Exception {
 		this.photoPath = photoPath;
 		setValueFromAccessor("PHOTO_PATH", photoPath);
+	}
+
+	public String getTelNumber() {
+		return telNumber;
+	}
+
+	public void setTelNumber(String telNumber) throws Exception {
+		this.telNumber = telNumber;
+		setValueFromAccessor("TEL_NUMBER", telNumber);
 	}
 
 	public Date getUpdateDate() {
@@ -428,7 +450,9 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "email : "+email+"\n";
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
+		str += "mobileNumber : "+mobileNumber+"\n";
 		str += "photoPath : "+photoPath+"\n";
+		str += "telNumber : "+telNumber+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
 		str += "insertUserName : "+insertUserName+"\n";
@@ -460,7 +484,9 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "<column name=\"email\" value=\""+email+"\">";
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
+		str += "<column name=\"mobileNumber\" value=\""+mobileNumber+"\">";
 		str += "<column name=\"photoPath\" value=\""+photoPath+"\">";
+		str += "<column name=\"telNumber\" value=\""+telNumber+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
 		str += "<column name=\"insertUserName\" value=\""+insertUserName+"\">";
@@ -492,7 +518,9 @@ public class SysUser extends BaseDto implements Serializable {
 		str += "\"email\":\""+email+"\", ";
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
+		str += "\"mobileNumber\":\""+mobileNumber+"\", ";
 		str += "\"photoPath\":\""+photoPath+"\", ";
+		str += "\"telNumber\":\""+telNumber+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";
 		str += "\"insertUserName\":\""+insertUserName+"\", ";

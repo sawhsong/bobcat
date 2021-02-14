@@ -26,7 +26,9 @@
 		<property name="email" column="EMAIL" type="java.lang.String" length="100"/>
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="mobileNumber" column="MOBILE_NUMBER" type="java.lang.String" length="15"/>
 		<property name="photoPath" column="PHOTO_PATH" type="java.lang.String" length="2000"/>
+		<property name="telNumber" column="TEL_NUMBER" type="java.lang.String" length="15"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 	</class>
@@ -50,7 +52,9 @@
 		       EMAIL,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
+		       MOBILE_NUMBER,
 		       PHOTO_PATH,
+		       TEL_NUMBER,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
 		  FROM SYS_USER
@@ -82,7 +86,9 @@
 		       EMAIL,
 		       INSERT_DATE,
 		       INSERT_USER_ID,
+		       MOBILE_NUMBER,
 		       PHOTO_PATH,
+		       TEL_NUMBER,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
 		       )
@@ -104,7 +110,9 @@
 		       ${EMAIL},
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
+		       ${MOBILE_NUMBER},
 		       ${PHOTO_PATH},
+		       ${TEL_NUMBER},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
 		       )
@@ -130,7 +138,9 @@
 		       EMAIL = ${EMAIL},
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       MOBILE_NUMBER = ${MOBILE_NUMBER},
 		       PHOTO_PATH = ${PHOTO_PATH},
+		       TEL_NUMBER = ${TEL_NUMBER},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}
 		 WHERE 1 = 1

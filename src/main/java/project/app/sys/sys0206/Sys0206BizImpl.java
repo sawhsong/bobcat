@@ -126,6 +126,9 @@ public class Sys0206BizImpl extends BaseBiz implements Sys0206Biz {
 			sysOrg.setLegalName(CommonUtil.replace(requestDataSet.getValue("legalName"), "||", "&"));
 			sysOrg.setTradingName(CommonUtil.replace(requestDataSet.getValue("tradingName"), "||", "&"));
 			sysOrg.setAbn(CommonUtil.remove(requestDataSet.getValue("abn"), " "));
+			sysOrg.setAcn(CommonUtil.remove(requestDataSet.getValue("acn"), " "));
+			sysOrg.setTelNumber(CommonUtil.remove(requestDataSet.getValue("telNumber"), " "));
+			sysOrg.setMobileNumber(CommonUtil.remove(requestDataSet.getValue("mobileNumber"), " "));
 			sysOrg.setEmail(requestDataSet.getValue("email"));
 			sysOrg.setAddress(requestDataSet.getValue("address"));
 			sysOrg.setRegisteredDate(CommonUtil.toDate(requestDataSet.getValue("registeredDate"), dateFormat));

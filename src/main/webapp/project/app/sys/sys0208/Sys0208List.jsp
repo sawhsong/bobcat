@@ -61,18 +61,28 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="10%"/>
-			<col width="23%"/>
-			<col width="8%"/>
-			<col width="23%"/>
-			<col width="10%"/>
-			<col width="24%"/>
+			<col width="6%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="20%"/>
+			<col width="6%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.name"/></th>
-			<td class="tdSearch"><ui:text name="userName" style="width:300px"/></td>
+			<td class="tdSearch"><ui:text name="userName" style="width:90%"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.id"/></th>
-			<td class="tdSearch"><ui:text name="loginId" style="width:200px"/></td>
+			<td class="tdSearch"><ui:text name="loginId" style="width:90%"/></td>
+			<th class="thSearch rt"><mc:msg key="sys0208.search.active"/></th>
+			<td class="tdSearch"><ui:ccselect name="isActive" codeType="IS_ACTIVE" caption="==Select=="/></td>
+			<th class="thSearch rt">Telephone</th>
+			<td class="tdSearch"><ui:text name="telNumber" style="width:90%"/></td>
+		</tr>
+		<tr>
+			<th class="thSearch rt">Organisation</th>
+			<td class="tdSearch"><ui:hidden name="orgId"/><ui:text name="orgName" style="width:90%"/></td>
 			<th class="thSearch rt"><mc:msg key="sys0208.search.auth"/></th>
 			<td class="tdSearch">
 				<ui:select name="authGroup">
@@ -86,14 +96,10 @@
 %>
 				</ui:select>
 			</td>
-		</tr>
-		<tr>
-			<th class="thSearch rt">Organisation</th>
-			<td class="tdSearch"><ui:hidden name="orgId"/><ui:text name="orgName" style="width:300px"/></td>
-			<th class="thSearch rt"><mc:msg key="sys0208.search.active"/></th>
-			<td class="tdSearch"><ui:ccselect name="isActive" codeType="IS_ACTIVE" caption="==Select=="/></td>
-			<th class="thSearch rt"><mc:msg key="sys0208.search.status"/></th>
-			<td class="tdSearch"><ui:ccselect name="userStatus" codeType="USER_STATUS" caption="==Select=="/></td>
+			<th class="thSearch rt">Mobile</th>
+			<td class="tdSearch"><ui:text name="mobileNumber" style="width:90%"/></td>
+			<th class="thSearch rt">Email</th>
+			<td class="tdSearch"><ui:text name="email" style="width:90%"/></td>
 		</tr>
 	</table>
 </div>
@@ -115,9 +121,10 @@
 			<col width="*"/>
 			<col width="7%"/>
 			<col width="18%"/>
-			<col width="17%"/>
 			<col width="7%"/>
-			<col width="9%"/>
+			<col width="7%"/>
+			<col width="17%"/>
+			<col width="10%"/>
 			<col width="5%"/>
 			<col width="8%"/>
 		</colgroup>
@@ -128,8 +135,9 @@
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.userName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.loginId"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0208.grid.orgName"/></th>
+				<th class="thGrid">Telephone</th>
+				<th class="thGrid">Mobile</th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.email"/></th>
-				<th class="thGrid">Bank Account</th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.authGroup"/></th>
 				<th class="thGrid"><mc:msg key="sys0208.grid.active"/></th>
 				<th class="thGrid">Last Updated Date</th>
@@ -137,7 +145,7 @@
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="10"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="11"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

@@ -96,13 +96,16 @@
 			<col width="2%"/>
 			<col width="2%"/>
 			<col width="*"/>
-			<col width="12%"/>
+			<col width="11%"/>
 			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="16%"/>
 			<col width="3%"/>
 			<col width="9%"/>
 			<col width="9%"/>
-			<col width="14%"/>
 			<col width="5%"/>
+			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
@@ -111,16 +114,19 @@
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.legalName"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.tradingName"/></th>
 				<th class="thGrid"><mc:msg key="sys0206.grid.abn"/></th>
+				<th class="thGrid">Telephone</th>
+				<th class="thGrid">Mobile</th>
+				<th class="thGrid">Email</th>
 				<th class="thGrid"><mc:msg key="sys0206.grid.users"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.entityType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0206.grid.bizType"/></th>
-				<th class="thGrid">Email</th>
 				<th class="thGrid sortable:date"><mc:msg key="sys0206.grid.regDate"/></th>
+				<th class="thGrid">Is Active</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGridCt" colspan="10"><mc:msg key="I002"/></td>
+				<td class="tdGridCt" colspan="13"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

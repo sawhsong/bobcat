@@ -86,18 +86,21 @@ $(function() {
 
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "TRADING_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "TEL_NUMBER"), "?? ???? ????")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "MOBILE_NUMBER"), "???? ??? ???")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "EMAIL")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "USER_CNT"), "#,###")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ENTITY_TYPE_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "BUSINESS_TYPE_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "EMAIL")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "REGISTERED_DATE")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "IS_ACTIVE")));
 
 				html += gridTr.toHtmlString();
 			}
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:10").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:13").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -132,7 +135,7 @@ $(function() {
 		if (param.mode == "Insert" || param.mode == "Update") {
 			url = "/sys/0206/getEdit.do";
 			header = com.header.popHeaderEdit;
-			width = 1000; height = 560;
+			width = 1000; height = 600;
 		}
 
 		var popParam = {
