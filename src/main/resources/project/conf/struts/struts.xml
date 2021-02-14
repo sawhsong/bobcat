@@ -8,4 +8,5 @@
     <include file="project/conf/struts/struts-project-app-bau.xml"/>
     <include file="project/conf/struts/struts-project-app-bst.xml"/>
     <include file="project/conf/struts/struts-project-app-bsa.xml"/>
+    <include file="project/conf/struts/struts-project-app-ads.xml"/>
 </struts>

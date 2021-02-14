@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <!--Ads0202 - Quote Management-->
+    <bean class="${name.package.project}.app.ads.ads0202.Ads0202Action" id="ads0202Action" name="ads0202Action"/>
+    <bean class="${name.package.project}.app.ads.ads0202.Ads0202BizImpl" id="ads0202Biz" name="ads0202Biz" parent="baseBiz"/>
+    <!--Ads0204 - Invoice Management-->
+    <bean class="${name.package.project}.app.ads.ads0204.Ads0204Action" id="ads0204Action" name="ads0204Action"/>
+    <bean class="${name.package.project}.app.ads.ads0204.Ads0204BizImpl" id="ads0204Biz" name="ads0204Biz" parent="baseBiz"/>
+</beans>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="ads" namespace="/ads" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Ads0202 - Quote Management-->
+        <action class="project.app.ads.ads0202.Ads0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/ads/ads0202/Ads0202List.jsp</result>
+            <result name="edit" type="debugDispatcherResult">/project/app/ads/ads0202/Ads0202EditPop.jsp</result>
+        </action>
+        <!--Ads0204 - Invoice Management-->
+        <action class="project.app.ads.ads0204.Ads0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/ads/ads0204/Ads0204List.jsp</result>
+            <result name="edit" type="debugDispatcherResult">/project/app/ads/ads0204/Ads0204EditPop.jsp</result>
+        </action>
+    </package>
+</struts>
