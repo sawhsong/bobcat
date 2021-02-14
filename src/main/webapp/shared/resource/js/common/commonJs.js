@@ -122,6 +122,7 @@ var commonJs = {
 	getUiRadio : function(params) {return uiElements.getUiRadio(params);},
 	getUiSelectOption : function(params) {return uiElements.getUiSelectOption(params);},
 	getUiSelectOptionWithCommonCode : function(params) {return uiElements.getUiSelectOptionWithCommonCode(params);},
+	getUiImage : function(params) {return uiElements.getUiImage(params);},
 	/*!
 	 * controlling file elements
 	 */

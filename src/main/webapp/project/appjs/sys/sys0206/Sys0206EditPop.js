@@ -84,7 +84,12 @@ $(function() {
 			if ($("#imgOrgLogo").length > 0) {
 				$("#imgOrgLogo").remove();
 			}
-			$("#tdOrgLogo").append("<img id=\"imgOrgLogo\" src=\""+ds.getValue(0, "LOGO_PATH")+"\" class=\"imgDis\" style=\"width:250px;height:80px;\"/>");
+			$("#tdOrgLogo").append(commonJs.getUiImage({
+				id:"imgOrgLogo",
+				src:ds.getValue(0, "LOGO_PATH"),
+				idDisabled:true,
+				style:"width:250px;height:80px;"
+			}));
 		}
 
 		$("#logoPath").val("");

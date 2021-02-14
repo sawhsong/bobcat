@@ -32,6 +32,33 @@ public class Ads0202Action extends BaseAction {
 		return "edit";
 	}
 
+	public String getQuotationNumber() throws Exception {
+		try {
+			biz.getQuotationNumber(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getMyInfo() throws Exception {
+		try {
+			biz.getMyInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getOrgInfo() throws Exception {
+		try {
+			biz.getOrgInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String doSave() throws Exception {
 		try {
 			biz.doSave(paramEntity);

@@ -5,6 +5,8 @@
  *************************************************************************************************/
 package project.app.ads.ads0202;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,16 @@ import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
+import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
+import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
+	@Autowired
+	private SysUserDao sysUserDao;
+	@Autowired
+	private SysOrgDao sysOrgDao;
+
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -37,6 +46,8 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
 
 		try {
 			queryAdvisor.setPagination(true);
@@ -54,6 +65,51 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 
 		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getQuotationNumber(ParamEntity paramEntity) throws Exception {
+		DataSet ds = new DataSet();
+		String prefix = "QN-";
+		Random random = new Random();
+		String uid = CommonUtil.uid();
+		String randomNumber1 = CommonUtil.substring(uid, 7, 11);
+		String randomNumber2 = CommonUtil.leftPad(CommonUtil.toString(random.nextInt(9999)), 4, "0");
+
+		try {
+			ds.addRow();
+			ds.addColumn("Number", prefix+randomNumber1+randomNumber2);
+			paramEntity.setAjaxResponseDataSet(ds);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getMyInfo(ParamEntity paramEntity) throws Exception {
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(sysUserDao.getUserInfoDataSetByUserId(userId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getOrgInfo(ParamEntity paramEntity) throws Exception {
+		HttpSession session = paramEntity.getSession();
+		String orgId = (String)session.getAttribute("OrgId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(sysOrgDao.getDataSetByOrgId(orgId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);

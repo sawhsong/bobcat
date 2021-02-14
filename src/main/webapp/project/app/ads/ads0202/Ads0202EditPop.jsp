@@ -10,6 +10,7 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	String quotationId = requestDataSet.getValue("quotationId");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
 %>
 <%/************************************************************************************************
 * HTML
@@ -47,9 +48,9 @@ var quotationId = "<%=quotationId%>";
 	<div id="divButtonAreaLeft">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnBringMyInfo" caption="Bring My Info" iconClass="fa-reply-all"/>
-			<ui:button id="btnDiscardMyInfo" caption="Discard My Info" iconClass="fa-trash"/>
 			<ui:button id="btnBringOrgInfo" caption="Bring Org Info" iconClass="fa-reply-all"/>
-			<ui:button id="btnDiscardOrgInfo" caption="Discard Org Info" iconClass="fa-trash"/>
+			<ui:button id="btnDiscardBasicInfo" caption="Discard Basic Info" iconClass="fa-trash"/>
+			<ui:button id="btnPreviewLogo" caption="Preview Logo" iconClass="fa-file-image-o"/>
 			<ui:button id="btnRemoveLogo" caption="Remove Logo" iconClass="fa-trash"/>
 		</ui:buttonGroup>
 	</div>
@@ -80,15 +81,18 @@ var quotationId = "<%=quotationId%>";
 			<th class="thEdit rt mandatory">Number</th>
 			<td class="tdEdit"><ui:text name="quotationNumber" checkName="Quotation Number" options="mandatory"/></td>
 			<th class="thEdit rt mandatory">Issue Date</th>
-			<td class="tdEdit"><ui:text name="issueDate" className="Ct hor" style="width:90px" option="date"/><ui:icon id="icnIssueDate" className="fa-calendar hor"/></td>
+			<td class="tdEdit">
+				<ui:text name="issueDate" className="Ct hor" value="<%=CommonUtil.getSysdate(dateFormat)%>" style="width:90px" option="date"/>
+				<ui:icon id="icnIssueDate" className="fa-calendar hor"/>
+			</td>
 		</tr>
 		<tr>
 			<th class="thEdit rt">Organisation</th>
 			<td class="tdEdit"><ui:hidden name="providerOrgId"/><ui:text name="providerOrgName"/></td>
 			<th class="thEdit rt">ABN</th>
-			<td class="tdEdit"><ui:text name="providerABN"/></td>
+			<td class="tdEdit"><ui:text name="providerAbn"/></td>
 			<th class="thEdit rt">ACN</th>
-			<td class="tdEdit"><ui:text name="providerACN"/></td>
+			<td class="tdEdit"><ui:text name="providerAcn"/></td>
 		</tr>
 		<tr>
 			<th class="thEdit rt mandatory">Name</th>

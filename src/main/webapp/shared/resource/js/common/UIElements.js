@@ -185,5 +185,40 @@ var uiElements = {
 				$("#"+id).selectpicker("render");
 			}
 		});
+	},
+	getUiImage : function(params) {
+		/*
+		 * id
+		 * src
+		 * className
+		 * isDisabled
+		 * attribute
+		 * style
+		 */
+
+		var html = "", attrString = "", attrs = new Array(), attr = new Array();
+		var className = (params.isDisabled == true) ? "imgDis" : "imgEn";
+
+		if ($.nony.isNotBlank(params.attribute)) {
+			attrs = params.attribute.split(";");
+			for (var i=0; i<attrs.length; i++) {
+				attr = attrs[i].split(":");
+				attrString += " "+attr[0]+"=\""+attr[1]+"\"";
+			}
+		}
+
+		className = $.nony.isNotBlank(params.className) ? className+" "+params.className : className;
+
+		html += "<img"+" "+className;
+
+		if ($.nony.isNotBlank(params.id)) {html += " id=\""+params.id+"\"";}
+		if ($.nony.isNotBlank(params.src)) {html += " src=\""+params.src+"\"";}
+		if ($.nony.isNotBlank(params.style)) {html += " style=\""+params.style+"\"";}
+		if ($.nony.isNotBlank(attrString)) {html += " "+attrString+"";}
+		if ($.nony.toBoolean(params.isDisabled)) {html += " disabled";}
+
+		html += "/>";
+
+		return html;
 	}
 };
