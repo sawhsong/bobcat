@@ -31,7 +31,7 @@ $(function() {
 			url:"/ads/0202/getEdit.do",
 			data:{quotationId:quotationId},
 			header:"Quotation Edit",
-			width:1200,
+			width:1400,
 			height:900
 		});
 	};
