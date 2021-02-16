@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_QUOTATION - Quotation info for additioanl user service
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrQuotation" table="USR_QUOTATION" lazy="false">
+		<meta attribute="class-description" inherit="false">Quotation info for additioanl user service</meta>
+
+		<id name="quotationId" column="QUOTATION_ID" type="java.lang.String" length="30"></id>
+
+		<property name="issueDate" column="ISSUE_DATE" not-null="true" type="java.util.Date"/>
+		<property name="quotationNumber" column="QUOTATION_NUMBER" not-null="true" type="java.lang.String" length="30"/>
+		<property name="userId" column="USER_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="additionalRemark" column="ADDITIONAL_REMARK" type="java.lang.String" length="4000"/>
+		<property name="clientAddress" column="CLIENT_ADDRESS" type="java.lang.String" length="300"/>
+		<property name="clientEmail" column="CLIENT_EMAIL" type="java.lang.String" length="100"/>
+		<property name="clientMobile" column="CLIENT_MOBILE" type="java.lang.String" length="15"/>
+		<property name="clientName" column="CLIENT_NAME" type="java.lang.String" length="50"/>
+		<property name="clientOrgId" column="CLIENT_ORG_ID" type="java.lang.String" length="30"/>
+		<property name="clientTelephone" column="CLIENT_TELEPHONE" type="java.lang.String" length="15"/>
+		<property name="clientUserId" column="CLIENT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="gstAmt" column="GST_AMT" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="netAmt" column="NET_AMT" type="java.lang.Double"/>
+		<property name="providerAbn" column="PROVIDER_ABN" type="java.lang.String" length="15"/>
+		<property name="providerAcn" column="PROVIDER_ACN" type="java.lang.String" length="15"/>
+		<property name="providerAddress" column="PROVIDER_ADDRESS" type="java.lang.String" length="300"/>
+		<property name="providerEmail" column="PROVIDER_EMAIL" type="java.lang.String" length="100"/>
+		<property name="providerLogoPath" column="PROVIDER_LOGO_PATH" type="java.lang.String" length="1000"/>
+		<property name="providerMobile" column="PROVIDER_MOBILE" type="java.lang.String" length="15"/>
+		<property name="providerName" column="PROVIDER_NAME" type="java.lang.String" length="50"/>
+		<property name="providerOrgId" column="PROVIDER_ORG_ID" type="java.lang.String" length="30"/>
+		<property name="providerTelephone" column="PROVIDER_TELEPHONE" type="java.lang.String" length="15"/>
+		<property name="totalAmt" column="TOTAL_AMT" type="java.lang.Double"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrQuotation.selectAll">
+	<![CDATA[
+		SELECT QUOTATION_ID,
+		       TO_CHAR(ISSUE_DATE, 'yyyymmddhh24miss') AS ISSUE_DATE,
+		       QUOTATION_NUMBER,
+		       USER_ID,
+		       ADDITIONAL_REMARK,
+		       CLIENT_ADDRESS,
+		       CLIENT_EMAIL,
+		       CLIENT_MOBILE,
+		       CLIENT_NAME,
+		       CLIENT_ORG_ID,
+		       CLIENT_TELEPHONE,
+		       CLIENT_USER_ID,
+		       DESCRIPTION,
+		       GST_AMT,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       PROVIDER_ABN,
+		       PROVIDER_ACN,
+		       PROVIDER_ADDRESS,
+		       PROVIDER_EMAIL,
+		       PROVIDER_LOGO_PATH,
+		       PROVIDER_MOBILE,
+		       PROVIDER_NAME,
+		       PROVIDER_ORG_ID,
+		       PROVIDER_TELEPHONE,
+		       TOTAL_AMT,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_QUOTATION
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotation.insert">
+	<![CDATA[
+		INSERT INTO USR_QUOTATION (
+		       QUOTATION_ID,
+		       ISSUE_DATE,
+		       QUOTATION_NUMBER,
+		       USER_ID,
+		       ADDITIONAL_REMARK,
+		       CLIENT_ADDRESS,
+		       CLIENT_EMAIL,
+		       CLIENT_MOBILE,
+		       CLIENT_NAME,
+		       CLIENT_ORG_ID,
+		       CLIENT_TELEPHONE,
+		       CLIENT_USER_ID,
+		       DESCRIPTION,
+		       GST_AMT,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       PROVIDER_ABN,
+		       PROVIDER_ACN,
+		       PROVIDER_ADDRESS,
+		       PROVIDER_EMAIL,
+		       PROVIDER_LOGO_PATH,
+		       PROVIDER_MOBILE,
+		       PROVIDER_NAME,
+		       PROVIDER_ORG_ID,
+		       PROVIDER_TELEPHONE,
+		       TOTAL_AMT,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${QUOTATION_ID},
+		       ${ISSUE_DATE},
+		       ${QUOTATION_NUMBER},
+		       ${USER_ID},
+		       ${ADDITIONAL_REMARK},
+		       ${CLIENT_ADDRESS},
+		       ${CLIENT_EMAIL},
+		       ${CLIENT_MOBILE},
+		       ${CLIENT_NAME},
+		       ${CLIENT_ORG_ID},
+		       ${CLIENT_TELEPHONE},
+		       ${CLIENT_USER_ID},
+		       ${DESCRIPTION},
+		       ${GST_AMT},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${NET_AMT},
+		       ${PROVIDER_ABN},
+		       ${PROVIDER_ACN},
+		       ${PROVIDER_ADDRESS},
+		       ${PROVIDER_EMAIL},
+		       ${PROVIDER_LOGO_PATH},
+		       ${PROVIDER_MOBILE},
+		       ${PROVIDER_NAME},
+		       ${PROVIDER_ORG_ID},
+		       ${PROVIDER_TELEPHONE},
+		       ${TOTAL_AMT},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotation.update">
+	<![CDATA[
+		UPDATE USR_QUOTATION
+		   SET ISSUE_DATE = ${ISSUE_DATE},
+		       QUOTATION_NUMBER = ${QUOTATION_NUMBER},
+		       USER_ID = ${USER_ID},
+		       ADDITIONAL_REMARK = ${ADDITIONAL_REMARK},
+		       CLIENT_ADDRESS = ${CLIENT_ADDRESS},
+		       CLIENT_EMAIL = ${CLIENT_EMAIL},
+		       CLIENT_MOBILE = ${CLIENT_MOBILE},
+		       CLIENT_NAME = ${CLIENT_NAME},
+		       CLIENT_ORG_ID = ${CLIENT_ORG_ID},
+		       CLIENT_TELEPHONE = ${CLIENT_TELEPHONE},
+		       CLIENT_USER_ID = ${CLIENT_USER_ID},
+		       DESCRIPTION = ${DESCRIPTION},
+		       GST_AMT = ${GST_AMT},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       NET_AMT = ${NET_AMT},
+		       PROVIDER_ABN = ${PROVIDER_ABN},
+		       PROVIDER_ACN = ${PROVIDER_ACN},
+		       PROVIDER_ADDRESS = ${PROVIDER_ADDRESS},
+		       PROVIDER_EMAIL = ${PROVIDER_EMAIL},
+		       PROVIDER_LOGO_PATH = ${PROVIDER_LOGO_PATH},
+		       PROVIDER_MOBILE = ${PROVIDER_MOBILE},
+		       PROVIDER_NAME = ${PROVIDER_NAME},
+		       PROVIDER_ORG_ID = ${PROVIDER_ORG_ID},
+		       PROVIDER_TELEPHONE = ${PROVIDER_TELEPHONE},
+		       TOTAL_AMT = ${TOTAL_AMT},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotation.updateColumns">
+	<![CDATA[
+		UPDATE USR_QUOTATION
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotation.delete">
+	<![CDATA[
+		DELETE USR_QUOTATION
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

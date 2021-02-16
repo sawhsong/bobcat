@@ -80,7 +80,7 @@ $(function() {
 	setOrgDetailInfo = function(ds) {
 		var logoPath = ds.getValue(0, "LOGO_PATH");
 
-		if (!commonJs.contains(logoPath, "DefaultLogo.png")) {
+		if (!commonJs.contains(logoPath, "/DefaultLogo.png")) {
 			if ($("#imgOrgLogo").length > 0) {
 				$("#imgOrgLogo").remove();
 			}

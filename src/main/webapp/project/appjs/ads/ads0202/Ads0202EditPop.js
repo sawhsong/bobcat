@@ -16,6 +16,69 @@ $(function() {
 //		parent.doSearch();
 	});
 
+	$("#btnSave").click(function(event) {
+		var isValid = true;
+		var elementsToCheck = [];
+		var detailLength = $("#ulDetailHolder .dummyDetail").length;
+		var fileValue = $("#providerLogoPath").val();
+
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
+		}
+
+		$("#liDummy").find(":input").each(function(index) {
+			$(this).removeAttr("mandatory");
+			$(this).removeAttr("option");
+		});
+
+		if (!commonJs.isEmpty(fileValue)) {
+			if (!commonJs.isUploadableImageFile($("#providerLogoPath"), fileValue)) {
+				return;
+			}
+		}
+
+		$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+			$(this).find(":input").each(function(index) {
+				var id = $(this).attr("id"), name = $(this).attr("name");
+
+				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
+				else {id = "";}
+
+				if (!commonJs.isEmpty(name)) {name = (name.indexOf(delimiter) != -1) ? name.substring(0, name.indexOf(delimiter)) : name;}
+				else {name = "";}
+
+				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+				elementsToCheck.push($(this).attr("id"));
+			});
+		});
+
+		if (!commonJs.doValidate("fmDefault")) {
+			isValid = false;
+			return;
+		}
+
+		if (elementsToCheck != null && elementsToCheck.length > 0 && !commonJs.doValidate(elementsToCheck)) {
+			isValid = false;
+			return;
+		}
+
+		if (isValid) {
+			commonJs.doSaveWithFile({
+				url:"/ads/0202/doSave.do",
+				data:{detailLength:detailLength},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+
+					quotationId = ds.getValue(0, "QUOTATION_ID");
+
+					loadMasterInfo();
+					loadDetailInfo();
+				}
+			});
+		}
+	});
+
 	$("#btnBringMyInfo").click(function() {
 		commonJs.showProcMessageOnElement("divFixedPanelPopup");
 
@@ -58,6 +121,26 @@ $(function() {
 		$("#providerTelephone").val("");
 		$("#providerMobile").val("");
 		$("#providerAddress").val("");
+		if ($("#imgLogo").length > 0) {
+			$("#imgLogo").remove();
+		}
+	});
+
+	$("#btnRemoveLogo").click(function() {
+		if ($("#imgLogo").length > 0) {
+			$("#imgLogo").remove();
+		}
+
+		if (!commonJs.isBlank(quotationId)) {
+			commonJs.doSimpleProcess({
+				url:"/ads/0202/doRemoveLogo.do",
+				noForm:true,
+				data:{quotationId:quotationId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+				}
+			});
+		}
 	});
 
 	$("#icnIssueDate").click(function(event) {
@@ -78,10 +161,69 @@ $(function() {
 		}
 	};
 
+	$("#btnAdd").click(function(event) {
+		var elem = $("#liDummy").clone(), elemId = $(elem).attr("id");
+
+		$(elem).css("display", "block").appendTo($("#ulDetailHolder"));
+
+		$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+			$(this).attr("index", groupIndex).attr("id", elemId+delimiter+groupIndex);
+
+			$(this).find("i").each(function(index) {
+				var id = $(this).attr("id"), id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;
+				$(this).attr("index", groupIndex).attr("id", id+delimiter+groupIndex);
+			});
+
+			$(this).find(".deleteButton").each(function(index) {
+				var id = $(this).attr("id"), id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;
+				$(this).attr("index", groupIndex).attr("id", id+delimiter+groupIndex);
+			});
+
+			$(this).find("input, select").each(function(index) {
+				var id = $(this).attr("id"), name = $(this).attr("name");
+
+				if (!commonJs.isEmpty(id)) {id = (id.indexOf(delimiter) != -1) ? id.substring(0, id.indexOf(delimiter)) : id;}
+				else {id = "";}
+
+				if (!commonJs.isEmpty(name)) {name = (name.indexOf(delimiter) != -1) ? name.substring(0, name.indexOf(delimiter)) : name;}
+				else {name = "";}
+
+				$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+				if ($(this).is("select")) {
+					setSelectboxForBankAccountTab($(this));
+				}
+
+				if (commonJs.contains(name, "rowIndex")) {
+					$(this).val(groupIndex + 1);
+				}
+
+				if (commonJs.contains(id, "unit") || commonJs.contains(id, "price") || commonJs.contains(id, "amount")) {
+					$(this).number(true, 2);
+				}
+			});
+		});
+
+		setGridHeader();
+	});
+
+	setGridHeader = function() {
+		$("#tblGrid").fixedHeaderTable({
+			attachTo:$("#divGridWrapper")
+		});
+	};
+
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
 		if (code == 13) {}
 		if (code == 9) {}
+	});
+
+	$(document).keyup(function(event) {
+		var code = event.keyCode || event.which, element = event.target;
+		if (code == 9) {}
+		if (code == 13) {}
+		onEditDataEntry($(element));
 	});
 	/*!
 	 * process
@@ -97,6 +239,9 @@ $(function() {
 		$("#netAmt").number(true, 2);
 		$("#gstAmt").number(true, 2);
 		$("#totalAmt").number(true, 2);
+		$("#unit").number(true, 2);
+		$("#price").number(true, 2);
+		$("#amount").number(true, 2);
 	};
 
 	setMyInfo = function(ds) {
@@ -105,19 +250,37 @@ $(function() {
 		$("#providerTelephone").val(commonJs.getFormatString(ds.getValue(0, "TEL_NUMBER"), "?? ???? ????"));
 		$("#providerMobile").val(commonJs.getFormatString(ds.getValue(0, "MOBILE_NUMBER"), "???? ??? ???"));
 
+		if ($("#imgLogo").length > 0) {
+			$("#imgLogo").remove();
+		}
+
 		commonJs.hideProcMessageOnElement("divFixedPanelPopup");
 	};
 
 	setOrgInfo = function(ds) {
+		var logoPath = ds.getValue(0, "LOGO_PATH");
+
 		$("#providerOrgId").val(ds.getValue(0, "ORG_ID"));
 		$("#providerOrgName").val(ds.getValue(0, "LEGAL_NAME"));
 		$("#providerName").val(ds.getValue(0, "LEGAL_NAME"));
 		$("#providerAbn").val(commonJs.getFormatString(ds.getValue(0, "ABN"), "?? ??? ??? ???"));
 		$("#providerAcn").val(commonJs.getFormatString(ds.getValue(0, "ACN"), "??? ??? ???"));
 		$("#providerEmail").val(ds.getValue(0, "EMAIL"));
-		$("#providerTelephone").val(ds.getValue(0, "TEL_NUMBER"));
-		$("#providerMobile").val(ds.getValue(0, "MOBILE_NUMBER"));
+		$("#providerTelephone").val(commonJs.getFormatString(ds.getValue(0, "TEL_NUMBER"), "?? ???? ????"));
+		$("#providerMobile").val(commonJs.getFormatString(ds.getValue(0, "MOBILE_NUMBER"), "???? ??? ???"));
 		$("#providerAddress").val(ds.getValue(0, "ADDRESS"));
+
+		if (!commonJs.contains(logoPath, "/DefaultLogo.png")) {
+			if ($("#imgLogo").length > 0) {
+				$("#imgLogo").remove();
+			}
+			$("#tdLogo").append(commonJs.getUiImage({
+				id:"imgLogo",
+				src:logoPath,
+				idDisabled:true,
+				style:"width:250px;height:80px;"
+			}));
+		}
 
 		commonJs.hideProcMessageOnElement("divFixedPanelPopup");
 	};
@@ -181,11 +344,74 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divDataArea");
 	};
 
+	setSortable = function() {
+		$("#ulDetailHolder").sortable({
+			axis:"y",
+			handle:".dragHandler",
+			stop:function() {
+				$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+					$(this).find("input").each(function(index) {
+						var id = $(this).attr("id"), name = $(this).attr("name");
+
+						$(this).attr("id", id+delimiter+groupIndex).attr("name", name+delimiter+groupIndex);
+
+						if (commonJs.contains(name, "rowIndex")) {
+							$(this).val(groupIndex + 1);
+						}
+					});
+				});
+			}
+		});
+
+		$("#ulDetailHolder").disableSelection();
+	};
+
+	onEditDataEntry = function(jqObj) {
+		var name = $(jqObj).attr("name");
+
+		if (commonJs.contains(name, "unit") || commonJs.contains(name, "price")) {
+			var suffix = name.substring(name.indexOf(delimiter));
+			var unit = commonJs.toNumber($("#unit"+suffix).val());
+			var price = commonJs.toNumber($("#price"+suffix).val());
+			var netAmt = 0;
+
+			$("#amount"+suffix).val(unit * price);
+
+			$("#ulDetailHolder").find(".dummyDetail").each(function(groupIndex) {
+				$(this).find("input").each(function(index) {
+					var id = $(this).attr("id"), name = $(this).attr("name");
+					if (commonJs.contains(name, "amount")) {
+						netAmt += commonJs.toNumber($(this).val());
+					}
+				});
+			});
+
+			$("#netAmt").val(netAmt);
+			$("#totalAmt").val(commonJs.toNumber($("#netAmt").val()) + commonJs.toNumber($("#gstAmt").val()));
+		}
+
+		if (commonJs.contains(name, "netAmt") || commonJs.contains(name, "gstAmt")) {
+			var netAmt = commonJs.toNumber($("#netAmt").val());
+			var gstAmt = commonJs.toNumber($("#gstAmt").val());
+			$("#totalAmt").val(netAmt + gstAmt);
+		}
+	};
 	/*!
 	 * load event (document / window)
 	 */
+	
 	$(document).click(function(event) {
 		var obj = event.target;
+
+		if ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton")) {
+			$("#ulDetailHolder").find(".dummyDetail").each(function(index) {
+				if ($(this).attr("index") == $(obj).attr("index")) {
+					$(this).remove();
+				}
+
+				setGridHeader();
+			});
+		}
 
 		if ($(obj).is($("input:text")) && $(obj).hasClass("txtEn")) {
 			$(obj).select();
@@ -194,9 +420,10 @@ $(function() {
 
 	$(window).load(function() {
 		commonJs.setEvent("blur", [$("#providerOrgName")], clearValueOnBlur);
-		$("#btnBringMyInfo").trigger("click");
 		setFieldFormat();
+		setSortable();
 		setTimeout(function() {
+			$("#btnBringMyInfo").trigger("click");
 			loadQuotationNumber();
 			loadMasterInfo();
 			loadDetailInfo();

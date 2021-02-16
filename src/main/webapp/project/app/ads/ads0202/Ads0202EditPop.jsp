@@ -26,6 +26,13 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.thGrid {border-bottom:0px;}
+.tblGrid tr:not(.default):not(.active):not(.info):not(.success):not(.warning):not(.danger):hover td {background:#FFFFFF;}
+#liDummy {display:none;}
+#divDataArea.areaContainerPopup {padding-top:0px;}
+.dummyDetail {list-style:none;}
+.dragHandler, .dragHandler > i {cursor:move;}
+.deleteButton {cursor:pointer;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -50,7 +57,6 @@ var quotationId = "<%=quotationId%>";
 			<ui:button id="btnBringMyInfo" caption="Bring My Info" iconClass="fa-reply-all"/>
 			<ui:button id="btnBringOrgInfo" caption="Bring Org Info" iconClass="fa-reply-all"/>
 			<ui:button id="btnDiscardBasicInfo" caption="Discard Basic Info" iconClass="fa-trash"/>
-			<ui:button id="btnPreviewLogo" caption="Preview Logo" iconClass="fa-file-image-o"/>
 			<ui:button id="btnRemoveLogo" caption="Remove Logo" iconClass="fa-trash"/>
 		</ui:buttonGroup>
 	</div>
@@ -75,7 +81,7 @@ var quotationId = "<%=quotationId%>";
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<td class="tdEdit" colspan="2" rowspan="3"></td>
+			<td class="tdEdit" colspan="2" rowspan="3" id="tdLogo"></td>
 			<th class="thEdit rt">Quotation ID</th>
 			<td class="tdEdit"><ui:text name="quotationId" status="display"/></td>
 			<th class="thEdit rt mandatory">Number</th>
@@ -149,8 +155,8 @@ var quotationId = "<%=quotationId%>";
 				<col width="*"/>
 			</colgroup>
 			<tr>
-				<th class="thInform rt mandatory">Net Amount</th>
-				<td class="tdInform"><ui:text name="netAmt" checkName="Net Amount" className="Rt numeric" option="numeric" options="mandatory"/></td>
+				<th class="thInform rt">Net Amount</th>
+				<td class="tdInform"><ui:text name="netAmt" checkName="Net Amount" className="Rt numeric" option="numeric"/></td>
 				<th class="thInform rt">Description</th>
 				<td class="tdInform"><ui:text name="description"/></td>
 			</tr>
@@ -162,7 +168,7 @@ var quotationId = "<%=quotationId%>";
 			</tr>
 			<tr>
 				<th class="thInform rt">Total Amount</th>
-				<td class="tdInform"><ui:text name="totalAmt" checkName="Total Amount" className="Rt numeric" option="numeric" options="mandatory"/></td>
+				<td class="tdInform"><ui:text name="totalAmt" checkName="Total Amount" className="Rt numeric" option="numeric" status="disabled"/></td>
 			</tr>
 		</table>
 	</div>
@@ -190,15 +196,17 @@ var quotationId = "<%=quotationId%>";
 	<div id="divGridWrapper">
 		<table id="tblGrid" class="tblGrid">
 			<colgroup>
-				<col width="3%"/>
-				<col width="7%"/>
-				<col width="11%"/>
-				<col width="11%"/>
-				<col width="14%"/>
+				<col width="2%"/>
+				<col width="2%"/>
+				<col width="6%"/>
+				<col width="10%"/>
+				<col width="10%"/>
+				<col width="12%"/>
 				<col width="*"/>
 			</colgroup>
 			<thead>
 				<tr>
+					<th class="thGrid"></th>
 					<th class="thGrid"></th>
 					<th class="thGrid">Row No.</th>
 					<th class="thGrid mandatory">Unit</th>
@@ -209,7 +217,7 @@ var quotationId = "<%=quotationId%>";
 			</thead>
 			<tbody id="tblGridBody">
 				<tr class="noStripe">
-					<td colspan="6" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
+					<td colspan="7" style="padding:0px;border-top:0px"><ul id="ulDetailHolder"></ul></td>
 				</tr>
 			</tbody>
 		</table>
@@ -224,6 +232,28 @@ var quotationId = "<%=quotationId%>";
 <%/************************************************************************************************
 * Additional Elements
 ************************************************************************************************/%>
+<li id="liDummy" class="dummyDetail">
+	<table class="tblGrid" style="border:0px">
+		<colgroup>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="6%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="12%"/>
+			<col width="*"/>
+		</colgroup>
+		<tr class="noBorderAll">
+			<th id="thDragHander" class="thGrid dragHandler"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
+			<th id="thDeleteButton" class="thGrid deleteButton"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
+			<td class="tdGrid Lt"><ui:hidden name="quotationDId"/><ui:text name="rowIndex" className="Ct" status="disabled"/></td>
+			<td class="tdGrid Ct"><ui:text name="unit" className="Rt" checkName="Unit" options="mandatory" option="numeric"/></td>
+			<td class="tdGrid Ct"><ui:text name="price" className="Rt" checkName="Price" options="mandatory" option="numeric"/></td>
+			<td class="tdGrid Ct"><ui:text name="amount" className="Rt" checkName="Amount" options="mandatory" option="numeric" status="disabled"/></td>
+			<td class="tdGrid Ct"><ui:text name="description" className="Lt"/></td>
+		</tr>
+	</table>
+</li>
 </form>
 <%/************************************************************************************************
 * Additional Form

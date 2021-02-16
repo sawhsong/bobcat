@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_INVOICE_D - Invoice detail info
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrInvoiceD" table="USR_INVOICE_D" lazy="false">
+		<meta attribute="class-description" inherit="false">Invoice detail info</meta>
+
+		<id name="invoiceDId" column="INVOICE_D_ID" type="java.lang.String" length="30"></id>
+
+		<property name="invoiceId" column="INVOICE_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="rowIndex" column="ROW_INDEX" not-null="true" type="java.lang.Double"/>
+		<property name="amtPerUnit" column="AMT_PER_UNIT" type="java.lang.Double"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="itemAmt" column="ITEM_AMT" type="java.lang.Double"/>
+		<property name="unit" column="UNIT" type="java.lang.Double"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrInvoiceD.selectAll">
+	<![CDATA[
+		SELECT INVOICE_ID,
+		       INVOICE_D_ID,
+		       ROW_INDEX,
+		       AMT_PER_UNIT,
+		       DESCRIPTION,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       ITEM_AMT,
+		       UNIT,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_INVOICE_D
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrInvoiceD.insert">
+	<![CDATA[
+		INSERT INTO USR_INVOICE_D (
+		       INVOICE_ID,
+		       INVOICE_D_ID,
+		       ROW_INDEX,
+		       AMT_PER_UNIT,
+		       DESCRIPTION,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       ITEM_AMT,
+		       UNIT,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${INVOICE_ID},
+		       ${INVOICE_D_ID},
+		       ${ROW_INDEX},
+		       ${AMT_PER_UNIT},
+		       ${DESCRIPTION},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${ITEM_AMT},
+		       ${UNIT},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrInvoiceD.update">
+	<![CDATA[
+		UPDATE USR_INVOICE_D
+		   SET INVOICE_ID = ${INVOICE_ID},
+		       ROW_INDEX = ${ROW_INDEX},
+		       AMT_PER_UNIT = ${AMT_PER_UNIT},
+		       DESCRIPTION = ${DESCRIPTION},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       ITEM_AMT = ${ITEM_AMT},
+		       UNIT = ${UNIT},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrInvoiceD.updateColumns">
+	<![CDATA[
+		UPDATE USR_INVOICE_D
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrInvoiceD.delete">
+	<![CDATA[
+		DELETE USR_INVOICE_D
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

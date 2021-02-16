@@ -29,4 +29,12 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodHDaoImpl" id="sysFinancialPeriodDao" init-method="init" name="sysFinancialPeriodDao" parent="baseHDao" scope="prototype"/>
     <!--SysReconCategory DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryHDaoImpl" id="sysReconCategoryDao" init-method="init" name="sysReconCategoryDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrInvoice DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrInvoice.UsrInvoiceHDaoImpl" id="usrInvoiceDao" init-method="init" name="usrInvoiceDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrInvoiceD DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrInvoiceD.UsrInvoiceDHDaoImpl" id="usrInvoiceDDao" init-method="init" name="usrInvoiceDDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrQuotation DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrQuotation.UsrQuotationHDaoImpl" id="usrQuotationDao" init-method="init" name="usrQuotationDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrQuotationD DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDHDaoImpl" id="usrQuotationDDao" init-method="init" name="usrQuotationDDao" parent="baseHDao" scope="prototype"/>
 </beans>

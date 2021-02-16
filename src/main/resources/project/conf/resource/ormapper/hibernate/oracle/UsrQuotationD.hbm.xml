@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_QUOTATION_D - Quotation detail info
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrQuotationD" table="USR_QUOTATION_D" lazy="false">
+		<meta attribute="class-description" inherit="false">Quotation detail info</meta>
+
+		<id name="quotationDId" column="QUOTATION_D_ID" type="java.lang.String" length="30"></id>
+
+		<property name="quotationId" column="QUOTATION_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="rowIndex" column="ROW_INDEX" not-null="true" type="java.lang.Double"/>
+		<property name="amtPerUnit" column="AMT_PER_UNIT" type="java.lang.Double"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="itemAmt" column="ITEM_AMT" type="java.lang.Double"/>
+		<property name="unit" column="UNIT" type="java.lang.Double"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrQuotationD.selectAll">
+	<![CDATA[
+		SELECT QUOTATION_ID,
+		       QUOTATION_D_ID,
+		       ROW_INDEX,
+		       AMT_PER_UNIT,
+		       DESCRIPTION,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       ITEM_AMT,
+		       UNIT,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_QUOTATION_D
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotationD.insert">
+	<![CDATA[
+		INSERT INTO USR_QUOTATION_D (
+		       QUOTATION_ID,
+		       QUOTATION_D_ID,
+		       ROW_INDEX,
+		       AMT_PER_UNIT,
+		       DESCRIPTION,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       ITEM_AMT,
+		       UNIT,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${QUOTATION_ID},
+		       ${QUOTATION_D_ID},
+		       ${ROW_INDEX},
+		       ${AMT_PER_UNIT},
+		       ${DESCRIPTION},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${ITEM_AMT},
+		       ${UNIT},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotationD.update">
+	<![CDATA[
+		UPDATE USR_QUOTATION_D
+		   SET QUOTATION_ID = ${QUOTATION_ID},
+		       ROW_INDEX = ${ROW_INDEX},
+		       AMT_PER_UNIT = ${AMT_PER_UNIT},
+		       DESCRIPTION = ${DESCRIPTION},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       ITEM_AMT = ${ITEM_AMT},
+		       UNIT = ${UNIT},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotationD.updateColumns">
+	<![CDATA[
+		UPDATE USR_QUOTATION_D
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrQuotationD.delete">
+	<![CDATA[
+		DELETE USR_QUOTATION_D
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

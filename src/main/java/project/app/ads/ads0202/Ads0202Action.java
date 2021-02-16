@@ -59,6 +59,33 @@ public class Ads0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getQuotationMasterInfo() throws Exception {
+		try {
+			biz.getQuotationMasterInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getQuotationDetailInfo() throws Exception {
+		try {
+			biz.getQuotationDetailInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String doRemoveLogo() throws Exception {
+		try {
+			biz.doRemoveLogo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String doSave() throws Exception {
 		try {
 			biz.doSave(paramEntity);
