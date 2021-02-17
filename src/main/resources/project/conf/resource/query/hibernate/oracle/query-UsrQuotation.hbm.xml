@@ -5,4 +5,16 @@
  * - USR_QUOTATION - Quotation info for additioanl user service
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrQuotation.getDataSetBySearchCriteria">
+	<![CDATA[
+		select uqm.*,
+		       (select legal_name from sys_org where org_id = uqm.provider_org_id) as provider_org_name,
+		       (select count(*) from usr_quotation_d where quotation_id = uqm.quotation_id) as detail_cnt
+		  from usr_quotation uqm
+		 where 1 = 1
+		${where_clause}
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

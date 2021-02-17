@@ -28,7 +28,7 @@ public class UsrQuotationDHDaoImpl extends BaseHDao implements UsrQuotationDDao 
 			usrQuotationD.setUnit(CommonUtil.toDouble(quotationDetailDataSet.getValue(i, "UNIT")));
 			usrQuotationD.setAmtPerUnit(CommonUtil.toDouble(quotationDetailDataSet.getValue(i, "PRICE")));
 			usrQuotationD.setItemAmt(CommonUtil.toDouble(quotationDetailDataSet.getValue(i, "AMOUNT")));
-			usrQuotationD.setDescription(quotationDetailDataSet.getValue(i, "AMOUNT"));
+			usrQuotationD.setDescription(quotationDetailDataSet.getValue(i, "DESCRIPTION"));
 			usrQuotationD.setInsertUserId(quotationDetailDataSet.getValue(i, "USER_ID"));
 			usrQuotationD.setInsertDate(CommonUtil.getSysdateAsDate());
 			usrQuotationD.setUpdateUserId(quotationDetailDataSet.getValue(i, "USER_ID"));

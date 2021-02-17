@@ -11,6 +11,7 @@ import project.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDDao;
 import project.conf.resource.ormapper.dto.oracle.UsrQuotation;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
+import zebra.util.ConfigUtil;
 
 public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 	@Autowired
@@ -41,6 +42,21 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
 		return updateColumns(queryAdvisor, usrQuotation);
+	}
+
+	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String userId = (String)queryAdvisor.getObject("userId");
+		String fromDate = (String)queryAdvisor.getObject("fromDate");
+		String toDate = (String)queryAdvisor.getObject("toDate");
+
+		queryAdvisor.addWhereClause("uqm.user_id = '"+userId+"'");
+		queryAdvisor.addAutoFillCriteria(fromDate, "trunc(uqm.issue_date) >= trunc(to_date('"+fromDate+"', '"+dateFormat+"'))");
+		queryAdvisor.addAutoFillCriteria(toDate, "trunc(uqm.issue_date) <= trunc(to_date('"+toDate+"', '"+dateFormat+"'))");
+
+		queryAdvisor.addOrderByClause("uqm.issue_date desc");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrQuotation.getDataSetBySearchCriteria");
 	}
 
 	public DataSet getDataSetByQuotationId(String quotationId) throws Exception {

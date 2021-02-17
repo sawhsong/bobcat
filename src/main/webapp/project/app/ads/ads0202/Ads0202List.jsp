@@ -59,12 +59,18 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="10%"/>
+			<col width="8%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thSearch rt"></th>
-			<td class="tdSearch"></td>
+			<th class="thSearch rt">Quotation Date</th>
+			<td class="tdSearch">
+				<ui:text name="fromDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="toDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnToDate" className="fa-calendar hor"/>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -82,17 +88,35 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="2%"/>
+			<col width="5%"/>
+			<col width="6%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="4%"/>
+			<col width="14%"/>
+			<col width="14%"/>
 			<col width="*"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
-				<th class="thGrid"></th>
+				<th class="thGrid">Date</th>
+				<th class="thGrid">Number</th>
+				<th class="thGrid">Net Amount</th>
+				<th class="thGrid">GST Amount</th>
+				<th class="thGrid">Total Amount</th>
+				<th class="thGrid">Items</th>
+				<th class="thGrid">Customer Name</th>
+				<th class="thGrid">Customer Email</th>
+				<th class="thGrid">Description</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="11"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

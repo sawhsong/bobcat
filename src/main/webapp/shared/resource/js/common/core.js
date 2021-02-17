@@ -776,6 +776,12 @@ var nony = {
 			return val.toLowerCase();
 		}
 	},
+	toCamelCase : function(val) {
+		if ($.nony.isBlank(val)) {return "";}
+		return val.toLowerCase().replace(/(\_[a-z])/g, function(arg) {
+			return arg.toUpperCase().replace('_','');
+		});
+	},
 	replace : function(src, from, to) {
 		var newStr = src;
 		var iOffset = 0;

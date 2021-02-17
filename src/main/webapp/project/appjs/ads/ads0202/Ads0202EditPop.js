@@ -13,7 +13,7 @@ $(function() {
 	 */
 	$("#btnClose").click(function() {
 		parent.popup.close();
-//		parent.doSearch();
+		parent.doSearch();
 	});
 
 	$("#btnSave").click(function(event) {
@@ -244,6 +244,12 @@ $(function() {
 		$("#amount").number(true, 2);
 	};
 
+	loadDefaultMyInfo = function() {
+		if (commonJs.isBlank(quotationId)) {
+			$("#btnBringMyInfo").trigger("click");
+		}
+	};
+
 	setMyInfo = function(ds) {
 		$("#providerName").val(ds.getValue(0, "USER_NAME"));
 		$("#providerEmail").val(ds.getValue(0, "EMAIL"));
@@ -318,7 +324,44 @@ $(function() {
 	};
 
 	setQuotationMasterInfo = function (ds) {
-		
+		var logoPath = "";
+
+		for (var i=0; i<ds.getColumnCnt(); i++) {
+			var eleId = commonJs.toCamelCase(ds.getName(i));
+
+			if (commonJs.isIn(eleId, ["providerLogoPath"])) {
+				logoPath = ds.getValue(0, "PROVIDER_LOGO_PATH");
+				continue;
+			}
+
+			if (commonJs.isIn(eleId, ["description"])) {
+				$("#descriptionM").val(ds.getValue(0, ds.getName(i)));
+				continue;
+			}
+
+			if (commonJs.isIn(eleId, ["issueDate"])) {
+				$("#issueDate").val(commonJs.getDateTimeMask(ds.getValue(0, ds.getName(i)), dateFormat));
+				continue;
+			}
+
+			$("#"+eleId).val(ds.getValue(0, ds.getName(i)));
+		}
+
+		if (commonJs.isNotBlank(logoPath)) {
+			if ($("#imgLogo").length > 0) {
+				$("#imgLogo").remove();
+			}
+
+			$("#tdLogo").append(commonJs.getUiImage({
+				id:"imgLogo",
+				src:logoPath,
+				idDisabled:true,
+				style:"width:250px;height:80px;"
+			}));
+		}
+
+		setFieldFormat();
+
 		commonJs.hideProcMessageOnElement("divFixedPanelPopup");
 	};
 
@@ -341,6 +384,21 @@ $(function() {
 	};
 
 	setQuotationDetailInfo = function (ds) {
+		$("#ulDetailHolder").html("");
+
+		for (var i=0; i<ds.getRowCnt(); i++) {
+			var rowIdx = delimiter+i;
+
+			$("#btnAdd").trigger("click");
+
+			$("[name=quotationDId"+rowIdx+"]").val(ds.getValue(i, "QUOTATION_D_ID"));
+			$("[name=rowIndex"+rowIdx+"]").val(ds.getValue(i, "ROW_INDEX"));
+			$("[name=unit"+rowIdx+"]").val(ds.getValue(i, "UNIT"));
+			$("[name=price"+rowIdx+"]").val(ds.getValue(i, "AMT_PER_UNIT"));
+			$("[name=amount"+rowIdx+"]").val(ds.getValue(i, "ITEM_AMT"));
+			$("[name=descriptionD"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION"));
+		}
+
 		commonJs.hideProcMessageOnElement("divDataArea");
 	};
 
@@ -423,8 +481,8 @@ $(function() {
 		setFieldFormat();
 		setSortable();
 		setTimeout(function() {
-			$("#btnBringMyInfo").trigger("click");
 			loadQuotationNumber();
+			loadDefaultMyInfo();
 			loadMasterInfo();
 			loadDetailInfo();
 		}, 200);

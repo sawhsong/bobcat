@@ -30,6 +30,7 @@ import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
 import project.conf.resource.ormapper.dao.UsrQuotation.UsrQuotationDao;
 import project.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.UsrQuotation;
 
 public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
@@ -52,16 +53,21 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 	}
 
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		DataSet req = paramEntity.getRequestDataSet();
+		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
 		String userId = (String)session.getAttribute("UserId");
+		String fromDate = req.getValue("fromDate");
+		String toDate = req.getValue("toDate");
 
 		try {
-			queryAdvisor.setPagination(true);
+			qa.setObject("userId", userId);
+			qa.setObject("fromDate", fromDate);
+			qa.setObject("toDate", toDate);
+			qa.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(new DataSet());
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setAjaxResponseDataSet(usrQuotationDao.getDataSetBySearchCriteria(qa));
+			paramEntity.setTotalResultRows(qa.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -150,8 +156,8 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 	}
 
 	public ParamEntity doRemoveLogo(ParamEntity paramEntity) throws Exception {
-		HttpSession session = paramEntity.getSession();
-		String quotationId = (String)session.getAttribute("quotationId");
+		DataSet req = paramEntity.getRequestDataSet();
+		String quotationId = req.getValue("quotationId");
 		UsrQuotation usrQuotation = new UsrQuotation();
 		int result = -1;
 
@@ -182,6 +188,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 		String uploadLogoPath = ConfigUtil.getProperty("path.dir.uploadedOrgLogo");
 		String webRootPath = (String)MemoryBean.get("applicationRealPath");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String providerOrgId = req.getValue("providerOrgId");
 		String pathToCopy = "";
 		int detailLength = CommonUtil.toInt(req.getValue("detailLength"));
 		UsrQuotation usrQuotation = new UsrQuotation();
@@ -199,9 +206,14 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 					detail.setValue(i, "UNIT", req.getValue("unit"+delimiter+i));
 					detail.setValue(i, "PRICE", req.getValue("price"+delimiter+i));
 					detail.setValue(i, "AMOUNT", req.getValue("amount"+delimiter+i));
-					detail.setValue(i, "DESCRIPTION", req.getValue("description"+delimiter+i));
+					detail.setValue(i, "DESCRIPTION", req.getValue("descriptionD"+delimiter+i));
 					detail.setValue(i, "USER_ID", userId);
 				}
+			}
+
+			if (CommonUtil.isBlank(quotationId) && CommonUtil.isNotBlank(providerOrgId)) {
+				SysOrg sysOrg = sysOrgDao.getOrgByOrgId(providerOrgId);
+				usrQuotation.setProviderLogoPath(sysOrg.getLogoPath());
 			}
 
 			if (fileDataSet.getRowCnt() > 0) {
@@ -221,7 +233,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 			usrQuotation.setQuotationNumber(req.getValue("quotationNumber"));
 			usrQuotation.setIssueDate(CommonUtil.toDate(req.getValue("issueDate"), dateFormat));
 			usrQuotation.setUserId(userId);
-			usrQuotation.setProviderOrgId(req.getValue("providerOrgId"));
+			usrQuotation.setProviderOrgId(providerOrgId);
 			usrQuotation.setProviderName(req.getValue("providerName"));
 			usrQuotation.setProviderTelephone(CommonUtil.remove(req.getValue("providerTelephone"), " "));
 			usrQuotation.setProviderMobile(CommonUtil.remove(req.getValue("providerMobile"), " "));
@@ -239,7 +251,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 			usrQuotation.setNetAmt(CommonUtil.toDouble(req.getValue("netAmt")));
 			usrQuotation.setGstAmt(CommonUtil.toDouble(req.getValue("gstAmt")));
 			usrQuotation.setTotalAmt(CommonUtil.toDouble(req.getValue("totalAmt")));
-			usrQuotation.setDescription(req.getValue("description"));
+			usrQuotation.setDescription(req.getValue("descriptionM"));
 			usrQuotation.setAdditionalRemark(req.getValue("additionalRemark"));
 
 			if (CommonUtil.isBlank(quotationId)) {

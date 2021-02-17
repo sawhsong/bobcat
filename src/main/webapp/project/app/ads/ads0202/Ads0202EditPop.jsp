@@ -158,7 +158,7 @@ var quotationId = "<%=quotationId%>";
 				<th class="thInform rt">Net Amount</th>
 				<td class="tdInform"><ui:text name="netAmt" checkName="Net Amount" className="Rt numeric" option="numeric"/></td>
 				<th class="thInform rt">Description</th>
-				<td class="tdInform"><ui:text name="description"/></td>
+				<td class="tdInform"><ui:text name="descriptionM"/></td>
 			</tr>
 			<tr>
 				<th class="thInform rt">GST Amount</th>
@@ -250,7 +250,7 @@ var quotationId = "<%=quotationId%>";
 			<td class="tdGrid Ct"><ui:text name="unit" className="Rt" checkName="Unit" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="price" className="Rt" checkName="Price" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="amount" className="Rt" checkName="Amount" options="mandatory" option="numeric" status="disabled"/></td>
-			<td class="tdGrid Ct"><ui:text name="description" className="Lt"/></td>
+			<td class="tdGrid Ct"><ui:text name="descriptionD" className="Lt"/></td>
 		</tr>
 	</table>
 </li>
