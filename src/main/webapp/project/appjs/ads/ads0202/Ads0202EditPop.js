@@ -16,6 +16,13 @@ $(function() {
 		parent.doSearch();
 	});
 
+	$("#btnPreview").click(function() {
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
+		}
+		parent.getPreview(quotationId);
+	});
+
 	$("#btnSave").click(function(event) {
 		var isValid = true;
 		var elementsToCheck = [];
@@ -72,6 +79,7 @@ $(function() {
 
 					quotationId = ds.getValue(0, "QUOTATION_ID");
 
+					toggleButtonStatus();
 					loadMasterInfo();
 					loadDetailInfo();
 				}
@@ -424,6 +432,12 @@ $(function() {
 		$("#ulDetailHolder").disableSelection();
 	};
 
+	toggleButtonStatus = function() {
+		if (commonJs.isBlank(quotationId)) {
+			$("#btnPreview").attr("disabled", true);
+		}
+	};
+
 	onEditDataEntry = function(jqObj) {
 		var name = $(jqObj).attr("name");
 
@@ -457,7 +471,6 @@ $(function() {
 	/*!
 	 * load event (document / window)
 	 */
-	
 	$(document).click(function(event) {
 		var obj = event.target;
 
@@ -480,6 +493,7 @@ $(function() {
 		commonJs.setEvent("blur", [$("#providerOrgName")], clearValueOnBlur);
 		setFieldFormat();
 		setSortable();
+		toggleButtonStatus();
 		setTimeout(function() {
 			loadQuotationNumber();
 			loadDefaultMyInfo();

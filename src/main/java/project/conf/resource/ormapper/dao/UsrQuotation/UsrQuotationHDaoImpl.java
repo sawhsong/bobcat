@@ -11,6 +11,7 @@ import project.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDDao;
 import project.conf.resource.ormapper.dto.oracle.UsrQuotation;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
+import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
@@ -44,6 +45,36 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 		return updateColumns(queryAdvisor, usrQuotation);
 	}
 
+	public int delete(String quotationIds[]) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		int result = 0;
+		String idsForDel = "";
+
+		result += usrQuotationDDao.delete(quotationIds);
+
+		if (!(quotationIds == null || quotationIds.length == 0)) {
+			for (int i=0; i<quotationIds.length; i++) {
+				idsForDel += CommonUtil.isBlank(idsForDel) ? "'"+quotationIds[i]+"'" : ",'"+quotationIds[i]+"'";
+			}
+			queryAdvisor.addWhereClause("quotation_id in ("+idsForDel+")");
+
+			result += deleteWithSQLQuery(queryAdvisor, new UsrQuotation());
+		}
+		return result;
+	}
+
+	public int delete(String quotationId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		int result = 0;
+
+		result += usrQuotationDDao.delete(quotationId);
+
+		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
+		result += deleteWithSQLQuery(queryAdvisor, new UsrQuotation());
+
+		return result;
+	}
+
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String userId = (String)queryAdvisor.getObject("userId");
@@ -63,5 +94,11 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
 		return selectAllAsDataSet(queryAdvisor, new UsrQuotation());
+	}
+
+	public UsrQuotation getQuotationByQuotationId(String quotationId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
+		return (UsrQuotation)selectAllToDto(queryAdvisor, new UsrQuotation());
 	}
 }

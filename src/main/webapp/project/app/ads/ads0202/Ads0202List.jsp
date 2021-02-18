@@ -9,6 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String dateFrom = CommonUtil.getCalcDate("M", CommonUtil.getSysdate(dateFormat), dateFormat, -1);
+	String dateTo = CommonUtil.getSysdate(dateFormat);
 %>
 <%/************************************************************************************************
 * HTML
@@ -65,10 +68,10 @@
 		<tr>
 			<th class="thSearch rt">Quotation Date</th>
 			<td class="tdSearch">
-				<ui:text name="fromDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:text name="fromDate" className="Ct hor" value="<%=dateFrom%>" style="width:90px" option="date"/>
 				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
 				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-				<ui:text name="toDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:text name="toDate" className="Ct hor" value="<%=dateTo%>" style="width:90px" option="date"/>
 				<ui:icon id="icnToDate" className="fa-calendar hor"/>
 			</td>
 		</tr>
@@ -95,8 +98,8 @@
 			<col width="7%"/>
 			<col width="7%"/>
 			<col width="4%"/>
-			<col width="14%"/>
-			<col width="14%"/>
+			<col width="12%"/>
+			<col width="13%"/>
 			<col width="*"/>
 		</colgroup>
 		<thead>

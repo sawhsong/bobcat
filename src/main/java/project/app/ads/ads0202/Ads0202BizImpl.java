@@ -11,6 +11,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
+import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
+import project.conf.resource.ormapper.dao.UsrQuotation.UsrQuotationDao;
+import project.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDDao;
+import project.conf.resource.ormapper.dto.oracle.SysOrg;
+import project.conf.resource.ormapper.dto.oracle.UsrQuotation;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
@@ -21,17 +28,6 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
 import zebra.util.FileUtil;
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
-import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
-import project.conf.resource.ormapper.dao.UsrQuotation.UsrQuotationDao;
-import project.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
-import project.conf.resource.ormapper.dto.oracle.SysOrg;
-import project.conf.resource.ormapper.dto.oracle.UsrQuotation;
 
 public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 	@Autowired
@@ -283,15 +279,43 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String quotationId = requestDataSet.getValue("quotationId");
+		String chkForDel = requestDataSet.getValue("chkForDel");
+		String quotationIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
+			if (CommonUtil.isBlank(quotationId)) {
+				result = usrQuotationDao.delete(quotationIds);
+			} else {
+				result = usrQuotationDao.delete(quotationId);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getPreview(ParamEntity paramEntity) throws Exception {
+		DataSet req = paramEntity.getRequestDataSet();
+		String quotationId = req.getValue("quotationId");
+		UsrQuotation usrQuotation;
+		DataSet quotationDetail;
+
+		try {
+			usrQuotation = usrQuotationDao.getQuotationByQuotationId(quotationId);
+			quotationDetail = usrQuotationDDao.getDataSetByQuotationId(quotationId);
+
+			paramEntity.setObject("usrQuotation", usrQuotation);
+			paramEntity.setObject("quotationDetail", quotationDetail);
+			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

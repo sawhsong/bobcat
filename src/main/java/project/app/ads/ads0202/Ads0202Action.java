@@ -104,6 +104,11 @@ public class Ads0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getPreview() throws Exception {
+		biz.getPreview(paramEntity);
+		return "preview";
+	}
+
 	public String doExport() throws Exception {
 		biz.doExport(paramEntity);
 		setRequestAttribute("paramEntity", paramEntity);

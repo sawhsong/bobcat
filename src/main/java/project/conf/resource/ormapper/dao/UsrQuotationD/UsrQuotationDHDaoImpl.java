@@ -40,6 +40,26 @@ public class UsrQuotationDHDaoImpl extends BaseHDao implements UsrQuotationDDao 
 		return result;
 	}
 
+	public int delete(String quotationIds[]) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String idsForDel = "";
+
+		if (!(quotationIds == null || quotationIds.length == 0)) {
+			for (int i=0; i<quotationIds.length; i++) {
+				idsForDel += CommonUtil.isBlank(idsForDel) ? "'"+quotationIds[i]+"'" : ",'"+quotationIds[i]+"'";
+			}
+			queryAdvisor.addWhereClause("quotation_id in ("+idsForDel+")");
+		}
+
+		return deleteWithSQLQuery(queryAdvisor, new UsrQuotationD());
+	}
+
+	public int delete(String quotationId) throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
+		return deleteWithSQLQuery(queryAdvisor, new UsrQuotationD());
+	}
+
 	public DataSet getDataSetByQuotationId(String quotationId) throws Exception {
 		QueryAdvisor queryAdvisor = new QueryAdvisor();
 		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");

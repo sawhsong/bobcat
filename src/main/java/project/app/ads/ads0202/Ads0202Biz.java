@@ -20,5 +20,6 @@ public interface Ads0202Biz {
 	public ParamEntity doRemoveLogo(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getPreview(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doExport(ParamEntity paramEntity) throws Exception;
 }

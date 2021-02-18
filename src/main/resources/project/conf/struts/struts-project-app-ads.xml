@@ -7,6 +7,7 @@
         <action class="project.app.ads.ads0202.Ads0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/ads/ads0202/Ads0202List.jsp</result>
             <result name="edit" type="debugDispatcherResult">/project/app/ads/ads0202/Ads0202EditPop.jsp</result>
+            <result name="preview" type="debugDispatcherResult">/project/app/ads/ads0202/Ads0202PreviewPop.jsp</result>
         </action>
         <!--Ads0204 - Invoice Management-->
         <action class="project.app.ads.ads0204.Ads0204Action" method="{1}" name="0204/*">

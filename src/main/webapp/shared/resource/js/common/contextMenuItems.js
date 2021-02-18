@@ -138,5 +138,20 @@ var ctxMenu = {
 		name:com.caption.ctxDelete,
 		img:"fa-trash",
 		fun:function() {}
+	}],
+	
+	// Additional service context menu (Quotation | Invoice)
+	quoteInvoiceAction : [{
+		name:com.caption.ctxEdit,
+		img:"fa-edit",
+		fun:function() {}
+	}, {
+		name:"Preview",
+		img:"fa-search-plus",
+		fun:function() {}
+	}, {
+		name:com.caption.ctxDelete,
+		img:"fa-times",
+		fun:function() {}
 	}]
 };

@@ -2,7 +2,7 @@
  * Framework Generated Javascript Source
  * - Ads0202List.js
  *************************************************************************************************/
-var popup;
+var popup, preview;
 var dateTimeFormat = jsconfig.get("dateTimeFormatJs");
 var dateFormat = jsconfig.get("dateFormatJs");
 
@@ -16,6 +16,10 @@ $(function() {
 
 	$("#btnNew").click(function() {
 		getEdit("");
+	});
+
+	$("#btnDelete").click(function(event) {
+		doDelete();
 	});
 
 	$("#icnFromDate").click(function(event) {
@@ -103,15 +107,19 @@ $(function() {
 			script:"doSearch"
 		});
 
+		$("[name=icnAction]").each(function(index) {
+			$(this).contextMenu(ctxMenu.quoteInvoiceAction);
+		});
+
 		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 
 	doAction = function(img) {
-		var orgId = $(img).attr("orgId"), userCnt = $(img).attr("userCnt");
+		var quotationId = $(img).attr("quotationId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == orgId) {
+			if (!$(this).is(":disabled") && $(this).val() == quotationId) {
 				$(this).prop("checked", true);
 				$(this).parents("tr").addClass("checkedTr");
 			} else {
@@ -120,16 +128,11 @@ $(function() {
 			}
 		});
 
-		if (userCnt > 0) {
-			ctxMenu.commonSimpleAction[1].disable = true;
-		} else {
-			ctxMenu.commonSimpleAction[1].disable = false;
-		}
+		ctxMenu.quoteInvoiceAction[0].fun = function() {getEdit(quotationId);};
+		ctxMenu.quoteInvoiceAction[1].fun = function() {getPreview(quotationId);};
+		ctxMenu.quoteInvoiceAction[2].fun = function() {doDelete();};
 
-		ctxMenu.commonSimpleAction[0].fun = function() {openPopup({mode:"Update", orgId:orgId});};
-		ctxMenu.commonSimpleAction[1].fun = function() {doDelete();};
-
-		$(img).contextMenu(ctxMenu.commonSimpleAction, {
+		$(img).contextMenu(ctxMenu.quoteInvoiceAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,
 			displayAround:"trigger",
 			position:"bottom",
@@ -146,6 +149,29 @@ $(function() {
 			header:"Quotation Edit",
 			width:1400,
 			height:900
+		});
+	};
+
+	getPreview = function(quotationId) {
+		preview = commonJs.openPopup({
+			popupId:"QuotationPreview",
+			url:"/ads/0202/getPreview.do",
+			data:{quotationId:quotationId},
+			header:"Quotation Preview",
+			width:800,
+			height:900
+		});
+	};
+
+	doDelete = function() {
+		if (commonJs.getCountChecked("chkForDel") == 0) {
+			commonJs.warn(com.message.I902);
+			return;
+		}
+
+		commonJs.doDelete({
+			url:"/ads/0202/doDelete.do",
+			onSuccess:doSearch
 		});
 	};
 	/*!

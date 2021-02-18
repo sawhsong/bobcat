@@ -13,7 +13,10 @@ public interface UsrQuotationDao extends IDao {
 	public int insert(UsrQuotation usrQuotation, DataSet detailDataSet) throws Exception;
 	public int update(String quotationId, UsrQuotation usrQuotation, DataSet detailDataSet) throws Exception;
 	public int updateColumn(String quotationId, UsrQuotation usrQuotation) throws Exception;
+	public int delete(String[] quotationIds) throws Exception;
+	public int delete(String quotationId) throws Exception;
 
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByQuotationId(String quotationId) throws Exception;
+	public UsrQuotation getQuotationByQuotationId(String quotationId) throws Exception;
 }
