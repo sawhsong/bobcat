@@ -283,6 +283,14 @@ public class CommonUtil extends StringUtils {
 		return false;
 	}
 
+	public static boolean isInIgnoreCase(String value, String... values) {
+		if (isBlank(value)) {return false;}
+		for (String s : values) {
+			if (equalsIgnoreCase(value, s)) {return true;}
+		}
+		return false;
+	}
+
 	public static boolean contains(String value, String... values) {
 		if (isBlank(value)) {return false;}
 		for (String s : values) {

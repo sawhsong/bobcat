@@ -24,6 +24,7 @@ import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
 import zebra.export.ExportHelper;
+import zebra.export.QuotationPdfExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
@@ -323,28 +324,22 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 	}
 
 	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[] = new String[] {};
-		String pageTitle = "", fileName = "";
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
+		DataSet req = paramEntity.getRequestDataSet();
+		QuotationPdfExportHelper exportHelper;
+		String quotationId = req.getValue("quotationId");
+		String fileType = "pdf";
+		UsrQuotation usrQuotation;
+		DataSet quotationDetail;
 
 		try {
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
+			usrQuotation = usrQuotationDao.getQuotationByQuotationId(quotationId);
+			quotationDetail = usrQuotationDDao.getDataSetByQuotationId(quotationId);
 
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
-			}
+			exportHelper = ExportUtil.getQuotationExportHelper(fileType);
 
-			exportHelper.setSourceDataSet(new DataSet());
+			exportHelper.setUsrQuotation(usrQuotation);
+			exportHelper.setUsrQuotationDDataSet(quotationDetail);
+			exportHelper.setFileName("Quotation-"+usrQuotation.getQuotationNumber());
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

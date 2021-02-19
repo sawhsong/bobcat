@@ -19,6 +19,13 @@ $(function() {
 		});
 	});
 
+	$("#btnExport").click(function() {
+		commonJs.doExport({
+			url:"/ads/0202/doExport.do",
+			data:{quotationId:quotationId}
+		});
+	});
+
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
 		if (code == 13) {}
