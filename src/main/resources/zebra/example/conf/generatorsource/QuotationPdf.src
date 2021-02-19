@@ -7,54 +7,172 @@
 </script>
 <style type="text/css">
 * {margin:0px 0px;padding:0px 0px;}
-body {padding:0px 0px;color:#000000;font:normal normal normal 11px/1.2 "Verdana", "Malgun Gothic", "Sans-serif";}
+body {padding:0px 0px;color:#000000;font:normal normal normal 10px/1.2 "Verdana";}
+table {width:100%;border-spacing:0px;border-collapse:collapse;}
+table.withPadding th, table.withPadding td {padding:4px 4px;}
+
 #divWrapper {padding:10px 10px;}
 
+.Lt, lt {text-align:left;}
+.Ct, ct {text-align:center;}
+.Rt, rt {text-align:right;}
+.verGap {font-size:1px;padding:4px 0px;}
+
+.tblDefault {border:0px solid #DDDDDD;}
+.thDefault {padding:0px 0px;}
+.tdDefault {padding:0px 0px;}
+
+.tblGrid {border:0px solid #DDDDDD;}
+.thGrid {padding:8px 4px;text-align:center;border:1px solid #DDDDDD;background:#F5F5F5;}
+.tdGrid {padding:6px 4px;border:1px solid #DDDDDD;}
+
+.tblEdit {border:0px solid #DDDDDD;}
+.thEdit {padding:8px 4px;border:1px solid #DDDDDD;background:#F5F5F5;}
+.tdEdit {padding:6px 4px;border:1px solid #DDDDDD;}
 </style>
 </head>
 <body>
 <div id="divWrapper">
-	<div class="verGap20"></div>
-		<table class="tblDefault">
-			<colgroup>
-				<col width="50%"/>
-				<col width="50%"/>
-			</colgroup>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<td class="tdDefault Lt" style="vertical-align:top;border-bottom:2px solid #DDDDDD;width:50%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="tdDefault Lt" style="height:84px;">
+							#PROVIDER_LOGO#
+						</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt" style="font-size:14px;font-weight:bold;">#PROVIDER_NAME#</td>
+					</tr>
+				</table>
+			</td>
+			<td class="tdDefault Rt" style="vertical-align:top;border-bottom:2px solid #DDDDDD;width:50%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="tdDefault Rt" colspan="2" style="vertical-align:top;font-size:16px;font-weight:bold;height:68px;">Quotation</td>
+					</tr>
+					<tr>
+						<th class="thDefault Rt" style="width:72%">Date</th>
+						<td class="tdDefault Rt" style="width:28%">#ISSUE_DATE#</td>
+					</tr>
+					<tr>
+						<th class="thDefault Rt" style="width:72%">Quotation Number</th>
+						<td class="tdDefault Rt" style="width:28%">#QUOTATION_NUMBER#</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<td style="vertical-align:top;width:49%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="thDefault Lt"><font style="font-weight:bold;font-size:12px">TO :</font></td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Name : </font>#CLIENT_NAME#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Tel : </font>#CLIENT_TELEPHONE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Mobile : </font>#CLIENT_MOBILE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Email : </font>#CLIENT_EMAIL#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Address : </font>#CLIENT_ADDRESS#</td>
+					</tr>
+				</table>
+			</td>
+			<td style="vertical-align:top;width:51%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<th class="thDefault Rt"><font style="font-weight:bold;font-size:12px">Prepared by :</font></th>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Name : </font>#PROVIDER_NAME#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">ABN : </font>#PROVIDER_ABN#</td>
+					</tr>
+					#PROVIDER_ACN#
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Tel : </font>#PROVIDER_TELEPHONE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Mobile : </font>#PROVIDER_MOBILE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Email : </font>#PROVIDER_EMAIL#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Address : </font>#PROVIDER_ADDRESS#</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblGrid">
+		<thead>
 			<tr>
-				<td class="tdDefault Lt" style="vertical-align:top;border-bottom:2px solid #DDDDDD;">
-					<table class="tblDefault withPadding">
-						<tr>
-							<td class="tdDefault Lt" style="height:88px;">
-								#PROVIDER_LOGO#
-							</td>
-						</tr>
-						<tr>
-							<td class="tdDefault Lt" style="font-size:14px;font-weight:bold;">#PROVIDER_NAME#</td>
-						</tr>
-					</table>
-				</td>
-				<td class="tdDefault Rt" style="vertical-align:top;border-bottom:2px solid #DDDDDD;">
-					<table class="tblDefault withPadding">
-						<colgroup>
-							<col width="*"/>
-							<col width="25%"/>
-						</colgroup>
-						<tr>
-							<td class="tdDefault Rt" colspan="2" style="vertical-align:top;font-size:16px;font-weight:bold;height:68px;">Quotation</td>
-						</tr>
-						<tr>
-							<th class="thDefault Rt">Date</th>
-							<td class="tdDefault Rt">#ISSUE_DATE#</td>
-						</tr>
-						<tr>
-							<th class="thDefault Rt">Quotation Number</th>
-							<td class="tdDefault Rt">#QUOTATION_NUMBER#</td>
-						</tr>
-					</table>
-				</td>
+				<th class="thGrid" style="width:*">Description</th>
+				<th class="thGrid" style="width:12%">Unit</th>
+				<th class="thGrid" style="width:14%">Price</th>
+				<th class="thGrid" style="width:14%">Amount</th>
 			</tr>
-		</table>
-#EXPORT_DETAILS#
+		</thead>
+		<tbody>
+			#QUOTATION_DETAIL_ROWS#
+			<tr>
+				<td class="tdGrid Rt" colspan="3" style="font-weight:bold;border-left:0px;border-bottom:0px;">Sub Total</td>
+				<td class="tdGrid Rt">#NET_AMT#</td>
+			</tr>
+			<tr>
+				<td class="tdGrid Rt" colspan="3" style="font-weight:bold;border-top:0px;border-left:0px;border-bottom:0px;">GST</td>
+				<td class="tdGrid Rt">#GST_AMT#</td>
+			</tr>
+			<tr>
+				<td class="tdGrid Rt" colspan="3" style="font-weight:bold;border-top:0px;border-left:0px;border-bottom:0px;">Grand Total</td>
+				<td class="tdGrid Rt">#TOTAL_AMT#</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblEdit">
+		<tr>
+			<th class="thEdit">Description of work</th>
+		</tr>
+		<tr>
+			<td class="tdEdit">#ADDITIONAL_REMARK#</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<td class="tdDefault">
+				This quotation is valid 30 days from above date.<br/>
+				This quotation is not a contract or a bill. It is our best guess at the total price for the service and goods described above.<br/>
+				The customer will be billed after indicating acceptance of this quote.<br/>
+				Should you have any questions, please contact above contact details.
+			</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<th class="thDefault">Thank you for your business.</th>
+		</tr>
+	</table>
 </div>
 </body>
 </html>

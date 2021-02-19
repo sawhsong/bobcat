@@ -7,7 +7,6 @@ import zebra.export.ExcelExportHelper;
 import zebra.export.ExportHelper;
 import zebra.export.HtmlExportHelper;
 import zebra.export.PdfExportHelper;
-import zebra.export.QuotationPdfExportHelper;
 
 public class ExportUtil {
 	@SuppressWarnings("unused")
@@ -29,16 +28,6 @@ public class ExportUtil {
 			helper.setFileType("html");
 			helper.setFileExtention("html");
 		}
-
-		return helper;
-	}
-
-	public static QuotationPdfExportHelper getQuotationExportHelper(String fileType) {
-		QuotationPdfExportHelper helper = null;
-
-		helper = new QuotationPdfExportHelper();
-		helper.setFileType("pdf");
-		helper.setFileExtention("pdf");
 
 		return helper;
 	}

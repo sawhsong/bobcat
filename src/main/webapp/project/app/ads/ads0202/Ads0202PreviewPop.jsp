@@ -52,7 +52,7 @@ var quotationId = "<%=quotationId%>";
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnPrint" caption="Print" iconClass="fa-print"/>
-			<ui:button id="btnExport" caption="Export" iconClass="fa-download"/>
+			<ui:button id="btnExport" caption="Download PDF" iconClass="fa-download"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>

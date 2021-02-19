@@ -8,10 +8,12 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public abstract class ExportHelper {
+	protected final String WEB_ROOT = (String)MemoryBean.get("applicationRealPath");
 	protected final String TARGET_FILE_PATH = ConfigUtil.getProperty("path.dir.temp");
 //	protected final String TARGET_FILE_PATH = (String)MemoryBean.get("applicationRealPath")+ConfigUtil.getProperty("path.dir.temp");
 	protected final String FILE_NAME_PREFIX = CommonUtil.getSysdate("yyyyMMddHHmmss")+"_"+CommonUtil.uid()+"_"+"Export";
 	protected final String SOURCE_FILE_PATH = (String)MemoryBean.get("applicationRealPath")+"/"+ConfigUtil.getProperty("path.export.sourceFile");
+	protected final String PDF_FONT_PATH = WEB_ROOT+"/shared/resource/pdffonts";
 	protected DataSet sourceDataSet;
 	protected String fileExtention;
 	protected String fileType;

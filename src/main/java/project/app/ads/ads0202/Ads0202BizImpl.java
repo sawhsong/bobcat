@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.common.extend.QuotationPdfExportHelper;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
 import project.conf.resource.ormapper.dao.UsrQuotation.UsrQuotationDao;
@@ -23,11 +24,8 @@ import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
-import zebra.export.QuotationPdfExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
 import zebra.util.FileUtil;
 
 public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
@@ -327,7 +325,6 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 		DataSet req = paramEntity.getRequestDataSet();
 		QuotationPdfExportHelper exportHelper;
 		String quotationId = req.getValue("quotationId");
-		String fileType = "pdf";
 		UsrQuotation usrQuotation;
 		DataSet quotationDetail;
 
@@ -335,7 +332,9 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 			usrQuotation = usrQuotationDao.getQuotationByQuotationId(quotationId);
 			quotationDetail = usrQuotationDDao.getDataSetByQuotationId(quotationId);
 
-			exportHelper = ExportUtil.getQuotationExportHelper(fileType);
+			exportHelper = new project.common.extend.QuotationPdfExportHelper();
+			exportHelper.setFileType("pdf");
+			exportHelper.setFileExtention("pdf");
 
 			exportHelper.setUsrQuotation(usrQuotation);
 			exportHelper.setUsrQuotationDDataSet(quotationDetail);
