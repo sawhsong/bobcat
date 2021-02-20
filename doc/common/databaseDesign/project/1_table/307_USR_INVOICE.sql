@@ -11,6 +11,7 @@ create table usr_invoice (
     issue_date                      date                                         not null,      -- Date issued
     user_id                         varchar2(30)                                 not null,      -- User UID - Logged In User Id (sys_user.user_id)
     quotation_id                    varchar2(30),                                               -- Quotation UID - if the invoice linked with quotation
+    status                          varchar2(30),                                               -- Invoice status (sys_common_code.invoice_status)
     provider_org_id                 varchar2(30),                                               -- Provider Org UID if applicable
     provider_logo_path              varchar2(1000),                                             -- Provider logo image path
     provider_name                   varchar2(50),                                               -- Provider name - user name | org name | editable
@@ -45,7 +46,7 @@ create table usr_invoice (
     insert_date                     date                default sysdate,                        -- Insert Date
     update_user_id                  varchar2(30),                                               -- Update User UID
 
-    constraint fk_27706984345900 foreign key(user_id) references sys_user(user_id),
+    constraint fk_52464305443800 foreign key(user_id) references sys_user(user_id),
     constraint pk_usr_invoice primary key(invoice_id)
     using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )
@@ -57,6 +58,7 @@ comment on column usr_invoice.invoice_number                                    
 comment on column usr_invoice.issue_date                                         is 'Date issued';
 comment on column usr_invoice.user_id                                            is 'User UID - Logged In User Id (sys_user.user_id)';
 comment on column usr_invoice.quotation_id                                       is 'Quotation UID - if the invoice linked with quotation';
+comment on column usr_invoice.status                                             is 'Invoice status (sys_common_code.invoice_status)';
 comment on column usr_invoice.provider_org_id                                    is 'Provider Org UID if applicable';
 comment on column usr_invoice.provider_logo_path                                 is 'Provider logo image path';
 comment on column usr_invoice.provider_name                                      is 'Provider name - user name | org name | editable';

@@ -10,9 +10,9 @@
 
 		<id name="invoiceId" column="INVOICE_ID" type="java.lang.String" length="30"></id>
 
+		<property name="userId" column="USER_ID" not-null="true" type="java.lang.String" length="30"/>
 		<property name="invoiceNumber" column="INVOICE_NUMBER" not-null="true" type="java.lang.String" length="30"/>
 		<property name="issueDate" column="ISSUE_DATE" not-null="true" type="java.util.Date"/>
-		<property name="userId" column="USER_ID" not-null="true" type="java.lang.String" length="30"/>
 		<property name="additionalRemark" column="ADDITIONAL_REMARK" type="java.lang.String" length="4000"/>
 		<property name="bankAccntId" column="BANK_ACCNT_ID" type="java.lang.String" length="30"/>
 		<property name="bankAccntName" column="BANK_ACCNT_NAME" type="java.lang.String" length="50"/>
@@ -44,6 +44,7 @@
 		<property name="providerTelephone" column="PROVIDER_TELEPHONE" type="java.lang.String" length="15"/>
 		<property name="quotationId" column="QUOTATION_ID" type="java.lang.String" length="30"/>
 		<property name="refNumber" column="REF_NUMBER" type="java.lang.String" length="30"/>
+		<property name="status" column="STATUS" type="java.lang.String" length="30"/>
 		<property name="totalAmt" column="TOTAL_AMT" type="java.lang.Double"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
@@ -51,10 +52,10 @@
 
 	<sql-query name="usrInvoice.selectAll">
 	<![CDATA[
-		SELECT INVOICE_ID,
+		SELECT USER_ID,
+		       INVOICE_ID,
 		       INVOICE_NUMBER,
 		       TO_CHAR(ISSUE_DATE, 'yyyymmddhh24miss') AS ISSUE_DATE,
-		       USER_ID,
 		       ADDITIONAL_REMARK,
 		       BANK_ACCNT_ID,
 		       BANK_ACCNT_NAME,
@@ -86,6 +87,7 @@
 		       PROVIDER_TELEPHONE,
 		       QUOTATION_ID,
 		       REF_NUMBER,
+		       STATUS,
 		       TOTAL_AMT,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID
@@ -101,10 +103,10 @@
 	<sql-query name="usrInvoice.insert">
 	<![CDATA[
 		INSERT INTO USR_INVOICE (
+		       USER_ID,
 		       INVOICE_ID,
 		       INVOICE_NUMBER,
 		       ISSUE_DATE,
-		       USER_ID,
 		       ADDITIONAL_REMARK,
 		       BANK_ACCNT_ID,
 		       BANK_ACCNT_NAME,
@@ -136,15 +138,16 @@
 		       PROVIDER_TELEPHONE,
 		       QUOTATION_ID,
 		       REF_NUMBER,
+		       STATUS,
 		       TOTAL_AMT,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID
 		       )
 		VALUES (
+		       ${USER_ID},
 		       ${INVOICE_ID},
 		       ${INVOICE_NUMBER},
 		       ${ISSUE_DATE},
-		       ${USER_ID},
 		       ${ADDITIONAL_REMARK},
 		       ${BANK_ACCNT_ID},
 		       ${BANK_ACCNT_NAME},
@@ -176,6 +179,7 @@
 		       ${PROVIDER_TELEPHONE},
 		       ${QUOTATION_ID},
 		       ${REF_NUMBER},
+		       ${STATUS},
 		       ${TOTAL_AMT},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID}
@@ -186,9 +190,9 @@
 	<sql-query name="usrInvoice.update">
 	<![CDATA[
 		UPDATE USR_INVOICE
-		   SET INVOICE_NUMBER = ${INVOICE_NUMBER},
+		   SET USER_ID = ${USER_ID},
+		       INVOICE_NUMBER = ${INVOICE_NUMBER},
 		       ISSUE_DATE = ${ISSUE_DATE},
-		       USER_ID = ${USER_ID},
 		       ADDITIONAL_REMARK = ${ADDITIONAL_REMARK},
 		       BANK_ACCNT_ID = ${BANK_ACCNT_ID},
 		       BANK_ACCNT_NAME = ${BANK_ACCNT_NAME},
@@ -220,6 +224,7 @@
 		       PROVIDER_TELEPHONE = ${PROVIDER_TELEPHONE},
 		       QUOTATION_ID = ${QUOTATION_ID},
 		       REF_NUMBER = ${REF_NUMBER},
+		       STATUS = ${STATUS},
 		       TOTAL_AMT = ${TOTAL_AMT},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID}

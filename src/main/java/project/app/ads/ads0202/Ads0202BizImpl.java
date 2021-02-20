@@ -54,11 +54,13 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 		String userId = (String)session.getAttribute("UserId");
 		String fromDate = req.getValue("fromDate");
 		String toDate = req.getValue("toDate");
+		String customerName = req.getValue("customerName");
 
 		try {
 			qa.setObject("userId", userId);
 			qa.setObject("fromDate", fromDate);
 			qa.setObject("toDate", toDate);
+			qa.setObject("customerName", customerName);
 			qa.setPagination(true);
 
 			paramEntity.setAjaxResponseDataSet(usrQuotationDao.getDataSetBySearchCriteria(qa));

@@ -587,6 +587,24 @@ public class CommonUtil extends StringUtils {
 		return base32.encodeToString(bytes);
 	}
 
+	public static String getSearchCriteriaWhereClauseString(String value) {
+		if (isBlank(value)) {return " = ''";}
+
+		if (contains(value, "*")) {
+			value = replace(value, "*", "%");
+			return " like '"+value+"'";
+		} else if (contains(value, ",")) {
+			String ids = "", values[] = splitWithTrim(value, ",");
+
+			for (String id : values) {
+				ids += isBlank(ids) ? "'"+id+"'" : ",'"+id+"'";
+			}
+			return " in ("+ids+")";
+		} else {
+			return " like '"+value+"%'";
+		}
+	}
+
 	public static String stackTraceToString(Throwable ex) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		PrintStream p = new PrintStream(bos);

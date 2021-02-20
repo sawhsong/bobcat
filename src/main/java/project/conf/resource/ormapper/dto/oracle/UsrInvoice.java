@@ -17,14 +17,14 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	/**
 	 * Columns
 	 */
+	private String userId;
+	private String USER_ID;
 	private String invoiceId;
 	private String INVOICE_ID;
 	private String invoiceNumber;
 	private String INVOICE_NUMBER;
 	private Date issueDate;
 	private String ISSUE_DATE;
-	private String userId;
-	private String USER_ID;
 	private String additionalRemark;
 	private String ADDITIONAL_REMARK;
 	private String bankAccntId;
@@ -87,6 +87,8 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	private String QUOTATION_ID;
 	private String refNumber;
 	private String REF_NUMBER;
+	private String status;
+	private String STATUS;
 	private double totalAmt;
 	private String TOTAL_AMT;
 	private Date updateDate;
@@ -132,6 +134,15 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	/**
 	 * Accessors
 	 */
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) throws Exception {
+		this.userId = userId;
+		setValueFromAccessor("USER_ID", userId);
+	}
+
 	public String getInvoiceId() {
 		return invoiceId;
 	}
@@ -157,15 +168,6 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	public void setIssueDate(Date issueDate) throws Exception {
 		this.issueDate = issueDate;
 		setValueFromAccessor("ISSUE_DATE", CommonUtil.toString(issueDate));
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) throws Exception {
-		this.userId = userId;
-		setValueFromAccessor("USER_ID", userId);
 	}
 
 	public String getAdditionalRemark() {
@@ -447,6 +449,15 @@ public class UsrInvoice extends BaseDto implements Serializable {
 		setValueFromAccessor("REF_NUMBER", refNumber);
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) throws Exception {
+		this.status = status;
+		setValueFromAccessor("STATUS", status);
+	}
+
 	public double getTotalAmt() {
 		return totalAmt;
 	}
@@ -609,10 +620,10 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	public String toString() {
 		String str = "";
 
+		str += "userId : "+userId+"\n";
 		str += "invoiceId : "+invoiceId+"\n";
 		str += "invoiceNumber : "+invoiceNumber+"\n";
 		str += "issueDate : "+issueDate+"\n";
-		str += "userId : "+userId+"\n";
 		str += "additionalRemark : "+additionalRemark+"\n";
 		str += "bankAccntId : "+bankAccntId+"\n";
 		str += "bankAccntName : "+bankAccntName+"\n";
@@ -644,6 +655,7 @@ public class UsrInvoice extends BaseDto implements Serializable {
 		str += "providerTelephone : "+providerTelephone+"\n";
 		str += "quotationId : "+quotationId+"\n";
 		str += "refNumber : "+refNumber+"\n";
+		str += "status : "+status+"\n";
 		str += "totalAmt : "+totalAmt+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
@@ -659,10 +671,10 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	public String toXmlString() {
 		String str = "";
 
+		str += "<column name=\"userId\" value=\""+userId+"\">";
 		str += "<column name=\"invoiceId\" value=\""+invoiceId+"\">";
 		str += "<column name=\"invoiceNumber\" value=\""+invoiceNumber+"\">";
 		str += "<column name=\"issueDate\" value=\""+issueDate+"\">";
-		str += "<column name=\"userId\" value=\""+userId+"\">";
 		str += "<column name=\"additionalRemark\" value=\""+additionalRemark+"\">";
 		str += "<column name=\"bankAccntId\" value=\""+bankAccntId+"\">";
 		str += "<column name=\"bankAccntName\" value=\""+bankAccntName+"\">";
@@ -694,6 +706,7 @@ public class UsrInvoice extends BaseDto implements Serializable {
 		str += "<column name=\"providerTelephone\" value=\""+providerTelephone+"\">";
 		str += "<column name=\"quotationId\" value=\""+quotationId+"\">";
 		str += "<column name=\"refNumber\" value=\""+refNumber+"\">";
+		str += "<column name=\"status\" value=\""+status+"\">";
 		str += "<column name=\"totalAmt\" value=\""+totalAmt+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
@@ -709,10 +722,10 @@ public class UsrInvoice extends BaseDto implements Serializable {
 	public String toJsonString() {
 		String str = "";
 
+		str += "\"userId\":\""+userId+"\", ";
 		str += "\"invoiceId\":\""+invoiceId+"\", ";
 		str += "\"invoiceNumber\":\""+invoiceNumber+"\", ";
 		str += "\"issueDate\":\""+issueDate+"\", ";
-		str += "\"userId\":\""+userId+"\", ";
 		str += "\"additionalRemark\":\""+additionalRemark+"\", ";
 		str += "\"bankAccntId\":\""+bankAccntId+"\", ";
 		str += "\"bankAccntName\":\""+bankAccntName+"\", ";
@@ -744,6 +757,7 @@ public class UsrInvoice extends BaseDto implements Serializable {
 		str += "\"providerTelephone\":\""+providerTelephone+"\", ";
 		str += "\"quotationId\":\""+quotationId+"\", ";
 		str += "\"refNumber\":\""+refNumber+"\", ";
+		str += "\"status\":\""+status+"\", ";
 		str += "\"totalAmt\":\""+totalAmt+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";

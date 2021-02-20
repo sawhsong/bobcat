@@ -63,6 +63,9 @@
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
 			<col width="8%"/>
+			<col width="20%"/>
+			<col width="8%"/>
+			<col width="15%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
@@ -74,6 +77,9 @@
 				<ui:text name="toDate" className="Ct hor" value="<%=dateTo%>" style="width:90px" option="date"/>
 				<ui:icon id="icnToDate" className="fa-calendar hor"/>
 			</td>
+			<th class="thSearch rt">Customer Name</th>
+			<td class="tdSearch"><ui:text name="customerName"/></td>
+			<td class="tdSearch"></td>
 		</tr>
 	</table>
 </div>

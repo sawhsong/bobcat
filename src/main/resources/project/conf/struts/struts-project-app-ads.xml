@@ -13,6 +13,7 @@
         <action class="project.app.ads.ads0204.Ads0204Action" method="{1}" name="0204/*">
             <result name="list" type="debugDispatcherResult">/project/app/ads/ads0204/Ads0204List.jsp</result>
             <result name="edit" type="debugDispatcherResult">/project/app/ads/ads0204/Ads0204EditPop.jsp</result>
+            <result name="preview" type="debugDispatcherResult">/project/app/ads/ads0204/Ads0204PreviewPop.jsp</result>
         </action>
     </package>
 </struts>

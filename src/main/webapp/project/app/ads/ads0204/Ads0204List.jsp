@@ -9,6 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String dateFrom = CommonUtil.getCalcDate("M", CommonUtil.getSysdate(dateFormat), dateFormat, -1);
+	String dateTo = CommonUtil.getSysdate(dateFormat);
 %>
 <%/************************************************************************************************
 * HTML
@@ -49,8 +52,9 @@
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
 			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -58,11 +62,23 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="10%"/>
+			<col width="8%"/>
+			<col width="20%"/>
+			<col width="8%"/>
+			<col width="15%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thSearch rt"></th>
+			<th class="thSearch rt">Quotation Date</th>
+			<td class="tdSearch">
+				<ui:text name="fromDate" className="Ct hor" value="<%=dateFrom%>" style="width:90px" option="date"/>
+				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="toDate" className="Ct hor" value="<%=dateTo%>" style="width:90px" option="date"/>
+				<ui:icon id="icnToDate" className="fa-calendar hor"/>
+			</td>
+			<th class="thSearch rt">Customer Name</th>
+			<td class="tdSearch"><ui:text name="customerName"/></td>
 			<td class="tdSearch"></td>
 		</tr>
 	</table>
@@ -81,17 +97,35 @@
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
+			<col width="2%"/>
+			<col width="5%"/>
+			<col width="6%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="4%"/>
+			<col width="12%"/>
+			<col width="13%"/>
 			<col width="*"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
-				<th class="thGrid"></th>
+				<th class="thGrid">Date</th>
+				<th class="thGrid">Number</th>
+				<th class="thGrid">Net Amount</th>
+				<th class="thGrid">GST Amount</th>
+				<th class="thGrid">Total Amount</th>
+				<th class="thGrid">Items</th>
+				<th class="thGrid">Customer Name</th>
+				<th class="thGrid">Customer Email</th>
+				<th class="thGrid">Description</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="11"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

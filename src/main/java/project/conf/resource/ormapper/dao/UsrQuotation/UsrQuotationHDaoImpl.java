@@ -80,10 +80,12 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 		String userId = (String)queryAdvisor.getObject("userId");
 		String fromDate = (String)queryAdvisor.getObject("fromDate");
 		String toDate = (String)queryAdvisor.getObject("toDate");
+		String customerName = (String)queryAdvisor.getObject("customerName");
 
 		queryAdvisor.addWhereClause("uqm.user_id = '"+userId+"'");
 		queryAdvisor.addAutoFillCriteria(fromDate, "trunc(uqm.issue_date) >= trunc(to_date('"+fromDate+"', '"+dateFormat+"'))");
 		queryAdvisor.addAutoFillCriteria(toDate, "trunc(uqm.issue_date) <= trunc(to_date('"+toDate+"', '"+dateFormat+"'))");
+		queryAdvisor.addAutoFillCriteria(customerName, "lower(uqm.client_name) "+CommonUtil.getSearchCriteriaWhereClauseString(customerName));
 
 		queryAdvisor.addOrderByClause("uqm.issue_date desc");
 

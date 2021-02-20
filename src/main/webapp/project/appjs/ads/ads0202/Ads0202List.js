@@ -40,7 +40,11 @@ $(function() {
 
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
-		if (code == 13) {}
+		if (code == 13) {
+			if ($(element).attr("name") == "customerName") {
+				doSearch();
+			}
+		}
 		if (code == 9) {}
 	});
 
