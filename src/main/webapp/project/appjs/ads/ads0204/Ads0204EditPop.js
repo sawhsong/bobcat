@@ -20,7 +20,7 @@ $(function() {
 		if ("disabled" == $(this).attr("disabled")) {
 			return;
 		}
-		parent.getPreview(quotationId);
+		parent.getPreview(invoiceId);
 	});
 
 	$("#btnSave").click(function(event) {
@@ -77,7 +77,7 @@ $(function() {
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 
-					quotationId = ds.getValue(0, "QUOTATION_ID");
+					invoiceId = ds.getValue(0, "INVOICE_ID");
 
 					toggleButtonStatus();
 					loadMasterInfo();
@@ -94,7 +94,7 @@ $(function() {
 			commonJs.doSimpleProcess({
 				url:"/ads/0204/getMyInfo.do",
 				noForm:true,
-				data:{quotationId:quotationId},
+				data:{invoiceId:invoiceId},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 					setMyInfo(ds);
@@ -110,7 +110,7 @@ $(function() {
 			commonJs.doSimpleProcess({
 				url:"/ads/0204/getOrgInfo.do",
 				noForm:true,
-				data:{quotationId:quotationId},
+				data:{invoiceId:invoiceId},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 					setOrgInfo(ds);
@@ -139,11 +139,11 @@ $(function() {
 			$("#imgLogo").remove();
 		}
 
-		if (!commonJs.isBlank(quotationId)) {
+		if (!commonJs.isBlank(invoiceId)) {
 			commonJs.doSimpleProcess({
 				url:"/ads/0204/doRemoveLogo.do",
 				noForm:true,
-				data:{quotationId:quotationId},
+				data:{invoiceId:invoiceId},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
 				}
@@ -151,8 +151,56 @@ $(function() {
 		}
 	});
 
+	$("#btnCreateFromQuotation").click(function() {
+		if ("disabled" == $(this).attr("disabled")) {
+			return;
+		}
+
+		if (commonJs.isBlank(invoiceId)) {
+			parent.popupLookup = parent.commonJs.openPopup({
+				popupId:"QuotationLookup",
+				url:"/common/lookup/getDefault.do",
+				data:{
+					lookupType:"quotation",
+					keyFieldId:"quotationId",
+					valueFieldId:"quotationNumber",
+					popupToSetValue:"parent.popup",
+					popupName:"parent.popupLookup",
+					lookupValue:$("#quotationNumber").val(),
+					callback:"createFromQuotation"
+				},
+				header:"Quotation Lookup",
+				width:1300,
+				height:680
+			});
+		}
+	});
+
+	$("#icnBankAccntSearch").click(function() {
+		parent.popupLookup = parent.commonJs.openPopup({
+			popupId:"BankAccntLookup",
+			url:"/common/lookup/getDefault.do",
+			data:{
+				lookupType:"bankAccnt",
+				keyFieldId:"bankAccntId",
+				valueFieldId:"bankAccntName",
+				popupToSetValue:"parent.popup",
+				popupName:"parent.popupLookup",
+				lookupValue:$("#bankAccntName").val(),
+				callback:"setBankInfo"
+			},
+			header:"Bank Account Lookup",
+			width:1200,
+			height:680
+		});
+	});
+
 	$("#icnIssueDate").click(function(event) {
 		commonJs.openCalendar(event, "issueDate");
+	});
+
+	$("#icnPaymentDueDate").click(function(event) {
+		commonJs.openCalendar(event, "paymentDueDate");
 	});
 
 	clearValueOnBlur = function(jqObj) {
@@ -233,17 +281,141 @@ $(function() {
 		if (code == 13) {}
 		onEditDataEntry($(element));
 	});
+
 	/*!
 	 * process
 	 */
+	createFromQuotation = () => {
+		var quotationId = $("#quotationId").val();
+
+		if (commonJs.isNotBlank(quotationId)) {
+			loadQuotationMasterInfo(quotationId);
+			loadQuotationDetailInfo(quotationId);
+		}
+	};
+
+	loadQuotationMasterInfo = function(quotationId) {
+		commonJs.showProcMessageOnElement("divFixedPanelPopup");
+
+		setTimeout(function() {
+			commonJs.doSimpleProcess({
+				url:"/ads/0204/getQuotationMasterInfo.do",
+				noForm:true,
+				data:{quotationId:quotationId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					var logoPath = "";
+
+					for (var i=0; i<ds.getColumnCnt(); i++) {
+						var eleId = commonJs.toCamelCase(ds.getName(i));
+
+						if (commonJs.isIn(eleId, ["providerLogoPath"])) {
+							logoPath = ds.getValue(0, "PROVIDER_LOGO_PATH");
+							continue;
+						}
+
+						if (commonJs.isIn(eleId, ["description"])) {
+							$("#descriptionM").val(ds.getValue(0, ds.getName(i)));
+							continue;
+						}
+
+						if (commonJs.isIn(eleId, ["issueDate", "quotationId", "quotationNumber"])) {
+							continue;
+						}
+
+						$("#"+eleId).val(ds.getValue(0, ds.getName(i)));
+					}
+
+					if (commonJs.isNotBlank(logoPath)) {
+						if ($("#imgLogo").length > 0) {
+							$("#imgLogo").remove();
+						}
+
+						$("#tdLogo").append(commonJs.getUiImage({
+							id:"imgLogo",
+							src:logoPath,
+							idDisabled:true,
+							style:"width:250px;height:80px;"
+						}));
+					}
+
+					setFieldFormat();
+
+					commonJs.hideProcMessageOnElement("divFixedPanelPopup");
+				}
+			});
+		}, 400);
+	};
+
+	loadQuotationDetailInfo = function(quotationId) {
+		commonJs.showProcMessageOnElement("divDataArea");
+
+		setTimeout(function() {
+			commonJs.doSimpleProcess({
+				url:"/ads/0204/getQuotationDetailInfo.do",
+				noForm:true,
+				data:{quotationId:quotationId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					$("#ulDetailHolder").html("");
+
+					for (var i=0; i<ds.getRowCnt(); i++) {
+						var rowIdx = delimiter+i;
+
+						$("#btnAdd").trigger("click");
+
+						$("[name=rowIndex"+rowIdx+"]").val(ds.getValue(i, "ROW_INDEX"));
+						$("[name=unit"+rowIdx+"]").val(ds.getValue(i, "UNIT"));
+						$("[name=price"+rowIdx+"]").val(ds.getValue(i, "AMT_PER_UNIT"));
+						$("[name=amount"+rowIdx+"]").val(ds.getValue(i, "ITEM_AMT"));
+						$("[name=descriptionD"+rowIdx+"]").val(ds.getValue(i, "DESCRIPTION"));
+					}
+
+					commonJs.hideProcMessageOnElement("divDataArea");
+				}
+			});
+		}, 400);
+	};
+
+	setBankInfo = () => {
+		var bankAccntId = $("#bankAccntId").val();
+
+		if (commonJs.isNotBlank(bankAccntId)) {
+			commonJs.doSimpleProcess({
+				url:"/ads/0204/getBankAccountInfo.do",
+				noForm:true,
+				data:{bankAccntId:bankAccntId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+
+					$("#bankCode").val(ds.getValue(0, "BANK_CODE"));
+					commonJs.refreshBootstrapSelectbox("bankCode");
+					$("#bsb").val(commonJs.getFormatString(ds.getValue(0, "BSB"), "??? ???"));
+					$("#bankAccntNumber").val(ds.getValue(0, "ACCNT_NUMBER"));
+				}
+			});
+		}
+	};
+
+	setSelectbox = function() {
+		var options = {};
+		$("select.bootstrapSelect").each(function(index) {
+			options.container = "body";
+			options.style = $(this).attr("class");
+			$(this).selectpicker(options);
+		});
+	};
+
 	setFieldFormat = function() {
 		commonJs.setFieldDateMask("issueDate");
+		commonJs.setFieldDateMask("paymentDueDate");
 		commonJs.setFieldNumberMask("providerAbn", "99 999 999 999");
 		commonJs.setFieldNumberMask("providerAcn", "999 999 999");
 		commonJs.setFieldNumberMask("providerTelephone", "99 9999 9999");
 		commonJs.setFieldNumberMask("providerMobile", "9999 999 999");
 		commonJs.setFieldNumberMask("clientTelephone", "99 9999 9999");
 		commonJs.setFieldNumberMask("clientMobile", "9999 999 999");
+		commonJs.setFieldNumberMask("bsb", "999 999");
 		$("#netAmt").number(true, 2);
 		$("#gstAmt").number(true, 2);
 		$("#totalAmt").number(true, 2);
@@ -253,7 +425,7 @@ $(function() {
 	};
 
 	loadDefaultMyInfo = function() {
-		if (commonJs.isBlank(quotationId)) {
+		if (commonJs.isBlank(invoiceId)) {
 			$("#btnBringMyInfo").trigger("click");
 		}
 	};
@@ -299,39 +471,40 @@ $(function() {
 		commonJs.hideProcMessageOnElement("divFixedPanelPopup");
 	};
 
-	loadQuotationNumber = function() {
-		if (commonJs.isBlank(quotationId)) {
+	loadInvoiceNumber = function() {
+		if (commonJs.isBlank(invoiceId)) {
 			commonJs.doSimpleProcess({
-				url:"/ads/0204/getQuotationNumber.do",
+				url:"/ads/0204/getInvoiceNumber.do",
 				noForm:true,
-				data:{quotationId:quotationId},
+				data:{invoiceId:invoiceId},
 				onSuccess:function(result) {
 					var ds = result.dataSet;
-					$("#quotationNumber").val(ds.getValue(0, "Number"));
+					$("#invoiceNumber").val(ds.getValue(0, "Number"));
+					$("#refNumber").val(ds.getValue(0, "Number"));
 				}
 			});
 		}
 	};
 
 	loadMasterInfo = function() {
-		if (!commonJs.isBlank(quotationId)) {
+		if (!commonJs.isBlank(invoiceId)) {
 			commonJs.showProcMessageOnElement("divFixedPanelPopup");
 
 			setTimeout(function() {
 				commonJs.doSimpleProcess({
-					url:"/ads/0204/getQuotationMasterInfo.do",
+					url:"/ads/0204/getInvoiceMasterInfo.do",
 					noForm:true,
-					data:{quotationId:quotationId},
+					data:{invoiceId:invoiceId},
 					onSuccess:function(result) {
 						var ds = result.dataSet;
-						setQuotationMasterInfo(ds);
+						setInvoiceMasterInfo(ds);
 					}
 				});
 			}, 300);
 		}
 	};
 
-	setQuotationMasterInfo = function (ds) {
+	setInvoiceMasterInfo = function (ds) {
 		var logoPath = "";
 
 		for (var i=0; i<ds.getColumnCnt(); i++) {
@@ -349,6 +522,29 @@ $(function() {
 
 			if (commonJs.isIn(eleId, ["issueDate"])) {
 				$("#issueDate").val(commonJs.getDateTimeMask(ds.getValue(0, ds.getName(i)), dateFormat));
+				continue;
+			}
+
+			if (commonJs.isIn(eleId, ["paymentDueDate"])) {
+				$("#paymentDueDate").val(commonJs.getDateTimeMask(ds.getValue(0, ds.getName(i)), dateFormat));
+				continue;
+			}
+
+			if (commonJs.isIn(eleId, ["status"])) {
+				$("#status").val(ds.getValue(0, "STATUS"));
+				commonJs.refreshBootstrapSelectbox("status");
+				continue;
+			}
+
+			if (commonJs.isIn(eleId, ["paymentMethod"])) {
+				$("#paymentMethod").val(ds.getValue(0, "PAYMENT_METHOD"));
+				commonJs.refreshBootstrapSelectbox("paymentMethod");
+				continue;
+			}
+
+			if (commonJs.isIn(eleId, ["bankCode"])) {
+				$("#bankCode").val(ds.getValue(0, "BANK_CODE"));
+				commonJs.refreshBootstrapSelectbox("bankCode");
 				continue;
 			}
 
@@ -374,24 +570,24 @@ $(function() {
 	};
 
 	loadDetailInfo = function() {
-		if (!commonJs.isBlank(quotationId)) {
+		if (!commonJs.isBlank(invoiceId)) {
 			commonJs.showProcMessageOnElement("divDataArea");
 
 			setTimeout(function() {
 				commonJs.doSimpleProcess({
-					url:"/ads/0204/getQuotationDetailInfo.do",
+					url:"/ads/0204/getInvoiceDetailInfo.do",
 					noForm:true,
-					data:{quotationId:quotationId},
+					data:{invoiceId:invoiceId},
 					onSuccess:function(result) {
 						var ds = result.dataSet;
-						setQuotationDetailInfo(ds);
+						setInvoiceDetailInfo(ds);
 					}
 				});
 			}, 300);
 		}
 	};
 
-	setQuotationDetailInfo = function (ds) {
+	setInvoiceDetailInfo = function (ds) {
 		$("#ulDetailHolder").html("");
 
 		for (var i=0; i<ds.getRowCnt(); i++) {
@@ -399,7 +595,7 @@ $(function() {
 
 			$("#btnAdd").trigger("click");
 
-			$("[name=quotationDId"+rowIdx+"]").val(ds.getValue(i, "QUOTATION_D_ID"));
+			$("[name=invoiceDId"+rowIdx+"]").val(ds.getValue(i, "INVOICE_D_ID"));
 			$("[name=rowIndex"+rowIdx+"]").val(ds.getValue(i, "ROW_INDEX"));
 			$("[name=unit"+rowIdx+"]").val(ds.getValue(i, "UNIT"));
 			$("[name=price"+rowIdx+"]").val(ds.getValue(i, "AMT_PER_UNIT"));
@@ -433,8 +629,12 @@ $(function() {
 	};
 
 	toggleButtonStatus = function() {
-		if (commonJs.isBlank(quotationId)) {
+		if (commonJs.isBlank(invoiceId)) {
 			$("#btnPreview").attr("disabled", true);
+			$("#btnCreateFromQuotation").attr("disabled", false);
+		} else {
+			$("#btnPreview").attr("disabled", false);
+			$("#btnCreateFromQuotation").attr("disabled", true);
 		}
 	};
 
@@ -473,6 +673,7 @@ $(function() {
 	 */
 	$(document).click(function(event) {
 		var obj = event.target;
+		var amt = 0;
 
 		if ($(obj).is("i") && $(obj).parent("th").hasClass("deleteButton")) {
 			$("#ulDetailHolder").find(".dummyDetail").each(function(index) {
@@ -481,7 +682,11 @@ $(function() {
 				}
 
 				setGridHeader();
+
+				amt += commonJs.toNumber($("#amount"+delimiter+index).val());
 			});
+
+			$("#netAmt").val(amt);
 		}
 
 		if ($(obj).is($("input:text")) && $(obj).hasClass("txtEn")) {
@@ -491,11 +696,12 @@ $(function() {
 
 	$(window).load(function() {
 		commonJs.setEvent("blur", [$("#providerOrgName")], clearValueOnBlur);
+		setSelectbox();
 		setFieldFormat();
 		setSortable();
 		toggleButtonStatus();
 		setTimeout(function() {
-			loadQuotationNumber();
+			loadInvoiceNumber();
 			loadDefaultMyInfo();
 			loadMasterInfo();
 			loadDetailInfo();

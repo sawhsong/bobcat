@@ -39,19 +39,14 @@ public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String langCode = (String)session.getAttribute("langCode");
 		String userId = (String)session.getAttribute("UserId");
-		DataSet userBankAccnts = new DataSet();
 
 		try {
-			queryAdvisor.setObject("langCode", langCode);
 			queryAdvisor.setObject("userId", userId);
 			queryAdvisor.setObject("bankCode", requestDataSet.getValue("bankCode"));
 			queryAdvisor.setPagination(false);
 
-			userBankAccnts= usrBankAccntDao.getDataSetBySearchCriteria(queryAdvisor);
-
-			paramEntity.setAjaxResponseDataSet(userBankAccnts);
+			paramEntity.setAjaxResponseDataSet(usrBankAccntDao.getDataSetBySearchCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {

@@ -9,8 +9,9 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	String quotationId = requestDataSet.getValue("quotationId");
+	String invoiceId = requestDataSet.getValue("invoiceId");
 	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String paymentDueDate = CommonUtil.getCalcDate("D", CommonUtil.getSysdate(dateFormat), dateFormat, 30);
 %>
 <%/************************************************************************************************
 * HTML
@@ -36,7 +37,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var quotationId = "<%=quotationId%>";
+var invoiceId = "<%=invoiceId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -58,6 +59,7 @@ var quotationId = "<%=quotationId%>";
 			<ui:button id="btnBringOrgInfo" caption="Bring Org Info" iconClass="fa-reply-all"/>
 			<ui:button id="btnDiscardBasicInfo" caption="Discard Basic Info" iconClass="fa-trash"/>
 			<ui:button id="btnRemoveLogo" caption="Remove Logo" iconClass="fa-trash"/>
+			<ui:button id="btnCreateFromQuotation" caption="Create From Quotation" iconClass="fa-link"/>
 		</ui:buttonGroup>
 	</div>
 	<div id="divButtonAreaRight">
@@ -72,21 +74,21 @@ var quotationId = "<%=quotationId%>";
 	<table class="tblEdit">
 		<caption>Supplier Information</caption>
 		<colgroup>
-			<col width="7%"/>
+			<col width="8%"/>
+			<col width="16%"/>
+			<col width="8%"/>
 			<col width="19%"/>
 			<col width="8%"/>
 			<col width="16%"/>
-			<col width="8%"/>
-			<col width="16%"/>
-			<col width="8%"/>
+			<col width="9%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
 			<td class="tdEdit" colspan="2" rowspan="3" id="tdLogo"></td>
-			<th class="thEdit rt">Quotation ID</th>
-			<td class="tdEdit"><ui:text name="quotationId" status="display"/></td>
+			<th class="thEdit rt">Invoice ID</th>
+			<td class="tdEdit"><ui:text name="invoiceId" status="display"/></td>
 			<th class="thEdit rt mandatory">Number</th>
-			<td class="tdEdit"><ui:text name="quotationNumber" checkName="Quotation Number" options="mandatory"/></td>
+			<td class="tdEdit"><ui:text name="invoiceNumber" checkName="Invoice Number" options="mandatory"/></td>
 			<th class="thEdit rt mandatory">Issue Date</th>
 			<td class="tdEdit">
 				<ui:text name="issueDate" className="Ct hor" value="<%=CommonUtil.getSysdate(dateFormat)%>" style="width:90px" option="date"/>
@@ -116,6 +118,42 @@ var quotationId = "<%=quotationId%>";
 			<td class="tdEdit"><ui:text name="providerMobile"/></td>
 			<th class="thEdit rt">Address</th>
 			<td class="tdEdit" colspan="3"><ui:text name="providerAddress"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Quote Number</th>
+			<td class="tdEdit"><ui:hidden name="quotationId"/><ui:text name="quotationNumber" status="disabled"/></td>
+			<th class="thEdit rt mandatory">Status</th>
+			<td class="tdEdit"><ui:ccselect name="status" codeType="INVOICE_STATUS" caption="==Select==" checkName="Status" options="mandatory"/></td>
+			<th class="thEdit rt">Payment Due</th>
+			<td class="tdEdit">
+				<ui:text name="paymentDueDate" className="Ct hor" value="<%=paymentDueDate%>" style="width:90px" option="date"/>
+				<ui:icon id="icnPaymentDueDate" className="fa-calendar hor"/>
+			</td>
+			<th class="thEdit rt mandatory">Pay Method</th>
+			<td class="tdEdit"><ui:ccselect name="paymentMethod" codeType="INVOICE_PAYMENT_TYPE" caption="==Select==" checkName="Payment Method" options="mandatory"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Bank Account</th>
+			<td class="tdEdit">
+				<ui:hidden name="bankAccntId"/><ui:text name="bankAccntName" className="hor" status="disabled" style="width:220px"/>
+				<ui:icon id="icnBankAccntSearch" className="fa-search hor"/>
+			</td>
+			<th class="thEdit rt">Bank Code</th>
+			<td class="tdEdit"><ui:ccselect name="bankCode" codeType="BANK_TYPE" caption="==Select==" attribute="data-width:100%"/></td>
+			<th class="thEdit rt">BSB</th>
+			<td class="tdEdit"><ui:text name="bsb"/></td>
+			<th class="thEdit rt">Account Number</th>
+			<td class="tdEdit"><ui:text name="bankAccntNumber"/></td>
+		</tr>
+		<tr>
+			<th class="thEdit rt">Ref Number</th>
+			<td class="tdEdit"><ui:text name="refNumber"/></td>
+			<th class="thEdit rt"></th>
+			<td class="tdEdit"></td>
+			<th class="thEdit rt"></th>
+			<td class="tdEdit"></td>
+			<th class="thEdit rt"></th>
+			<td class="tdEdit"></td>
 		</tr>
 	</table>
 	<div class="verGap4"></div>
@@ -148,7 +186,7 @@ var quotationId = "<%=quotationId%>";
 	</div>
 	<div style="float:right;width:59%">
 		<table class="tblInform">
-			<caption>Quotation Information</caption>
+			<caption>Invoice Information</caption>
 			<colgroup>
 				<col width="13%"/>
 				<col width="20%"/>
@@ -247,7 +285,7 @@ var quotationId = "<%=quotationId%>";
 		<tr class="noBorderAll">
 			<th id="thDragHander" class="thGrid dragHandler"><ui:icon id="iDragHandler" className="fa-lg fa-sort"/></th>
 			<th id="thDeleteButton" class="thGrid deleteButton"><i id="iDeleteButton" class="fa fa-lg fa-times"></i></th>
-			<td class="tdGrid Lt"><ui:hidden name="quotationDId"/><ui:text name="rowIndex" className="Ct" status="disabled"/></td>
+			<td class="tdGrid Lt"><ui:hidden name="invoiceDId"/><ui:text name="rowIndex" className="Ct" status="disabled"/></td>
 			<td class="tdGrid Ct"><ui:text name="unit" className="Rt" checkName="Unit" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="price" className="Rt" checkName="Price" options="mandatory" option="numeric"/></td>
 			<td class="tdGrid Ct"><ui:text name="amount" className="Rt" checkName="Amount" options="mandatory" option="numeric" status="disabled"/></td>

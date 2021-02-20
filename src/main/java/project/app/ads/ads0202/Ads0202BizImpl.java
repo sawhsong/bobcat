@@ -261,6 +261,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 				usrQuotation.setQuotationId(quotationId);
 				usrQuotation.setUpdateUserId(userId);
 				usrQuotation.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+				usrQuotation.addUpdateColumnFromField();
 
 				result = usrQuotationDao.update(quotationId, usrQuotation, detail);
 			}

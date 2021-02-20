@@ -93,9 +93,9 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 	}
 
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
-		String langCode = (String)queryAdvisor.getObject("langCode");
 		String userId = (String)queryAdvisor.getObject("userId");
 		String bankCode = (String)queryAdvisor.getObject("bankCode");
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
 
 		queryAdvisor.addVariable("langCode", langCode);
 		queryAdvisor.addAutoFillCriteria(bankCode, "bank_code = '"+bankCode+"'");

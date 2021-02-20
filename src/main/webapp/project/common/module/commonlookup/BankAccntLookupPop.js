@@ -1,5 +1,5 @@
 /**
- * OrganisationLookupPop.js
+ * BankAccntLookupPop.js
  */
 $(function() {
 	/*!
@@ -17,6 +17,15 @@ $(function() {
 		parent.popupLookup.close();
 	});
 
+	$("#bankCode").change(function(event) {
+		doSearch();
+	});
+
+	$(document).keydown(function(event) {
+		var code = event.keyCode || event.which, element = event.target;
+		if (code == 13) {}
+		if (code == 9) {}
+	});
 	/*!
 	 * process
 	 */
@@ -24,12 +33,12 @@ $(function() {
 		commonJs.showProcMessageOnElement("divScrollablePanelPopup");
 
 		commonJs.doSearch({
-			url:"/common/lookup/getOrganisationLookup.do",
-			onSuccess:renderDataGridTable
+			url:"/common/lookup/getBankAccntLookup.do",
+			onSuccess:renderDataGrid
 		});
 	};
 
-	renderDataGridTable = function(result) {
+	renderDataGrid = function(result) {
 		var ds = result.dataSet;
 		var html = "";
 
@@ -40,21 +49,22 @@ $(function() {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ORG_ID")));
-
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(ds.getValue(i, "LEGAL_NAME"), 60)).setScript("setValue('"+ds.getValue(i, "ORG_ID")+"', '"+ds.getValue(i, "LEGAL_NAME")+"')");
+				uiAnc.setText(ds.getValue(i, "BANK_NAME")).setScript("setValue('"+ds.getValue(i, "BANK_ACCNT_ID")+"', '"+ds.getValue(i, "BANK_NAME")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "ABN"), "?? ??? ??? ???")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.abbreviate(ds.getValue(i, "ADDRESS"), 60)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "BSB"), "??? ???")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NUMBER")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "ACCNT_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
 
 				html += gridTr.toHtmlString();
 			}
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:4").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:6").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
@@ -63,9 +73,7 @@ $(function() {
 		$("#tblGrid").fixedHeaderTable({
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
-			isPageable:true,
-			isFilter:false,
-			filterColumn:[],
+			isPageable:false,
 			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
@@ -96,35 +104,6 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#orgName").val(lookupValue);
-		$("#orgName").focus();
-
-		commonJs.setAutoComplete($("#orgName"), {
-			method:"getOrgName",
-			label:"org_name",
-			value:"org_name",
-			focus: function(event, ui) {
-				$("#orgName").val(ui.item.label);
-				return false;
-			},
-			select:function(event, ui) {
-				doSearch();
-			}
-		});
-
-		commonJs.setAutoComplete($("#abn"), {
-			method:"getAbn",
-			label:"abn",
-			value:"abn",
-			focus: function(event, ui) {
-				$("#abn").val(ui.item.label);
-				return false;
-			},
-			select:function(event, ui) {
-				doSearch();
-			}
-		});
-
-		doSearch();
+		setTimeout(() => doSearch(), 400);
 	});
 });

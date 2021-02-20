@@ -33,7 +33,7 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 
 		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
 
-		result += updateWithSQLQuery(queryAdvisor, usrQuotation);
+		result += updateColumns(queryAdvisor, usrQuotation);
 		result += usrQuotationDDao.deleteAndInsert(quotationId, detailDataSet);
 
 		return result;
@@ -87,7 +87,7 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 		queryAdvisor.addAutoFillCriteria(toDate, "trunc(uqm.issue_date) <= trunc(to_date('"+toDate+"', '"+dateFormat+"'))");
 		queryAdvisor.addAutoFillCriteria(customerName, "lower(uqm.client_name) "+CommonUtil.getSearchCriteriaWhereClauseString(customerName));
 
-		queryAdvisor.addOrderByClause("uqm.issue_date desc");
+		queryAdvisor.addOrderByClause("uqm.issue_date desc, nvl(uqm.update_date, uqm.insert_date) desc");
 
 		return selectAsDataSet(queryAdvisor, "query.UsrQuotation.getDataSetBySearchCriteria");
 	}

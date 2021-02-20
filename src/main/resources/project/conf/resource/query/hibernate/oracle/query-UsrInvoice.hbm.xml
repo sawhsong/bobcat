@@ -5,4 +5,18 @@
  * - USR_INVOICE - Invoice info for additioanl user service
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrInvoice.getDataSetBySearchCriteria">
+	<![CDATA[
+		select uin.*,
+		       (select legal_name from sys_org where org_id = uin.provider_org_id) as provider_org_name,
+		       (select count(*) from usr_invoice_d where invoice_id = uin.invoice_id) as detail_cnt,
+		       (select description_${langCode} from sys_common_code where code_type = 'INVOICE_SATUS' and common_code = uin.status) as status_meaning,
+		       (select quotation_number from usr_quotation where quotation_id = uin.quotation_id) as quotation_number
+		  from usr_invoice uin
+		 where 1 = 1
+		${where_clause}
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

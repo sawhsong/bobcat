@@ -17,8 +17,13 @@ public class CommonLookupAction extends BaseAction {
 
 		try {
 			biz.getDefault(paramEntity);
+
 			if (CommonUtil.equalsIgnoreCase(lookupType, "organisationName")) {
 				returnString = "organisation";
+			} else if (CommonUtil.equalsIgnoreCase(lookupType, "quotation")) {
+				returnString = "quotation";
+			} else if (CommonUtil.equalsIgnoreCase(lookupType, "bankAccnt")) {
+				returnString = "bankAccnt";
 			}
 		} catch (Exception ex) {
 		}
@@ -38,6 +43,26 @@ public class CommonLookupAction extends BaseAction {
 	public String getOrganisationLookup() throws Exception {
 		try {
 			biz.getOrganisationLookup(paramEntity);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getQuotationLookup() throws Exception {
+		try {
+			biz.getQuotationLookup(paramEntity);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getBankAccntLookup() throws Exception {
+		try {
+			biz.getBankAccntLookup(paramEntity);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

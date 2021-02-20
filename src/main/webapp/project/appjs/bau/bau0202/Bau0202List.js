@@ -43,9 +43,7 @@ $(function() {
 
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
-
 		if (code == 13) {}
-
 		if (code == 9) {}
 	});
 

@@ -12,12 +12,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
-import project.common.extend.QuotationPdfExportHelper;
+import project.common.extend.InvoicePdfExportHelper;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
+import project.conf.resource.ormapper.dao.UsrInvoice.UsrInvoiceDao;
+import project.conf.resource.ormapper.dao.UsrInvoiceD.UsrInvoiceDDao;
 import project.conf.resource.ormapper.dao.UsrQuotation.UsrQuotationDao;
 import project.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDDao;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
+import project.conf.resource.ormapper.dto.oracle.UsrInvoice;
 import project.conf.resource.ormapper.dto.oracle.UsrQuotation;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
@@ -37,6 +41,12 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 	private UsrQuotationDao usrQuotationDao;
 	@Autowired
 	private UsrQuotationDDao usrQuotationDDao;
+	@Autowired
+	private UsrInvoiceDao usrInvoiceDao;
+	@Autowired
+	private UsrInvoiceDDao usrInvoiceDDao;
+	@Autowired
+	private UsrBankAccntDao usrBankAccntDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -54,14 +64,18 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 		String userId = (String)session.getAttribute("UserId");
 		String fromDate = req.getValue("fromDate");
 		String toDate = req.getValue("toDate");
+		String customerName = req.getValue("customerName");
+		String status = req.getValue("status");
 
 		try {
 			qa.setObject("userId", userId);
 			qa.setObject("fromDate", fromDate);
 			qa.setObject("toDate", toDate);
+			qa.setObject("customerName", customerName);
+			qa.setObject("status", status);
 			qa.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(usrQuotationDao.getDataSetBySearchCriteria(qa));
+			paramEntity.setAjaxResponseDataSet(usrInvoiceDao.getDataSetBySearchCriteria(qa));
 			paramEntity.setTotalResultRows(qa.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -79,9 +93,9 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getQuotationNumber(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getInvoiceNumber(ParamEntity paramEntity) throws Exception {
 		DataSet ds = new DataSet();
-		String prefix = "QN-";
+		String prefix = "INVN-";
 		Random random = new Random();
 		String uid = CommonUtil.uid();
 		String randomNumber1 = CommonUtil.substring(uid, 7, 11);
@@ -124,6 +138,32 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity getInvoiceMasterInfo(ParamEntity paramEntity) throws Exception {
+		DataSet req = paramEntity.getRequestDataSet();
+		String invoiceId = req.getValue("invoiceId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrInvoiceDao.getDataSetByInvoiceId(invoiceId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getInvoiceDetailInfo(ParamEntity paramEntity) throws Exception {
+		DataSet req = paramEntity.getRequestDataSet();
+		String invoiceId = req.getValue("invoiceId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrInvoiceDDao.getDataSetByInvoiceId(invoiceId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity getQuotationMasterInfo(ParamEntity paramEntity) throws Exception {
 		DataSet req = paramEntity.getRequestDataSet();
 		String quotationId = req.getValue("quotationId");
@@ -150,15 +190,28 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity getBankAccountInfo(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrBankAccntDao.getDataSetByBankAccntId(bankAccntId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity doRemoveLogo(ParamEntity paramEntity) throws Exception {
 		DataSet req = paramEntity.getRequestDataSet();
-		String quotationId = req.getValue("quotationId");
-		UsrQuotation usrQuotation = new UsrQuotation();
+		String invoiceId = req.getValue("invoiceId");
+		UsrInvoice usrInvoice = new UsrInvoice();
 		int result = -1;
 
 		try {
-			usrQuotation.addUpdateColumn("PROVIDER_LOGO_PATH", "");
-			result = usrQuotationDao.updateColumn(quotationId, usrQuotation);
+			usrInvoice.addUpdateColumn("PROVIDER_LOGO_PATH", "");
+			result = usrInvoiceDao.updateColumn(invoiceId, usrInvoice);
 
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
@@ -178,17 +231,18 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 		HttpSession session = paramEntity.getSession();
 		String userId = (String)session.getAttribute("UserId");
 		String delimiter = ConfigUtil.getProperty("delimiter.data");
-		String quotationId = req.getValue("quotationId");
+		String invoiceId = req.getValue("invoiceId");
 		String webLogoPath = ConfigUtil.getProperty("path.image.orgLogo");
 		String uploadLogoPath = ConfigUtil.getProperty("path.dir.uploadedOrgLogo");
 		String webRootPath = (String)MemoryBean.get("applicationRealPath");
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String providerOrgId = req.getValue("providerOrgId");
+		String quotationId = req.getValue("quotationId");
 		String pathToCopy = "";
 		int detailLength = CommonUtil.toInt(req.getValue("detailLength"));
-		UsrQuotation usrQuotation = new UsrQuotation();
+		UsrInvoice usrInvoice = new UsrInvoice();
 		DataSet detail = new DataSet();
-		String header[] = new String[] {"QUOTATION_D_ID", "ROW_INDEX", "UNIT", "PRICE", "AMOUNT", "DESCRIPTION", "USER_ID"};
+		String header[] = new String[] {"INVOICE_D_ID", "ROW_INDEX", "UNIT", "PRICE", "AMOUNT", "DESCRIPTION", "USER_ID"};
 		int result = -1;
 
 		try {
@@ -196,7 +250,7 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 				detail.addName(header);
 				for (int i=0; i<detailLength; i++) {
 					detail.addRow();
-					detail.setValue(i, "QUOTATION_D_ID", req.getValue("quotationDId"+delimiter+i));
+					detail.setValue(i, "INVOICE_D_ID", req.getValue("invoiceDId"+delimiter+i));
 					detail.setValue(i, "ROW_INDEX", req.getValue("rowIndex"+delimiter+i));
 					detail.setValue(i, "UNIT", req.getValue("unit"+delimiter+i));
 					detail.setValue(i, "PRICE", req.getValue("price"+delimiter+i));
@@ -206,9 +260,16 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 				}
 			}
 
-			if (CommonUtil.isBlank(quotationId) && CommonUtil.isNotBlank(providerOrgId)) {
-				SysOrg sysOrg = sysOrgDao.getOrgByOrgId(providerOrgId);
-				usrQuotation.setProviderLogoPath(sysOrg.getLogoPath());
+			if (CommonUtil.isBlank(invoiceId)) {
+				if (CommonUtil.isNotBlank(providerOrgId)) {
+					SysOrg sysOrg = sysOrgDao.getOrgByOrgId(providerOrgId);
+					usrInvoice.setProviderLogoPath(sysOrg.getLogoPath());
+				}
+
+				if (CommonUtil.isNotBlank(quotationId)) {
+					UsrQuotation usrQuotation = usrQuotationDao.getQuotationByQuotationId(quotationId);
+					usrInvoice.setProviderLogoPath(usrQuotation.getProviderLogoPath());
+				}
 			}
 
 			if (fileDataSet.getRowCnt() > 0) {
@@ -222,52 +283,63 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 				pathToCopy = uploadLogoPath + "/" + fileName;
 				FileUtil.moveFile(fileDataSet, pathToCopy);
 
-				usrQuotation.setProviderLogoPath(webLogoPath + "/" + fileName);
+				usrInvoice.setProviderLogoPath(webLogoPath + "/" + fileName);
 			}
 
-			usrQuotation.setQuotationNumber(req.getValue("quotationNumber"));
-			usrQuotation.setIssueDate(CommonUtil.toDate(req.getValue("issueDate"), dateFormat));
-			usrQuotation.setUserId(userId);
-			usrQuotation.setProviderOrgId(providerOrgId);
-			usrQuotation.setProviderName(req.getValue("providerName"));
-			usrQuotation.setProviderTelephone(CommonUtil.remove(req.getValue("providerTelephone"), " "));
-			usrQuotation.setProviderMobile(CommonUtil.remove(req.getValue("providerMobile"), " "));
-			usrQuotation.setProviderEmail(req.getValue("providerEmail"));
-			usrQuotation.setProviderAddress(req.getValue("providerAddress"));
-			usrQuotation.setProviderAbn(CommonUtil.remove(req.getValue("providerAbn"), " "));
-			usrQuotation.setProviderAcn(CommonUtil.remove(req.getValue("providerAcn"), " "));
-			usrQuotation.setClientOrgId("");
-			usrQuotation.setClientUserId("");
-			usrQuotation.setClientName(req.getValue("clientName"));
-			usrQuotation.setClientTelephone(CommonUtil.remove(req.getValue("clientTelephone"), " "));
-			usrQuotation.setClientMobile(CommonUtil.remove(req.getValue("clientMobile"), " "));
-			usrQuotation.setClientEmail(req.getValue("clientEmail"));
-			usrQuotation.setClientAddress(req.getValue("clientAddress"));
-			usrQuotation.setNetAmt(CommonUtil.toDouble(req.getValue("netAmt")));
-			usrQuotation.setGstAmt(CommonUtil.toDouble(req.getValue("gstAmt")));
-			usrQuotation.setTotalAmt(CommonUtil.toDouble(req.getValue("totalAmt")));
-			usrQuotation.setDescription(req.getValue("descriptionM"));
-			usrQuotation.setAdditionalRemark(req.getValue("additionalRemark"));
+			usrInvoice.setInvoiceNumber(req.getValue("invoiceNumber"));
+			usrInvoice.setIssueDate(CommonUtil.toDate(req.getValue("issueDate"), dateFormat));
+			usrInvoice.setUserId(userId);
+			usrInvoice.setQuotationId(req.getValue("quotationId"));
+			usrInvoice.setStatus(req.getValue("status"));
+			usrInvoice.setProviderOrgId(providerOrgId);
+			usrInvoice.setProviderName(req.getValue("providerName"));
+			usrInvoice.setProviderTelephone(CommonUtil.remove(req.getValue("providerTelephone"), " "));
+			usrInvoice.setProviderMobile(CommonUtil.remove(req.getValue("providerMobile"), " "));
+			usrInvoice.setProviderEmail(req.getValue("providerEmail"));
+			usrInvoice.setProviderAddress(req.getValue("providerAddress"));
+			usrInvoice.setProviderAbn(CommonUtil.remove(req.getValue("providerAbn"), " "));
+			usrInvoice.setProviderAcn(CommonUtil.remove(req.getValue("providerAcn"), " "));
+			usrInvoice.setClientOrgId("");
+			usrInvoice.setClientUserId("");
+			usrInvoice.setClientName(req.getValue("clientName"));
+			usrInvoice.setClientTelephone(CommonUtil.remove(req.getValue("clientTelephone"), " "));
+			usrInvoice.setClientMobile(CommonUtil.remove(req.getValue("clientMobile"), " "));
+			usrInvoice.setClientEmail(req.getValue("clientEmail"));
+			usrInvoice.setClientAddress(req.getValue("clientAddress"));
+			usrInvoice.setNetAmt(CommonUtil.toDouble(req.getValue("netAmt")));
+			usrInvoice.setGstAmt(CommonUtil.toDouble(req.getValue("gstAmt")));
+			usrInvoice.setTotalAmt(CommonUtil.toDouble(req.getValue("totalAmt")));
+			usrInvoice.setDescription(req.getValue("descriptionM"));
+			usrInvoice.setAdditionalRemark(req.getValue("additionalRemark"));
+			usrInvoice.setPaymentDueDate(CommonUtil.toDate(req.getValue("paymentDueDate"), dateFormat));
+			usrInvoice.setPaymentMethod(req.getValue("paymentMethod"));
+			usrInvoice.setBankAccntId(req.getValue("bankAccntId"));
+			usrInvoice.setBankCode(req.getValue("bankCode"));
+			usrInvoice.setBsb(req.getValue("bsb"));
+			usrInvoice.setBankAccntNumber(req.getValue("bankAccntNumber"));
+			usrInvoice.setBankAccntName(req.getValue("bankAccntName"));
+			usrInvoice.setRefNumber(req.getValue("refNumber"));
 
-			if (CommonUtil.isBlank(quotationId)) {
-				usrQuotation.setQuotationId(CommonUtil.uid());
-				usrQuotation.setInsertUserId(userId);
-				usrQuotation.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			if (CommonUtil.isBlank(invoiceId)) {
+				usrInvoice.setInvoiceId(CommonUtil.uid());
+				usrInvoice.setInsertUserId(userId);
+				usrInvoice.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
-				result = usrQuotationDao.insert(usrQuotation, detail);
+				result = usrInvoiceDao.insert(usrInvoice, detail);
 			} else {
-				usrQuotation.setQuotationId(quotationId);
-				usrQuotation.setUpdateUserId(userId);
-				usrQuotation.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+				usrInvoice.setInvoiceId(invoiceId);
+				usrInvoice.setUpdateUserId(userId);
+				usrInvoice.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+				usrInvoice.addUpdateColumnFromField();
 
-				result = usrQuotationDao.update(quotationId, usrQuotation, detail);
+				result = usrInvoiceDao.update(invoiceId, usrInvoice, detail);
 			}
 
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
-			paramEntity.setAjaxResponseDataSet(usrQuotation.getDataSet());
+			paramEntity.setAjaxResponseDataSet(usrInvoice.getDataSet());
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
@@ -278,16 +350,16 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String quotationId = requestDataSet.getValue("quotationId");
+		String invoiceId = requestDataSet.getValue("invoiceId");
 		String chkForDel = requestDataSet.getValue("chkForDel");
-		String quotationIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
+		String invoiceIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
-			if (CommonUtil.isBlank(quotationId)) {
-				result = usrQuotationDao.delete(quotationIds);
+			if (CommonUtil.isBlank(invoiceId)) {
+				result = usrInvoiceDao.delete(invoiceIds);
 			} else {
-				result = usrQuotationDao.delete(quotationId);
+				result = usrInvoiceDao.delete(invoiceId);
 			}
 
 			if (result <= 0) {
@@ -304,16 +376,16 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 
 	public ParamEntity getPreview(ParamEntity paramEntity) throws Exception {
 		DataSet req = paramEntity.getRequestDataSet();
-		String quotationId = req.getValue("quotationId");
-		UsrQuotation usrQuotation;
-		DataSet quotationDetail;
+		String invoiceId = req.getValue("invoiceId");
+		UsrInvoice usrInvoice;
+		DataSet invoiceDetail;
 
 		try {
-			usrQuotation = usrQuotationDao.getQuotationByQuotationId(quotationId);
-			quotationDetail = usrQuotationDDao.getDataSetByQuotationId(quotationId);
+			usrInvoice = usrInvoiceDao.getInvoiceByInvoiceId(invoiceId);
+			invoiceDetail = usrInvoiceDDao.getDataSetByInvoiceId(invoiceId);
 
-			paramEntity.setObject("usrQuotation", usrQuotation);
-			paramEntity.setObject("quotationDetail", quotationDetail);
+			paramEntity.setObject("usrInvoice", usrInvoice);
+			paramEntity.setObject("invoiceDetail", invoiceDetail);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -323,22 +395,22 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 
 	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
 		DataSet req = paramEntity.getRequestDataSet();
-		QuotationPdfExportHelper exportHelper;
-		String quotationId = req.getValue("quotationId");
-		UsrQuotation usrQuotation;
-		DataSet quotationDetail;
+		InvoicePdfExportHelper exportHelper;
+		String invoiceId = req.getValue("invoiceId");
+		UsrInvoice usrInvoice;
+		DataSet invoiceDetail;
 
 		try {
-			usrQuotation = usrQuotationDao.getQuotationByQuotationId(quotationId);
-			quotationDetail = usrQuotationDDao.getDataSetByQuotationId(quotationId);
+			usrInvoice = usrInvoiceDao.getInvoiceByInvoiceId(invoiceId);
+			invoiceDetail = usrInvoiceDDao.getDataSetByInvoiceId(invoiceId);
 
-			exportHelper = new project.common.extend.QuotationPdfExportHelper();
+			exportHelper = new project.common.extend.InvoicePdfExportHelper();
 			exportHelper.setFileType("pdf");
 			exportHelper.setFileExtention("pdf");
 
-			exportHelper.setUsrQuotation(usrQuotation);
-			exportHelper.setUsrQuotationDDataSet(quotationDetail);
-			exportHelper.setFileName("Quotation-"+usrQuotation.getQuotationNumber());
+			exportHelper.setUsrInvoice(usrInvoice);
+			exportHelper.setUsrInvoiceDDataSet(invoiceDetail);
+			exportHelper.setFileName("Invoice-"+usrInvoice.getInvoiceNumber());
 
 			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());

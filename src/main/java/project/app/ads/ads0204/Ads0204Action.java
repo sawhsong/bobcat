@@ -32,9 +32,9 @@ public class Ads0204Action extends BaseAction {
 		return "edit";
 	}
 
-	public String getQuotationNumber() throws Exception {
+	public String getInvoiceNumber() throws Exception {
 		try {
-			biz.getQuotationNumber(paramEntity);
+			biz.getInvoiceNumber(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
@@ -59,6 +59,24 @@ public class Ads0204Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getInvoiceMasterInfo() throws Exception {
+		try {
+			biz.getInvoiceMasterInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getInvoiceDetailInfo() throws Exception {
+		try {
+			biz.getInvoiceDetailInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String getQuotationMasterInfo() throws Exception {
 		try {
 			biz.getQuotationMasterInfo(paramEntity);
@@ -71,6 +89,15 @@ public class Ads0204Action extends BaseAction {
 	public String getQuotationDetailInfo() throws Exception {
 		try {
 			biz.getQuotationDetailInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getBankAccountInfo() throws Exception {
+		try {
+			biz.getBankAccountInfo(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

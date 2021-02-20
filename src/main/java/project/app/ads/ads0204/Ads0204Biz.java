@@ -11,11 +11,14 @@ public interface Ads0204Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
-	public ParamEntity getQuotationNumber(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getInvoiceNumber(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getMyInfo(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getOrgInfo(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getInvoiceMasterInfo(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getInvoiceDetailInfo(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getQuotationMasterInfo(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getQuotationDetailInfo(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getBankAccountInfo(ParamEntity paramEntity) throws Exception;
 
 	public ParamEntity doRemoveLogo(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception;

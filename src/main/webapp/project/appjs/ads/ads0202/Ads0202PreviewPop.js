@@ -4,6 +4,7 @@
  *************************************************************************************************/
 var dateTimeFormat = jsconfig.get("dateTimeFormatJs");
 var dateFormat = jsconfig.get("dateFormatJs");
+var popup;
 
 $(function() {
 	/*!
@@ -24,6 +25,8 @@ $(function() {
 			url:"/ads/0202/doExport.do",
 			data:{quotationId:quotationId}
 		});
+
+//		setTimeout(() => popup.close(), 5000);
 	});
 
 	$(document).keydown(function(event) {

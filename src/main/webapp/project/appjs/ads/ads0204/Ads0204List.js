@@ -2,7 +2,7 @@
  * Framework Generated Javascript Source
  * - Ads0204List.js
  *************************************************************************************************/
-var popup, preview;
+var popup, preview, popupLookup;
 var dateTimeFormat = jsconfig.get("dateTimeFormatJs");
 var dateFormat = jsconfig.get("dateFormatJs");
 
@@ -38,6 +38,10 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForDel");
 	});
 
+	$("#status").change(function(event) {
+		doSearch();
+	});
+
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
 		if (code == 13) {
@@ -71,17 +75,17 @@ $(function() {
 				var gridTr = new UiGridTr();
 
 				var iconAction = new UiIcon();
-				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("quotationId:"+ds.getValue(i, "QUOTATION_ID")).setScript("doAction(this)");
+				iconAction.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("invoiceId:"+ds.getValue(i, "INVOICE_ID")).setScript("doAction(this)");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(iconAction));
 
 				var uiChk = new UiCheckbox();
-				uiChk.setName("chkForDel").setValue(ds.getValue(i, "QUOTATION_ID"));
+				uiChk.setName("chkForDel").setValue(ds.getValue(i, "INVOICE_ID"));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "ISSUE_DATE"), dateFormat)));
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "QUOTATION_NUMBER")).setScript("getEdit('"+ds.getValue(i, "QUOTATION_ID")+"')");
+				uiAnc.setText(ds.getValue(i, "INVOICE_NUMBER")).setScript("getEdit('"+ds.getValue(i, "INVOICE_ID")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,##0.00")));
@@ -90,6 +94,8 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "DETAIL_CNT"), "#,##0")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "CLIENT_NAME")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "CLIENT_EMAIL")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "STATUS_MEANING")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "QUOTATION_NUMBER")));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
 
 				html += gridTr.toHtmlString();
@@ -97,14 +103,14 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:11").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:13").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 
 		$("#tblGridBody").append($(html));
 
 		$("#tblGrid").fixedHeaderTable({
-			attachTo:$("#divDataArea"),
+			attachTo:$("#divGridWrapper"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
 			totalResultRows:result.totalResultRows,
@@ -120,10 +126,10 @@ $(function() {
 	};
 
 	doAction = function(img) {
-		var quotationId = $(img).attr("quotationId");
+		var invoiceId = $(img).attr("invoiceId");
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == quotationId) {
+			if (!$(this).is(":disabled") && $(this).val() == invoiceId) {
 				$(this).prop("checked", true);
 				$(this).parents("tr").addClass("checkedTr");
 			} else {
@@ -132,8 +138,8 @@ $(function() {
 			}
 		});
 
-		ctxMenu.quoteInvoiceAction[0].fun = function() {getEdit(quotationId);};
-		ctxMenu.quoteInvoiceAction[1].fun = function() {getPreview(quotationId);};
+		ctxMenu.quoteInvoiceAction[0].fun = function() {getEdit(invoiceId);};
+		ctxMenu.quoteInvoiceAction[1].fun = function() {getPreview(invoiceId);};
 		ctxMenu.quoteInvoiceAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.quoteInvoiceAction, {
@@ -145,23 +151,23 @@ $(function() {
 		});
 	};
 
-	getEdit = function(quotationId) {
+	getEdit = function(invoiceId) {
 		popup = commonJs.openPopup({
-			popupId:"QuotationEdit",
+			popupId:"InvoiceEdit",
 			url:"/ads/0204/getEdit.do",
-			data:{quotationId:quotationId},
-			header:"Quotation Edit",
+			data:{invoiceId:invoiceId},
+			header:"Invoice Edit",
 			width:1400,
 			height:900
 		});
 	};
 
-	getPreview = function(quotationId) {
+	getPreview = function(invoiceId) {
 		preview = commonJs.openPopup({
-			popupId:"QuotationPreview",
+			popupId:"InvoicePreview",
 			url:"/ads/0204/getPreview.do",
-			data:{quotationId:quotationId},
-			header:"Quotation Preview",
+			data:{invoiceId:invoiceId},
+			header:"Invoice Preview",
 			width:800,
 			height:900
 		});

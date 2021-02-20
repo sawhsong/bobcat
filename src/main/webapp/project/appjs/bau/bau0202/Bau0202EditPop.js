@@ -31,9 +31,7 @@ $(function() {
 
 	$(document).keydown(function(event) {
 		var code = event.keyCode || event.which, element = event.target;
-
 		if (code == 13) {}
-
 		if (code == 9) {}
 	});
 
@@ -64,18 +62,16 @@ $(function() {
 	};
 
 	setBankAccountInfo = function(ds) {
-		for (var i=0; i<ds.getRowCnt(); i++) {
-			$("#bankAccntId").val(ds.getValue(i, "BANK_ACCNT_ID"));
-			$("#bankCode").val(ds.getValue(i, "BANK_CODE"));
-			commonJs.refreshBootstrapSelectbox("bankCode");
-			$("#bsb").val(commonJs.getFormatString(ds.getValue(i, "BSB"), "??? ???"));
-			$("#accntNumber").val(ds.getValue(i, "ACCNT_NUMBER"));
-			$("#accntName").val(ds.getValue(i, "ACCNT_NAME"));
-			$("#balance").val(ds.getValue(i, "BALANCE"));
-			$("#description").val(ds.getValue(i, "DESCRIPTION"));
-			$("#lastUpdatedBy").val(commonJs.nvl(ds.getValue(0, "UPDATE_USER_NAME"), ds.getValue(0, "INSERT_USER_NAME")));
-			$("#lastUpdatedDate").val(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(0, "UPDATE_DATE"), ds.getValue(0, "INSERT_DATE")), dateTimeFormat));
-		}
+		$("#bankAccntId").val(ds.getValue(0, "BANK_ACCNT_ID"));
+		$("#bankCode").val(ds.getValue(0, "BANK_CODE"));
+		commonJs.refreshBootstrapSelectbox("bankCode");
+		$("#bsb").val(commonJs.getFormatString(ds.getValue(0, "BSB"), "??? ???"));
+		$("#accntNumber").val(ds.getValue(0, "ACCNT_NUMBER"));
+		$("#accntName").val(ds.getValue(0, "ACCNT_NAME"));
+		$("#balance").val(ds.getValue(0, "BALANCE"));
+		$("#description").val(ds.getValue(0, "DESCRIPTION"));
+		$("#lastUpdatedBy").val(commonJs.nvl(ds.getValue(0, "UPDATE_USER_NAME"), ds.getValue(0, "INSERT_USER_NAME")));
+		$("#lastUpdatedDate").val(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(0, "UPDATE_DATE"), ds.getValue(0, "INSERT_DATE")), dateTimeFormat));
 
 		commonJs.hideProcMessage();
 	};
