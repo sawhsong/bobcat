@@ -32,12 +32,20 @@ $(function() {
 		refreshDataEntry();
 	});
 
-	$("#icnFromDate").click(function(event) {
-		commonJs.openCalendar(event, "fromDate");
+	$("#icnTransactionDateFrom").click(function(event) {
+		commonJs.openCalendar(event, "transactionDateFrom");
 	});
 
-	$("#icnToDate").click(function(event) {
-		commonJs.openCalendar(event, "toDate");
+	$("#icnTransactionDateTo").click(function(event) {
+		commonJs.openCalendar(event, "transactionDateTo");
+	});
+
+	$("#icnUpdatedDateFrom").click(function(event) {
+		commonJs.openCalendar(event, "updatedDateFrom");
+	});
+
+	$("#icnUpdatedDateTo").click(function(event) {
+		commonJs.openCalendar(event, "updatedDateTo");
 	});
 
 	$("#icnCheck").click(function(event) {
@@ -50,7 +58,7 @@ $(function() {
 
 	$("#deSubReconCategory").change(function() {
 		if (!commonJs.isBlank($("#deSubReconCategory").val())) {
-			doSave();
+//			doSave();
 		}
 	});
 
@@ -75,7 +83,7 @@ $(function() {
 		if (code == 9) {}
 		if (code == 13) {
 			if ($(element).attr("name") == "deGstAmount") {
-				doSave();
+//				doSave();
 			}
 		}
 		onEditDataEntry($(element));
@@ -396,7 +404,7 @@ $(function() {
 			$("#deSubReconCategory").val(subCategoryId);
 			commonJs.refreshBootstrapSelectbox("deSubReconCategory");
 
-			doSave();
+//			doSave();
 		}, 400);
 	};
 
@@ -412,9 +420,10 @@ $(function() {
 	});
 
 	$(window).load(function() {
-		commonJs.setFieldDateMask("fromDate");
-		commonJs.setFieldDateMask("toDate");
-		commonJs.setFieldDateMask("deDate");
+		commonJs.setFieldDateMask("transactionDateFrom");
+		commonJs.setFieldDateMask("transactionDateTo");
+		commonJs.setFieldDateMask("updatedDateFrom");
+		commonJs.setFieldDateMask("updatedDateTo");
 		$(".numeric").number(true, 2);
 
 		setDeCategoriesContextMenu();

@@ -52,16 +52,20 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		HttpSession session = paramEntity.getSession();
 		String userId = (String)session.getAttribute("UserId");
 		String allocationStatus = requestDataSet.getValue("allocationStatus");
-		String fromDate = requestDataSet.getValue("fromDate");
-		String toDate = requestDataSet.getValue("toDate");
+		String transactionDateFrom = requestDataSet.getValue("transactionDateFrom");
+		String transactionDateTo = requestDataSet.getValue("transactionDateTo");
+		String updatedDateFrom = requestDataSet.getValue("updatedDateFrom");
+		String updatedDateTo = requestDataSet.getValue("updatedDateTo");
 		String selectedBankAccntIdInSession = (String)session.getAttribute("SelectedBankAccntIdInSession");
 		String bankAccntId = requestDataSet.getValue("bankAccntId");
 
 		try {
 			queryAdvisor.setObject("userId", userId);
 			queryAdvisor.setObject("allocationStatus", allocationStatus);
-			queryAdvisor.setObject("fromDate", fromDate);
-			queryAdvisor.setObject("toDate", toDate);
+			queryAdvisor.setObject("transactionDateFrom", transactionDateFrom);
+			queryAdvisor.setObject("transactionDateTo", transactionDateTo);
+			queryAdvisor.setObject("updatedDateFrom", updatedDateFrom);
+			queryAdvisor.setObject("updatedDateTo", updatedDateTo);
 			queryAdvisor.setObject("bankAccntId", bankAccntId);
 			queryAdvisor.setPagination(true);
 

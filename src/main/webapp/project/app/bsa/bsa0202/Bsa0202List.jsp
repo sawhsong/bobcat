@@ -10,7 +10,7 @@
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	String dateFormat = ConfigUtil.getProperty("format.date.java");
-	String dateFrom = CommonUtil.getCalcDate("D", CommonUtil.getSysdate(dateFormat), dateFormat, -1);
+	String dateFrom = CommonUtil.getCalcDate("D", CommonUtil.getSysdate(dateFormat), dateFormat, -7);
 	String dateTo = CommonUtil.getSysdate(dateFormat);
 	DataSet bankAccnt = (DataSet)paramEntity.getObject("bankAccnt");
 	String sbaId = (String)session.getAttribute("SelectedBankAccntIdInSession");
@@ -70,6 +70,7 @@ var sbaId = "<%=sbaId%>";
 			<col width="8%"/>
 			<col width="7%"/>
 			<col width="15%"/>
+			<col width="7%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
@@ -87,15 +88,22 @@ var sbaId = "<%=sbaId%>";
 			</td>
 			<th class="thSearch rt">Allocation Status</th>
 			<td class="tdSearch"><ui:ccselect name="allocationStatus" codeType="BS_TRAN_ALLOC_STATUS" caption="==Select=="/></td>
-			<th class="thSearch rt">Uploaded Date</th>
+			<th class="thSearch rt">Transaction Date</th>
 			<td class="tdSearch">
-				<ui:text name="fromDate" value="<%=dateFrom%>" className="Ct hor" style="width:90px" option="date"/>
-				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
+				<ui:text name="transactionDateFrom" value="<%=dateFrom%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnTransactionDateFrom" className="fa-calendar hor"/>
 				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-				<ui:text name="toDate" value="<%=dateTo%>" className="Ct hor" style="width:90px" option="date"/>
-				<ui:icon id="icnToDate" className="fa-calendar hor"/>
+				<ui:text name="transactionDateTo" value="<%=dateTo%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnTransactionDateTo" className="fa-calendar hor"/>
 			</td>
-			<td class="tdSearch"></td>
+			<th class="thSearch rt">Updated Date</th>
+			<td class="tdSearch">
+				<ui:text name="updatedDateFrom" value="<%=dateFrom%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnUpdatedDateFrom" className="fa-calendar hor"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="updatedDateTo" value="<%=dateTo%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnUpdatedDateTo" className="fa-calendar hor"/>
+			</td>
 		</tr>
 	</table>
 </div>

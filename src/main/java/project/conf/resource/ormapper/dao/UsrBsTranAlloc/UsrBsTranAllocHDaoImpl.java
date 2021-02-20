@@ -39,15 +39,19 @@ public class UsrBsTranAllocHDaoImpl extends BaseHDao implements UsrBsTranAllocDa
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String allocationStatus = (String)queryAdvisor.getObject("allocationStatus");
 		String userId = (String)queryAdvisor.getObject("userId");
-		String fromDate = (String)queryAdvisor.getObject("fromDate");
-		String toDate = (String)queryAdvisor.getObject("toDate");
+		String transactionDateFrom = (String)queryAdvisor.getObject("transactionDateFrom");
+		String transactionDateTo = (String)queryAdvisor.getObject("transactionDateTo");
+		String updatedDateFrom = (String)queryAdvisor.getObject("updatedDateFrom");
+		String updatedDateTo = (String)queryAdvisor.getObject("updatedDateTo");
 		String bankAccntId = (String)queryAdvisor.getObject("bankAccntId");
 
 		queryAdvisor.addVariable("langCode", langCode);
 		queryAdvisor.addAutoFillCriteria(allocationStatus, "bta.status = '"+allocationStatus+"'");
 		queryAdvisor.addAutoFillCriteria(userId, "bta.user_id = '"+userId+"'");
-		queryAdvisor.addAutoFillCriteria(fromDate, "trunc(nvl(bta.update_date, bta.insert_date)) >= trunc(to_date('"+fromDate+"', '"+dateFormat+"'))");
-		queryAdvisor.addAutoFillCriteria(toDate, "trunc(nvl(bta.update_date, bta.insert_date)) <= trunc(to_date('"+toDate+"', '"+dateFormat+"'))");
+		queryAdvisor.addAutoFillCriteria(updatedDateFrom, "trunc(nvl(bta.update_date, bta.insert_date)) >= trunc(to_date('"+updatedDateFrom+"', '"+dateFormat+"'))");
+		queryAdvisor.addAutoFillCriteria(updatedDateTo, "trunc(nvl(bta.update_date, bta.insert_date)) <= trunc(to_date('"+updatedDateTo+"', '"+dateFormat+"'))");
+		queryAdvisor.addAutoFillCriteria(transactionDateFrom, "trunc(bta.proc_date) >= trunc(to_date('"+transactionDateFrom+"', '"+dateFormat+"'))");
+		queryAdvisor.addAutoFillCriteria(transactionDateTo, "trunc(bta.proc_date) <= trunc(to_date('"+transactionDateTo+"', '"+dateFormat+"'))");
 		queryAdvisor.addAutoFillCriteria(bankAccntId, "bta.bank_accnt_id = '"+bankAccntId+"'");
 
 		queryAdvisor.addOrderByClause("bta.proc_date desc, bta.row_index, nvl(bta.update_date, bta.insert_date) desc");
