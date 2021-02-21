@@ -37,7 +37,7 @@ var quarterCode = "<%=quarterCode%>";
 <%/************************************************************************************************
 * Page & Header
 ************************************************************************************************/%>
-<body>
+<body style="overflow-y:hidden;">
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divPopupWindowHolder">
 <div id="divFixedPanelPopup">
