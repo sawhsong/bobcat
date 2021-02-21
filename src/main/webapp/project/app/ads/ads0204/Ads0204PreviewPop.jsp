@@ -9,11 +9,11 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
-	String quotationId = requestDataSet.getValue("quotationId");
+	String invoiceId = requestDataSet.getValue("invoiceId");
 	String dateFormat = "dd/MM/yyyy", numberFormat = "#,##0.00";
-	UsrQuotation uqm = (UsrQuotation)paramEntity.getObject("usrQuotation");
-	DataSet dtl = (DataSet)paramEntity.getObject("quotationDetail");
-	String logoPath = uqm.getProviderLogoPath();
+	UsrInvoice uin = (UsrInvoice)paramEntity.getObject("usrInvoice");
+	DataSet dtl = (DataSet)paramEntity.getObject("invoiceDetail");
+	String logoPath = uin.getProviderLogoPath();
 %>
 <%/************************************************************************************************
 * HTML
@@ -32,7 +32,7 @@
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
-var quotationId = "<%=quotationId%>";
+var invoiceId = "<%=invoiceId%>";
 </script>
 </head>
 <%/************************************************************************************************
@@ -69,7 +69,7 @@ var quotationId = "<%=quotationId%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<div class="verGap20"></div>
+	<div class="verGap10"></div>
 	<table class="tblDefault">
 		<colgroup>
 			<col width="50%"/>
@@ -90,7 +90,7 @@ var quotationId = "<%=quotationId%>";
 						</td>
 					</tr>
 					<tr>
-						<td class="tdDefault Lt" style="font-size:14px;font-weight:bold;"><%=uqm.getProviderName()%></td>
+						<td class="tdDefault Lt" style="font-size:14px;font-weight:bold;"><%=uin.getProviderName()%></td>
 					</tr>
 				</table>
 			</td>
@@ -98,81 +98,85 @@ var quotationId = "<%=quotationId%>";
 				<table class="tblDefault withPadding">
 					<colgroup>
 						<col width="*"/>
-						<col width="25%"/>
+						<col width="27%"/>
 					</colgroup>
 					<tr>
-						<td class="tdDefault Rt" colspan="2" style="vertical-align:top;font-size:16px;font-weight:bold;height:68px;">Quotation</td>
+						<td class="tdDefault Rt" colspan="2" style="vertical-align:top;font-size:16px;font-weight:bold;height:48px;">Invoice</td>
 					</tr>
 					<tr>
-						<th class="thDefault Rt">Date</th>
-						<td class="tdDefault Rt"><%=CommonUtil.toString(uqm.getIssueDate(), dateFormat)%></td>
+						<th class="thDefault Rt">Invoice Date</th>
+						<td class="tdDefault Rt"><%=CommonUtil.toString(uin.getIssueDate(), dateFormat)%></td>
 					</tr>
 					<tr>
-						<th class="thDefault Rt">Quotation Number</th>
-						<td class="tdDefault Rt"><%=uqm.getQuotationNumber()%></td>
+						<th class="thDefault Rt">Invoice Number</th>
+						<td class="tdDefault Rt"><%=uin.getInvoiceNumber()%></td>
+					</tr>
+					<tr>
+						<th class="thDefault Rt">Due Date</th>
+						<td class="tdDefault Rt"><%=CommonUtil.toString(uin.getPaymentDueDate(), dateFormat)%></td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 	</table>
-	<div class="verGap20"></div>
+	<div class="verGap10"></div>
 	<div style="float:left;width:49%;">
 		<table class="tblDefault withPadding">
 			<tr>
-				<td class="thDefault Lt"><font style="font-weight:bold;font-size:12px">TO :</font></td>
+				<td class="thDefault Lt"><font style="font-weight:bold;font-size:12px">Bill To :</font></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Lt"><font style="font-weight:bold">Name : </font><%=uqm.getClientName()%></td>
+				<td class="tdDefault Lt"><font style="font-weight:bold">Name : </font><%=uin.getClientName()%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Lt"><font style="font-weight:bold">Tel : </font><%=CommonUtil.getFormatString(uqm.getClientTelephone(), "?? ???? ????")%></td>
+				<td class="tdDefault Lt"><font style="font-weight:bold">Tel : </font><%=CommonUtil.getFormatString(uin.getClientTelephone(), "?? ???? ????")%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Lt"><font style="font-weight:bold">Mobile : </font><%=CommonUtil.getFormatString(uqm.getClientMobile(), "???? ??? ???")%></td>
+				<td class="tdDefault Lt"><font style="font-weight:bold">Mobile : </font><%=CommonUtil.getFormatString(uin.getClientMobile(), "???? ??? ???")%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Lt"><font style="font-weight:bold">Email : </font><%=uqm.getClientEmail()%></td>
+				<td class="tdDefault Lt"><font style="font-weight:bold">Email : </font><%=uin.getClientEmail()%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Lt"><font style="font-weight:bold">Address : </font><%=uqm.getClientAddress()%></td>
+				<td class="tdDefault Lt"><font style="font-weight:bold">Address : </font><%=uin.getClientAddress()%></td>
 			</tr>
 		</table>
 	</div>
 	<div style="float:right;width:50%;">
 		<table class="tblDefault withPadding">
 			<tr>
-				<th class="thDefault Rt"><font style="font-weight:bold;font-size:12px">Prepared by :</font></th>
+				<th class="thDefault Rt"><font style="font-weight:bold;font-size:12px">Issued By :</font></th>
 			</tr>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">Name : </font><%=uqm.getProviderName()%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">Name : </font><%=uin.getProviderName()%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">ABN : </font><%=CommonUtil.getFormatString(uqm.getProviderAbn(), "?? ??? ??? ???")%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">ABN : </font><%=CommonUtil.getFormatString(uin.getProviderAbn(), "?? ??? ??? ???")%></td>
 			</tr>
 <%
-			if (CommonUtil.isNotBlank(uqm.getProviderAcn())) {
+			if (CommonUtil.isNotBlank(uin.getProviderAcn())) {
 %>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">ACN : </font><%=CommonUtil.getFormatString(uqm.getProviderAcn(), "??? ??? ???")%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">ACN : </font><%=CommonUtil.getFormatString(uin.getProviderAcn(), "??? ??? ???")%></td>
 			</tr>
 <%
 			}
 %>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">Tel : </font><%=CommonUtil.getFormatString(uqm.getProviderTelephone(), "?? ???? ????")%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">Tel : </font><%=CommonUtil.getFormatString(uin.getProviderTelephone(), "?? ???? ????")%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">Mobile : </font><%=CommonUtil.getFormatString(uqm.getProviderMobile(), "???? ??? ???")%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">Mobile : </font><%=CommonUtil.getFormatString(uin.getProviderMobile(), "???? ??? ???")%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">Email : </font><%=uqm.getProviderEmail()%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">Email : </font><%=uin.getProviderEmail()%></td>
 			</tr>
 			<tr>
-				<td class="tdDefault Rt"><font style="font-weight:bold">Address : </font><%=uqm.getProviderAddress()%></td>
+				<td class="tdDefault Rt"><font style="font-weight:bold">Address : </font><%=uin.getProviderAddress()%></td>
 			</tr>
 		</table>
 	</div>
-	<div class="verGap20"></div>
+	<div class="verGap10"></div>
 	<table id="tblGrid" class="tblGrid sort autosort" style="border:0px">
 		<colgroup>
 			<col width="*"></col>
@@ -211,42 +215,61 @@ var quotationId = "<%=quotationId%>";
 %>
 			<tr class="noStripe">
 				<td class="tdGrid Rt" colspan="3" style="border:0px;font-weight:bold;">Sub Total</td>
-				<td class="tdGrid Rt"><%=CommonUtil.getNumberMask(uqm.getNetAmt(), numberFormat)%></td>
+				<td class="tdGrid Rt"><%=CommonUtil.getNumberMask(uin.getNetAmt(), numberFormat)%></td>
 			</tr>
 			<tr class="noStripe">
 				<td class="tdGrid Rt" colspan="3" style="border:0px;font-weight:bold;">GST</td>
-				<td class="tdGrid Rt"><%=CommonUtil.getNumberMask(uqm.getGstAmt(), numberFormat)%></td>
+				<td class="tdGrid Rt"><%=CommonUtil.getNumberMask(uin.getGstAmt(), numberFormat)%></td>
 			</tr>
 			<tr class="noStripe">
-				<td class="tdGrid Rt" colspan="3" style="border:0px;font-weight:bold;">Grand Total</td>
-				<td class="tdGrid Rt"><%=CommonUtil.getNumberMask(uqm.getTotalAmt(), numberFormat)%></td>
+				<td class="tdGrid Rt" colspan="3" style="border:0px;font-weight:bold;">Total Amount Due</td>
+				<td class="tdGrid Rt"><%=CommonUtil.getNumberMask(uin.getTotalAmt(), numberFormat)%></td>
 			</tr>
 		</tbody>
 	</table>
-	<div class="verGap20"></div>
+	<div class="verGap10"></div>
 	<table class="tblEdit">
 		<tr>
-			<th class="thEdit">Description of work</th>
+			<th class="thEdit">Additional Information</th>
 		</tr>
 		<tr>
-			<td class="tdEdit"><%=CommonUtil.nvl(HtmlUtil.stringToHtml(uqm.getAdditionalRemark()), "&nbsp;")%></td>
-		</tr>
-	</table>
-	<div class="verGap20"></div>
-	<table class="tblDefault">
-		<tr>
-			<td class="tdDefault">
-				This quotation is valid 30 days from above date.<br/>
-				This quotation is not a contract or a bill. It is our best guess at the total price for the service and goods described above.<br/>
-				The customer will be billed after indicating acceptance of this quote.<br/>
-				Should you have any questions, please contact above contact details.
-			</td>
+			<td class="tdEdit"><%=CommonUtil.nvl(HtmlUtil.stringToHtml(uin.getAdditionalRemark()), "&nbsp;")%></td>
 		</tr>
 	</table>
-	<div class="verGap20"></div>
-	<table class="tblDefault">
+	<div class="verGap10"></div>
+	<table class="tblEdit" style="width:70%;">
+		<colgroup>
+			<col width="30%"></col>
+			<col width="*"></col>
+		</colgroup>
 		<tr>
-			<th class="thDefault">Thank you for your business.</th>
+			<th class="thEdit" colspan="2">How To pay</th>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Bank</th>
+			<td class="tdEdit"><%=CommonCodeManager.getCodeDescription("BANK_TYPE", uin.getBankCode())%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Name</th>
+			<td class="tdEdit"><%=uin.getBankAccntName()%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">BSB</th>
+			<td class="tdEdit"><%=CommonUtil.getFormatString(uin.getBsb(), "??? ???")%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Account Number</th>
+			<td class="tdEdit"><%=uin.getBankAccntNumber()%></td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Ref Number</th>
+			<td class="tdEdit"><%=uin.getRefNumber()%></td>
+		</tr>
+	</table>
+	<div class="verGap30"></div>
+	<table class="tblDefault withPadding">
+		<tr>
+			<th class="thDefault">Should you have any questions, please contact above contact details.</th>
 		</tr>
 	</table>
 </div>

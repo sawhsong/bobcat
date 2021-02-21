@@ -50,7 +50,7 @@ $(function() {
 				var gridTr = new UiGridTr();
 
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(ds.getValue(i, "BANK_NAME")).setScript("setValue('"+ds.getValue(i, "BANK_ACCNT_ID")+"', '"+ds.getValue(i, "BANK_NAME")+"')");
+				uiAnc.setText(ds.getValue(i, "BANK_NAME")).setScript("setValue('"+ds.getValue(i, "BANK_ACCNT_ID")+"', '"+ds.getValue(i, "ACCNT_NAME")+"')");
 				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getFormatString(ds.getValue(i, "BSB"), "??? ???")));

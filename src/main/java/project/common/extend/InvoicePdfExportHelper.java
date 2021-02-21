@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.zefer.pd4ml.PD4ML;
 
+import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dto.oracle.UsrInvoice;
 import zebra.data.DataSet;
 import zebra.export.ExcelExportHelper;
@@ -136,7 +137,8 @@ public class InvoicePdfExportHelper extends ExportHelper {
 		src = CommonUtil.replace(src, "#PROVIDER_LOGO#", providerLogo);
 		src = CommonUtil.replace(src, "#PROVIDER_NAME#", usrInvoice.getProviderName());
 		src = CommonUtil.replace(src, "#ISSUE_DATE#", CommonUtil.toString(usrInvoice.getIssueDate(), dateFormat));
-		src = CommonUtil.replace(src, "#QUOTATION_NUMBER#", usrInvoice.getInvoiceNumber());
+		src = CommonUtil.replace(src, "#INVOICE_NUMBER#", usrInvoice.getInvoiceNumber());
+		src = CommonUtil.replace(src, "#DUE_DATE#", CommonUtil.toString(usrInvoice.getPaymentDueDate(), dateFormat));
 
 		src = CommonUtil.replace(src, "#CLIENT_NAME#", usrInvoice.getClientName());
 		src = CommonUtil.replace(src, "#CLIENT_TELEPHONE#", CommonUtil.getFormatString(usrInvoice.getClientTelephone(), "?? ???? ????"));
@@ -150,11 +152,16 @@ public class InvoicePdfExportHelper extends ExportHelper {
 		src = CommonUtil.replace(src, "#PROVIDER_MOBILE#", CommonUtil.getFormatString(usrInvoice.getProviderMobile(), "???? ??? ???"));
 		src = CommonUtil.replace(src, "#PROVIDER_EMAIL#", usrInvoice.getProviderEmail());
 		src = CommonUtil.replace(src, "#PROVIDER_ADDRESS#", usrInvoice.getProviderAddress());
-		src = CommonUtil.replace(src, "#QUOTATION_DETAIL_ROWS#", getInvoiceDetailRows());
+		src = CommonUtil.replace(src, "#INVOICE_DETAIL_ROWS#", getInvoiceDetailRows());
 		src = CommonUtil.replace(src, "#NET_AMT#", CommonUtil.getNumberMask(usrInvoice.getNetAmt(), numberFormat));
 		src = CommonUtil.replace(src, "#GST_AMT#", CommonUtil.getNumberMask(usrInvoice.getGstAmt(), numberFormat));
 		src = CommonUtil.replace(src, "#TOTAL_AMT#", CommonUtil.getNumberMask(usrInvoice.getTotalAmt(), numberFormat));
 		src = CommonUtil.replace(src, "#ADDITIONAL_REMARK#", CommonUtil.nvl(HtmlUtil.stringToHtml(usrInvoice.getAdditionalRemark()), "&nbsp;"));
+		src = CommonUtil.replace(src, "#BANK_NAME#", CommonCodeManager.getCodeDescription("BANK_TYPE", usrInvoice.getBankCode()));
+		src = CommonUtil.replace(src, "#ACCOUNT_NAME#", usrInvoice.getBankAccntName());
+		src = CommonUtil.replace(src, "#BSB#", CommonUtil.getFormatString(usrInvoice.getBsb(), "??? ???"));
+		src = CommonUtil.replace(src, "#ACCOUNT_NUMBER#", usrInvoice.getBankAccntNumber());
+		src = CommonUtil.replace(src, "#REF_NUMBER#", usrInvoice.getRefNumber());
 
 		return src;
 	}

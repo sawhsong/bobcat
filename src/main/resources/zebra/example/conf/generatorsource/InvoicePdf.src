@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<script type="text/javascript">
+</script>
+<style type="text/css">
+* {margin:0px 0px;padding:0px 0px;}
+body {padding:0px 0px;color:#000000;font:normal normal normal 10px/1.2 "Verdana";}
+table {width:100%;border-spacing:0px;border-collapse:collapse;}
+table.withPadding th, table.withPadding td {padding:4px 4px;}
+
+#divWrapper {padding:10px 10px;}
+
+.Lt, lt {text-align:left;}
+.Ct, ct {text-align:center;}
+.Rt, rt {text-align:right;}
+.verGap {font-size:1px;padding:4px 0px;}
+
+.tblDefault {border:0px solid #DDDDDD;}
+.thDefault {padding:0px 0px;}
+.tdDefault {padding:0px 0px;}
+
+.tblGrid {border:0px solid #DDDDDD;}
+.thGrid {padding:8px 4px;text-align:center;border:1px solid #DDDDDD;background:#F5F5F5;}
+.tdGrid {padding:6px 4px;border:1px solid #DDDDDD;}
+
+.tblEdit {border:0px solid #DDDDDD;}
+.thEdit {padding:8px 4px;border:1px solid #DDDDDD;background:#F5F5F5;}
+.tdEdit {padding:6px 4px;border:1px solid #DDDDDD;}
+</style>
+</head>
+<body>
+<div id="divWrapper">
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<td class="tdDefault Lt" style="vertical-align:top;border-bottom:2px solid #DDDDDD;width:50%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="tdDefault Lt" style="height:84px;">
+							#PROVIDER_LOGO#
+						</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt" style="font-size:14px;font-weight:bold;">#PROVIDER_NAME#</td>
+					</tr>
+				</table>
+			</td>
+			<td class="tdDefault Rt" style="vertical-align:top;border-bottom:2px solid #DDDDDD;width:50%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="tdDefault Rt" colspan="2" style="vertical-align:top;font-size:16px;font-weight:bold;height:48px;">Invoice</td>
+					</tr>
+					<tr>
+						<th class="thDefault Rt" style="width:68%">Invoice Date</th>
+						<td class="tdDefault Rt" style="width:32%">#ISSUE_DATE#</td>
+					</tr>
+					<tr>
+						<th class="thDefault Rt">Invoice Number</th>
+						<td class="tdDefault Rt">#INVOICE_NUMBER#</td>
+					</tr>
+					<tr>
+						<th class="thDefault Rt">Due Date</th>
+						<td class="tdDefault Rt">#DUE_DATE#</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<td style="vertical-align:top;width:49%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="thDefault Lt"><font style="font-weight:bold;font-size:12px">Bill To :</font></td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Name : </font>#CLIENT_NAME#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Tel : </font>#CLIENT_TELEPHONE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Mobile : </font>#CLIENT_MOBILE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Email : </font>#CLIENT_EMAIL#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt"><font style="font-weight:bold">Address : </font>#CLIENT_ADDRESS#</td>
+					</tr>
+				</table>
+			</td>
+			<td style="vertical-align:top;width:51%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<th class="thDefault Rt"><font style="font-weight:bold;font-size:12px">Issued By :</font></th>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Name : </font>#PROVIDER_NAME#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">ABN : </font>#PROVIDER_ABN#</td>
+					</tr>
+					#PROVIDER_ACN#
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Tel : </font>#PROVIDER_TELEPHONE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Mobile : </font>#PROVIDER_MOBILE#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Email : </font>#PROVIDER_EMAIL#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Address : </font>#PROVIDER_ADDRESS#</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblGrid">
+		<thead>
+			<tr>
+				<th class="thGrid" style="width:*">Description</th>
+				<th class="thGrid" style="width:12%">Unit</th>
+				<th class="thGrid" style="width:14%">Price</th>
+				<th class="thGrid" style="width:14%">Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			#INVOICE_DETAIL_ROWS#
+			<tr>
+				<td class="tdGrid Rt" colspan="3" style="font-weight:bold;border-left:0px;border-bottom:0px;">Sub Total</td>
+				<td class="tdGrid Rt">#NET_AMT#</td>
+			</tr>
+			<tr>
+				<td class="tdGrid Rt" colspan="3" style="font-weight:bold;border-top:0px;border-left:0px;border-bottom:0px;">GST</td>
+				<td class="tdGrid Rt">#GST_AMT#</td>
+			</tr>
+			<tr>
+				<td class="tdGrid Rt" colspan="3" style="font-weight:bold;border-top:0px;border-left:0px;border-bottom:0px;">Total Amount Due</td>
+				<td class="tdGrid Rt">#TOTAL_AMT#</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblEdit">
+		<tr>
+			<th class="thEdit">Additional Information</th>
+		</tr>
+		<tr>
+			<td class="tdEdit">#ADDITIONAL_REMARK#</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblEdit" style="width:70%;">
+		<tr>
+			<th class="thEdit" colspan="2">How To pay</th>
+		</tr>
+		<tr>
+			<th class="thEdit Rt" style="width:30%">Bank</th>
+			<td class="tdEdit" style="width:70%">#BANK_NAME#</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Name</th>
+			<td class="tdEdit">#ACCOUNT_NAME#</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">BSB</th>
+			<td class="tdEdit">#BSB#</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Account Number</th>
+			<td class="tdEdit">#ACCOUNT_NUMBER#</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Ref Number</th>
+			<td class="tdEdit">#REF_NUMBER#</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault withPadding">
+		<tr>
+			<th class="thDefault">Should you have any questions, please contact above contact details.</th>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

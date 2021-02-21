@@ -315,7 +315,7 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 			usrInvoice.setPaymentMethod(req.getValue("paymentMethod"));
 			usrInvoice.setBankAccntId(req.getValue("bankAccntId"));
 			usrInvoice.setBankCode(req.getValue("bankCode"));
-			usrInvoice.setBsb(req.getValue("bsb"));
+			usrInvoice.setBsb(CommonUtil.remove(req.getValue("bsb"), " "));
 			usrInvoice.setBankAccntNumber(req.getValue("bankAccntNumber"));
 			usrInvoice.setBankAccntName(req.getValue("bankAccntName"));
 			usrInvoice.setRefNumber(req.getValue("refNumber"));

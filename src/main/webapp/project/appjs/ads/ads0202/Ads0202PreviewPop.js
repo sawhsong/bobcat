@@ -26,7 +26,7 @@ $(function() {
 			data:{quotationId:quotationId}
 		});
 
-//		setTimeout(() => popup.close(), 5000);
+		setTimeout(() => popup.close(), 5000);
 	});
 
 	$(document).keydown(function(event) {
