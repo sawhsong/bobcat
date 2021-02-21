@@ -37,24 +37,10 @@ $(function() {
 	doSearch = function() {
 		commonJs.showProcMessageOnElement("divScrollablePanel");
 
-		if (commonJs.doValidate($("#fmDefault"))) {
-			setTimeout(function() {
-				commonJs.ajaxSubmit({
-					url:"/sys/0404/getList.do",
-					dataType:"json",
-					formId:"fmDefault",
-					success:function(data, textStatus) {
-						var result = commonJs.parseAjaxResult(data, textStatus, "json");
-
-						if (result.isSuccess == true || result.isSuccess == "true") {
-							renderDataGridTable(result);
-						} else {
-							commonJs.error(result.message);
-						}
-					}
-				});
-			}, 500);
-		}
+		commonJs.doSearch({
+			url:"/sys/0404/getList.do",
+			onSuccess:renderDataGridTable
+		});
 	};
 
 	renderDataGridTable = function(result) {

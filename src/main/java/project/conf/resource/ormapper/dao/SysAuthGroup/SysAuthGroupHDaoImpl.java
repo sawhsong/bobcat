@@ -50,8 +50,8 @@ public class SysAuthGroupHDaoImpl extends BaseHDao implements SysAuthGroupDao {
 	public DataSet getAuthGroupDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		queryAdvisor.addVariable("dateFormat", dateFormat);
-		queryAdvisor.addOrderByClause("nvl(update_date, insert_date) desc");
 		queryAdvisor.addOrderByClause("group_name");
+		queryAdvisor.addOrderByClause("nvl(update_date, insert_date) desc");
 		return selectAsDataSet(queryAdvisor, "query.SysAuthGroup.getAuthGroupDataSetBySearchCriteria");
 	}
 
