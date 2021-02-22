@@ -52,7 +52,10 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 		DataSet result = new DataSet();
 
 		try {
-			if (CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_ANZ")) || CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_CBA"))) {
+			if (CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_ANZ"))
+					|| CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_CBA"))
+					|| CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_NAB"))
+					) {
 				// Type1 : Commonwealth / ANZ
 				result = getDataSetForType1(bankAccntId, bankCode, bankStatementFile);
 			} else if (CommonUtil.equalsIgnoreCase(bankCode, CommonCodeManager.getCodeByConstants("BANK_TYPE_WESTPAC"))) {

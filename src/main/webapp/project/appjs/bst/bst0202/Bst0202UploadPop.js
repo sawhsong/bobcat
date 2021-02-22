@@ -198,7 +198,7 @@ $(function() {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
-				if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
+				if (commonJs.isIn(bankCode, ["CBA", "ANZ", "NAB"])) {
 					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ROW_INDEX")));
 					gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "PROC_DATE")));
 					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "PROC_AMOUNT"), "#,##0.00")));
@@ -221,7 +221,7 @@ $(function() {
 		} else {
 			var gridTr = new UiGridTr();
 
-			if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
+			if (commonJs.isIn(bankCode, ["CBA", "ANZ", "NAB"])) {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:5").setText(com.message.I001));
 			} else if (commonJs.isIn(bankCode, ["WESTPAC"])) {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:9").setText(com.message.I001));
@@ -232,7 +232,7 @@ $(function() {
 
 		$(tbody).append($(html));
 
-		if (commonJs.isIn(bankCode, ["CBA", "ANZ"])) {
+		if (commonJs.isIn(bankCode, ["CBA", "ANZ", "NAB"])) {
 			attachTo = $("#divDataArea");
 		} else if (commonJs.isIn(bankCode, ["WESTPAC"])) {
 			attachTo = $("#divGridWrapper_WESTPAC");

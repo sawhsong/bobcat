@@ -90,10 +90,10 @@ var sbaId = "<%=sbaId%>";
 			<td class="tdSearch"><ui:ccselect name="allocationStatus" codeType="BS_TRAN_ALLOC_STATUS" caption="==Select=="/></td>
 			<th class="thSearch rt">Transaction Date</th>
 			<td class="tdSearch">
-				<ui:text name="transactionDateFrom" value="<%=dateFrom%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:text name="transactionDateFrom" className="Ct hor" style="width:90px" option="date"/>
 				<ui:icon id="icnTransactionDateFrom" className="fa-calendar hor"/>
 				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
-				<ui:text name="transactionDateTo" value="<%=dateTo%>" className="Ct hor" style="width:90px" option="date"/>
+				<ui:text name="transactionDateTo" className="Ct hor" style="width:90px" option="date"/>
 				<ui:icon id="icnTransactionDateTo" className="fa-calendar hor"/>
 			</td>
 			<th class="thSearch rt">Updated Date</th>

@@ -121,8 +121,8 @@ var bankStatementId = "<%=bankStatementId%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<div id="div_CBA_ANZ" style="display:none">
-		<table id="tblGrid_CBA_ANZ" class="tblGrid sort autosort">
+	<div id="div_CBA_ANZ_NAB" style="display:none">
+		<table id="tblGrid_CBA_ANZ_NAB" class="tblGrid sort autosort">
 			<colgroup>
 				<col width="7%"/>
 				<col width="9%"/>
@@ -139,7 +139,7 @@ var bankStatementId = "<%=bankStatementId%>";
 					<th class="thGrid">Description</th>
 				</tr>
 			</thead>
-			<tbody id="tblGridBody_CBA_ANZ">
+			<tbody id="tblGridBody_CBA_ANZ_NAB">
 			</tbody>
 		</table>
 	</div>
