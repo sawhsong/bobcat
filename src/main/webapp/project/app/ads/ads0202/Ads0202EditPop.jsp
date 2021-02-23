@@ -111,7 +111,7 @@ var quotationId = "<%=quotationId%>";
 		</tr>
 		<tr>
 			<th class="thEdit rt">Logo Image</th>
-			<td class="tdEdit"><ui:file name="providerLogoPath" style="width:250px"/></td>
+			<td class="tdEdit"><ui:file name="providerLogoPath" style="width:246px"/></td>
 			<th class="thEdit rt">Mobile</th>
 			<td class="tdEdit"><ui:text name="providerMobile"/></td>
 			<th class="thEdit rt">Address</th>

@@ -466,9 +466,14 @@
 			/*!
 			 * Adjust width / height here (for dialog)
 			 */
-			if ($.nony.browser.Chrome) {heightAdjust = params.heightAdjust;}
-			else if ($.nony.browser.FireFox) {heightAdjust = (params.heightAdjust + 2);}
-			else {heightAdjust = (params.heightAdjust + 2);}
+			if ($.nony.browser.Chrome) {
+				heightAdjust = params.heightAdjust;
+			} else if ($.nony.browser.FireFox) {
+				heightAdjust = (params.heightAdjust + 2);
+				dialogWidth = (dialogWidth + 10);
+			} else {
+				heightAdjust = (params.heightAdjust + 2);
+			}
 
 			$(params.popupIframe).height(dialogHeight + "px");
 			$(params.popupBase).height((($(params.popupIframe).outerHeight()) + heightSum + popupFooterHeight + heightAdjust) + "px");
