@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="bbs" namespace="/bbs" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Bbs0202 - Notice Board-->
+        <action class="project.app.bbs.bbs0202.Bbs0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/bbs/bbs0202/Bbs0202List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/bbs/bbs0202/Bbs0202DetailPop.jsp</result>
+        </action>
+    </package>
+</struts>

@@ -113,6 +113,16 @@ public class SysBoardHDaoImpl extends BaseHDao implements SysBoardDao {
 		return selectAsDataSet(queryAdvisor, "query.SysBoard.getNoticeBoardDataSetByCriteria");
 	}
 
+	public DataSet getAnnouncementDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String dataFormat = ConfigUtil.getProperty("format.date.java");
+
+		queryAdvisor.addVariable("dateFormat", dataFormat);
+		queryAdvisor.addVariable("boardType", CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
+		queryAdvisor.addWhereClause("rownum <= 5");
+
+		return selectAsDataSet(queryAdvisor, "query.SysBoard.getAnnouncementDataSetForDashboard");
+	}
+
 	public DataSet getFreeBoardDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String dataFormat = ConfigUtil.getProperty("format.date.java");
