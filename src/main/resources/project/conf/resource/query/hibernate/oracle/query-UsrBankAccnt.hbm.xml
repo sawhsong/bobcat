@@ -34,4 +34,24 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.UsrBankAccnt.getBankStatementAllocationStatusForDashboard">
+	<![CDATA[
+		select uba.bank_code,
+		       (select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = uba.bank_code) as bank_name,
+		       uba.bsb,
+		       uba.accnt_number,
+		       uba.accnt_name,
+		       uba.balance,
+		       uba.accnt_name||' ['||(select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = uba.bank_code)
+		       ||' | '||'BSB : '||regexp_replace(uba.bsb, '(.{3})(.{3})', '\1 \2')||' | '||'ACC : '||uba.accnt_number||']' as description,
+		       (select count(*) from usr_bank_statement where bank_accnt_id = uba.bank_accnt_id) as bs_cnt,
+		       (select count(*) from usr_bs_tran_alloc where bank_accnt_id = uba.bank_accnt_id) as total_tran_cnt,
+		       (select count(*) from usr_bs_tran_alloc where bank_accnt_id = uba.bank_accnt_id and status = 'AL') as allocated_tran_cnt,
+		       (select count(*) from usr_bs_tran_alloc where bank_accnt_id = uba.bank_accnt_id and status = 'UP') as uploaded_tran_cnt
+		  from usr_bank_accnt uba
+		 where uba.user_id = '${userId}'
+		 order by bank_name
+	]]>
+	</sql-query>
 </hibernate-mapping>

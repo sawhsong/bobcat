@@ -40,10 +40,15 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-#divWrapper {padding:0px 10px;}
+#divWrapper {padding:0px 5px;}
+#tblGridAnnouncement {}
+#tblGridAnnouncement th, #tblGridAnnouncement td {border:0px;}
+#tblBankStatement {}
+#tblGridBankStatement th, #tblGridAnnouncement td {}
 
-.sectionHolder {}
-.sectionHeader {}
+.sectionHolder {margin-bottom:20px;}
+.sectionHeader {padding:0px 4px 4px 0px;border-bottom:1px solid #cccccc;}
+.badge {padding:4px 6px 4px 6px;margin-top:-6px;font-size:11px;font-weight:normal;border-radius:3px;background:#094369;cursor:default;}
 
 /* #hNotice.ui-state-default {background-color:#DFF0D8;padding-top:10px;padding-bottom:10px;} */
 /* #hNotice.ui-accordion-header.ui-state-active {background:#DFF0D8;padding-top:10px;padding-bottom:10px;} */
@@ -90,349 +95,183 @@
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
 <div id="divWrapper">
-	<div id="divLeft" style="width:49%;float:left">
+	<div id="divLeft" style="width:45%;float:left">
 		<div class="sectionHolder">
-			<h4 class="sectionHeader">Announcement</h4>
+			<h4 class="sectionHeader">Announcement
+				<span style="float:right;">
+					<ui:icon id="icnRefreshAnnouncement" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+				</span>
+			</h4>
 			<div id="sectionAnnouncement" class="sectionContents">
 				<table id="tblGridAnnouncement" class="tblGrid">
 					<colgroup>
 						<col width="*"/>
-						<col width="15%"/>
-						<col width="10%"/>
+						<col width="5%"/>
+						<col width="12%"/>
+						<col width="6%"/>
 					</colgroup>
 					<tbody id="tbodyGridAnnouncement">
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="accordionGroup">
-			<h3 id="hIncome">Income</h3>
-			<div id="divIncome" class="accordionContents">
-				<table id="tblGridIncome" class="tblGrid">
+		<div class="sectionHolder">
+			<h4 class="sectionHeader">Bank Statements and Allocation Status
+				<span style="float:right;">
+					<ui:icon id="icnRefreshBankStatement" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+				</span>
+			</h4>
+			<div id="sectionBankStatement" class="sectionContents">
+				<table id="tblGridBankStatement" class="tblGrid">
+					<colgroup>
+						<col width="*"/>
+						<col width="6%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+					</colgroup>
+					<thead>
+						<tr class="noBorderAll">
+							<th class="thGrid">Bank Account</th>
+							<th class="thGrid Rt">BS</th>
+							<th class="thGrid Rt">Uploaded</th>
+							<th class="thGrid Rt">Allocated</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyGridBankStatement">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<h4 class="sectionHeader">Quotation | Invoice</h4>
+<!--
+		<div class="divTabArea" class="areaContainer">
+			<ui:tab id="tabQuotationInvoice">
+				<ui:tabList caption="Quotation" isActive="true" iconClass="fa-user" iconPosition="left"/>
+				<ui:tabList caption="Invoice" iconClass="fa-university" iconPosition="left"/>
+			</ui:tab>
+		</div>
+		<div id="div0" style="">
+			<h3>Quotation
+				<span style="float:right;">
+					<span id="spnBadgeQuotationCnt" class="badge"></span>
+					<span id="spnBadgeQuotationAmt" class="badge"></span>
+					<ui:icon id="icnRefreshQuotation" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+				</span>
+			</h3>
+			<div id="sectionQuotation" class="sectionContents">
+				<table id="tblGridQuotation" class="tblGrid">
+					<colgroup>
+						<col width="*"/>
+						<col width="12%"/>
+						<col width="12%"/>
+					</colgroup>
+					<thead>
+						<tr class="noBorderAll">
+							<th class="thGrid Lt">Customer</th>
+							<th class="thGrid Rt">Total Amount</th>
+							<th class="thGrid Rt">Date Issued</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyGridQuotation">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="div1" style="display:none">
+			<h3>Invoice
+				<span style="float:right;">
+					<span id="spnBadgeInvoiceCnt" class="badge"></span>
+					<span id="spnBadgeInvoiceAmt" class="badge"></span>
+					<ui:icon id="icnRefreshInvoice" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+				</span>
+			</h3>
+			<div id="sectionInvoice" class="sectionContents">
+				<table id="tblGridInvoice" class="tblGrid">
 					<colgroup>
 						<col width="*"/>
 						<col width="12%"/>
 						<col width="12%"/>
 						<col width="12%"/>
-						<col width="12%"/>
-						<col width="12%"/>
-						<col width="12%"/>
-						<col width="12%"/>
 					</colgroup>
 					<thead>
-						<tr class="noBorderHor noStripe">
-							<th class="thGrid">Date</th>
-							<th class="thGrid">Card, Etc</th>
-							<th class="thGrid">Cash</th>
-							<th class="thGrid">Gross</th>
-							<th class="thGrid">GST Free</th>
-							<th class="thGrid">GST</th>
-							<th class="thGrid">Net</th>
-							<th class="thGrid">Particular</th>
+						<tr class="noBorderAll">
+							<th class="thGrid Lt">Customer</th>
+							<th class="thGrid Lt">Status</th>
+							<th class="thGrid Rt">Total Amount</th>
+							<th class="thGrid Rt">Date Issued</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">30-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">29-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">28-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">27-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">26-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">25-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">24-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">23-06-2017</a></td>
-							<td class="tdGridRt">1,000.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">22-06-2017</a></td>
-							<td class="tdGridRt">2,500.99</td>
-							<td class="tdGridRt">1,234.99</td>
-							<td class="tdGridRt">1,500.99</td>
-							<td class="tdGridRt">900.99</td>
-							<td class="tdGridRt">2,080.99</td>
-							<td class="tdGridRt">3,560.99</td>
-							<td class="tdGridRt">600.99</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGridCt"><a class="aEn">21-06-2017</a></td>
-							<td class="tdGridRt">1,030.50</td>
-							<td class="tdGridRt">1,234.10</td>
-							<td class="tdGridRt">1,500.05</td>
-							<td class="tdGridRt">900.30</td>
-							<td class="tdGridRt">2,080.50</td>
-							<td class="tdGridRt">3,560.06</td>
-							<td class="tdGridRt">600.02</td>
-						</tr>
+					<tbody id="tbodyGridInvoice">
 					</tbody>
 				</table>
+			</div>
+		</div>
+-->
+		<div class="accordionQuotationInvoice">
+			<div class="accordionGroup">
+				<h3>Quotation
+					<span style="float:right;">
+						<span id="spnBadgeQuotationCnt" class="badge"></span>
+						<span id="spnBadgeQuotationAmt" class="badge"></span>
+						<ui:icon id="icnRefreshQuotation" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+					</span>
+				</h3>
+				<div id="sectionQuotation" class="sectionContents">
+					<table id="tblGridQuotation" class="tblGrid">
+						<colgroup>
+							<col width="*"/>
+							<col width="12%"/>
+							<col width="12%"/>
+						</colgroup>
+						<thead>
+							<tr class="noBorderAll">
+								<th class="thGrid Lt">Customer</th>
+								<th class="thGrid Rt">Total Amount</th>
+								<th class="thGrid Rt">Date Issued</th>
+							</tr>
+						</thead>
+						<tbody id="tbodyGridQuotation">
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="accordionGroup">
+				<h3>Invoice
+					<span style="float:right;">
+						<span id="spnBadgeInvoiceCnt" class="badge"></span>
+						<span id="spnBadgeInvoiceAmt" class="badge"></span>
+						<ui:icon id="icnRefreshInvoice" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+					</span>
+				</h3>
+				<div id="sectionInvoice" class="sectionContents">
+					<table id="tblGridInvoice" class="tblGrid">
+						<colgroup>
+							<col width="*"/>
+							<col width="12%"/>
+							<col width="12%"/>
+							<col width="12%"/>
+						</colgroup>
+						<thead>
+							<tr class="noBorderAll">
+								<th class="thGrid Lt">Customer</th>
+								<th class="thGrid Lt">Status</th>
+								<th class="thGrid Rt">Total Amount</th>
+								<th class="thGrid Rt">Date Issued</th>
+							</tr>
+						</thead>
+						<tbody id="tbodyGridInvoice">
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div id="divRight" class="accordion" style="width:50%;float:right">
-		<div class="accordionGroup">
-			<h3 id="hFreeBoard">Free Board</h3>
-			<div id="divFreeBoard" class="accordionContents">
-				<table id="tblGridFreeBoard" class="tblGrid">
-					<colgroup>
-						<col width="*"/>
-						<col width="15%"/>
-						<col width="10%"/>
-					</colgroup>
-					<tbody>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-						<tr class="noBorderAll noStripe">
-							<td class="tdGrid"><a class="aEn">The new system opened. Please check your account details.</a></td>
-							<td class="tdGridCt">Seun Jin Lee</td>
-							<td class="tdGridRt">20-07-2017</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+	<div id="divRight" style="width:53%;float:right">
+		<div class="sectionHolder">
+			<h4 class="sectionHeader">Allocation Status</h4>
 		</div>
-		<div class="accordionGroup">
-			<h3 id="hExpense">Expense</h3>
-			<div id="divExpense" class="accordionContents">
-				<table id="tblGridExpense" class="tblGrid">
-					<colgroup>
-						<col width="*"/>
-						<col width="20%"/>
-						<col width="6%"/>
-						<col width="10%"/>
-						<col width="7%"/>
-						<col width="7%"/>
-						<col width="7%"/>
-						<col width="20%"/>
-					</colgroup>
-					<thead>
-						<tr class="noBorderHor noStripe">
-							<th class="thGrid">Main Type</th>
-							<th class="thGrid">Sub Type</th>
-							<th class="thGrid">Code</th>
-							<th class="thGrid">Date</th>
-							<th class="thGrid">Gross</th>
-							<th class="thGrid">GST</th>
-							<th class="thGrid">Net</th>
-							<th class="thGrid">Particular</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">25-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">24-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">23-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">22-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">21-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">20-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">19-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">18-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">17-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-						<tr class="noBorderHor noStripe">
-							<td class="tdGrid">Client Related Expenses</td>
-							<td class="tdGrid">Commission Discount</td>
-							<td class="tdGridCt">345</td>
-							<td class="tdGridCt"><a class="aEn">16-06-2017</a></td>
-							<td class="tdGridRt">176.04</td>
-							<td class="tdGridRt">16.00</td>
-							<td class="tdGridRt">160.04</td>
-							<td class="tdGrid">IELI_Seo Yeol YANG</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+
+
 	</div>
 </div>
 </div>

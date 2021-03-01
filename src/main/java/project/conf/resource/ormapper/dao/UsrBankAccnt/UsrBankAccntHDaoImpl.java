@@ -131,4 +131,14 @@ public class UsrBankAccntHDaoImpl extends BaseHDao implements UsrBankAccntDao {
 
 		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getDataSetForSearchCriteriaByUserId");
 	}
+
+	public DataSet getBankStatementAllocationStatusForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
+		String userId = (String)queryAdvisor.getObject("userId");
+
+		queryAdvisor.addVariable("langCode", langCode);
+		queryAdvisor.addVariable("userId", userId);
+
+		return selectAsDataSet(queryAdvisor, "query.UsrBankAccnt.getBankStatementAllocationStatusForDashboard");
+	}
 }

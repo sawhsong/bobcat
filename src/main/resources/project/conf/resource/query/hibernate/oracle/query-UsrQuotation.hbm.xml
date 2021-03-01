@@ -17,4 +17,22 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.UsrQuotation.getQuotationBadgeForDashboard">
+	<![CDATA[
+		select (select count(*) from usr_quotation where user_id = '${userId}') as quotation_cnt,
+		       (select sum(total_amt) from usr_quotation where user_id = '${userId}') as quotation_tot_amt
+		  from dual
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrQuotation.getQuotationDataSetForDashboard">
+	<![CDATA[
+		select quotation_id, quotation_number, issue_date, client_name, client_email, net_amt, gst_amt, total_amt, insert_date, update_date
+		  from usr_quotation
+		 where user_id = '${userId}'
+		   and rownum <= 5
+		 order by nvl(update_date, insert_date) desc
+	]]>
+	</sql-query>
 </hibernate-mapping>

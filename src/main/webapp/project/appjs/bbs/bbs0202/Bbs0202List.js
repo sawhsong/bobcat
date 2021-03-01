@@ -224,7 +224,6 @@ $(function() {
 	$(window).load(function() {
 		commonJs.setFieldDateMask("fromDate");
 		commonJs.setFieldDateMask("toDate");
-		$("#searchWord").focus();
 		doSearch();
 	});
 });

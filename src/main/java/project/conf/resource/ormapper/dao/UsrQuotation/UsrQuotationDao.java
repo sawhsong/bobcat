@@ -19,4 +19,6 @@ public interface UsrQuotationDao extends IDao {
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByQuotationId(String quotationId) throws Exception;
 	public UsrQuotation getQuotationByQuotationId(String quotationId) throws Exception;
+	public DataSet getQuotationBadgeForDashboard(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getQuotationDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception;
 }

@@ -19,4 +19,6 @@ public interface UsrInvoiceDao extends IDao {
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByInvoiceId(String invoiceId) throws Exception;
 	public UsrInvoice getInvoiceByInvoiceId(String invoiceId) throws Exception;
+	public DataSet getInvoiceBadgeForDashboard(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getInvoiceDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception;
 }

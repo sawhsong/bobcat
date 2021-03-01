@@ -31,4 +31,58 @@ public class IndexAction extends BaseAction {
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
+
+	public String getAttachedFile() throws Exception {
+		try {
+			biz.getAttachedFile(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getBankStatementAllocationStatus() throws Exception {
+		try {
+			biz.getBankStatementAllocationStatus(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getQuotationBadge() throws Exception {
+		try {
+			biz.getQuotationBadge(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getQuotationData() throws Exception {
+		try {
+			biz.getQuotationData(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getInvoiceBadge() throws Exception {
+		try {
+			biz.getInvoiceBadge(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getInvoiceData() throws Exception {
+		try {
+			biz.getInvoiceData(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
 }

@@ -103,4 +103,22 @@ public class UsrQuotationHDaoImpl extends BaseHDao implements UsrQuotationDao {
 		queryAdvisor.addWhereClause("quotation_id = '"+quotationId+"'");
 		return (UsrQuotation)selectAllToDto(queryAdvisor, new UsrQuotation());
 	}
+
+	public DataSet getQuotationBadgeForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+
+		queryAdvisor.addVariable("userId", userId);
+
+		return selectAsDataSet(queryAdvisor, "query.UsrQuotation.getQuotationBadgeForDashboard");
+	}
+
+	public DataSet getQuotationDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
+
+		queryAdvisor.addVariable("langCode", langCode);
+		queryAdvisor.addVariable("userId", userId);
+
+		return selectAsDataSet(queryAdvisor, "query.UsrQuotation.getQuotationDataSetForDashboard");
+	}
 }

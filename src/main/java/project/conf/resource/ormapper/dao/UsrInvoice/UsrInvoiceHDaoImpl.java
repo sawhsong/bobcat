@@ -107,4 +107,22 @@ public class UsrInvoiceHDaoImpl extends BaseHDao implements UsrInvoiceDao {
 		queryAdvisor.addWhereClause("invoice_id = '"+invoiceId+"'");
 		return (UsrInvoice)selectAllToDto(queryAdvisor, new UsrInvoice());
 	}
+
+	public DataSet getInvoiceBadgeForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+
+		queryAdvisor.addVariable("userId", userId);
+
+		return selectAsDataSet(queryAdvisor, "query.UsrInvoice.getInvoiceBadgeForDashboard");
+	}
+
+	public DataSet getInvoiceDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
+
+		queryAdvisor.addVariable("langCode", langCode);
+		queryAdvisor.addVariable("userId", userId);
+
+		return selectAsDataSet(queryAdvisor, "query.UsrInvoice.getInvoiceDataSetForDashboard");
+	}
 }

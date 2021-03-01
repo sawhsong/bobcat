@@ -19,4 +19,23 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.UsrInvoice.getInvoiceBadgeForDashboard">
+	<![CDATA[
+		select (select count(*) from usr_invoice where user_id = '${userId}') as invoice_cnt, 
+		       (select sum(total_amt) from usr_invoice where user_id = '${userId}') as invoice_tot_amt
+		  from dual
+	]]>
+	</sql-query>
+
+	<sql-query name="query.UsrInvoice.getInvoiceDataSetForDashboard">
+	<![CDATA[
+		select invoice_id, invoice_number, issue_date, status, client_name, client_email, net_amt, gst_amt, total_amt, insert_date, update_date,
+		       (select description_${langCode} from sys_common_code where code_type = 'INVOICE_STATUS' and common_code = usr_invoice.status) as status_meaning
+		  from usr_invoice
+		 where user_id = '${userId}'
+		   and rownum <= 5
+		 order by nvl(update_date, insert_date) desc
+	]]>
+	</sql-query>
 </hibernate-mapping>
