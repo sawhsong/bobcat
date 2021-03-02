@@ -95,7 +95,7 @@
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
 <div id="divWrapper">
-	<div id="divLeft" style="width:45%;float:left">
+	<div id="divLeft" style="width:48%;float:left">
 		<div class="sectionHolder">
 			<h4 class="sectionHeader">Announcement
 				<span style="float:right;">
@@ -266,12 +266,37 @@
 			</div>
 		</div>
 	</div>
-	<div id="divRight" style="width:53%;float:right">
-		<div class="sectionHolder">
-			<h4 class="sectionHeader">Allocation Status</h4>
+	<div id="divRight" style="width:51%;float:right">
+		<h4 class="sectionHeader">Allocation Status</h4>
+		<div class="accordionStatus">
+			<div id="sectionIncomeChart" class="accordionGroup">
+				<h3>Income
+					<span style="float:right;">
+						<ui:icon id="icnRefreshIncomeChart" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+					</span>
+				</h3>
+				<div id="incomeChart" class="sectionContents">
+				</div>
+			</div>
+			<div id="sectionExpenseChart" class="accordionGroup">
+				<h3>Expense
+					<span style="float:right;">
+						<ui:icon id="icnRefreshExpenseChart" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+					</span>
+				</h3>
+				<div id="expenseChart" class="sectionContents">
+				</div>
+			</div>
+			<div id="sectionOtherChart" class="accordionGroup">
+				<h3>Others
+					<span style="float:right;">
+						<ui:icon id="icnRefreshOtherChart" className="fa-refresh" style="font-size:15px;margin-left:14px;" title="Refresh"/>
+					</span>
+				</h3>
+				<div id="otherChart" class="sectionContents">
+				</div>
+			</div>
 		</div>
-
-
 	</div>
 </div>
 </div>

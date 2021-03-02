@@ -85,4 +85,40 @@ public class IndexAction extends BaseAction {
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
 	}
+
+	public String getMonthForChart() throws Exception {
+		try {
+			biz.getMonthForChart(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getIncomeChartData() throws Exception {
+		try {
+			biz.getIncomeChartData(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getExpenseChartData() throws Exception {
+		try {
+			biz.getExpenseChartData(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getOtherChartData() throws Exception {
+		try {
+			biz.getOtherChartData(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
 }

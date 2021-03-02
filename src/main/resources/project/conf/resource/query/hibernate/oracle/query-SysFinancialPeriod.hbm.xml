@@ -35,4 +35,33 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.SysFinancialPeriod.getFinancialMonthsByPeriodYear">
+	<![CDATA[
+		 select period_year, financial_year,
+		        to_char(add_months(date_from, (level - 1)), 'Mon-yy') as mon_char,
+		        to_char(add_months(date_from, (level - 1)), 'mm-yy') as mon_num
+		   from (select period_year,
+		                financial_year,
+		                min(date_from) as date_from,
+		                max(date_to) as date_to
+		           from sys_financial_period
+		          where period_year = '${periodYear}'
+		          group by period_year, financial_year
+		        )
+		connect by trunc(add_months(date_from, (level - 1))) <= trunc(date_to)
+	]]>
+	</sql-query>
+
+	<sql-query name="query.SysFinancialPeriod.getStartEndDataSetByPeriodYear">
+	<![CDATA[
+		select period_year,
+		       financial_year,
+		       min(date_from) as date_from,
+		       max(date_to) as date_to
+		  from sys_financial_period
+		 where period_year = '${periodYear}'
+		 group by period_year, financial_year
+	]]>
+	</sql-query>
 </hibernate-mapping>

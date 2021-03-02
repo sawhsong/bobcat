@@ -5,6 +5,8 @@ jsconfig.put("noWest", true);
 var attchedFileContextMenu = [];
 var dateTimeFormat = jsconfig.get("dateTimeFormatJs");
 var dateFormat = jsconfig.get("dateFormatJs");
+var monthDataSet;
+var monthLabel = [], monthNumber = [];
 
 $(function() {
 	/*!
@@ -25,6 +27,9 @@ $(function() {
 
 		if (id == "icnRefreshQuotation") {getQuotationData();}
 		if (id == "icnRefreshInvoice") {getInvoiceData();}
+		if (id == "icnRefreshIncomeChart") {renderIncomeChart();}
+		if (id == "icnRefreshExpenseChart") {renderExpenseChart();}
+		if (id == "icnRefreshOtherChart") {renderOtherChart();}
 
 		event.preventDefault();
 		event.stopPropagation();
@@ -325,6 +330,293 @@ $(function() {
 			}
 		});
 	};
+
+	getMonthsForChart = () => {
+		commonJs.doSearch({
+			url:"/index/getMonthForChart.do",
+			onSuccess:(result) => {
+				monthDataSet = result.dataSet;
+				for (var i=0; i<monthDataSet.getRowCnt(); i++) {
+					monthLabel.push(monthDataSet.getValue(i, "MON_CHAR"));
+					monthNumber.push(monthDataSet.getValue(i, "MON_NUM"));
+				}
+			}
+		});
+	};
+
+	renderIncomeChart = () => {
+		commonJs.showProcMessageOnElement("sectionIncomeChart");
+
+		var chartData = {};
+		$("#incomeChart").html("");
+		$("#incomeChart").html("<canvas id=\"cvIncomeChart\" style=\"width:100%;height:210px;\"></canvas>");
+
+		commonJs.doSearch({
+			url:"/index/getIncomeChartData.do",
+			onSuccess:(result) => {
+				var ds = result.dataSet;
+				var dataTot = {}, dataGst = {}, dataNet = {};
+				var totAmt = [], gstAmt = [], netAmt = [];
+				var datasets = [];
+
+				for (var i=0; i<monthNumber.length; i++) {
+					var mon = monthNumber[i].split("-")[0];
+
+					totAmt.push(ds.getValue(0, "TOTAL_AMT_"+mon));
+					gstAmt.push(ds.getValue(0, "GST_AMT_"+mon));
+					netAmt.push(ds.getValue(0, "NET_AMT_"+mon));
+				}
+
+				dataGst.type = "bar";
+				dataGst.label = "GST";
+				dataGst.backgroundColor = chartColor.background0;
+				dataGst.borderColor = chartColor.border0;
+				dataGst.borderWidth = 1,
+				dataGst.data = gstAmt;
+
+				dataNet.type = "bar";
+				dataNet.label = "Net";
+				dataNet.backgroundColor = chartColor.background3;
+				dataNet.borderColor = chartColor.border3;
+				dataNet.borderWidth = 1,
+				dataNet.data = netAmt;
+
+				dataTot.type = "bar";
+				dataTot.label = "Total";
+				dataTot.backgroundColor = chartColor.background5;
+				dataTot.borderColor = chartColor.border5;
+				dataTot.borderWidth = 1,
+				dataTot.data = totAmt;
+
+				datasets.push(dataGst);
+				datasets.push(dataNet);
+				datasets.push(dataTot);
+
+				chartData.labels = monthLabel;
+				chartData.datasets = datasets;
+
+				setTimeout(() => {
+					var ctx = $("#cvIncomeChart")[0].getContext("2d");
+					incomeChart = new Chart(ctx, {
+						type:"bar",
+						data:chartData,
+						options:{
+							responsive:true,
+							defaultFontFamily:"Verdana",
+							title:{
+								display:false,
+								text: "Income Status"
+							},
+							tooltips:{
+								mode:"index",
+								intersect:true,
+								callbacks:{
+									label:(tooltipItem, data) => {
+										var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+										if (label) {label += ": ";}
+										label += commonJs.getNumberMask(tooltipItem.yLabel, "#,##0.00");
+
+										return label;
+									}
+								}
+							},
+							scales:{
+								yAxes:[{
+									ticks:{
+										callback:(value, index, values) => {
+											return commonJs.getNumberMask(value, "#,##0");
+										}
+									}
+								}]
+							}
+						}
+					});
+
+					commonJs.hideProcMessageOnElement("sectionIncomeChart");
+				}, 500);
+			}
+		});
+	};
+
+	renderExpenseChart = () => {
+		commonJs.showProcMessageOnElement("sectionExpenseChart");
+
+		var chartData = {};
+		$("#expenseChart").html("");
+		$("#expenseChart").html("<canvas id=\"cvExpenseChart\" style=\"width:100%;height:210px;\"></canvas>");
+
+		commonJs.doSearch({
+			url:"/index/getExpenseChartData.do",
+			onSuccess:(result) => {
+				var ds = result.dataSet;
+				var dataTot = {}, dataGst = {}, dataNet = {};
+				var totAmt = [], gstAmt = [], netAmt = [];
+				var datasets = [];
+
+				for (var i=0; i<monthNumber.length; i++) {
+					var mon = monthNumber[i].split("-")[0];
+
+					totAmt.push(ds.getValue(0, "TOTAL_AMT_"+mon));
+					gstAmt.push(ds.getValue(0, "GST_AMT_"+mon));
+					netAmt.push(ds.getValue(0, "NET_AMT_"+mon));
+				}
+
+				dataGst.type = "bar";
+				dataGst.label = "GST";
+				dataGst.backgroundColor = chartColor.background0;
+				dataGst.borderColor = chartColor.border0;
+				dataGst.borderWidth = 1,
+				dataGst.data = gstAmt;
+
+				dataNet.type = "bar";
+				dataNet.label = "Net";
+				dataNet.backgroundColor = chartColor.background3;
+				dataNet.borderColor = chartColor.border3;
+				dataNet.borderWidth = 1,
+				dataNet.data = netAmt;
+
+				dataTot.type = "bar";
+				dataTot.label = "Total";
+				dataTot.backgroundColor = chartColor.background5;
+				dataTot.borderColor = chartColor.border5;
+				dataTot.borderWidth = 1,
+				dataTot.data = totAmt;
+
+				datasets.push(dataGst);
+				datasets.push(dataNet);
+				datasets.push(dataTot);
+
+				chartData.labels = monthLabel;
+				chartData.datasets = datasets;
+
+				setTimeout(() => {
+					var ctx = $("#cvExpenseChart")[0].getContext("2d");
+					incomeChart = new Chart(ctx, {
+						type:"bar",
+						data:chartData,
+						options:{
+							responsive:true,
+							defaultFontFamily:"Verdana",
+							title:{
+								display:false,
+								text: "Expense Status"
+							},
+							tooltips:{
+								mode:"index",
+								intersect:true,
+								callbacks:{
+									label:(tooltipItem, data) => {
+										var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+										if (label) {label += ": ";}
+										label += commonJs.getNumberMask(tooltipItem.yLabel, "#,##0.00");
+
+										return label;
+									}
+								}
+							},
+							scales:{
+								yAxes:[{
+									ticks:{
+										callback:(value, index, values) => {
+											return commonJs.getNumberMask(value, "#,##0");
+										}
+									}
+								}]
+							}
+						}
+					});
+
+					commonJs.hideProcMessageOnElement("sectionExpenseChart");
+				}, 500);
+			}
+		});
+	};
+
+	renderOtherChart = () => {
+		commonJs.showProcMessageOnElement("sectionOtherChart");
+
+		var chartData = {};
+		$("#otherChart").html("");
+		$("#otherChart").html("<canvas id=\"cvOtherChart\" style=\"width:100%;height:210px;\"></canvas>");
+
+		commonJs.doSearch({
+			url:"/index/getOtherChartData.do",
+			onSuccess:(result) => {
+				var ds = result.dataSet;
+				var data0 = {}, data1 = {};
+				var totAmt0 = [], totAmt1 = [];
+				var datasets = [];
+
+				for (var i=0; i<monthNumber.length; i++) {
+					var mon = monthNumber[i].split("-")[0];
+
+					totAmt0.push(ds.getValue(0, "TOTAL_AMT_"+mon));
+					totAmt1.push(ds.getValue(1, "TOTAL_AMT_"+mon));
+				}
+
+				data0.type = "line";
+				data0.label = "Loan";
+				data0.borderColor = chartColor.border8;
+				data0.borderWidth = 2,
+				data0.data = totAmt0;
+
+				data1.type = "line";
+				data1.label = "Personal";
+				data1.borderColor = chartColor.border9;
+				data1.borderWidth = 2,
+				data1.data = totAmt1;
+
+				datasets.push(data0);
+				datasets.push(data1);
+
+				chartData.labels = monthLabel;
+				chartData.datasets = datasets;
+
+				setTimeout(() => {
+					var ctx = $("#cvOtherChart")[0].getContext("2d");
+					incomeChart = new Chart(ctx, {
+						type:"line",
+						data:chartData,
+						options:{
+							responsive:true,
+							defaultFontFamily:"Verdana",
+							title:{
+								display:false,
+								text: "Other Status"
+							},
+							tooltips:{
+								mode:"index",
+								intersect:true,
+								callbacks:{
+									label:(tooltipItem, data) => {
+										var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+										if (label) {label += ": ";}
+										label += commonJs.getNumberMask(tooltipItem.yLabel, "#,##0.00");
+
+										return label;
+									}
+								}
+							},
+							scales:{
+								yAxes:[{
+									ticks:{
+										callback:(value, index, values) => {
+											return commonJs.getNumberMask(value, "#,##0");
+										}
+									}
+								}]
+							}
+						}
+					});
+
+					commonJs.hideProcMessageOnElement("sectionOtherChart");
+				}, 500);
+			}
+		});
+	};
 	/*!
 	 * load event (document / window)
 	 */
@@ -335,9 +627,21 @@ $(function() {
 			expandAll:true
 		});
 
+		commonJs.setAccordion({
+			containerClass:"accordionStatus",
+			multipleExpand:true,
+			expandAll:true
+		});
+
+		getMonthsForChart();
+
 		getAnnouncement();
 		getBankStatementAllocationStatus();
 		getQuotationData();
 		getInvoiceData();
+
+		renderIncomeChart();
+		renderExpenseChart();
+		renderOtherChart();
 	});
 });

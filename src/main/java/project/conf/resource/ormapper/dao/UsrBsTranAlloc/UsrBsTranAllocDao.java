@@ -18,4 +18,8 @@ public interface UsrBsTranAllocDao extends IDao {
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByFileDataForDupCheck(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByBsTranAllocId(String bsTranAllocId) throws Exception;
+
+	public DataSet getIncomeChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getExpenseChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception;
+	public DataSet getOtherChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception;
 }

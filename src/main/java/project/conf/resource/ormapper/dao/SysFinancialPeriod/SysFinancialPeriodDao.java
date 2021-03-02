@@ -20,4 +20,7 @@ public interface SysFinancialPeriodDao extends IDao {
 	public DataSet getPeriodDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public SysFinancialPeriod getFinancialPeriodByPeriodYearAndCode(String periodYear, String quarterCode) throws Exception;
 	public DataSet getDataSetByPeriodYearAndCode(String periodYear, String quarterCode) throws Exception;
+
+	public DataSet getFinancialMonthsByPeriodYear(String periodYear) throws Exception;
+	public DataSet getStartEndDataSetByPeriodYear(String periodYear) throws Exception;
 }

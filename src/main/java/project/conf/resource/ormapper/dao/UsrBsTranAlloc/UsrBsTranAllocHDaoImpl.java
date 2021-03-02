@@ -68,4 +68,44 @@ public class UsrBsTranAllocHDaoImpl extends BaseHDao implements UsrBsTranAllocDa
 		queryAdvisor.addWhereClause("bs_tran_alloc_id = '"+bsTranAllocId+"'");
 		return selectAllAsDataSet(queryAdvisor, new UsrBsTranAlloc());
 	}
+
+	public DataSet getIncomeChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+		String yearFrom = (String)queryAdvisor.getObject("yearFrom");
+		String yearTo = (String)queryAdvisor.getObject("yearTo");
+
+		queryAdvisor.addVariable("userId", userId);
+		queryAdvisor.addVariable("yearFrom", yearFrom);
+		queryAdvisor.addVariable("yearTo", yearTo);
+		queryAdvisor.addWhereClause("lower(src.main_category_name) like lower('%Income%')");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrBsTranAlloc.getChartDataSetForDashboard");
+	}
+
+	public DataSet getExpenseChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+		String yearFrom = (String)queryAdvisor.getObject("yearFrom");
+		String yearTo = (String)queryAdvisor.getObject("yearTo");
+
+		queryAdvisor.addVariable("userId", userId);
+		queryAdvisor.addVariable("yearFrom", yearFrom);
+		queryAdvisor.addVariable("yearTo", yearTo);
+		queryAdvisor.addWhereClause("lower(src.main_category_name) like lower('%Expense%')");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrBsTranAlloc.getChartDataSetForDashboard");
+	}
+
+	public DataSet getOtherChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
+		String userId = (String)queryAdvisor.getObject("userId");
+		String yearFrom = (String)queryAdvisor.getObject("yearFrom");
+		String yearTo = (String)queryAdvisor.getObject("yearTo");
+
+		queryAdvisor.addVariable("userId", userId);
+		queryAdvisor.addVariable("yearFrom", yearFrom);
+		queryAdvisor.addVariable("yearTo", yearTo);
+		queryAdvisor.addWhereClause("lower(src.main_category_name) not like lower('%Income%')");
+		queryAdvisor.addWhereClause("lower(src.main_category_name) not like lower('%Expense%')");
+
+		return selectAsDataSet(queryAdvisor, "query.UsrBsTranAlloc.getChartDataSetForDashboard");
+	}
 }

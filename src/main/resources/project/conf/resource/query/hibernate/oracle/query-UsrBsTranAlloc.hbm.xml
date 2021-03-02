@@ -42,4 +42,106 @@
 		${order_by_clause}
 	]]>
 	</sql-query>
+
+	<sql-query name="query.UsrBsTranAlloc.getChartDataSetForDashboard">
+	<![CDATA[
+		with src as (
+		select main_category,
+		       main_category_name,
+		       decode(proc_date, '07'||'/'||'${yearFrom}', sum(nvl(total_amt, 0))) as total_amt_07,
+		       decode(proc_date, '07'||'/'||'${yearFrom}', sum(nvl(gst_amt, 0))) as gst_amt_07,
+		       decode(proc_date, '07'||'/'||'${yearFrom}', sum(nvl(net_amt, 0))) as net_amt_07,
+		       decode(proc_date, '08'||'/'||'${yearFrom}', sum(nvl(total_amt, 0))) as total_amt_08,
+		       decode(proc_date, '08'||'/'||'${yearFrom}', sum(nvl(gst_amt, 0))) as gst_amt_08,
+		       decode(proc_date, '08'||'/'||'${yearFrom}', sum(nvl(net_amt, 0))) as net_amt_08,
+		       decode(proc_date, '09'||'/'||'${yearFrom}', sum(nvl(total_amt, 0))) as total_amt_09,
+		       decode(proc_date, '09'||'/'||'${yearFrom}', sum(nvl(gst_amt, 0))) as gst_amt_09,
+		       decode(proc_date, '09'||'/'||'${yearFrom}', sum(nvl(net_amt, 0))) as net_amt_09,
+		       decode(proc_date, '10'||'/'||'${yearFrom}', sum(nvl(total_amt, 0))) as total_amt_10,
+		       decode(proc_date, '10'||'/'||'${yearFrom}', sum(nvl(gst_amt, 0))) as gst_amt_10,
+		       decode(proc_date, '10'||'/'||'${yearFrom}', sum(nvl(net_amt, 0))) as net_amt_10,
+		       decode(proc_date, '11'||'/'||'${yearFrom}', sum(nvl(total_amt, 0))) as total_amt_11,
+		       decode(proc_date, '11'||'/'||'${yearFrom}', sum(nvl(gst_amt, 0))) as gst_amt_11,
+		       decode(proc_date, '11'||'/'||'${yearFrom}', sum(nvl(net_amt, 0))) as net_amt_11,
+		       decode(proc_date, '12'||'/'||'${yearFrom}', sum(nvl(total_amt, 0))) as total_amt_12,
+		       decode(proc_date, '12'||'/'||'${yearFrom}', sum(nvl(gst_amt, 0))) as gst_amt_12,
+		       decode(proc_date, '12'||'/'||'${yearFrom}', sum(nvl(net_amt, 0))) as net_amt_12,
+		       decode(proc_date, '01'||'/'||'${yearTo}', sum(nvl(total_amt, 0))) as total_amt_01,
+		       decode(proc_date, '01'||'/'||'${yearTo}', sum(nvl(gst_amt, 0))) as gst_amt_01,
+		       decode(proc_date, '01'||'/'||'${yearTo}', sum(nvl(net_amt, 0))) as net_amt_01,
+		       decode(proc_date, '02'||'/'||'${yearTo}', sum(nvl(total_amt, 0))) as total_amt_02,
+		       decode(proc_date, '02'||'/'||'${yearTo}', sum(nvl(gst_amt, 0))) as gst_amt_02,
+		       decode(proc_date, '02'||'/'||'${yearTo}', sum(nvl(net_amt, 0))) as net_amt_02,
+		       decode(proc_date, '03'||'/'||'${yearTo}', sum(nvl(total_amt, 0))) as total_amt_03,
+		       decode(proc_date, '03'||'/'||'${yearTo}', sum(nvl(gst_amt, 0))) as gst_amt_03,
+		       decode(proc_date, '03'||'/'||'${yearTo}', sum(nvl(net_amt, 0))) as net_amt_03,
+		       decode(proc_date, '04'||'/'||'${yearTo}', sum(nvl(total_amt, 0))) as total_amt_04,
+		       decode(proc_date, '04'||'/'||'${yearTo}', sum(nvl(gst_amt, 0))) as gst_amt_04,
+		       decode(proc_date, '04'||'/'||'${yearTo}', sum(nvl(net_amt, 0))) as net_amt_04,
+		       decode(proc_date, '05'||'/'||'${yearTo}', sum(nvl(total_amt, 0))) as total_amt_05,
+		       decode(proc_date, '05'||'/'||'${yearTo}', sum(nvl(gst_amt, 0))) as gst_amt_05,
+		       decode(proc_date, '05'||'/'||'${yearTo}', sum(nvl(net_amt, 0))) as net_amt_05,
+		       decode(proc_date, '06'||'/'||'${yearTo}', sum(nvl(total_amt, 0))) as total_amt_06,
+		       decode(proc_date, '06'||'/'||'${yearTo}', sum(nvl(gst_amt, 0))) as gst_amt_06,
+		       decode(proc_date, '06'||'/'||'${yearTo}', sum(nvl(net_amt, 0))) as net_amt_06
+		  from (select ubta.main_category,
+		               (select category_name from sys_recon_category where category_id = ubta.main_category) as main_category_name,
+		               to_char(ubta.proc_date, 'mm/yyyy') as proc_date,
+		               sum(nvl(ubta.proc_amt, 0)) as total_amt,
+		               sum(nvl(ubta.gst_amt, 0)) as gst_amt,
+		               sum(nvl(ubta.net_amt, 0)) as net_amt
+		          from usr_bs_tran_alloc ubta
+		         where ubta.user_id = '${userId}'
+		           and ubta.status = 'AL'
+		           and trunc(ubta.proc_date) between to_date('${yearFrom}0701', 'yyyymmdd') and to_date('${yearTo}0630', 'yyyymmdd')
+		         group by ubta.main_category, to_char(ubta.proc_date, 'mm/yyyy')
+		       )
+		 group by main_category, main_category_name, proc_date
+		)
+		select src.main_category,
+		       src.main_category_name,
+		       round(sum(nvl(src.total_amt_07, 0)), 2) as total_amt_07,
+		       round(sum(nvl(src.gst_amt_07, 0)), 2) as gst_amt_07,
+		       round(sum(nvl(src.net_amt_07, 0)), 2) as net_amt_07,
+		       round(sum(nvl(src.total_amt_08, 0)), 2) as total_amt_08,
+		       round(sum(nvl(src.gst_amt_08, 0)), 2) as gst_amt_08,
+		       round(sum(nvl(src.net_amt_08, 0)), 2) as net_amt_08,
+		       round(sum(nvl(src.total_amt_09, 0)), 2) as total_amt_09,
+		       round(sum(nvl(src.gst_amt_09, 0)), 2) as gst_amt_09,
+		       round(sum(nvl(src.net_amt_09, 0)), 2) as net_amt_09,
+		       round(sum(nvl(src.total_amt_10, 0)), 2) as total_amt_10,
+		       round(sum(nvl(src.gst_amt_10, 0)), 2) as gst_amt_10,
+		       round(sum(nvl(src.net_amt_10, 0)), 2) as net_amt_10,
+		       round(sum(nvl(src.total_amt_11, 0)), 2) as total_amt_11,
+		       round(sum(nvl(src.gst_amt_11, 0)), 2) as gst_amt_11,
+		       round(sum(nvl(src.net_amt_11, 0)), 2) as net_amt_11,
+		       round(sum(nvl(src.total_amt_12, 0)), 2) as total_amt_12,
+		       round(sum(nvl(src.gst_amt_12, 0)), 2) as gst_amt_12,
+		       round(sum(nvl(src.net_amt_12, 0)), 2) as net_amt_12,
+		       round(sum(nvl(src.total_amt_01, 0)), 2) as total_amt_01,
+		       round(sum(nvl(src.gst_amt_01, 0)), 2) as gst_amt_01,
+		       round(sum(nvl(src.net_amt_01, 0)), 2) as net_amt_01,
+		       round(sum(nvl(src.total_amt_02, 0)), 2) as total_amt_02,
+		       round(sum(nvl(src.gst_amt_02, 0)), 2) as gst_amt_02,
+		       round(sum(nvl(src.net_amt_02, 0)), 2) as net_amt_02,
+		       round(sum(nvl(src.total_amt_03, 0)), 2) as total_amt_03,
+		       round(sum(nvl(src.gst_amt_03, 0)), 2) as gst_amt_03,
+		       round(sum(nvl(src.net_amt_03, 0)), 2) as net_amt_03,
+		       round(sum(nvl(src.total_amt_04, 0)), 2) as total_amt_04,
+		       round(sum(nvl(src.gst_amt_04, 0)), 2) as gst_amt_04,
+		       round(sum(nvl(src.net_amt_04, 0)), 2) as net_amt_04,
+		       round(sum(nvl(src.total_amt_05, 0)), 2) as total_amt_05,
+		       round(sum(nvl(src.gst_amt_05, 0)), 2) as gst_amt_05,
+		       round(sum(nvl(src.net_amt_05, 0)), 2) as net_amt_05,
+		       round(sum(nvl(src.total_amt_06, 0)), 2) as total_amt_06,
+		       round(sum(nvl(src.gst_amt_06, 0)), 2) as gst_amt_06,
+		       round(sum(nvl(src.net_amt_06, 0)), 2) as net_amt_06
+		  from src
+		 where 1 = 1
+		 ${where_clause}
+		 group by src.main_category,
+		       src.main_category_name
+		 order by src.main_category_name
+	]]>
+	</sql-query>
 </hibernate-mapping>
