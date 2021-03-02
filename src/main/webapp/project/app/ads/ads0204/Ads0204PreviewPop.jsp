@@ -243,7 +243,7 @@ var invoiceId = "<%=invoiceId%>";
 			<col width="*"></col>
 		</colgroup>
 		<tr>
-			<th class="thEdit" colspan="2">How To pay</th>
+			<th class="thEdit" colspan="2">How To Pay</th>
 		</tr>
 		<tr>
 			<th class="thEdit Rt">Bank</th>
