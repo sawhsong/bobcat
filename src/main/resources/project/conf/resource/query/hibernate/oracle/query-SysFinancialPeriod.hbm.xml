@@ -28,7 +28,8 @@
 		       sfp.update_user_id,
 		       (select user_name from sys_user where user_id = sfp.update_user_id) as update_user_name,
 		       to_char(sfp.insert_date, '${dateFormat}') as insert_date,
-		       to_char(sfp.update_date, '${dateFormat}') as update_date
+		       to_char(sfp.update_date, '${dateFormat}') as update_date,
+		       nvl(update_date, insert_date) as last_updated_date
 		  from sys_financial_period sfp
 		 where 1 = 1
 		${auto_fill}

@@ -83,7 +83,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "QUARTER_NAME_DESC")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "DATE_FROM")));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "DATE_TO")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE")), dateTimeFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "LAST_UPDATED_DATE"), dateTimeFormat)));
 
 				html += gridTr.toHtmlString();
 			}
