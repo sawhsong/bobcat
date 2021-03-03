@@ -547,29 +547,31 @@ $(function() {
 				var ds = result.dataSet;
 				var data0 = {}, data1 = {};
 				var totAmt0 = [], totAmt1 = [];
-				var datasets = [];
+				var amt = [], datasets = [];
 
-				for (var i=0; i<monthNumber.length; i++) {
-					var mon = monthNumber[i].split("-")[0];
+				for (var i=0; i<ds.getRowCnt(); i++) {
+					var monAmt = [];
 
-					totAmt0.push(ds.getValue(0, "TOTAL_AMT_"+mon));
-					totAmt1.push(ds.getValue(1, "TOTAL_AMT_"+mon));
+					for (var j=0; j<monthNumber.length; j++) {
+						var mon = monthNumber[j].split("-")[0];
+
+						monAmt.push(ds.getValue(i, "TOTAL_AMT_"+mon));
+					}
+					amt.push(monAmt);
 				}
 
-				data0.type = "line";
-				data0.label = "Loan";
-				data0.borderColor = chartColor.border8;
-				data0.borderWidth = 2,
-				data0.data = totAmt0;
+				for (var i=0; i<ds.getRowCnt(); i++) {
+					var data = [];
+					var colorName = "chartColor.border"+((i+1)*3)+"";
 
-				data1.type = "line";
-				data1.label = "Personal";
-				data1.borderColor = chartColor.border9;
-				data1.borderWidth = 2,
-				data1.data = totAmt1;
+					data["type"] = "line";
+					data["label"] = ds.getValue(i, "MAIN_CATEGORY_NAME");
+					data["borderColor"] = eval(colorName);
+					data["borderWidth"] = 2;
+					data["data"] = amt[i];
 
-				datasets.push(data0);
-				datasets.push(data1);
+					datasets.push(data);
+				}
 
 				chartData.labels = monthLabel;
 				chartData.datasets = datasets;
