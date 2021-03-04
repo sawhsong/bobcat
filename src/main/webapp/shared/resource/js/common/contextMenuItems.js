@@ -15,6 +15,21 @@ var ctxMenu = {
 		fun:function() {}
 	}],
 
+	// LoggedIn global menu for Administrator
+	loggedInUserForAdmin : [{
+		name:com.caption.ctxMyProfile,
+		img:jsconfig.get("imgThemeCom")+"/icnUser-MyProfile_Black.png",
+		fun:function() {}
+	}, {
+		name:"User Status Board",
+		img:jsconfig.get("imgThemeCom")+"/icnUserGroup-MyProfile_Black.png",
+		fun:function() {}
+	}, {
+		name:com.caption.ctxLogOut,
+		img:jsconfig.get("imgThemeCom")+"/icnUser-LogOut_Black.png",
+		fun:function() {}
+	}],
+
 	// Common action context menu
 	commonAction : [{
 		name:com.caption.ctxDetail,

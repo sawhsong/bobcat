@@ -10,6 +10,8 @@ public interface LoginBiz {
 	public ParamEntity getUserProfile(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getUserDetail(ParamEntity paramEntity) throws Exception;
 	public ParamEntity saveUserDetail(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getUserStatusBoard(ParamEntity paramEntity) throws Exception;
+	public ParamEntity setSessionValuesForAdminTool(ParamEntity paramEntity) throws Exception;
 	public ParamEntity hasAuthKey(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getAuthenticationSecretKey(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doAuthentication(ParamEntity paramEntity) throws Exception;

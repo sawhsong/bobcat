@@ -24,6 +24,7 @@
 </style>
 <script type="text/javascript">
 var popupUserProfile;
+var popupUserStatusBoard;
 
 $(function() {
 	$("#aLogo").click(function(event) {
@@ -68,20 +69,39 @@ $(function() {
 	};
 
 	setLoginUserContextMenu = function() {
-		ctxMenu.loggedInUser[0].fun = function() {getMyProfile("<%=userIdHeaderPage%>");};
-		ctxMenu.loggedInUser[1].fun = function() {logout();};
-		$("#divLoggedInUser").contextMenu(ctxMenu.loggedInUser, {
-			classPrefix:"header",
-			effectDuration:300,
-			effect:"slide",
-			borderRadius:"bottom 3px",
-			displayAround:"trigger",
-			position:"bottom",
-			verAdjust:0,
-			onClose:function() {
-				$("#divLoggedInUser").removeClass("selected");
-			}
-		});
+		var authGroupIdHeaderPage = "<%=authGroupIdHeaderPage%>";
+		if (authGroupIdHeaderPage == "0") {
+			ctxMenu.loggedInUserForAdmin[0].fun = function() {getMyProfile("<%=userIdHeaderPage%>");};
+			ctxMenu.loggedInUserForAdmin[1].fun = function() {getUserStatusBoard("<%=userIdHeaderPage%>");};
+			ctxMenu.loggedInUserForAdmin[2].fun = function() {logout();};
+			$("#divLoggedInUser").contextMenu(ctxMenu.loggedInUserForAdmin, {
+				classPrefix:"header",
+				effectDuration:300,
+				effect:"slide",
+				borderRadius:"bottom 3px",
+				displayAround:"trigger",
+				position:"bottom",
+				verAdjust:0,
+				onClose:function() {
+					$("#divLoggedInUser").removeClass("selected");
+				}
+			});
+		} else {
+			ctxMenu.loggedInUser[0].fun = function() {getMyProfile("<%=userIdHeaderPage%>");};
+			ctxMenu.loggedInUser[1].fun = function() {logout();};
+			$("#divLoggedInUser").contextMenu(ctxMenu.loggedInUser, {
+				classPrefix:"header",
+				effectDuration:300,
+				effect:"slide",
+				borderRadius:"bottom 3px",
+				displayAround:"trigger",
+				position:"bottom",
+				verAdjust:0,
+				onClose:function() {
+					$("#divLoggedInUser").removeClass("selected");
+				}
+			});
+		}
 	};
 
 	getMyProfile = function(userId) {
@@ -93,6 +113,18 @@ $(function() {
 			blind:true,
 			width:800,
 			height:310
+		});
+	};
+
+	getUserStatusBoard = function(userId) {
+		popupUserStatusBoard = commonJs.openPopup({
+			popupId:"UserStatusBoard",
+			url:"/login/getUserStatusBoard.do",
+			data:{userId:userId},
+			header:"Comrehensive User Status Board",
+			blind:true,
+			width:1200,
+			height:880
 		});
 	};
 

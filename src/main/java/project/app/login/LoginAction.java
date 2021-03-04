@@ -11,7 +11,6 @@ import project.common.extend.BaseAction;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
-import zebra.data.DataSet;
 import zebra.util.CommonUtil;
 
 public class LoginAction extends BaseAction {
@@ -103,12 +102,46 @@ public class LoginAction extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String controlAdminTool() throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String flag = requestDataSet.getValue("flag");
+	public String getUserStatusBoard() throws Exception {
+		biz.getUserStatusBoard(paramEntity);
+		return "userStatusBoard";
+	}
 
+	public String setSessionValuesForAdminTool() throws Exception {
 		try {
-			session.setAttribute("isVisibleAdminTool", flag);
+			biz.setSessionValuesForAdminTool(paramEntity);
+
+			if (paramEntity.isSuccess()) {
+				SysUser sysUserForAdminTool = (SysUser)paramEntity.getObject("sysUserForAdminTool");
+				SysOrg sysOrgForAdminTool = (SysOrg)paramEntity.getObject("sysOrgForAdminTool");
+
+				session.setAttribute("UserIdForAdminTool", sysUserForAdminTool.getUserId());
+				session.setAttribute("UserNameForAdminTool", sysUserForAdminTool.getUserName());
+				session.setAttribute("LoginIdForAdminTool", sysUserForAdminTool.getLoginId());
+				session.setAttribute("OrgIdForAdminTool", sysUserForAdminTool.getOrgId());
+				session.setAttribute("SysUserForAdminTool", sysUserForAdminTool);
+				session.setAttribute("SysOrgForAdminTool", sysOrgForAdminTool);
+				session.setAttribute("OrgLegalNameForAdminTool", paramEntity.getObject("orgLegalNameForAdminTool"));
+				session.setAttribute("OrgCategoryForAdminTool", paramEntity.getObject("orgCategoryForAdminTool"));
+				session.setAttribute("OrgCategoryDescForAdminTool", paramEntity.getObject("orgCategoryDescForAdminTool"));
+			}
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String removeSessionValuesForAdminTool() throws Exception {
+		try {
+			session.removeAttribute("UserIdForAdminTool");
+			session.removeAttribute("UserNameForAdminTool");
+			session.removeAttribute("LoginIdForAdminTool");
+			session.removeAttribute("OrgIdForAdminTool");
+			session.removeAttribute("SysUserForAdminTool");
+			session.removeAttribute("SysOrgForAdminTool");
+			session.removeAttribute("OrgLegalNameForAdminTool");
+			session.removeAttribute("OrgCategoryForAdminTool");
+			session.removeAttribute("OrgCategoryDescForAdminTool");
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 		}

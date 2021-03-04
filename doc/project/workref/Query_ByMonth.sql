@@ -155,27 +155,3 @@ select src.category_level,
           src.sort_order
  order by src.sort_order
 ;
-
-select a.sub_category as category_id,
-       case when sum(nvl(a.proc_amt, 0)) < 0 then sum(nvl(a.proc_amt, 0)) end as debit_amt,
-       case when sum(nvl(a.proc_amt, 0)) >= 0 then sum(nvl(a.proc_amt, 0)) end as credit_amt,
-       sum(nvl(a.gst_amt, 0)) as gst_amt,
-       sum(nvl(a.net_amt, 0)) as net_amt,
-       sum(nvl(a.balance, 0)) as balance
-  from usr_bs_tran_alloc a,
-       (select period_year,
-               financial_year,
-               min(date_from) as date_from,
-               max(date_to) as date_to
-          from sys_financial_period
-         where period_year = '2021'
-         group by period_year, financial_year
-       ) b
- where user_id = '1'
-   and trunc(a.proc_date) between trunc(b.date_from) and trunc(b.date_to)
- group by a.sub_category
-;
-
-select *
-  from usr_bs_tran_alloc
-;
