@@ -20,6 +20,7 @@ import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
+import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
@@ -280,8 +281,28 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 		return paramEntity;
 	}
 
-	public ParamEntity getUserStatusBoard(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getUsers(ParamEntity paramEntity) throws Exception {
 		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getUserList(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String langCode = (String)session.getAttribute("langCode");
+
+		try {
+			queryAdvisor.setObject("langCode", langCode);
+			queryAdvisor.setRequestDataSet(requestDataSet);
+			queryAdvisor.setPagination(true);
+
+			paramEntity.setAjaxResponseDataSet(sysUserDao.getUserDataSetBySearchCriteria(queryAdvisor));
+			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -302,15 +323,15 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 
 			paramEntity.setObject("sysUserForAdminTool", sysUser);
 			paramEntity.setObject("sysOrgForAdminTool", sysOrg);
-			paramEntity.setObject("orgLegalNameForAdminTool", sysOrg.getLegalName());
 
-			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "org_category_desc"});
+			resultDataSet.addName(new String[] {"user_id", "user_name", "login_id", "org_id", "org_name", "abn"});
 			resultDataSet.addRow();
 			resultDataSet.setValue("user_id", sysUser.getUserId());
 			resultDataSet.setValue("user_name", sysUser.getUserName());
 			resultDataSet.setValue("login_id", sysUser.getLoginId());
 			resultDataSet.setValue("org_id", sysUser.getOrgId());
 			resultDataSet.setValue("org_name", sysOrg.getLegalName());
+			resultDataSet.setValue("abn", CommonUtil.getFormatString(sysOrg.getAbn(), "?? ??? ??? ???"));
 
 			paramEntity.setAjaxResponseDataSet(resultDataSet);
 			paramEntity.setSuccess(true);

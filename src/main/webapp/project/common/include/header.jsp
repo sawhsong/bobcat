@@ -15,6 +15,7 @@
 	String languageCodeHeaderPage = CommonUtil.upperCase((String)session.getAttribute("langCode"));
 	String selectedHeaderMenuHeaderPage = (String)session.getAttribute("headerMenuId");
 	DataSet dsMenuHeaderPage = MenuManager.getMenu(authGroupIdHeaderPage, "", "1", "1");
+	String userIdForAdminToolHeaderPage = (String)session.getAttribute("UserIdForAdminTool");
 	String defaultStartUrlHeaderPage = sysUserHeaderPage.getDefaultStartUrl();
 %>
 <%/************************************************************************************************
@@ -24,7 +25,7 @@
 </style>
 <script type="text/javascript">
 var popupUserProfile;
-var popupUserStatusBoard;
+var popupUsers;
 
 $(function() {
 	$("#aLogo").click(function(event) {
@@ -54,6 +55,16 @@ $(function() {
 		$("#divLoggedInUser").trigger("click");
 	});
 
+	$("#aDeleteSessionDesc").click(function() {
+		commonJs.doSimpleProcess({
+			url:"/login/removeSessionValuesForAdminTool.do",
+			onSuccess:function(result) {
+				$("#divUsingUserAs").html("");
+				$("#divUsingUserAsBreaker").hide();
+			}
+		});
+	});
+
 	doMainMenu = function(menuId, menuName, menuUrl) {
 		if (menuUrl == "#") {
 			menuUrl = "/index.do";
@@ -72,7 +83,7 @@ $(function() {
 		var authGroupIdHeaderPage = "<%=authGroupIdHeaderPage%>";
 		if (authGroupIdHeaderPage == "0") {
 			ctxMenu.loggedInUserForAdmin[0].fun = function() {getMyProfile("<%=userIdHeaderPage%>");};
-			ctxMenu.loggedInUserForAdmin[1].fun = function() {getUserStatusBoard("<%=userIdHeaderPage%>");};
+			ctxMenu.loggedInUserForAdmin[1].fun = function() {changeUser("<%=userIdHeaderPage%>");};
 			ctxMenu.loggedInUserForAdmin[2].fun = function() {logout();};
 			$("#divLoggedInUser").contextMenu(ctxMenu.loggedInUserForAdmin, {
 				classPrefix:"header",
@@ -116,15 +127,15 @@ $(function() {
 		});
 	};
 
-	getUserStatusBoard = function(userId) {
-		popupUserStatusBoard = commonJs.openPopup({
+	changeUser = function(userId) {
+		popupUsers = commonJs.openPopup({
 			popupId:"UserStatusBoard",
-			url:"/login/getUserStatusBoard.do",
+			url:"/login/getUsers.do",
 			data:{userId:userId},
-			header:"Comrehensive User Status Board",
+			header:"Change User",
 			blind:true,
-			width:1200,
-			height:880
+			width:1000,
+			height:600
 		});
 	};
 
@@ -150,9 +161,27 @@ $(function() {
 		</div>
 		<div id="divGlobalMenuRight">
 			<div id="divGblMenuArea">
+<%
+				if (CommonUtil.isNotBlank(userIdForAdminToolHeaderPage)) {
+%>
+				<div id="divUsingUserAs" class="headerGblMenus" style="color:#D92E24;cursor:default;">
+					User Name : ${sessionScope.UserNameForAdminTool} | User Login ID : ${sessionScope.LoginIdForAdminTool} (${sessionScope.OrgIdForAdminTool} | ${sessionScope.OrgNameForAdminTool} | ${sessionScope.OrgAbnForAdminTool})
+				</div>
+				<div id="divUsingUserAsBreaker" class="divGblMenuBreak"></div>
+<%
+				} else {
+%>
+				<div id="divUsingUserAs" class="headerGblMenus" style="color:#D92E24;cursor:default;">
+				</div>
+				<div id="divUsingUserAsBreaker" class="divGblMenuBreak" style="display:none"></div>
+<%
+				}
+%>
 				<div id="divLoginUserInfo" class="headerGblMenus" style="cursor:default;">
 					<%=sysOrgHeaderPage.getLegalName()%> (<%=CommonUtil.getFormatString(sysOrgHeaderPage.getAbn(), "?? ??? ??? ???")%>)
 				</div>
+				<div class="divGblMenuBreak"></div>
+				<div class="headerGblMenus" style="margin-top:-1px;"><a id="aDeleteSessionDesc" class="fa fa-trash fa-lg aEn" title="Delete all session values"></a></div>
 <%
 				if (CommonUtil.equals(loginIdHeaderPage, "dustin")) {
 %>

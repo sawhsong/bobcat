@@ -21,7 +21,7 @@ var ctxMenu = {
 		img:jsconfig.get("imgThemeCom")+"/icnUser-MyProfile_Black.png",
 		fun:function() {}
 	}, {
-		name:"User Status Board",
+		name:"Change User",
 		img:jsconfig.get("imgThemeCom")+"/icnUserGroup-MyProfile_Black.png",
 		fun:function() {}
 	}, {

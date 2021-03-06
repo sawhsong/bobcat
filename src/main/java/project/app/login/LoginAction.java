@@ -102,9 +102,18 @@ public class LoginAction extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getUserStatusBoard() throws Exception {
-		biz.getUserStatusBoard(paramEntity);
-		return "userStatusBoard";
+	public String getUsers() throws Exception {
+		biz.getUsers(paramEntity);
+		return "getUsers";
+	}
+
+	public String getUserList() throws Exception {
+		try {
+			biz.getUserList(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String setSessionValuesForAdminTool() throws Exception {
@@ -119,11 +128,11 @@ public class LoginAction extends BaseAction {
 				session.setAttribute("UserNameForAdminTool", sysUserForAdminTool.getUserName());
 				session.setAttribute("LoginIdForAdminTool", sysUserForAdminTool.getLoginId());
 				session.setAttribute("OrgIdForAdminTool", sysUserForAdminTool.getOrgId());
+				session.setAttribute("OrgNameForAdminTool", sysOrgForAdminTool.getLegalName());
+				session.setAttribute("OrgAbnForAdminTool", CommonUtil.getFormatString(sysOrgForAdminTool.getAbn(), "?? ??? ??? ???"));
 				session.setAttribute("SysUserForAdminTool", sysUserForAdminTool);
 				session.setAttribute("SysOrgForAdminTool", sysOrgForAdminTool);
-				session.setAttribute("OrgLegalNameForAdminTool", paramEntity.getObject("orgLegalNameForAdminTool"));
-				session.setAttribute("OrgCategoryForAdminTool", paramEntity.getObject("orgCategoryForAdminTool"));
-				session.setAttribute("OrgCategoryDescForAdminTool", paramEntity.getObject("orgCategoryDescForAdminTool"));
+
 			}
 		} catch (Exception ex) {
 		}
@@ -137,11 +146,10 @@ public class LoginAction extends BaseAction {
 			session.removeAttribute("UserNameForAdminTool");
 			session.removeAttribute("LoginIdForAdminTool");
 			session.removeAttribute("OrgIdForAdminTool");
+			session.removeAttribute("OrgNameForAdminTool");
+			session.removeAttribute("OrgAbnForAdminTool");
 			session.removeAttribute("SysUserForAdminTool");
 			session.removeAttribute("SysOrgForAdminTool");
-			session.removeAttribute("OrgLegalNameForAdminTool");
-			session.removeAttribute("OrgCategoryForAdminTool");
-			session.removeAttribute("OrgCategoryDescForAdminTool");
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 		}

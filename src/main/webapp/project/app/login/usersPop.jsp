@@ -47,14 +47,35 @@ var userId = "<%=userId%>";
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnLoginUserAs" caption="Log in User As" iconClass="fa-user-circle"/>
+			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
 		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea"></div>
-<div id="divInformArea">
+<div id="divSearchCriteriaArea" class="areaContainerPopup">
+	<table class="tblSearch">
+		<caption><mc:msg key="page.com.searchCriteria"/></caption>
+		<colgroup>
+			<col width="9%"/>
+			<col width="24%"/>
+			<col width="8%"/>
+			<col width="24%"/>
+			<col width="10%"/>
+			<col width="*"/>
+		</colgroup>
+		<tr>
+			<th class="thSearch rt">User Name</th>
+			<td class="tdSearch"><ui:text name="userName" style="width:95%"/></td>
+			<th class="thSearch rt">Login ID</th>
+			<td class="tdSearch"><ui:text name="loginId" style="width:95%"/></td>
+			<th class="thSearch rt">Organisation</th>
+			<td class="tdSearch"><ui:hidden name="orgId"/><ui:text name="orgName" style="width:95%"/></td>
+		</tr>
+	</table>
 </div>
+<div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -65,36 +86,31 @@ var userId = "<%=userId%>";
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainerPopup">
-	<table class="tblEdit">
+	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
+			<col width="2%"/>
+			<col width="2%"/>
+			<col width="27%"/>
+			<col width="20%"/>
 			<col width="*"/>
-			<col width="16%"/>
-			<col width="25%"/>
-			<col width="16%"/>
-			<col width="25%"/>
 		</colgroup>
-		<tr>
-			<td class="tdEdit Ct" rowspan="3">
-				<img id="imgUserPhoto" src="" class="imgDis" style="width:100%;height:110px;"/>
-			</td>
-			<th class="thEdit rt">Change Photo</th>
-			<td class="tdEdit" colspan="3"><ui:file name="photoPath" style="width:400px;" checkName="Photo"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt">User ID</th>
-			<td class="tdEdit"><ui:text name="userId" status="display"/></td>
-			<th class="thEdit rt mandatory">User Name</th>
-			<td class="tdEdit"><ui:text name="userName" checkName="User Name" options="mandatory"/></td>
-		</tr>
-		<tr>
-			<th class="thEdit rt mandatory">Login ID</th>
-			<td class="tdEdit"><ui:text name="loginId" checkName="Login ID" options="mandatory"/></td>
-			<th class="thEdit rt mandatory">Password</th>
-			<td class="tdEdit"><ui:password name="password" checkName="Password" options="mandatory"/></td>
-		</tr>
+		<thead>
+			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
+				<th class="thGrid"><ui:icon id="icnRdo" className="fa-dot-circle-o fa-lg" status="display"/></th>
+				<th class="thGrid">User Name</th>
+				<th class="thGrid">Login ID</th>
+				<th class="thGrid">Organisation</th>
+			</tr>
+		</thead>
+		<tbody id="tblGridBody">
+			<tr>
+				<td class="tdGrid Ct" colspan="5"><mc:msg key="I002"/></td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<div id="divPagingArea"></div>
+<div id="divPagingArea" class="areaContainer"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>
