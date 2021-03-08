@@ -91,7 +91,7 @@
 		               sum(nvl(ubta.gst_amt, 0)) as gst_amt,
 		               sum(nvl(ubta.net_amt, 0)) as net_amt
 		          from usr_bs_tran_alloc ubta
-		         where ubta.user_id = '${userId}'
+		         where ubta.user_id in (select user_id from sys_user where org_id = '${orgId}')
 		           and ubta.status = 'AL'
 		           and trunc(ubta.proc_date) between to_date('${yearFrom}0701', 'yyyymmdd') and to_date('${yearTo}0630', 'yyyymmdd')
 		         group by ubta.main_category, to_char(ubta.proc_date, 'mm/yyyy')

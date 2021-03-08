@@ -51,7 +51,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 		DataSet req = paramEntity.getRequestDataSet();
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 		String fromDate = req.getValue("fromDate");
 		String toDate = req.getValue("toDate");
 		String customerName = req.getValue("customerName");
@@ -102,7 +102,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 
 	public ParamEntity getMyInfo(ParamEntity paramEntity) throws Exception {
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			paramEntity.setAjaxResponseDataSet(sysUserDao.getUserInfoDataSetByUserId(userId));
@@ -115,7 +115,7 @@ public class Ads0202BizImpl extends BaseBiz implements Ads0202Biz {
 
 	public ParamEntity getOrgInfo(ParamEntity paramEntity) throws Exception {
 		HttpSession session = paramEntity.getSession();
-		String orgId = (String)session.getAttribute("OrgId");
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
 
 		try {
 			paramEntity.setAjaxResponseDataSet(sysOrgDao.getDataSetByOrgId(orgId));

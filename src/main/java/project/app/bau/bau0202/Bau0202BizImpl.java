@@ -39,7 +39,7 @@ public class Bau0202BizImpl extends BaseBiz implements Bau0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			queryAdvisor.setObject("userId", userId);

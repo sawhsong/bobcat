@@ -35,7 +35,7 @@ select cate.category_level,
                  where period_year = '2021'
                  group by period_year, financial_year
                ) fy
-         where user_id = '1'
+         where user_id in (select user_id from sys_user where org_id = (select org_id from sys_user where user_id = '1'))
            and trunc(ubta.proc_date) between trunc(fy.date_from) and trunc(fy.date_to)
          group by ubta.main_category,
                ubta.sub_category,

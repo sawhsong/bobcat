@@ -33,7 +33,7 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		DataSet bankAccnt = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);
@@ -50,7 +50,7 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 		String allocationStatus = requestDataSet.getValue("allocationStatus");
 		String transactionDateFrom = requestDataSet.getValue("transactionDateFrom");
 		String transactionDateTo = requestDataSet.getValue("transactionDateTo");

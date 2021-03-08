@@ -39,7 +39,7 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		DataSet bankAccnt = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);
@@ -56,7 +56,7 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 		String bankAccntId = requestDataSet.getValue("bankAccntId");
 		String fromDate = requestDataSet.getValue("fromDate");
 		String toDate = requestDataSet.getValue("toDate");
@@ -80,7 +80,7 @@ public class Bst0202BizImpl extends BaseBiz implements Bst0202Biz {
 	public ParamEntity getUpload(ParamEntity paramEntity) throws Exception {
 		DataSet bankAccnt = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);

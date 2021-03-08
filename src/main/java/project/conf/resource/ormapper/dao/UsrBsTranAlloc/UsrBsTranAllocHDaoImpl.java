@@ -70,11 +70,11 @@ public class UsrBsTranAllocHDaoImpl extends BaseHDao implements UsrBsTranAllocDa
 	}
 
 	public DataSet getIncomeChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
-		String userId = (String)queryAdvisor.getObject("userId");
+		String orgId = (String)queryAdvisor.getObject("orgId");
 		String yearFrom = (String)queryAdvisor.getObject("yearFrom");
 		String yearTo = (String)queryAdvisor.getObject("yearTo");
 
-		queryAdvisor.addVariable("userId", userId);
+		queryAdvisor.addVariable("orgId", orgId);
 		queryAdvisor.addVariable("yearFrom", yearFrom);
 		queryAdvisor.addVariable("yearTo", yearTo);
 		queryAdvisor.addWhereClause("lower(src.main_category_name) like lower('%Income%')");
@@ -83,11 +83,11 @@ public class UsrBsTranAllocHDaoImpl extends BaseHDao implements UsrBsTranAllocDa
 	}
 
 	public DataSet getExpenseChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
-		String userId = (String)queryAdvisor.getObject("userId");
+		String orgId = (String)queryAdvisor.getObject("orgId");
 		String yearFrom = (String)queryAdvisor.getObject("yearFrom");
 		String yearTo = (String)queryAdvisor.getObject("yearTo");
 
-		queryAdvisor.addVariable("userId", userId);
+		queryAdvisor.addVariable("orgId", orgId);
 		queryAdvisor.addVariable("yearFrom", yearFrom);
 		queryAdvisor.addVariable("yearTo", yearTo);
 		queryAdvisor.addWhereClause("lower(src.main_category_name) like lower('%Expense%')");
@@ -96,11 +96,11 @@ public class UsrBsTranAllocHDaoImpl extends BaseHDao implements UsrBsTranAllocDa
 	}
 
 	public DataSet getOtherChartDataSetForDashboard(QueryAdvisor queryAdvisor) throws Exception {
-		String userId = (String)queryAdvisor.getObject("userId");
+		String orgId = (String)queryAdvisor.getObject("orgId");
 		String yearFrom = (String)queryAdvisor.getObject("yearFrom");
 		String yearTo = (String)queryAdvisor.getObject("yearTo");
 
-		queryAdvisor.addVariable("userId", userId);
+		queryAdvisor.addVariable("orgId", orgId);
 		queryAdvisor.addVariable("yearFrom", yearFrom);
 		queryAdvisor.addVariable("yearTo", yearTo);
 		queryAdvisor.addWhereClause("lower(src.main_category_name) not like lower('%Income%')");

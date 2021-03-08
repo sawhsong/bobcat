@@ -13,6 +13,7 @@ import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
+import zebra.util.CommonUtil;
 
 public class CommonLookupBizImpl extends BaseBiz implements CommonLookupBiz {
 	@Autowired
@@ -70,7 +71,7 @@ public class CommonLookupBizImpl extends BaseBiz implements CommonLookupBiz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 		String fromDate = requestDataSet.getValue("fromDate");
 		String toDate = requestDataSet.getValue("toDate");
 		String customerName = requestDataSet.getValue("customerName");
@@ -95,7 +96,7 @@ public class CommonLookupBizImpl extends BaseBiz implements CommonLookupBiz {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			queryAdvisor.setObject("userId", userId);

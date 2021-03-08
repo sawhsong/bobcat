@@ -82,7 +82,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			qa.setObject("userId", userId);
@@ -100,7 +100,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			qa.setObject("userId", userId);
@@ -118,7 +118,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			qa.setObject("userId", userId);
@@ -136,7 +136,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			qa.setObject("userId", userId);
@@ -154,7 +154,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
 		try {
 			qa.setObject("userId", userId);
@@ -185,7 +185,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
 		DataSet fy;
 		String yearFrom = "", yearTo = "";
 
@@ -194,7 +194,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 			yearFrom = CommonUtil.split(fy.getValue("FINANCIAL_YEAR"), "-")[0];
 			yearTo = CommonUtil.split(fy.getValue("FINANCIAL_YEAR"), "-")[1];
 
-			qa.setObject("userId", userId);
+			qa.setObject("orgId", orgId);
 			qa.setObject("yearFrom", yearFrom);
 			qa.setObject("yearTo", yearTo);
 
@@ -211,7 +211,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
 		DataSet fy;
 		String yearFrom = "", yearTo = "";
 
@@ -220,7 +220,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 			yearFrom = CommonUtil.split(fy.getValue("FINANCIAL_YEAR"), "-")[0];
 			yearTo = CommonUtil.split(fy.getValue("FINANCIAL_YEAR"), "-")[1];
 
-			qa.setObject("userId", userId);
+			qa.setObject("orgId", orgId);
 			qa.setObject("yearFrom", yearFrom);
 			qa.setObject("yearTo", yearTo);
 
@@ -237,7 +237,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		DataSet result = new DataSet();
 		HttpSession session = paramEntity.getSession();
-		String userId = (String)session.getAttribute("UserId");
+		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
 		DataSet fy;
 		String yearFrom = "", yearTo = "";
 
@@ -246,7 +246,7 @@ public class IndexBizImpl extends BaseBiz implements IndexBiz {
 			yearFrom = CommonUtil.split(fy.getValue("FINANCIAL_YEAR"), "-")[0];
 			yearTo = CommonUtil.split(fy.getValue("FINANCIAL_YEAR"), "-")[1];
 
-			qa.setObject("userId", userId);
+			qa.setObject("orgId", orgId);
 			qa.setObject("yearFrom", yearFrom);
 			qa.setObject("yearTo", yearTo);
 
