@@ -324,6 +324,22 @@ public class CommonUtil extends StringUtils {
 		return new DecimalFormat(ConfigUtil.getProperty("format.default.decimal")).format(Double.valueOf(value));
 	}
 
+	public static String getAccountingFormat(String value) {
+		if (isBlank(value)) {
+			return "";
+		} else {
+			double val = toDouble(value);
+			var format = "#,##0.00";
+			if (val == 0) {
+				return "-";
+			} else if (val < 0) {
+				return "("+toString(Math.abs(val), format)+")";
+			} else {
+				return getNumberMask(val, format);
+			}
+		}
+	}
+
 	public static String getDateTimeMask(String value, String format) throws Exception {
 		if (isEmpty(value)) {return "";}
 		else {

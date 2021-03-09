@@ -10,4 +10,6 @@
     <include file="project/conf/struts/struts-project-app-bsa.xml"/>
     <include file="project/conf/struts/struts-project-app-ads.xml"/>
     <include file="project/conf/struts/struts-project-app-bbs.xml"/>
+    <include file="project/conf/struts/struts-project-app-rpu.xml"/>
+    <include file="project/conf/struts/struts-project-app-rpa.xml"/>
 </struts>

@@ -4,6 +4,8 @@ import java.io.File;
 
 import zebra.config.MemoryBean;
 import zebra.data.DataSet;
+import zebra.data.ParamEntity;
+import zebra.data.QueryAdvisor;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
@@ -23,6 +25,8 @@ public abstract class ExportHelper {
 	protected String columnHeader[];
 	protected String fileHeader[];
 	protected int pdfWidth;
+	protected ParamEntity paramEntity;
+	protected QueryAdvisor queryAdvisor;
 
 	/**
 	 * Accessors
@@ -97,6 +101,22 @@ public abstract class ExportHelper {
 
 	public void setPdfWidth(int pdfWidth) {
 		this.pdfWidth = pdfWidth;
+	}
+
+	public ParamEntity getParamEntity() {
+		return paramEntity;
+	}
+
+	public void setParamEntity(ParamEntity paramEntity) {
+		this.paramEntity = paramEntity;
+	}
+
+	public QueryAdvisor getQueryAdvisor() {
+		return queryAdvisor;
+	}
+
+	public void setQueryAdvisor(QueryAdvisor queryAdvisor) {
+		this.queryAdvisor = queryAdvisor;
 	}
 
 	/**

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<script type="text/javascript">
+</script>
+<style type="text/css">
+* {margin:0px 0px;padding:0px 0px;}
+body {padding:0px 0px;color:#000000;font:normal normal normal 10px/1.2 "Verdana";}
+table {width:100%;border-spacing:0px;border-collapse:collapse;}
+table.withPadding th, table.withPadding td {padding:4px 4px;}
+
+#divWrapper {padding:10px 10px;}
+
+.Lt, lt {text-align:left;}
+.Ct, ct {text-align:center;}
+.Rt, rt {text-align:right;}
+.verGap {font-size:1px;padding:4px 0px;}
+
+.tblDefault {border:0px solid #DDDDDD;}
+.thDefault {padding:0px 0px;}
+.tdDefault {padding:0px 0px;}
+
+.tblGrid {border:0px solid #DDDDDD;}
+.thGrid {padding:8px 4px;text-align:center;background:#F5F5F5;border-top:1px solid #DDDDDD;border-bottom:1px solid #DDDDDD;border-left:1px solid #DDDDDD;border-right:1px solid #DDDDDD;}
+.tdGrid {padding:6px 4px;border-top:0px;border-bottom:0px;border-left:1px solid #DDDDDD;border-right:1px solid #DDDDDD;}
+
+.tblEdit {border:0px solid #DDDDDD;}
+.thEdit {padding:8px 4px;border:1px solid #DDDDDD;background:#F5F5F5;}
+.tdEdit {padding:6px 4px;border:1px solid #DDDDDD;}
+</style>
+</head>
+<body>
+<pd4ml:page.header>
+<div id="divHeader" style="padding:10px 10px;">
+	<table class="tblDefault withPadding">
+		<tr>
+			<td class="tdDefault Lt" style="width:30%;vertical-align:top;">#SYSTEM_DATE_TIME#</td>
+			<td class="tdDefault Ct" style="width:40%;vertical-align:top;"><font style="font-weight:bold;">#ORG_NAME#</font><br/>Trial Balance</td>
+			<td class="tdDefault Rt" style="width:30%;vertical-align:top;">Page $[page] of $[total]</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault">
+		<tr>
+			<td style="vertical-align:top;width:50%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="tdDefault Lt" style="">From First to Last by Account</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Lt" style="">Options: Not summarised, Excluding NIL Balances</td>
+					</tr>
+					<tr>
+						<td class="thDefault Lt" style="">Client Code : #CLIENT_CODE#</td>
+					</tr>
+				</table>
+			</td>
+			<td style="vertical-align:top;width:50%;">
+				<table class="tblDefault withPadding">
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Financial Year : </font>#FINANCIAL_YEAR#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Quarter : </font>#QUARTER_NAME#</td>
+					</tr>
+					<tr>
+						<td class="tdDefault Rt"><font style="font-weight:bold">Date Period : </font>#DATE_PERIOD#</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<div class="verGap">&nbsp;</div>
+</div>
+</pd4ml:page.header>
+<div id="divWrapper">
+	<div class="verGap">&nbsp;</div>
+	<table class="tblGrid">
+		<thead>
+			<tr>
+				<th class="thGrid Rt" style="width:14%;border-left:0px;">Last Year</th>
+				<th class="thGrid Lt" style="width:14%">Account</th>
+				<th class="thGrid Lt" style="width:*">Description</th>
+				<th class="thGrid Rt" style="width:14%">Debit</th>
+				<th class="thGrid Rt" style="width:14%;border-right:0px;">Credit</th>
+			</tr>
+		</thead>
+		<tbody>
+			#DETAIL_ROWS#
+		</tbody>
+	</table>
+	<div class="verGap">&nbsp;</div>
+	<div class="verGap">&nbsp;</div>
+	<table class="tblDefault withPadding">
+		<tr>
+			<td class="tdDefault Lt" style="width:30%;">No. of Accounts : #NUMBER_OF_ACCOUNTS#</td>
+			<td class="tdDefault Ct" style="width:40%;"></td>
+			<td class="tdDefault Rt" style="width:30%;"></td>
+		</tr>
+		<tr>
+			<td class="tdDefault Lt">No. of Entries : #NUMBER_OF_ENTRIES#</td>
+			<td class="tdDefault Ct"></td>
+			<td class="tdDefault Rt"></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

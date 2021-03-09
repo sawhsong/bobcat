@@ -404,7 +404,7 @@ public class Ads0204BizImpl extends BaseBiz implements Ads0204Biz {
 			usrInvoice = usrInvoiceDao.getInvoiceByInvoiceId(invoiceId);
 			invoiceDetail = usrInvoiceDDao.getDataSetByInvoiceId(invoiceId);
 
-			exportHelper = new project.common.extend.InvoicePdfExportHelper();
+			exportHelper = new InvoicePdfExportHelper();
 			exportHelper.setFileType("pdf");
 			exportHelper.setFileExtention("pdf");
 

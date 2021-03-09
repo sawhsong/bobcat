@@ -714,6 +714,21 @@ var nony = {
 			}
 		}
 	},
+	getAccountingFormat : function(val) {
+		if ($.nony.isBlank(val)) {
+			return "";
+		} else {
+			var value = $.nony.toNumber(val);
+			var format = "#,##0.00";
+			if (value == 0) {
+				return "-";
+			} else if (value < 0) {
+				return "("+$.nony.getNumberMask(Math.abs(value), format)+")";
+			} else {
+				return $.nony.getNumberMask(value, format)+"";
+			}
+		}
+	},
 	/*!
 	 * string utilities
 	 */
