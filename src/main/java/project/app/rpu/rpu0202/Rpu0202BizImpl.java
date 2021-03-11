@@ -58,7 +58,7 @@ public class Rpu0202BizImpl extends BaseBiz implements Rpu0202Biz {
 		DataSet request = paramEntity.getRequestDataSet();
 		QueryAdvisor qa = paramEntity.getQueryAdvisor();
 		ReportPdfExportHelper exportHelper;
-		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String dateFormat = ConfigUtil.getProperty("format.default.date");
 		HttpSession session = paramEntity.getSession();
 		String orgId = CommonUtil.nvl((String)session.getAttribute("OrgIdForAdminTool"), (String)session.getAttribute("OrgId"));
 		DataSet srcData;

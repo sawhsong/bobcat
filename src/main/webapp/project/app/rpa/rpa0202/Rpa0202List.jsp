@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String currentYear = CommonUtil.getSysdate("yyyy");
 %>
 <%/************************************************************************************************
 * HTML
@@ -48,9 +49,9 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnExport" caption="Export" iconClass="fa-download"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -58,12 +59,34 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
+			<col width="7%"/>
+			<col width="22%"/>
+			<col width="8%"/>
 			<col width="10%"/>
+			<col width="6%"/>
+			<col width="10%"/>
+			<col width="6%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thSearch rt"></th>
-			<td class="tdSearch"></td>
+			<th class="thSearch rt mandatory">Organisation</th>
+			<td class="tdSearch">
+				<ui:hidden name="orgId" checkName="Organisation"/>
+				<ui:text name="orgName" className="hor" style="width:270px" checkName="Organisation" options="mandatory"/>
+				<ui:icon id="icnOrgSearch" className="fa-search hor"/>
+			</td>
+			<th class="thSearch rt">Financial Year</th>
+			<td class="tdSearch"><ui:deSelect name="financialYear" codeType="FinancialYear" selectedValue="<%=currentYear%>" caption="==Select=="/></td>
+			<th class="thSearch rt">Quarter</th>
+			<td class="tdSearch"><ui:ccselect name="quarterName" codeType="QUARTER_NAME" caption="==Select=="/></td>
+			<th class="thSearch rt">Period</th>
+			<td class="tdSearch">
+				<ui:text name="fromDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="toDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnToDate" className="fa-calendar hor"/>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -80,23 +103,29 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
-			<col width="2%"/>
+			<col width="10%"/>
+			<col width="10%"/>
 			<col width="*"/>
+			<col width="10%"/>
+			<col width="10%"/>
 		</colgroup>
 		<thead>
 			<tr>
-				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
-				<th class="thGrid"></th>
+				<th class="thGrid">Last Year</th>
+				<th class="thGrid">Account</th>
+				<th class="thGrid">Description</th>
+				<th class="thGrid">Debit</th>
+				<th class="thGrid">Credit</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="5"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div id="divPagingArea" class="areaContainer"></div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

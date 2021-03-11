@@ -51,7 +51,7 @@ table.withPadding th, table.withPadding td {padding:4px 4px;}
 						<td class="tdDefault Lt" style="">From First to Last by Account</td>
 					</tr>
 					<tr>
-						<td class="tdDefault Lt" style="">Options: Not summarised, Excluding NIL Balances</td>
+						<td class="tdDefault Lt" style="">Options : Not summarised, Excluding NIL Balances</td>
 					</tr>
 					<tr>
 						<td class="thDefault Lt" style="">Client Code : #CLIENT_CODE#</td>

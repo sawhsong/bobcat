@@ -25,15 +25,6 @@ import zebra.util.ConfigUtil;
 public class ReportPdfExportHelper extends ExportHelper {
 	@SuppressWarnings("unused")
 	private static Logger logger = LogManager.getLogger(ExcelExportHelper.class);
-	private String reportType;
-
-	public String getReportType() {
-		return reportType;
-	}
-
-	public void setReportType(String reportType) {
-		this.reportType = reportType;
-	}
 
 	@Override
 	public File createFile() throws Exception {

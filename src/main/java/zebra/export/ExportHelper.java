@@ -25,6 +25,7 @@ public abstract class ExportHelper {
 	protected String columnHeader[];
 	protected String fileHeader[];
 	protected int pdfWidth;
+	protected String reportType;
 	protected ParamEntity paramEntity;
 	protected QueryAdvisor queryAdvisor;
 
@@ -101,6 +102,14 @@ public abstract class ExportHelper {
 
 	public void setPdfWidth(int pdfWidth) {
 		this.pdfWidth = pdfWidth;
+	}
+
+	public String getReportType() {
+		return reportType;
+	}
+
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
 	}
 
 	public ParamEntity getParamEntity() {

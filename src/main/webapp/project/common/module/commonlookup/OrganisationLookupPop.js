@@ -74,18 +74,28 @@ $(function() {
 	};
 
 	setValue = function(id, name) {
-		var targetDocument, keyField, valueField;
+		var keyField, valueField;
 
-		if (popupToSetValue != null) {
-			targetDocument = $(popupToSetValue.popupIframe).contents();
-			keyField = $(targetDocument).find("#"+keyFieldId);
-			valueField = $(targetDocument).find("#"+valueFieldId);
+		if (popupToSetValueObject != null) {
+			if (popupToSetValue == "parent") {
+				parent.$("#"+keyFieldId).val(id);
+				parent.$("#"+valueFieldId).val(name);
 
-			$(keyField).val(id);
-			$(valueField).val(name);
+				if (commonJs.isNotBlank(callback)) {
+					parent[callback]();
+				}
+			} else {
+				var targetDocument = $(popupToSetValueObject.popupIframe).contents();
 
-			if (commonJs.isNotBlank(callback)) {
-				$(popupToSetValue.popupIframe).get(0).contentWindow[callback]();
+				keyField = $(targetDocument).find("#"+keyFieldId);
+				valueField = $(targetDocument).find("#"+valueFieldId);
+
+				$(keyField).val(id);
+				$(valueField).val(name);
+
+				if (commonJs.isNotBlank(callback)) {
+					$(popupToSetValueObject.popupIframe).get(0).contentWindow[callback]();
+				}
 			}
 		}
 
