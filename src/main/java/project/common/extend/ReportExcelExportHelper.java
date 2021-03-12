@@ -9,11 +9,15 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HeaderFooter;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Footer;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFCell;
@@ -81,6 +85,8 @@ public class ReportExcelExportHelper extends ExportHelper {
 		int rowIndex = -1, freezeRowIndex = 0;
 		SXSSFRow row;
 		SXSSFCell cell;
+		Footer footer = sheet.getFooter();
+		PrintSetup ps = sheet.getPrintSetup();
 		Map<String, CellStyle> styles = createStyles(wb);
 		String dateFormat = "dd/MM/yyyy", dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
 		String defaultDateFormat = ConfigUtil.getProperty("format.date.java");
@@ -90,7 +96,10 @@ public class ReportExcelExportHelper extends ExportHelper {
 		Date fromDate = CommonUtil.toDate((String)queryAdvisor.getObject("fromDate"), defaultDateFormat);
 		Date toDate = CommonUtil.toDate((String)queryAdvisor.getObject("toDate"), defaultDateFormat);
 
+		footer.setRight( "Page " + HeaderFooter.page() + " of " + HeaderFooter.numPages());
 		sheet.setHorizontallyCenter(true);
+		sheet.setAutobreaks(true);
+		ps.setFitWidth((short)1);
 
 		// Title
 		rowIndex++;
@@ -106,11 +115,13 @@ public class ReportExcelExportHelper extends ExportHelper {
 		row = sheet.createRow(rowIndex);
 		row.setHeightInPoints(18);
 
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
 		cell = row.createCell(0);
 		cell.setCellValue(CommonUtil.getSysdate(dateTimeFormat));
 		cell.setCellStyle(styles.get("descLeft"));
 
-		cell = row.createCell(4);
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 3, 4));
+		cell = row.createCell(3);
 		cell.setCellValue("Financial Year : "+financialYear);
 		cell.setCellStyle(styles.get("descRight"));
 
@@ -118,11 +129,13 @@ public class ReportExcelExportHelper extends ExportHelper {
 		row = sheet.createRow(rowIndex);
 		row.setHeightInPoints(18);
 
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
 		cell = row.createCell(0);
 		cell.setCellValue("From First to Last by Account");
 		cell.setCellStyle(styles.get("descLeft"));
 
-		cell = row.createCell(4);
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 3, 4));
+		cell = row.createCell(3);
 		cell.setCellValue("Quarter : "+quarterName);
 		cell.setCellStyle(styles.get("descRight"));
 
@@ -130,11 +143,13 @@ public class ReportExcelExportHelper extends ExportHelper {
 		row = sheet.createRow(rowIndex);
 		row.setHeightInPoints(18);
 
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
 		cell = row.createCell(0);
 		cell.setCellValue("Options : Not summarised, Excluding NIL Balances");
 		cell.setCellStyle(styles.get("descLeft"));
 
-		cell = row.createCell(4);
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 3, 4));
+		cell = row.createCell(3);
 		cell.setCellValue("Date Period : "+CommonUtil.toString(fromDate, dateFormat)+" - "+CommonUtil.toString(toDate, dateFormat));
 		cell.setCellStyle(styles.get("descRight"));
 
@@ -142,6 +157,7 @@ public class ReportExcelExportHelper extends ExportHelper {
 		row = sheet.createRow(rowIndex);
 		row.setHeightInPoints(18);
 
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
 		cell = row.createCell(0);
 		cell.setCellValue("Client Code : ");
 		cell.setCellStyle(styles.get("descLeft"));
@@ -187,7 +203,7 @@ public class ReportExcelExportHelper extends ExportHelper {
 			if (i == (sourceDataSet.getRowCnt()-1)) {
 				cell = row.createCell(0);
 				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR")));
-				cell.setCellStyle(styles.get("totalRowRt"));
+				cell.setCellStyle(styles.get("totalRowNumber"));
 				sheet.autoSizeColumn(0);
 
 				cell = row.createCell(1);
@@ -202,17 +218,23 @@ public class ReportExcelExportHelper extends ExportHelper {
 
 				cell = row.createCell(3);
 				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "DEBIT")));
-				cell.setCellStyle(styles.get("totalRowRt"));
+				cell.setCellStyle(styles.get("totalRowNumber"));
 				sheet.autoSizeColumn(3);
 
 				cell = row.createCell(4);
 				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "CREDIT")));
-				cell.setCellStyle(styles.get("totalRowRt"));
+				cell.setCellStyle(styles.get("totalRowNumber"));
 				sheet.autoSizeColumn(4);
+
+//				sheet.setColumnWidth(0, 13);
+//				sheet.setColumnWidth(1, 13);
+//				sheet.setColumnWidth(2, 30);
+//				sheet.setColumnWidth(3, 13);
+//				sheet.setColumnWidth(4, 13);
 			} else {
 				cell = row.createCell(0);
 				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR")));
-				cell.setCellStyle(styles.get("dataRowRt"));
+				cell.setCellStyle(styles.get("dataRowNumber"));
 
 				cell = row.createCell(1);
 				cell.setCellValue(sourceDataSet.getValue(i, "ACCOUNT_CODE"));
@@ -224,11 +246,11 @@ public class ReportExcelExportHelper extends ExportHelper {
 
 				cell = row.createCell(3);
 				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "DEBIT")));
-				cell.setCellStyle(styles.get("dataRowRt"));
+				cell.setCellStyle(styles.get("dataRowNumber"));
 
 				cell = row.createCell(4);
 				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "CREDIT")));
-				cell.setCellStyle(styles.get("dataRowRt"));
+				cell.setCellStyle(styles.get("dataRowNumber"));
 			}
 		}
 
@@ -255,6 +277,7 @@ public class ReportExcelExportHelper extends ExportHelper {
 	private Map<String, CellStyle> createStyles(SXSSFWorkbook wb) throws Exception {
 		Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
 		XSSFCellStyle style;
+		DataFormat format = wb.createDataFormat();
 
 		// Title
 		Font titleFont = wb.createFont();
@@ -276,7 +299,7 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setFont(descLeft);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setAlignment(HorizontalAlignment.LEFT);
-		style.setWrapText(true);
+		style.setWrapText(false);
 		styles.put("descLeft", style);
 
 		// Description section right
@@ -287,7 +310,7 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setFont(descRight);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setAlignment(HorizontalAlignment.RIGHT);
-		style.setWrapText(true);
+		style.setWrapText(false);
 		styles.put("descRight", style);
 
 		// Grid Header
@@ -314,6 +337,8 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setFont(dataFont);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setAlignment(HorizontalAlignment.LEFT);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
 		style.setWrapText(false);
 		styles.put("dataRowLt", style);
 
@@ -321,6 +346,8 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setFont(dataFont);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setAlignment(HorizontalAlignment.CENTER);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
 		style.setWrapText(false);
 		styles.put("dataRowCt", style);
 
@@ -328,8 +355,20 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setFont(dataFont);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setAlignment(HorizontalAlignment.RIGHT);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
 		style.setWrapText(false);
 		styles.put("dataRowRt", style);
+
+		style = (XSSFCellStyle)wb.createCellStyle();
+		style.setFont(dataFont);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setAlignment(HorizontalAlignment.RIGHT);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setDataFormat(format.getFormat("#,##0.00"));
+		style.setWrapText(false);
+		styles.put("dataRowNumber", style);
 
 		// Total
 		Font totalFont = wb.createFont();
@@ -368,6 +407,18 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setBorderBottom(BorderStyle.MEDIUM);
 		style.setWrapText(false);
 		styles.put("totalRowRt", style);
+
+		style = (XSSFCellStyle)wb.createCellStyle();
+		style.setFont(totalFont);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setAlignment(HorizontalAlignment.RIGHT);
+		style.setFillForegroundColor(new XSSFColor(new Color(252, 248, 227)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderTop(BorderStyle.MEDIUM);
+		style.setBorderBottom(BorderStyle.MEDIUM);
+		style.setDataFormat(format.getFormat("#,##0.00"));
+		style.setWrapText(false);
+		styles.put("totalRowNumber", style);
 
 		return styles;
 	}
