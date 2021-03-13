@@ -1,3 +1,4 @@
+with src as (
 select cate.category_level,
        cate.category_id,
        cate.category_name,
@@ -6,7 +7,7 @@ select cate.category_level,
        bsta.debit_amt,
        bsta.credit_amt,
        bsta.gst_amt,
-       bsta.net_amt,
+       bsta.gross_amt,
        bsta.balance
   from ( select connect_by_root category_id as root,
                 level as category_level,
@@ -21,11 +22,11 @@ select cate.category_level,
        (select ubta.main_category,
                ubta.sub_category as category_id,
                trunc(ubta.proc_date) as proc_date,
-               case when sum(nvl(ubta.proc_amt, 0)) < 0 then sum(nvl(ubta.proc_amt, 0)) end as debit_amt,
-               case when sum(nvl(ubta.proc_amt, 0)) >= 0 then sum(nvl(ubta.proc_amt, 0)) end as credit_amt,
+               case when sum(nvl(ubta.net_amt, 0)) < 0 then sum(nvl(ubta.net_amt, 0)) end as debit_amt,
+               case when sum(nvl(ubta.net_amt, 0)) >= 0 then sum(nvl(ubta.net_amt, 0)) end as credit_amt,
                sum(nvl(ubta.gst_amt, 0)) as gst_amt,
-               sum(nvl(ubta.net_amt, 0)) as net_amt,
-               sum(nvl(ubta.balance, 0)) as balance
+               sum(nvl(ubta.proc_amt, 0)) as gross_amt,
+               max(nvl(ubta.balance, 0)) as balance
           from usr_bs_tran_alloc ubta,
                (select period_year,
                        financial_year,
@@ -42,5 +43,21 @@ select cate.category_level,
                trunc(ubta.proc_date)
        ) bsta
  where cate.category_id = bsta.category_id(+)
- order by cate.sort_order, bsta.proc_date
+)
+select (grouping(src.account_code)+grouping(src.category_name)+grouping(src.proc_date)) as div,
+       src.account_code,
+       src.category_name,
+       src.proc_date,
+       round(sum(nvl(src.gst_amt, 0)), 2) as gst_amt,
+       round(sum(nvl(src.gross_amt, 0)), 2) as gross_amt,
+       round(sum(nvl(src.debit_amt, 0)), 2) as debit_amt,
+       round(sum(nvl(src.credit_amt, 0)), 2) as credit_amt,
+       round(max(nvl(src.balance, 0)), 2) as balance
+  from src
+ where src.proc_date is not null
+ group by rollup(src.account_code, src.category_name, src.proc_date)
+having (grouping(src.account_code)+grouping(src.category_name)+grouping(src.proc_date)) in ('0', '1', '3')
+ order by src.account_code,
+       div desc,
+       src.proc_date
 ;

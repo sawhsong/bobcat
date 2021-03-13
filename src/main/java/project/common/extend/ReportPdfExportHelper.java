@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import org.zefer.pd4ml.PD4ML;
 
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
-import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.export.ExcelExportHelper;
 import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
@@ -102,6 +101,14 @@ public class ReportPdfExportHelper extends ExportHelper {
 			} else if (CommonUtil.containsIgnoreCase(fileType, "html")) {
 				sourceName = "ReportTrialBalancePdf.src";
 			}
+		} else if (CommonUtil.equalsIgnoreCase(reportType, "GeneralLedger")) {
+			if (CommonUtil.containsIgnoreCase(fileType, "excel")) {
+				sourceName = "ReportGeneralLedgerPdf.src";
+			} else if (CommonUtil.containsIgnoreCase(fileType, "pdf")) {
+				sourceName = "ReportGeneralLedgerPdf.src";
+			} else if (CommonUtil.containsIgnoreCase(fileType, "html")) {
+				sourceName = "ReportGeneralLedgerPdf.src";
+			}
 		}
 
 		return new File(SOURCE_FILE_PATH+"/"+sourceName);
@@ -112,6 +119,8 @@ public class ReportPdfExportHelper extends ExportHelper {
 
 		if (CommonUtil.equalsIgnoreCase(reportType, "TrialBalance")) {
 			rtn = getExportDetailsTrialBalance(src);
+		}if (CommonUtil.equalsIgnoreCase(reportType, "GeneralLedger")) {
+			rtn = getExportDetailsGeneralLedger(src);
 		}
 
 		return rtn;
@@ -121,8 +130,7 @@ public class ReportPdfExportHelper extends ExportHelper {
 		String dateFormat = "dd/MM/yyyy", dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
 		String defaultDateFormat = ConfigUtil.getProperty("format.date.java");
 		HttpSession session = paramEntity.getSession();
-		SysUser sysUser = (SysUser)session.getAttribute("SysUserForAdminTool") == null ? (SysUser)session.getAttribute("SysUser") : (SysUser)session.getAttribute("SysUserForAdminTool");
-		SysOrg sysOrg = (SysOrg)session.getAttribute("SysOrgForAdminTool") == null ? (SysOrg)session.getAttribute("SysOrg") : (SysOrg)session.getAttribute("SysOrgForAdminTool");
+		SysOrg sysOrg = (SysOrg)queryAdvisor.getObject("sysOrg") == null ? (SysOrg)session.getAttribute("SysOrg") : (SysOrg)queryAdvisor.getObject("sysOrg");
 		String financialYear = CommonUtil.nvl((String)queryAdvisor.getObject("financialYear"), "-");
 		String quarterName = CommonUtil.nvl((String)queryAdvisor.getObject("quarterName"), "-");
 		Date fromDate = CommonUtil.toDate((String)queryAdvisor.getObject("fromDate"), defaultDateFormat);
@@ -130,7 +138,7 @@ public class ReportPdfExportHelper extends ExportHelper {
 
 		src = CommonUtil.replace(src, "#ORG_NAME#", sysOrg.getLegalName());
 		src = CommonUtil.replace(src, "#SYSTEM_DATE_TIME#", CommonUtil.getSysdate(dateTimeFormat));
-		src = CommonUtil.replace(src, "#CLIENT_CODE#", sysUser.getLoginId());
+		src = CommonUtil.replace(src, "#CLIENT_CODE#", "");
 		src = CommonUtil.replace(src, "#FINANCIAL_YEAR#", financialYear);
 		src = CommonUtil.replace(src, "#QUARTER_NAME#", quarterName);
 		src = CommonUtil.replace(src, "#DATE_PERIOD#", CommonUtil.toString(fromDate, dateFormat)+" - "+CommonUtil.toString(toDate, dateFormat));
@@ -172,6 +180,84 @@ public class ReportPdfExportHelper extends ExportHelper {
 		return str;
 	}
 
+	private String getExportDetailsGeneralLedger(String src) throws Exception {
+		String dateFormat = "dd/MM/yyyy", dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
+		String defaultDateFormat = ConfigUtil.getProperty("format.date.java");
+		HttpSession session = paramEntity.getSession();
+		SysOrg sysOrg = (SysOrg)queryAdvisor.getObject("sysOrg") == null ? (SysOrg)session.getAttribute("SysOrg") : (SysOrg)queryAdvisor.getObject("sysOrg");
+		String financialYear = CommonUtil.nvl((String)queryAdvisor.getObject("financialYear"), "-");
+		String quarterName = CommonUtil.nvl((String)queryAdvisor.getObject("quarterName"), "-");
+		Date fromDate = CommonUtil.toDate((String)queryAdvisor.getObject("fromDate"), defaultDateFormat);
+		Date toDate = CommonUtil.toDate((String)queryAdvisor.getObject("toDate"), defaultDateFormat);
+
+		src = CommonUtil.replace(src, "#ORG_NAME#", sysOrg.getLegalName());
+		src = CommonUtil.replace(src, "#SYSTEM_DATE_TIME#", CommonUtil.getSysdate(dateTimeFormat));
+		src = CommonUtil.replace(src, "#CLIENT_CODE#", "");
+		src = CommonUtil.replace(src, "#FINANCIAL_YEAR#", financialYear);
+		src = CommonUtil.replace(src, "#QUARTER_NAME#", quarterName);
+		src = CommonUtil.replace(src, "#DATE_PERIOD#", CommonUtil.toString(fromDate, dateFormat)+" - "+CommonUtil.toString(toDate, dateFormat));
+		src = CommonUtil.replace(src, "#DETAIL_ROWS#", getDetailRowsGeneralLedger());
+		src = CommonUtil.replace(src, "#NUMBER_OF_ACCOUNTS#", CommonUtil.toString(getNumberOfAccounts(), "#,##0"));
+		src = CommonUtil.replace(src, "#NUMBER_OF_ENTRIES#", CommonUtil.toString(sourceDataSet.getRowCnt()-1, "#,##0"));
+
+		return src;
+	}
+
+	private String getDetailRowsGeneralLedger() throws Exception {
+		String str = "";
+		String dateFormat = "dd/MM/yyyy";
+
+		if (sourceDataSet.getRowCnt() > 0) {
+			for (int i=0; i<sourceDataSet.getRowCnt(); i++) {
+				Date dProcDate = CommonUtil.toDate(sourceDataSet.getValue(i, "PROC_DATE"));
+				String sProcDate = CommonUtil.toString(dProcDate, dateFormat);
+
+				if (CommonUtil.isBlank(sProcDate)) {
+					if (i == sourceDataSet.getRowCnt()-1) {
+						str += "<tr style=\"font-weight:bold;background:#f5f5f5;\">";
+						str += "<td class=\"tdGrid Rt\" style=\"border-left:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">Total</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "GST_AMT")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "GROSS_AMT")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "DEBIT_AMT")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "CREDIT_AMT")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "BALANCE")), "&nbsp;")+"</td>";
+						str += "</tr>";
+					} else {
+						str += "<tr>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-left:0px;\">"+CommonUtil.nvl(sourceDataSet.getValue(i, "ACCOUNT_CODE"), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Lt\">"+CommonUtil.nvl(sourceDataSet.getValue(i, "CATEGORY_NAME"), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "BALANCE")), "&nbsp;")+"</td>";
+						str += "</tr>";
+					}
+				} else {
+					str += "<tr>";
+					str += "<td class=\"tdGrid Lt\" style=\"border-left:0px;\">"+"&nbsp;"+"</td>";
+					str += "<td class=\"tdGrid Ct\">"+CommonUtil.nvl(sProcDate, "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Lt\">"+"&nbsp;"+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "GST_AMT")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "GROSS_AMT")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "DEBIT_AMT")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "CREDIT_AMT")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "BALANCE")), "&nbsp;")+"</td>";
+					str += "</tr>";
+				}
+			}
+		} else {
+			str += "<tr>";
+			str += "<td class=\"tdGrid Ct\" colspan=\"8\">&nbsp;</td>";
+			str += "</tr>";
+		}
+
+		return str;
+	}
+
 	private int getNumberOfAccounts() throws Exception {
 		String preAccntCode = "";
 		int accntCodeCnt = 0;
@@ -179,6 +265,7 @@ public class ReportPdfExportHelper extends ExportHelper {
 		if (sourceDataSet.getRowCnt() > 0) {
 			for (int i=0; i<sourceDataSet.getRowCnt()-1; i++) {
 				if (!CommonUtil.equalsIgnoreCase(preAccntCode, sourceDataSet.getValue(i, "ACCOUNT_CODE"))) {
+					preAccntCode = sourceDataSet.getValue(i, "ACCOUNT_CODE");
 					accntCodeCnt++;
 				}
 			}

@@ -83,4 +83,66 @@ public class ReportHDaoImpl extends BaseHDao implements ReportDao {
 
 		return selectAsDataSet(queryAdvisor, "query.Report.getTrialBalance");
 	}
+
+	public DataSet getGeneralLedger(QueryAdvisor queryAdvisor) throws Exception {
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String orgId = (String)queryAdvisor.getObject("orgId");
+		String selectedFinancialYear = (String)queryAdvisor.getObject("financialYear");
+		String quarterName = (String)queryAdvisor.getObject("quarterName");
+		String fromDate = (String)queryAdvisor.getObject("fromDate");
+		String toDate = (String)queryAdvisor.getObject("toDate");
+		String defaultFinancialYear = CommonUtil.getSysdate("yyyy");
+		String thisYear = "";
+
+		queryAdvisor.addVariable("dateFormat", dateFormat);
+		queryAdvisor.addVariable("orgId", orgId);
+
+		if (CommonUtil.isNotBlank(fromDate)) {
+			Date dateFrom = CommonUtil.toDate(fromDate, dateFormat);
+			thisYear = CommonUtil.toString(dateFrom, "yyyy");
+
+			queryAdvisor.addVariable("conFinancialYear", "and period_year = '"+thisYear+"'");
+			queryAdvisor.addVariable("conFinancialYearPeriod", "");
+			queryAdvisor.addVariable("conFromDate", "and trunc(ubta.proc_date) >= to_date('"+fromDate+"', '"+dateFormat+"')");
+		} else {
+			queryAdvisor.addVariable("conFromDate", "");
+		}
+
+		if (CommonUtil.isNotBlank(toDate)) {
+			Date dateFrom = CommonUtil.toDate(fromDate, dateFormat);
+			thisYear = CommonUtil.toString(dateFrom, "yyyy");
+
+			queryAdvisor.addVariable("conFinancialYear", "and period_year = '"+thisYear+"'");
+			queryAdvisor.addVariable("conFinancialYearPeriod", "");
+			queryAdvisor.addVariable("conToDate", "and trunc(ubta.proc_date) <= to_date('"+toDate+"', '"+dateFormat+"')");
+		} else {
+			queryAdvisor.addVariable("conToDate", "");
+		}
+
+		if (CommonUtil.isNotBlank(quarterName)) {
+			if (CommonUtil.isBlank(selectedFinancialYear)) {
+				selectedFinancialYear = defaultFinancialYear;
+			}
+
+			queryAdvisor.addVariable("conQuarterName", "and quarter_name = '"+quarterName+"'");
+		} else {
+			queryAdvisor.addVariable("conQuarterName", "");
+		}
+
+		if (CommonUtil.isNotBlank(selectedFinancialYear)) {
+			queryAdvisor.addVariable("conFinancialYear", "and period_year = '"+selectedFinancialYear+"'");
+			queryAdvisor.addVariable("conFinancialYearPeriod", "and trunc(ubta.proc_date) between trunc(fy.date_from) and trunc(fy.date_to)");
+		}
+
+		if (CommonUtil.isBlank(selectedFinancialYear + quarterName + fromDate + toDate)) {
+			queryAdvisor.addVariable("conFinancialYear", "and period_year = '"+defaultFinancialYear+"'");
+			queryAdvisor.addVariable("conFinancialYearPeriod", "and trunc(ubta.proc_date) between trunc(fy.date_from) and trunc(fy.date_to)");
+
+			queryAdvisor.addVariable("conFromDate", "");
+			queryAdvisor.addVariable("conToDate", "");
+			queryAdvisor.addVariable("conQuarterName", "");
+		}
+
+		return selectAsDataSet(queryAdvisor, "query.Report.getGeneralLedger");
+	}
 }

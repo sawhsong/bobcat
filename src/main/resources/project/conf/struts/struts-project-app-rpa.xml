@@ -7,5 +7,13 @@
         <action class="project.app.rpa.rpa0202.Rpa0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/rpa/rpa0202/Rpa0202List.jsp</result>
         </action>
+        <!--Rpa0204 - General Ledger-->
+        <action class="project.app.rpa.rpa0204.Rpa0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rpa/rpa0204/Rpa0204List.jsp</result>
+        </action>
+        <!--Rpa0206 - Profit And Loss Statement-->
+        <action class="project.app.rpa.rpa0206.Rpa0206Action" method="{1}" name="0206/*">
+            <result name="list" type="debugDispatcherResult">/project/app/rpa/rpa0206/Rpa0206List.jsp</result>
+        </action>
     </package>
 </struts>

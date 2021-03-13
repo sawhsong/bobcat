@@ -2,4 +2,10 @@
     <!--Rpa0202 - Trial Balance-->
     <bean class="${name.package.project}.app.rpa.rpa0202.Rpa0202Action" id="rpa0202Action" name="rpa0202Action"/>
     <bean class="${name.package.project}.app.rpa.rpa0202.Rpa0202BizImpl" id="rpa0202Biz" name="rpa0202Biz" parent="baseBiz"/>
+    <!--Rpa0204 - General Ledger-->
+    <bean class="${name.package.project}.app.rpa.rpa0204.Rpa0204Action" id="rpa0204Action" name="rpa0204Action"/>
+    <bean class="${name.package.project}.app.rpa.rpa0204.Rpa0204BizImpl" id="rpa0204Biz" name="rpa0204Biz" parent="baseBiz"/>
+    <!--Rpa0206 - Profit And Loss Statement-->
+    <bean class="${name.package.project}.app.rpa.rpa0206.Rpa0206Action" id="rpa0206Action" name="rpa0206Action"/>
+    <bean class="${name.package.project}.app.rpa.rpa0206.Rpa0206BizImpl" id="rpa0206Biz" name="rpa0206Biz" parent="baseBiz"/>
 </beans>
