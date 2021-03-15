@@ -5,10 +5,13 @@
  *************************************************************************************************/
 package project.app.rpa.rpa0206;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.extend.ReportExcelExportHelper;
+import project.common.extend.ReportPdfExportHelper;
+import project.conf.resource.ormapper.dao.Report.ReportDao;
+import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
@@ -16,15 +19,13 @@ import zebra.exception.FrameworkException;
 import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Rpa0206BizImpl extends BaseBiz implements Rpa0206Biz {
+	@Autowired
+	private ReportDao reportDao;
+	@Autowired
+	private SysOrgDao sysOrgDao;
+
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
@@ -35,60 +36,20 @@ public class Rpa0206BizImpl extends BaseBiz implements Rpa0206Biz {
 	}
 
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		DataSet request = paramEntity.getRequestDataSet();
+		QueryAdvisor qa = paramEntity.getQueryAdvisor();
+		String orgId = request.getValue("orgId");
 
 		try {
-			queryAdvisor.setPagination(true);
+			qa.setObject("orgId", orgId);
+			qa.setObject("financialYear", request.getValue("financialYear"));
+			qa.setObject("quarterName", request.getValue("quarterName"));
+			qa.setObject("fromDate", request.getValue("fromDate"));
+			qa.setObject("toDate", request.getValue("toDate"));
 
-			paramEntity.setAjaxResponseDataSet(new DataSet());
-			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setAjaxResponseDataSet(reportDao.getProfitAndLoss(qa));
+			paramEntity.setTotalResultRows(qa.getTotalResultRows());
 			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-
-		try {
-			paramEntity.setSuccess(true);
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		int result = -1;
-
-		try {
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		int result = 0;
-
-		try {
-			if (result <= 0) {
-				throw new FrameworkException("E801", getMessage("E801", paramEntity));
-			}
-
-			paramEntity.setSuccess(true);
-			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
@@ -96,32 +57,42 @@ public class Rpa0206BizImpl extends BaseBiz implements Rpa0206Biz {
 	}
 
 	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[] = new String[] {};
-		String pageTitle = "", fileName = "";
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
+		DataSet request = paramEntity.getRequestDataSet();
+		QueryAdvisor qa = paramEntity.getQueryAdvisor();
+		ExportHelper exportHelper = null;
+		String dateFormat = ConfigUtil.getProperty("format.default.date");
+		String orgId = request.getValue("orgId");
+		String fileType = request.getValue("fileType");
+		DataSet srcData;
 
 		try {
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
+			qa.setObject("orgId", orgId);
+			qa.setObject("sysOrg", sysOrgDao.getOrgByOrgId(orgId));
+			qa.setObject("financialYear", request.getValue("financialYear"));
+			qa.setObject("quarterName", request.getValue("quarterName"));
+			qa.setObject("fromDate", request.getValue("fromDate"));
+			qa.setObject("toDate", request.getValue("toDate"));
 
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
+			srcData = reportDao.getProfitAndLoss(qa);
+
+			if (CommonUtil.equalsIgnoreCase(fileType, "pdf")) {
+				exportHelper = new ReportPdfExportHelper();
+				exportHelper.setFileExtention("pdf");
+			} else if (CommonUtil.equalsIgnoreCase(fileType, "excel")) {
+				exportHelper = new ReportExcelExportHelper();
+				exportHelper.setFileExtention("xlsx");
 			}
 
-			exportHelper.setSourceDataSet(new DataSet());
+			exportHelper.setReportType("GeneralLedger");
+			exportHelper.setFileType(fileType);
+			exportHelper.setFileName("GeneralLedger-"+orgId+"_"+CommonUtil.getSysdate(dateFormat));
+			exportHelper.setSourceDataSet(srcData);
+			exportHelper.setParamEntity(paramEntity);
+			exportHelper.setQueryAdvisor(qa);
 
-			paramEntity.setSuccess(true);
 			paramEntity.setFileToExport(exportHelper.createFile());
 			paramEntity.setFileNameToExport(exportHelper.getFileName());
+			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
