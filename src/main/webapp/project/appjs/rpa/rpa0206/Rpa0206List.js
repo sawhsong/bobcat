@@ -126,7 +126,7 @@ $(function() {
 						gridTr1.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(totJun)));
 						gridTr1.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(totThisYear)));
 						gridTr1.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(totLastYear)));
-						gridTr1.addClassName("noStripe").setStyle("font-weight:bold;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;background:#f8f8f8;");
+						gridTr1.addClassName("noStripe").setStyle("font-weight:bold;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;background:#fffef4;");
 						html += gridTr1.toHtmlString();
 
 						totSep = 0;
@@ -153,7 +153,7 @@ $(function() {
 							gridTr1.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(totJun)));
 							gridTr1.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(totThisYear)));
 							gridTr1.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(totLastYear)));
-							gridTr1.addClassName("noStripe").setStyle("font-weight:bold;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;background:#f8f8f8;");
+							gridTr1.addClassName("noStripe").setStyle("font-weight:bold;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;background:#fffef4;");
 							html += gridTr1.toHtmlString();
 
 							totSep = 0;
