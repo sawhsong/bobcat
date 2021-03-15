@@ -10,6 +10,7 @@ import zebra.data.ParamEntity;
 public interface Bsa0202Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getReconCategoryDataSet(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getSubReconCategory(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
 

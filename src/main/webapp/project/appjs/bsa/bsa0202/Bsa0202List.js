@@ -5,31 +5,27 @@
 var dateTimeFormat = jsconfig.get("dateTimeFormatJs");
 var dateFormat = jsconfig.get("dateFormatJs");
 var numberFormat = "#,##0.00";
-var reconCategoryMenu = [];
 var popup;
+var categoryDataSet;
 
 $(function() {
 	/*!
 	 * event
 	 */
 	$("#btnSearch").click(function(event) {
-		refreshDataEntry();
 		doSearch();
 	});
 
 	$("#btnClear").click(function(event) {
 		commonJs.clearSearchCriteria();
-		refreshDataEntry();
 	});
 
 	$("#bankAccntId").change(function(event) {
-		refreshDataEntry();
 		doSearch();
 	});
 
 	$("#allocationStatus").change(function(event) {
 		doSearch();
-		refreshDataEntry();
 	});
 
 	$("#icnTransactionDateFrom").click(function(event) {
@@ -52,16 +48,6 @@ $(function() {
 		commonJs.toggleCheckboxes("chkForEdit");
 	});
 
-	$("#deMainReconCategory").change(function() {
-		setSubReconCategory();
-	});
-
-	$("#deSubReconCategory").change(function() {
-		if (!commonJs.isBlank($("#deSubReconCategory").val())) {
-//			doSave();
-		}
-	});
-
 	$("#btnBatch").click(function() {
 		if (commonJs.getCountChecked("chkForEdit") == 0) {
 			commonJs.warn(com.message.I902);
@@ -82,58 +68,104 @@ $(function() {
 		var code = event.keyCode || event.which, element = event.target;
 		if (code == 9) {}
 		if (code == 13) {
-			if ($(element).attr("name") == "deGstAmount") {
-//				doSave();
-			}
+			onEditGstAmt($(element));
 		}
-		onEditDataEntry($(element));
 	});
 
 	/*!
 	 * process
 	 */
-	doSave = function() {
-		if (commonJs.isBlank($("#deBsTranAllocId").val())) {
-			commonJs.alert("There is no data selected.");
-			return;
-		}
+	initElements = () => {
+		var options = {};
+		$("#divDataArea").find(".bootstrapSelect").each(function(index) {
+			options.container = "body";
+			options.style = $(this).attr("class");
+			$(this).selectpicker(options);
 
-		if (!commonJs.doValidate("fmDefault")) {
-			return;
-		}
+			commonJs.setEvent("change", [$(this)], onEditGstAmt);
+		});
+
+		$("#divDataArea").find(".txtEn").each((index, obj) => {
+			commonJs.setEvent("blur", [$(obj)], onEditGstAmt);
+		});
+	};
+
+	onEditGstAmt = function(jqObj) {
+		var name = $(jqObj).attr("name");
+		var index = name.split("_")[1];
+		var bsTranAllocId = $(jqObj).attr("bsTranAllocId");
+		var categoryId = $("#selCategory_"+index).val();
+		var procAmt = $("#txtGstAmt_"+index).attr("procAmt");
+		var gstAmt = $("#txtGstAmt_"+index).val();
 
 		commonJs.doSimpleProcess({
 			url:"/bsa/0202/doSave.do",
+			data:{
+				bsTranAllocId:commonJs.nvl(bsTranAllocId, ""),
+				categoryId:categoryId,
+				procAmt:procAmt,
+				gstAmt:gstAmt
+			},
+			noForm:true,
 			onSuccess:function(result) {
 				var ds = result.dataSet;
-				doSearch();
+
+				$("#txtNetAmt_"+index).val(ds.getValue(0, "netAmt"));
+			}
+		});
+
+		$("#txtGstAmt_"+index).number(true, 2);
+		$("#txtNetAmt_"+index).number(true, 2);
+	};
+
+	initCategoryDataSet = () => {
+		commonJs.doSearch({
+			url:"/bsa/0202/getReconCategoryDataSet.do",
+			onSuccess:(result) => {
+				categoryDataSet = result.dataSet;
 			}
 		});
 	};
 
-	doDelete = function() {
-		if (commonJs.isBlank($("#deBsTranAllocId").val())) {
-			commonJs.alert("There is no data selected.");
-			return;
+	getCategorySelectbox = (params) => {
+		var html = "<select id=\""+params.id+"\" name=\""+params.name+"\" bsTranAllocId=\""+params.bsTranAllocId+"\" class=\"bootstrapSelect\" data-width=\"100%\">";
+
+		html += "<option value=\"\">==Select==</option>";
+
+		for (var i=0; i<categoryDataSet.getRowCnt(); i++) {
+			var level = categoryDataSet.getValue(i, "CATEGORY_LEVEL");
+			var selected = "";
+
+			if (categoryDataSet.getValue(i, "PATH") == params.selectedValue) {selected = " selected";}
+
+			if (level == "1") {
+				if (i != 0) {
+					html += "</optgroup>";
+				}
+				html += "<optgroup label=\""+categoryDataSet.getValue(i, "CATEGORY_NAME")+"\">";
+			} else {
+				html += "<option value=\""+categoryDataSet.getValue(i, "PATH")+"\""+selected+">"+categoryDataSet.getValue(i, "CATEGORY_NAME")+"</option>";
+			}
 		}
 
-		commonJs.doSimpleProcess({
-			url:"/bsa/0202/doDelete.do",
-			onSuccess:function(result) {
-				var ds = result.dataSet;
-				doSearch();
-			}
-		});
+		html += "</select>";
+
+		return html;
 	};
 
-	onEditDataEntry = function(jqObj) {
-		var name = $(jqObj).attr("name");
-		if (name == "deGstAmount") {
-			var amt = $("#deAmount").val();
-			var gst = $("#deGstAmount").val();
+	getGstAmtTextbox = (params) => {
+		var html = "<input type=\"text\" id=\""+params.id+"\" name=\""+params.name+"\" bsTranAllocId=\""+params.bsTranAllocId+"\" class=\"txtEn Rt numeric\" option=\"numeric\" ";
+		html += "value=\""+commonJs.getNumberMask(params.value, "#,##0.00")+"\" ";
+		html += "procAmt=\""+params.procAmt+"\"";
+		html += "/>";
+		return html;
+	};
 
-			$("#deNetAmount").val(amt - gst);
-		}
+	getNetAmtTextbox = (params) => {
+		var html = "<input type=\"text\" id=\""+params.id+"\" name=\""+params.name+"\" class=\"txtDpl Rt numeric\" option=\"numeric\" readonly ";
+		html += "value=\""+commonJs.getNumberMask(params.value, "#,##0.00")+"\" ";
+		html += "/>";
+		return html;
 	};
 
 	setBankAccntId = function() {
@@ -141,114 +173,6 @@ $(function() {
 			$("#bankAccntId").val(sbaId);
 			commonJs.refreshBootstrapSelectbox("bankAccntId");
 		}
-	};
-
-	flushReconCategory = function() {
-		$("#deMainReconCategory").val("");
-		$("#deMainReconCategory").selectpicker("refresh");
-
-		$("#deSubReconCategory option").each(function(index) {
-			$(this).remove();
-		});
-
-		$("#deSubReconCategory").append(commonJs.getUiSelectOption({
-			value:"",
-			text:"==Select=="
-		}));
-
-		$("#deSubReconCategory").selectpicker("refresh");
-	};
-
-	refreshDataEntry = function() {
-		$("#divInformArea").find(":input").each(function() {
-			if ($(this).prop("type") == "checkbox" || $(this).prop("type") == "radio") {
-				$(this).attr("checked", false);
-			} else {
-				$(this).val("");
-			}
-		});
-		flushReconCategory();
-	};
-
-	setSubReconCategory = function() {
-		commonJs.doSearch({
-			url:"/bsa/0202/getSubReconCategory.do",
-			noForm:true,
-			data:{mainReconCategoryId:$("#deMainReconCategory").val()},
-			onSuccess:function(result) {
-				var ds = result.dataSet;
-
-				$("#deSubReconCategory option").each(function(index) {
-					$(this).remove();
-				});
-
-				$("#deSubReconCategory").append(commonJs.getUiSelectOption({
-					value:"",
-					text:"==Select=="
-				}));
-
-				if (ds.getRowCnt() > 0) {
-					for (var i=0; i<ds.getRowCnt(); i++) {
-						$("#deSubReconCategory").append(commonJs.getUiSelectOption({
-							value:ds.getValue(i, "CATEGORY_ID"),
-							text:ds.getValue(i, "CATEGORY_NAME")
-						}));
-					}
-				}
-
-				$("#deSubReconCategory").selectpicker("refresh");
-			}
-		});
-	};
-
-	getEdit = function(bsTranAllocId) {
-		$("input:checkbox[name=chkForEdit]").each(function(index) {
-			if (!$(this).is(":disabled") && $(this).val() == bsTranAllocId) {
-				$(this).prop("checked", true);
-				$(this).parents("tr").addClass("checkedTr");
-			} else {
-				$(this).prop("checked", false);
-				$(this).parents("tr").removeClass("checkedTr");
-			}
-		});
-
-		commonJs.showProcMessageOnElement("divInformArea");
-
-		commonJs.doSearch({
-			url:"/bsa/0202/getEdit.do",
-			noForm:true,
-			data:{bsTranAllocId:bsTranAllocId},
-			onSuccess:function(result) {
-				var ds = result.dataSet;
-
-				refreshDataEntry();
-				setDataEntryValues(ds);
-				$("#deGstAmount").select();
-			}
-		});
-	};
-
-	setDataEntryValues = function(ds) {
-		$("#deBsTranAllocId").val(ds.getValue(0, "BS_TRAN_ALLOC_ID"));
-		$("#deDate").val(commonJs.getDateTimeMask(ds.getValue(0, "PROC_DATE"), dateFormat));
-
-		$("#deMainReconCategory").val(ds.getValue(0, "MAIN_CATEGORY"));
-		commonJs.refreshBootstrapSelectbox("deMainReconCategory");
-
-		setSubReconCategory();
-
-		$("#deAmount").val(commonJs.getNumberMask(ds.getValue(0, "PROC_AMT"), numberFormat));
-		$("#deGstAmount").val(commonJs.getNumberMask(ds.getValue(0, "GST_AMT"), numberFormat));
-		$("#deNetAmount").val(commonJs.getNumberMask(ds.getValue(0, "NET_AMT"), numberFormat));
-		$("#deDescription").val(ds.getValue(0, "PROC_DESCRIPTION"));
-		$("#deBalance").val(commonJs.getNumberMask(ds.getValue(0, "BALANCE"), numberFormat));
-
-		setTimeout(function() {
-			$("#deSubReconCategory").val(ds.getValue(0, "SUB_CATEGORY"));
-			commonJs.refreshBootstrapSelectbox("deSubReconCategory");
-		}, 300);
-
-		commonJs.hideProcMessageOnElement("divInformArea");
 	};
 
 	doSearch = function() {
@@ -268,20 +192,42 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
+				var categorySelectboxString = getCategorySelectbox({
+					id:"selCategory_"+i,
+					name:"selCategory_"+i,
+					selectedValue:ds.getValue(i, "MAIN_CATEGORY")+"-"+ds.getValue(i, "SUB_CATEGORY")+"",
+					bsTranAllocId:ds.getValue(i, "BS_TRAN_ALLOC_ID")+""
+				});
+				var gstBoxString = getGstAmtTextbox({
+					id:"txtGstAmt_"+i,
+					name:"txtGstAmt_"+i,
+					value:ds.getValue(i, "GST_AMT"),
+					bsTranAllocId:ds.getValue(i, "BS_TRAN_ALLOC_ID")+"",
+					procAmt:ds.getValue(i, "PROC_AMT")
+				});
+				var netAmtBoxString = getNetAmtTextbox({
+					id:"txtNetAmt_"+i,
+					name:"txtNetAmt_"+i,
+					value:ds.getValue(i, "NET_AMT")
+				});
+				var debitAmt = commonJs.isNotBlank(ds.getValue(i, "DEBIT_AMT")) ? commonJs.getNumberMask(ds.getValue(i, "DEBIT_AMT"), "#,##0.00") : "";
+				var creditAmt = commonJs.isNotBlank(ds.getValue(i, "CREDIT_AMT")) ? commonJs.getNumberMask(ds.getValue(i, "CREDIT_AMT"), "#,##0.00") : "";
 
-				var uiChk = new UiCheckbox();
-				uiChk.setName("chkForEdit").setValue(ds.getValue(i, "BS_TRAN_ALLOC_ID"));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
-
-				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(new UiAnchor().setText(commonJs.getDateTimeMask(ds.getValue(i, "PROC_DATE"), dateFormat)).setScript("getEdit('"+ds.getValue(i, "BS_TRAN_ALLOC_ID")+"')")));
-
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "MAIN_CATEGORY_DESC")));
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "SUB_CATEGORY_DESC")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "PROC_AMT"), "#,##0.00")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "GST_AMT"), "#,##0.00")));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "NET_AMT"), "#,##0.00")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").addChild(new UiCheckbox().setName("chkForEdit").setValue(ds.getValue(i, "BS_TRAN_ALLOC_ID"))));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "PROC_DATE"), dateFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(categorySelectboxString));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(debitAmt));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(creditAmt));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(gstBoxString));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(netAmtBoxString));
 				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "PROC_DESCRIPTION")));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "BALANCE"), "#,##0.00")));
+
+				gridTr.setClassName("noStripe");
+
+				if (commonJs.isNotBlank(ds.getValue(i, "MAIN_CATEGORY"))) {
+					gridTr.addClassName("success");
+				}
 
 				html += gridTr.toHtmlString();
 			}
@@ -297,6 +243,8 @@ $(function() {
 
 		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForEdit]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
+
+		initElements();
 	};
 
 	setGridTable = function(totalResultRows) {
@@ -307,105 +255,6 @@ $(function() {
 			totalResultRows:totalResultRows,
 			script:"doSearch"
 		});
-	};
-
-	setDataEntryActionButtonContextMenu = function() {
-		ctxMenu.dataEntryAction[0].fun = function() {};
-		ctxMenu.dataEntryAction[1].fun = function() {};
-		ctxMenu.dataEntryAction[2].fun = function() {};
-
-		$("#icnDeAction").contextMenu(ctxMenu.dataEntryAction, {
-			classPrefix:com.constants.ctxClassPrefixGrid,
-			effectDuration:300,
-			borderRadius:"bottom 4px",
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0
-		});
-	};
-
-	doDataEntryAction = function(img) {
-		ctxMenu.dataEntryAction[0].fun = function() {doSave();};
-		ctxMenu.dataEntryAction[1].fun = function() {refreshDataEntry();};
-		ctxMenu.dataEntryAction[2].fun = function() {doDelete();};
-
-		$(img).contextMenu(ctxMenu.dataEntryAction, {
-			classPrefix:com.constants.ctxClassPrefixGrid,
-			displayAround:"trigger",
-			position:"bottom",
-			horAdjust:0,
-			verAdjust:2
-		});
-	};
-
-	setDeCategoriesContextMenu = function() {
-		var subMenu = [];
-
-		commonJs.doSearch({
-			url:"/common/entryTypeSupporter/getRconCategoryForContextMenu.do",
-			onSuccess:function(result) {
-				var ds = result.dataSet;
-
-				if (ds.getRowCnt() > 0) {
-					for (var i=0; i<ds.getRowCnt(); i++) {
-						var categoryId = ds.getValue(i, "CATEGORY_ID");
-						var parentCategoryId = ds.getValue(i, "PARENT_CATEGORY_ID");
-						var iLevel = parseInt(ds.getValue(i, "CATEGORY_LEVEL"));
-
-						if (iLevel == 1) {
-							if (subMenu.length != 0) {
-								reconCategoryMenu[reconCategoryMenu.length - 1].subMenu = subMenu;
-								subMenu = [];
-							}
-
-							reconCategoryMenu.push({
-								name:ds.getValue(i, "CATEGORY_NAME"),
-								userData:categoryId,
-								fun:function() {
-								}
-							});
-						} else {
-							subMenu.push({
-								name:ds.getValue(i, "CATEGORY_NAME"),
-								userData:parentCategoryId+"_"+categoryId,
-								fun:function() {
-									setDeCategorySelectboxes($(this).attr("userData"));
-								}
-							});
-						}
-
-						if (i == ds.getRowCnt()-1) {
-							reconCategoryMenu[reconCategoryMenu.length - 1].subMenu = subMenu;
-							subMenu = [];
-						}
-					}
-				}
-
-				$("#btnDeCategories").contextMenu(reconCategoryMenu, {
-					borderRadius : "4px",
-					displayAround : "trigger",
-					position : "bottom",
-					horAdjust : 0,
-					verAdjust : 0
-				});
-			}
-		});
-	};
-
-	setDeCategorySelectboxes = function(categoryIds) {
-		var mainCategoryId = categoryIds.split("_")[0];
-		var subCategoryId = categoryIds.split("_")[1];
-
-		$("#deMainReconCategory").val(mainCategoryId);
-		commonJs.refreshBootstrapSelectbox("deMainReconCategory");
-
-		setSubReconCategory();
-		setTimeout(function() {
-			$("#deSubReconCategory").val(subCategoryId);
-			commonJs.refreshBootstrapSelectbox("deSubReconCategory");
-
-//			doSave();
-		}, 400);
 	};
 
 	/*!
@@ -425,9 +274,7 @@ $(function() {
 		commonJs.setFieldDateMask("updatedDateFrom");
 		commonJs.setFieldDateMask("updatedDateTo");
 		$(".numeric").number(true, 2);
-
-		setDeCategoriesContextMenu();
-		setDataEntryActionButtonContextMenu();
+		initCategoryDataSet();
 
 		setTimeout(function() {
 			setBankAccntId();

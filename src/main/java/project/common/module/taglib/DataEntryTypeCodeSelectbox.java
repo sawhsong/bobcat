@@ -42,6 +42,8 @@ public class DataEntryTypeCodeSelectbox extends TaglibSupport {
 				ds = DataHelper.getMainReconCategoryDataSet();
 			} else if (CommonUtil.equalsIgnoreCase(codeType, "SubReconCategory")) {
 				ds = DataHelper.getSbuReconCategoryDataSet(parentCategoryId);
+			} else if (CommonUtil.equalsIgnoreCase(codeType, "ReconCategoryOptGroup")) {
+				ds = DataHelper.getReconCategoryDataSetForOptionGroup();
 			}
 
 			langCode = CommonUtil.nvl(langCode, (String)httpSession.getAttribute("langCode"));
@@ -99,6 +101,23 @@ public class DataEntryTypeCodeSelectbox extends TaglibSupport {
 					if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "CATEGORY_ID"))) {disabledOption = " disabled";}
 
 					html.append("<option value=\""+ds.getValue(i, "CATEGORY_ID")+"\""+selected+disabledOption+">"+ds.getValue(i, "CATEGORY_NAME")+"</option>\n");
+				}
+			} else if (CommonUtil.isIn(codeType, "ReconCategoryOptGroup")) {
+				for (int i=0; i<ds.getRowCnt(); i++) {
+					String level = ds.getValue(i, "CATEGORY_LEVEL");
+					String selected = "", disabledOption = "";
+
+					if (CommonUtil.equals(ds.getValue(i, "CATEGORY_ID"), selectedValue)) {selected = " selected";}
+					if (CommonUtil.containsIgnoreCase(disabledValue, ds.getValue(i, "CATEGORY_ID"))) {disabledOption = " disabled";}
+
+					if (CommonUtil.equals(level, "1")) {
+						if (i != 0) {
+							html.append("</optgroup>\n");
+						}
+						html.append("<optgroup label=\""+ds.getValue(i, "CATEGORY_NAME")+"\">\n");
+					} else {
+						html.append("<option value=\""+ds.getValue(i, "CATEGORY_ID")+"\""+selected+disabledOption+">"+ds.getValue(i, "CATEGORY_NAME")+"</option>\n");
+					}
 				}
 			}
 

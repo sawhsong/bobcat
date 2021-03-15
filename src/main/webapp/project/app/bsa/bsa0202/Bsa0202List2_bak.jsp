@@ -29,9 +29,6 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
-#tblGrid button.bootstrapSelect.dropdown-toggle {padding:3px 20px 2px 4px;}
-#tblGrid td {padding:2px 4px;}
-#tblGrid .txtEn, #tblGrid .txtDpl, #tblGrid .txtDis {padding:4px 4px;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -110,7 +107,47 @@ var sbaId = "<%=sbaId%>";
 		</tr>
 	</table>
 </div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainer">
+	<table class="tblDataEntry">
+		<caption>Data Entry</caption>
+		<colgroup>
+			<col width="2%"/>
+			<col width="6%"/>
+			<col width="10%"/>
+			<col width="13%"/>
+			<col width="20%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="7%"/>
+			<col width="*"/>
+			<col width="7%"/>
+		</colgroup>
+		<tr>
+			<th class="thDataEntry"><ui:icon className="fa-magic fa-lg"/></th>
+			<th class="thDataEntry mandatory">Date</th>
+			<th class="thDataEntry mandatory">Reconciliation Categories</th>
+			<th class="thDataEntry mandatory">Main Category</th>
+			<th class="thDataEntry mandatory">Sub Category</th>
+			<th class="thDataEntry mandatory">Amount</th>
+			<th class="thDataEntry mandatory">GST Amount</th>
+			<th class="thDataEntry mandatory">Net Amount</th>
+			<th class="thDataEntry">Particular</th>
+			<th class="thDataEntry mandatory">Balance</th>
+		</tr>
+		<tr>
+			<td class="tdDataEntry Ct"><ui:icon id="icnDeAction" className="fa-ellipsis-h fa-lg" script="doDataEntryAction(this)"/></td>
+			<td class="tdDataEntry Ct"><ui:hidden name="deBsTranAllocId"/><ui:text name="deDate" className="Ct" style="width:100px" status="disabled"/></td>
+			<td class="tdDataEntry Ct"><ui:button id="btnDeCategories" caption="Reconciliation Categories" iconClass="fa-caret-down"/></td>
+			<td class="tdDataEntry Ct"><ui:deSelect name="deMainReconCategory" codeType="MainReconCategory" caption="==Select==" attribute="data-width:100%" checkName="Main Category" options="mandatory"/></td>
+			<td class="tdDataEntry Ct"><ui:deSelect name="deSubReconCategory" codeType="SubReconCategory" caption="==Select==" attribute="data-width:100%" checkName="Sub Category" options="mandatory"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deAmount" className="rt numeric" status="display" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deGstAmount" className="rt numeric" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deNetAmount" className="rt numeric" status="display" option="numeric"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deDescription" className="Lt" status="display"/></td>
+			<td class="tdDataEntry Ct"><ui:text name="deBalance" className="rt numeric" status="display" option="numeric"/></td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>
@@ -124,9 +161,9 @@ var sbaId = "<%=sbaId%>";
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
 			<col width="2%"/>
-			<col width="5%"/>
+			<col width="6%"/>
+			<col width="13%"/>
 			<col width="20%"/>
-			<col width="7%"/>
 			<col width="7%"/>
 			<col width="7%"/>
 			<col width="7%"/>
@@ -137,9 +174,9 @@ var sbaId = "<%=sbaId%>";
 			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
 				<th class="thGrid">Date</th>
-				<th class="thGrid">Category</th>
-				<th class="thGrid">Debit</th>
-				<th class="thGrid">Credit</th>
+				<th class="thGrid">Main Category</th>
+				<th class="thGrid">Sub Category</th>
+				<th class="thGrid">Amount</th>
 				<th class="thGrid">GST Amount</th>
 				<th class="thGrid">Net Amount</th>
 				<th class="thGrid sortable:alphanumeric">Particular</th>

@@ -54,6 +54,7 @@ public class UsrBankStatementDHDaoImpl extends BaseHDao implements UsrBankStatem
 			usrBsTranAlloc.setRowIndex(CommonUtil.toDouble(bankFileData.getValue(i, "ROW_INDEX")));
 			usrBsTranAlloc.setProcDate(CommonUtil.toDate(bankFileData.getValue(i, "PROC_DATE"), dateFormat));
 			usrBsTranAlloc.setProcAmt(CommonUtil.toDouble(bankFileData.getValue(i, "PROC_AMOUNT")));
+			usrBsTranAlloc.setNetAmt(CommonUtil.toDouble(bankFileData.getValue(i, "PROC_AMOUNT")));
 			usrBsTranAlloc.setProcDescription(bankFileData.getValue(i, "DESCRIPTION"));
 			usrBsTranAlloc.setBalance(CommonUtil.toDouble(bankFileData.getValue(i, "BALANCE")));
 			usrBsTranAlloc.setUserDescription("");

@@ -33,10 +33,10 @@ table > tbody > tr.active:hover, table > tbody > tr > td.active:hover {
 	background-color:#e8e8e8;
 }
 table > tbody > tr.success, table > tbody > tr > td.success {
-	background-color:#dff0d8;
+	background-color:#f3faf1; /*#dff0d8*/
 }
 table > tbody > tr.success:hover, table > tbody > tr > td.success:hover {
-	background-color:#d0e9c6;
+	background-color:#dff0d8; /*#d0e9c6*/
 }
 table > tbody > tr.info, table > tbody > tr > td.info {
 	background-color:#d9edf7;

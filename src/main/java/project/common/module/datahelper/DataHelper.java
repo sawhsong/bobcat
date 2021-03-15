@@ -135,4 +135,8 @@ public class DataHelper extends BaseBiz {
 	public static DataSet getSbuReconCategoryDataSet(String parentCategoryId) throws Exception {
 		return sysReconCategoryDao.getSubCategoryDataSet(parentCategoryId);
 	}
+
+	public static DataSet getReconCategoryDataSetForOptionGroup() throws Exception {
+		return sysReconCategoryDao.getReconCategoryDataSetForOptionGroup();
+	}
 }

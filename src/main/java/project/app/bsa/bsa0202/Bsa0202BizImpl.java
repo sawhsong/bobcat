@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
 import project.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryDao;
 import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
 import project.conf.resource.ormapper.dao.UsrBsTranAlloc.UsrBsTranAllocDao;
@@ -82,6 +83,16 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity getReconCategoryDataSet(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setAjaxResponseDataSet(DataHelper.getReconCategoryDataSetForOptionGroup());
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity getSubReconCategory(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
@@ -110,19 +121,75 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 		return paramEntity;
 	}
 
+	/*
+	 * Old
+	 */
+//	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
+//		DataSet requestDataSet = paramEntity.getRequestDataSet();
+//		String bsTranAllocId = requestDataSet.getValue("deBsTranAllocId");
+//		HttpSession session = paramEntity.getSession();
+//		String userId = (String)session.getAttribute("UserId");
+//		UsrBsTranAlloc usrBsTranAlloc = new UsrBsTranAlloc();
+//		int result = -1;
+//
+//		try {
+//			usrBsTranAlloc.setMainCategory(requestDataSet.getValue("deMainReconCategory"));
+//			usrBsTranAlloc.setSubCategory(requestDataSet.getValue("deSubReconCategory"));
+//			usrBsTranAlloc.setGstAmt(CommonUtil.toDouble(requestDataSet.getValue("deGstAmount")));
+//			usrBsTranAlloc.setNetAmt(CommonUtil.toDouble(requestDataSet.getValue("deNetAmount")));
+//			usrBsTranAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_AL"));
+//			usrBsTranAlloc.setUpdateUserId(userId);
+//			usrBsTranAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+//			usrBsTranAlloc.addUpdateColumnFromField();
+//
+//			result = usrBsTranAllocDao.updateColumn(bsTranAllocId, usrBsTranAlloc);
+//
+//			if (result <= 0) {
+//				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+//			}
+//
+//			paramEntity.setSuccess(true);
+//			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+//		} catch (Exception ex) {
+//			throw new FrameworkException(paramEntity, ex);
+//		}
+//		return paramEntity;
+//	}
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		String bsTranAllocId = requestDataSet.getValue("deBsTranAllocId");
+		DataSet resultDataSet = new DataSet();
+		String bsTranAllocId = requestDataSet.getValue("bsTranAllocId");
+		String categoryId = requestDataSet.getValue("categoryId");
+		String mainCategory = "", subCategory = "";
+		String numberFormat = "#,##0.00";
+		double procAmt = CommonUtil.toDouble(requestDataSet.getValue("procAmt"));
+		double gstAmt = CommonUtil.toDouble(requestDataSet.getValue("gstAmt"));
+		double netAmt = 0;
 		HttpSession session = paramEntity.getSession();
 		String userId = (String)session.getAttribute("UserId");
 		UsrBsTranAlloc usrBsTranAlloc = new UsrBsTranAlloc();
 		int result = -1;
 
 		try {
-			usrBsTranAlloc.setMainCategory(requestDataSet.getValue("deMainReconCategory"));
-			usrBsTranAlloc.setSubCategory(requestDataSet.getValue("deSubReconCategory"));
-			usrBsTranAlloc.setGstAmt(CommonUtil.toDouble(requestDataSet.getValue("deGstAmount")));
-			usrBsTranAlloc.setNetAmt(CommonUtil.toDouble(requestDataSet.getValue("deNetAmount")));
+			if (CommonUtil.isNotBlank(categoryId)) {
+				mainCategory = CommonUtil.split(categoryId, "-")[0];
+				subCategory = CommonUtil.split(categoryId, "-")[1];
+			}
+
+			netAmt = procAmt - gstAmt;
+
+			resultDataSet.addColumn("bsTranAllocId", bsTranAllocId);
+			resultDataSet.addColumn("categoryId", categoryId);
+			resultDataSet.addColumn("mainCategory", mainCategory);
+			resultDataSet.addColumn("subCategory", subCategory);
+			resultDataSet.addColumn("procAmt", CommonUtil.toString(procAmt, numberFormat));
+			resultDataSet.addColumn("gstAmt", CommonUtil.toString(gstAmt, numberFormat));
+			resultDataSet.addColumn("netAmt", CommonUtil.toString(netAmt, numberFormat));
+
+			usrBsTranAlloc.setMainCategory(mainCategory);
+			usrBsTranAlloc.setSubCategory(subCategory);
+			usrBsTranAlloc.setGstAmt(gstAmt);
+			usrBsTranAlloc.setNetAmt(netAmt);
 			usrBsTranAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_AL"));
 			usrBsTranAlloc.setUpdateUserId(userId);
 			usrBsTranAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
@@ -134,6 +201,7 @@ public class Bsa0202BizImpl extends BaseBiz implements Bsa0202Biz {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {

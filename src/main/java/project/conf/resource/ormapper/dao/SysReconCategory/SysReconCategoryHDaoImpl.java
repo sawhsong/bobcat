@@ -57,6 +57,17 @@ public class SysReconCategoryHDaoImpl extends BaseHDao implements SysReconCatego
 		return selectAllAsDataSet(queryAdvisor, new SysReconCategory());
 	}
 
+	public DataSet getReconCategoryDataSetForOptionGroup() throws Exception {
+		QueryAdvisor queryAdvisor = new QueryAdvisor();
+		String dateFormat = ConfigUtil.getProperty("format.date.java");
+		String langCode = CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"));
+
+		queryAdvisor.addVariable("dateFormat", dateFormat);
+		queryAdvisor.addVariable("langCode", langCode);
+
+		return selectAsDataSet(queryAdvisor, "query.SysReconCategory.getDataSetBySearchCriteria");
+	}
+
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String mainCategory = requestDataSet.getValue("mainCategory");

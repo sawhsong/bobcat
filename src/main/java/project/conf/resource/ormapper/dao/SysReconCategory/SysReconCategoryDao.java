@@ -17,6 +17,7 @@ public interface SysReconCategoryDao extends IDao {
 
 	public DataSet getMainCategoryDataSet() throws Exception;
 	public DataSet getSubCategoryDataSet(String parentCategoryId) throws Exception;
+	public DataSet getReconCategoryDataSetForOptionGroup() throws Exception;
 	public DataSet getDataSetBySearchCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByCategoryId(String categoryId) throws Exception;
 	public SysReconCategory getReconCategoryByCategoryId(String categoryId) throws Exception;

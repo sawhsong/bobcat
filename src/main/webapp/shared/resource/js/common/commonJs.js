@@ -120,6 +120,7 @@ var commonJs = {
 	refreshBootstrapSelectbox : function(id) {return $.nony.refreshBootstrapSelectbox(id);},
 	setSelectpickerValue : function(elementId, selectedValue) {$.nony.setSelectpickerValue(elementId, selectedValue);},
 	setAutoComplete : function(jqObject, param) {$.nony.setAutoComplete(jqObject, param);},
+	initSelectpicker : function() {$.nony._jqSelectmenu();},
 	/*!
 	 * UI Elements
 	 */

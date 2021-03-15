@@ -27,6 +27,15 @@ public class Bsa0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getReconCategoryDataSet() throws Exception {
+		try {
+			biz.getReconCategoryDataSet(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String getSubReconCategory() throws Exception {
 		try {
 			biz.getSubReconCategory(paramEntity);
