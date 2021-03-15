@@ -83,9 +83,9 @@ public class Rpa0206BizImpl extends BaseBiz implements Rpa0206Biz {
 				exportHelper.setFileExtention("xlsx");
 			}
 
-			exportHelper.setReportType("GeneralLedger");
+			exportHelper.setReportType("ProfitAndLoss");
 			exportHelper.setFileType(fileType);
-			exportHelper.setFileName("GeneralLedger-"+orgId+"_"+CommonUtil.getSysdate(dateFormat));
+			exportHelper.setFileName("ProfitAndLoss-"+orgId+"_"+CommonUtil.getSysdate(dateFormat));
 			exportHelper.setSourceDataSet(srcData);
 			exportHelper.setParamEntity(paramEntity);
 			exportHelper.setQueryAdvisor(qa);

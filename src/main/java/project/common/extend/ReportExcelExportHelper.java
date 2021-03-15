@@ -77,6 +77,8 @@ public class ReportExcelExportHelper extends ExportHelper {
 			createSheetTrialBalance(wb, sheet);
 		} else if (CommonUtil.equalsIgnoreCase(reportType, "GeneralLedger")) {
 			createSheetGeneralLedger(wb, sheet);
+		} else if (CommonUtil.equalsIgnoreCase(reportType, "ProfitAndLoss")) {
+			createSheetProfitAndLoss(wb, sheet);
 		}
 	}
 
@@ -549,10 +551,365 @@ public class ReportExcelExportHelper extends ExportHelper {
 		sheet.createFreezePane(0, freezeRowIndex+1, 0, freezeRowIndex+1);
 	}
 
+	private void createSheetProfitAndLoss(SXSSFWorkbook wb, SXSSFSheet sheet) throws Exception {
+		int rowIndex = -1, freezeRowIndex = 0;
+		SXSSFRow row;
+		SXSSFCell cell;
+		Footer footer = sheet.getFooter();
+		PrintSetup ps = sheet.getPrintSetup();
+		Map<String, CellStyle> styles = createStyles(wb);
+		String dateFormat = "dd/MM/yyyy", dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
+		String defaultDateFormat = ConfigUtil.getProperty("format.date.java");
+		SysOrg sysOrg = (SysOrg)queryAdvisor.getObject("sysOrg");
+		String financialYear = CommonUtil.nvl((String)queryAdvisor.getObject("financialYear"), "-");
+		String quarterName = CommonUtil.nvl((String)queryAdvisor.getObject("quarterName"), "-");
+		Date fromDate = CommonUtil.toDate((String)queryAdvisor.getObject("fromDate"), defaultDateFormat);
+		Date toDate = CommonUtil.toDate((String)queryAdvisor.getObject("toDate"), defaultDateFormat);
+
+		footer.setRight( "Page " + HeaderFooter.page() + " of " + HeaderFooter.numPages());
+		sheet.setHorizontallyCenter(true);
+		sheet.setAutobreaks(true);
+		ps.setFitWidth((short)1);
+
+		// Title
+		rowIndex++;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(30);
+		cell = row.createCell(0);
+		cell.setCellValue(sysOrg.getLegalName()+"\n"+"Profit And Loss Statement");
+		cell.setCellStyle(styles.get("pageTitle"));
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 6));
+
+		rowIndex++;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(30);
+		cell = row.createCell(0);
+		cell.setCellValue("ABN : "+CommonUtil.getFormatString(sysOrg.getAbn(), "?? ??? ??? ???"));
+		cell.setCellStyle(styles.get("pageTitle"));
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 6));
+
+		// Description section
+		rowIndex++;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(18);
+
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
+		cell = row.createCell(0);
+		cell.setCellValue(CommonUtil.getSysdate(dateTimeFormat));
+		cell.setCellStyle(styles.get("descLeft"));
+
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 5, 6));
+		cell = row.createCell(5);
+		cell.setCellValue("Financial Year : "+financialYear);
+		cell.setCellStyle(styles.get("descRight"));
+
+		rowIndex++;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(18);
+
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 5, 6));
+		cell = row.createCell(5);
+		cell.setCellValue("Quarter : "+quarterName);
+		cell.setCellStyle(styles.get("descRight"));
+
+		rowIndex++;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(18);
+
+		sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 5, 6));
+		cell = row.createCell(5);
+		cell.setCellValue("Date Period : "+CommonUtil.toString(fromDate, dateFormat)+" - "+CommonUtil.toString(toDate, dateFormat));
+		cell.setCellStyle(styles.get("descRight"));
+
+		// Column Header
+		rowIndex++;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(18);
+
+		cell = row.createCell(0);
+		cell.setCellValue("Narration");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(0);
+
+		cell = row.createCell(1);
+		cell.setCellValue("Sep");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(1);
+
+		cell = row.createCell(2);
+		cell.setCellValue("Dec");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(2);
+
+		cell = row.createCell(3);
+		cell.setCellValue("Mar");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(3);
+
+		cell = row.createCell(4);
+		cell.setCellValue("Jun");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(4);
+
+		cell = row.createCell(5);
+		cell.setCellValue("This Year");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(5);
+
+		cell = row.createCell(6);
+		cell.setCellValue("Last Year");
+		cell.setCellStyle(styles.get("gridHeader"));
+		sheet.trackColumnForAutoSizing(6);
+
+		freezeRowIndex = rowIndex;
+
+		// Data Rows
+		double totSep = 0, totDec = 0, totMar = 0, totJun = 0, totThisYear = 0, totLastYear = 0;
+		for (int i=0; i<sourceDataSet.getRowCnt(); i++) {
+			String accntCode = sourceDataSet.getValue(i, "ACCOUNT_CODE");
+
+			rowIndex++;
+			row = sheet.createRow(rowIndex);
+			row.setHeightInPoints(18);
+
+			if (CommonUtil.isBlank(accntCode)) {
+				if (i == (sourceDataSet.getRowCnt()-1)) {
+					cell = row.createCell(0);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("subTotalRowLt"));
+
+					cell = row.createCell(1);
+					cell.setCellValue(totSep);
+					cell.setCellStyle(styles.get("subTotalNumber"));
+
+					cell = row.createCell(2);
+					cell.setCellValue(totDec);
+					cell.setCellStyle(styles.get("subTotalNumber"));
+
+					cell = row.createCell(3);
+					cell.setCellValue(totMar);
+					cell.setCellStyle(styles.get("subTotalNumber"));
+
+					cell = row.createCell(4);
+					cell.setCellValue(totJun);
+					cell.setCellStyle(styles.get("subTotalNumber"));
+
+					cell = row.createCell(5);
+					cell.setCellValue(totThisYear);
+					cell.setCellStyle(styles.get("subTotalNumber"));
+
+					cell = row.createCell(6);
+					cell.setCellValue(totLastYear);
+					cell.setCellStyle(styles.get("subTotalNumber"));
+
+					totSep = 0;
+					totDec = 0;
+					totMar = 0;
+					totJun = 0;
+					totThisYear = 0;
+					totLastYear = 0;
+
+					cell = row.createCell(0);
+					cell.setCellValue("(Loss) Profit before income tax");
+					cell.setCellStyle(styles.get("totalRowLt"));
+					sheet.autoSizeColumn(0);
+
+					cell = row.createCell(1);
+					cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_SEP")));
+					cell.setCellStyle(styles.get("totalRowNumber"));
+					sheet.autoSizeColumn(1);
+
+					cell = row.createCell(2);
+					cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_DEC")));
+					cell.setCellStyle(styles.get("totalRowNumber"));
+					sheet.autoSizeColumn(2);
+
+					cell = row.createCell(3);
+					cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_MAR")));
+					cell.setCellStyle(styles.get("totalRowNumber"));
+					sheet.autoSizeColumn(3);
+
+					cell = row.createCell(4);
+					cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_JUN")));
+					cell.setCellStyle(styles.get("totalRowNumber"));
+					sheet.autoSizeColumn(4);
+
+					cell = row.createCell(5);
+					cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "THIS_YEAR_PROC_AMT")));
+					cell.setCellStyle(styles.get("totalRowNumber"));
+					sheet.autoSizeColumn(5);
+
+					cell = row.createCell(6);
+					cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR_PROC_AMT")));
+					cell.setCellStyle(styles.get("totalRowNumber"));
+					sheet.autoSizeColumn(6);
+				} else {
+					if (i != 0) {
+						cell = row.createCell(0);
+						cell.setCellValue("");
+						cell.setCellStyle(styles.get("subTotalRowLt"));
+
+						cell = row.createCell(1);
+						cell.setCellValue(totSep);
+						cell.setCellStyle(styles.get("subTotalNumber"));
+
+						cell = row.createCell(2);
+						cell.setCellValue(totDec);
+						cell.setCellStyle(styles.get("subTotalNumber"));
+
+						cell = row.createCell(3);
+						cell.setCellValue(totMar);
+						cell.setCellStyle(styles.get("subTotalNumber"));
+
+						cell = row.createCell(4);
+						cell.setCellValue(totJun);
+						cell.setCellStyle(styles.get("subTotalNumber"));
+
+						cell = row.createCell(5);
+						cell.setCellValue(totThisYear);
+						cell.setCellStyle(styles.get("subTotalNumber"));
+
+						cell = row.createCell(6);
+						cell.setCellValue(totLastYear);
+						cell.setCellStyle(styles.get("subTotalNumber"));
+
+						totSep = 0;
+						totDec = 0;
+						totMar = 0;
+						totJun = 0;
+						totThisYear = 0;
+						totLastYear = 0;
+					}
+
+					cell = row.createCell(0);
+					cell.setCellValue(sourceDataSet.getValue(i, "CATEGORY_NAME"));
+					cell.setCellStyle(styles.get("boldFont"));
+
+					cell = row.createCell(1);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("dataRowLt"));
+
+					cell = row.createCell(2);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("dataRowLt"));
+
+					cell = row.createCell(3);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("dataRowLt"));
+
+					cell = row.createCell(4);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("dataRowLt"));
+
+					cell = row.createCell(5);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("dataRowLt"));
+
+					cell = row.createCell(6);
+					cell.setCellValue("");
+					cell.setCellStyle(styles.get("dataRowLt"));
+				}
+			} else {
+				cell = row.createCell(0);
+				cell.setCellValue(sourceDataSet.getValue(i, "CATEGORY_NAME"));
+				cell.setCellStyle(styles.get("dataRowLt"));
+
+				cell = row.createCell(1);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_SEP")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(2);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_DEC")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(3);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_MAR")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(4);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_JUN")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(5);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "THIS_YEAR_PROC_AMT")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(6);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR_PROC_AMT")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				totSep += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_SEP"));
+				totDec += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_DEC"));
+				totMar += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_MAR"));
+				totJun += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_JUN"));
+				totThisYear += CommonUtil.toDouble(sourceDataSet.getValue(i, "THIS_YEAR_PROC_AMT"));
+				totLastYear += CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR_PROC_AMT"));
+			}
+
+
+
+			if (i == (sourceDataSet.getRowCnt()-1)) {
+				cell = row.createCell(0);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR")));
+				cell.setCellStyle(styles.get("totalRowNumber"));
+				sheet.autoSizeColumn(0);
+
+				cell = row.createCell(1);
+				cell.setCellValue("");
+				cell.setCellStyle(styles.get("totalRowLt"));
+				sheet.autoSizeColumn(1);
+
+				cell = row.createCell(2);
+				cell.setCellValue("Total");
+				cell.setCellStyle(styles.get("totalRowLt"));
+				sheet.autoSizeColumn(2);
+
+				cell = row.createCell(3);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "DEBIT")));
+				cell.setCellStyle(styles.get("totalRowNumber"));
+				sheet.autoSizeColumn(3);
+
+				cell = row.createCell(4);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "CREDIT")));
+				cell.setCellStyle(styles.get("totalRowNumber"));
+				sheet.autoSizeColumn(4);
+			} else {
+				cell = row.createCell(0);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(1);
+				cell.setCellValue(sourceDataSet.getValue(i, "ACCOUNT_CODE"));
+				cell.setCellStyle(styles.get("dataRowLt"));
+
+				cell = row.createCell(2);
+				cell.setCellValue(sourceDataSet.getValue(i, "DESCRIPTION"));
+				cell.setCellStyle(styles.get("dataRowLt"));
+
+				cell = row.createCell(3);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "DEBIT")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+
+				cell = row.createCell(4);
+				cell.setCellValue(CommonUtil.toDouble(sourceDataSet.getValue(i, "CREDIT")));
+				cell.setCellStyle(styles.get("dataRowNumber"));
+			}
+		}
+
+		sheet.createFreezePane(0, freezeRowIndex+1, 0, freezeRowIndex+1);
+	}
+
 	private Map<String, CellStyle> createStyles(SXSSFWorkbook wb) throws Exception {
 		Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
 		XSSFCellStyle style;
 		DataFormat format = wb.createDataFormat();
+
+		// Bold font
+		Font boldFont = wb.createFont();
+		boldFont.setFontHeightInPoints((short)10);
+		boldFont.setBold(true);
+		style = (XSSFCellStyle)wb.createCellStyle();
+		styles.put("boldFont", style);
 
 		// Title
 		Font titleFont = wb.createFont();
@@ -694,6 +1051,56 @@ public class ReportExcelExportHelper extends ExportHelper {
 		style.setDataFormat(format.getFormat("#,##0.00"));
 		style.setWrapText(false);
 		styles.put("totalRowNumber", style);
+
+		// SubTotal
+		Font subTotalFont = wb.createFont();
+		subTotalFont.setFontHeightInPoints((short)10);
+		subTotalFont.setBold(true);
+
+		style = (XSSFCellStyle)wb.createCellStyle();
+		style.setFont(subTotalFont);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setAlignment(HorizontalAlignment.LEFT);
+		style.setFillForegroundColor(new XSSFColor(new Color(255, 254, 244)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setWrapText(false);
+		styles.put("subTotalRowLt", style);
+
+		style = (XSSFCellStyle)wb.createCellStyle();
+		style.setFont(subTotalFont);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
+		style.setFillForegroundColor(new XSSFColor(new Color(255, 254, 244)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setWrapText(false);
+		styles.put("subTotalRowCt", style);
+
+		style = (XSSFCellStyle)wb.createCellStyle();
+		style.setFont(subTotalFont);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setAlignment(HorizontalAlignment.RIGHT);
+		style.setFillForegroundColor(new XSSFColor(new Color(255, 254, 244)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setWrapText(false);
+		styles.put("subTotalRowRt", style);
+
+		style = (XSSFCellStyle)wb.createCellStyle();
+		style.setFont(subTotalFont);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setAlignment(HorizontalAlignment.RIGHT);
+		style.setFillForegroundColor(new XSSFColor(new Color(255, 254, 244)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setDataFormat(format.getFormat("#,##0.00"));
+		style.setWrapText(false);
+		styles.put("subTotalRowNumber", style);
 
 		return styles;
 	}

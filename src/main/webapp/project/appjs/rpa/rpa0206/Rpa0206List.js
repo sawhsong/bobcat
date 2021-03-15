@@ -142,7 +142,7 @@ $(function() {
 						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_MAR"))));
 						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_JUN"))));
 						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "THIS_YEAR_PROC_AMT"))));
-						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "last_year_proc_amt"))));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "LAST_YEAR_PROC_AMT"))));
 					} else {
 						if (i != 0) {
 							var gridTr1 = new UiGridTr();

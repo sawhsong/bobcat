@@ -109,6 +109,14 @@ public class ReportPdfExportHelper extends ExportHelper {
 			} else if (CommonUtil.containsIgnoreCase(fileType, "html")) {
 				sourceName = "ReportGeneralLedgerPdf.src";
 			}
+		} else if (CommonUtil.equalsIgnoreCase(reportType, "ProfitAndLoss")) {
+			if (CommonUtil.containsIgnoreCase(fileType, "excel")) {
+				sourceName = "ReportProfitAndLossPdf.src";
+			} else if (CommonUtil.containsIgnoreCase(fileType, "pdf")) {
+				sourceName = "ReportProfitAndLossPdf.src";
+			} else if (CommonUtil.containsIgnoreCase(fileType, "html")) {
+				sourceName = "ReportProfitAndLossPdf.src";
+			}
 		}
 
 		return new File(SOURCE_FILE_PATH+"/"+sourceName);
@@ -119,8 +127,10 @@ public class ReportPdfExportHelper extends ExportHelper {
 
 		if (CommonUtil.equalsIgnoreCase(reportType, "TrialBalance")) {
 			rtn = getExportDetailsTrialBalance(src);
-		}if (CommonUtil.equalsIgnoreCase(reportType, "GeneralLedger")) {
+		} else if (CommonUtil.equalsIgnoreCase(reportType, "GeneralLedger")) {
 			rtn = getExportDetailsGeneralLedger(src);
+		} else if (CommonUtil.equalsIgnoreCase(reportType, "ProfitAndLoss")) {
+			rtn = getExportDetailsProfitAndLoss(src);
 		}
 
 		return rtn;
@@ -252,6 +262,124 @@ public class ReportPdfExportHelper extends ExportHelper {
 		} else {
 			str += "<tr>";
 			str += "<td class=\"tdGrid Ct\" colspan=\"8\">&nbsp;</td>";
+			str += "</tr>";
+		}
+
+		return str;
+	}
+
+	private String getExportDetailsProfitAndLoss(String src) throws Exception {
+		String dateFormat = "dd/MM/yyyy", dateTimeFormat = "dd/MM/yyyy HH:mm:ss";
+		String defaultDateFormat = ConfigUtil.getProperty("format.date.java");
+		HttpSession session = paramEntity.getSession();
+		SysOrg sysOrg = (SysOrg)queryAdvisor.getObject("sysOrg") == null ? (SysOrg)session.getAttribute("SysOrg") : (SysOrg)queryAdvisor.getObject("sysOrg");
+		String financialYear = CommonUtil.nvl((String)queryAdvisor.getObject("financialYear"), "-");
+		String quarterName = CommonUtil.nvl((String)queryAdvisor.getObject("quarterName"), "-");
+		Date fromDate = CommonUtil.toDate((String)queryAdvisor.getObject("fromDate"), defaultDateFormat);
+		Date toDate = CommonUtil.toDate((String)queryAdvisor.getObject("toDate"), defaultDateFormat);
+
+		src = CommonUtil.replace(src, "#ORG_NAME#", sysOrg.getLegalName());
+		src = CommonUtil.replace(src, "#ABN#", CommonUtil.getFormatString(sysOrg.getAbn(), "?? ??? ??? ???"));
+		src = CommonUtil.replace(src, "#SYSTEM_DATE_TIME#", CommonUtil.getSysdate(dateTimeFormat));
+		src = CommonUtil.replace(src, "#FINANCIAL_YEAR#", financialYear);
+		src = CommonUtil.replace(src, "#QUARTER_NAME#", quarterName);
+		src = CommonUtil.replace(src, "#DATE_PERIOD#", CommonUtil.toString(fromDate, dateFormat)+" - "+CommonUtil.toString(toDate, dateFormat));
+		src = CommonUtil.replace(src, "#DETAIL_ROWS#", getDetailRowsProfitAndLoss());
+		src = CommonUtil.replace(src, "#NUMBER_OF_ACCOUNTS#", CommonUtil.toString(getNumberOfAccounts(), "#,##0"));
+		src = CommonUtil.replace(src, "#NUMBER_OF_ENTRIES#", CommonUtil.toString(sourceDataSet.getRowCnt()-1, "#,##0"));
+
+		return src;
+	}
+
+	private String getDetailRowsProfitAndLoss() throws Exception {
+		String str = "", numberFormat = "#,##0.00";
+
+		if (sourceDataSet.getRowCnt() > 0) {
+			double totSep = 0, totDec = 0, totMar = 0, totJun = 0, totThisYear = 0, totLastYear = 0;
+
+			for (int i=0; i<sourceDataSet.getRowCnt(); i++) {
+				String accntCode = sourceDataSet.getValue(i, "ACCOUNT_CODE");
+
+				if (CommonUtil.isBlank(accntCode)) {
+					if (i == sourceDataSet.getRowCnt()-1) {
+						str += "<tr style=\"font-weight:bold;background:#fffef4;\">";
+						str += "<td class=\"tdGrid Rt\" style=\"border-left:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totSep, numberFormat))+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totDec, numberFormat))+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totMar, numberFormat))+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totJun, numberFormat))+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totThisYear, numberFormat))+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totLastYear, numberFormat))+"</td>";
+						str += "</tr>";
+
+						totSep = 0;
+						totDec = 0;
+						totMar = 0;
+						totJun = 0;
+						totThisYear = 0;
+						totLastYear = 0;
+
+						str += "<tr style=\"font-weight:bold;background:#f5f5f5;\">";
+						str += "<td class=\"tdGrid Rt\" style=\"border-left:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+"(Loss) Profit before income tax"+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_SEP")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_DEC")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_MAR")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_JUN")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "THIS_YEAR_PROC_AMT")), "&nbsp;")+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "LAST_YEAR_PROC_AMT")), "&nbsp;")+"</td>";
+						str += "</tr>";
+					} else {
+						if (i != 0) {
+							str += "<tr style=\"font-weight:bold;background:#fffef4;\">";
+							str += "<td class=\"tdGrid Rt\" style=\"border-left:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+"&nbsp;"+"</td>";
+							str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totSep, numberFormat))+"</td>";
+							str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totDec, numberFormat))+"</td>";
+							str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totMar, numberFormat))+"</td>";
+							str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totJun, numberFormat))+"</td>";
+							str += "<td class=\"tdGrid Lt\" style=\"border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totThisYear, numberFormat))+"</td>";
+							str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;\">"+CommonUtil.getAccountingFormat(CommonUtil.toString(totLastYear, numberFormat))+"</td>";
+							str += "</tr>";
+
+							totSep = 0;
+							totDec = 0;
+							totMar = 0;
+							totJun = 0;
+							totThisYear = 0;
+							totLastYear = 0;
+						}
+
+						str += "<tr>";
+						str += "<td class=\"tdGrid Lt\" style=\"border-left:0px;font-weight:bold;\">"+sourceDataSet.getValue(i, "CATEGORY_NAME")+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\">"+"&nbsp;"+"</td>";
+						str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;\">"+"&nbsp;"+"</td>";
+						str += "</tr>";
+					}
+				} else {
+					str += "<tr>";
+					str += "<td class=\"tdGrid Lt\" style=\"border-left:0px;\">"+sourceDataSet.getValue(i, "CATEGORY_NAME")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_SEP")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_DEC")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_MAR")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "PROC_AMT_JUN")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "THIS_YEAR_PROC_AMT")), "&nbsp;")+"</td>";
+					str += "<td class=\"tdGrid Rt\" style=\"border-right:0px;\">"+CommonUtil.nvl(CommonUtil.getAccountingFormat(sourceDataSet.getValue(i, "LAST_YEAR_PROC_AMT")), "&nbsp;")+"</td>";
+					str += "</tr>";
+
+					totSep += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_SEP"));
+					totDec += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_DEC"));
+					totMar += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_MAR"));
+					totJun += CommonUtil.toDouble(sourceDataSet.getValue(i, "PROC_AMT_JUN"));
+					totThisYear += CommonUtil.toDouble(sourceDataSet.getValue(i, "THIS_YEAR_PROC_AMT"));
+					totLastYear += CommonUtil.toDouble(sourceDataSet.getValue(i, "LAST_YEAR_PROC_AMT"));
+				}
+			}
+		} else {
+			str += "<tr>";
+			str += "<td class=\"tdGrid Ct\" colspan=\"7\">&nbsp;</td>";
 			str += "</tr>";
 		}
 
