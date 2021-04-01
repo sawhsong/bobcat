@@ -91,4 +91,8 @@ public class SysOrgHDaoImpl extends BaseHDao implements SysOrgDao {
 		queryAdvisor.addWhereClause("org_id = '"+orgId+"'");
 		return selectAllAsDataSet(queryAdvisor, new SysOrg());
 	}
+
+	public DataSet getDataSet() throws Exception {
+		return selectAllAsDataSet(new QueryAdvisor(), new SysOrg());
+	}
 }

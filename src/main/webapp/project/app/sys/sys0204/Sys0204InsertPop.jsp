@@ -90,7 +90,7 @@ var articleId = "<%=requestDataSet.getValue("articleId")%>";
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.articleContents"/></th>
 			<td class="tdEdit" colspan="3">
-				<ui:txa name="articleContents" style="height:224px;"/>
+				<ui:txa name="articleContents" style="height:380px;"/>
 			</td>
 		</tr>
 		<tr>
@@ -104,6 +104,10 @@ var articleId = "<%=requestDataSet.getValue("articleId")%>";
 				<div id="divAttachedFile" style="width:100%;height:88px;overflow-y:auto;">
 				</div>
 			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Send Email</th>
+			<td class="tdEdit" colspan="3"><ui:ccradio name="sendEmail" codeType="SIMPLE_YN" selectedValue="Y" isCustomised="true"/></td>
 		</tr>
 	</table>
 </div>

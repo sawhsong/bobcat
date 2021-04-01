@@ -12,7 +12,7 @@ public class HtmlUtil {
 //			text = CommonUtil.replace(text, "%", "&#37;");
 			text = CommonUtil.replace(text, "\"", "&quot;");
 			text = CommonUtil.replace(text, "'", "&#39;");
-//			text = CommonUtil.replace(text, " ", "&nbsp;");
+			text = CommonUtil.replace(text, " ", "&nbsp;");
 			text = CommonUtil.replace(text, "\r\n", "<br/>");
 //			text = CommonUtil.replace(text, "\r", "<br/>");
 			text = CommonUtil.replace(text, "\n", "<br/>");

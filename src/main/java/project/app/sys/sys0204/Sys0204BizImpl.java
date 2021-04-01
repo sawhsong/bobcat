@@ -17,7 +17,6 @@ import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 import zebra.util.ExportUtil;
-
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
@@ -29,6 +28,8 @@ public class Sys0204BizImpl extends BaseBiz implements Sys0204Biz {
 	private SysBoardDao sysBoardDao;
 	@Autowired
 	private SysBoardFileDao sysBoardFileDao;
+	@Autowired
+	private Sys0204MessageSender messageSender;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -122,6 +123,7 @@ public class Sys0204BizImpl extends BaseBiz implements Sys0204Biz {
 			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
 			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
 			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
+			sysBoard.setSendEmail(requestDataSet.getValue("sendEmail"));
 			sysBoard.setInsertUserId(loggedInUserId);
 			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			sysBoard.setParentArticleId(CommonUtil.nvl(requestDataSet.getValue("articleId"), "-1"));
@@ -129,6 +131,10 @@ public class Sys0204BizImpl extends BaseBiz implements Sys0204Biz {
 			result = sysBoardDao.insert(sysBoard, fileDataSet, "Y");
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			if (CommonUtil.equalsIgnoreCase(sysBoard.getSendEmail(), CommonCodeManager.getCodeByConstants("SIMPLE_YN_Y"))) {
+				messageSender.sendMessageForInsert(sysBoard, fileDataSet);
 			}
 
 			paramEntity.setSuccess(true);
@@ -159,12 +165,17 @@ public class Sys0204BizImpl extends BaseBiz implements Sys0204Biz {
 			sysBoard.setWriterIpAddress(paramEntity.getRequest().getRemoteAddr());
 			sysBoard.setArticleSubject(requestDataSet.getValue("articleSubject"));
 			sysBoard.setArticleContents(requestDataSet.getValue("articleContents"));
+			sysBoard.setSendEmail(requestDataSet.getValue("sendEmail"));
 			sysBoard.setUpdateUserId(loggedInUserId);
 			sysBoard.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 
 			result = sysBoardDao.update(sysBoard, fileDataSet, "Y", fileIdsToDelete);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			if (CommonUtil.equalsIgnoreCase(sysBoard.getSendEmail(), CommonCodeManager.getCodeByConstants("SIMPLE_YN_Y"))) {
+				messageSender.sendMessageForInsert(sysBoard, fileDataSet);
 			}
 
 			paramEntity.setSuccess(true);

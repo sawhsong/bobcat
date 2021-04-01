@@ -1,6 +1,6 @@
 /**************************************************************************************************
  * Framework Generated DTO Source
- * - SYS_BOARD - Bulletin Board
+ * - SYS_BOARD - Bulletin board
  *************************************************************************************************/
 package project.conf.resource.ormapper.dto.oracle;
 
@@ -39,6 +39,8 @@ public class SysBoard extends BaseDto implements Serializable {
 	private String INSERT_USER_ID;
 	private String isConfidential;
 	private String IS_CONFIDENTIAL;
+	private String sendEmail;
+	private String SEND_EMAIL;
 	private Date updateDate;
 	private String UPDATE_DATE;
 	private String updateUserId;
@@ -187,6 +189,15 @@ public class SysBoard extends BaseDto implements Serializable {
 		setValueFromAccessor("IS_CONFIDENTIAL", isConfidential);
 	}
 
+	public String getSendEmail() {
+		return sendEmail;
+	}
+
+	public void setSendEmail(String sendEmail) throws Exception {
+		this.sendEmail = sendEmail;
+		setValueFromAccessor("SEND_EMAIL", sendEmail);
+	}
+
 	public Date getUpdateDate() {
 		return updateDate;
 	}
@@ -276,10 +287,10 @@ public class SysBoard extends BaseDto implements Serializable {
 		dataSet.setValue(dataSet.getRowCnt()-1, columnName, value);
 		for (int i=0; i<field.length; i++) {
 			if (field[i].getName().equals(CommonUtil.toCamelCaseStartLowerCase(columnName))) {
-				if (CommonUtil.containsIgnoreCase(getFrwVarNumberColumn(), columnName)) {
+				if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarNumberColumn(), ","))) {
 					field[i].set(this, CommonUtil.toDouble(value));
-				} else if (CommonUtil.containsIgnoreCase(getFrwVarDateColumn(), columnName)) {
-					if (CommonUtil.equalsIgnoreCase(value, "SYSDATE")) {
+				} else if (CommonUtil.isIn(columnName, CommonUtil.split(getFrwVarDateColumn(), ","))) {
+					if (CommonUtil.equalsIgnoreCase(value, "SYSDATE") || CommonUtil.containsIgnoreCase(value, "SYSDATE")) {
 						field[i].set(this, CommonUtil.toDate(CommonUtil.getSysdate()));
 					} else {
 						field[i].set(this, CommonUtil.toDate(value));
@@ -329,9 +340,9 @@ public class SysBoard extends BaseDto implements Serializable {
 	public void addUpdateColumn(String columnName, String columnValue) throws Exception {
 		String dataType = "";
 
-		if (CommonUtil.containsIgnoreCase(getFrwVarNumberColumn(), columnName)) {
+		if (CommonUtil.isInIgnoreCase(columnName, CommonUtil.split(getFrwVarNumberColumn(), ","))) {
 			dataType = "Number";
-		} else if (CommonUtil.containsIgnoreCase(getFrwVarDateColumn(), columnName)) {
+		} else if (CommonUtil.isInIgnoreCase(columnName, CommonUtil.split(getFrwVarDateColumn(), ","))) {
 			dataType = "Date";
 		} else {
 			dataType = "String";
@@ -378,6 +389,7 @@ public class SysBoard extends BaseDto implements Serializable {
 		str += "insertDate : "+insertDate+"\n";
 		str += "insertUserId : "+insertUserId+"\n";
 		str += "isConfidential : "+isConfidential+"\n";
+		str += "sendEmail : "+sendEmail+"\n";
 		str += "updateDate : "+updateDate+"\n";
 		str += "updateUserId : "+updateUserId+"\n";
 		str += "writerEmail : "+writerEmail+"\n";
@@ -406,6 +418,7 @@ public class SysBoard extends BaseDto implements Serializable {
 		str += "<column name=\"insertDate\" value=\""+insertDate+"\">";
 		str += "<column name=\"insertUserId\" value=\""+insertUserId+"\">";
 		str += "<column name=\"isConfidential\" value=\""+isConfidential+"\">";
+		str += "<column name=\"sendEmail\" value=\""+sendEmail+"\">";
 		str += "<column name=\"updateDate\" value=\""+updateDate+"\">";
 		str += "<column name=\"updateUserId\" value=\""+updateUserId+"\">";
 		str += "<column name=\"writerEmail\" value=\""+writerEmail+"\">";
@@ -434,6 +447,7 @@ public class SysBoard extends BaseDto implements Serializable {
 		str += "\"insertDate\":\""+insertDate+"\", ";
 		str += "\"insertUserId\":\""+insertUserId+"\", ";
 		str += "\"isConfidential\":\""+isConfidential+"\", ";
+		str += "\"sendEmail\":\""+sendEmail+"\", ";
 		str += "\"updateDate\":\""+updateDate+"\", ";
 		str += "\"updateUserId\":\""+updateUserId+"\", ";
 		str += "\"writerEmail\":\""+writerEmail+"\", ";

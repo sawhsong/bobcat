@@ -59,19 +59,21 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="50%"/>
-			<col width="50%"/>
+			<col width="6%"/>
+			<col width="25%"/>
+			<col width="8%"/>
+			<col width="*"/>
 		</colgroup>
 		<tr>
+			<th class="thSearch rt"><mc:msg key="sys0204.search.searchType"/></th>
 			<td class="tdSearch">
-				<label for="searchType" class="lblEn hor"><mc:msg key="sys0204.search.searchType"/></label>
 				<div style="float:left;padding-right:4px;">
 					<ui:ccselect name="searchType" codeType="BOARD_SEARCH_TYPE" caption="==Select=="/>
 				</div>
 				<ui:text name="searchWord" className="hor" style="width:280px"/>
 			</td>
+			<th class="thSearch rt"><mc:msg key="sys0204.search.searchPeriod"/></th>
 			<td class="tdSearch">
-				<label for="fromDate" class="lblEn hor"><mc:msg key="sys0204.search.searchPeriod"/></label>
 				<ui:text name="fromDate" className="Ct hor" style="width:100px" checkName="sys0204.search.searchDateFrom" option="date"/>
 				<ui:icon id="icnFromDate" className="fa-calendar hor" title="sys0204.search.searchDateFrom"/>
 				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
@@ -109,12 +111,12 @@
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0204.grid.subject"/></th>
 				<th class="thGrid"><mc:msg key="sys0204.grid.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="sys0204.grid.writerName"/></th>
-				<th class="thGrid sortable:date"><mc:msg key="sys0204.grid.date"/></th>
+				<th class="thGrid sortable:date">Last Update Date</th>
 				<th class="thGrid sortable:numeric"><mc:msg key="sys0204.grid.hitCount"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noBorderHor noStripe">
+			<tr>
 				<td class="tdGrid Ct" colspan="7"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>

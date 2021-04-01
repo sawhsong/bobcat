@@ -22,5 +22,6 @@ public interface SysOrgDao extends IDao {
 	public DataSet getOrgInfoDataSetForAutoCompletion(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getOrgDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception;
 	public DataSet getDataSetByOrgId(String orgId) throws Exception;
+	public DataSet getDataSet() throws Exception;
 	public SysOrg getOrgByOrgId(String orgId) throws Exception;
 }

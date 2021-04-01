@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!--/*
  * Framework Generated Hibernate Config hbm Source
- * - SYS_BOARD - Bulletin Board
+ * - SYS_BOARD - Bulletin board
  */-->
 <hibernate-mapping>
 	<class name="project.conf.resource.ormapper.dto.oracle.SysBoard" table="SYS_BOARD" lazy="false">
-		<meta attribute="class-description" inherit="false">Bulletin Board</meta>
+		<meta attribute="class-description" inherit="false">Bulletin board</meta>
 
 		<id name="articleId" column="ARTICLE_ID" type="java.lang.String" length="30"></id>
 
@@ -20,6 +20,7 @@
 		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
 		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
 		<property name="isConfidential" column="IS_CONFIDENTIAL" type="java.lang.String" length="1"/>
+		<property name="sendEmail" column="SEND_EMAIL" type="java.lang.String" length="1"/>
 		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
 		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
 		<property name="writerEmail" column="WRITER_EMAIL" type="java.lang.String" length="100"/>
@@ -40,6 +41,7 @@
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
 		       INSERT_USER_ID,
 		       IS_CONFIDENTIAL,
+		       SEND_EMAIL,
 		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
 		       UPDATE_USER_ID,
 		       WRITER_EMAIL,
@@ -68,6 +70,7 @@
 		       INSERT_DATE,
 		       INSERT_USER_ID,
 		       IS_CONFIDENTIAL,
+		       SEND_EMAIL,
 		       UPDATE_DATE,
 		       UPDATE_USER_ID,
 		       WRITER_EMAIL,
@@ -86,6 +89,7 @@
 		       ${INSERT_DATE},
 		       ${INSERT_USER_ID},
 		       ${IS_CONFIDENTIAL},
+		       ${SEND_EMAIL},
 		       ${UPDATE_DATE},
 		       ${UPDATE_USER_ID},
 		       ${WRITER_EMAIL},
@@ -108,6 +112,7 @@
 		       INSERT_DATE = ${INSERT_DATE},
 		       INSERT_USER_ID = ${INSERT_USER_ID},
 		       IS_CONFIDENTIAL = ${IS_CONFIDENTIAL},
+		       SEND_EMAIL = ${SEND_EMAIL},
 		       UPDATE_DATE = ${UPDATE_DATE},
 		       UPDATE_USER_ID = ${UPDATE_USER_ID},
 		       WRITER_EMAIL = ${WRITER_EMAIL},

@@ -8,26 +8,14 @@ $(function() {
 	 */
 	$("#btnSave").click(function(event) {
 		if (commonJs.doValidate("fmDefault")) {
-			$("#fmDefault").attr("enctype", "multipart/form-data");
-
-			commonJs.confirm({
-				contents:com.message.Q001,
-				buttons:[{
-					caption:com.caption.yes,
-					callback:function() {
-						commonJs.doSubmit({
-							form:"fmDefault",
-							action:"/sys/0204/exeUpdate.do",
-							data:{
-								articleId:articleId
-							}
-						});
-					}
-				}, {
-					caption:com.caption.no,
-					callback:function() {
-					}
-				}]
+			commonJs.doSaveWithFile({
+				url:"/sys/0204/exeUpdate.do",
+				data:{articleId:articleId},
+				onSuccess:function(result) {
+					var ds = result.dataSet;
+					parent.popup.close();
+					parent.doSearch();
+				}
 			});
 		}
 	});

@@ -92,8 +92,8 @@ var articleId = "<%=sysBoard.getArticleId()%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="sys0204.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa style="height:214px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
+			<td class="tdEdit" colspan="3" style="height:380px;vertical-align:top">
+				<ui:txa style="height:372px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
 			</td>
 		</tr>
 		<tr>
@@ -125,6 +125,10 @@ var articleId = "<%=sysBoard.getArticleId()%>";
 					</table>
 				</div>
 			</td>
+		</tr>
+		<tr>
+			<th class="thEdit Rt">Send Email</th>
+			<td class="tdEdit" colspan="3"><ui:ccradio name="sendEmail" codeType="SIMPLE_YN" selectedValue="<%=sysBoard.getSendEmail()%>" isCustomised="true"/></td>
 		</tr>
 	</table>
 </div>

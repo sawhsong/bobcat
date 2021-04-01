@@ -54,37 +54,19 @@ public class Sys0204Action extends BaseAction {
 	public String exeInsert() throws Exception {
 		try {
 			biz.exeInsert(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("script", "parent.popup.close(); parent.doSearch();");
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String exeUpdate() throws Exception {
 		try {
 			biz.exeUpdate(paramEntity);
-
-			if (paramEntity.isSuccess()) {
-				paramEntity.setObject("script", "parent.popup.close(); parent.doSearch();");
-			} else {
-				paramEntity.setObject("script", "history.go(-1);");
-			}
 		} catch (Exception ex) {
-			paramEntity.setObject("script", "history.go(-1);");
-		} finally {
-			paramEntity.setObject("messageCode", paramEntity.getMessageCode());
-			paramEntity.setObject("message", paramEntity.getMessage());
 		}
-		return "pageHandler";
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String exeDelete() throws Exception {

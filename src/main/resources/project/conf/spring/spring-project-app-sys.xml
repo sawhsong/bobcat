@@ -5,6 +5,10 @@
     <!--Sys0204 - Annoucement-->
     <bean class="${name.package.project}.app.sys.sys0204.Sys0204Action" id="sys0204Action" name="sys0204Action"/>
     <bean class="${name.package.project}.app.sys.sys0204.Sys0204BizImpl" id="sys0204Biz" name="sys0204Biz" parent="baseBiz"/>
+	<bean id="sys0204MessageSender" class="${name.package.project}.app.sys.sys0204.Sys0204MessageSender">
+		<property name="javaMailSender" ref="javaMailSender" />
+		<property name="messageSourceAccessor" ref="messageSourceAccessor" />
+	</bean>
     <!--Sys0206 - Organisation Management-->
     <bean class="${name.package.project}.app.sys.sys0206.Sys0206Action" id="sys0206Action" name="sys0206Action"/>
     <bean class="${name.package.project}.app.sys.sys0206.Sys0206BizImpl" id="sys0206Biz" name="sys0206Biz" parent="baseBiz"/>
