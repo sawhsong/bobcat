@@ -56,7 +56,7 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="6%"/>
+			<col width="8%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
@@ -91,16 +91,16 @@
 			<col width="8%"/>
 		</colgroup>
 		<thead>
-			<tr class="noBorderHor">
+			<tr>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="bbs0202.grid.subject"/></th>
 				<th class="thGrid"><mc:msg key="bbs0202.grid.file"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="bbs0202.grid.writerName"/></th>
-				<th class="thGrid sortable:date">Last Updated Date</th>
+				<th class="thGrid sortable:date">Last Update Date</th>
 				<th class="thGrid sortable:numeric"><mc:msg key="bbs0202.grid.hitCount"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
-			<tr class="noBorderHor noStripe">
+			<tr>
 				<td class="tdGrid Ct" colspan="5"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>

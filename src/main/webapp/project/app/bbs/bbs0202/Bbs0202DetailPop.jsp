@@ -11,6 +11,9 @@
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
 	SysBoard sysBoard = (SysBoard)paramEntity.getObject("sysBoard");
 	DataSet fileDataSet = (DataSet)paramEntity.getObject("fileDataSet");
+	String dateFormat = ConfigUtil.getProperty("format.date.java");
+	String insertDate = CommonUtil.toString(sysBoard.getInsertDate(), dateFormat);
+	String updateDate = CommonUtil.toString(sysBoard.getUpdateDate(), dateFormat);
 %>
 <%/************************************************************************************************
 * HTML
@@ -79,7 +82,7 @@ var articleId = "<%=sysBoard.getArticleId()%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="bbs0202.header.updateDate"/></th>
-			<td class="tdEdit"><%=CommonUtil.toViewDateString(sysBoard.getUpdateDate())%></td>
+			<td class="tdEdit"><%=CommonUtil.nvl(updateDate, insertDate)%></td>
 			<th class="thEdit Rt"><mc:msg key="bbs0202.header.hitCount"/></th>
 			<td class="tdEdit"><%=CommonUtil.getNumberMask(sysBoard.getHitCnt())%></td>
 		</tr>
@@ -89,8 +92,8 @@ var articleId = "<%=sysBoard.getArticleId()%>";
 		</tr>
 		<tr>
 			<th class="thEdit Rt"><mc:msg key="bbs0202.header.articleContents"/></th>
-			<td class="tdEdit" colspan="3" style="height:226px;vertical-align:top">
-				<ui:txa  style="height:214px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
+			<td class="tdEdit" colspan="3" style="height:410px;vertical-align:top">
+				<ui:txa  style="height:400px;padding:0px 4px 0px 0px" value="<%=sysBoard.getArticleContents()%>" status="display"/>
 			</td>
 		</tr>
 		<tr>

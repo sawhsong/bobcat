@@ -60,7 +60,7 @@ public class Sys0204MessageSender extends AbstractMessageSender implements Appli
 			}
 		} catch (Exception ex) {
 			logger.error(ex);
-			throw ex;
+//			throw ex;
 		}
 	}
 

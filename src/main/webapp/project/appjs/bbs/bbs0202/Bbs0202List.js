@@ -2,10 +2,7 @@
  * Framework Generated Javascript Source
  * - Bbs0202List.js
  *************************************************************************************************/
-jsconfig.put("useJqTooltip", false);
-
 var popup = null;
-var searchResultDataCount = 0;
 var attchedFileContextMenu = [];
 
 $(function() {
@@ -53,46 +50,31 @@ $(function() {
 	};
 
 	renderDataGridTable = function(result) {
-		var dataSet = result.dataSet;
+		var ds = result.dataSet;
 		var html = "";
 
-		searchResultDataCount = dataSet.getRowCnt();
 		$("#tblGridBody").html("");
 
-		if (dataSet.getRowCnt() > 0) {
-			for (var i=0; i<dataSet.getRowCnt(); i++) {
-				var space = "", iLength = 200;
-				var iLevel = parseInt(dataSet.getValue(i, "LEVEL")) - 1;
+		if (ds.getRowCnt() > 0) {
+			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
 
-				gridTr.setClassName("noBorderHor noStripe");
-
-				if (iLevel > 0) {
-					for (var j=0; j<iLevel; j++) {
-						space += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						iLength -= - 2;
-					}
-					space += "<i class=\"fa fa-comments\"></i>";
-				} else {
-					space += "<i class=\"fa fa-comment\"></i>";
-				}
-
 				var uiAnc = new UiAnchor();
-				uiAnc.setText(commonJs.abbreviate(dataSet.getValue(i, "ARTICLE_SUBJECT"), iLength)).setScript("getDetail('"+dataSet.getValue(i, "ARTICLE_ID")+"')");
-				gridTr.addChild(new UiGridTd().addClassName("Lt").addTextBeforeChild(space+"&nbsp;&nbsp;").addChild(uiAnc));
+				uiAnc.setText(ds.getValue(i, "ARTICLE_SUBJECT")).setScript("getDetail('"+ds.getValue(i, "ARTICLE_ID")+"')");
+				gridTr.addChild(new UiGridTd().addClassName("Lt").addChild(uiAnc));
 
 				var gridTd = new UiGridTd();
 				gridTd.addClassName("Ct");
-				if (dataSet.getValue(i, "FILE_CNT") > 0) {
+				if (ds.getValue(i, "FILE_CNT") > 0) {
 					var iconAttachFile = new UiIcon();
-					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+dataSet.getValue(i, "ARTICLE_ID")).setScript("getAttachedFile(this)");
+					iconAttachFile.setId("icnAttachedFile").setName("icnAttachedFile").addClassName("glyphicon-paperclip").addAttribute("articleId:"+ds.getValue(i, "ARTICLE_ID")).setScript("getAttachedFile(this)");
 					gridTd.addChild(iconAttachFile);
 				}
 				gridTr.addChild(gridTd);
 
-				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(dataSet.getValue(i, "WRITER_NAME")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.nvl(dataSet.getValue(i, "UPDATE_DATE"), dataSet.getValue(i, "INSERT_DATE"))));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(dataSet.getValue(i, "HIT_CNT"), "#,###")));
+				gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "WRITER_NAME")));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.nvl(ds.getValue(i, "UPDATE_DATE"), ds.getValue(i, "INSERT_DATE"))));
+				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "HIT_CNT"), "#,###")));
 
 				html += gridTr.toHtmlString();
 			}
@@ -109,9 +91,6 @@ $(function() {
 			attachTo:$("#divDataArea"),
 			pagingArea:$("#divPagingArea"),
 			isPageable:true,
-			isFilter:false,
-			filterColumn:[],
-			totalResultRows:result.totalResultRows,
 			script:"doSearch"
 		});
 
@@ -128,7 +107,7 @@ $(function() {
 
 	openPopup = function(param) {
 		var url = "", header = "";
-		var height = 510;
+		var width = 1080, height = 700;
 
 		if (param.mode == "Detail") {
 			url = "/bbs/0202/getDetail.do";
@@ -144,7 +123,7 @@ $(function() {
 			},
 			header:header,
 			blind:true,
-			width:800,
+			width:width,
 			height:height
 		};
 
