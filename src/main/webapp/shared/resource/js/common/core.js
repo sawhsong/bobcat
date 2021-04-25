@@ -1789,13 +1789,7 @@ var nony = {
 	_doPageLayout : function(options) {
 		if ($.nony.isEmpty(options)) {return;}
 
-		if ($.nony.isIn($("#hdnHeaderMenuId").val(), ["SYS", "BAU", "ADS", "RPU", "RPA", "M100", "M200", "M300"])) {
-			options[1].togglerLength_open = 40;
-			options[1].togglerLength_closed = 40;
-			options[1].spacing_open = 0,
-			options[1].spacing_closed = 0,
-			options[1].west__size = 250;
-		} else {
+		if ($.nony.isIn($("#hdnHeaderMenuId").val(), ["ABC"])) {
 			options[1].togglerLength_open = 0;
 			options[1].togglerLength_closed = 0;
 			options[1].spacing_open = 0,
@@ -1803,6 +1797,12 @@ var nony = {
 			options[1].west__size = 0;
 
 			$("#divBodyCenter").css("border-left", "0px solid #D1D1D1");
+		} else {
+			options[1].togglerLength_open = 40;
+			options[1].togglerLength_closed = 40;
+			options[1].spacing_open = 0,
+			options[1].spacing_closed = 0,
+			options[1].west__size = 250;
 		}
 
 		var defaultOuterLayoutOption = $("body").layout(options[0]);

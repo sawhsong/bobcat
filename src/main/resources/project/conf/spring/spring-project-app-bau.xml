@@ -2,4 +2,7 @@
     <!--Bau0202 - My Bank Accounts-->
     <bean class="${name.package.project}.app.bau.bau0202.Bau0202Action" id="bau0202Action" name="bau0202Action"/>
     <bean class="${name.package.project}.app.bau.bau0202.Bau0202BizImpl" id="bau0202Biz" name="bau0202Biz" parent="baseBiz"/>
+    <!--Bau0204 - Announcement-->
+    <bean class="${name.package.project}.app.bau.bau0204.Bau0204Action" id="bau0204Action" name="bau0204Action"/>
+    <bean class="${name.package.project}.app.bau.bau0204.Bau0204BizImpl" id="bau0204Biz" name="bau0204Biz" parent="baseBiz"/>
 </beans>

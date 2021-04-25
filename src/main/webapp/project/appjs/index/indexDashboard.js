@@ -54,11 +54,11 @@ $(function() {
 	};
 
 	goAnnouncement = () => {
-		goMenu("BBS", "Announcement", "#", "BBS0202", "Announcement", "/bbs/0202/getDefault.do");
+		goMenu("BAU", "Announcement", "#", "BAU0204", "Announcement", "/bau/0204/getDefault.do");
 	};
 
 	goBankStatementAllocation = () => {
-		goMenu("BSA", "Bank Statement Allocation", "#", "BSA0202", "Bank Statement Allocation", "/bsa/0202/getDefault.do");
+		goMenu("BSM", "Bank Statement Allocation", "#", "BSM0204", "Bank Statement Allocation", "/bsm/0204/getDefault.do");
 	};
 
 	goQuotation = () => {

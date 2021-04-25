@@ -8,5 +8,10 @@
             <result name="list" type="debugDispatcherResult">/project/app/bau/bau0202/Bau0202List.jsp</result>
             <result name="edit" type="debugDispatcherResult">/project/app/bau/bau0202/Bau0202EditPop.jsp</result>
         </action>
+        <!--Bau0204 - Announcement-->
+        <action class="project.app.bau.bau0204.Bau0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/bau/bau0204/Bau0204List.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/bau/bau0204/Bau0204DetailPop.jsp</result>
+        </action>
     </package>
 </struts>

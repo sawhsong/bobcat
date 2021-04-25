@@ -45,7 +45,16 @@ $(function() {
 	setActive = function() {
 		var activeMenuIndex = -1;
 
-		if (commonJs.isIn($("#hdnHeaderMenuId").val(), ["SYS", "BAU", "ADS", "RPU", "RPA"])) {
+		if (commonJs.isIn($("#hdnHeaderMenuId").val(), ["ABC"])) {
+			if (commonJs.isBlank($("#hdnLeftMenuId").val())) {
+				$(".leftMenuAccordionContents").find("li").each(function(index) {
+					if (index == 0) {
+						$(this).trigger("click");
+						return false;
+					}
+				});
+			}
+		} else {
 			$(".leftMenuAccordionGroup").each(function(i) {
 				$(this).find("li").each(function(j) {
 					if ($(this).hasClass("leftMenusSelected")) {
@@ -64,15 +73,6 @@ $(function() {
 					}
 				}
 			});
-		} else {
-			if (commonJs.isBlank($("#hdnLeftMenuId").val())) {
-				$(".leftMenuAccordionContents").find("li").each(function(index) {
-					if (index == 0) {
-						$(this).trigger("click");
-						return false;
-					}
-				});
-			}
 		}
 	};
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package extends="default" name="bsm" namespace="/bsm" strict-method-invocation="false">
+        <default-interceptor-ref name="ZebraDefaultStack"/>
+        <!--Bsm0202 - Bank Transaction-->
+        <action class="project.app.bsm.bsm0202.Bsm0202Action" method="{1}" name="0202/*">
+            <result name="list" type="debugDispatcherResult">/project/app/bsm/bsm0202/Bsm0202List.jsp</result>
+            <result name="upload" type="debugDispatcherResult">/project/app/bsm/bsm0202/Bsm0202UploadPop.jsp</result>
+            <result name="detail" type="debugDispatcherResult">/project/app/bsm/bsm0202/Bsm0202DetailPop.jsp</result>
+        </action>
+        <!--Bsm0204 - Bank Statement Allocation-->
+        <action class="project.app.bsm.bsm0204.Bsm0204Action" method="{1}" name="0204/*">
+            <result name="list" type="debugDispatcherResult">/project/app/bsm/bsm0204/Bsm0204List.jsp</result>
+            <result name="batch" type="debugDispatcherResult">/project/app/bsm/bsm0204/Bsm0204BatchApplicationPop.jsp</result>
+        </action>
+    </package>
+</struts>
