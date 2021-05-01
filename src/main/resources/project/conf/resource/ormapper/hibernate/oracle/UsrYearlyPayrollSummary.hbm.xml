@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_YEARLY_PAYROLL_SUMMARY - Yerarly payroll summary
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrYearlyPayrollSummary" table="USR_YEARLY_PAYROLL_SUMMARY" lazy="false">
+		<meta attribute="class-description" inherit="false">Yerarly payroll summary</meta>
+
+		<composite-id>
+			<key-property name="orgId" column="ORG_ID" type="java.lang.String" length="30"/>
+			<key-property name="payrollMonth" column="PAYROLL_MONTH" type="java.lang.String" length="10"/>
+		</composite-id>
+
+		<property name="grossPayAmt" column="GROSS_PAY_AMT" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="netPayAmt" column="NET_PAY_AMT" type="java.lang.Double"/>
+		<property name="numberOfEmployee" column="NUMBER_OF_EMPLOYEE" type="java.lang.Double"/>
+		<property name="superAmt" column="SUPER_AMT" type="java.lang.Double"/>
+		<property name="tax" column="TAX" type="java.lang.Double"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrYearlyPayrollSummary.selectAll">
+	<![CDATA[
+		SELECT ORG_ID,
+		       PAYROLL_MONTH,
+		       GROSS_PAY_AMT,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_PAY_AMT,
+		       NUMBER_OF_EMPLOYEE,
+		       SUPER_AMT,
+		       TAX,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_YEARLY_PAYROLL_SUMMARY
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrYearlyPayrollSummary.insert">
+	<![CDATA[
+		INSERT INTO USR_YEARLY_PAYROLL_SUMMARY (
+		       ORG_ID,
+		       PAYROLL_MONTH,
+		       GROSS_PAY_AMT,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_PAY_AMT,
+		       NUMBER_OF_EMPLOYEE,
+		       SUPER_AMT,
+		       TAX,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${ORG_ID},
+		       ${PAYROLL_MONTH},
+		       ${GROSS_PAY_AMT},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${NET_PAY_AMT},
+		       ${NUMBER_OF_EMPLOYEE},
+		       ${SUPER_AMT},
+		       ${TAX},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrYearlyPayrollSummary.update">
+	<![CDATA[
+		UPDATE USR_YEARLY_PAYROLL_SUMMARY
+		   SET GROSS_PAY_AMT = ${GROSS_PAY_AMT},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       NET_PAY_AMT = ${NET_PAY_AMT},
+		       NUMBER_OF_EMPLOYEE = ${NUMBER_OF_EMPLOYEE},
+		       SUPER_AMT = ${SUPER_AMT},
+		       TAX = ${TAX},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrYearlyPayrollSummary.updateColumns">
+	<![CDATA[
+		UPDATE USR_YEARLY_PAYROLL_SUMMARY
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrYearlyPayrollSummary.delete">
+	<![CDATA[
+		DELETE USR_YEARLY_PAYROLL_SUMMARY
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>
