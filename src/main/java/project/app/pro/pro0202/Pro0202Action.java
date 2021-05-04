@@ -27,23 +27,9 @@ public class Pro0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getEdit() throws Exception {
-		biz.getEdit(paramEntity);
-		return "edit";
-	}
-
 	public String doSave() throws Exception {
 		try {
 			biz.doSave(paramEntity);
-		} catch (Exception ex) {
-		}
-		setRequestAttribute("paramEntity", paramEntity);
-		return "ajaxResponse";
-	}
-
-	public String doDelete() throws Exception {
-		try {
-			biz.doDelete(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

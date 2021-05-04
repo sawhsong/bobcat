@@ -7,6 +7,7 @@ purge recyclebin;
 
 create table usr_yearly_payroll_summary (
     org_id                          varchar2(30)                                 not null,      -- Org UID
+    financial_year                  varchar2(5)                                  not null,      -- Financial year
     payroll_month                   varchar2(10)                                 not null,      -- Payroll month(YYYYMM)
     number_of_employee              number,                                                     -- Number of employee
     gross_pay_amt                   number,                                                     -- Gross payment
@@ -18,13 +19,14 @@ create table usr_yearly_payroll_summary (
     insert_date                     date                default sysdate,                        -- Insert Date
     update_user_id                  varchar2(30),                                               -- Update User UID
 
-    constraint pk_usr_yearly_payroll_summary primary key(org_id, payroll_month)
+    constraint pk_usr_yearly_payroll_summary primary key(org_id, financial_year, payroll_month)
     using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )
 pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_yearly_payroll_summary                                     is 'Yerarly payroll summary';
 comment on column usr_yearly_payroll_summary.org_id                              is 'Org UID';
+comment on column usr_yearly_payroll_summary.financial_year                      is 'Financial year';
 comment on column usr_yearly_payroll_summary.payroll_month                       is 'Payroll month(YYYYMM)';
 comment on column usr_yearly_payroll_summary.number_of_employee                  is 'Number of employee';
 comment on column usr_yearly_payroll_summary.gross_pay_amt                       is 'Gross payment';

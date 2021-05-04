@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	String financialYear = (String)session.getAttribute("DefaultPeriodYear");
 %>
 <%/************************************************************************************************
 * HTML
@@ -24,6 +25,12 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+.panel-title {font-size:11px;font-weight:bold;}
+.tdTotal {padding:6px 4px;}
+
+#tblGrid button.bootstrapSelect.dropdown-toggle {padding:3px 20px 2px 4px;}
+#tblGrid td {padding:2px 4px;}
+#tblGrid .txtEn, #tblGrid .txtDpl, #tblGrid .txtDis {padding:4px 4px;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -46,27 +53,9 @@
 <div id="divTabArea"></div>
 <div id="divButtonArea" class="areaContainer">
 	<div id="divButtonAreaLeft"></div>
-	<div id="divButtonAreaRight">
-		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
-			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
-		</ui:buttonGroup>
-	</div>
+	<div id="divButtonAreaRight"></div>
 </div>
-<div id="divSearchCriteriaArea" class="areaContainer">
-	<table class="tblSearch">
-		<caption><mc:msg key="page.com.searchCriteria"/></caption>
-		<colgroup>
-			<col width="10%"/>
-			<col width="*"/>
-		</colgroup>
-		<tr>
-			<th class="thSearch rt"></th>
-			<td class="tdSearch"></td>
-		</tr>
-	</table>
-</div>
+<div id="divSearchCriteriaArea"></div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
@@ -78,31 +67,83 @@
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
 <div id="divDataArea" class="areaContainer">
-	<div id="divPayrollSummary" style="float:left;width:50%;">
-		<table id="tblPayrollSummary" class="tblGrid sort autosort">
-			<colgroup>
-				<col width="3%"/>
-				<col width="34%"/>
-				<col width="*"/>
-			</colgroup>
-			<thead>
-				<tr>
-					<th class="thGrid"><i id="icnCheckSourceData" class="fa fa-check-square-o fa-lg icnEn"></i></th>
-					<th class="thGrid sortable:alphanumeric">Table Name</th>
-					<th class="thGrid">Table Description</th>
-				</tr>
-			</thead>
-			<tbody id="tblSourceDataBody">
-				<tr>
-					<td class="tdGrid Ct" colspan="3"><mc:msg key="I002"/></td>
-				</tr>
-			</tbody>
-		</table>
-		<div id="divSourceDataPagingArea"></div>
+	<div id="divPayrollSummary" class="panel panel-default" style="float:left;width:69%;">
+		<div class="panel-heading"><h3 class="panel-title">Payroll Summary</h3></div>
+		<div class="panel-body">
+			<div class="divButtonArea">
+				<div class="divButtonAreaRight">
+					<ui:buttonGroup id="buttonGroup">
+						<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+						<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+					</ui:buttonGroup>
+				</div>
+			</div>
+			<div class="verGap4"></div>
+			<div class="divSearchCriteriaArea">
+				<table class="tblSearch">
+					<caption><mc:msg key="page.com.searchCriteria"/></caption>
+					<colgroup>
+						<col width="10%"/>
+						<col width="*"/>
+					</colgroup>
+					<tr>
+						<th class="thSearch rt">Financial Year</th>
+						<td class="tdSearch"><ui:deSelect name="financialYear" codeType="FinancialYear" selectedValue="<%=financialYear%>" caption="==Select=="/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="verGap4"></div>
+			<table id="tblGrid" class="tblGrid sort autosort">
+				<colgroup>
+					<col width="*"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+				</colgroup>
+				<thead>
+					<tr>
+						<th class="thGrid">Month</th>
+						<th class="thGrid">No. of Employee</th>
+						<th class="thGrid">Gross Payment</th>
+						<th class="thGrid">Tax</th>
+						<th class="thGrid">Net Payment</th>
+						<th class="thGrid">Superannuation</th>
+						<th class="thGrid">Updated Date</th>
+					</tr>
+				</thead>
+				<tbody id="tblGridBody">
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<div id="divPayrollLink" style="float:right;width:49%;">
+	<div class="panel panel-default" style="float:right;width:30%;">
+		<div class="panel-heading"><h3 class="panel-title">Payroll Service Link</h3></div>
+		<div class="panel-body">
+			<table class="tblDefault withPadding">
+				<colgroup>
+					<col width="40%"/>
+					<col width="*"/>
+				</colgroup>
+				<tr>
+					<td class="tdDefault Ct" style="height:100px;"><a href="https://app.payroller.com.au" target="_blank"><ui:img src="<mc:cp key=imgIcon/>/logoPayRoller.png" style="width:159px;height:33px;"/></a></td>
+					<td class="tdDefault" style="padding-left:20px;"><a href="https://app.payroller.com.au" target="_blank">https://app.payroller.com.au</a></td>
+				</tr>
+				<tr>
+					<td class="tdDefault Ct" style="height:100px;"><a href="https://login.myob.com/Account/Login" target="_blank"><ui:img src="<mc:cp key=imgIcon/>/logoMyob.png" style="width:109px;height:46px;"/></a></td>
+					<td class="tdDefault" style="padding-left:20px;"><a href="https://login.myob.com/Account/Login" target="_blank">https://www.myob.com/au</a></td>
+				</tr>
+				<tr>
+					<td class="tdDefault Ct" style="height:100px;"><a href="https://login.xero.com/identity/user/login/" target="_blank"><ui:img src="<mc:cp key=imgIcon/>/logoXero.png" style="width:67px;height:67px;"/></a></td>
+					<td class="tdDefault" style="padding-left:20px;"><a href="https://login.xero.com/identity/user/login/" target="_blank">https://www.xero.com/au</a></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
+<div id="divPagingArea"></div>
 <%/************************************************************************************************
 * Right & Footer
 ************************************************************************************************/%>

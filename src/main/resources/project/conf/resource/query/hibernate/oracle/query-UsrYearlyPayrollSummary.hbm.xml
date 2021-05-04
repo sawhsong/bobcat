@@ -5,4 +5,58 @@
  * - USR_YEARLY_PAYROLL_SUMMARY - Yerarly payroll summary
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrYearlyPayrollSummary.getDataSetBySearchCriteria">
+	<![CDATA[
+		select 'Det' as div,
+		       dmst.base_year,
+		       dmst.month_num,
+		       dmst.month_alpha,
+		       nvl(uyps.number_of_employee, 0) as number_of_employee,
+		       nvl(uyps.gross_pay_amt, 0) as gross_pay_amt,
+		       nvl(uyps.tax, 0) as tax,
+		       nvl(uyps.net_pay_amt, 0) as net_pay_amt,
+		       nvl(uyps.super_amt, 0) as super_amt,
+		       uyps.insert_user_id,
+		       uyps.insert_date as insert_date,
+		       uyps.update_date as update_date
+		  from ( select to_char(base_year) as base_year,
+		                to_char(add_months(to_date((base_year - 1)||'07', 'yyyymm'), level-1), 'yyyymm') as month_num,
+		                trim(to_char(add_months(to_date((base_year - 1)||'07', 'yyyymm'), level-1), 'Month')) as month_alpha
+		           from (select '${financialYear}' as base_year
+		                   from dual
+		                )
+		        connect by level <= 12
+		       ) dmst,
+		       usr_yearly_payroll_summary uyps
+		 where 1 = 1
+		   and uyps.org_id(+) = '${orgId}'
+		   and dmst.month_num = uyps.payroll_month(+)
+		union
+		select 'Total' as div,
+		       dmst.base_year,
+		       dmst.base_year as month_num,
+		       'Total' as month_alpha,
+		       sum(nvl(uyps.number_of_employee, 0)) as number_of_employee,
+		       sum(nvl(uyps.gross_pay_amt, 0)) as gross_pay_amt,
+		       sum(nvl(uyps.tax, 0)) as tax,
+		       sum(nvl(uyps.net_pay_amt, 0)) as net_pay_amt,
+		       sum(nvl(uyps.super_amt, 0)) as super_amt,
+		       '' as insert_user_id,
+		       max(uyps.insert_date) as insert_date,
+		       max(uyps.update_date) as update_date
+		  from ( select to_char(base_year) as base_year,
+		                to_char(add_months(to_date((base_year - 1)||'07', 'yyyymm'), level-1), 'yyyymm') as month_num,
+		                trim(to_char(add_months(to_date((base_year - 1)||'07', 'yyyymm'), level-1), 'Month')) as month_alpha
+		           from (select '${financialYear}' as base_year
+		                   from dual
+		                )
+		        connect by level <= 12
+		       ) dmst,
+		       usr_yearly_payroll_summary uyps
+		 where 1 = 1
+		   and uyps.org_id(+) = '${orgId}'
+		   and dmst.month_num = uyps.payroll_month(+)
+		 group by dmst.base_year
+	]]>
+	</sql-query>
 </hibernate-mapping>

@@ -9,6 +9,7 @@
 		<meta attribute="class-description" inherit="false">Yerarly payroll summary</meta>
 
 		<composite-id>
+			<key-property name="financialYear" column="FINANCIAL_YEAR" type="java.lang.String" length="5"/>
 			<key-property name="orgId" column="ORG_ID" type="java.lang.String" length="30"/>
 			<key-property name="payrollMonth" column="PAYROLL_MONTH" type="java.lang.String" length="10"/>
 		</composite-id>
@@ -26,7 +27,8 @@
 
 	<sql-query name="usrYearlyPayrollSummary.selectAll">
 	<![CDATA[
-		SELECT ORG_ID,
+		SELECT FINANCIAL_YEAR,
+		       ORG_ID,
 		       PAYROLL_MONTH,
 		       GROSS_PAY_AMT,
 		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
@@ -49,6 +51,7 @@
 	<sql-query name="usrYearlyPayrollSummary.insert">
 	<![CDATA[
 		INSERT INTO USR_YEARLY_PAYROLL_SUMMARY (
+		       FINANCIAL_YEAR,
 		       ORG_ID,
 		       PAYROLL_MONTH,
 		       GROSS_PAY_AMT,
@@ -62,6 +65,7 @@
 		       UPDATE_USER_ID
 		       )
 		VALUES (
+		       ${FINANCIAL_YEAR},
 		       ${ORG_ID},
 		       ${PAYROLL_MONTH},
 		       ${GROSS_PAY_AMT},

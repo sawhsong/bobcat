@@ -17,6 +17,8 @@ public class UsrYearlyPayrollSummary extends BaseDto implements Serializable {
 	/**
 	 * Columns
 	 */
+	private String financialYear;
+	private String FINANCIAL_YEAR;
 	private String orgId;
 	private String ORG_ID;
 	private String payrollMonth;
@@ -66,7 +68,7 @@ public class UsrYearlyPayrollSummary extends BaseDto implements Serializable {
 
 		dataSet.addRow();
 		updateColumnsDataSet.addName(updateColumnsDataSetHeader);
-		setFrwVarPrimaryKey("ORG_ID,PAYROLL_MONTH");
+		setFrwVarPrimaryKey("FINANCIAL_YEAR,ORG_ID,PAYROLL_MONTH");
 		setFrwVarDateColumn("INSERT_DATE,UPDATE_DATE");
 		setFrwVarNumberColumn("GROSS_PAY_AMT,NET_PAY_AMT,NUMBER_OF_EMPLOYEE,SUPER_AMT,TAX");
 		setFrwVarClobColumn("");
@@ -78,6 +80,15 @@ public class UsrYearlyPayrollSummary extends BaseDto implements Serializable {
 	/**
 	 * Accessors
 	 */
+	public String getFinancialYear() {
+		return financialYear;
+	}
+
+	public void setFinancialYear(String financialYear) throws Exception {
+		this.financialYear = financialYear;
+		setValueFromAccessor("FINANCIAL_YEAR", financialYear);
+	}
+
 	public String getOrgId() {
 		return orgId;
 	}
@@ -322,6 +333,7 @@ public class UsrYearlyPayrollSummary extends BaseDto implements Serializable {
 	public String toString() {
 		String str = "";
 
+		str += "financialYear : "+financialYear+"\n";
 		str += "orgId : "+orgId+"\n";
 		str += "payrollMonth : "+payrollMonth+"\n";
 		str += "grossPayAmt : "+grossPayAmt+"\n";
@@ -345,6 +357,7 @@ public class UsrYearlyPayrollSummary extends BaseDto implements Serializable {
 	public String toXmlString() {
 		String str = "";
 
+		str += "<column name=\"financialYear\" value=\""+financialYear+"\">";
 		str += "<column name=\"orgId\" value=\""+orgId+"\">";
 		str += "<column name=\"payrollMonth\" value=\""+payrollMonth+"\">";
 		str += "<column name=\"grossPayAmt\" value=\""+grossPayAmt+"\">";
@@ -368,6 +381,7 @@ public class UsrYearlyPayrollSummary extends BaseDto implements Serializable {
 	public String toJsonString() {
 		String str = "";
 
+		str += "\"financialYear\":\""+financialYear+"\", ";
 		str += "\"orgId\":\""+orgId+"\", ";
 		str += "\"payrollMonth\":\""+payrollMonth+"\", ";
 		str += "\"grossPayAmt\":\""+grossPayAmt+"\", ";

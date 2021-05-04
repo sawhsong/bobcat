@@ -124,6 +124,8 @@ var commonJs = {
 	/*!
 	 * UI Elements
 	 */
+	getUiTextbox : function(params) {return uiElements.getUiTextbox(params);},
+	getUiHidden : function(params) {return uiElements.getUiHidden(params);},
 	getUiRadio : function(params) {return uiElements.getUiRadio(params);},
 	getUiSelectOption : function(params) {return uiElements.getUiSelectOption(params);},
 	getUiSelectOptionWithCommonCode : function(params) {return uiElements.getUiSelectOptionWithCommonCode(params);},

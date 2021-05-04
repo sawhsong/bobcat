@@ -51,6 +51,10 @@ public class LoginAction extends BaseAction {
 				session.setAttribute("SysUser", sysUser);
 				session.setAttribute("SysOrg", sysOrg);
 				session.setAttribute("OrgLegalName", sysOrg.getLegalName());
+				session.setAttribute("DefaultPeriodYear", paramEntity.getObject("defaultPeriodYear"));
+				session.setAttribute("DefaultFinancialYear", paramEntity.getObject("defaultFinancialYear"));
+				session.setAttribute("DefaultQuarterCode", paramEntity.getObject("defaultQuarterCode"));
+				session.setAttribute("DefaultQuarterName", paramEntity.getObject("defaultQuarterName"));
 				session.setAttribute("AuthenticationKey", (String)paramEntity.getObject("authenticationKey"));
 
 				paramEntity.setAjaxResponseDataSet(sysUser.getDataSet());

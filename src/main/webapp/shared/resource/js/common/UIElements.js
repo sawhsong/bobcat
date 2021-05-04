@@ -4,6 +4,113 @@
 * 	- Same as taglib
 */
 var uiElements = {
+	getUiHidden : (params) => {
+		/*
+		 * id
+		 * name
+		 * className
+		 * value
+		 * style
+		 * checkName
+		 * attribute
+		 */
+		var html = "", attrStr = "", attrs = new Array(), attr = new Array();
+
+		if ($.nony.isNotBlank(params.attribute)) {
+			attrs = params.attribute.split(";");
+			for (var i=0; i<attrs.length; i++) {
+				attr = attrs[i].split(":");
+				attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+			}
+		}
+
+		html += "<input type=\"hidden\"";
+		html += " id=\""+$.nony.nvl(params.id, params.name)+"\"";
+		html += " name=\""+params.name+"\"";
+
+		if ($.nony.isNotBlank(params.className)) {html += " class=\""+params.className+"\"";}
+		if ($.nony.isNotBlank(params.value)) {html += " value=\""+params.value+"\"";}
+		if ($.nony.isNotBlank(params.style)) {html += " style=\""+params.style+"\"";}
+		if ($.nony.isNotBlank(params.checkName)) {html += " checkName=\""+params.checkName+"\"";}
+		if ($.nony.isNotBlank(attrStr)) {html += " "+attrStr+"";}
+
+		html += "/>";
+
+		return html;
+	},
+	getUiTextbox : (params) => {
+		/*
+		 * id
+		 * name
+		 * className
+		 * value
+		 * style
+		 * script
+		 * title
+		 * placeHolder
+		 * checkName
+		 * maxlength
+		 * minlength
+		 * checkFlag
+		 * option
+		 * options
+		 * attribute
+		 * status
+		 */
+		var html = "", className = ""; classNamePrefix = "", scriptStr = "", attrStr = "", options = "";
+		var scripts = new Array(), eventFunc = new Array(), attrs = new Array(), attr = new Array();
+
+		if ($.nony.containsIgnoreCase(params.status, "disabled")) {
+			options += ($.nony.isBlank(params.options)) ? "readonly" : " readonly";
+			classNamePrefix = "txtDis";
+		} else if ($.nony.containsIgnoreCase(params.status, "display")) {
+			options += ($.nony.isBlank(params.options)) ? "readonly" : " readonly";
+			classNamePrefix = "txtDpl";
+		} else if ($.nony.containsIgnoreCase(params.status, "spinner")) {
+			classNamePrefix = "txtSpinner";
+		} else {
+			classNamePrefix = "txtEn";
+		}
+		className = ($.nony.isBlank(params.className)) ? classNamePrefix : classNamePrefix+" "+params.className;
+
+		if ($.nony.isNotBlank(params.script)) {
+			scripts = params.script.split(";");
+			for (var i=0; i<scripts.length; i++) {
+				eventFunc = scripts[i].split(":");
+				scriptStr += " "+eventFunc[0]+"=\""+eventFunc[1]+"\"";
+			}
+		}
+
+		if ($.nony.isNotBlank(params.attribute)) {
+			attrs = params.attribute.split(";");
+			for (var i=0; i<attrs.length; i++) {
+				attr = attrs[i].split(":");
+				attrStr += " "+attr[0]+"=\""+attr[1]+"\"";
+			}
+		}
+
+		html += "<input type=\"text\"";
+		html += " id=\""+$.nony.nvl(params.id, params.name)+"\"";
+		html += " name=\""+params.name+"\"";
+
+		if ($.nony.isNotBlank(className)) {html += " class=\""+className+"\"";}
+		if ($.nony.isNotBlank(params.value)) {html += " value=\""+params.value+"\"";}
+		if ($.nony.isNotBlank(params.style)) {html += " style=\""+params.style+"\"";}
+		if ($.nony.isNotBlank(scriptStr)) {html += " "+scriptStr+"";}
+		if ($.nony.isNotBlank(params.title)) {html += " title=\""+params.title+"\"";}
+		if ($.nony.isNotBlank(params.placeHolder)) {html += " placeholder=\""+params.placeHolder+"\"";}
+		if ($.nony.isNotBlank(params.checkName)) {html += " checkName=\""+params.checkName+"\"";}
+		if ($.nony.isNotBlank(params.maxlength)) {html += " maxlength=\""+params.maxlength+"\"";}
+		if ($.nony.isNotBlank(params.minlength)) {html += " minlength=\""+params.minlength+"\"";}
+		if ($.nony.isNotBlank(params.checkFlag)) {html += " checkFlag=\""+params.checkFlag+"\"";}
+		if ($.nony.isNotBlank(params.option)) {html += " option=\""+params.option+"\"";}
+		if ($.nony.isNotBlank(attrStr)) {html += " "+attrStr+"";}
+		if ($.nony.isNotBlank(params.options)) {html += " "+params.options;}
+
+		html += "/>";
+
+		return html;
+	},
 	getUiRadio : function(params) {
 		/*
 		 * name

@@ -13,8 +13,10 @@ import de.taimos.totp.TOTP;
 import project.common.extend.BaseBiz;
 import project.common.module.commoncode.CommonCodeManager;
 import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.SysFinancialPeriod.SysFinancialPeriodDao;
 import project.conf.resource.ormapper.dao.SysOrg.SysOrgDao;
 import project.conf.resource.ormapper.dao.SysUser.SysUserDao;
+import project.conf.resource.ormapper.dto.oracle.SysFinancialPeriod;
 import project.conf.resource.ormapper.dto.oracle.SysOrg;
 import project.conf.resource.ormapper.dto.oracle.SysUser;
 import zebra.config.MemoryBean;
@@ -31,6 +33,8 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	private SysUserDao sysUserDao;
 	@Autowired
 	private SysOrgDao sysOrgDao;
+	@Autowired
+	private SysFinancialPeriodDao sysFinancialPeriodDao;
 	@Autowired
 	private LoginMessageSender loginMessageSender;
 
@@ -147,6 +151,7 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 	public ParamEntity exeLogin(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		SysUser sysUser = new SysUser();
+		SysFinancialPeriod sysFinancialPeriod = new SysFinancialPeriod();
 		String loginId = requestDataSet.getValue("loginId");
 		String password = requestDataSet.getValue("password");
 		String loginAuthEmailKey = ConfigUtil.getProperty("login.auth.emailKey");
@@ -174,8 +179,14 @@ public class LoginBizImpl extends BaseBiz implements LoginBiz {
 				loginMessageSender.sendAuthKey(sysUser, email, authKey);
 			}
 
+			sysFinancialPeriod = sysFinancialPeriodDao.getCurrentFinancialPeriod();
+
 			paramEntity.setObject("sysUser", sysUser);
 			paramEntity.setObject("sysOrg", sysOrgDao.getOrgByOrgId(sysUser.getOrgId()));
+			paramEntity.setObject("defaultPeriodYear", sysFinancialPeriod.getPeriodYear());
+			paramEntity.setObject("defaultFinancialYear", sysFinancialPeriod.getFinancialYear());
+			paramEntity.setObject("defaultQuarterCode", sysFinancialPeriod.getQuarterCode());
+			paramEntity.setObject("defaultQuarterName", sysFinancialPeriod.getQuarterName());
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I903", getMessage("I903", paramEntity));
