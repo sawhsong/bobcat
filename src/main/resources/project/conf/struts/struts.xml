@@ -11,4 +11,5 @@
     <include file="project/conf/struts/struts-project-app-rpu.xml"/>
     <include file="project/conf/struts/struts-project-app-rpa.xml"/>
     <include file="project/conf/struts/struts-project-app-pro.xml"/>
+    <include file="project/conf/struts/struts-project-app-cce.xml"/>
 </struts>

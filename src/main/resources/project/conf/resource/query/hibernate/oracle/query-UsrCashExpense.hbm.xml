@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Query hbm Source
+ * - USR_CASH_EXPENSE - Cash expenses
+ */-->
+<hibernate-mapping>
+	<sql-query name="query.UsrCashExpense.getDataSetBySearchCriteria">
+	<![CDATA[
+		select uce.*,
+		       to_char(uce.proc_date, '${dateFormat}') as proc_date_format,
+		       (select category_name from sys_recon_category where category_id = uce.sub_category) as category_meaning,
+		       to_char(uce.insert_date, '${dateFormat}') as insert_date_format,
+		       to_char(uce.update_date, '${dateFormat}') as update_date_format
+		  from usr_cash_expense uce,
+		       (select min(date_from) as date_from,
+		               max(date_to) as date_to
+		          from sys_financial_period
+		         where 1 = 1
+		         ${auto_fill}
+		       ) sfp
+		 where uce.user_id = '${userId}'
+		   and trunc(uce.proc_date) between trunc(date_from) and trunc(date_to)
+		 ${where_clause}
+		 ${order_by_clause}
+	]]>
+	</sql-query>
+</hibernate-mapping>

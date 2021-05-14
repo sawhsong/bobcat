@@ -1,6 +1,6 @@
 /**
  * Table Name  : USR_BS_TRAN_ALLOC
- * Description : Bank statement transaction allocation - transaction reconcilisation
+ * Description : Bank statement transaction allocation - transaction reconciliation
  */
 drop table usr_bs_tran_alloc cascade constraints;
 purge recyclebin;
@@ -34,7 +34,7 @@ create table usr_bs_tran_alloc (
 )
 pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
-comment on table  usr_bs_tran_alloc                                              is 'Bank statement transaction allocation - transaction reconcilisation';
+comment on table  usr_bs_tran_alloc                                              is 'Bank statement transaction allocation - transaction reconciliation';
 comment on column usr_bs_tran_alloc.bs_tran_alloc_id                             is 'Bank statement transaction allocation UID (PK)';
 comment on column usr_bs_tran_alloc.bank_statement_d_id                          is 'Bank statement detail ID';
 comment on column usr_bs_tran_alloc.bank_statement_id                            is 'Bank statement master ID';

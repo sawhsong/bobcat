@@ -130,6 +130,7 @@ var commonJs = {
 	getUiSelectOption : function(params) {return uiElements.getUiSelectOption(params);},
 	getUiSelectOptionWithCommonCode : function(params) {return uiElements.getUiSelectOptionWithCommonCode(params);},
 	getUiImage : function(params) {return uiElements.getUiImage(params);},
+	getUiIcon : function(params) {return uiElements.getUiIcon(params);},
 	/*!
 	 * controlling file elements
 	 */

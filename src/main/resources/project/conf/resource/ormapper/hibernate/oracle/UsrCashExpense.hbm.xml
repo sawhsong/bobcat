@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_CASH_EXPENSE - Cash expenses
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrCashExpense" table="USR_CASH_EXPENSE" lazy="false">
+		<meta attribute="class-description" inherit="false">Cash expenses</meta>
+
+		<id name="cashExpenseId" column="CASH_EXPENSE_ID" type="java.lang.String" length="30"></id>
+
+		<property name="mainCategory" column="MAIN_CATEGORY" not-null="true" type="java.lang.String" length="30"/>
+		<property name="procDate" column="PROC_DATE" not-null="true" type="java.util.Date"/>
+		<property name="subCategory" column="SUB_CATEGORY" not-null="true" type="java.lang.String" length="30"/>
+		<property name="userId" column="USER_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="gstAmt" column="GST_AMT" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="netAmt" column="NET_AMT" type="java.lang.Double"/>
+		<property name="procAmt" column="PROC_AMT" type="java.lang.Double"/>
+		<property name="procDescription" column="PROC_DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrCashExpense.selectAll">
+	<![CDATA[
+		SELECT CASH_EXPENSE_ID,
+		       MAIN_CATEGORY,
+		       TO_CHAR(PROC_DATE, 'yyyymmddhh24miss') AS PROC_DATE,
+		       SUB_CATEGORY,
+		       USER_ID,
+		       GST_AMT,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       PROC_AMT,
+		       PROC_DESCRIPTION,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_CASH_EXPENSE
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCashExpense.insert">
+	<![CDATA[
+		INSERT INTO USR_CASH_EXPENSE (
+		       CASH_EXPENSE_ID,
+		       MAIN_CATEGORY,
+		       PROC_DATE,
+		       SUB_CATEGORY,
+		       USER_ID,
+		       GST_AMT,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       NET_AMT,
+		       PROC_AMT,
+		       PROC_DESCRIPTION,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${CASH_EXPENSE_ID},
+		       ${MAIN_CATEGORY},
+		       ${PROC_DATE},
+		       ${SUB_CATEGORY},
+		       ${USER_ID},
+		       ${GST_AMT},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${NET_AMT},
+		       ${PROC_AMT},
+		       ${PROC_DESCRIPTION},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCashExpense.update">
+	<![CDATA[
+		UPDATE USR_CASH_EXPENSE
+		   SET MAIN_CATEGORY = ${MAIN_CATEGORY},
+		       PROC_DATE = ${PROC_DATE},
+		       SUB_CATEGORY = ${SUB_CATEGORY},
+		       USER_ID = ${USER_ID},
+		       GST_AMT = ${GST_AMT},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       NET_AMT = ${NET_AMT},
+		       PROC_AMT = ${PROC_AMT},
+		       PROC_DESCRIPTION = ${PROC_DESCRIPTION},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCashExpense.updateColumns">
+	<![CDATA[
+		UPDATE USR_CASH_EXPENSE
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCashExpense.delete">
+	<![CDATA[
+		DELETE USR_CASH_EXPENSE
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

@@ -327,5 +327,53 @@ var uiElements = {
 		html += "/>";
 
 		return html;
+	},
+	getUiIcon : (params) => {
+		/*
+		 * id
+		 * title
+		 * className
+		 * style
+		 * attribute
+		 * script
+		 * status
+		 */
+
+		var html = "", attrString = "", classNamePrefix = "", className = "", attrs = new Array(), attr = new Array();
+
+		if ($.nony.containsIgnoreCase(params.status, "display")) {
+		} else if ($.nony.containsIgnoreCase(params.status, "disabled")) {
+			classNamePrefix = "icnDis";
+		} else {
+			classNamePrefix = "icnEn";
+		}
+
+		if ($.nony.containsIgnoreCase(params.className, "fa-")) {
+			classNamePrefix += " fa";
+		} else if ($.nony.containsIgnoreCase(params.className, "glyphicon-")) {
+			classNamePrefix += " glyphicon";
+		}
+		className = ($.nony.isBlank(params.className)) ? classNamePrefix : classNamePrefix+" "+params.className;
+
+		if ($.nony.isNotBlank(params.attribute)) {
+			attrs = params.attribute.split(";");
+			for (var i=0; i<attrs.length; i++) {
+				attr = attrs[i].split(":");
+				attrString += " "+attr[0]+"=\""+attr[1]+"\"";
+			}
+		}
+
+		html += "<i";
+
+		if ($.nony.isNotBlank(params.id)) {html += " id=\""+params.id+"\"";}
+		if ($.nony.isNotBlank(params.title)) {html += " id=\""+params.title+"\"";}
+		if ($.nony.isNotBlank(className)) {html += " class=\""+className+"\"";}
+		if ($.nony.isNotBlank(params.style)) {html += " style=\""+params.style+"\"";}
+		if ($.nony.isNotBlank(params.script)) {html += " onclick=\""+params.script+"\"";}
+		if ($.nony.isNotBlank(attrString)) {html += " "+attrString+"";}
+
+		html += "></i>";
+
+		return html;
 	}
 };
