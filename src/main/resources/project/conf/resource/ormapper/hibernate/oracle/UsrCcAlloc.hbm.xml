@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_CC_ALLOC - Credit card statement transaction allocation - transaction reconciliation
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrCcAlloc" table="USR_CC_ALLOC" lazy="false">
+		<meta attribute="class-description" inherit="false">Credit card statement transaction allocation - transaction reconciliation</meta>
+
+		<id name="ccAllocId" column="CC_ALLOC_ID" type="java.lang.String" length="30"></id>
+
+		<property name="bankAccntId" column="BANK_ACCNT_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="ccStatementDId" column="CC_STATEMENT_D_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="ccStatementId" column="CC_STATEMENT_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="procAmt" column="PROC_AMT" not-null="true" type="java.lang.Double"/>
+		<property name="procDate" column="PROC_DATE" not-null="true" type="java.util.Date"/>
+		<property name="rowIndex" column="ROW_INDEX" not-null="true" type="java.lang.Double"/>
+		<property name="userId" column="USER_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="balance" column="BALANCE" type="java.lang.Double"/>
+		<property name="gstAmt" column="GST_AMT" type="java.lang.Double"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="mainCategory" column="MAIN_CATEGORY" type="java.lang.String" length="30"/>
+		<property name="netAmt" column="NET_AMT" type="java.lang.Double"/>
+		<property name="procDescription" column="PROC_DESCRIPTION" type="java.lang.String" length="1000"/>
+		<property name="sourceId" column="SOURCE_ID" type="java.lang.String" length="30"/>
+		<property name="sourceType" column="SOURCE_TYPE" type="java.lang.String" length="30"/>
+		<property name="status" column="STATUS" type="java.lang.String" length="30"/>
+		<property name="subCategory" column="SUB_CATEGORY" type="java.lang.String" length="30"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+		<property name="userDescription" column="USER_DESCRIPTION" type="java.lang.String" length="500"/>
+	</class>
+
+	<sql-query name="usrCcAlloc.selectAll">
+	<![CDATA[
+		SELECT CC_ALLOC_ID,
+		       BANK_ACCNT_ID,
+		       CC_STATEMENT_D_ID,
+		       CC_STATEMENT_ID,
+		       PROC_AMT,
+		       TO_CHAR(PROC_DATE, 'yyyymmddhh24miss') AS PROC_DATE,
+		       ROW_INDEX,
+		       USER_ID,
+		       BALANCE,
+		       GST_AMT,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       MAIN_CATEGORY,
+		       NET_AMT,
+		       PROC_DESCRIPTION,
+		       SOURCE_ID,
+		       SOURCE_TYPE,
+		       STATUS,
+		       SUB_CATEGORY,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID,
+		       USER_DESCRIPTION
+		  FROM USR_CC_ALLOC
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcAlloc.insert">
+	<![CDATA[
+		INSERT INTO USR_CC_ALLOC (
+		       CC_ALLOC_ID,
+		       BANK_ACCNT_ID,
+		       CC_STATEMENT_D_ID,
+		       CC_STATEMENT_ID,
+		       PROC_AMT,
+		       PROC_DATE,
+		       ROW_INDEX,
+		       USER_ID,
+		       BALANCE,
+		       GST_AMT,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       MAIN_CATEGORY,
+		       NET_AMT,
+		       PROC_DESCRIPTION,
+		       SOURCE_ID,
+		       SOURCE_TYPE,
+		       STATUS,
+		       SUB_CATEGORY,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID,
+		       USER_DESCRIPTION
+		       )
+		VALUES (
+		       ${CC_ALLOC_ID},
+		       ${BANK_ACCNT_ID},
+		       ${CC_STATEMENT_D_ID},
+		       ${CC_STATEMENT_ID},
+		       ${PROC_AMT},
+		       ${PROC_DATE},
+		       ${ROW_INDEX},
+		       ${USER_ID},
+		       ${BALANCE},
+		       ${GST_AMT},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${MAIN_CATEGORY},
+		       ${NET_AMT},
+		       ${PROC_DESCRIPTION},
+		       ${SOURCE_ID},
+		       ${SOURCE_TYPE},
+		       ${STATUS},
+		       ${SUB_CATEGORY},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID},
+		       ${USER_DESCRIPTION}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcAlloc.update">
+	<![CDATA[
+		UPDATE USR_CC_ALLOC
+		   SET BANK_ACCNT_ID = ${BANK_ACCNT_ID},
+		       CC_STATEMENT_D_ID = ${CC_STATEMENT_D_ID},
+		       CC_STATEMENT_ID = ${CC_STATEMENT_ID},
+		       PROC_AMT = ${PROC_AMT},
+		       PROC_DATE = ${PROC_DATE},
+		       ROW_INDEX = ${ROW_INDEX},
+		       USER_ID = ${USER_ID},
+		       BALANCE = ${BALANCE},
+		       GST_AMT = ${GST_AMT},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       MAIN_CATEGORY = ${MAIN_CATEGORY},
+		       NET_AMT = ${NET_AMT},
+		       PROC_DESCRIPTION = ${PROC_DESCRIPTION},
+		       SOURCE_ID = ${SOURCE_ID},
+		       SOURCE_TYPE = ${SOURCE_TYPE},
+		       STATUS = ${STATUS},
+		       SUB_CATEGORY = ${SUB_CATEGORY},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID},
+		       USER_DESCRIPTION = ${USER_DESCRIPTION}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcAlloc.updateColumns">
+	<![CDATA[
+		UPDATE USR_CC_ALLOC
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcAlloc.delete">
+	<![CDATA[
+		DELETE USR_CC_ALLOC
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

@@ -2,4 +2,10 @@
     <!--Cce0208 - Cash Expenses-->
     <bean class="${name.package.project}.app.cce.cce0208.Cce0208Action" id="cce0208Action" name="cce0208Action"/>
     <bean class="${name.package.project}.app.cce.cce0208.Cce0208BizImpl" id="cce0208Biz" name="cce0208Biz" parent="baseBiz"/>
+    <!--Cce0202 - Credit Card Statement Upload-->
+    <bean class="${name.package.project}.app.cce.cce0202.Cce0202Action" id="cce0202Action" name="cce0202Action"/>
+    <bean class="${name.package.project}.app.cce.cce0202.Cce0202BizImpl" id="cce0202Biz" name="cce0202Biz" parent="baseBiz"/>
+    <!--Cce0204 - Credit Card Statement Allocation-->
+    <bean class="${name.package.project}.app.cce.cce0204.Cce0204Action" id="cce0204Action" name="cce0204Action"/>
+    <bean class="${name.package.project}.app.cce.cce0204.Cce0204BizImpl" id="cce0204Biz" name="cce0204Biz" parent="baseBiz"/>
 </beans>

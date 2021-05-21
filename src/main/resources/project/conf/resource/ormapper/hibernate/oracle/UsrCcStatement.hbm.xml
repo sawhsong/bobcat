@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--/*
+ * Framework Generated Hibernate Config hbm Source
+ * - USR_CC_STATEMENT - Credit card statement master info which is uploaded by user
+ */-->
+<hibernate-mapping>
+	<class name="project.conf.resource.ormapper.dto.oracle.UsrCcStatement" table="USR_CC_STATEMENT" lazy="false">
+		<meta attribute="class-description" inherit="false">Credit card statement master info which is uploaded by user</meta>
+
+		<id name="ccStatementId" column="CC_STATEMENT_ID" type="java.lang.String" length="30"></id>
+
+		<property name="bankAccntId" column="BANK_ACCNT_ID" not-null="true" type="java.lang.String" length="30"/>
+		<property name="newName" column="NEW_NAME" not-null="true" type="java.lang.String" length="1000"/>
+		<property name="originalFileName" column="ORIGINAL_FILE_NAME" not-null="true" type="java.lang.String" length="500"/>
+		<property name="repositoryPath" column="REPOSITORY_PATH" not-null="true" type="java.lang.String" length="1000"/>
+		<property name="description" column="DESCRIPTION" type="java.lang.String" length="500"/>
+		<property name="fileIcon" column="FILE_ICON" type="java.lang.String" length="500"/>
+		<property name="fileSize" column="FILE_SIZE" type="java.lang.Double"/>
+		<property name="fileType" column="FILE_TYPE" type="java.lang.String" length="100"/>
+		<property name="insertDate" column="INSERT_DATE" type="java.util.Date"/>
+		<property name="insertUserId" column="INSERT_USER_ID" type="java.lang.String" length="30"/>
+		<property name="updateDate" column="UPDATE_DATE" type="java.util.Date"/>
+		<property name="updateUserId" column="UPDATE_USER_ID" type="java.lang.String" length="30"/>
+	</class>
+
+	<sql-query name="usrCcStatement.selectAll">
+	<![CDATA[
+		SELECT BANK_ACCNT_ID,
+		       CC_STATEMENT_ID,
+		       NEW_NAME,
+		       ORIGINAL_FILE_NAME,
+		       REPOSITORY_PATH,
+		       DESCRIPTION,
+		       FILE_ICON,
+		       FILE_SIZE,
+		       FILE_TYPE,
+		       TO_CHAR(INSERT_DATE, 'yyyymmddhh24miss') AS INSERT_DATE,
+		       INSERT_USER_ID,
+		       TO_CHAR(UPDATE_DATE, 'yyyymmddhh24miss') AS UPDATE_DATE,
+		       UPDATE_USER_ID
+		  FROM USR_CC_STATEMENT
+		 WHERE 1 = 1
+		 ${auto_fill}
+		 ${frameworkGeneratedWhere}
+		 ${frameworkGeneratedOrderBy}
+		 FOR UPDATE
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcStatement.insert">
+	<![CDATA[
+		INSERT INTO USR_CC_STATEMENT (
+		       BANK_ACCNT_ID,
+		       CC_STATEMENT_ID,
+		       NEW_NAME,
+		       ORIGINAL_FILE_NAME,
+		       REPOSITORY_PATH,
+		       DESCRIPTION,
+		       FILE_ICON,
+		       FILE_SIZE,
+		       FILE_TYPE,
+		       INSERT_DATE,
+		       INSERT_USER_ID,
+		       UPDATE_DATE,
+		       UPDATE_USER_ID
+		       )
+		VALUES (
+		       ${BANK_ACCNT_ID},
+		       ${CC_STATEMENT_ID},
+		       ${NEW_NAME},
+		       ${ORIGINAL_FILE_NAME},
+		       ${REPOSITORY_PATH},
+		       ${DESCRIPTION},
+		       ${FILE_ICON},
+		       ${FILE_SIZE},
+		       ${FILE_TYPE},
+		       ${INSERT_DATE},
+		       ${INSERT_USER_ID},
+		       ${UPDATE_DATE},
+		       ${UPDATE_USER_ID}
+		       )
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcStatement.update">
+	<![CDATA[
+		UPDATE USR_CC_STATEMENT
+		   SET BANK_ACCNT_ID = ${BANK_ACCNT_ID},
+		       NEW_NAME = ${NEW_NAME},
+		       ORIGINAL_FILE_NAME = ${ORIGINAL_FILE_NAME},
+		       REPOSITORY_PATH = ${REPOSITORY_PATH},
+		       DESCRIPTION = ${DESCRIPTION},
+		       FILE_ICON = ${FILE_ICON},
+		       FILE_SIZE = ${FILE_SIZE},
+		       FILE_TYPE = ${FILE_TYPE},
+		       INSERT_DATE = ${INSERT_DATE},
+		       INSERT_USER_ID = ${INSERT_USER_ID},
+		       UPDATE_DATE = ${UPDATE_DATE},
+		       UPDATE_USER_ID = ${UPDATE_USER_ID}
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcStatement.updateColumns">
+	<![CDATA[
+		UPDATE USR_CC_STATEMENT
+		   SET ${frameworkGeneratedColumnsToUpdate}
+		 WHERE 1 = 1
+		 ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+
+	<sql-query name="usrCcStatement.delete">
+	<![CDATA[
+		DELETE USR_CC_STATEMENT
+		 WHERE 1 = 1
+		   ${frameworkGeneratedWhere}
+	]]>
+	</sql-query>
+</hibernate-mapping>

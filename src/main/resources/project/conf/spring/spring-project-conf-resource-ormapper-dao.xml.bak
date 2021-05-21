@@ -41,4 +41,6 @@
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrQuotationD.UsrQuotationDHDaoImpl" id="usrQuotationDDao" init-method="init" name="usrQuotationDDao" parent="baseHDao" scope="prototype"/>
     <!--UsrYearlyPayrollSummary DAO-->
     <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrYearlyPayrollSummary.UsrYearlyPayrollSummaryHDaoImpl" id="usrYearlyPayrollSummaryDao" init-method="init" name="usrYearlyPayrollSummaryDao" parent="baseHDao" scope="prototype"/>
+    <!--UsrCashExpense DAO-->
+    <bean class="${name.package.project}.conf.resource.ormapper.dao.UsrCashExpense.UsrCashExpenseHDaoImpl" id="usrCashExpenseDao" init-method="init" name="usrCashExpenseDao" parent="baseHDao" scope="prototype"/>
 </beans>
