@@ -23,7 +23,7 @@ create table usr_cc_statement_d (
     update_user_id                  varchar2(30),                                               -- Update User UID
     update_date                     date,                                                       -- Update Date
 
-    constraint fk_11694491827400 foreign key(cc_statement_id) references usr_bank_statement(bank_statement_id),
+    constraint fk_11694491827400 foreign key(cc_statement_id) references usr_cc_statement(cc_statement_id),
     constraint pk_usr_cc_statement_d primary key(cc_statement_d_id)
     using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
 )

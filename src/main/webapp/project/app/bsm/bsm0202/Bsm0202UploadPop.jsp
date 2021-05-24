@@ -104,7 +104,7 @@
 			<th class="thInform rt">Balance</th>
 			<td class="tdInform" id="tdBalance"></td>
 			<th class="thInform rt">Description</th>
-			<td class="tdInform" colspan="3" id="tdDescription"></td>
+			<td class="tdInform" id="tdDescription"></td>
 		</tr>
 	</table>
 </div>

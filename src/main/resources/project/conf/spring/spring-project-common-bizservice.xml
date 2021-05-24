@@ -7,4 +7,7 @@
 
 	<!--/* Bank Statement File Upload Biz Service Module */-->
 	<bean id="bankStatementBS" name="bankStatementBS" class="${name.package.project}.common.module.bizservice.bankstatement.BankStatementBizServiceImpl" parent="baseBiz"/>
+
+	<!--/* Credit Card Statement File Upload Biz Service Module */-->
+	<bean id="ccStatementBS" name="ccStatementBS" class="${name.package.project}.common.module.bizservice.ccstatement.CcStatementBizServiceImpl" parent="baseBiz"/>
 </beans>

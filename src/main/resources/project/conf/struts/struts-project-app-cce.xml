@@ -11,8 +11,8 @@
         <!--Cce0202 - Credit Card Statement Upload-->
         <action class="project.app.cce.cce0202.Cce0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/cce/cce0202/Cce0202List.jsp</result>
+            <result name="upload" type="debugDispatcherResult">/project/app/cce/cce0202/Cce0202UploadPop.jsp</result>
             <result name="detail" type="debugDispatcherResult">/project/app/cce/cce0202/Cce0202DetailPop.jsp</result>
-            <result name="edit" type="debugDispatcherResult">/project/app/cce/cce0202/Cce0202EditPop.jsp</result>
         </action>
         <!--Cce0204 - Credit Card Statement Allocation-->
         <action class="project.app.cce.cce0204.Cce0204Action" method="{1}" name="0204/*">

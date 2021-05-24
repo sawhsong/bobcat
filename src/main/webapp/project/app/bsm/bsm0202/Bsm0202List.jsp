@@ -105,15 +105,15 @@
 			<col width="2%"/>
 			<col width="*"/>
 			<col width="4%"/>
-			<col width="7%"/>
+			<col width="8%"/>
 			<col width="12%"/>
 			<col width="22%"/>
 			<col width="4%"/>
-			<col width="4%"/>
 			<col width="5%"/>
 			<col width="5%"/>
-			<col width="7%"/>
-			<col width="8%"/>
+			<col width="5%"/>
+			<col width="6%"/>
+			<col width="6%"/>
 		</colgroup>
 		<thead>
 			<tr>
@@ -123,12 +123,12 @@
 				<th class="thGrid">Account Number</th>
 				<th class="thGrid">Account Name</th>
 				<th class="thGrid">File Name</th>
-				<th class="thGrid">File Rows</th>
-				<th class="thGrid">Download</th>
+				<th class="thGrid">Rows</th>
+				<th class="thGrid">File</th>
 				<th class="thGrid">Date From</th>
 				<th class="thGrid">Date To</th>
-				<th class="thGrid">Last Balance</th>
-				<th class="thGrid sortable:date">Last Update Date</th>
+				<th class="thGrid">Balance</th>
+				<th class="thGrid sortable:date">Update Date</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

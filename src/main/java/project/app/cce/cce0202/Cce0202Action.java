@@ -27,9 +27,68 @@ public class Cce0202Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String getEdit() throws Exception {
-		biz.getEdit(paramEntity);
-		return "edit";
+	public String getUpload() throws Exception {
+		biz.getUpload(paramEntity);
+		return "upload";
+	}
+
+	public String getBankAccountInfo() throws Exception {
+		try {
+			biz.getBankAccountInfo(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getFile() throws Exception {
+		try {
+			biz.getFile(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getDetail() throws Exception {
+		biz.getDetail(paramEntity);
+		return "detail";
+	}
+
+	public String getInfoDataForDetail() throws Exception {
+		try {
+			biz.getInfoDataForDetail(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getCcStatementDetail() throws Exception {
+		try {
+			biz.getCcStatementDetail(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String doUpload() throws Exception {
+		try {
+			biz.doUpload(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String discardCcStatement() throws Exception {
+		try {
+			biz.discardCcStatement(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String doSave() throws Exception {
@@ -48,11 +107,5 @@ public class Cce0202Action extends BaseAction {
 		}
 		setRequestAttribute("paramEntity", paramEntity);
 		return "ajaxResponse";
-	}
-
-	public String doExport() throws Exception {
-		biz.doExport(paramEntity);
-		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
 	}
 }

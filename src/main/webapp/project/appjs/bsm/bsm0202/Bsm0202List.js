@@ -111,7 +111,7 @@ $(function() {
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "MIN_PROC_DATE"), dateFormat)));
 				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "MAX_PROC_DATE"), dateFormat)));
 				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getNumberMask(ds.getValue(i, "LAST_BALANCE_AMT"), "#,##0.00")));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "LAST_UPDATE_DATE"), dateTimeFormat)));
+				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(ds.getValue(i, "LAST_UPDATE_DATE"), dateFormat)));
 
 				html += gridTr.toHtmlString();
 			}

@@ -5,4 +5,43 @@
  * - USR_CC_ALLOC - Credit card statement transaction allocation - transaction reconciliation
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrCcAlloc.getDataSetBySearchCriteria">
+	<![CDATA[
+		select cta.cc_alloc_id,
+		       cta.cc_statement_id,
+		       cta.cc_statement_d_id,
+		       cta.bank_accnt_id,
+		       cta.user_id,
+		       cta.proc_date,
+		       cta.proc_amt,
+		       case when nvl(cta.proc_amt, 0) < 0 then nvl(cta.proc_amt, 0) end as debit_amt,
+		       case when nvl(cta.proc_amt, 0) >= 0 then nvl(cta.proc_amt, 0) end as credit_amt,
+		       cta.proc_description,
+		       cta.balance,
+		       cta.user_description,
+		       cta.main_category,
+		       (select category_name from sys_recon_category where category_id = cta.main_category) as main_category_desc,
+		       cta.sub_category,
+		       (select category_name from sys_recon_category where category_id = cta.sub_category) as sub_category_desc,
+		       cta.gst_amt,
+		       cta.net_amt,
+		       cta.status,
+		       (select description_${langCode} from sys_common_code where code_type = 'CC_ALLOC_STATUS' and common_code = cta.status) as status_desc,
+		       cta.source_type,
+		       (select description_${langCode} from sys_common_code where code_type = 'CC_SOURCE_TYPE' and common_code = cta.source_type) as source_type_desc,
+		       cta.source_id,
+		       uba.bank_code,
+		       (select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = uba.bank_code) as bank_code_desc,
+		       uba.bsb,
+		       uba.accnt_number,
+		       uba.accnt_name,
+		       uba.balance as bank_accnt_balance
+		  from usr_cc_alloc cta,
+		       usr_bank_accnt uba
+		 where 1 = 1
+		   and cta.bank_accnt_id = uba.bank_accnt_id
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

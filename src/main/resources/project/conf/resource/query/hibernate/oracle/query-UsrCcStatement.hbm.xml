@@ -5,4 +5,55 @@
  * - USR_CC_STATEMENT - Credit card statement master info which is uploaded by user
  */-->
 <hibernate-mapping>
+	<sql-query name="query.UsrCcStatement.getDataSetBySearchCriteria">
+	<![CDATA[
+		select csm.cc_statement_id,
+		       csm.bank_accnt_id,
+		       csm.original_file_name,
+		       csm.new_name,
+		       csm.file_type,
+		       csm.file_icon,
+		       csm.file_size,
+		       csm.repository_path,
+		       csm.description as statement_file_description,
+		       nvl(csm.update_date, csm.insert_date) as last_update_date,
+		       csd.detail_cnt,
+		       csd.min_proc_date,
+		       csd.max_proc_date,
+		       csd.total_proc_amt,
+		       csd.last_balance_amt,
+		       bat.bank_code,
+		       bat.bank_name,
+		       bat.bsb,
+		       bat.accnt_number,
+		       bat.accnt_name,
+		       bat.balance,
+		       bat.description as bank_accnt_description
+		  from usr_cc_statement csm,
+		       (select cc_statement_id,
+		               detail_cnt,
+		               min_proc_date,
+		               max_proc_date,
+		               total_proc_amt,
+		               (select nvl(balance, 0) from usr_bank_statement_d where bank_statement_id = a.cc_statement_id and row_index = a.min_row_index) as last_balance_amt
+		          from (select cc_statement_id,
+		                       count(*) as detail_cnt,
+		                       trunc(min(proc_date)) as min_proc_date,
+		                       trunc(max(proc_date)) as max_proc_date,
+		                       nvl(sum(proc_amt), 0) as total_proc_amt,
+		                       min(row_index) as min_row_index
+		                  from usr_cc_statement_d
+		                 group by cc_statement_id
+		               ) a
+		       ) csd,
+		       (select a.*, (select description_${langCode} from sys_common_code where code_type = 'BANK_TYPE' and common_code = a.bank_code) as bank_name
+		          from usr_bank_accnt a
+		       ) bat
+		 where 1 = 1
+		   and csm.cc_statement_id = csd.cc_statement_id(+)
+		   and csm.bank_accnt_id = bat.bank_accnt_id
+		${auto_fill}
+		${order_by_clause}
+	]]>
+	</sql-query>
 </hibernate-mapping>

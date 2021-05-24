@@ -9,6 +9,7 @@
 <%
 	ParamEntity paramEntity = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet requestDataSet = (DataSet)paramEntity.getRequestDataSet();
+	DataSet bankAccnt = (DataSet)paramEntity.getObject("bankAccnt");
 %>
 <%/************************************************************************************************
 * HTML
@@ -48,9 +49,10 @@
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
-			<ui:button id="btnNew" caption="button.com.new" iconClass="fa-plus-square"/>
-			<ui:button id="btnEdit" caption="button.com.edit" iconClass="fa-edit"/>
+			<ui:button id="btnUpload" caption="Upload" iconClass="fa-upload"/>
+			<ui:button id="btnDelete" caption="button.com.delete" iconClass="fa-trash"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
+			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>
 		</ui:buttonGroup>
 	</div>
 </div>
@@ -58,12 +60,32 @@
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="10%"/>
+			<col width="7%"/>
+			<col width="25%"/>
+			<col width="7%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
-			<th class="thSearch rt"></th>
-			<td class="tdSearch"></td>
+			<th class="thSearch rt">Bank Account</th>
+			<td class="tdSearch">
+				<ui:select name="bankAccntId" hasCaption="true" attribute="data-width:100%">
+<%
+				for (int i=0; i<bankAccnt.getRowCnt(); i++) {
+%>
+					<option value="<%=bankAccnt.getValue(i, "BANK_ACCNT_ID")%>" bankCode="<%=bankAccnt.getValue(i, "BANK_CODE")%>"><%=bankAccnt.getValue(i, "DESCRIPTION")%></option>
+<%
+				}
+%>
+				</ui:select>
+			</td>
+			<th class="thSearch rt">Uploaded Date</th>
+			<td class="tdSearch">
+				<ui:text name="fromDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnFromDate" className="fa-calendar hor"/>
+				<div class="horGap20" style="padding:6px 8px 6px 0px;">-</div>
+				<ui:text name="toDate" className="Ct hor" style="width:90px" option="date"/>
+				<ui:icon id="icnToDate" className="fa-calendar hor"/>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -82,16 +104,34 @@
 		<colgroup>
 			<col width="2%"/>
 			<col width="*"/>
+			<col width="4%"/>
+			<col width="8%"/>
+			<col width="12%"/>
+			<col width="22%"/>
+			<col width="5%"/>
+			<col width="5%"/>
+			<col width="5%"/>
+			<col width="5%"/>
+			<col width="6%"/>
 		</colgroup>
 		<thead>
 			<tr>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg"/></th>
-				<th class="thGrid"></th>
+				<th class="thGrid sortable:alphanumeric">Bank</th>
+				<th class="thGrid">BSB</th>
+				<th class="thGrid">Account Number</th>
+				<th class="thGrid">Account Name</th>
+				<th class="thGrid">File Name</th>
+				<th class="thGrid">Rows</th>
+				<th class="thGrid">File</th>
+				<th class="thGrid">Date From</th>
+				<th class="thGrid">Date To</th>
+				<th class="thGrid sortable:date">Update Date</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">
 			<tr>
-				<td class="tdGrid Ct" colspan="2"><mc:msg key="I002"/></td>
+				<td class="tdGrid Ct" colspan="11"><mc:msg key="I002"/></td>
 			</tr>
 		</tbody>
 	</table>

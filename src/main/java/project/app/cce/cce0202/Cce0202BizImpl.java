@@ -5,28 +5,46 @@
  *************************************************************************************************/
 package project.app.cce.cce0202;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.bizservice.ccstatement.CcStatementBizService;
+import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
+import project.conf.resource.ormapper.dao.UsrCcStatement.UsrCcStatementDao;
+import project.conf.resource.ormapper.dao.UsrCcStatementD.UsrCcStatementDDao;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
+import zebra.util.FileUtil;
 
 public class Cce0202BizImpl extends BaseBiz implements Cce0202Biz {
+	@Autowired
+	private UsrBankAccntDao usrBankAccntDao;
+	@Autowired
+	private UsrCcStatementDao usrCcStatementDao;
+	@Autowired
+	private UsrCcStatementDDao usrCcStatementDDao;
+	@Autowired
+	private CcStatementBizService ccStatementBS;
+
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
+		DataSet bankAccnt = new DataSet();
+		HttpSession session = paramEntity.getSession();
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
+
 		try {
+			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);
+
+			paramEntity.setObject("bankAccnt", bankAccnt);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -37,11 +55,20 @@ public class Cce0202BizImpl extends BaseBiz implements Cce0202Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+		String fromDate = requestDataSet.getValue("fromDate");
+		String toDate = requestDataSet.getValue("toDate");
 
 		try {
+			queryAdvisor.setObject("userId", userId);
+			queryAdvisor.setObject("bankAccntId", bankAccntId);
+			queryAdvisor.setObject("fromDate", fromDate);
+			queryAdvisor.setObject("toDate", toDate);
 			queryAdvisor.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(new DataSet());
+			paramEntity.setAjaxResponseDataSet(usrCcStatementDao.getDataSetBySearchCriteria(queryAdvisor));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -50,9 +77,55 @@ public class Cce0202BizImpl extends BaseBiz implements Cce0202Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
+	public ParamEntity getUpload(ParamEntity paramEntity) throws Exception {
+		DataSet bankAccnt = new DataSet();
+		HttpSession session = paramEntity.getSession();
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
 
+		try {
+			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);
+
+			paramEntity.setObject("bankAccnt", bankAccnt);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getBankAccountInfo(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+		DataSet bankAccountInfo = new DataSet();
+
+		try {
+			bankAccountInfo= usrBankAccntDao.getDataSetByBankAccntId(bankAccntId);
+			bankAccountInfo.addColumn("INSERT_USER_NAME", DataHelper.getUserNameById(bankAccountInfo.getValue("INSERT_USER_ID")));
+			bankAccountInfo.addColumn("UPDATE_USER_NAME", DataHelper.getUserNameById(bankAccountInfo.getValue("UPDATE_USER_ID")));
+			bankAccountInfo.addColumn("BANK_NAME", CommonCodeManager.getCodeDescription("BANK_TYPE", bankAccountInfo.getValue("BANK_CODE")));
+
+			paramEntity.setAjaxResponseDataSet(bankAccountInfo);
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getFile(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String ccStatementId = requestDataSet.getValue("ccStatementId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrCcStatementDao.getDataSetByCcStatementId(ccStatementId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getDetail(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -61,14 +134,147 @@ public class Cce0202BizImpl extends BaseBiz implements Cce0202Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getInfoDataForDetail(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String ccStatementId = requestDataSet.getValue("ccStatementId");
+
+		try {
+			queryAdvisor.setObject("ccStatementId", ccStatementId);
+
+			paramEntity.setAjaxResponseDataSet(usrCcStatementDao.getDataSetBySearchCriteria(queryAdvisor));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getCcStatementDetail(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String ccStatementId = requestDataSet.getValue("ccStatementId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(usrCcStatementDDao.getDataSetByCcStatementId(ccStatementId));
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity doUpload(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
+		HttpSession session = paramEntity.getSession();
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
+		String bankCode = requestDataSet.getValue("bankCode");
+		String fileName = "";
+		DataSet fileData = new DataSet();
+		DataSet dupData = new DataSet();
+
+		try {
+			discardCcStatement(paramEntity);
+
+			fileName = fileDataSet.getValue("NEW_NAME");
+
+			fileData = ccStatementBS.getCcStatementDataSetFromFileByBank(bankAccntId, bankCode, new File(fileDataSet.getValue("TEMP_PATH")+"/"+fileName));
+			dupData = ccStatementBS.getDuplicatedDataSet(fileData);
+
+			if (dupData.getRowCnt() > 0) {
+				String msg = "";
+
+				FileUtil.deleteTempFile(fileDataSet);
+
+				paramEntity.setAjaxResponseDataSet(dupData);
+				paramEntity.setSuccess(true);
+				msg += "There are some duplicated data already uploaded exist.\n";
+				msg += "Please check the file and try again.\n\n";
+				msg += "Ex.\n";
+				for (int i=0; i<dupData.getRowCnt(); i++) {
+					String dateTimeFormat = ConfigUtil.getProperty("format.default.dateTime");
+					String dateFormat = ConfigUtil.getProperty("format.date.java");
+
+					msg += "Date : "+CommonUtil.changeDateFormat(dupData.getValue(i, "PROC_DATE"), dateTimeFormat, dateFormat)+"\n";
+					msg += "Amount : "+CommonUtil.getNumberMask(dupData.getValue(i, "PROC_AMT"), "#,##0.00")+"\n";
+					msg += "Description : "+dupData.getValue(i, "PROC_DESCRIPTION")+"\n\n";
+				}
+				paramEntity.setMessage("E999", msg);
+
+				return paramEntity;
+			}
+
+			// Save to session before saving
+			session.setAttribute("UploadCcStatementDataFile", fileDataSet);
+			session.setAttribute("UploadCcStatementData", fileData);
+
+			paramEntity.setAjaxResponseDataSet(fileData);
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+			try {
+				FileUtil.deleteTempFile(fileDataSet);
+			} catch (Exception e) {
+			}
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity discardCcStatement(ParamEntity paramEntity) throws Exception {
+		HttpSession session = paramEntity.getSession();
+		File file;
+		DataSet fileDataSet;
+		String filePathName = "";
+
+		try {
+			fileDataSet = (DataSet)session.getAttribute("UploadCcStatementDataFile");
+
+			filePathName = fileDataSet.getValue("TEMP_PATH")+"/"+fileDataSet.getValue("NEW_NAME");
+
+			file = new File(filePathName);
+			file.delete();
+
+			// Remove session attribute
+			session.removeAttribute("UploadCcStatementDataFile");
+			session.removeAttribute("UploadCcStatementData");
+
+			paramEntity.setAjaxResponseDataSet(new DataSet());
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
+		} catch (Exception ex) {
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
+		HttpSession session = paramEntity.getSession();
+		String loggedInUserId = (String)session.getAttribute("UserId");
+		DataSet fileDataSet, ccFileData;
+		String filePathNameTemp = "", filePathNameRepos = "", fileName = "";
+		String pathToSave = ConfigUtil.getProperty("path.dir.uploadedCcStatement");
 		int result = -1;
 
 		try {
+			fileDataSet = (DataSet)session.getAttribute("UploadCcStatementDataFile");
+			ccFileData = (DataSet)session.getAttribute("UploadCcStatementData");
+			fileName = fileDataSet.getValue("NEW_NAME");
+			filePathNameTemp = fileDataSet.getValue("TEMP_PATH")+"/"+fileName;
+			filePathNameRepos = pathToSave+"/"+fileName;
+			FileUtil.copyFile(new File(filePathNameTemp), new File(filePathNameRepos));
+
+			fileDataSet.addColumn("USER_ID", loggedInUserId);
+			ccFileData.addColumn("USER_ID", loggedInUserId);
+			fileDataSet.setValue("REPOSITORY_PATH", pathToSave);
+
+			result = ccStatementBS.doSave(fileDataSet, ccFileData);
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
+
+			session.setAttribute("SelectedBankAccntIdInSession", ccFileData.getValue("BANK_ACCNT_ID"));
+
+			discardCcStatement(paramEntity);
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
@@ -80,48 +286,24 @@ public class Cce0202BizImpl extends BaseBiz implements Cce0202Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String chkForDel = requestDataSet.getValue("chkForDel");
+		String ccStatementId = requestDataSet.getValue("ccStatementId");
+		String ccStatementIds[] = CommonUtil.splitWithTrim(chkForDel, ConfigUtil.getProperty("delimiter.record"));
 		int result = 0;
 
 		try {
+			if (CommonUtil.isBlank(ccStatementId)) {
+				result = usrCcStatementDao.delete(ccStatementIds);
+			} else {
+				result = usrCcStatementDao.delete(ccStatementId);
+			}
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
-		} catch (Exception ex) {
-			throw new FrameworkException(paramEntity, ex);
-		}
-		return paramEntity;
-	}
-
-	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
-		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[] = new String[] {};
-		String pageTitle = "", fileName = "";
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
-
-		try {
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
-
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
-			}
-
-			exportHelper.setSourceDataSet(new DataSet());
-
-			paramEntity.setSuccess(true);
-			paramEntity.setFileToExport(exportHelper.createFile());
-			paramEntity.setFileNameToExport(exportHelper.getFileName());
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}
