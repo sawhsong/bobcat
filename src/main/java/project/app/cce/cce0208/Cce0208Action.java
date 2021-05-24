@@ -27,6 +27,15 @@ public class Cce0208Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getReconCategoryDataSet() throws Exception {
+		try {
+			biz.getReconCategoryDataSet(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String getEdit() throws Exception {
 		biz.getEdit(paramEntity);
 		return "edit";
@@ -35,6 +44,15 @@ public class Cce0208Action extends BaseAction {
 	public String getDataForEdit() throws Exception {
 		try {
 			biz.getDataForEdit(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String doSaveOnEdit() throws Exception {
+		try {
+			biz.doSaveOnEdit(paramEntity);
 		} catch (Exception ex) {
 		}
 		setRequestAttribute("paramEntity", paramEntity);

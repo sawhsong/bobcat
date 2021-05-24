@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import project.common.extend.BaseBiz;
+import project.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryDao;
 import project.conf.resource.ormapper.dao.UsrCashExpense.UsrCashExpenseDao;
 import project.conf.resource.ormapper.dto.oracle.UsrCashExpense;
 import zebra.data.DataSet;
@@ -22,6 +23,8 @@ import zebra.util.ConfigUtil;
 public class Cce0208BizImpl extends BaseBiz implements Cce0208Biz {
 	@Autowired
 	private UsrCashExpenseDao usrCashExpenseDao;
+	@Autowired
+	private SysReconCategoryDao sysReconCategoryDao;
 
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
 		try {
@@ -59,9 +62,76 @@ public class Cce0208BizImpl extends BaseBiz implements Cce0208Biz {
 		return paramEntity;
 	}
 
+	public ParamEntity getReconCategoryDataSet(ParamEntity paramEntity) throws Exception {
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String mainReconCategoryId = "0200";
+
+		try {
+			paramEntity.setAjaxResponseDataSet(sysReconCategoryDao.getSubCategoryDataSet(mainReconCategoryId));
+			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
 		try {
 			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity doSaveOnEdit(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet resultDataSet = new DataSet();
+		String cashExpenseId = requestDataSet.getValue("cashExpenseId");
+		String categoryId = requestDataSet.getValue("categoryId");
+		double grossAmt = CommonUtil.toDouble(requestDataSet.getValue("grossAmt"));
+		double gstAmt = CommonUtil.toDouble(requestDataSet.getValue("gstAmt"));
+		double netAmt = 0;
+		String procDescription = requestDataSet.getValue("desc");
+		HttpSession session = paramEntity.getSession();
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
+		UsrCashExpense usrCashExpense = new UsrCashExpense();
+		String numberFormat = "#,##0.00";
+		String mainCategory = "0200";
+		int result = -1;
+
+		try {
+			netAmt = grossAmt - gstAmt;
+
+			resultDataSet.addColumn("cashExpenseId", cashExpenseId);
+			resultDataSet.addColumn("categoryId", categoryId);
+			resultDataSet.addColumn("subCategory", categoryId);
+			resultDataSet.addColumn("procAmt", CommonUtil.toString(grossAmt, numberFormat));
+			resultDataSet.addColumn("gstAmt", CommonUtil.toString(gstAmt, numberFormat));
+			resultDataSet.addColumn("netAmt", CommonUtil.toString(netAmt, numberFormat));
+
+			usrCashExpense.setUserId(userId);
+			usrCashExpense.setMainCategory(mainCategory);
+			usrCashExpense.setSubCategory(categoryId);
+			usrCashExpense.setProcAmt(grossAmt);
+			usrCashExpense.setGstAmt(gstAmt);
+			usrCashExpense.setNetAmt(netAmt);
+			usrCashExpense.setProcDescription(procDescription);
+			usrCashExpense.setCashExpenseId(cashExpenseId);
+			usrCashExpense.setUpdateUserId(userId);
+			usrCashExpense.setUpdateDate(CommonUtil.toDate(CommonUtil.getSysdate()));
+			usrCashExpense.addUpdateColumnFromField();
+
+			result = usrCashExpenseDao.update(cashExpenseId, usrCashExpense);
+
+			if (result <= 0) {
+				throw new FrameworkException("E801", getMessage("E801", paramEntity));
+			}
+
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
+			paramEntity.setSuccess(true);
+			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

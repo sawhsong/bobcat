@@ -28,6 +28,9 @@
 ************************************************************************************************/%>
 <%@ include file="/shared/page/incCssJs.jsp"%>
 <style type="text/css">
+#tblGrid button.bootstrapSelect.dropdown-toggle {padding:3px 20px 2px 4px;}
+#tblGrid td {padding:2px 4px;}
+#tblGrid .txtEn, #tblGrid .txtDpl, #tblGrid .txtDis {padding:4px 4px;}
 </style>
 <script type="text/javascript" src="<mc:cp key="viewPageJsName"/>"></script>
 <script type="text/javascript">
@@ -59,15 +62,15 @@
 		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea" class="areaContainer">
+<div id="divSearchCriteriaArea" class="areaContainer" style="float:left;width:51%;">
 	<table class="tblSearch">
 		<caption><mc:msg key="page.com.searchCriteria"/></caption>
 		<colgroup>
-			<col width="7%"/>
-			<col width="8%"/>
-			<col width="5%"/>
-			<col width="8%"/>
-			<col width="5%"/>
+			<col width="14%"/>
+			<col width="12%"/>
+			<col width="9%"/>
+			<col width="12%"/>
+			<col width="9%"/>
 			<col width="*"/>
 		</colgroup>
 		<tr>
@@ -86,7 +89,27 @@
 		</tr>
 	</table>
 </div>
-<div id="divInformArea"></div>
+<div id="divInformArea" class="areaContainer" style="float:right;width:49%;">
+	<table class="tblInform">
+		<caption>Total Amount</caption>
+		<colgroup>
+			<col width="15%"/>
+			<col width="18%"/>
+			<col width="15%"/>
+			<col width="18%"/>
+			<col width="15%"/>
+			<col width="*"/>
+		</colgroup>
+		<tr>
+			<th class="thInform rt">Gross Amount</th>
+			<td class="tdInform"><ui:text name="totGrossAmt" className="Rt" status="display"/></td>
+			<th class="thInform rt">GST Amount</th>
+			<td class="tdInform"><ui:text name="totGstAmt" className="Rt" status="display"/></td>
+			<th class="thInform rt">Net Amount</th>
+			<td class="tdInform"><ui:text name="totNetAmt" className="Rt" status="display"/></td>
+		</tr>
+	</table>
+</div>
 <%/************************************************************************************************
 * End of fixed panel
 ************************************************************************************************/%>

@@ -10,9 +10,11 @@ import zebra.data.ParamEntity;
 public interface Cce0208Biz {
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception;
+	public ParamEntity getReconCategoryDataSet(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception;
 	public ParamEntity getDataForEdit(ParamEntity paramEntity) throws Exception;
 
+	public ParamEntity doSaveOnEdit(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception;
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception;
 }
