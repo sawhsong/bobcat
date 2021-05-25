@@ -36,6 +36,7 @@ var commonJs = {
 	floor : function(number, scale) {return $.nony.floor(number, scale);},
 	getNumberMask : function(number, format) {return $.nony.getNumberMask(number, format);},
 	getAccountingFormat : function(val) {return $.nony.getAccountingFormat(val);},
+	getParenthesisFormat : function(val) {return $.nony.getParenthesisFormat(val);},
 	/*!
 	 * string utilities
 	 */

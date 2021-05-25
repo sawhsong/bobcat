@@ -332,6 +332,20 @@ public class CommonUtil extends StringUtils {
 			var format = "#,##0.00";
 			if (val == 0) {
 				return "-";
+			} else {
+				return getNumberMask(val, format);
+			}
+		}
+	}
+
+	public static String getParenthesisFormat(String value) {
+		if (isBlank(value)) {
+			return "";
+		} else {
+			double val = toDouble(value);
+			var format = "#,##0.00";
+			if (val == 0) {
+				return "-";
 			} else if (val < 0) {
 				return "("+toString(Math.abs(val), format)+")";
 			} else {

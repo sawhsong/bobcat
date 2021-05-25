@@ -143,6 +143,26 @@ public class QueryAdvisor {
 		autoFillDataSet.setValue(autoFillDataSet.getRowCnt()-1, "SQL_SENTENCE", sqlSentence);
 	}
 
+	public void setAutoFillCriteria(String value, String sqlSentence) throws Exception {
+		if (autoFillDataSet.getRowCnt() <= 0) {
+			addAutoFillCriteria(value, sqlSentence);
+		} else {
+			boolean isSet = false;
+
+			for (int i=0; i<autoFillDataSet.getRowCnt(); i++) {
+				if (CommonUtil.equals(value, autoFillDataSet.getValue(i, "VALUE"))) {
+					autoFillDataSet.setValue(i, "SQL_SENTENCE", sqlSentence);
+					isSet = true;
+					break;
+				}
+			}
+
+			if (!isSet) {
+				addAutoFillCriteria(value, sqlSentence);
+			}
+		}
+	}
+
 	public void resetAutoFillCriteria() throws Exception {
 		autoFillDataSet = new DataSet();
 		autoFillDataSet.addName(autoFillDataSetHeader);
@@ -155,6 +175,26 @@ public class QueryAdvisor {
 		variableDataSet.addRow();
 		variableDataSet.setValue(variableDataSet.getRowCnt()-1, "VARIABLE_NAME", variableName);
 		variableDataSet.setValue(variableDataSet.getRowCnt()-1, "VARIABLE_VALUE", variableValue);
+	}
+
+	public void setVariable(String variableName, String variableValue) throws Exception {
+		if (variableDataSet.getRowCnt() <= 0) {
+			addVariable(variableName, variableValue);
+		} else {
+			boolean isSet = false;
+
+			for (int i=0; i<variableDataSet.getRowCnt(); i++) {
+				if (CommonUtil.equals(variableName, variableDataSet.getValue(i, "VARIABLE_NAME"))) {
+					variableDataSet.setValue(i, "VARIABLE_VALUE", variableValue);
+					isSet = true;
+					break;
+				}
+			}
+
+			if (!isSet) {
+				addVariable(variableName, variableValue);
+			}
+		}
 	}
 
 	public void resetVariable() throws Exception {

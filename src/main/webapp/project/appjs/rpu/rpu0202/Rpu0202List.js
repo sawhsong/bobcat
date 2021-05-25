@@ -74,27 +74,64 @@ $(function() {
 		if (ds.getRowCnt() > 0) {
 			for (var i=0; i<ds.getRowCnt(); i++) {
 				var gridTr = new UiGridTr();
+				var parentCategoryId = ds.getValue(i, "PARENT_CATEGORY_ID");
 
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "LAST_YEAR"))));
-				gridTr.addChild(new UiGridTd().addClassName("Ct").setText(ds.getValue(i, "ACCOUNT_CODE")));
-				if (i == ds.getRowCnt()-1) {
-					gridTr.addChild(new UiGridTd().addClassName("Lt").setText("Total"));
+				if (commonJs.isNotBlank(parentCategoryId)) {
+					gridTr.addChild(new UiGridTd().addClassName("Lt").setText("&nbsp;&nbsp;&nbsp;&nbsp;"+commonJs.nvl(ds.getValue(i, "CATEGORY_NAME"), "&nbsp;")));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_SEP"))));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_DEC"))));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_MAR"))));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_JUN"))));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "THIS_YEAR_PROC_AMT"))).setStyle("background:#f5f5f5;"));
+					gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "LAST_YEAR_PROC_AMT"))).setStyle("background:#f5f5f5;"));
 				} else {
-					gridTr.addChild(new UiGridTd().addClassName("Lt").setText(ds.getValue(i, "DESCRIPTION")));
+					var div = ds.getValue(i, "DIV");
+
+					if (div == "0") {
+						gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.nvl(ds.getValue(i, "CATEGORY_NAME"), "&nbsp;")).setStyle("font-weight:bold;"));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(""));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(""));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(""));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText(""));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText("").setStyle("background:#f5f5f5;"));
+						gridTr.addChild(new UiGridTd().addClassName("Rt").setText("").setStyle("background:#f5f5f5;"));
+					} else {
+						if (i != ds.getRowCnt()-1) {
+							gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.nvl(ds.getValue(i, "CATEGORY_NAME"), "&nbsp;")));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_SEP"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_DEC"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_MAR"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "PROC_AMT_JUN"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "THIS_YEAR_PROC_AMT"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "LAST_YEAR_PROC_AMT"))));
+						} else {
+							gridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.nvl(ds.getValue(i, "CATEGORY_NAME"), "&nbsp;")));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getParenthesisFormat(ds.getValue(i, "PROC_AMT_SEP"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getParenthesisFormat(ds.getValue(i, "PROC_AMT_DEC"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getParenthesisFormat(ds.getValue(i, "PROC_AMT_MAR"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getParenthesisFormat(ds.getValue(i, "PROC_AMT_JUN"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getParenthesisFormat(ds.getValue(i, "THIS_YEAR_PROC_AMT"))));
+							gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getParenthesisFormat(ds.getValue(i, "LAST_YEAR_PROC_AMT"))));
+						}
+
+						if (commonJs.isNotBlank(div)) {
+							gridTr.setStyle("font-weight:bold;background:#fffef4;");
+						}
+					}
 				}
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "DEBIT"))));
-				gridTr.addChild(new UiGridTd().addClassName("Rt").setText(commonJs.getAccountingFormat(ds.getValue(i, "CREDIT"))));
 
 				if (i == ds.getRowCnt()-1) {
-					gridTr.addClassName("noStripe").setStyle("font-weight:bold;border-top:2px solid #cccccc;border-bottom:2px solid #cccccc;background:#f5f5f5;");
+					gridTr.setStyle("font-weight:bold;border-top:2px solid #cccccc;border-bottom:2px solid #cccccc;background:#f5f5f5;");
 				}
+
+				gridTr.setClassName("noStripe");
 
 				html += gridTr.toHtmlString();
 			}
 		} else {
 			var gridTr = new UiGridTr();
 
-			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:5").setText(com.message.I001));
+			gridTr.addChild(new UiGridTd().addClassName("Ct").setAttribute("colspan:7").setText(com.message.I001));
 			html += gridTr.toHtmlString();
 		}
 

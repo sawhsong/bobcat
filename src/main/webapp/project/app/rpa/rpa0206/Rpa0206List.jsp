@@ -118,8 +118,8 @@
 				<th class="thGrid">Dec</th>
 				<th class="thGrid">Mar</th>
 				<th class="thGrid">Jun</th>
-				<th class="thGrid">This Year</th>
-				<th class="thGrid">Last Year</th>
+				<th class="thGrid" style="background:#f5f5f5;">This Year</th>
+				<th class="thGrid" style="background:#f5f5f5;">Last Year</th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

@@ -7,7 +7,7 @@
 </script>
 <style type="text/css">
 * {margin:0px 0px;padding:0px 0px;}
-body {padding:0px 0px;color:#000000;font:normal normal normal 10px/1.2 "Verdana";}
+body {padding:0px 0px;color:#000000;font:normal normal normal 9px/1.2 "Verdana";}
 table {width:100%;border-spacing:0px;border-collapse:collapse;}
 table.withPadding th, table.withPadding td {padding:4px 4px;}
 

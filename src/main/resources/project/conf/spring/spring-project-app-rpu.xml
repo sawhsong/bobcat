@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-    <!--Rpu0202 - Trial Balance-->
+    <!--Rpu0202 - Profit And Loss Statement-->
     <bean class="${name.package.project}.app.rpu.rpu0202.Rpu0202Action" id="rpu0202Action" name="rpu0202Action"/>
     <bean class="${name.package.project}.app.rpu.rpu0202.Rpu0202BizImpl" id="rpu0202Biz" name="rpu0202Biz" parent="baseBiz"/>
 </beans>

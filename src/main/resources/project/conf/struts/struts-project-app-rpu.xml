@@ -3,7 +3,7 @@
 <struts>
     <package extends="default" name="rpu" namespace="/rpu" strict-method-invocation="false">
         <default-interceptor-ref name="ZebraDefaultStack"/>
-        <!--Rpu0202 - Trial Balance-->
+        <!--Rpu0202 - Profit And Loss Statement-->
         <action class="project.app.rpu.rpu0202.Rpu0202Action" method="{1}" name="0202/*">
             <result name="list" type="debugDispatcherResult">/project/app/rpu/rpu0202/Rpu0202List.jsp</result>
         </action>
