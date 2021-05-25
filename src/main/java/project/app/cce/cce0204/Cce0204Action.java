@@ -27,9 +27,31 @@ public class Cce0204Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
+	public String getReconCategoryDataSet() throws Exception {
+		try {
+			biz.getReconCategoryDataSet(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
+	public String getSubReconCategory() throws Exception {
+		try {
+			biz.getSubReconCategory(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
+	}
+
 	public String getEdit() throws Exception {
-		biz.getEdit(paramEntity);
-		return "edit";
+		try {
+			biz.getEdit(paramEntity);
+		} catch (Exception ex) {
+		}
+		setRequestAttribute("paramEntity", paramEntity);
+		return "ajaxResponse";
 	}
 
 	public String doSave() throws Exception {
@@ -50,9 +72,17 @@ public class Cce0204Action extends BaseAction {
 		return "ajaxResponse";
 	}
 
-	public String doExport() throws Exception {
-		biz.doExport(paramEntity);
+	public String getBatchApplication() throws Exception {
+		biz.getBatchApplication(paramEntity);
+		return "batch";
+	}
+
+	public String doBatchApplication() throws Exception {
+		try {
+			biz.doBatchApplication(paramEntity);
+		} catch (Exception ex) {
+		}
 		setRequestAttribute("paramEntity", paramEntity);
-		return "export";
+		return "ajaxResponse";
 	}
 }

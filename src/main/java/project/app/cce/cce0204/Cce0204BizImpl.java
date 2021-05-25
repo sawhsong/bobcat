@@ -9,24 +9,37 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import project.common.extend.BaseBiz;
+import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.datahelper.DataHelper;
+import project.conf.resource.ormapper.dao.SysReconCategory.SysReconCategoryDao;
+import project.conf.resource.ormapper.dao.UsrBankAccnt.UsrBankAccntDao;
+import project.conf.resource.ormapper.dao.UsrCcAlloc.UsrCcAllocDao;
+import project.conf.resource.ormapper.dto.oracle.UsrCcAlloc;
 import zebra.data.DataSet;
 import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.exception.FrameworkException;
-import zebra.export.ExportHelper;
 import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
-import zebra.util.ExportUtil;
-
-import project.common.extend.BaseBiz;
-import project.common.module.commoncode.CommonCodeManager;
-import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
-import project.conf.resource.ormapper.dao.SysBoardFile.SysBoardFileDao;
-import project.conf.resource.ormapper.dto.oracle.SysBoard;
 
 public class Cce0204BizImpl extends BaseBiz implements Cce0204Biz {
+	@Autowired
+	private UsrBankAccntDao usrBankAccntDao;
+	@Autowired
+	private UsrCcAllocDao usrCcAllocDao;
+	@Autowired
+	private SysReconCategoryDao sysReconCategoryDao;
+
 	public ParamEntity getDefault(ParamEntity paramEntity) throws Exception {
+		DataSet bankAccnt = new DataSet();
+		HttpSession session = paramEntity.getSession();
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
+
 		try {
+			bankAccnt = usrBankAccntDao.getDataSetForSearchCriteriaByUserId(userId);
+
+			paramEntity.setObject("bankAccnt", bankAccnt);
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -37,11 +50,56 @@ public class Cce0204BizImpl extends BaseBiz implements Cce0204Biz {
 	public ParamEntity getList(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
 		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		HttpSession session = paramEntity.getSession();
+		String userId = CommonUtil.nvl((String)session.getAttribute("UserIdForAdminTool"), (String)session.getAttribute("UserId"));
+		String allocationStatus = requestDataSet.getValue("allocationStatus");
+		String transactionDateFrom = requestDataSet.getValue("transactionDateFrom");
+		String transactionDateTo = requestDataSet.getValue("transactionDateTo");
+		String updatedDateFrom = requestDataSet.getValue("updatedDateFrom");
+		String updatedDateTo = requestDataSet.getValue("updatedDateTo");
+		String selectedBankAccntIdInSession = (String)session.getAttribute("SelectedBankAccntIdInSession");
+		String bankAccntId = requestDataSet.getValue("bankAccntId");
 
 		try {
+			queryAdvisor.setObject("userId", userId);
+			queryAdvisor.setObject("allocationStatus", allocationStatus);
+			queryAdvisor.setObject("transactionDateFrom", transactionDateFrom);
+			queryAdvisor.setObject("transactionDateTo", transactionDateTo);
+			queryAdvisor.setObject("updatedDateFrom", updatedDateFrom);
+			queryAdvisor.setObject("updatedDateTo", updatedDateTo);
+			queryAdvisor.setObject("bankAccntId", bankAccntId);
 			queryAdvisor.setPagination(true);
 
-			paramEntity.setAjaxResponseDataSet(new DataSet());
+			if (CommonUtil.isNotBlank(selectedBankAccntIdInSession)) {
+				session.removeAttribute("SelectedBankAccntIdInSession");
+			}
+
+			paramEntity.setAjaxResponseDataSet(usrCcAllocDao.getDataSetBySearchCriteria(queryAdvisor));
+			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getReconCategoryDataSet(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setAjaxResponseDataSet(DataHelper.getReconCategoryDataSetForOptionGroup());
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity getSubReconCategory(ParamEntity paramEntity) throws Exception {
+		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
+		String mainReconCategoryId = requestDataSet.getValue("mainReconCategoryId");
+
+		try {
+			paramEntity.setAjaxResponseDataSet(sysReconCategoryDao.getSubCategoryDataSet(mainReconCategoryId));
 			paramEntity.setTotalResultRows(queryAdvisor.getTotalResultRows());
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
@@ -52,8 +110,10 @@ public class Cce0204BizImpl extends BaseBiz implements Cce0204Biz {
 
 	public ParamEntity getEdit(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String ccAllocId = requestDataSet.getValue("ccAllocId");
 
 		try {
+			paramEntity.setAjaxResponseDataSet(usrCcAllocDao.getDataSetByCcAllocId(ccAllocId));
 			paramEntity.setSuccess(true);
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
@@ -63,13 +123,51 @@ public class Cce0204BizImpl extends BaseBiz implements Cce0204Biz {
 
 	public ParamEntity doSave(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		DataSet resultDataSet = new DataSet();
+		String ccAllocId = requestDataSet.getValue("ccAllocId");
+		String categoryId = requestDataSet.getValue("categoryId");
+		String mainCategory = "", subCategory = "";
+		String numberFormat = "#,##0.00";
+		double procAmt = CommonUtil.toDouble(requestDataSet.getValue("procAmt"));
+		double gstAmt = CommonUtil.toDouble(requestDataSet.getValue("gstAmt"));
+		double netAmt = 0;
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		UsrCcAlloc usrCcAlloc = new UsrCcAlloc();
 		int result = -1;
 
 		try {
+			if (CommonUtil.isNotBlank(categoryId)) {
+				mainCategory = CommonUtil.split(categoryId, "-")[0];
+				subCategory = CommonUtil.split(categoryId, "-")[1];
+			}
+
+			netAmt = procAmt - gstAmt;
+
+			resultDataSet.addColumn("ccAllocId", ccAllocId);
+			resultDataSet.addColumn("categoryId", categoryId);
+			resultDataSet.addColumn("mainCategory", mainCategory);
+			resultDataSet.addColumn("subCategory", subCategory);
+			resultDataSet.addColumn("procAmt", CommonUtil.toString(procAmt, numberFormat));
+			resultDataSet.addColumn("gstAmt", CommonUtil.toString(gstAmt, numberFormat));
+			resultDataSet.addColumn("netAmt", CommonUtil.toString(netAmt, numberFormat));
+
+			usrCcAlloc.setMainCategory(mainCategory);
+			usrCcAlloc.setSubCategory(subCategory);
+			usrCcAlloc.setGstAmt(gstAmt);
+			usrCcAlloc.setNetAmt(netAmt);
+			usrCcAlloc.setStatus(CommonCodeManager.getCodeByConstants("CC_ALLOC_STATUS_AL"));
+			usrCcAlloc.setUpdateUserId(userId);
+			usrCcAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+			usrCcAlloc.addUpdateColumnFromField();
+
+			result = usrCcAllocDao.updateColumn(ccAllocId, usrCcAlloc);
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
 
+			paramEntity.setAjaxResponseDataSet(resultDataSet);
 			paramEntity.setSuccess(true);
 			paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 		} catch (Exception ex) {
@@ -80,9 +178,24 @@ public class Cce0204BizImpl extends BaseBiz implements Cce0204Biz {
 
 	public ParamEntity doDelete(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
+		String ccAllocId = requestDataSet.getValue("deCcAllocId");
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		UsrCcAlloc usrCcAlloc = new UsrCcAlloc();
 		int result = 0;
 
 		try {
+			usrCcAlloc = usrCcAllocDao.getCcAllocByCcAllocId(ccAllocId);
+			usrCcAlloc.setMainCategory(null);
+			usrCcAlloc.setSubCategory(null);
+			usrCcAlloc.setGstAmt(0);
+			usrCcAlloc.setNetAmt(0);
+			usrCcAlloc.setStatus(CommonCodeManager.getCodeByConstants("BS_TRAN_ALLOC_STATUS_UP"));
+			usrCcAlloc.setUpdateUserId(userId);
+			usrCcAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+
+			result = usrCcAllocDao.update(ccAllocId, usrCcAlloc);
+
 			if (result <= 0) {
 				throw new FrameworkException("E801", getMessage("E801", paramEntity));
 			}
@@ -95,33 +208,55 @@ public class Cce0204BizImpl extends BaseBiz implements Cce0204Biz {
 		return paramEntity;
 	}
 
-	public ParamEntity doExport(ParamEntity paramEntity) throws Exception {
+	public ParamEntity getBatchApplication(ParamEntity paramEntity) throws Exception {
+		try {
+			paramEntity.setSuccess(true);
+		} catch (Exception ex) {
+			throw new FrameworkException(paramEntity, ex);
+		}
+		return paramEntity;
+	}
+
+	public ParamEntity doBatchApplication(ParamEntity paramEntity) throws Exception {
 		DataSet requestDataSet = paramEntity.getRequestDataSet();
-		QueryAdvisor queryAdvisor = paramEntity.getQueryAdvisor();
-		ExportHelper exportHelper;
-		String columnHeader[] = new String[] {};
-		String pageTitle = "", fileName = "";
-		String fileType = requestDataSet.getValue("fileType");
-		String dataRange = requestDataSet.getValue("dataRange");
+		String chkForEdit = requestDataSet.getValue("chkForEdit");
+		String ccAllocIds[] = CommonUtil.splitWithTrim(chkForEdit, ConfigUtil.getProperty("delimiter.data"));
+		String mainCategory = requestDataSet.getValue("mainReconCategory");
+		String subCategory = requestDataSet.getValue("subReconCategory");
+		HttpSession session = paramEntity.getSession();
+		String userId = (String)session.getAttribute("UserId");
+		UsrCcAlloc usrCcAlloc = new UsrCcAlloc();
+		double gstPercentage = CommonUtil.toDouble(requestDataSet.getValue("gstPercentage")) / 100;
+		int result = -1;
 
 		try {
-			exportHelper = ExportUtil.getExportHelper(fileType);
-			exportHelper.setPageTitle(pageTitle);
-			exportHelper.setColumnHeader(columnHeader);
-			exportHelper.setFileName(fileName);
-			exportHelper.setPdfWidth(1000);
+			if (ccAllocIds != null && ccAllocIds.length > 0) {
+				for (String id : ccAllocIds) {
+					double amt = 0, gstAmt = 0, netAmt = 0;
+					usrCcAlloc = usrCcAllocDao.getCcAllocByCcAllocId(id);
 
-			if (CommonUtil.containsIgnoreCase(dataRange, "all"))
-				queryAdvisor.setPagination(false);
-			else {
-				queryAdvisor.setPagination(true);
+					amt = usrCcAlloc.getProcAmt();
+					gstAmt = amt * gstPercentage;
+					netAmt = amt - gstAmt;
+
+					usrCcAlloc.setMainCategory(mainCategory);
+					usrCcAlloc.setSubCategory(subCategory);
+					usrCcAlloc.setGstAmt(gstAmt);
+					usrCcAlloc.setNetAmt(netAmt);
+					usrCcAlloc.setStatus(CommonCodeManager.getCodeByConstants("CC_ALLOC_STATUS_AL"));
+					usrCcAlloc.setUpdateUserId(userId);
+					usrCcAlloc.setUpdateDate(CommonUtil.getSysdateAsDate());
+
+					result += usrCcAllocDao.update(id, usrCcAlloc);
+				}
+
+				if (result <= 0) {
+					throw new FrameworkException("E801", getMessage("E801", paramEntity));
+				}
+
+				paramEntity.setSuccess(true);
+				paramEntity.setMessage("I801", getMessage("I801", paramEntity));
 			}
-
-			exportHelper.setSourceDataSet(new DataSet());
-
-			paramEntity.setSuccess(true);
-			paramEntity.setFileToExport(exportHelper.createFile());
-			paramEntity.setFileNameToExport(exportHelper.getFileName());
 		} catch (Exception ex) {
 			throw new FrameworkException(paramEntity, ex);
 		}

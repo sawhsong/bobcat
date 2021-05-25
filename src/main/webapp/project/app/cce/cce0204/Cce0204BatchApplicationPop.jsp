@@ -44,9 +44,39 @@
 <div id="divButtonArea" class="areaContainerPopup">
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
+		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnSave" caption="button.com.save" iconClass="fa-save"/>
+			<ui:button id="btnClose" caption="button.com.close" iconClass="fa-times"/>
+		</ui:buttonGroup>
 	</div>
 </div>
-<div id="divSearchCriteriaArea"></div>
+<div id="divSearchCriteriaArea" class="areaContainerPopup">
+	<table class="tblSearch">
+		<caption>Please select categories and GST Percentage</caption>
+		<colgroup>
+			<col width="14%"/>
+			<col width="18%"/>
+			<col width="14%"/>
+			<col width="*"/>
+			<col width="14%"/>
+			<col width="10%"/>
+		</colgroup>
+		<tr>
+			<th class="thSearch rt mandatory">Main Category</th>
+			<td class="tdSearch">
+				<ui:deSelect name="mainReconCategory" codeType="MainReconCategory" caption="==Select==" checkName="Main Category" options="mandatory"/>
+			</td>
+			<th class="thSearch rt mandatory">Sub Category</th>
+			<td class="tdSearch">
+				<ui:deSelect name="subReconCategory" codeType="SubReconCategory" caption="==Select==" checkName="Sub Category" options="mandatory"/>
+			</td>
+			<th class="thSearch rt">GST Percentage</th>
+			<td class="tdSearch">
+				<ui:text name="gstPercentage" className="Rt numeric" option="numeric"/>
+			</td>
+		</tr>
+	</table>
+</div>
 <div id="divInformArea"></div>
 <%/************************************************************************************************
 * End of fixed panel
@@ -57,7 +87,7 @@
 <%/************************************************************************************************
 * Real Contents - scrollable panel(data, paging)
 ************************************************************************************************/%>
-<div id="divDataArea" class="areaContainerPopup">
+<div id="divDataArea">
 </div>
 <div id="divPagingArea"></div>
 <%/************************************************************************************************
