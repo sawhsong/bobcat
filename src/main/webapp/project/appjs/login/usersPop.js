@@ -10,6 +10,21 @@ $(function() {
 	/*!
 	 * event
 	 */
+	$("#btnBackToMyAccnt").click(function(event) {
+		commonJs.doSimpleProcess({
+			url:"/login/removeSessionValuesForAdminTool.do",
+			noForm:true,
+			data:{},
+			onSuccess:function(result) {
+				var ds = result.dataSet;
+
+				parent.$("#divUsingUserAs").html("");
+				parent.$("#divUsingUserAsBreaker").hide();
+				$("#btnClose").trigger("click");
+			}
+		});
+	});
+
 	$("#btnLoginUserAs").click(function(event) {
 		loginAs(commonJs.getCheckedValueFromRadio("rdoForSave"));
 	});
@@ -103,6 +118,11 @@ $(function() {
 	};
 
 	loginAs = function(userId) {
+		if (commonJs.isBlank(userId)) {
+			commonJs.warn("Please select a User.");
+			return;
+		}
+
 		commonJs.doSimpleProcess({
 			url:"/login/setSessionValuesForAdminTool.do",
 			noForm:true,

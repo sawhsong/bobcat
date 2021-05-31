@@ -10,6 +10,7 @@
 	ParamEntity pe = (ParamEntity)request.getAttribute("paramEntity");
 	DataSet dsRequest = (DataSet)pe.getRequestDataSet();
 	String userId = dsRequest.getValue("userId");
+System.out.println(userId);
 %>
 <%/************************************************************************************************
 * HTML
@@ -47,6 +48,7 @@ var userId = "<%=userId%>";
 	<div id="divButtonAreaLeft"></div>
 	<div id="divButtonAreaRight">
 		<ui:buttonGroup id="buttonGroup">
+			<ui:button id="btnBackToMyAccnt" caption="Back To My Account" iconClass="fa-user"/>
 			<ui:button id="btnLoginUserAs" caption="Log in User As" iconClass="fa-user-circle"/>
 			<ui:button id="btnSearch" caption="button.com.search" iconClass="fa-search"/>
 			<ui:button id="btnClear" caption="button.com.clear" iconClass="fa-refresh"/>

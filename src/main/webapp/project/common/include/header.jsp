@@ -129,7 +129,7 @@ $(function() {
 
 	changeUser = function(userId) {
 		popupUsers = commonJs.openPopup({
-			popupId:"UserStatusBoard",
+			popupId:"ChangeUser",
 			url:"/login/getUsers.do",
 			data:{userId:userId},
 			header:"Change User",
