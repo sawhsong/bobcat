@@ -78,6 +78,7 @@
 <div id="divDataArea" class="areaContainer">
 	<table id="tblGrid" class="tblGrid sort autosort">
 		<colgroup>
+			<col width="2%"/>
 			<col width="3%"/>
 			<col width="15%"/>
 			<col width="*"/>
@@ -86,10 +87,10 @@
 			<col width="7%"/>
 			<col width="9%"/>
 			<col width="9%"/>
-			<col width="4%"/>
 		</colgroup>
 		<thead>
 			<tr>
+				<th class="thGrid"><ui:icon className="fa-magic fa-lg"/></th>
 				<th class="thGrid"><ui:icon id="icnCheck" className="fa-check-square-o fa-lg" title="fwk.commoncode.gridHeader.selectToDelete"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.codeType"/></th>
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.description"/></th>
@@ -98,7 +99,6 @@
 				<th class="thGrid sortable:alphanumeric"><mc:msg key="fwk.commoncode.gridHeader.defaultYn"/></th>
 				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.gridHeader.insertDate"/></th>
 				<th class="thGrid sortable:date"><mc:msg key="fwk.commoncode.gridHeader.updateDate"/></th>
-				<th class="thGrid"><mc:msg key="page.com.action"/></th>
 			</tr>
 		</thead>
 		<tbody id="tblGridBody">

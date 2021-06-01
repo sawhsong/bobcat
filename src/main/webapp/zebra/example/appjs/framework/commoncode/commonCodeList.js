@@ -85,6 +85,11 @@ $(function() {
 					disabledStr = "disabled";
 				}
 
+				var uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
+					.addAttribute("defaultYn:"+defaultYn).setScript("doAction(this)");
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
+
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").removeClassName("chkEn").addClassName(className).setValue(dataSet.getValue(i, "CODE_TYPE")).setOptions(disabledStr);
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
@@ -99,11 +104,6 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(defaultYn));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "INSERT_DATE"), dateFormat)));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "UPDATE_DATE"), dateFormat)));
-
-				var uiTd3 = new UiGridTd(), uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("codeType:"+dataSet.getValue(i, "CODE_TYPE"))
-					.addAttribute("defaultYn:"+defaultYn).setScript("doAction(this)");
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
 				html += uiGridTr.toHtmlString();
 			}

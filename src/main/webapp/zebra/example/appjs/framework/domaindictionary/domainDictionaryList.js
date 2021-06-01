@@ -75,6 +75,11 @@ $(function() {
 			for (var i=0; i<dataSet.getRowCnt(); i++) {
 				var uiGridTr = new UiGridTr();
 
+				var uiIcon = new UiIcon();
+				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
+					.addAttribute("title:"+com.header.action).setScript("doAction(this)");
+				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
+
 				var uiChk = new UiCheckbox();
 				uiChk.setId("chkForDel").setName("chkForDel").setValue(dataSet.getValue(i, "DOMAIN_ID"));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiChk));
@@ -88,11 +93,6 @@ $(function() {
 				uiGridTr.addChild(new UiGridTd().addClassName("Rt").setText(dataSet.getValue(i, "DATA_LENGTH")));
 				uiGridTr.addChild(new UiGridTd().addClassName("Lt").setText(commonJs.htmlToString(dataSet.getValue(i, "DESCRIPTION"))));
 				uiGridTr.addChild(new UiGridTd().addClassName("Ct").setText(commonJs.getDateTimeMask(dataSet.getValue(i, "LAST_UPDATE"), dateFormat)));
-
-				var uiIcon = new UiIcon();
-				uiIcon.setId("icnAction").setName("icnAction").addClassName("fa-ellipsis-h fa-lg").addAttribute("domainId:"+dataSet.getValue(i, "DOMAIN_ID"))
-					.addAttribute("title:"+com.header.action).setScript("doAction(this)");
-				uiGridTr.addChild(new UiGridTd().addClassName("Ct").addChild(uiIcon));
 
 				html += uiGridTr.toHtmlString();
 			}
