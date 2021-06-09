@@ -1,0 +1,10 @@
+db202106190950_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-melbourne-1.oraclecloud.com))(connect_data=(service_name=gcb82f6abdfae3b_db202106190950_high.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-melbourne-1.oraclecloud.com, OU=Oracle ADB MELBOURNE, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+db202106190950_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-melbourne-1.oraclecloud.com))(connect_data=(service_name=gcb82f6abdfae3b_db202106190950_low.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-melbourne-1.oraclecloud.com, OU=Oracle ADB MELBOURNE, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+db202106190950_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-melbourne-1.oraclecloud.com))(connect_data=(service_name=gcb82f6abdfae3b_db202106190950_medium.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-melbourne-1.oraclecloud.com, OU=Oracle ADB MELBOURNE, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+db202106190950_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-melbourne-1.oraclecloud.com))(connect_data=(service_name=gcb82f6abdfae3b_db202106190950_tp.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-melbourne-1.oraclecloud.com, OU=Oracle ADB MELBOURNE, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+db202106190950_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-melbourne-1.oraclecloud.com))(connect_data=(service_name=gcb82f6abdfae3b_db202106190950_tpurgent.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-melbourne-1.oraclecloud.com, OU=Oracle ADB MELBOURNE, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+

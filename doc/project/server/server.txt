@@ -1,0 +1,30 @@
+==== Oracle Cloud(cloud.oracle.com) ====
+sawhsong@gmail.com / Pass!@#_720
+
+--db
+ADMIN / DBPassAdm720
+
+
+
+-- how to
+upload jdk and tomcat
+unzip
+	tar zxvf jdk-10.0.2_linux-x64_bin.tar.gz
+	tar zxvf apache-tomcat-9.0.48.tar.gz
+start tomcat
+	export JAVA_HOME=/home/opc/jdk-10.0.2
+	bash /home/opc/apache-tomcat-9.0.48/bin/startup.sh
+	tail -f /home/opc/apache-tomcat-9.0.48/logs/catalina.out
+check
+	netstat -nlp | grep 8080
+	curl -I http://localhost:8080
+	wget http://localhost:8080
+
+$ sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+$ sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+$ sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
+$ sudo firewall-cmd --reload
+
+
+-- ref link
+https://www.ateam-oracle.com/installing-tomcat-on-oracle-linux-in-oracle-cloud <- open port

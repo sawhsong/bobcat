@@ -8,6 +8,16 @@ create user hkaccount identified by hkaccount20170523;
 grant connect, resource to hkaccount;
 grant create synonym, create view, create database link, create public synonym, drop public synonym to hkaccount;
 
+/*
+ * Oracle cloud autonomous database
+ */
+create user hkaccount identified by hkAccntPass20210620; -- Oracle cloud autonumous db
+grant connect, resource to hkaccount;
+grant create synonym, create view, create database link, create public synonym, drop public synonym to hkaccount;
+grant unlimited tablespace to hkaccount;
+
+
+
 /**
  * Create DB Link
  * 	Login as alpaca

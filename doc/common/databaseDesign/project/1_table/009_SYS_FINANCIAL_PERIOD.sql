@@ -6,7 +6,7 @@ drop table sys_financial_period cascade constraints;
 purge recyclebin;
 
 create table sys_financial_period (
-    period_year                     varchar2()                                   not null,      -- Year (PK)
+    period_year                     varchar2(30)                                 not null,      -- Year (PK)
     quarter_code                    varchar2(30)                                 not null,      -- Quarter Code (PK) (sys_common_code.quarter_code)
     financial_year                  varchar2(30),                                               -- Financial Year (ex. 2016 - 2017)
     quarter_name                    varchar2(30)                                 not null,      -- Quarter Name (sys_common_code.quarter_name)
