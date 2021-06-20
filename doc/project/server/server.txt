@@ -23,8 +23,16 @@ check
 $ sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 $ sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 $ sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
+$ sudo firewall-cmd --zone=public --add-port=25/tcp --permanent
+$ sudo firewall-cmd --zone=public --add-port=4555/tcp --permanent
 $ sudo firewall-cmd --reload
 
 
 -- ref link
 https://www.ateam-oracle.com/installing-tomcat-on-oracle-linux-in-oracle-cloud <- open port
+
+
+
+
+-- james
+find ./james-2.3.2.1 -type f -name '*\.sh' -exec chmod +x {} \;
