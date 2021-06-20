@@ -77,7 +77,9 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 			qa.addWhereClause("to_char(proc_date, 'dd-mm-yyyy') = '"+fileData.getValue(0, "PROC_DATE")+"'");
 			qa.addWhereClause("proc_amt = "+fileData.getValue(0, "PROC_AMOUNT")+"");
 			qa.addWhereClause("proc_description = '"+fileData.getValue(0, "DESCRIPTION")+"'");
-			qa.addWhereClause("balance = "+fileData.getValue(0, "BALANCE")+"");
+			if (CommonUtil.isNotBlank(fileData.getValue(0, "BALANCE"))) {
+				qa.addWhereClause("balance = "+fileData.getValue(0, "BALANCE")+"");
+			}
 			result = usrBsTranAllocDao.getDataSetByFileDataForDupCheck(qa);
 
 			qa.resetAll();
@@ -85,7 +87,9 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 			qa.addWhereClause("to_char(proc_date, 'dd-mm-yyyy') = '"+fileData.getValue(fileData.getRowCnt()-1, "PROC_DATE")+"'");
 			qa.addWhereClause("proc_amt = "+fileData.getValue(fileData.getRowCnt()-1, "PROC_AMOUNT")+"");
 			qa.addWhereClause("proc_description = '"+fileData.getValue(fileData.getRowCnt()-1, "DESCRIPTION")+"'");
-			qa.addWhereClause("balance = "+fileData.getValue(fileData.getRowCnt()-1, "BALANCE")+"");
+			if (CommonUtil.isNotBlank(fileData.getValue(fileData.getRowCnt()-1, "BALANCE"))) {
+				qa.addWhereClause("balance = "+fileData.getValue(fileData.getRowCnt()-1, "BALANCE")+"");
+			}
 			temp = usrBsTranAllocDao.getDataSetByFileDataForDupCheck(qa);
 
 			result.merge(temp);
@@ -113,8 +117,8 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 
 			while ((textLine = br.readLine()) != null) {
 				if (CommonUtil.isBlank(textLine)) {continue;}
-				dataArr = CommonUtil.splitPreserveAllTokens(textLine, ",");
-				if (dataArr == null || dataArr.length != 4) {continue;}
+				dataArr = CommonUtil.splitPreserveAllTokens(CommonUtil.removeString(textLine, "\"", "\\"), ",");
+//				if (dataArr == null || dataArr.length != 4) {continue;}
 				if (CommonUtil.isBlank(dataArr)) {continue;}
 
 				index++;
@@ -126,7 +130,9 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 				result.setValue(result.getRowCnt()-1, "PROC_DATE", getValidDateStringForType1(CommonUtil.trim(dataArr[0]))); // Date : dd/MM/yyyy
 				result.setValue(result.getRowCnt()-1, "PROC_AMOUNT", CommonUtil.trim(dataArr[1])); // Amount : no format(2 decimal)
 				result.setValue(result.getRowCnt()-1, "DESCRIPTION", dataArr[2]); // Desc
-				result.setValue(result.getRowCnt()-1, "BALANCE", CommonUtil.trim(dataArr[3])); // Balance : no format(2 decimal)
+				if (dataArr.length >= 4) {
+					result.setValue(result.getRowCnt()-1, "BALANCE", CommonUtil.trim(dataArr[3])); // Balance : no format(2 decimal)
+				}
 			}
 
 			if (result.getRowCnt() > 0) {
@@ -164,7 +170,7 @@ public class BankStatementBizServiceImpl extends BaseBiz implements BankStatemen
 			while ((textLine = br.readLine()) != null) {
 				if (CommonUtil.isBlank(textLine)) {continue;}
 				if (CommonUtil.contains(textLine, "Date,Narrative")) {continue;}
-				dataArr = CommonUtil.splitPreserveAllTokens(textLine, ",");
+				dataArr = CommonUtil.splitPreserveAllTokens(CommonUtil.removeString(textLine, "\"", "\\"), ",");
 				if (dataArr == null || dataArr.length != 8) {continue;}
 				if (CommonUtil.isBlank(dataArr)) {continue;}
 
