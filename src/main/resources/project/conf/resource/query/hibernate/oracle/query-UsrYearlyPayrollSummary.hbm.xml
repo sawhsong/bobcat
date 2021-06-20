@@ -57,6 +57,7 @@
 		   and uyps.org_id(+) = '${orgId}'
 		   and dmst.month_num = uyps.payroll_month(+)
 		 group by dmst.base_year
+		 order by div, base_year, month_num
 	]]>
 	</sql-query>
 </hibernate-mapping>
