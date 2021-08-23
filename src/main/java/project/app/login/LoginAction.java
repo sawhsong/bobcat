@@ -201,8 +201,6 @@ public class LoginAction extends BaseAction {
 	public String logout() throws Exception {
 		MemoryBean.remove(session.getId());
 		session.invalidate();
-		System.gc();
-		System.runFinalization();
 		return "index";
 	}
 }

@@ -43,9 +43,9 @@ import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -145,6 +145,7 @@ public class HDao extends HibernateDaoSupport {
 		return dto;
 	}
 
+	@SuppressWarnings("deprecation")
 	protected DataSet selectAsDataSetBySQLQuery(String sqlQuery) throws Exception {
 		setSessionFactoryForMultiDatasource();
 		query = session.createSQLQuery(sqlQuery);
@@ -424,7 +425,7 @@ public class HDao extends HibernateDaoSupport {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "deprecation" })
 	private DataSet selectAsDataSet(QueryAdvisor queryAdvisor, Dto dto) throws Exception {
 		DataSet dataSet;
 
@@ -448,7 +449,7 @@ public class HDao extends HibernateDaoSupport {
 		return dataSet;
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "deprecation" })
 	private DataSet selectAsDataSet(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet dataSet;
 
