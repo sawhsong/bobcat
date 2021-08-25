@@ -44,6 +44,10 @@ public class Button extends TaglibSupport {
 			if (CommonUtil.isNotBlank(buttonStyle)) {buttonStyle = " style=\""+buttonStyle+"\"";}
 			else {buttonStyle = "";}
 			// icon
+			if (CommonUtil.isBlank(iconClass) && CommonUtil.isNotBlank(caption)) {
+				iconClass = getAutoIconClass(caption);
+			}
+
 			if (CommonUtil.isNotBlank(iconClass)) {
 				if (CommonUtil.isNotBlank(iconStyle)) {iconStyle = " style=\""+iconStyle+"\"";}
 				else {iconStyle = "";}
@@ -80,9 +84,7 @@ public class Button extends TaglibSupport {
 
 		return SKIP_BODY;
 	}
-	/*!
-	 * getter / setter
-	 */
+
 	@SuppressWarnings("rawtypes")
 	private void initialise() throws Exception {
 		Class cls = getClass();
@@ -92,6 +94,54 @@ public class Button extends TaglibSupport {
 		}
 	}
 
+	private String getAutoIconClass(String caption) {
+		switch (CommonUtil.lowerCase(caption)) {
+			case "ok":
+				return "fa-check";
+			case "cancel":
+				return "fa-undo";
+			case "close":
+				return "fa-times";
+			case "reload":
+				return "fa-refresh";
+			case "search":
+				return "fa-search";
+			case "new":
+				return "fa-plus";
+			case "add":
+				return "fa-plus";
+			case "create":
+				return "fa-plus";
+			case "delete":
+				return "fa-trash";
+			case "edit":
+				return "fa-pencil-square";
+			case "save":
+				return "fa-floppy-o";
+			case "reply":
+				return "fa-reply";
+			case "back":
+				return "fa-arrow-left";
+			case "clear":
+				return "fa-refresh";
+			case "action":
+				return "fa-caret-down";
+			case "export":
+				return "fa-download";
+			case "generate":
+				return "fa-gears";
+			case "change":
+				return "fa-exchange";
+			case "return":
+				return "fa-undo";
+			default:
+				return "";
+		}
+	}
+
+	/*!
+	 * getter / setter
+	 */
 	public String getId() {
 		return id;
 	}
