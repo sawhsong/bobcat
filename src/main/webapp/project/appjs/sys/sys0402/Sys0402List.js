@@ -255,11 +255,11 @@ $(function() {
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == menuId) {
-				$(this).prop("checked", true);
-				$(this).parents("tr").addClass("checkedTr");
+				$(this).click();
 			} else {
-				$(this).prop("checked", false);
-				$(this).parents("tr").removeClass("checkedTr");
+				if ($(this).is(":checked")) {
+					$(this).click();
+				}
 			}
 		});
 
