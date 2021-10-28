@@ -71,4 +71,16 @@ public class FileUtil extends FileUtils {
 			dir.mkdirs();
 		}
 	}
+
+	public static boolean isEmptyDir(File file) throws Exception {
+		if (file == null || !file.isDirectory()) {
+			return true;
+		} else {
+			if (file.listFiles() == null || file.listFiles().length <= 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 }
