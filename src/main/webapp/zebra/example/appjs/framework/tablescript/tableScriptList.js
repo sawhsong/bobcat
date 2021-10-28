@@ -218,7 +218,9 @@ $(function() {
 
 		$("input:checkbox[name=chkForDel]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == fileName) {
-				$(this).click();
+				if (!$(this).is(":checked")) {
+					$(this).click();
+				}
 			} else {
 				if ($(this).is(":checked")) {
 					$(this).click();

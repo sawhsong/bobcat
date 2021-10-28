@@ -156,7 +156,9 @@ $(function() {
 
 		$("input:checkbox[name=chkForGenerate]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == menuId) {
-				$(this).click();
+				if (!$(this).is(":checked")) {
+					$(this).click();
+				}
 			} else {
 				if ($(this).is(":checked")) {
 					$(this).click();

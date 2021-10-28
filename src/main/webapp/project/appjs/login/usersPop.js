@@ -149,7 +149,9 @@ $(function() {
 
 		$("input:radio[name=rdoForSave]").each(function(index) {
 			if (!$(this).is(":disabled") && $(this).val() == userId) {
-				$(this).click();
+				if (!$(this).is(":checked")) {
+					$(this).click();
+				}
 			} else {
 				if ($(this).is(":checked")) {
 					$(this).click();
