@@ -114,17 +114,6 @@ var ctxMenu = {
 		fun:function() {}
 	}],
 
-	// DTOGenerator Action context menu
-	dtoGeneratorAction : [{
-		name:com.caption.ctxDetail,
-		img:"fa-list-alt",
-		fun:function() {}
-	}, {
-		name:com.caption.ctxGenerate,
-		img:"fa-gears",
-		fun:function() {}
-	}],
-
 	// Data Entry List Screen Action context menu
 	dataEntryListAction : [{
 		name:com.caption.ctxEdit,
