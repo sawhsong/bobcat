@@ -16,7 +16,7 @@
 		<version.userdefined>1.0</version.userdefined>
 		<version.poi>3.17</version.poi>
 		<version.springframework>5.2.9.RELEASE</version.springframework>
-		<version.struts2>2.5.16</version.struts2>
+		<version.struts2>2.5.22</version.struts2>
 		<versoin.cxf>3.2.6</versoin.cxf>
 	</properties>
 
