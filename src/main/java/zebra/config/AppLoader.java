@@ -35,7 +35,7 @@ public class AppLoader extends HttpServlet {
 	 */
 	private void executeWorks() throws Exception {
 		MemoryBean.set("applicationRealPath", CommonUtil.replace(context.getRealPath(""), File.separator, "/"));
-		MemoryBean.set("applicationSrcPathRoot", CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/alpaca/"));
+		MemoryBean.set("applicationSrcPathRoot", CommonUtil.remove((String)MemoryBean.get("applicationRealPath"), "/target/HKAccounting/"));
 		MemoryBean.set("applicationSrcPathSrc", MemoryBean.get("applicationSrcPathRoot")+"/src");
 		MemoryBean.set("applicationSrcPathJava", MemoryBean.get("applicationSrcPathSrc")+"/main/java");
 		MemoryBean.set("applicationSrcPathWeb", MemoryBean.get("applicationSrcPathSrc")+"/main/webapp");
