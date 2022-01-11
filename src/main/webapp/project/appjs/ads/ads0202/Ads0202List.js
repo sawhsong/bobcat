@@ -154,7 +154,7 @@ $(function() {
 			data:{quotationId:quotationId},
 			header:"Quotation Edit",
 			width:1400,
-			height:900
+			height:750
 		});
 	};
 
@@ -165,7 +165,7 @@ $(function() {
 			data:{quotationId:quotationId},
 			header:"Quotation Preview",
 			width:800,
-			height:900
+			height:750
 		});
 	};
 
