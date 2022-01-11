@@ -27,7 +27,7 @@ $(function() {
 			data:{},
 			header:"Upload Bank Statement",
 			width:1200,
-			height:850
+			height:750
 		});
 	});
 
@@ -163,7 +163,7 @@ $(function() {
 			},
 			header:"Bank Statement Detail",
 			width:1200,
-			height:850
+			height:750
 		});
 	};
 

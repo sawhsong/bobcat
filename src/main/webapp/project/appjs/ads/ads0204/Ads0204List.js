@@ -160,7 +160,7 @@ $(function() {
 			data:{invoiceId:invoiceId},
 			header:"Invoice Edit",
 			width:1400,
-			height:900
+			height:750
 		});
 	};
 
@@ -171,7 +171,7 @@ $(function() {
 			data:{invoiceId:invoiceId},
 			header:"Invoice Preview",
 			width:800,
-			height:900
+			height:750
 		});
 	};
 

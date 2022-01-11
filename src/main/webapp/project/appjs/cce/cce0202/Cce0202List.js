@@ -27,7 +27,7 @@ $(function() {
 			data:{},
 			header:"Upload Credit Card Statement",
 			width:1200,
-			height:850
+			height:750
 		});
 	});
 
@@ -162,7 +162,7 @@ $(function() {
 			},
 			header:"Credit Card Statement Detail",
 			width:1200,
-			height:850
+			height:750
 		});
 	};
 
