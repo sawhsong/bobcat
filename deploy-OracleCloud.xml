@@ -63,15 +63,18 @@
 	</target>
 
 	<target name="2-upload-buildset">
+<!--
 		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.buildset}"
 			file="${dir.local.war}"
 			trust="true"
 			keyfile="${file.key}"
 		/>
-
+-->
+<!--
 		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.buildset}/${name.project}" trust="true" keyfile="${file.key}">
 			<fileset dir="${dir.local.buildset}/${name.project}" excludes="**/CVS/**, **/cvs/**"/>
 		</scp>
+-->
 	</target>
 
 	<target name="3-upload-webapp">
