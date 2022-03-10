@@ -5,11 +5,11 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/>
 		</Console>
-		<RollingFile name="RollingFile" fileName="/home/opc/apache-tomcat-9.0.48/logs/hkaccountingRollingFile.log" filePattern="/home/opc/apache-tomcat-9.0.48/logs/$${date:yyyy-MM}/hkaccountingRollingFile-%d{yyyy-MM-dd}-%i.log">
+		<RollingFile name="RollingFile" fileName="/home/tomcat/logs/hkaccountingRollingFile.log" filePattern="/home/tomcat/logs/$${date:yyyy-MM}/hkaccountingRollingFile-%d{yyyy-MM-dd}-%i.log">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/>
 			<TimeBasedTriggeringPolicy />
 		</RollingFile>
-		<File name="File" fileName="/home/opc/apache-tomcat-9.0.48/logs/hkaccountingFile.log" append="false">
+		<File name="File" fileName="/home/tomcat/logs/hkaccountingFile.log" append="false">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n" />
 		</File>
 	</appenders>
@@ -48,40 +48,24 @@
 			<appender-ref ref="Console"/>
 		</logger>
 
-<!-- 		<logger name="zebra" level="debug"> -->
-<!-- 			<appender-ref ref="Console"/> -->
-<!-- 		</logger> -->
-<!-- 		<logger name="project" level="debug"> -->
-<!-- 			<appender-ref ref="Console"/> -->
-<!-- 		</logger> -->
-
-		<!-- log4jdbc begin -->
-		<!-- log SQL (pre-execution) plus exceptions caused by SQL -->
 		<logger name="jdbc.sqlonly" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<!-- log SQL with timing information, post execution -->
 		<logger name="jdbc.sqltiming" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<!-- only use the two logs below to trace ALL JDBC information, NOTE: This can be very voluminous! -->
-		<!-- log all jdbc calls except ResultSet calls -->
 		<logger name="jdbc.audit" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<!-- log the jdbc ResultSet calls -->
 		<logger name="jdbc.resultset" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<!-- log connection open/close events and dump of all open connection numbers -->
 		<logger name="jdbc.connection" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<!-- debug logging for log4jdbc itself -->
 		<logger name="log4jdbc.debug" level="error" additivity="false">
 			<appender-ref ref="Console"/>
 		</logger>
-		<!-- log4jdbc end -->
 
 		<root level="debug">
 			<appender-ref ref="Console"/>
