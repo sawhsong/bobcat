@@ -1,0 +1,127 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="USR_CC_STATEMENT_D" directorySegmentName="seg_0" id="3A3D1E55-5CD8-F26B-4645-E7112F874CB6">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F28C6001-5676-32BA-4276-51ABC4F2056E</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="UPDATE_USER_ID" id="165F99CC-882F-C024-FCFB-4794A7A96430">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DEBIT_AMT" id="25BB23BE-F714-E826-7027-AF39C192382D">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ROW_INDEX" id="310AFE44-03CB-E45B-04A4-5CB45AC4D006">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BANK_ACCOUNT" id="4E234F45-81FC-5A97-DE8E-7F4993B3B60E">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_DATE" id="57D08A77-0239-A521-B31D-590EEFC4A80D">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="SERIAL" id="5F4543BF-718D-AEB2-D814-E8E6F2FDC3DB">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_USER_ID" id="8AE7F72C-0139-B4C9-F06E-E41A51AE5BE8">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PROC_DESCRIPTION" id="979EC211-44E1-0868-626B-EC84919A3C13">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="98792F77-C6B2-87EB-3A29-4CE1BB378AAA">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CATEGORY" id="A0794C0A-5458-2930-92B2-7AEA4DD7BDC9">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PROC_AMT" id="C76025CA-4B29-7653-C34B-0264B62A6126">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PROC_DATE" id="D1CC7469-B1C1-6E95-2805-2E0386E7B73F">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CC_STATEMENT_D_ID" id="DBBEA6B1-D770-0E6B-5E45-798EF7E10444">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CREDIT_AMT" id="DDCD171B-50F0-D9A7-A688-C5E06D8E2EFC">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USER_DESCRIPTION" id="E915AE5E-C7E7-8552-2184-3BE63E4FC734">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CC_STATEMENT_ID" id="FE0E16C0-B30C-FF57-AFB0-ED6B2A3C4678">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_USR_CC_STATEMENT_D" id="4481F24A-8DE1-4A0C-EAB8-225ED6BAF6C0">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_11694491827400" id="1B0E2399-7647-BFBA-569F-72227529B2FA">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_USR_CC_STATEMENT_D" id="3B33F16C-A9C7-AEAA-F68F-0F7F655DFF74">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+<existingIndex>4481F24A-8DE1-4A0C-EAB8-225ED6BAF6C0</existingIndex>
+<indexSegment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

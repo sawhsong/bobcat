@@ -1,0 +1,362 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Diagram class="oracle.dbtools.crest.swingui.relational.DPVRelational" name="Relational_1(2)" id="BF8BFAFD-36D3-23C6-7F52-0C699B78277E">
+<createdBy>Dustin.Sa</createdBy>
+<modifiedBy>Dustin.Sa</modifiedBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<autoRoute>false</autoRoute>
+<boxInbox>true</boxInbox>
+<showLegend>false</showLegend>
+<showLabels>false</showLabels>
+<showRelAttributes>false</showRelAttributes>
+<gridEnabled>false</gridEnabled>
+<showGrid>false</showGrid>
+<diagramColor>-1</diagramColor>
+<display>false</display>
+<notation>1</notation>
+<objectViews>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="05981032-6903-8194-FEFE-29FA02671077" otype="Table" vid="4A00774E-6923-FD90-5A1A-D7142926D0BF">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="5" y="5" width="326" height="278"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="07E95A50-EB9F-C505-9248-489FDBD04BCC" otype="Table" vid="B34F5867-0B7A-4FFC-BB2C-E6A9C6B24D51">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="125" y="1786" width="301" height="475"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="0CB4A515-38A8-B4F9-3C47-1B99D9D79DE2" otype="Table" vid="8D7AFAF6-3821-55B1-A0B3-585CBFB0F027">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1490" y="905" width="280" height="261"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="0E87DEE8-A21A-183A-E04B-47E1156E38FC" otype="Note" vid="C1A699D5-0F7E-0626-7E95-A920E88FBCC7">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1315" y="258" width="170" height="27"/>
+<comment>권한그룹 기본</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="0EA6D750-9B7B-EE57-03D0-67C5037EC604" otype="Note" vid="80405E6F-9ACA-AC19-3928-790ADF555EA8">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1014" y="1715" width="170" height="27"/>
+<comment>Bank statement allocation 정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="0EC7014A-DBCB-6E4D-1FC4-7CF3BC2002D5" otype="Table" vid="214D037A-F8C9-27DA-3E73-1DE6C94081EB">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="6" y="296" width="305" height="362"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="105FE797-3586-902C-E792-6D2D27F328C1" otype="Table" vid="DE39A772-3180-A49F-B2C9-9AF1095D3D7F">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1488" y="10" width="289" height="192"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="10A20129-71DB-0C15-0904-73BFC8D0CAF2" otype="Note" vid="B70DB505-390F-B758-F453-F348B749955D">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="309" y="680" width="170" height="26"/>
+<comment>reconciliation category 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="116E29DC-85CF-53F7-9F01-3BA60302AA6B" otype="Note" vid="3687B78E-E87B-492D-CD1B-A0F98B23A77D">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1031" y="1336" width="170" height="29"/>
+<comment>Bank statement 상제정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="13B347A9-328A-D51D-4C51-0E022B82FC5C" otype="Note" vid="664AC820-9F47-A2E3-B053-DC43B4990EB3">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="295" y="1451" width="95" height="27"/>
+<comment>Cash expense</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="1F467893-51B9-0A5E-6352-E679616C569B" otype="Table" vid="13C6A622-D538-8BC0-FFDD-D55F61F34730">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1752" y="2079" width="266" height="224"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="272F9C89-7664-322F-7D54-2B2985BBE691" otype="Table" vid="966F4D3F-45C8-B258-636B-B5D83A5A4F82">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1921" y="1563" width="292" height="377"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="2745DB81-F485-2AFC-7B32-84F63A2C6E1C" otype="Note" vid="C9897FA7-27FF-83D1-3DE4-2C7A580499D4">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1793" y="1230" width="170" height="30"/>
+<comment>Credit card statement 파일 정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="2963427C-96C0-DAD5-7492-C2877A186A81" otype="Note" vid="C5A416F7-BCC9-AB68-7264-0595229DE05E">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="2133" y="9" width="170" height="28"/>
+<comment>메뉴 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="2B741E67-FEBC-28D7-C6FE-C6612906F31F" otype="Table" vid="6E0487E6-AF7C-1950-21FA-AC0886C32480">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="703" y="1714" width="306" height="377"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="3E76F700-B110-596A-DBCC-AB097EDC4565" otype="Table" vid="D672C1DD-851A-C323-9A92-76944E8DE219">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="678" y="11" width="344" height="403"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="3E7E7567-CDCD-41EF-DC93-395B452EBFAC" otype="Note" vid="23F7FEEC-E095-4BA5-543F-8C58597BD7CD">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1155" y="1960" width="170" height="28"/>
+<comment>Invoice 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="4A875AD6-F565-21FA-9320-3B949A6A9303" otype="Table" vid="9FE69878-278F-81CB-060C-E100B3857D8F">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="698" y="1336" width="331" height="325"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="4B95B256-4EFD-DB34-053B-51A603FC80AC" otype="Note" vid="132D06E3-0B0F-3296-6B85-77E2F18D4011">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="2020" y="2080" width="170" height="110"/>
+<comment>Invoice 상세정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="4E0B39FE-494D-93CB-08A0-303325FE05F0" otype="Note" vid="3E4242D6-56DF-1DE9-CD45-E6A041769162">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1776" y="905" width="170" height="31"/>
+<comment>공지사항/게시판 파일</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="4E3B3F02-1294-77F3-6782-16F69130E4B2" otype="Table" vid="FE4AF5C6-F68E-41F9-6966-EA471EE59270">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="870" y="974" width="305" height="270"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="50735014-FE0F-4428-4F6B-693262903F5F" otype="Note" vid="BEC34115-53EF-90FC-E5B9-949438B8BF7F">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1313" y="1560" width="182" height="28"/>
+<comment>Credit card statement 상세 정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="51BC5B85-BFA1-3DF6-21E9-2C9D0E935547" otype="Note" vid="FA12F1E2-1DB7-E0FE-5FBE-593628D94651">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="364" y="953" width="170" height="29"/>
+<comment>회계년도별 분기 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="5496019F-8733-E89B-D592-91FFAEA432E4" otype="Note" vid="578647F8-F259-2D9C-2C13-17CEFA3ADA50">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1317" y="8" width="170" height="26"/>
+<comment>메뉴-권한 링크 정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="5B4BBB11-80F1-1052-9569-CA6E1476F18F" otype="Table" vid="60729328-2EC7-98F5-E473-17751D30DB6E">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1498" y="1557" width="303" height="312"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="5EDD8B07-20BF-930B-D6EE-1A03ACDD29E6" otype="Table" vid="6987FF36-883E-6CB8-9032-4F2A97C3BA51">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="7" y="1191" width="475" height="236"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="5EFFA3A4-FBFC-BAE5-4440-837F88A9D778" otype="Note" vid="BDDC5083-72A6-5C32-27BD-2BC1B2128455">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1026" y="11" width="170" height="30"/>
+<comment>사용자정보 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="67F5F9A5-82C3-F84D-6E36-E0ACD0037D14" otype="Table" vid="C8B1E6A9-C473-6106-54C1-43AFC3B56601">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="9" y="679" width="294" height="250"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="6D168037-40F1-811C-FEF1-774EBECB11B7" otype="Table" vid="44614E65-F73C-9F21-A5C5-E7990AD69F5E">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="9" y="955" width="353" height="208"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="723DE2D5-E395-42D2-BB93-E7381BCB8DF8" otype="Note" vid="84B30364-0BE6-040E-0505-C4FACA5B6367">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="430" y="1784" width="170" height="30"/>
+<comment>Quotation 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="7679C516-F4D0-4700-E28E-364328217CF9" otype="Note" vid="6858BA08-1D5A-CC5A-1BDC-AE83455591A9">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1054" y="580" width="170" height="29"/>
+<comment>사용자별 은행계좌 정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="85960379-DB5A-DC42-8647-DB219E5CCC09" otype="Table" vid="73CEA266-9084-3632-F9C0-12D2D99BE3A2">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1488" y="254" width="266" height="214"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="870084D8-8A14-760D-8523-E1A57AE68EA3" otype="Table" vid="D39B8C0E-FA47-A259-59D2-E7D7B2CD364A">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="845" y="612" width="379" height="263"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="968D02EC-EC6B-2686-1336-17175052F9C5" otype="Note" vid="53642913-9575-EAFE-8D03-688B816E31E8">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="397" y="2355" width="170" height="26"/>
+<comment>Quotation 상세정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="96BE90EC-58C6-896F-7EA7-65C6D438B192" otype="Note" vid="5B282489-4CAE-27F1-2129-B1BF81ECDF79">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="335" y="4" width="115" height="30"/>
+<comment>시스템 공통 코드</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="9BCBC5C2-F86C-5CBC-D9C1-05DB0C292183" otype="Table" vid="33887C12-1AC3-EE25-85FF-07A3494A8121">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="123" y="2355" width="269" height="243"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="A3A3CC2B-8069-8822-2A50-A5A6E5C27812" otype="Table" vid="7028635C-8F5A-13D2-857A-8043420960B9">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1326" y="1960" width="301" height="635"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="BE022890-8795-AF8C-7789-8617B1A6D671" otype="Note" vid="313FE622-A6B6-C0CA-3C30-9B8A2EA4B17D">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="317" y="296" width="95" height="39"/>
+<comment>회사정보 마스터</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="C20D59F0-5C10-D7D7-ECC8-8360AEDF4CFD" otype="Note" vid="B19621A7-AECE-B32C-0C50-B8CC19B41FEB">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="486" y="1190" width="195" height="25"/>
+<comment>회계년도/분기별 Payroll summary</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="C31E2350-9474-F7DA-CD88-AD3C7568DD9C" otype="Note" vid="6934481E-DF12-38DD-7CF9-EE64D04F9E45">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1780" y="556" width="170" height="31"/>
+<comment>공지사항/게시판</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="E3CA1900-B1C0-8541-6763-CB2818496F3F" otype="Note" vid="8D61459D-9CA5-694C-3EBD-D62743B5151D">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1921" y="1532" width="217" height="25"/>
+<comment>Credit card statement allocation 정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="EA875D8F-5146-B469-E2B1-7D445FA312A4" otype="Table" vid="DD1E821C-3067-DE1A-9209-49B48C37AAE2">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="7" y="1450" width="283" height="250"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="EB353ED7-E774-57B1-1C3E-3E859CAA9BD7" otype="Table" vid="7E456190-9520-16C5-99D7-C87C90712D62">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1488" y="554" width="286" height="309"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.TVNote" oid="F0EAD117-4DB1-30EE-34DA-BD7AA3111D1E" otype="Note" vid="D9BB72CB-312B-427B-D976-6525A41989C2">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1179" y="972" width="170" height="36"/>
+<comment>Bank statement 파일정보</comment>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="F39CA9FA-B147-5059-D318-F60C56B8B09D" otype="Table" vid="6B91579B-3B69-9DF4-5956-17B4002D42EC">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1857" y="10" width="272" height="256"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="F4D8CD40-8DC2-0EA8-610F-A25BA6C47DA1" otype="Table" vid="08FA853C-4F55-27F5-086F-C8A9432DC87C">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="1498" y="1229" width="291" height="270"/>
+</OView>
+</objectViews>
+<connectors>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="3884AF0A-C81E-1A36-6DF6-4136DD8DBE8F" otype="FKIndexAssociation" vid_source="6B91579B-3B69-9DF4-5956-17B4002D42EC" vid_target="DE39A772-3180-A49F-B2C9-9AF1095D3D7F">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1857" y="106"/>
+<point x="1777" y="106"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="417FFF05-9552-CD45-52A7-C874BE724D4F" otype="FKIndexAssociation" vid_source="D672C1DD-851A-C323-9A92-76944E8DE219" vid_target="7028635C-8F5A-13D2-857A-8043420960B9">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="911" y="414"/>
+<point x="1380" y="1960"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="41C52A14-0864-0D60-0C71-E8F610A929B6" otype="FKIndexAssociation" vid_source="FE4AF5C6-F68E-41F9-6966-EA471EE59270" vid_target="9FE69878-278F-81CB-060C-E100B3857D8F">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="949" y="1244"/>
+<point x="949" y="1336"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="4EFD97BB-77C7-8040-D1B6-04E4BF63EB98" otype="FKIndexAssociation" vid_source="D39B8C0E-FA47-A259-59D2-E7D7B2CD364A" vid_target="08FA853C-4F55-27F5-086F-C8A9432DC87C">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1178" y="875"/>
+<point x="1511" y="1229"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="73E9B312-52C0-BFD9-55AB-7FE3735EDACD" otype="FKIndexAssociation" vid_source="B34F5867-0B7A-4FFC-BB2C-E6A9C6B24D51" vid_target="33887C12-1AC3-EE25-85FF-07A3494A8121">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="258" y="2261"/>
+<point x="258" y="2355"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="8D0DADDD-BA34-21A7-C483-7C13FE9A9382" otype="FKIndexAssociation" vid_source="7028635C-8F5A-13D2-857A-8043420960B9" vid_target="13C6A622-D538-8BC0-FFDD-D55F61F34730">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1627" y="2191"/>
+<point x="1752" y="2191"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="9E502E5C-8BF9-8829-BB8A-7F2636E43A72" otype="FKIndexAssociation" vid_source="08FA853C-4F55-27F5-086F-C8A9432DC87C" vid_target="60729328-2EC7-98F5-E473-17751D30DB6E">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1643" y="1499"/>
+<point x="1643" y="1557"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="BABEC414-0116-37D4-ABC6-4C14085C2FF9" otype="FKIndexAssociation" vid_source="60729328-2EC7-98F5-E473-17751D30DB6E" vid_target="966F4D3F-45C8-B258-636B-B5D83A5A4F82">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1801" y="1716"/>
+<point x="1921" y="1716"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="C3F8F036-0F8B-8999-6247-58F0C69E1865" otype="FKIndexAssociation" vid_source="9FE69878-278F-81CB-060C-E100B3857D8F" vid_target="6E0487E6-AF7C-1950-21FA-AC0886C32480">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="856" y="1661"/>
+<point x="856" y="1714"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="D19C171D-B51D-F759-2150-C31B3868E678" otype="FKIndexAssociation" vid_source="73CEA266-9084-3632-F9C0-12D2D99BE3A2" vid_target="DE39A772-3180-A49F-B2C9-9AF1095D3D7F">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1621" y="254"/>
+<point x="1621" y="202"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="D2A0D697-1819-8EDB-BCA6-3601986A1C6D" otype="FKIndexAssociation" vid_source="D672C1DD-851A-C323-9A92-76944E8DE219" vid_target="D39B8C0E-FA47-A259-59D2-E7D7B2CD364A">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="933" y="414"/>
+<point x="933" y="612"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="E195FFAA-77F8-0C03-5130-1ECF60944F48" otype="FKIndexAssociation" vid_source="D672C1DD-851A-C323-9A92-76944E8DE219" vid_target="B34F5867-0B7A-4FFC-BB2C-E6A9C6B24D51">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="786" y="414"/>
+<point x="350" y="1786"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="F1EE45E6-A27C-8997-F01A-E00A593296DE" otype="FKIndexAssociation" vid_source="214D037A-F8C9-27DA-3E73-1DE6C94081EB" vid_target="D672C1DD-851A-C323-9A92-76944E8DE219">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="311" y="370"/>
+<point x="678" y="370"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="FA3BDC43-6D49-4AC9-AA3C-F47CFAB81F91" otype="FKIndexAssociation" vid_source="D39B8C0E-FA47-A259-59D2-E7D7B2CD364A" vid_target="FE4AF5C6-F68E-41F9-6966-EA471EE59270">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1022" y="875"/>
+<point x="1022" y="974"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="FFE20188-531C-9858-DC8C-538DAAFB8780" otype="FKIndexAssociation" vid_source="7E456190-9520-16C5-99D7-C87C90712D62" vid_target="8D7AFAF6-3821-55B1-A0B3-585CBFB0F027">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="1630" y="863"/>
+<point x="1630" y="905"/>
+</points>
+</Connector>
+</connectors>
+</Diagram>

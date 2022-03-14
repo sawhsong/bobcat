@@ -1,0 +1,105 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SYS_MENU" directorySegmentName="seg_0" id="12884468-FB68-00AF-5F2A-5E9BE2C93D0C">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F28C6001-5676-32BA-4276-51ABC4F2056E</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="MENU_NAME_EN" id="003324DF-48FC-A213-8319-A1DC8A984A6F">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_USER_ID" id="00EF8E0D-11EB-452B-C5A6-9BC7D9A0917D">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="IS_ACTIVE" id="07409E26-1D18-691D-7FD4-E22C37832DF2">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DESCRIPTION" id="0BA6A354-F07E-3CE4-A2D2-10D7B08A9A5E">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_URL" id="1F0BDEFA-6352-0793-5656-6ED868AEBF35">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_DATE" id="45581EC0-C592-9FA2-8A82-8B7593491D22">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="MENU_ID" id="62D187E7-B4CB-1D83-DBB2-B1C6570598B3">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_NAME_KO" id="6C968C72-51F2-D0AA-B9DB-70265E293373">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MENU_ICON" id="AA04880A-823F-47CB-D41D-2B04F459487E">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PARENT_MENU_ID" id="B456DE36-96B7-4BF4-8603-5AE57436528F">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_USER_ID" id="B583979C-1EFA-0FDF-4518-C10C37BD42D9">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SORT_ORDER" id="DA12A0D1-2645-D308-6332-63204F3EEE98">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="DF7F4039-B401-A24B-93DC-A82E03469ABC">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_SYS_MENU" id="33488D6A-3226-B2FC-EE3D-0F79E2114321">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_SYS_MENU" id="53BB9824-6504-9A55-170D-248C68591874">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+<existingIndex>33488D6A-3226-B2FC-EE3D-0F79E2114321</existingIndex>
+<indexSegment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

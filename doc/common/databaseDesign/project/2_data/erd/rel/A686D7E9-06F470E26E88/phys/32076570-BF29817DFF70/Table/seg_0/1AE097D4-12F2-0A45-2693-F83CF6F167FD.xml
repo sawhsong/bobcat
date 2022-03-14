@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SYS_RECON_CATEGORY" directorySegmentName="seg_0" id="1AE097D4-12F2-0A45-2693-F83CF6F167FD">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F28C6001-5676-32BA-4276-51ABC4F2056E</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="SORT_ORDER" id="18B8461B-4A5A-B983-E884-39C4BEBDDE21">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="GST_PERCENTAGE" id="52207D55-74AF-DB37-8303-2529EBE6DE72">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CATEGORY_NAME" id="6BCDF350-E4AC-A717-3718-20ED1D6FF0C3">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_DATE" id="8F091244-FEE6-2BD3-9FCE-4E3175B37059">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="PARENT_CATEGORY_ID" id="A3F2225F-C8C3-3A73-E165-16C3341E19BD">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="IS_APPLY_GST" id="AD719F57-8AEB-0E99-629D-8839D0B15617">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ACCOUNT_CODE" id="BE3AD9C9-099C-6C40-3881-DF2756D755D8">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="DDBF63DE-1C56-E1BC-B8FF-72AE6EF8B8F9">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CATEGORY_ID" id="E8524078-0F5F-1C57-DD5E-62995EFCA4A6">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_USER_ID" id="EDC3B041-0808-6954-2EAF-A77FA331E0FD">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_USER_ID" id="F0C2FEC4-2115-FB49-883C-133747162867">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_SYS_RECON_CATEGORY" id="2367F655-4A2A-2213-55A7-A6AE74B15BB1">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<segment>730C8D1C-FF57-67E9-B50E-6072A27FECE0</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+</IndexProxy>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="UK_4913649645400" id="6990E660-08A0-3C7F-4C12-8C68B82AFD65">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_SYS_RECON_CATEGORY" id="2609E79F-3B54-A4DE-B741-CFA04EB520D5">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<segment>730C8D1C-FF57-67E9-B50E-6072A27FECE0</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+<existingIndex>2367F655-4A2A-2213-55A7-A6AE74B15BB1</existingIndex>
+<indexSegment>730C8D1C-FF57-67E9-B50E-6072A27FECE0</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="UK_4913649645400" id="96DCCAAD-DC82-D2F3-5BE9-D77479ACDEAA">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+<existingIndex>6990E660-08A0-3C7F-4C12-8C68B82AFD65</existingIndex>
+<indexSegment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev11g>

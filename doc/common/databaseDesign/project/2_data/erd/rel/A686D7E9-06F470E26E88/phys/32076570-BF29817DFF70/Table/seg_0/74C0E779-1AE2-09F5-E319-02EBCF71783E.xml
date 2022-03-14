@@ -1,0 +1,132 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="USR_BANK_STATEMENT_D" directorySegmentName="seg_0" id="74C0E779-1AE2-09F5-E319-02EBCF71783E">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F28C6001-5676-32BA-4276-51ABC4F2056E</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="PROC_DATE" id="3433E13D-1080-7C41-E1B6-1DE9B416B5D5">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ROW_INDEX" id="5C469297-45DE-A40B-DEDD-B333E0578092">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BANK_STATEMENT_D_ID" id="7038328B-DD84-746E-A24F-6F75ABE3B5A5">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DEBIT_AMT" id="74389555-20E2-910E-3AB6-6260DAAA1109">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_DATE" id="83C17D4C-1B5A-7E25-316D-575AB04B6866">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="CREDIT_AMT" id="83E7B436-1BE5-4C32-E5A4-B3A82E658093">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BANK_ACCOUNT" id="86B7E8F4-1D0D-E3CE-D3D7-B9EF86793DAA">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BANK_STATEMENT_ID" id="9BFDC681-F81D-3390-EAFC-27CA4B2AD1C5">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SERIAL" id="B5A790C0-F5E6-D1D1-1FF7-FB0D5156F5E8">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_USER_ID" id="BA168941-0F4B-E0D6-33CF-558C9C81DD55">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BALANCE" id="BF4EFF02-8A4D-A863-C9C2-893D58FBC768">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PROC_AMT" id="C9494C1C-B78B-C81E-5F4B-B2C15A580BB5">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PROC_DESCRIPTION" id="D0FE1842-08E6-1E1A-29DC-377368D323FC">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USER_DESCRIPTION" id="DA664456-222A-D780-6CD6-27E3938A6ED4">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CATEGORY" id="ED12D9C5-6C02-7656-2E06-94061439B250">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="F53109B2-022D-3C09-0302-70327A41D64D">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_USER_ID" id="FB885B2B-73A7-47AF-CB28-8E6480781308">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_USR_BANK_STATEMENT_D" id="330DB4E7-65C3-E8FF-E05C-B242022F7BAE">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_29431361643900" id="5A0CB32B-E3D8-0D8D-D0CB-355F919C1735">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_USR_BANK_STATEMENT_D" id="4B550AAC-5590-A553-09B6-55831ADD5925">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+<existingIndex>330DB4E7-65C3-E8FF-E05C-B242022F7BAE</existingIndex>
+<indexSegment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

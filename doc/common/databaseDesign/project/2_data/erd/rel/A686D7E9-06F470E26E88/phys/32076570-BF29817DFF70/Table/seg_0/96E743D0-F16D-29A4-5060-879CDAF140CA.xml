@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SYS_BOARD_FILE" directorySegmentName="seg_0" id="96E743D0-F16D-29A4-5060-879CDAF140CA">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>F28C6001-5676-32BA-4276-51ABC4F2056E</segment>
+<tableSpace>5F9B85A4-6750-ACDD-7C4C-9A37A790A31B</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="FILE_ID" id="01CF5779-06A6-DC15-541F-466523E9C3DF">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ARTICLE_ID" id="11820B21-2110-773D-15B6-4BE037A57E19">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_DATE" id="228C52CF-479B-9A8B-821D-58EF6B06562A">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="REPOSITORY_PATH" id="3A9D0744-FD1E-D252-B3AD-76572DFC66B8">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NEW_NAME" id="4DDF3FC7-1E66-25C5-220D-9C3F97A52EC3">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_USER_ID" id="7883B59F-6C58-7418-15FA-4381CDC4141A">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FILE_ICON" id="79022FAC-88BB-E8FC-B901-DCE9BC725A0E">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="87B2A0C8-B7AD-3F92-7FD4-BC63977B3B63">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ORIGINAL_NAME" id="88D9A0EE-74FA-B85E-4947-E8748146EEA2">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FILE_TYPE" id="913765BB-6FE6-BD59-7938-8D5899209291">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FILE_SIZE" id="BCF1F8C5-AFAD-6ED0-8F97-16FB7D461F0D">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INSERT_USER_ID" id="D5192A42-6B70-5BF7-3F2A-6FFE08B1C7CE">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_SYS_BOARD_FILE" id="4F6FB9CA-3B05-AB83-1C20-B1578502C2D7">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>57A716C6-CAA3-58CA-F7E7-20D496992C8F</schemaObject>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_SYS_BOARD_FILE" id="B1B7D416-B1B0-9A7E-705C-C6C5290EBCD0">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<segment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</segment>
+<tableSpace>34584378-3C2B-D8CF-6158-0DABF515EB2D</tableSpace>
+<existingIndex>4F6FB9CA-3B05-AB83-1C20-B1578502C2D7</existingIndex>
+<indexSegment>879C6F59-50FB-F09B-41C1-DAC0A7B27E23</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

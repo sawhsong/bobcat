@@ -1,0 +1,248 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5EDD8B07-20BF-930B-D6EE-1A03ACDD29E6" schemaObject="39461213-9176-6D64-33F3-9293CD53D7ED" name="USR_YEARLY_PAYROLL_SUMMARY">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>USR_YEARLY_PAYROLL_SUMMARY</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Yerarly payroll summary]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>02EC3ECA-D5FA-7266-2CFE-14EDCDEA31CC</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ORG_ID" id="DD978F1F-38F2-D223-EBFF-8EB94D31871F">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>ORG_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Org UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>5014260B-0EEC-986B-5E51-C146C72DD0D5</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FINANCIAL_YEAR" id="7D5E9606-60AC-9F16-270E-1E291C57DD71">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>FINANCIAL_YEAR</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Financial year]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>579AE036-C602-5272-F53A-78DDEE4C7B47</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5 BYTE</dataTypeSize>
+<ownDataTypeParameters>5 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PAYROLL_MONTH" id="26C91FA0-687A-D926-1E92-275692ABC946">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>PAYROLL_MONTH</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Payroll month(YYYYMM)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>37B8121F-8338-718B-E397-1D4078798F2E</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NUMBER_OF_EMPLOYEE" id="3C045C47-6C86-3217-7939-91C09B77B63F">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>NUMBER_OF_EMPLOYEE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Number of employee]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>64B1DB3A-3031-77EC-5C82-D3E1F4EDB59B</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GROSS_PAY_AMT" id="3657DDD2-BBBB-0778-53A1-A578E8BDA8BD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>GROSS_PAY_AMT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Gross payment]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>7BD1C74C-134E-5D3D-37BE-A0BE229EF4C5</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TAX" id="A749ED71-12FD-8BF7-4145-1A61CAB69B30">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>TAX</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tax]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>86620B0B-B1A2-D7A9-AE39-FDF7032912D9</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NET_PAY_AMT" id="3C71E359-8E88-441F-9656-0E34F1982200">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>NET_PAY_AMT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Net Payment]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>560F1C52-F444-5271-94AA-BBF7E4CA76C5</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SUPER_AMT" id="9FBED5C2-FA7B-2432-3DF2-F90EC490DCAF">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>SUPER_AMT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Superannuation]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>3E39B594-FA6E-9B36-EFDB-A84A14F21605</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_DATE" id="5D0016B6-002C-7840-77B3-DD5DAE5A489D">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>UPDATE_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>A8659F84-707C-1CB4-CF14-D8C7A911F7AD</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_USER_ID" id="DD98E765-FF43-DB2A-927D-7F8FE8B48ECD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>INSERT_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>04DC0CA9-FCD9-51E9-293A-4DD6AB5AD1A6</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_DATE" id="1C3DFB6C-8B6C-BD97-566D-8514F87B3553">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>INSERT_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>33B5C382-9A17-8E53-751C-26C7B78262FC</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_USER_ID" id="6502E1DF-6209-4F25-C6D2-FD0E355D9A81">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_YEARLY_PAYROLL_SUMMARY</sourceObjSchema>
+<sourceObjName>UPDATE_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>ECCF801B-8AA9-2B66-738E-A2CBA9CE53F4</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A15D56BC-04E3-FD0F-5D01-D8CEE9CC6DBA" name="PK_USR_YEARLY_PAYROLL_SUMMARY">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_USR_YEARLY_PAYROLL_SUMMARY</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>6AE18179-B4D1-269B-84F0-EFE921005D36</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DD978F1F-38F2-D223-EBFF-8EB94D31871F"/>
+<colUsage columnID="7D5E9606-60AC-9F16-270E-1E291C57DD71"/>
+<colUsage columnID="26C91FA0-687A-D926-1E92-275692ABC946"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5454F197-5E38-F3CE-0895-4A0265EB3BF6" schemaObject="39461213-9176-6D64-33F3-9293CD53D7ED" name="PK_USR_YEARLY_PAYROLL_SUMMARY">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_USR_YEARLY_PAYROLL_SUMMARY</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>B3D6F728-6B1F-57AD-8FEB-3DD104DE2C8D</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DD978F1F-38F2-D223-EBFF-8EB94D31871F"/>
+<colUsage columnID="7D5E9606-60AC-9F16-270E-1E291C57DD71"/>
+<colUsage columnID="26C91FA0-687A-D926-1E92-275692ABC946"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

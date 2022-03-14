@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="C3F8F036-0F8B-8999-6247-58F0C69E1865" containerWithKeyObject="2B741E67-FEBC-28D7-C6FE-C6612906F31F" localFKIndex="510323E6-D26D-3138-3EC3-72070860E48D" name="USR_BS_TRAN_ALLOC_USR_BANK_STATEMENT_D">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>E952F564-1667-3E4F-3A7E-56D2FB706B94</importedID>
+<referredTableLongName>HKACCOUNT.USR_BANK_STATEMENT_D</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>4A875AD6-F565-21FA-9320-3B949A6A9303</referredTableID>
+<keyObject>BB881CA8-29A2-3CC1-1112-4DF1C19C9BC8</keyObject>
+<referredKeyID>BB881CA8-29A2-3CC1-1112-4DF1C19C9BC8</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>BANK_STATEMENT_D_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

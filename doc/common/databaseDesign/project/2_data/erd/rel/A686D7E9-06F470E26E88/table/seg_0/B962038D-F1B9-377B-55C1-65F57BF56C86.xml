@@ -1,0 +1,202 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B962038D-F1B9-377B-55C1-65F57BF56C86" schemaObject="57A716C6-CAA3-58CA-F7E7-20D496992C8F" name="SYS_FINANCIAL_PERIOD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>SYS_FINANCIAL_PERIOD</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Quarter type by financial year]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PERIOD_YEAR" id="5F04A3B4-759D-C85C-1020-5C396276EF58">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>PERIOD_YEAR</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Year (PK)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>4 BYTE</dataTypeSize>
+<ownDataTypeParameters>4 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QUARTER_CODE" id="670C3A9D-E7B5-A634-C522-E37C2705C271">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>QUARTER_CODE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Quarter Code (PK) (sys_common_code.quarter_code)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FINANCIAL_YEAR" id="E683CD22-BC38-350F-88C3-2BE161983FCA">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>FINANCIAL_YEAR</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Financial Year (ex. 2016 - 2017)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QUARTER_NAME" id="5BB24FCB-3310-9E81-FB0D-0723D3AB3D73">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>QUARTER_NAME</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Quarter Name (sys_common_code.quarter_name)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATE_FROM" id="6754ADA6-A079-BAB0-4C94-735D1EE060DF">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>DATE_FROM</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Date From]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATE_TO" id="AFEBC953-EB09-E2EE-CC68-23F61E6B615E">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>DATE_TO</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Date To]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_USER_ID" id="B2107E47-8235-E0D4-CF01-4A28D0D6AC2A">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>INSERT_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_DATE" id="A81ACDFE-2F97-DDD3-7D70-78658188896C">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>INSERT_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_USER_ID" id="CAC3D31F-B417-D463-1CF9-DFEF2521C651">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>UPDATE_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_DATE" id="F6161B42-D13B-03AC-A569-03B5DEF6C686">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>SYS_FINANCIAL_PERIOD</sourceObjSchema>
+<sourceObjName>UPDATE_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="67FF301D-DF83-0472-A6BE-FB99005BC409" name="PK_SYS_FINANCIAL_PERIOD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_SYS_FINANCIAL_PERIOD</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5F04A3B4-759D-C85C-1020-5C396276EF58"/>
+<colUsage columnID="670C3A9D-E7B5-A634-C522-E37C2705C271"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FF130D27-7490-B98E-B205-F4F78EF636BD" schemaObject="57A716C6-CAA3-58CA-F7E7-20D496992C8F" name="PK_SYS_FINANCIAL_PERIOD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_SYS_FINANCIAL_PERIOD</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5F04A3B4-759D-C85C-1020-5C396276EF58"/>
+<colUsage columnID="670C3A9D-E7B5-A634-C522-E37C2705C271"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

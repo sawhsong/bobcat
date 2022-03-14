@@ -1,0 +1,305 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="870084D8-8A14-760D-8523-E1A57AE68EA3" schemaObject="39461213-9176-6D64-33F3-9293CD53D7ED" name="USR_BANK_ACCNT">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>USR_BANK_ACCNT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank account info by user]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>0EF09B64-810D-813B-56B0-B45A6E086B33</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="BANK_ACCNT_ID" id="709325F7-AF16-3620-E3AA-40A610CC244C">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>BANK_ACCNT_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank account UID (PK)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>C2D1F024-36D3-241D-B6BC-C5829855AF57</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USER_ID" id="0BC2A2F9-8696-5E2C-A40F-BEB5E9E11FE9">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[User UID (SYS_USER.USER_ID)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>421F5E6E-F3F4-E9B6-3763-BF42BA45CDDE</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BANK_CODE" id="CDA93D1E-D51F-C0C6-C8BD-C27B5DA4E790">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>BANK_CODE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank code (SYS_COMMON_CODE.COMMON_CODE)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>2440AC00-57B0-5FC5-465C-1CAED7FB9206</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BSB" id="D4D64572-9F0C-0FD1-6232-2561930E8ABA">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>BSB</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank BSB Number]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>272D0037-C534-03B7-A3DC-68084100BDAA</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ACCNT_NUMBER" id="CE3D457A-54DA-21AB-29D3-03BBCF822911">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>ACCNT_NUMBER</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank account Number]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>B2BA5F19-3413-7306-8216-D662ED92C624</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ACCNT_NAME" id="BC7615A2-D4E2-CBC0-9248-9AC13A9C52AC">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>ACCNT_NAME</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank account Name]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>7C0BA141-6D1D-91EE-F672-7764775A0756</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BALANCE" id="8D045C5F-EE21-AD7F-E5E1-40BEA57179CF">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>BALANCE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Account balance amount]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>E5D8C816-239D-445F-3BD7-2EF4AE657703</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTION" id="280A25DC-6061-D7FB-C4AD-6F798CED180D">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>DESCRIPTION</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bacnk account description]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>8611AD3E-C03E-DFC4-3D49-FDCAC64E2ADC</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_USER_ID" id="864C268E-EE80-F753-7733-243BE44255AD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>INSERT_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>532E13DD-52A9-B36E-302C-18D3D33D9D74</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_DATE" id="8A9875B6-4A59-D900-D3C0-3A9EBF884FCA">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>INSERT_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>16A02938-2E16-EC7F-4447-0F803D553657</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_USER_ID" id="8417C42D-CD16-150E-751A-C168D16ECB15">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>UPDATE_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>BE8348D5-2329-C880-FF42-23D610AD1ED4</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_DATE" id="33F138EB-A995-9ABB-4B27-082ED5590764">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_BANK_ACCNT</sourceObjSchema>
+<sourceObjName>UPDATE_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>BBF3FCC7-8F1C-F53E-1D2B-585F24040CA2</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SYS_USER_USER_ID" id="A0E83BB7-E090-A83C-DEBF-757375122410">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>7C08A285-A2C2-F1D6-216B-8EA8687FECB2</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D2A0D697-1819-8EDB-BCA6-3601986A1C6D" referredColumn="9E824AAB-41A1-4525-3F70-475B712C8B3A"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="53D17947-5025-7BCD-23F8-002FB352F897" name="PK_USR_BANK_ACCNT">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_USR_BANK_ACCNT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>6FFC54DB-7AD0-B9C4-63EA-4E9BB2D78A77</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="709325F7-AF16-3620-E3AA-40A610CC244C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="44DD0408-B7D2-DE06-A6E0-917DCCE1F01B" name="UK_13468612426000">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>UK_13468612426000</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>2104721C-0D3C-A2F8-A11F-15EA4AA5282A</importedID>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0BC2A2F9-8696-5E2C-A40F-BEB5E9E11FE9"/>
+<colUsage columnID="CDA93D1E-D51F-C0C6-C8BD-C27B5DA4E790"/>
+<colUsage columnID="D4D64572-9F0C-0FD1-6232-2561930E8ABA"/>
+<colUsage columnID="CE3D457A-54DA-21AB-29D3-03BBCF822911"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="49E6AA20-52A4-68B3-80A3-484D45455A09" schemaObject="39461213-9176-6D64-33F3-9293CD53D7ED" name="PK_USR_BANK_ACCNT">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_USR_BANK_ACCNT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>C2A9225C-1624-233C-4DDA-67A255B47DDE</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="709325F7-AF16-3620-E3AA-40A610CC244C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="776D76B9-AF4E-FBF7-E702-D260633916C5" schemaObject="39461213-9176-6D64-33F3-9293CD53D7ED" name="UK_13468612426000">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>UK_13468612426000</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>F99C30A4-FEC6-2745-48B5-062095E0FAAC</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0BC2A2F9-8696-5E2C-A40F-BEB5E9E11FE9"/>
+<colUsage columnID="CDA93D1E-D51F-C0C6-C8BD-C27B5DA4E790"/>
+<colUsage columnID="D4D64572-9F0C-0FD1-6232-2561930E8ABA"/>
+<colUsage columnID="CE3D457A-54DA-21AB-29D3-03BBCF822911"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E85E89FB-5CCE-7A73-9E6E-BBB43345F559" name="USR_BANK_ACCNT_SYS_USER">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A0E83BB7-E090-A83C-DEBF-757375122410"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

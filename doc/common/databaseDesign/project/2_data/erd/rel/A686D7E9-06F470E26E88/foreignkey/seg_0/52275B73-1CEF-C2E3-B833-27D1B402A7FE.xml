@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="52275B73-1CEF-C2E3-B833-27D1B402A7FE" containerWithKeyObject="C3637059-9735-3953-7743-C57E8AA3C659" localFKIndex="1E20A4CB-6C27-D258-1C93-0814D2AEF023" name="FK_SYS_MENU_AUTH_LINK_GROUP">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>FK_SYS_MENU_AUTH_LINK_GROUP</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<referredTableLongName>HKACCOUNT.SYS_AUTH_GROUP</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>9EBBB761-AB2D-E47A-32FD-785F5036C8C8</referredTableID>
+<keyObject>7EC46B79-E288-0E4C-0F8A-C65DC3A703E3</keyObject>
+<referredKeyID>7EC46B79-E288-0E4C-0F8A-C65DC3A703E3</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>GROUP_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

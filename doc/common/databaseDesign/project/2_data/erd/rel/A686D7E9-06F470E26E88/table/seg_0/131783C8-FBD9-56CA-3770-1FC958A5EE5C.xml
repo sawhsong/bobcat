@@ -1,0 +1,260 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="131783C8-FBD9-56CA-3770-1FC958A5EE5C" schemaObject="57A716C6-CAA3-58CA-F7E7-20D496992C8F" name="USR_CC_STATEMENT">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>USR_CC_STATEMENT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Credit card statement master info which is uploaded by user]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CC_STATEMENT_ID" id="8BC58DF4-DA02-A4D7-5EFD-F4E6C72196DD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>CC_STATEMENT_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Credit card statement master UID (PK)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BANK_ACCNT_ID" id="FBD70067-36EF-8111-0E16-A6DBA1E39ABD">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>BANK_ACCNT_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bank account UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="331FD9F7-B227-E78C-DE85-A57B69DA4399" referredColumn="C2D1F024-36D3-241D-B6BC-C5829855AF57"/>
+</associations>
+</Column>
+<Column name="ORIGINAL_FILE_NAME" id="15542E31-F968-28CA-1CF7-F87E0942FCF8">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>ORIGINAL_FILE_NAME</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[File real name]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NEW_NAME" id="1581F4E8-28C9-A05B-54AE-835EBBA3D612">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>NEW_NAME</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[File name defined by system]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FILE_TYPE" id="B8401EAD-1872-DAE6-CFD2-6D8B1377900A">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>FILE_TYPE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[File type]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FILE_ICON" id="A45CC81C-D7C6-ED85-9067-63E37B4B0338">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>FILE_ICON</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[File icon path and name]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FILE_SIZE" id="D9CB1FDA-173F-90EC-3B49-F42E941B6FF6">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>FILE_SIZE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[File size (KB)]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REPOSITORY_PATH" id="F05C807E-3A4D-7B2C-E785-5061877ABB39">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>REPOSITORY_PATH</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Saved file path]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTION" id="A2A5C0F6-31BF-CD23-BAE5-926F5EA207FF">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>DESCRIPTION</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[File description written by user]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_USER_ID" id="6B44912F-6CCC-8DEB-46A5-460E724C1976">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>INSERT_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INSERT_DATE" id="912BB41C-1932-2C23-E44D-2FC41D9E8D64">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>INSERT_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Insert Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_USER_ID" id="7763B9C7-91A9-AA41-42B8-4FBF7BA9BF1D">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>UPDATE_USER_ID</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update User UID]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_DATE" id="E3452170-B049-61AF-C402-3F4122D2DD31">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>USR_CC_STATEMENT</sourceObjSchema>
+<sourceObjName>UPDATE_DATE</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[Update Date]]></commentInRDBMS>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DE06586A-3B33-DF05-725A-4BA1D05DB7D9" name="PK_USR_CC_STATEMENT">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_USR_CC_STATEMENT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8BC58DF4-DA02-A4D7-5EFD-F4E6C72196DD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D47F2062-3C29-1A0A-2339-60018897D2D2" schemaObject="57A716C6-CAA3-58CA-F7E7-20D496992C8F" name="PK_USR_CC_STATEMENT">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>PK_USR_CC_STATEMENT</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8BC58DF4-DA02-A4D7-5EFD-F4E6C72196DD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6C27A27D-8095-859E-A487-3D3A01A964B2" name="FK_11580650864400">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FBD70067-36EF-8111-0E16-A6DBA1E39ABD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

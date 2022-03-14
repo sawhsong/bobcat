@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SchemaObject class="oracle.dbtools.crest.model.design.relational.SchemaObject" name="HKACCOUNT" directorySegmentName="seg_0" id="39461213-9176-6D64-33F3-9293CD53D7ED">
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-16 00:49:33 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<importedID>57A716C6-CAA3-58CA-F7E7-20D496992C8F</importedID>
+</SchemaObject>

@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="FDEA0BD7-D15F-EFF0-5103-DBF8DC7D873E" containerWithKeyObject="B71DE024-85D3-0383-A534-F73087B8C01E" localFKIndex="42BF1DC7-450B-451D-F2F1-13885A873E86" name="FK_29601650533400">
+<sourceConnName>XE_HKACCOUNT</sourceConnName>
+<sourceObjSchema>HKACCOUNT</sourceObjSchema>
+<sourceObjName>FK_29601650533400</sourceObjName>
+<createdBy>Dustin.Sa</createdBy>
+<createdTime>2022-03-15 23:55:01 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<referredTableLongName>HKACCOUNT.USR_QUOTATION</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>0E3A6ECE-6535-01F6-87C4-90FA38DD31E2</referredTableID>
+<keyObject>61332E64-8BD5-3491-1DDC-81B35FC285BD</keyObject>
+<referredKeyID>61332E64-8BD5-3491-1DDC-81B35FC285BD</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>QUOTATION_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
