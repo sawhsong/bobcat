@@ -21,9 +21,9 @@ create table sys_menu (
     update_date                     date,                                                           -- Update Date
 
     constraint pk_sys_menu primary key(menu_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_menu                 is 'Menu Info';
 comment on column sys_menu.menu_id         is 'Menu UID (PK)';

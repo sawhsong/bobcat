@@ -20,9 +20,9 @@ create table usr_invoice_d (
 
     constraint fk_29690386282100 foreign key(invoice_id) references usr_invoice(invoice_id),
     constraint pk_usr_invoice_d primary key(invoice_d_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_invoice_d                                                  is 'Invoice detail info';
 comment on column usr_invoice_d.invoice_d_id                                     is 'Invoice detail UID (PK)';

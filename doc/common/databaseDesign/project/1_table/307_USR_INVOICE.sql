@@ -48,9 +48,9 @@ create table usr_invoice (
 
     constraint fk_52464305443800 foreign key(user_id) references sys_user(user_id),
     constraint pk_usr_invoice primary key(invoice_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_invoice                                                    is 'Invoice info for additioanl user service';
 comment on column usr_invoice.invoice_id                                         is 'Invoice UID (PK)';

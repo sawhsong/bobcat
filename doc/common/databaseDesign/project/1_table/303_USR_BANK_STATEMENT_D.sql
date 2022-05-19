@@ -26,9 +26,9 @@ create table usr_bank_statement_d (
 
     constraint fk_29431361643900 foreign key(bank_statement_id) references usr_bank_statement(bank_statement_id),
     constraint pk_usr_bank_statement_d primary key(bank_statement_d_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_bank_statement_d                                           is 'Bank statement details';
 comment on column usr_bank_statement_d.bank_statement_d_id                       is 'Bank statement detail UID (PK)';

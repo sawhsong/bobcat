@@ -21,9 +21,9 @@ create table usr_bank_accnt (
 
     constraint pk_usr_bank_accnt primary key(bank_accnt_id),
     constraint uk_13468612426000 unique(user_id, bank_code, bsb, accnt_number)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_bank_accnt                                                 is 'Bank account info by user';
 comment on column usr_bank_accnt.bank_accnt_id                                   is 'Bank account UID (PK)';

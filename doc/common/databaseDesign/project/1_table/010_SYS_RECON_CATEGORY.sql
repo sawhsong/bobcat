@@ -20,9 +20,9 @@ create table sys_recon_category (
 
     constraint pk_sys_recon_category primary key(category_id),
     constraint uk_4913649645400 unique(category_name)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_recon_category                                             is 'Bank transaction reconciliation category';
 comment on column sys_recon_category.category_id                                 is 'Reconciliation category UID (PK)';

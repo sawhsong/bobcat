@@ -22,9 +22,9 @@ create table sys_income_type (
 
     constraint pk_sys_income_type primary key(income_type_id),
     constraint uk_sys_income_type unique(org_category, income_type)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_income_type                       is 'Income Entry Type';
 comment on column sys_income_type.income_type_id        is 'Income type UID (PK)';

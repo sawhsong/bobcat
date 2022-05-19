@@ -22,9 +22,9 @@ create table usr_bank_statement (
 
     constraint fk_13247395166800 foreign key(bank_accnt_id) references usr_bank_accnt(bank_accnt_id),
     constraint pk_usr_bank_statement primary key(bank_statement_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_bank_statement                                             is 'Bank statement master info which is uploaded by user';
 comment on column usr_bank_statement.bank_statement_id                           is 'Bank statement master UID (PK)';

@@ -1,33 +1,20 @@
 /**
  * User
  */
--- hkaccount
-drop user hkaccount cascade;
+-- bobcat
+drop user bobcat cascade;
 
-create user hkaccount identified by hkaccount20170523;
-grant connect, resource to hkaccount;
-grant create synonym, create view, create database link, create public synonym, drop public synonym to hkaccount;
+create user bobcat identified by Bobcat_20220519;
+grant connect, resource to bobcat;
+grant create synonym, create view, create database link, create public synonym, drop public synonym to bobcat;
 
 /*
  * Oracle cloud autonomous database
  */
-create user hkaccount identified by hkAccntPass20210620; -- Oracle cloud autonumous db
-grant connect, resource to hkaccount;
-grant create synonym, create view, create database link, create public synonym, drop public synonym to hkaccount;
-grant unlimited tablespace to hkaccount;
-
-
-
-/**
- * Create DB Link
- * 	Login as alpaca
- */
---drop database link hkaccount_aws;
---create database link hkaccount_aws connect to hkaccount identified by hkaccount20170523 using '52.65.204.139:1521/xe';
-
---drop database link perci;
---create database link perci connect to PERCI_0829 identified by welcome1 using '10.14.35.41:1521/TEST';
---create database link perci connect to PERCI identified by WELCOME1 using 'entipx-ora2:1521/PROD';
+create user bobcat identified by DBPass_20220519; -- Oracle cloud autonumous db
+grant connect, resource to bobcat;
+grant create synonym, create view, create database link, create public synonym, drop public synonym to bobcat;
+grant unlimited tablespace to bobcat;
 
 /**
  * Table space(Index, Data)
@@ -35,12 +22,12 @@ grant unlimited tablespace to hkaccount;
 -- system
 alter database datafile 'C:\oraclexe\app\oracle\oradata\xe\system.DBF' autoextend on next 1M maxsize unlimited;
 
--- hkaccount
-create tablespace hkaccount_idx datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' size 1m extent management local segment space management auto;
-create tablespace hkaccount_data datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_DATA.DBF' size 1m extent management local segment space management auto;
+-- bobcat
+create tablespace bobcat_idx datafile 'C:\oraclexe\app\oracle\oradata\Bobcat\Bobcat_IDX.DBF' size 1m extent management local segment space management auto;
+create tablespace bobcat_data datafile 'C:\oraclexe\app\oracle\oradata\Bobcat\Bobcat_DATA.DBF' size 1m extent management local segment space management auto;
 
-alter database datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_IDX.DBF' autoextend on;
-alter database datafile 'C:\oraclexe\app\oracle\oradata\HKAccount\HKAccount_DATA.DBF' autoextend on;
+alter database datafile 'C:\oraclexe\app\oracle\oradata\Bobcat\Bobcat_IDX.DBF' autoextend on;
+alter database datafile 'C:\oraclexe\app\oracle\oradata\Bobcat\Bobcat_DATA.DBF' autoextend on;
 
 /**
  * To turn off oracle password expiration
@@ -129,10 +116,3 @@ select a.table_name,
        a.nullable,
        a.column_name
 ;
-
-
-/**
- * Just for reference
- */
---alter table zebra_board_file add(constraint fk_zebra_board_file foreign key(article_uid) references zebra_board(article_uid));
---create index idx_zebra_board_file on zebra_board_file(file_uid) tablespace alpaca_idx storage(initial 3m next 3m maxextents 2000 pctincrease 0);

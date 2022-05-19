@@ -20,9 +20,9 @@ create table usr_yearly_payroll_summary (
     update_user_id                  varchar2(30),                                               -- Update User UID
 
     constraint pk_usr_yearly_payroll_summary primary key(org_id, financial_year, payroll_month)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_yearly_payroll_summary                                     is 'Yerarly payroll summary';
 comment on column usr_yearly_payroll_summary.org_id                              is 'Org UID';

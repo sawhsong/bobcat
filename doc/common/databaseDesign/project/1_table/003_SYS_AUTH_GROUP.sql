@@ -17,9 +17,9 @@ create table sys_auth_group (
 
     constraint pk_sys_auth_group primary key(group_id),
     constraint uk_sys_auth_group unique(group_name)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_auth_group                 is 'Menu Authority Info';
 comment on column sys_auth_group.group_id        is 'Authority group UID (PK)';

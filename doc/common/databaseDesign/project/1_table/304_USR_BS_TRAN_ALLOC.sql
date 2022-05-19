@@ -30,9 +30,9 @@ create table usr_bs_tran_alloc (
     update_user_id                  varchar2(30),                                               -- Update User UID
 
     constraint pk_usr_bs_tran_alloc primary key(bs_tran_alloc_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_bs_tran_alloc                                              is 'Bank statement transaction allocation - transaction reconciliation';
 comment on column usr_bs_tran_alloc.bs_tran_alloc_id                             is 'Bank statement transaction allocation UID (PK)';

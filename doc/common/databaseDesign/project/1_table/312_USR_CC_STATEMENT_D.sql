@@ -25,9 +25,9 @@ create table usr_cc_statement_d (
 
     constraint fk_11694491827400 foreign key(cc_statement_id) references usr_cc_statement(cc_statement_id),
     constraint pk_usr_cc_statement_d primary key(cc_statement_d_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_cc_statement_d                                             is 'Credit card statement details';
 comment on column usr_cc_statement_d.cc_statement_d_id                           is 'Credit card statement detail UID (PK)';

@@ -18,9 +18,9 @@ create table sys_financial_period (
     update_date                     date,                                                       -- Update Date
 
     constraint pk_sys_financial_period primary key(period_year, quarter_code)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_financial_period                                           is 'Quarter type by financial year';
 comment on column sys_financial_period.period_year                               is 'Year (PK)';

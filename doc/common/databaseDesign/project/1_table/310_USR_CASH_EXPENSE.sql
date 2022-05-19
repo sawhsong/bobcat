@@ -21,9 +21,9 @@ create table usr_cash_expense (
     update_date                     date,                                                       -- Update Date
 
     constraint pk_usr_cash_expense primary key(cash_expense_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_cash_expense                                               is 'Cash expenses';
 comment on column usr_cash_expense.cash_expense_id                               is 'Cash expense UID (PK)';

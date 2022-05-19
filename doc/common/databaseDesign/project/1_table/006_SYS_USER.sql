@@ -31,9 +31,9 @@ create table sys_user (
 
     constraint pk_sys_user primary key(user_id),
     constraint uk_32879178477399 unique(login_id, login_password)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_user                                                       is 'User Info - Use Excel file to initialise data (SYS_USER.xlsx)';
 comment on column sys_user.user_id                                               is 'User UID (PK)';
@@ -75,7 +75,7 @@ select '0' as user_id,
        'EN' as language,
        'THEME000' as theme_type,
        'INTERNAL' as user_type,
-       'jin@hkaccounting.com.au' as email,
+       'jin@bobcating.com.au' as email,
        50 as max_row_per_page,
        5 as page_num_per_page,
        'NU' as user_status,
@@ -98,7 +98,7 @@ select '1' as user_id,
        'EN' as language,
        'THEME000' as theme_type,
        'INTERNAL' as user_type,
-       'jin@hkaccounting.com.au' as email,
+       'jin@bobcating.com.au' as email,
        50 as max_row_per_page,
        5 as page_num_per_page,
        'NU' as user_status,

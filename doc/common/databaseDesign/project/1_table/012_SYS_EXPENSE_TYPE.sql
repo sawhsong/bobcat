@@ -22,9 +22,9 @@ create table sys_expense_type (
 
     constraint pk_sys_expense_type primary key(expense_type_id),
     constraint uk_sys_expense_type unique(org_category, expense_type)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  sys_expense_type                       is 'Expenditure Entry Type';
 comment on column sys_expense_type.expense_type_id       is 'Expense Type UID (PK)';

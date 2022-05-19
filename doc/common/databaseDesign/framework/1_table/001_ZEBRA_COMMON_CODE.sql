@@ -21,9 +21,9 @@ create table zebra_common_code (
 
     constraint pk_zebra_common_code primary key(code_type, common_code),
     constraint uk_zebra_common_code unique(program_constants)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table zebra_common_code is '공통코드';
 

@@ -21,9 +21,9 @@ create table zebra_domain_dictionary (
 
     constraint pk_zebra_domain_dictionary primary key(domain_id),
     constraint uk_zebra_domain_dictionary unique(domain_name, name_abbreviation)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  zebra_domain_dictionary                     is 'Domain Dictionary';
 comment on column zebra_domain_dictionary.domain_id           is 'Domain item UID (PK)';

@@ -22,9 +22,9 @@ create table usr_cc_statement (
 
     constraint fk_11580650864400 foreign key(bank_accnt_id) references usr_bank_accnt(bank_accnt_id),
     constraint pk_usr_cc_statement primary key(cc_statement_id)
-    using index tablespace hkaccount_idx storage(initial 50k next 50k pctincrease 0)
+    using index tablespace bobcat_idx storage(initial 50k next 50k pctincrease 0)
 )
-pctfree 20 pctused 80 tablespace hkaccount_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
+pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
 comment on table  usr_cc_statement                                               is 'Credit card statement master info which is uploaded by user';
 comment on column usr_cc_statement.cc_statement_id                               is 'Credit card statement master UID (PK)';
