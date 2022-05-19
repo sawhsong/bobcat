@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="HK Z Deploy" default="all" basedir=".">
+<project name="Bobcat Z Deploy" default="all" basedir=".">
 	<property file="deploy-OracleCloud.properties"/>
 
 	<target name="all"
