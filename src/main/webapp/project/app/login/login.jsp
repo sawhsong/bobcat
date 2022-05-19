@@ -16,7 +16,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconHKAccount.png">
+<link rel="icon" type="image/png" href="<mc:cp key="imgIcon"/>/faviconBobcat.png">
 <title><mc:msg key="main.system.title"/></title>
 <%/************************************************************************************************
 * Stylesheet & Javascript
@@ -56,7 +56,7 @@ body {background:#FFFFFF;}
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divLogo" class="logoImage">
-	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoHKAccount.png" style="width:130px;height:28px;" status="display"/>
+	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoBobcat.png" style="width:130px;height:28px;" status="display"/>
 </div>
 <div id="divLoginPanel" class="loginPanel">
 	<div class="panel panel-default panelLogin">

@@ -20,14 +20,8 @@
 			</Realm>
 
 			<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
-				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="hkaccounting_access_log" suffix=".txt"/>
-
-<!-- 				<Context docBase="C:/myworkspace/hkaccounting/target/HKAccounting" path="" reloadable="true"> -->
-<!-- 					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkaccountJndi" password="hkaccount20170523" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:XE" username="hkaccount"/> -->
-<!-- 					<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory" maxIdle="30" maxTotal="100" name="jdbc/hkmysqlJndi" username="hkaccount" password="hka0507!" type="javax.sql.DataSource" url="jdbc:mysql://hkaccounting.com.au:3306/hkaccount"/> -->
-<!-- 				</Context> -->
-
- 				<Context docBase="/home/opc/apache-tomcat-9.0.48/HKAccounting" path="/" reloadable="true">
+				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="bobcat_access_log" suffix=".txt"/>
+ 				<Context docBase="/home/opc/apache-tomcat-9.0.48/bobcat" path="/" reloadable="true">
  				</Context>
 			</Host>
 		</Engine>

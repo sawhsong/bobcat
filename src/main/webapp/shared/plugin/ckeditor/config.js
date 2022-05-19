@@ -14,7 +14,7 @@ CKEDITOR.editorConfig = function(config) {
 	config.uiColor = "#F8F8F8";
 	config.language = jsconfig.get("langCode");
 	config.height = 500;
-	config.skin = "hkaccounting";
+	config.skin = "bobcat";
 	config.title = false;
 	config.toolbar_full=[
 		{name:"document", items:["Source", "-", "Save", "NewPage", "DocProps", "Preview", "Print", "-", "Templates"]},

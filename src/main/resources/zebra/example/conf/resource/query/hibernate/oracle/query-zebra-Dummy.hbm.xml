@@ -29,7 +29,7 @@
 		  from (select a.table_name,
 		               a.table_comment
 		          from information_schema.tables a
-		         where a.table_schema = 'hkaccount'
+		         where a.table_schema = 'bobcat'
 		           and a.table_type = 'BASE TABLE'
 		           and a.table_name not like 'e5zg0_%'
 		           and a.table_name not like 'zo7dp_%'
@@ -41,7 +41,7 @@
 		        select a.table_name,
 		               a.table_comment
 		          from information_schema.tables a
-		         where a.table_schema = 'hkaccount'
+		         where a.table_schema = 'bobcat'
 		           and a.table_type = 'BASE TABLE'
 		           and a.table_name = 'e5zg0_users'
 		       ) a
@@ -101,11 +101,11 @@
 		       a.column_comment as COMMENTS,
 		       (select table_comment
 		          from information_schema.tables
-		         where table_schema = 'hkaccount'
+		         where table_schema = 'bobcat'
 		           and table_name = a.table_name
 		       ) as TABLE_DESCRIPTION
 		  from information_schema.columns a
-		 where a.table_schema = 'hkaccount'
+		 where a.table_schema = 'bobcat'
 		   and upper(a.table_name) = upper('${table_name}')
 		 order by a.table_name
 	]]>

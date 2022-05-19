@@ -809,7 +809,7 @@
 		</attribute>
 	</tag>
 
-	<!-- Project - HKAccounting -->
+	<!-- Project - Bobcat -->
 	<tag>
 		<name>deSelect</name>
 		<tag-class>project.common.module.taglib.DataEntryTypeCodeSelectbox</tag-class>
