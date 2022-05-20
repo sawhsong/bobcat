@@ -33,7 +33,7 @@ public class ZebraBoardArticleCreationJob extends QuartzJobBean {
 			ZebraBoard zebraBoard = new ZebraBoard();
 
 			zebraBoard.setArticleId(ZebraKeyManager.getId("ZEBRA_BOARD_S"));
-			if (CommonUtil.toInt(CommonUtil.substring(uid, uid.length()-3)) % 2 == 0) {
+			if (CommonUtil.toInt(CommonUtil.substring(uid, 0, 3)) % 2 == 0) {
 				zebraBoard.setBoardType(ZebraCommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
 			} else {
 				zebraBoard.setBoardType(ZebraCommonCodeManager.getCodeByConstants("BOARD_TYPE_FREE"));

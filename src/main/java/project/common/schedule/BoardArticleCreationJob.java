@@ -34,7 +34,7 @@ public class BoardArticleCreationJob extends QuartzJobBean {
 			uid = CommonUtil.uid();
 
 			sysBoard.setArticleId(KeyManager.getId("SYS_BOARD_S"));
-			if (CommonUtil.toInt(CommonUtil.substring(uid, uid.length()-3)) % 2 == 0) {
+			if (CommonUtil.toInt(CommonUtil.substring(uid, 0, 3)) % 2 == 0) {
 				sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
 			} else {
 				sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_FREE"));
