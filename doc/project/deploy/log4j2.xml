@@ -5,11 +5,11 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/>
 		</Console>
-		<RollingFile name="RollingFile" fileName="/home/opc/apache-tomcat-9.0.48/logs/bobcatRollingFile.log" filePattern="/home/opc/apache-tomcat-9.0.48/logs/$${date:yyyy-MM}/bobcatRollingFile-%d{yyyy-MM-dd}-%i.log">
+		<RollingFile name="RollingFile" fileName="/home/opc/apache-tomcat-9.0.63/logs/bobcatRollingFile.log" filePattern="/home/opc/apache-tomcat-9.0.63/logs/$${date:yyyy-MM}/bobcatRollingFile-%d{yyyy-MM-dd}-%i.log">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/>
 			<TimeBasedTriggeringPolicy />
 		</RollingFile>
-		<File name="File" fileName="/home/opc/apache-tomcat-9.0.48/logs/bobcatFile.log" append="false">
+		<File name="File" fileName="/home/opc/apache-tomcat-9.0.63/logs/bobcatFile.log" append="false">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n" />
 		</File>
 	</appenders>

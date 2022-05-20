@@ -1,10 +1,10 @@
 ==== Oracle Cloud(cloud.oracle.com) ====
-sawhsong@gmail.com / Pass!@#_720
+sawhsong@gmail.com / sawh7673SA_202205
 
 --db
-ADMIN / DBPassAdm720
-
-
+ADMIN / DBPassAdm_202205
+--db wallet pass
+DBPassAdm_202205
 
 -- how to
 upload jdk and tomcat
@@ -13,8 +13,8 @@ unzip
 	tar zxvf apache-tomcat-9.0.48.tar.gz
 start tomcat
 	export JAVA_HOME=/home/opc/jdk-10.0.2
-	bash /home/opc/apache-tomcat-9.0.48/bin/startup.sh
-	tail -f /home/opc/apache-tomcat-9.0.48/logs/catalina.out
+	bash /home/opc/apache-tomcat-9.0.63/bin/startup.sh
+	tail -f /home/opc/apache-tomcat-9.0.63/logs/catalina.out
 check
 	netstat -nlp | grep 8080
 	curl -I http://localhost:8080

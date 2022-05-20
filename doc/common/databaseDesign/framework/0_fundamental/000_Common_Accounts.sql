@@ -8,13 +8,17 @@ create user bobcat identified by Bobcat_20220519;
 grant connect, resource to bobcat;
 grant create synonym, create view, create database link, create public synonym, drop public synonym to bobcat;
 
-/*
+/**
  * Oracle cloud autonomous database
  */
 create user bobcat identified by DBPass_20220519; -- Oracle cloud autonumous db
 grant connect, resource to bobcat;
 grant create synonym, create view, create database link, create public synonym, drop public synonym to bobcat;
 grant unlimited tablespace to bobcat;
+--db
+ADMIN / DBPassAdm_202205
+--db wallet pass
+DBPassAdm_202205
 
 /**
  * Table space(Index, Data)
