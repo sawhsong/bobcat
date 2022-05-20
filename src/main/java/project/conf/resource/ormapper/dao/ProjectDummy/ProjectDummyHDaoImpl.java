@@ -9,6 +9,10 @@ import zebra.util.CommonUtil;
 import zebra.util.ConfigUtil;
 
 public class ProjectDummyHDaoImpl extends BaseHDao implements ProjectDummyDao {
+	public DataSet getIdBySequenceName(String sequeceName) throws Exception {
+		return selectAsDataSetBySQLQuery("select "+sequeceName+".nextval from dual");
+	}
+
 	public DataSet getFinacialQuarter(QueryAdvisor queryAdvisor) throws Exception {
 		String dateFormat = ConfigUtil.getProperty("format.date.java");
 		String quarterCode = CommonUtil.substring((String)queryAdvisor.getObject("quarterCode"), 1);

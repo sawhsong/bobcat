@@ -102,7 +102,7 @@ $(function() {
 
 		$("#tblSourceDataBody").append($(html));
 
-		$("#tblSourceData").fixedHeaderTable({
+		$("#tblSourceData").freezeHeader({
 			attachTo:$("#divSourceDataTable")
 		});
 
@@ -157,7 +157,7 @@ $(function() {
 
 		$("#tblTargetDataBody").append($(html));
 
-		$("#tblTargetData").fixedHeaderTable({
+		$("#tblTargetData").freezeHeader({
 			attachTo:$("#divTargetDataTable")
 		});
 

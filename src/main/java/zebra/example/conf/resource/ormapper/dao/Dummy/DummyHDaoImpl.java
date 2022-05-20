@@ -6,6 +6,10 @@ import zebra.example.common.extend.BaseHDao;
 import zebra.util.CommonUtil;
 
 public class DummyHDaoImpl extends BaseHDao implements DummyDao {
+	public DataSet getIdBySequenceName(String sequeceName) throws Exception {
+		return selectAsDataSetBySQLQuery("select "+sequeceName+".nextval from dual");
+	}
+
 	public DataSet getTableListDataSetByCriteria(QueryAdvisor queryAdvisor) throws Exception {
 		DataSet requestDataSet = queryAdvisor.getRequestDataSet();
 		String tableName = requestDataSet.getValue("tableName");

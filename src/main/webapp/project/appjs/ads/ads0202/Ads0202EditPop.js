@@ -216,7 +216,7 @@ $(function() {
 	});
 
 	setGridHeader = function() {
-		$("#tblGrid").fixedHeaderTable({
+		$("#tblGrid").freezeHeader({
 			attachTo:$("#divGridWrapper")
 		});
 	};

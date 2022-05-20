@@ -793,7 +793,7 @@ var Table = (function(){
 				row.style.display = hideRow?"none":"";
 
 				/*!
-				 * modified by Dustin(2013.12.01) - fixedHeaderTable
+				 * modified by Dustin(2013.12.01) - freezeHeader
 				 */
 //				$(row).find("td").each(function(index) {
 //					if ($.nony.isEmpty($(this).attr("colspan"))) {
@@ -821,7 +821,7 @@ var Table = (function(){
 		this.processTableCells(t,"THEAD",
 			function(c) {
 				/*!
-				 * modified by Dustin(2013.12.08) - fixedHeaderTable
+				 * modified by Dustin(2013.12.08) - freezeHeader
 				 */
 				(tdata.filters && def(tdata.filters[table.getCellIndex(c)]) && hasClass(c,table.FilterableClassName))?addClass(c,table.FilteredClassName):removeClass(c,table.FilteredClassName);
 

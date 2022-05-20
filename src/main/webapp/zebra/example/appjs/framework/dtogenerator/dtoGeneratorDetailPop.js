@@ -24,7 +24,7 @@ $(function() {
 	 */
 	$(window).ready(function() {
 		setTimeout(function() {
-			$("#tblGrid").fixedHeaderTable({
+			$("#tblGrid").freezeHeader({
 				attachTo:$("#divDataArea"),
 				pagingArea:$("#divPagingArea")
 			});

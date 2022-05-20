@@ -164,7 +164,7 @@ $(function() {
 			attachTo = $("#divGridWrapper_WESTPAC");
 		}
 
-		$(table).fixedHeaderTable({
+		$(table).freezeHeader({
 			attachTo:attachTo,
 			pagingArea:$("#divPagingArea"),
 			isPageable:false,

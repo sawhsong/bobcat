@@ -5,6 +5,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<!--/* Zebra Key Manager */-->
+	<bean id="zebraKeyManager" name="zebraKeyManager" class="${name.package.framework}.example.common.module.key.ZebraKeyManager" parent="baseBiz">
+		<property name="zebraDummyDao" ref="zebraDummyDao"/>
+	</bean>
+
 	<!--/* ZebraCommonCode Manager */-->
 	<bean id="zebraCommonCodeManager" name="zebraCommonCodeManager" class="${name.package.framework}.example.common.module.commoncode.ZebraCommonCodeManager" parent="baseBiz">
 		<property name="zebraCommonCodeDao" ref="zebraCommonCodeDao"/>

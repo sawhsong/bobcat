@@ -97,7 +97,7 @@ $(function() {
 			});
 		});
 
-		$("#tblGrid").fixedHeaderTable({
+		$("#tblGrid").freezeHeader({
 			attachTo:$("#divDataArea")
 		});
 	});
@@ -196,7 +196,7 @@ $(function() {
 				if ($(this).attr("index") == $(obj).attr("index")) {
 					$(this).remove();
 
-					$("#tblGrid").fixedHeaderTable({
+					$("#tblGrid").freezeHeader({
 						attachTo:$("#divDataArea")
 					});
 				}
@@ -223,7 +223,7 @@ $(function() {
 		}, 200);
 
 		setTimeout(function() {
-			$("#tblGrid").fixedHeaderTable({
+			$("#tblGrid").freezeHeader({
 				attachTo:$("#divDataArea")
 			});
 		}, 400);

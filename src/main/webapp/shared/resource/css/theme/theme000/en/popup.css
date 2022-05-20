@@ -12,10 +12,10 @@
  * Layout of popup window iframe
  */
 #divPopupWindowHolder {}
-#divFixedPanelPopup{}
-#divScrollablePanelPopup{overflow:auto;}
+#divFixedPanelPopup{overflow:hidden;margin:4px 6px 4px 6px;}
+#divScrollablePanelPopup{overflow:auto;margin:0px 6px 4px 6px;}
 
-.iframeInPopup {padding:0px 0px;width:100%;height:100%;}
+.iframeInPopup {margin:0px 0px;padding:0px 0px;width:100%;height:100%;}
 
 /**
  * popup window
@@ -37,7 +37,7 @@
 .nonyPopWinHeaderTitle {font-size:1.03em;font-weight:bold;
 	background:transparent;
 }
-.nonyPopWinHeaderCloseButton {position:absolute;top:12px;right:12px;}
+.nonyPopWinHeaderCloseButton {position:absolute;top:11px;right:12px;}
 .nonyPopWinHeaderCloseButton:after {content:"";line-height:0px;clear:both;}
 .nonyPopWinHeaderBreaker {height:2px;clear:both;
 	background:#ffffff;
@@ -60,7 +60,7 @@
 .nonyDialogWindowHolder {width:100%;height:100%;border-radius:5px;
 	background-color:#FFFFFF;
 }
-.nonyDialogHeaderHolder {padding:12px 8px;transition:background .2s;border-top-left-radius:5px;border-top-right-radius:5px;
+.nonyDialogHeaderHolder {padding:10px 8px;transition:background .2s;border-top-left-radius:5px;border-top-right-radius:5px;
 	border:0px solid #AAAAAA;
 	background:#F9F9F9;
 }

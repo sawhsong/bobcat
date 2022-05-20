@@ -35,7 +35,7 @@
 /**
  * Global Menu - Left(Logo)
  */
-#divLogoArea {font-size:1.3em;font-weight:bold;cursor:pointer;text-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);}
+#divLogoArea {font-size:1.0em;font-weight:bold;cursor:pointer;text-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);}
 #divLogoArea a, #divLogoArea a:link, #divLogoArea a:visited {text-decoration:none;
 	color:#000000;
 }
@@ -46,7 +46,7 @@
 	font-size:0.8em;
 	background:url('/shared/resource/image/icon/logo-gear_Black.png') no-repeat 0% 50%;
 }
-#aLogo {padding:6px 0px 8px 160px;
+#aLogo {padding:11px 0px 11px 40px;
 	background:url('/shared/resource/image/icon/logoBobcat.png') no-repeat 0% 0%;
 	background-size:33px 37px;
 }

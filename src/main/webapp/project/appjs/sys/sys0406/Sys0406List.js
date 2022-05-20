@@ -215,7 +215,7 @@ $(function() {
 	 * load event (document / window)
 	 */
 	$(window).load(function() {
-		$("#tblGrid").fixedHeaderTable({
+		$("#tblGrid").freezeHeader({
 			attachTo:$("#divDataArea")
 		});
 

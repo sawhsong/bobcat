@@ -156,7 +156,7 @@ $(function() {
 	<div id="divGlobalMenuHeaderGroup">
 		<div id="divGlobalMenuLeft">
 			<div id="divLogoArea">
-				<a id="aLogo"></a>
+				<a id="aLogo">Bobcat Project</a>
 			</div>
 		</div>
 		<div id="divGlobalMenuRight">
