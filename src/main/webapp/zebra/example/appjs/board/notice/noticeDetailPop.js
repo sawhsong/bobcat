@@ -9,6 +9,10 @@ $(function() {
 		doProcessByButton({mode:"Update"});
 	});
 
+	$("#btnReply").click(function(event) {
+		doProcessByButton({mode:"Reply"});
+	});
+
 	$("#btnDelete").click(function(event) {
 		doProcessByButton({mode:"Delete"});
 	});
@@ -44,6 +48,8 @@ $(function() {
 
 		if (param.mode == "Update") {
 			actionString = "/zebra/board/notice/getUpdate.do";
+		} else if (param.mode == "Reply") {
+			actionString = "/zebra/board/notice/getInsert.do";
 		} else if (param.mode == "Delete") {
 			actionString = "/zebra/board/notice/exeDelete.do";
 		}
