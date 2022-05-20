@@ -183,7 +183,7 @@ $(function() {
 				<div class="divGblMenuBreak"></div>
 				<div class="headerGblMenus" style="margin-top:-1px;"><a id="aDeleteSessionDesc" class="fa fa-trash fa-lg aEn" title="Delete all session values"></a></div>
 <%
-				if (CommonUtil.equals(loginIdHeaderPage, "dustin")) {
+				if (CommonUtil.equals(loginIdHeaderPage, "admin")) {
 %>
 				<div class="divGblMenuBreak"></div>
 				<div id="divFrameworkMenu" class="headerGblMenus">

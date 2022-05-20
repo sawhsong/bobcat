@@ -56,7 +56,7 @@ body {background:#FFFFFF;}
 <body>
 <form id="fmDefault" name="fmDefault" method="post" action="">
 <div id="divLogo" class="logoImage">
-	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoBobcat.png" style="width:130px;height:28px;" status="display"/>
+	<ui:img id="imgLogo" src="<mc:cp key=imgIcon/>/logoBobcat.png" style="width:115px;height:130px;" status="display"/>
 </div>
 <div id="divLoginPanel" class="loginPanel">
 	<div class="panel panel-default panelLogin">
