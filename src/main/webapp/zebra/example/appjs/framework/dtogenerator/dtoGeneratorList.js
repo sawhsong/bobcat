@@ -35,7 +35,7 @@ $(function() {
 			data:{dataSource:$("#dataSource").val()},
 			blind:true,
 			width:1000,
-			height:520
+			height:530
 		});
 	});
 
