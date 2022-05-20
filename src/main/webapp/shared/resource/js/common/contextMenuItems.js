@@ -105,10 +105,6 @@ var ctxMenu = {
 		img:"fa-edit",
 		fun:function() {}
 	}, {
-		name:com.caption.ctxReply,
-		img:"fa-reply-all",
-		fun:function() {}
-	}, {
 		name:com.caption.ctxDelete,
 		img:"fa-times",
 		fun:function() {}

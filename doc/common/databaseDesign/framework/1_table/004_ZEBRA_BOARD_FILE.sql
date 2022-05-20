@@ -25,6 +25,8 @@ create table zebra_board_file (
 )
 pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
+create sequence zebra_board_file_s minvalue 1 maxvalue 999999999999999999999999999 increment by 1 start with 1 nocache noorder nocycle;
+
 comment on table  zebra_board_file                    is '게시판 첨부파일';
 comment on column zebra_board_file.file_id            is '파일 unique id';
 comment on column zebra_board_file.article_id         is '게시물 unique id';

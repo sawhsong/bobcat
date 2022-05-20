@@ -5,6 +5,7 @@ import java.io.File;
 import zebra.data.DataSet;
 import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseHDao;
+import zebra.example.common.module.key.ZebraKeyManager;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoard;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoardFile;
 import zebra.util.CommonUtil;
@@ -17,7 +18,7 @@ public class ZebraBoardFileHDaoImpl extends BaseHDao implements ZebraBoardFileDa
 		for (int i=0; i<fileDataSet.getRowCnt(); i++) {
 			ZebraBoardFile zebraBoardFile = new ZebraBoardFile();
 
-			zebraBoardFile.setFileId(CommonUtil.uid());
+			zebraBoardFile.setFileId(ZebraKeyManager.getId("ZEBRA_BOARD_FILE_S"));
 			zebraBoardFile.setArticleId(zebraBoard.getArticleId());
 			zebraBoardFile.setOriginalName(fileDataSet.getValue(i, "ORIGINAL_NAME"));
 			zebraBoardFile.setNewName(fileDataSet.getValue(i, "NEW_NAME"));

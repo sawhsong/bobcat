@@ -163,7 +163,7 @@ $(function() {
 		} else if (param.mode == "Edit") {
 			url = "/zebra/board/notice/getUpdate.do";
 			header = framework.header.popHeaderEdit;
-			height = 634;
+			height = 646;
 		}
 
 		var popParam = {
@@ -211,8 +211,7 @@ $(function() {
 
 		ctxMenu.boardAction[0].fun = function() {getDetail(articleId);};
 		ctxMenu.boardAction[1].fun = function() {openPopup({mode:"Edit", articleId:articleId});};
-		ctxMenu.boardAction[2].fun = function() {openPopup({mode:"Reply", articleId:articleId});};
-		ctxMenu.boardAction[3].fun = function() {doDelete();};
+		ctxMenu.boardAction[2].fun = function() {doDelete();};
 
 		$(img).contextMenu(ctxMenu.boardAction, {
 			classPrefix:com.constants.ctxClassPrefixGrid,

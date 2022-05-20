@@ -7,6 +7,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
+import zebra.example.common.module.key.ZebraKeyManager;
 import zebra.example.conf.resource.ormapper.dao.ZebraBoard.ZebraBoardDao;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoard;
 import zebra.util.CommonUtil;
@@ -31,7 +32,7 @@ public class ZebraBoardArticleCreationJob extends QuartzJobBean {
 		try {
 			ZebraBoard zebraBoard = new ZebraBoard();
 
-			zebraBoard.setArticleId(uid);
+			zebraBoard.setArticleId(ZebraKeyManager.getId("ZEBRA_BOARD_S"));
 			if (CommonUtil.toInt(CommonUtil.substring(uid, uid.length()-3)) % 2 == 0) {
 				zebraBoard.setBoardType(ZebraCommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
 			} else {
@@ -41,8 +42,8 @@ public class ZebraBoardArticleCreationJob extends QuartzJobBean {
 			zebraBoard.setWriterName("ZebraBoardArticleCreationJob");
 			zebraBoard.setWriterEmail(ConfigUtil.getProperty("mail.default.from"));
 			zebraBoard.setWriterIpAddress("127.0.0.1");
-			zebraBoard.setArticleSubject("System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
-			zebraBoard.setArticleContents("ZebraBoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
+			zebraBoard.setArticleSubject("System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss")+" - "+uid);
+			zebraBoard.setArticleContents("ZebraBoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss")+"\n"+uid);
 			zebraBoard.setInsertUserId("0");
 			zebraBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			zebraBoard.setRefArticleId("-1");

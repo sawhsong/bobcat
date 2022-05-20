@@ -27,6 +27,8 @@ create table zebra_board (
 )
 pctfree 20 pctused 80 tablespace bobcat_data storage(initial 100k next 100k maxextents 2000 pctincrease 0);
 
+create sequence zebra_board_s minvalue 1 maxvalue 999999999999999999999999999 increment by 1 start with 1 nocache noorder nocycle;
+
 comment on table  zebra_board                     is '게시판';
 comment on column zebra_board.article_id          is 'Article UID (PK)';
 comment on column zebra_board.board_type          is '게시판 종류([sys_common_code.board_type - bbs / notice])';

@@ -9,13 +9,9 @@ $(function() {
 		if (commonJs.doValidate("fmDefault")) {
 			commonJs.doSaveWithFile({
 				url:"/zebra/board/notice/exeInsert.do",
-				callback:function() {
-					setTimeout(function() {
-						parent.popup.close();
-					}, 300);
-					setTimeout(function() {
-						parent.doSearch();
-					}, 700);
+				onSuccess:function() {
+					parent.popup.close();
+					parent.doSearch();
 				}
 			});
 		}

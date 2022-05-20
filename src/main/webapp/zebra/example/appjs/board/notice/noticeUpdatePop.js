@@ -10,13 +10,9 @@ $(function() {
 			commonJs.doSaveWithFile({
 				url:"/zebra/board/notice/exeUpdate.do",
 				data:{articleId:articleId},
-				callback:function() {
-					setTimeout(function() {
-						parent.popup.close();
-					}, 300);
-					setTimeout(function() {
-						parent.doSearch();
-					}, 700);
+				onSuccess:function() {
+					parent.popup.close();
+					parent.doSearch();
 				}
 			});
 		}

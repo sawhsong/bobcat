@@ -9,6 +9,7 @@ import zebra.data.ParamEntity;
 import zebra.data.QueryAdvisor;
 import zebra.example.common.extend.BaseBiz;
 import zebra.example.common.module.commoncode.ZebraCommonCodeManager;
+import zebra.example.common.module.key.ZebraKeyManager;
 import zebra.example.conf.resource.ormapper.dao.ZebraBoard.ZebraBoardDao;
 import zebra.example.conf.resource.ormapper.dao.ZebraBoardFile.ZebraBoardFileDao;
 import zebra.example.conf.resource.ormapper.dto.oracle.ZebraBoard;
@@ -108,12 +109,11 @@ public class FreeBoardBizImpl extends BaseBiz implements FreeBoardBiz {
 		HttpSession session = paramEntity.getSession();
 		DataSet fileDataSet = paramEntity.getRequestFileDataSet();
 		ZebraBoard zebraBoard = new ZebraBoard();
-		String uid = CommonUtil.uid();
 		String loggedInUserId = (String)session.getAttribute("UserId");
 		int result = -1;
 
 		try {
-			zebraBoard.setArticleId(uid);
+			zebraBoard.setArticleId(ZebraKeyManager.getId("ZEBRA_BOARD_S"));
 			zebraBoard.setBoardType(ZebraCommonCodeManager.getCodeByConstants("BOARD_TYPE_FREE"));
 			zebraBoard.setWriterId(loggedInUserId);
 			zebraBoard.setWriterName(requestDataSet.getValue("writerName"));

@@ -7,6 +7,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import project.common.module.commoncode.CommonCodeManager;
+import project.common.module.key.KeyManager;
 import project.conf.resource.ormapper.dao.SysBoard.SysBoardDao;
 import project.conf.resource.ormapper.dto.oracle.SysBoard;
 import zebra.util.CommonUtil;
@@ -32,7 +33,7 @@ public class BoardArticleCreationJob extends QuartzJobBean {
 			SysBoard sysBoard = new SysBoard();
 			uid = CommonUtil.uid();
 
-			sysBoard.setArticleId(uid);
+			sysBoard.setArticleId(KeyManager.getId("SYS_BOARD_S"));
 			if (CommonUtil.toInt(CommonUtil.substring(uid, uid.length()-3)) % 2 == 0) {
 				sysBoard.setBoardType(CommonCodeManager.getCodeByConstants("BOARD_TYPE_NOTICE"));
 			} else {
@@ -42,8 +43,8 @@ public class BoardArticleCreationJob extends QuartzJobBean {
 			sysBoard.setWriterName("BoardArticleCreationJob");
 			sysBoard.setWriterEmail(ConfigUtil.getProperty("mail.default.from"));
 			sysBoard.setWriterIpAddress("127.0.0.1");
-			sysBoard.setArticleSubject("System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
-			sysBoard.setArticleContents("BoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss"));
+			sysBoard.setArticleSubject("System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss")+" - "+uid);
+			sysBoard.setArticleContents("BoardArticleCreationJob System generated article - "+CommonUtil.getSysdate("yyyy-MM-dd HH:mm:ss")+"\n"+uid);
 			sysBoard.setInsertUserId("0");
 			sysBoard.setInsertDate(CommonUtil.toDate(CommonUtil.getSysdate()));
 			sysBoard.setParentArticleId("-1");
