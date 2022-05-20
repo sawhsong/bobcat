@@ -123,7 +123,7 @@ $(function() {
 			header:"User Profile Detail",
 			blind:true,
 			width:800,
-			height:310
+			height:320
 		});
 	};
 

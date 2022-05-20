@@ -6,6 +6,16 @@
 		openDialog : function(params) {
 			if ($("#"+params.popupId).length > 0) {return;}
 
+			if ($.nony.contains(params.width+"", "%")) {
+				var temp = $.nony.toNumber($.nony.removeString(params.width, "%"));
+				params.width = ($(window).innerWidth() * (temp/100));
+			}
+
+			if ($.nony.contains(params.height+"", "%")) {
+				var temp = $.nony.toNumber($.nony.removeString(params.height, "%"));
+				params.height = ($(window).innerHeight() * (temp/100));
+			}
+
 			params.popupId = params.popupId || "popupDialog_"+$.nony.getTimeStamp();
 			params.popupMethod = "popupDialog";
 			params.type = params.type || com.message.I000;
@@ -132,6 +142,16 @@
 			if ($.nony.isEmpty(params) || $.nony.isEmpty(params.popupId)) {throw new Error("Popup Id" + com.message.required);}
 			if ($("#"+params.popupId).length > 0) {return;}
 
+			if ($.nony.contains(params.width+"", "%")) {
+				var temp = $.nony.toNumber($.nony.removeString(params.width, "%"));
+				params.width = ($(window).innerWidth() * (temp/100));
+			}
+
+			if ($.nony.contains(params.height+"", "%")) {
+				var temp = $.nony.toNumber($.nony.removeString(params.height, "%"));
+				params.height = ($(window).innerHeight() * (temp/100));
+			}
+
 			params.popupMethod = "popupWithIframe";
 			params.header = params.header || "Popup";
 			params.width = params.width || "500";
@@ -250,9 +270,9 @@
 			this.width = params.width;									// Popup width (Popup:[350], Dialog:[250])
 			this.height = params.height;								// Popup height (Popup:[200], Dialog:[150])
 			this.limitHeightForMax = params.limitHeightForMax = 100;	// Size for height limited (for only Dialog. Not editable)
-			this.minWidth = params.minWidth = 250;						// Minimum width of dialog (for only Dialog. Not editable)
+			this.minWidth = params.minWidth = 230;						// Minimum width of dialog (for only Dialog. Not editable)
 			this.maxWidth = params.maxWidth = 800;						// Maximum width of dialog (for only Dialog. Not editable)
-			this.minHeight = params.minHeight = 35;						// Minimum height of dialog (for only Dialog. Not editable)
+			this.minHeight = params.minHeight = 38;						// Minimum height of dialog (for only Dialog. Not editable)
 			this.left = params.left;									// Left position ([center])
 			this.top = params.top;										// Top position ([middle])
 			this.effect = params.effect || "fade";						// Show effect (fade / slide, [fade])
@@ -383,12 +403,12 @@
 		_checkContentsHeight : function(params) {
 			var html = "", testElement, outerWidth = 0;
 
-			html += "<table><tr><td style='padding:2px 4px;line-height:16px;white-space:nowrap;font-size:12px;font-weight:bold;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td></tr></table>";
+			html += "<table><tr><td style='padding:2px 4px;line-height:14px;white-space:nowrap;font-size:12px;font-weight:bold;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td></tr></table>";
 
 			testElement = $(html);
 			$(testElement).appendTo("body");
 
-			outerWidth = ($(testElement).outerWidth() + 32);
+			outerWidth = ($(testElement).outerWidth() + 25);
 
 			if ($.nony.isEmpty(params.width)) {
 				if (outerWidth < params.minWidth) {
@@ -466,14 +486,9 @@
 			/*!
 			 * Adjust width / height here (for dialog)
 			 */
-			if ($.nony.browser.Chrome) {
-				heightAdjust = params.heightAdjust;
-			} else if ($.nony.browser.FireFox) {
-				heightAdjust = (params.heightAdjust + 2);
-				dialogWidth = (dialogWidth + 10);
-			} else {
-				heightAdjust = (params.heightAdjust + 2);
-			}
+			if ($.nony.browser.Chrome) {heightAdjust = params.heightAdjust;}
+			else if ($.nony.browser.FireFox) {heightAdjust = (params.heightAdjust + 2);}
+			else {heightAdjust = (params.heightAdjust + 2);}
 
 			$(params.popupIframe).height(dialogHeight + "px");
 			$(params.popupBase).height((($(params.popupIframe).outerHeight()) + heightSum + popupFooterHeight + heightAdjust) + "px");
@@ -491,8 +506,8 @@
 			$(divHolder).addClass("areaContainerPopup");
 
 			html += "<table><tr>";
-			html += "<td style='vertical-align:top;padding-right:4px;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
-			html += "<td style='padding:2px 4px;line-height:16px;font-weight:bold;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
+			html += "<td style='padding:0px 4px;vertical-align:top;'><img src='"+jsconfig.get("imgThemeCom")+"/"+params.type+".png"+"'/></td>";
+			html += "<td style='padding:2px 4px;line-height:14px;font-weight:bold;'>"+$.nony.replace(params.contents, "\n", "<br/>")+"</td>";
 			html += "</tr></table>";
 
 			$(divHolder).html(html);
@@ -547,7 +562,7 @@
 			 * Adjust height here (for popup)
 			 */
 			if ($.nony.browser.Chrome) {heightAdjust = 2;}
-			else if ($.nony.browser.FireFox) {heightAdjust = 10;}
+			else if ($.nony.browser.FireFox) {heightAdjust = 2;}
 			else {heightAdjust = 10;}
 
 			$(this.popupIframe).css("height", (this.height - (heightSum + heightAdjust))+"px");
