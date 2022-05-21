@@ -12,7 +12,7 @@
 
 	<Service name="Catalina">
 		<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
-<!-- 		<Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/> -->
+		<Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/>
 
 		<Engine defaultHost="localhost" name="Catalina">
 			<Realm className="org.apache.catalina.realm.LockOutRealm">
@@ -26,4 +26,23 @@
 			</Host>
 		</Engine>
 	</Service>
+<!-- Multiple Service -->
+<!--
+	<Service name="Catalina">
+		<Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8444"/>
+		<Connector port="8010" protocol="AJP/1.3" redirectPort="8444"/>
+
+		<Engine defaultHost="alpaca" name="Catalina">
+			<Realm className="org.apache.catalina.realm.LockOutRealm">
+				<Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+			</Realm>
+
+			<Host appBase="webapps" autoDeploy="true" name="alpaca" unpackWARs="true">
+				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="alpaca_access_log" suffix=".txt"/>
+				<Context docBase="C:/ws/alpaca/target/alpaca" path="" reloadable="true">
+				</Context>
+			</Host>
+		</Engine>
+	</Service>
+-->
 </Server>
