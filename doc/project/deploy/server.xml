@@ -38,7 +38,7 @@
 				<Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
 			</Realm>
 
-			<Host appBase="webapps" autoDeploy="true" name="alpaca" unpackWARs="true">
+			<Host appBase="webapps" autoDeploy="true" name="husky" unpackWARs="true">
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="husky_access_log" suffix=".txt"/>
 				<Context docBase="/home/opc/apache-tomcat-9.0.63/husky" path="" reloadable="true">
 				</Context>
