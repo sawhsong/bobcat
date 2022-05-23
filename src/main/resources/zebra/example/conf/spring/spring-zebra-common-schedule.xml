@@ -38,6 +38,6 @@
 	</bean>
 	<bean id="zebraBoardArticleCreationJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="zebraBoardArticleCreationJobDetail"/>
-		<property name="cronExpression" value="0 0/5 * * * ?"/>
+		<property name="cronExpression" value="0 0/30 * * * ?"/>
 	</bean>
 </beans>
