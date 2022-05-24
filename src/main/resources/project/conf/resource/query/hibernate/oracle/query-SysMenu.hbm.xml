@@ -61,7 +61,7 @@
 			    and menu_id not like 'QM%'
 			connect by prior menu_id = parent_menu_id
 			  start with parent_menu_id is null
-			  order by sort_order
+			  order siblings by sort_order
 		)
 		select src.*,
 		       to_char(nvl(update_date, insert_date), '${dateFormat}') as creation_date
