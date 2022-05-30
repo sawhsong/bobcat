@@ -158,7 +158,7 @@ var commonJs = {
 	setFieldDateMask : function(elementId) {$.nony.setFieldDateMask(elementId);},
 	setFieldNumberMask : function(elementId, format) {$.nony.setFieldNumberMask(elementId, format);},
 	toggleCheckboxes : function(elementName) {$.nony.toggleCheckboxes(elementName);},
-	bindToggleTrBackgoundWithCheckbox : function(jqObject) {$.nony.bindToggleTrBackgoundWithCheckbox(jqObject);},
+	bindToggleTrBackgroundWithCheckbox : function(jqObject) {$.nony.bindToggleTrBackgroundWithCheckbox(jqObject);},
 	bindToggleTrBackgoundWithRadiobox : function(jqObject) {$.nony.bindToggleTrBackgoundWithRadiobox(jqObject);},
 	getCountChecked : function(checkboxName) {return $.nony.getCountChecked(checkboxName);},
 	setCheckboxValue : function(checkboxName, value) {$.nony.setCheckboxValue(checkboxName, value);},

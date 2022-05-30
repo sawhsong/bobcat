@@ -150,7 +150,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.commonSimpleAction);
 		});
 
-		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
+		commonJs.bindToggleTrBackgroundWithCheckbox($("[name=chkForDel]"));
 		bindEventCheckForDel();
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};

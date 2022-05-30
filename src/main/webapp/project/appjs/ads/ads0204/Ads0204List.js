@@ -121,7 +121,7 @@ $(function() {
 			$(this).contextMenu(ctxMenu.quoteInvoiceAction);
 		});
 
-		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForDel]"));
+		commonJs.bindToggleTrBackgroundWithCheckbox($("[name=chkForDel]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 	};
 

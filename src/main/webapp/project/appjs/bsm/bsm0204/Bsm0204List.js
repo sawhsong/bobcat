@@ -241,7 +241,7 @@ $(function() {
 		$("#tblGridBody").append($(html));
 		setGridTable(result.totalResultRows);
 
-		commonJs.bindToggleTrBackgoundWithCheckbox($("[name=chkForEdit]"));
+		commonJs.bindToggleTrBackgroundWithCheckbox($("[name=chkForEdit]"));
 		commonJs.hideProcMessageOnElement("divScrollablePanel");
 
 		initElements();
