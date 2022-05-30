@@ -87,6 +87,8 @@ var commonJs = {
 	getIconNameByFileType : function(fileType) {return $.nony.getIconNameByFileType(fileType);},
 	copyToClipboard : function(value) {$.nony.copyToClipboard(value);},
 	downloadContentAsFile : function(fileName, value) {$.nony.downloadContentAsFile(fileName, value);},
+	enableObject : function(jqObject) {$.nony.enableObject(jqObject);},
+	disableObject : function(jqObject) {$.nony.disableObject(jqObject);},
 	/*!
 	 * popup / dialog / calendar
 	 */
