@@ -30,6 +30,7 @@
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/canvas-toBlob.js"></script> <!-- For saving chart in canvas element - https://eligrey.com/blog/saving-generated-files-on-the-client-side/ -->
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/FileSaver.js"></script> <!-- For saving chart in canvas element - https://eligrey.com/blog/saving-generated-files-on-the-client-side/ -->
 <script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/printThis.js"></script>
+<script type="text/javascript" src="<mc:cp key="jsJqPlugin"/>/crypto-js.min.js"></script>
 
 <script type="text/javascript" src="<mc:cp key="ckEditor"/>/ckeditor.js"></script>
 <script type="text/javascript" src="<mc:cp key="ckEditor"/>/adapters/jquery.js"></script>

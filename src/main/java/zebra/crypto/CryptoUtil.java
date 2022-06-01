@@ -3,6 +3,11 @@ package zebra.crypto;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.Key;
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.engines.DESEngine;
@@ -12,8 +17,9 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 
 public class CryptoUtil {
-	private static final String encoding = "euc-kr";
+	private static final String encoding = "utf-8";
 	private static final byte[] h = { 1, 35, 69, 103, -119, -85, -51, -17 };
+	private static final String ALGO = "AES"; // Default uses ECB PKCS5Padding
 
 	public static final String encrypt(String s, String s1) throws CryptoException {
 		if ((s1 == null) || (s == null)) {
@@ -33,7 +39,7 @@ public class CryptoUtil {
 		try {
 			abyte0 = ("^" + s + "$").getBytes(encoding);
 		} catch (UnsupportedEncodingException unsupportedencodingexception) {
-			throw new CryptoException("Unsupported euc-kr", unsupportedencodingexception);
+			throw new CryptoException("Unsupported utf-8", unsupportedencodingexception);
 		}
 
 		PaddedBufferedBlockCipher paddedbufferedblockcipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new DESEngine()));
@@ -78,7 +84,7 @@ public class CryptoUtil {
 			try {
 				return new String(abyte1, 1, i1 + j1 - 2, encoding);
 			} catch (UnsupportedEncodingException unsupportedencodingexception) {
-				throw new CryptoException("Unsupported euc-kr", unsupportedencodingexception);
+				throw new CryptoException("Unsupported utf-8", unsupportedencodingexception);
 			}
 		}
 		return null;
@@ -91,7 +97,7 @@ public class CryptoUtil {
 		try {
 			abyte0 = s.getBytes(encoding);
 		} catch (UnsupportedEncodingException unsupportedencodingexception) {
-			throw new CryptoException("Unsupported euc-kr", unsupportedencodingexception);
+			throw new CryptoException("Unsupported utf-8", unsupportedencodingexception);
 		}
 
 		int i1 = abyte0.length > 8 ? 8 : abyte0.length;
@@ -122,7 +128,7 @@ public class CryptoUtil {
 			}
 		}
 		try {
-			result = URLEncoder.encode(result, "euc-kr");
+			result = URLEncoder.encode(result, "utf-8");
 		} catch (UnsupportedEncodingException localUnsupportedEncodingException) {
 		}
 		return result;
@@ -134,7 +140,7 @@ public class CryptoUtil {
 
 		char[] keys = new char[key.length()];
 		try {
-			value = URLDecoder.decode(value, "euc-kr");
+			value = URLDecoder.decode(value, "utf-8");
 		} catch (UnsupportedEncodingException localUnsupportedEncodingException) {
 		}
 		key.getChars(0, key.length(), keys, 0);
@@ -151,10 +157,46 @@ public class CryptoUtil {
 		return result;
 	}
 
-	public static void main(String[] args) {
-		String aaa = XOREncrypt("sdfsdf", "<#안녕하세요->");
-		String bbb = XORDecrypt("sdfsdf", aaa);
-		System.out.println("EN:" + aaa);
-		System.out.println("DE:" + bbb);
+	/*!
+	 * javascript <-> java enc / dec begin
+	 */
+	public static String encryptInput(String data, String secret) throws Exception {
+		Key key = generateKey(secret);
+		Cipher c = Cipher.getInstance(ALGO);
+		c.init(Cipher.ENCRYPT_MODE, key);
+		byte[] encVal = c.doFinal(data.getBytes());
+		String encryptedValue = Base64.getEncoder().encodeToString(encVal);
+		return encryptedValue;
 	}
+
+	public static String decryptInput(String strToDecrypt, String secret) {
+		try {
+			Key key = generateKey(secret);
+			Cipher cipher = Cipher.getInstance(ALGO);
+			cipher.init(Cipher.DECRYPT_MODE, key);
+			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+		} catch (Exception e) {
+			System.out.println("Error while decrypting: " + e.toString());
+		}
+		return null;
+	}
+
+	private static Key generateKey(String secret) throws Exception {
+		byte[] decoded = Base64.getDecoder().decode(secret.getBytes());
+		Key key = new SecretKeySpec(decoded, ALGO);
+		return key;
+	}
+
+	public static String decodeKey(String str) {
+		byte[] decoded = Base64.getDecoder().decode(str.getBytes());
+		return new String(decoded);
+	}
+
+	public static String encodeKey(String str) {
+		byte[] encoded = Base64.getEncoder().encode(str.getBytes());
+		return new String(encoded);
+	}
+	/*!
+	 * javascript <-> java enc / dec end
+	 */
 }
