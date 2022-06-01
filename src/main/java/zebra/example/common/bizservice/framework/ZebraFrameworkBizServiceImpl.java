@@ -1806,7 +1806,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 						resultElement.setAttribute("type", "debugDispatcherResult");
 						resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "List.jsp");
 						actionElement.appendChild(resultElement);
-						packageElement.appendChild(actionElement);
 
 						if (CommonUtil.toBoolean(isCreateDetail)) {
 							pageNameSuffix = (CommonUtil.equalsIgnoreCase(pageType, "Page")) ? ".jsp" : "Pop.jsp";
@@ -1815,7 +1814,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 							resultElement.setAttribute("type", "debugDispatcherResult");
 							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Detail"+pageNameSuffix);
 							actionElement.appendChild(resultElement);
-							packageElement.appendChild(actionElement);
 						}
 
 						if (CommonUtil.toBoolean(isCreateEdit)) {
@@ -1825,7 +1823,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 							resultElement.setAttribute("type", "debugDispatcherResult");
 							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Edit"+pageNameSuffix);
 							actionElement.appendChild(resultElement);
-							packageElement.appendChild(actionElement);
 						}
 
 						if (CommonUtil.toBoolean(isCreateInsert)) {
@@ -1834,7 +1831,6 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 							resultElement.setAttribute("type", "debugDispatcherResult");
 							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Insert"+pageNameSuffix);
 							actionElement.appendChild(resultElement);
-							packageElement.appendChild(actionElement);
 						}
 
 						if (CommonUtil.toBoolean(isCreateUpdate)) {
@@ -1843,8 +1839,9 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 							resultElement.setAttribute("type", "debugDispatcherResult");
 							resultElement.setTextContent(jspRelPath + "/" + menuPathStr + "/" + thisMenuIdUpperCamelCase + "Update"+pageNameSuffix);
 							actionElement.appendChild(resultElement);
-							packageElement.appendChild(actionElement);
 						}
+
+						packageElement.appendChild(actionElement);
 
 						Comment commentElement = document.createComment(thisMenuIdUpperCamelCase + " - " + menuName);
 						actionElement.getParentNode().insertBefore(commentElement, actionElement);
