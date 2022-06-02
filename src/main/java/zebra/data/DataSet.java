@@ -703,12 +703,12 @@ public class DataSet {
 		return sb.toString();
 	}
 
-	public String getAsHtmlStringForSelectbox(String colNameForValue, String colNameForText, String selectedValue, String caption, String selectAttributs) throws Exception {
+	public String getAsHtmlStringForSelectbox(String colNameForValue, String colNameForText, String selectedValue, String caption, String selectAttr) throws Exception {
 		String html = "", attrStr = "";
 		String attrs[];
 
-		if (CommonUtil.isNotBlank(selectAttributs)) {
-			attrs = CommonUtil.split(selectAttributs, ";");
+		if (CommonUtil.isNotBlank(selectAttr)) {
+			attrs = CommonUtil.split(selectAttr, ";");
 			for (String attr : attrs) {
 				String name = CommonUtil.split(attr, ":")[0];
 				String value = CommonUtil.split(attr, ":")[1];
@@ -730,6 +730,102 @@ public class DataSet {
 				}
 			} else {
 				html += "<option value=\""+getValue(i, colNameForValue)+"\">"+getValue(i, colNameForText)+"</option>";
+			}
+		}
+		html += "</select>";
+
+		return html;
+	}
+
+	public String getAsHtmlStringForSelectbox(String colNameForValue, String colNameForText, String selectedValue, String caption, String selectAttr, String optionAttr) throws Exception {
+		String html = "", selectAttrStr = "", optionAttrStr = "";
+		String attrs[];
+
+		if (CommonUtil.isNotBlank(selectAttr)) {
+			attrs = CommonUtil.split(selectAttr, ";");
+			for (String attr : attrs) {
+				String name = CommonUtil.split(attr, ":")[0];
+				String value = CommonUtil.split(attr, ":")[1];
+				selectAttrStr += " "+name+"=\""+value+"\"";
+			}
+		}
+
+		if (CommonUtil.isNotBlank(optionAttr)) {
+			attrs = CommonUtil.split(optionAttr, ";");
+			for (String attr : attrs) {
+				String name = CommonUtil.split(attr, ":")[0];
+				String value = CommonUtil.split(attr, ":")[1];
+				optionAttrStr += " "+name+"=\""+value+"\"";
+			}
+		}
+
+		html += "<select"+selectAttrStr+">";
+		if (CommonUtil.isNotBlank(caption)) {
+			html += "<option value=\"\">"+caption+"</option>";
+		}
+
+		for (int i=0; i<getRowCnt(); i++) {
+			if (CommonUtil.isNotBlank(selectedValue)) {
+				if (CommonUtil.equals(getValue(i, colNameForValue), selectedValue)) {
+					html += "<option value=\""+getValue(i, colNameForValue)+"\" "+optionAttrStr+" selected>"+getValue(i, colNameForText)+"</option>";
+				} else {
+					html += "<option value=\""+getValue(i, colNameForValue)+"\" "+optionAttrStr+">"+getValue(i, colNameForText)+"</option>";
+				}
+			} else {
+				html += "<option value=\""+getValue(i, colNameForValue)+"\" "+optionAttrStr+">"+getValue(i, colNameForText)+"</option>";
+			}
+		}
+		html += "</select>";
+
+		return html;
+	}
+
+	public String getAsHtmlStringForSelectbox(String colNameForValue, String colNameForText, String selectedValue, String caption, String selectAttr, String optionAttr, String optionAttrFromColumn) throws Exception {
+		String html = "", selectAttrStr = "", optionAttrStr = "";
+		String attrs[];
+
+		if (CommonUtil.isNotBlank(selectAttr)) {
+			attrs = CommonUtil.split(selectAttr, ";");
+			for (String attr : attrs) {
+				String name = CommonUtil.split(attr, ":")[0];
+				String value = CommonUtil.split(attr, ":")[1];
+				selectAttrStr += " "+name+"=\""+value+"\"";
+			}
+		}
+
+		if (CommonUtil.isNotBlank(optionAttr)) {
+			attrs = CommonUtil.split(optionAttr, ";");
+			for (String attr : attrs) {
+				String name = CommonUtil.split(attr, ":")[0];
+				String value = CommonUtil.split(attr, ":")[1];
+				optionAttrStr += " "+name+"=\""+value+"\"";
+			}
+		}
+
+		html += "<select"+selectAttrStr+">";
+		if (CommonUtil.isNotBlank(caption)) {
+			html += "<option value=\"\">"+caption+"</option>";
+		}
+
+		for (int i=0; i<getRowCnt(); i++) {
+			String optAttrFromColStr = "";
+			if (CommonUtil.isNotBlank(optionAttrFromColumn)) {
+				attrs = CommonUtil.split(optionAttrFromColumn, ";");
+				for (String attr : attrs) {
+					String attrName = CommonUtil.split(attr, ":")[0];
+					String dsColName = CommonUtil.split(attr, ":")[1];
+					optAttrFromColStr += " "+attrName+"=\""+getValue(i, dsColName)+"\"";
+				}
+			}
+
+			if (CommonUtil.isNotBlank(selectedValue)) {
+				if (CommonUtil.equals(getValue(i, colNameForValue), selectedValue)) {
+					html += "<option value=\""+getValue(i, colNameForValue)+"\""+optionAttrStr+optAttrFromColStr+" selected>"+getValue(i, colNameForText)+"</option>";
+				} else {
+					html += "<option value=\""+getValue(i, colNameForValue)+"\""+optionAttrStr+optAttrFromColStr+">"+getValue(i, colNameForText)+"</option>";
+				}
+			} else {
+				html += "<option value=\""+getValue(i, colNameForValue)+"\""+optionAttrStr+optAttrFromColStr+">"+getValue(i, colNameForText)+"</option>";
 			}
 		}
 		html += "</select>";

@@ -16,6 +16,7 @@ public class Icon extends TaglibSupport {
 	private String script = "";
 	private String status = "";
 	private String attribute = "";
+	private String useFor = "";
 
 	public int doStartTag() {
 		try {
@@ -32,6 +33,11 @@ public class Icon extends TaglibSupport {
 				classNamePrefix = "icnDis";
 			} else {
 				classNamePrefix = "icnEn";
+			}
+
+			// Auto set
+			if (CommonUtil.isNotBlank(useFor)) {
+				className += " "+getAutoIconClass(useFor);
 			}
 
 			if (CommonUtil.containsIgnoreCase(className, "fa-")) {
@@ -78,6 +84,31 @@ public class Icon extends TaglibSupport {
 		Field fields[] = cls.getDeclaredFields();
 		for (int i=0; i<fields.length; i++) {
 			fields[i].set(this, "");
+		}
+	}
+
+	private String getAutoIconClass(String useFor) {
+		switch (CommonUtil.lowerCase(useFor)) {
+			case "actionheadergrid":
+				return "fa-magic fa-lg";
+			case "checkgrid":
+				return "fa-check-square-o fa-lg";
+			case "radiogrid":
+				return "fa-dot-circle-o fa-lg";
+			case "action":
+				return "fa-ellipsis-h fa-lg";
+			case "calendar":
+				return "fa-calendar";
+			case "refresh":
+				return "fa-refresh fa-lg";
+			case "delete":
+				return "fa-times fa-lg";
+			case "lookup":
+				return "fa-search";
+			case "sort":
+				return "fa-sort fa-lg";
+			default:
+				return "";
 		}
 	}
 

@@ -92,6 +92,7 @@ public class MenuManager extends BaseBiz {
 	public static DataSet getMenu(String authGroupId, String parentMenuId, String startMenuLevel, String endMenuLevel) throws Exception {
 		DataSet dsRtn = new DataSet();
 		DataSet dsMenu = (DataSet)MemoryBean.get("menuDataSet");
+		String delimiter = ConfigUtil.getProperty("delimiter.data");
 
 		authGroupId = CommonUtil.nvl(authGroupId);
 		startMenuLevel = CommonUtil.nvl(startMenuLevel, "1");
@@ -108,8 +109,17 @@ public class MenuManager extends BaseBiz {
 		for (int i=0; i<dsMenu.getRowCnt(); i++) {
 			int menuLevel = CommonUtil.toInt(dsMenu.getValue(i, "LEVEL"));
 			String groupId = dsMenu.getValue(i, "GROUP_ID");
+			String[] groupIds = CommonUtil.split(groupId, delimiter);
+			boolean hasAuth = false;
 
-			if (CommonUtil.containsIgnoreCase(groupId, authGroupId) && (menuLevel >= startLevel && menuLevel <= endLevel)) {
+			for (String id : groupIds) {
+				if (CommonUtil.equals(id, authGroupId)) {
+					hasAuth = true;
+					break;
+				}
+			}
+
+			if (hasAuth && menuLevel >= startLevel && menuLevel <= endLevel) {
 				if (CommonUtil.isBlank(parentMenuId)) {
 					dsRtn.addRow();
 					for (int j=0; j<dsRtn.getColumnCnt(); j++) {

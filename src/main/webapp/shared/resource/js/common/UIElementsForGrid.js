@@ -287,6 +287,29 @@ UiIcon.prototype = {
 	setStyle : function(style) {this.style = style; return this;},
 	setScript : function(script) {this.script = script; return this;},
 	setAttribute : function(attributes) {this.attribute = attributes; return this;},
+	setUseFor : function(useFor) {
+		if ($.nony.isNotBlank(useFor)) {
+			var classNamePrefix = "", cName = "";
+
+			if ($.nony.lowerCase(useFor) == "checkgrid") {cName = "fa-check-square-o fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "radiogrid") {cName = "fa-dot-circle-o fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "action") {cName = "fa-ellipsis-h fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "calendar") {cName = "fa-calendar";}
+			else if ($.nony.lowerCase(useFor) == "refresh") {cName = "fa-refresh fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "delete") {cName = "fa-times fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "lookup") {cName = "fa-search";}
+			else if ($.nony.lowerCase(useFor) == "sort") {cName = "fa-sort fa-lg";}
+
+			if ($.nony.startsWith(cName, "fa-")) {
+				classNamePrefix = "fa";
+			} else if ($.nony.startsWith(cName, "glyphicon-")) {
+				classNamePrefix = "glyphicon";
+			}
+			this.className += ($.nony.isEmpty(this.className)) ? classNamePrefix+" "+cName : " "+classNamePrefix+" "+cName;
+		}
+
+		return this;
+	},
 	/**
 	 * Method
 	 */

@@ -303,6 +303,9 @@
 		<attribute>
 			<name>attribute</name><required>false</required><rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>useFor</name><required>false</required><rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>img</name>

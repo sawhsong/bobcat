@@ -348,6 +348,17 @@ var uiElements = {
 			classNamePrefix = "icnEn";
 		}
 
+		if ($.nony.isNotBlank(useFor)) {
+			if ($.nony.lowerCase(useFor) == "checkgrid") {params.className = params.className+" "+"fa-check-square-o fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "radiogrid") {params.className = params.className+" "+"fa-dot-circle-o fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "action") {params.className = params.className+" "+"fa-ellipsis-h fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "calendar") {params.className = params.className+" "+"fa-calendar";}
+			else if ($.nony.lowerCase(useFor) == "refresh") {params.className = params.className+" "+"fa-refresh fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "delete") {params.className = params.className+" "+"fa-times fa-lg";}
+			else if ($.nony.lowerCase(useFor) == "lookup") {params.className = params.className+" "+"fa-search";}
+			else if ($.nony.lowerCase(useFor) == "sort") {params.className = params.className+" "+"fa-sort fa-lg";}
+		}
+
 		if ($.nony.containsIgnoreCase(params.className, "fa-")) {
 			classNamePrefix += " fa";
 		} else if ($.nony.containsIgnoreCase(params.className, "glyphicon-")) {
