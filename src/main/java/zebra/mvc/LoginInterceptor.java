@@ -49,16 +49,19 @@ public class LoginInterceptor implements Interceptor {
 //		}
 
 		// Log
-		if (CommonUtil.equalsIgnoreCase(ConfigUtil.getProperty("log.interceptor.login"), "Y")) {
-			logger.debug("invocation.getAction() : "+action.getClass().getName());
-			logger.debug("session.getId() : "+session.getId());
+		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.interceptor.login"))) {
+			logger.debug("Action Name in LoginInterceptor : "+action.getClass().getName());
+			logger.debug("Method Name in LoginInterceptor : "+invocation.getProxy().getMethod());
+			logger.debug("Session Id in LoginInterceptor : "+session.getId());
 
-			for (Iterator iter = sessionMap.entrySet().iterator(); iter.hasNext();) {
-				Entry entry = (Entry)iter.next();
-				String key = (String)entry.getKey();
-				Object obj = entry.getValue();
+			if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.interceptor.session"))) {
+				for (Iterator iter = sessionMap.entrySet().iterator(); iter.hasNext();) {
+					Entry entry = (Entry)iter.next();
+					String key = (String)entry.getKey();
+					Object obj = entry.getValue();
 
-				logger.debug("sessionMap in LoginInterceptor - [" + key + "] : [" + obj + "]");
+					logger.debug("sessionMap in LoginInterceptor - [" + key + "] : [" + obj + "]");
+				}
 			}
 		}
 
