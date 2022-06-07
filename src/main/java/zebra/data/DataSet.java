@@ -103,7 +103,7 @@ public class DataSet {
 
 			addRow();
 			for (int i=0; i<values.size(); i++) {
-				setValue(getRowCnt()-1, i, (String)values.get(i));
+				setValue(getRowCnt()-1, i, CommonUtil.replace((String)values.get(i), "\n", "\\n"));
 			}
 		}
 	}
@@ -655,7 +655,7 @@ public class DataSet {
 		for (int i=0; i<getRowCnt(); i++) {
 			sb.append("\"dataSetValueRow").append(i).append("\":[");
 			for (int j=0; j<getColumnCnt(); j++) {
-				sb.append("\"").append(getValue(i, j)).append("\"");
+				sb.append("\"").append(CommonUtil.replace(getValue(i, j), "\n", "\\n")).append("\"");
 				if (j < getColumnCnt()-1) {
 					sb.append(",");
 				}
