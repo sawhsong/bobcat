@@ -3,7 +3,8 @@
 	<!-- Log Level : TRACE, DEBUG, INFO, WARN, ERROR and FATAL -->
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/>
+<!-- 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/> -->
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C{1}.%M(%L) - %m%n"/>
 		</Console>
 		<RollingFile name="RollingFile" fileName="/home/opc/apache-tomcat-9.0.63/logs/bobcatRollingFile.log" filePattern="/home/opc/apache-tomcat-9.0.63/logs/$${date:yyyy-MM}/bobcatRollingFile-%d{yyyy-MM-dd}-%i.log">
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss} %p] - %C.%M(%L) - %m%n"/>

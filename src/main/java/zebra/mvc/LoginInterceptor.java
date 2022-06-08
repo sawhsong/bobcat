@@ -50,8 +50,9 @@ public class LoginInterceptor implements Interceptor {
 
 		// Log
 		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.interceptor.login"))) {
-			logger.debug("Action Name in LoginInterceptor : "+action.getClass().getName());
-			logger.debug("Method Name in LoginInterceptor : "+invocation.getProxy().getMethod());
+//			logger.debug("Action Name in LoginInterceptor : "+action.getClass().getName());
+//			logger.debug("Method Name in LoginInterceptor : "+invocation.getProxy().getMethod());
+			logger.debug("Execution Result : "+invocation.getAction().getClass().getName()+" => "+invocation.getProxy().getMethod());
 //			logger.debug("Session Id in LoginInterceptor : "+session.getId());
 
 			if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.interceptor.session"))) {
