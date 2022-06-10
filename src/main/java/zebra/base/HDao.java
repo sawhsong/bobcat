@@ -166,6 +166,7 @@ public class HDao extends HibernateDaoSupport {
 		try {
 			setSessionFactoryForMultiDatasource();
 			Object object = session.save(dto);
+			session.flush();
 			return (object == null) || (CommonUtil.isBlank(object.toString())) ? 0 : 1;
 		} catch (Exception ex) {
 			this.logger.error(ex);
