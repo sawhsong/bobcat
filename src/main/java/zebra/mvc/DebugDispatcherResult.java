@@ -24,7 +24,7 @@ public class DebugDispatcherResult extends StrutsResultSupport {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(finalLocation);
 
 		if (CommonUtil.equalsIgnoreCase(ConfigUtil.getProperty("log.dispatcher.result"), "Y")) {
-			logger.debug("Execution Result : " + invocation.getAction().getClass().getName() + " => " + invocation.getResultCode() + " => " + finalLocation);
+			logger.debug(invocation.getAction().getClass().getName() + " => " + invocation.getResultCode() + " => " + finalLocation);
 		}
 
 		dispatcher.forward(request, response);
