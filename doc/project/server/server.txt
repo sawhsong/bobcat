@@ -1,5 +1,5 @@
 ==== Oracle Cloud(cloud.oracle.com) ====
-sawhsong@gmail.com / sawh7673SA_202205
+sawhsong@gmail.com / sawh7673SA_202212
 
 --db
 ADMIN / DBPassAdm_202205
