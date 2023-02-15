@@ -353,7 +353,8 @@ $(function() {
 			url:"/index/getIncomeChartData.do",
 			onSuccess:(result) => {
 				var ds = result.dataSet;
-
+console.log("ds.toString()");
+console.log(ds.toString());
 				if (ds.getRowCnt() > 0) {
 					var dataTot = {}, dataGst = {}, dataNet = {};
 					var totAmt = [], gstAmt = [], netAmt = [];

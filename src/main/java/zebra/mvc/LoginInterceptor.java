@@ -38,7 +38,7 @@ public class LoginInterceptor implements Interceptor {
 		HttpSession session = request.getSession();
 		Map sessionMap = context.getSession();
 		Object action = invocation.getAction();
-		String userId = "", returnValue = "";
+		String userId = (String)sessionMap.get("UserId"), userName = (String)sessionMap.get("UserName"), returnValue = "";
 
 //		for (Iterator iter = context.getContextMap().entrySet().iterator(); iter.hasNext();) {
 //			Entry entry = (Entry)iter.next();
@@ -52,7 +52,7 @@ public class LoginInterceptor implements Interceptor {
 		if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.interceptor.login"))) {
 //			logger.debug("Action Name in LoginInterceptor : "+action.getClass().getName());
 //			logger.debug("Method Name in LoginInterceptor : "+invocation.getProxy().getMethod());
-			logger.debug(invocation.getAction().getClass().getName()+" => "+invocation.getProxy().getMethod());
+			logger.debug("[User : "+userName+" ("+userId+")] "+invocation.getAction().getClass().getSimpleName()+" => "+invocation.getProxy().getMethod());
 //			logger.debug("Session Id in LoginInterceptor : "+session.getId());
 
 			if (CommonUtil.toBoolean(ConfigUtil.getProperty("log.interceptor.session"))) {
