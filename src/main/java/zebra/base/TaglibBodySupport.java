@@ -23,7 +23,7 @@ public class TaglibBodySupport extends BodyTagSupport {
 	 * getMessage() - being called by sub classes
 	 */
 	protected String getMessage(String messageCode) {
-		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"))));
+		return messageSourceAccessor.getMessage(messageCode, new Locale.Builder().setLanguage(CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language"))).build());
 	}
 
 	protected String getMessage(String messageCode, Locale locale) {
@@ -31,12 +31,12 @@ public class TaglibBodySupport extends BodyTagSupport {
 	}
 
 	protected String getMessage(String messageCode, String languageCode) {
-		return messageSourceAccessor.getMessage(messageCode, new Locale(languageCode));
+		return messageSourceAccessor.getMessage(messageCode, new Locale.Builder().setLanguage(languageCode).build());
 	}
 
 	protected String getMessage(String messageCode, ParamEntity paramEntity) {
 		String lang = (String)paramEntity.getSession().getAttribute("langCode");
-		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.nvl(lang, CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")))));
+		return messageSourceAccessor.getMessage(messageCode, new Locale.Builder().setLanguage(CommonUtil.nvl(lang, CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")))).build());
 	}
 
 	/*!

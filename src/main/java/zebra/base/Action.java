@@ -82,12 +82,12 @@ public class Action extends ActionSupport implements ServletContextAware, Servle
 	}
 
 	protected String getMessage(String messageCode, String languageCode) {
-		return messageSourceAccessor.getMessage(messageCode, new Locale(languageCode));
+		return messageSourceAccessor.getMessage(messageCode, new Locale.Builder().setLanguage(languageCode).build());
 	}
 
 	protected String getMessage(String messageCode, ParamEntity paramEntity) {
 		String lang = (String)paramEntity.getSession().getAttribute("langCode");
-		return messageSourceAccessor.getMessage(messageCode, new Locale(CommonUtil.nvl(lang, CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")))));
+		return messageSourceAccessor.getMessage(messageCode, new Locale.Builder().setLanguage(CommonUtil.nvl(lang, CommonUtil.lowerCase(ConfigUtil.getProperty("etc.default.language")))).build());
 	}
 
 	/*!
