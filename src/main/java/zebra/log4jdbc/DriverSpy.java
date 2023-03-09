@@ -378,7 +378,6 @@ public class DriverSpy implements Driver {
 
 	@Override
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
