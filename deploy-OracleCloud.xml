@@ -1,132 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Bobcat Z Deploy" default="all" basedir=".">
+<project name="Bobcat Z Deploy" default="0. Deploy All" basedir=".">
 	<property file="deploy-OracleCloud.properties"/>
 
-	<target name="all"
-		depends="0-init-dir,
-				 1-change-properties,
-				 2-upload-buildset,
-				 3-upload-webapp"
-		description="Create buildset and webapp"
+	<target name="0. Deploy All"
+		depends="0.1. shutdownTomcat,
+				1.1. webAppDir - Root | META-INF,
+				1.2. webAppDir - project,
+				1.3. webAppDir - shared,
+				1.4. webAppDir - zebra,
+				2.1. WEB-INF - Web.xml,
+				2.2. WEB-INF - classes,
+				2.3. WEB-INF - lib,
+				2.4. WEB-INF - tld,
+				9.1. startupTomcat"
+		description="Deploy All"
 	/>
 
-	<target name="0-init-dir">
-		<delete dir="${dir.local.buildset}/${name.project}"/>
-		<mkdir dir="${dir.local.buildset}/${name.project}"/>
-		<copy todir="${dir.local.buildset}/${name.project}">
-			<fileset dir="${dir.local.src}"/>
-		</copy>
-
+	<target name="0.1. shutdownTomcat">
 		<sshexec host="${server.ip}"
 			username="${server.id}"
 			keyfile="${file.key}"
 			trust="true"
-			command="rm -rf ${dir.server.buildset}"
-		/>
-
-		<sshexec host="${server.ip}"
-			username="${server.id}"
-			keyfile="${file.key}"
-			trust="true"
-			command="mkdir ${dir.server.buildset}"
-		/>
-
-		<sshexec host="${server.ip}"
-			username="${server.id}"
-			keyfile="${file.key}"
-			trust="true"
-			command="mkdir ${dir.server.buildset}/${name.project}"
-		/>
-
-		<sshexec host="${server.ip}"
-			username="${server.id}"
-			keyfile="${file.key}"
-			trust="true"
-			command="rm -rf ${dir.server.tomcat}/${name.project}"
-		/>
-		<sshexec host="${server.ip}"
-			username="${server.id}"
-			keyfile="${file.key}"
-			trust="true"
-			command="mkdir ${dir.server.tomcat}/${name.project}"
+			command="export JAVA_HOME=${dir.server.jdkHome};
+					 bash ${server.cmd.shutdown}"
 		/>
 	</target>
 
-	<target name="1-change-properties">
-		<delete file="${dir.local.buildset}/${name.project}/${dir.class}/config.properties"/>
-		<delete file="${dir.local.buildset}/${name.project}/${dir.class}/log4j2.xml"/>
+	<target name="1.1. webAppDir - Root | META-INF">
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/META-INF;
+					 mkdir ${dir.server.tomcat}/${name.project}/META-INF"
+		/>
 
-		<copy todir="${dir.local.buildset}/${name.project}/${dir.class}">
-			<fileset file="${dir.local.prop}/config.properties"/>
-			<fileset file="${dir.local.prop}/log4j2.xml"/>
-		</copy>
-	</target>
-
-	<target name="2-upload-buildset">
-<!--
-		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.buildset}"
-			file="${dir.local.war}"
+		<scp file="${dir.local.src}/index.jsp"
+			todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}"
 			trust="true"
 			keyfile="${file.key}"
 		/>
--->
-<!--
-		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.buildset}/${name.project}" trust="true" keyfile="${file.key}">
-			<fileset dir="${dir.local.buildset}/${name.project}" excludes="**/CVS/**, **/cvs/**"/>
+
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/META-INF" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/META-INF"/>
 		</scp>
--->
 	</target>
+	<target name="1.2. webAppDir - project">
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/project;
+					 mkdir ${dir.server.tomcat}/${name.project}/project"
+		/>
 
-	<target name="3-upload-webapp">
-		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}" trust="true" keyfile="${file.key}">
-			<fileset dir="${dir.local.buildset}/${name.project}" excludes="**/CVS/**, **/cvs/**"/>
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/project" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/project"/>
+		</scp>
+	</target>
+	<target name="1.3. webAppDir - shared">
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/shared;
+					 mkdir ${dir.server.tomcat}/${name.project}/shared"
+		/>
+
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/shared" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/shared"/>
+		</scp>
+	</target>
+	<target name="1.4. webAppDir - zebra">
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/zebra;
+					 mkdir ${dir.server.tomcat}/${name.project}/zebra"
+		/>
+
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/zebra" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/zebra"/>
 		</scp>
 	</target>
 
-	<!-- upload webapp only - not delete or create buildset in the server -->
-	<target name="9-direct" description="Build directly from my workspace">
+	<target name="2.1. WEB-INF - Web.xml">
 		<sshexec host="${server.ip}"
 			username="${server.id}"
 			keyfile="${file.key}"
 			trust="true"
-			command="
-				export JAVA_HOME=${dir.server.jdkHome};
-				bash ${server.cmd.shutdown}"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/${dir.web-inf};
+					 mkdir ${dir.server.tomcat}/${name.project}/${dir.web-inf}"
 		/>
 
-		<!-- init dirs -->
-		<delete dir="${dir.local.buildset}/${name.project}"/>
-		<mkdir dir="${dir.local.buildset}/${name.project}"/>
-		<copy todir="${dir.local.buildset}/${name.project}">
-			<fileset dir="${dir.local.src}"/>
-		</copy>
+		<scp file="${dir.local.src}/${dir.web-inf}/web.xml"
+			todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/${dir.web-inf}"
+			trust="true"
+			keyfile="${file.key}"
+		/>
+	</target>
+	<target name="2.2. WEB-INF - classes">
 		<sshexec host="${server.ip}"
 			username="${server.id}"
 			keyfile="${file.key}"
 			trust="true"
-			command="rm -rf ${dir.server.tomcat}/${name.project}"
-		/>
-		<sshexec host="${server.ip}"
-			username="${server.id}"
-			keyfile="${file.key}"
-			trust="true"
-			command="mkdir ${dir.server.tomcat}/${name.project}"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes;
+					 mkdir ${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes"
 		/>
 
-		<!-- change properties -->
-		<delete file="${dir.local.buildset}/${name.project}/${dir.class}/config.properties"/>
-		<delete file="${dir.local.buildset}/${name.project}/${dir.class}/log4j2.xml"/>
-
-		<copy todir="${dir.local.buildset}/${name.project}/${dir.class}">
-			<fileset file="${dir.local.prop}/config.properties"/>
-			<fileset file="${dir.local.prop}/log4j2.xml"/>
-		</copy>
-
-		<!-- upload webapp -->
-		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}" trust="true" keyfile="${file.key}">
-			<fileset dir="${dir.local.buildset}/${name.project}" excludes="**/CVS/**, **/cvs/**"/>
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/${dir.web-inf}/classes"/>
 		</scp>
 
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -f ${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes/config.properties;
+					 rm -f ${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes/log4j2.xml"
+		/>
+
+		<scp file="${dir.local.prop}/config.properties"
+			todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes"
+			trust="true"
+			keyfile="${file.key}"
+		/>
+		<scp file="${dir.local.prop}/log4j2.xml"
+			todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/${dir.web-inf}/classes"
+			trust="true"
+			keyfile="${file.key}"
+		/>
+	</target>
+	<target name="2.3. WEB-INF - lib">
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/${dir.web-inf}/lib;
+					 mkdir ${dir.server.tomcat}/${name.project}/${dir.web-inf}/lib"
+		/>
+
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/${dir.web-inf}/lib" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/${dir.web-inf}/lib"/>
+		</scp>
+	</target>
+	<target name="2.4. WEB-INF - tld">
+		<sshexec host="${server.ip}"
+			username="${server.id}"
+			keyfile="${file.key}"
+			trust="true"
+			command="rm -rf ${dir.server.tomcat}/${name.project}/${dir.web-inf}/tld;
+					 mkdir ${dir.server.tomcat}/${name.project}/${dir.web-inf}/tld"
+		/>
+
+		<scp todir="${server.id}:${server.pw}@${server.ip}:${dir.server.tomcat}/${name.project}/${dir.web-inf}/tld" trust="true" keyfile="${file.key}">
+			<fileset dir="${dir.local.src}/${dir.web-inf}/tld"/>
+		</scp>
+	</target>
+
+	<target name="9.1. startupTomcat">
 		<sshexec host="${server.ip}"
 			username="${server.id}"
 			keyfile="${file.key}"
