@@ -810,6 +810,7 @@ var nony = {
 	},
 	toCamelCase : function(val) {
 		if ($.nony.isBlank(val)) {return "";}
+		if (!$.nony.contains(val, "_")) {return val.toLowerCase();}
 		return val.toLowerCase().replace(/(\_[a-z])/g, function(arg) {
 			return arg.toUpperCase().replace('_','');
 		});
