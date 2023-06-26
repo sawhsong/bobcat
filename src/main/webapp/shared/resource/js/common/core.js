@@ -1440,6 +1440,7 @@ var nony = {
 		var opt = {
 			source:dataSource,
 			minLength:1,
+			delay:600,
 			search:function(event, ui) {
 				data.inputValue = $(this).val();
 				if (additionalObject) {
