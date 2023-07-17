@@ -6,6 +6,7 @@ package #PACKAGE#;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.sql.Blob;
 import java.util.Date;
 
 import zebra.data.DataSet;
@@ -106,7 +107,7 @@ public class #TABLE_NAME_CAMELCASE# extends BaseDto implements Serializable {
 		}
 	}
 
-	private void setValueFromAccessor(String columnName, String value) throws Exception {
+	private void setValueFromAccessor(String columnName, Object value) throws Exception {
 		dataSet.setValue(dataSet.getRowCnt()-1, columnName, value);
 	}
 

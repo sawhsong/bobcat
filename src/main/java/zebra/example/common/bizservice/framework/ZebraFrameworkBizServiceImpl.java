@@ -2525,9 +2525,13 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 
 	private String getDataTypeString(String value) {
 		if (CommonUtil.contains(CommonUtil.upperCase(value), "NUMBER")) {
-			return "double";
+			return "Double";
 		} else if (CommonUtil.contains(CommonUtil.upperCase(value), "DATE")) {
 			return "Date";
+		} else if (CommonUtil.contains(CommonUtil.upperCase(value), "BLOB")) {
+			return "Blob";
+		} else if (CommonUtil.contains(CommonUtil.upperCase(value), "CLOB")) {
+			return "Clob";
 		} else {
 			return "String";
 		}
@@ -2596,6 +2600,8 @@ public class ZebraFrameworkBizServiceImpl extends BaseBiz implements ZebraFramew
 			return " type=\"java.lang.Double\"";
 		} else if (CommonUtil.equalsIgnoreCase(dataType, "DATE")) {
 			return " type=\"java.util.Date\"";
+		} else if (CommonUtil.equalsIgnoreCase(dataType, "BLOB")) {
+			return " type=\"java.sql.Blob\"";
 		} else if (CommonUtil.equalsIgnoreCase(dataType, "CLOB")) {
 			return " type=\"java.lang.String\"";
 		} else {
