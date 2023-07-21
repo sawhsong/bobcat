@@ -1,6 +1,7 @@
 package zebra.data;
 
 import java.io.Reader;
+import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -29,6 +30,7 @@ public class DataSet {
 
 	private Map<String, Integer> fieldNameIdx = new HashMap<String, Integer>();
 	private List<String> fieldName = new ArrayList<String>();
+	private String objectField = "";
 	@SuppressWarnings("rawtypes")
 	private List fieldValue = new ArrayList();
 
@@ -39,6 +41,10 @@ public class DataSet {
 		for (int i=0; i<names.length; i++) {
 			addName(names[i]);
 		}
+	}
+
+	public String getObjectFieldName() {
+		return objectField;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -156,11 +162,13 @@ public class DataSet {
 		int columnCnt = rsmd.getColumnCount();
 
 		while (rs.next()) {
-			List<String> row = new ArrayList<String>();
+			List<Object> row = new ArrayList<Object>();
 
 			for (int i=1; i<=columnCnt; i++) {
-				if ("CLOB".equals(rsmd.getColumnTypeName(i)) || "BLOB".equals(rsmd.getColumnTypeName(i))) {
+				if ("CLOB".equalsIgnoreCase(rsmd.getColumnTypeName(i))) {
 					row.add(getLob(rs.getCharacterStream(i)));
+				} else if ("BLOB".equalsIgnoreCase(rsmd.getColumnTypeName(i))) {
+					row.add(rs.getBlob(i));
 				} else {
 					row.add(CommonUtil.nvl(rs.getString(i)));
 				}
@@ -331,6 +339,30 @@ public class DataSet {
 		return CommonUtil.nvl((String)getRowAsList(row).get(col));
 	}
 
+	public Object getValueAsObject(String name) throws Exception {
+		return getValueAsObject(0, name);
+	}
+
+	public Object getValueAsObject(int col) throws Exception {
+		return getValueAsObject(0, col);
+	}
+
+	public Object getValueAsObject(int row, String name) throws Exception {
+		Integer idx = (Integer)fieldNameIdx.get(name);
+
+		if (idx == null) {return "";}
+
+		if ((fieldValue.size() < 1) || (row > fieldValue.size())) {
+			logger.error("Out of Row index : "+row);
+			throw new Exception("[DataSet : getValue(int, String)] Exception : Out of Row index : "+row);
+		}
+		return getValueAsObject(row, idx.intValue());
+	}
+
+	public Object getValueAsObject(int row, int col) {
+		return getRowAsList(row).get(col);
+	}
+
 	public int getRowIndex(int col, String value) throws Exception {
 		int intRtn = -1;
 
@@ -448,7 +480,7 @@ public class DataSet {
 			logger.error("Invalid Row index : " + row);
 			throw new Exception("[DataSet : setValue(int, int, String)] Exception : Invalid Row index : " + row);
 		}
-		lsTemp.set(col, getString(value));
+		lsTemp.set(col, value);
 	}
 
 	public void setValue(String colName, Object value) throws Exception {
@@ -470,7 +502,13 @@ public class DataSet {
 			logger.error("Invalid Column name : " + colName);
 			throw new Exception("[DataSet : setValue(int, String, String)] Exception : Invalid Column name : " + colName);
 		}
-		lsTemp.set(idx.intValue(), getString(value));
+
+		if (value instanceof Blob) {
+			lsTemp.set(idx.intValue(), value);
+			objectField += (CommonUtil.isBlank(objectField)) ? colName : ","+colName;
+		} else {
+			lsTemp.set(idx.intValue(), getString(value));
+		}
 	}
 
 	public void deleteRow(int row) throws Exception {
