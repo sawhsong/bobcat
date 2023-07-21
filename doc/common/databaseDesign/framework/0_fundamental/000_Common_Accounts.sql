@@ -4,7 +4,7 @@
 -- bobcat
 drop user bobcat cascade;
 
-create user bobcat identified by Bobcat_20220519;
+create user bobcat identified by sawh_MyPrj44;
 grant connect, resource to bobcat;
 grant create synonym, create view, create database link, create public synonym, drop public synonym, create tablespace, alter database to bobcat;
 grant unlimited tablespace to bobcat;
@@ -13,7 +13,7 @@ grant execute on sys.dbms_crypto to bobcat;
 /**
  * Oracle cloud autonomous database
  */
-create user bobcat identified by DBPass_20220519; -- Oracle cloud autonumous db
+create user bobcat identified by sawh_MyPrj44; -- Oracle cloud autonumous db
 grant connect, resource to bobcat;
 grant create synonym, create view, create database link, create public synonym, drop public synonym, create tablespace, alter database to bobcat;
 grant unlimited tablespace to bobcat;
