@@ -1139,6 +1139,16 @@ var nony = {
 			});
 		});
 	},
+	toggleTrBackgroundOnTdClick : function(jqObjectTd) {
+		var index = $(jqObjectTd).closest("tr").index();
+		$(jqObjectTd).parents("tbody").find("tr").each(function(rowIdx) {
+			if (index == rowIdx) {
+				$(this).addClass("checkedTr");
+			} else {
+				$(this).removeClass("checkedTr");
+			}
+		});
+	},
 	getCountChecked : function (checkboxName) {
 		var cnt = 0;
 

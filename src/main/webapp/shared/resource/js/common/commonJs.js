@@ -169,6 +169,7 @@ var commonJs = {
 	isSearchCriteriaSelected : function() {return $.nony.isSearchCriteriaSelected();},
 	clearPaginationValue : function() {$.nony.clearPaginationValue();},
 	setExportButtonContextMenu : function(jqObjectButton) {$.nony.setExportButtonContextMenu(jqObjectButton);},
+	toggleTrBackgroundOnTdClick : function(jqObjectTd) {$.nony.toggleTrBackgroundOnTdClick(jqObjectTd);},
 	/*!
 	 * process wrappers - for ajax
 	 */
